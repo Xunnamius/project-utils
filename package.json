@@ -1,0 +1,97 @@
+{
+  "name": "euphoria-reign",
+  "version": "0.1.0",
+  "description": "Ldyna Dickens Euphoria Reign shopify site",
+  "main": "./src/index.html",
+  "scripts": {
+    "test": "npx jest",
+    "dev": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "build": "webpack --config ./webpack.config.js --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.xunn.io/shopify/euphoria-reign.git"
+  },
+  "author": "Xunnamius",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^7.0.0-bridge.0",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-export-default-from": "^7.0.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.0.0",
+    "bulma": "^0.7.1",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "babel-jest": "^23.4.2",
+    "babel-loader": "^8.0.2",
+    "babel-plugin-source-map-support": "^2.0.1",
+    "eslint": "^5.5.0",
+    "eslint-plugin-flowtype": "^2.50.0",
+    "jest": "^23.5.0",
+    "source-map": "^0.7.3",
+    "source-map-support": "^0.5.9",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.7"
+  },
+  "peerDependencies": {
+    "flow-bin": "^0.8.0"
+  },
+  "babel": {
+    "plugins": [
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-export-default-from",
+      "@babel/plugin-proposal-numeric-separator",
+      "@babel/plugin-proposal-throw-expressions",
+      "@babel/plugin-proposal-nullish-coalescing-operator",
+      "@babel/plugin-proposal-optional-chaining"
+    ],
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "shippedProposals": true
+        }
+      ],
+      [
+        "@babel/preset-flow"
+      ],
+      [
+        "@babel/preset-react"
+      ]
+    ],
+    "env": {
+      "production": {},
+      "development": {
+        "sourceMaps": "inline",
+        "plugins": [
+          "babel-plugin-source-map-support"
+        ]
+      },
+      "debug": {
+        "sourceMaps": "inline",
+        "plugins": [
+          "babel-plugin-source-map-support"
+        ],
+        "presets": [
+          [
+            "@babel/preset-react",
+            {
+              "development": true
+            }
+          ]
+        ]
+      }
+    }
+  }
+}
