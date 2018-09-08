@@ -24,7 +24,6 @@
     "@babel/plugin-proposal-numeric-separator": "^7.0.0",
     "@babel/plugin-proposal-optional-chaining": "^7.0.0",
     "@babel/plugin-proposal-throw-expressions": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "ajv": "^6.5.3",
@@ -65,9 +64,13 @@
     ],
     "presets": [
       [
-        "@babel/preset-env",
-        {
-          "shippedProposals": true
+        "next/babel", {
+          "@babel/preset-env": {
+            "shippedProposals": true
+          },
+          "transform-runtime": {},
+          "styled-jsx": {},
+          "class-properties": {}
         }
       ],
       [

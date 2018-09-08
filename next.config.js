@@ -32,6 +32,16 @@ module.exports = (phase, {defaultConfig}) => { // eslint-disable-line no-unused-
             // });
 
             return config;
+        },
+
+        // ? Will only be available on the server side
+        serverRuntimeConfig: {
+            // ...
+        },
+
+        // ? Will be available on both server and client
+        publicRuntimeConfig: {
+            // ...
         }
     }
 };
