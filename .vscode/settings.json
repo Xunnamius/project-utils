@@ -1,6 +1,18 @@
 {
+    "css.validate": false,
+    "less.validate": false,
+    "scss.validate": false,
     "cSpell.words": [
         "Ldyna",
+        "euphoriareign",
+        "fix",
+        "new",
+        "next",
+        "nextnodemods",
+        "nextpkgjson",
+        "nextpkgjsonnew",
+        "nextpkglockjson",
+        "pkgjson",
         "shopify"
     ]
 }
