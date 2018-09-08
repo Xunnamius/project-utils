@@ -64,7 +64,8 @@
     ],
     "presets": [
       [
-        "next/babel", {
+        "next/babel",
+        {
           "@babel/preset-env": {
             "shippedProposals": true
           },
