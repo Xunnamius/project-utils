@@ -3,7 +3,7 @@
 import * as React from "react";
 import {render} from "react-dom";
 
-class App extends React.PureComponent<{||}> { // eslint-disable-line no-unused-vars
+class App extends React.PureComponent<{||}> {
     render() {
         return (
             <div>
