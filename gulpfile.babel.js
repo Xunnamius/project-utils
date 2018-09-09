@@ -20,7 +20,7 @@ const paths = {
 
 gulp.task('regenerate-nextjs-config', async () => {
     log(`Recompiling ${paths.nextConfigRaw} into ${paths.nextConfigCompiled}...`);
-    
+
     await gulp.src(paths.nextConfigRaw)
               .pipe(babel({
                   envName: 'generate-next-config',

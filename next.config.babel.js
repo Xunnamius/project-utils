@@ -1,7 +1,6 @@
 /* @flow */
 
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
-import { promisify } from 'util'
 import { readdirSync, lstatSync } from 'fs'
 import path from 'path'
 
