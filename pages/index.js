@@ -1,7 +1,7 @@
 /* @flow */
 
 import * as React from 'react'
-import Link from 'next/link' // eslint-disable-line no-unused-vars
+import Link from 'next/link'
 import Header from '../components/view/header'
 
 export default class Index extends React.PureComponent<{||}> {
