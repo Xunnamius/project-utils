@@ -10,7 +10,7 @@
     "test": "npx jest",
     "install-types": "npx flow-typed install",
     "regenerate-nextjs-config": "gulp regenerate-nextjs-config",
-    "prepare": "npm run install-types && npm run regenerate-nextjs-config",
+    "prepare": "npm run install-types",
     "dev": "next",
     "build": "next build",
     "start": "next start"
@@ -31,8 +31,8 @@
     "babel-core": "^7.0.0-bridge.0",
     "bulma": "^0.7.1",
     "next": "^7.0.0-canary.14",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2"
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
   },
   "devDependencies": {
     "@babel/register": "^7.0.0",
