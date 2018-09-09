@@ -14,7 +14,7 @@ export default class Index extends React.PureComponent<{||}> {
                     <a>Goto: About Page</a>
                 </Link>
                 */}
-                <p>Hello Next.js!</p>
+                <p>Goodbye Next.js!</p>
             </div>
         );
     }

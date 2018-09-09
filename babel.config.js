@@ -32,8 +32,8 @@ module.exports = {
         },
         "development": {
             "presets": [nextjsBabelPreset],
-            "sourceMaps": sourceMapValue,
-            "plugins": [sourceMapPlugin],
+            /* "sourceMaps": sourceMapValue,
+            "plugins": [sourceMapPlugin], */
         },
         "debug": {
             "sourceMaps": sourceMapValue,
