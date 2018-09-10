@@ -104,6 +104,7 @@ remove the entry from the root [.gitignore](.gitignore).
 
 <detail>
     <summary><strong>What are all these other files at the project root?</strong></summary>
+    
 (todo)
 </detail>
 
