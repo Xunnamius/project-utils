@@ -7,21 +7,25 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Gulp task",
+            "name": "gulp:regenerate",
             "program": "${workspaceFolder}/node_modules/gulp/bin/gulp.js",
             "args": [
                 "task"
+            ],
+            "skipFiles": [
+                "${workspaceFolder}/node_modules/**/*.js",
+                "<node_internals>/**/*.js"
             ]
         },
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
+            "name": "chrome",
             "url": "http://localhost:8080",
             "webRoot": "${workspaceFolder}",
             "skipFiles": [
                 "${workspaceFolder}/node_modules/**/*.js",
-                "${workspaceFolder}/lib/**/*.js"
+                "<node_internals>/**/*.js"
             ]
         },
     ]

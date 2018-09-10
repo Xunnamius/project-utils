@@ -39,7 +39,8 @@ module.exports = {
             ]
         },
         generator: {
-            comments: false
+            comments: false,
+            presets: ['@babel/preset-env']
         }
     }
 };

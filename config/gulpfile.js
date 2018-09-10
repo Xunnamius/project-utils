@@ -32,18 +32,20 @@ const CLI_BANNER = `/**
 
 `;
 
-export const regenerate = () => {
+const regenerate = () => {
     log(`Regenerating target configurations`);
 
     process.env.BABEL_ENV = 'generator';
 
     return gulp.src(paths.regenTargets)
-               .pipe(tap(file => file.contents = Buffer.from(babel(`${CLI_BANNER}${file.contents.toString()}`))))
-               .pipe(gulp.dest('.'));
+        .pipe(tap(file => file.contents = Buffer.from(babel(`${CLI_BANNER}${file.contents.toString()}`))))
+        .pipe(gulp.dest('.'));
 };
+regenerate.description = 'Invokes babel on the files in config, transpiling them into their project root versions';
+export { regenerate };
 
 // ! @dependent
-const clean_types = () => { // eslint-disable-line camelcase
+const cleanTypes = () => { // eslint-disable-line camelcase
     return (async () => {
         const targets = parseGitIgnore(await readFileAsync(paths.flowTypedGitIgnore));
 
@@ -52,4 +54,5 @@ const clean_types = () => { // eslint-disable-line camelcase
     })();
 };
 
-gulp.task('clean-types', clean_types);
+cleanTypes.description = 'Resets the flow-types/ directory to a pristine state';
+gulp.task('clean-types', cleanTypes);
