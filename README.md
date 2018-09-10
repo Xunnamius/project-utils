@@ -24,6 +24,7 @@ This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic w
 ## Simple Quick Start Guide
 
 > 0. Explore the [getting started documentation](https://git.xunn.io/DarkTools/ergo-provision/wikis/home)
+
 1. Delete the `.git/` directory **RIGHT NOW!**
 2. Rename this project directory
 3. Edit `name`, `description`, and `url` keys in [package.json](package.json)
