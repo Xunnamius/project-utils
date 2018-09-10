@@ -43,7 +43,7 @@ It is recommended that you also check out the so-called [Required Reading](#requ
 * **Webpack** and all its powers come preconfigured (webpack can be further customized in [config/next.config.js](config/next.config.js))
 * **Babel** (latest JS features are available in every file everywhere **except in [babel.config.js](babel.config.js)**)
 * **Next.js** Here's everything you get **FOR FREE NO EXTRA LINES OF CODE FOR YOU**:
-    * [HMR]() as a LiveReload replacement
+    * [HMR](https://www.youtube.com/watch?v=9mSJSXo1to4) as a LiveReload replacement
     * [SSR](https://hackernoon.com/next-js-react-server-side-rendering-done-right-f9700078a3b6)
     * [CSR](http://krasimirtsonev.com/blog/article/deep-dive-into-client-side-routing-navigo-pushstate-hash)
     * [Styled-jsx](https://github.com/zeit/styled-jsx)
