@@ -13,6 +13,7 @@ This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic w
     - [Script Tags Should Usually Not Appear In Your Components](#script-tags-should-usually-not-appear-in-your-components)
     - [Page Refreshes vs Client-side Navigation](#page-refreshes-vs-client-side-navigation)
     - [Immutability and You](#immutability-and-you)
+    - [Other Considerations](#other-considerations)
 - [Available NPM Run Scripts/Commands](#available-npm-run-scriptscommands)
 - [Good Questions](#good-questions)
 - [Further Research Materials](#further-research-materials)
@@ -100,6 +101,10 @@ When a `<Link>` is followed (client-side nav), `getInitialProps()` is called cli
 ### Immutability and You
 
 (todo)
+
+### Other Considerations
+
+(todo)(run regenerate when you change stuff in config/)
 
 ## Available NPM Run Scripts/Commands
 

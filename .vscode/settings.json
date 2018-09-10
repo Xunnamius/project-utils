@@ -1,8 +1,7 @@
 {
   "files.exclude": {
     "build": true,
-    "flow-typed": true,
-    ".vscode": true
+    "flow-typed": true
   },
   "cSpell.words": [
     "babelconfigjs",
