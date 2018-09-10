@@ -8,8 +8,9 @@
   "version": "0.1.0",
   "scripts": {
     "test": "npx jest",
-    "install-types": "npx flow-typed install",
-    "regenerate-nextjs-config": "gulp regenerate-nextjs-config",
+    "install-types": "npm run clean-types && npx flow-typed install",
+    "clean-types": "gulp clean-types",
+    "regenerate": "gulp regenerate",
     "prepare": "npm run install-types",
     "dev": "next",
     "build": "next build",
@@ -30,7 +31,12 @@
     "ajv": "^6.5.3",
     "babel-core": "^7.0.0-bridge.0",
     "bulma": "^0.7.1",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-tap": "^1.0.1",
+    "immutable": "^3.8.2",
     "next": "^7.0.0-canary.14",
+    "parse-gitignore": "^1.0.1",
     "react": "^16.5.0",
     "react-dom": "^16.5.0"
   },
@@ -46,15 +52,14 @@
     "fancy-log": "^1.3.2",
     "flow-bin": "^0.80.0",
     "flow-typed": "^2.5.1",
-    "gulp": "^4.0.0",
-    "gulp-append-prepend": "^1.0.4",
-    "gulp-babel": "^8.0.0",
-    "gulp-rename": "^1.4.0",
     "jest": "^23.5.0",
     "source-map": "^0.7.3",
     "source-map-support": "^0.5.9",
     "stylelint": "^9.5.0",
     "stylelint-config-standard": "^18.2.0",
     "webpack-bundle-analyzer": "^2.13.1"
-  }
+  },
+  "os": [
+    "!win32"
+  ]
 }

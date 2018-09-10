@@ -1,48 +1,45 @@
-const nextjsBabelPreset = [
-    "next/babel",
-    {
-        "@babel/preset-env": {
-            "shippedProposals": true,
-        },
-        "transform-runtime": {},
-        "styled-jsx": {},
-        "class-properties": {},
-    },
-];
+const sourceMapPlugin = 'babel-plugin-source-map-support';
+const sourceMapValue = 'inline';
 
-const sourceMapPlugin = "babel-plugin-source-map-support";
-const sourceMapValue = "inline";
+const devNextBabel = ['next/babel', {
+    '@babel/preset-env': {
+        // targets: {
+        //     node: true
+        // }
+    }
+}];
 
 module.exports = {
-    "plugins": [
-        "@babel/plugin-proposal-class-properties",
-        "@babel/plugin-proposal-export-default-from",
-        "@babel/plugin-proposal-numeric-separator",
-        "@babel/plugin-proposal-throw-expressions",
-        "@babel/plugin-proposal-nullish-coalescing-operator",
-        "@babel/plugin-proposal-optional-chaining",
+    plugins: [
+        '@babel/plugin-proposal-class-properties',
+        '@babel/plugin-proposal-export-default-from',
+        '@babel/plugin-proposal-numeric-separator',
+        '@babel/plugin-proposal-throw-expressions',
+        '@babel/plugin-proposal-nullish-coalescing-operator',
+        '@babel/plugin-proposal-optional-chaining'
     ],
-    "presets": [
-        ["@babel/preset-flow"],
-        ["@babel/preset-react"],
+    presets: [
+        ['@babel/preset-flow'],
+        ['@babel/preset-react'],
+        ['next/babel']
     ],
-    "env": {
-        "production": {
-            "presets": [nextjsBabelPreset],
+    env: {
+        production: {},
+        development: {
+            /* sourceMaps: sourceMapValue,
+            plugins: [sourceMapPlugin], */
+            presets: [devNextBabel]
         },
-        "development": {
-            "presets": [nextjsBabelPreset],
-            /* "sourceMaps": sourceMapValue,
-            "plugins": [sourceMapPlugin], */
-        },
-        "debug": {
-            "sourceMaps": sourceMapValue,
-            "plugins": [sourceMapPlugin],
-            "presets": [
-                nextjsBabelPreset,
-                ["@babel/preset-react", { "development": true }],
+        debug: {
+            /* sourceMaps: sourceMapValue,
+            plugins: [sourceMapPlugin], */
+            presets: [
+                devNextBabel,
+                ['@babel/preset-react', { development: true }],
             ]
         },
-        "generate-next-config": {},
+        generator: {
+            comments: false
+        }
     }
 };

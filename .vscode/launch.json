@@ -18,15 +18,11 @@
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
-        },
-        "skipFiles": [
-            "${workspaceFolder}/node_modules/**/*.js",
-            "${workspaceFolder}/lib/**/*.js",
+            "webRoot": "${workspaceFolder}",
             "skipFiles": [
-    "${workspaceFolder}/node_modules/**/*.js",
-    "${workspaceFolder}/lib/**/*.js"
-  ]
-        ]
+                "${workspaceFolder}/node_modules/**/*.js",
+                "${workspaceFolder}/lib/**/*.js"
+            ]
+        },
     ]
 }
