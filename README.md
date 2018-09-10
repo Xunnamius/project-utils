@@ -1,4 +1,36 @@
-This is a boilerplate website with the following features:
+<style>
+    * { outline: none; }
+</style>
+
+This is one of several [boilerplate](https://git.xunn.io/boilerplate) futuristic web dev environment your parents warned you about.
+
+<!-- TOC -->
+
+- [Simple Quick Start Guide](#simple-quick-start-guide)
+- [Feature Scope](#feature-scope)
+- [Required Reading](#required-reading)
+    - [](#)
+    - [NPM Run Scripts](#npm-run-scripts)
+- [Good Questions](#good-questions)
+- [Further Research Materials](#further-research-materials)
+
+<!-- /TOC -->
+
+***
+
+## Simple Quick Start Guide
+
+> 0. Explore the [getting started documentation](https://git.xunn.io/DarkTools/ergo-provision/wikis/home)
+1. Delete the `.git/` directory **RIGHT NOW!**
+2. Rename this project directory
+3. Edit `name`, `description`, and `url` keys in [package.json](package.json)
+4. Rename [.env-dist](.env-dist) to `.env`; customize `.env` to your liking
+5. Initialize a new git repository and/or link this repository and branch to gitlab/github
+6. (todo)
+
+It is recommended that you also check out the so-called [Required Reading](#required-reading) and [FAQ](#further-research-materials) sections if you don't want to get lost.
+
+## Feature Scope
 
 * **Shopify** ready (see [.env-dist](.env-dist))
 * **React** and **JSX** are fully support
@@ -25,36 +57,49 @@ This is a boilerplate website with the following features:
 
 ***
 
-<!-- TOC -->
-
-- [Required Reading](#required-reading)
-    - [NPM Run Scripts](#npm-run-scripts)
-        - [`regenerate`](#regenerate)
-        - [`(todo)`](#todo)
-- [Good Questions](#good-questions)
-    - [I cloned it! What do I do now?](#i-cloned-it-what-do-i-do-now)
-    - [What is this `.env-dist` thing? (AKA: `.env`)](#what-is-this-env-dist-thing-aka-env)
-    - [What's going on in `package.json`?](#whats-going-on-in-packagejson)
-    - [What's going on in `babel.config.js`?](#whats-going-on-in-babelconfigjs)
-    - [What's going on in `next.config.js`?](#whats-going-on-in-nextconfigjs)
-    - [Why is `package-lock.js` included in `.gitignore`?](#why-is-package-lockjs-included-in-gitignore)
-    - [What's up with `static/`?](#whats-up-with-static)
-    - [What's up with `pages/`?](#whats-up-with-pages)
-    - [What's up with `flow-typed/`?](#whats-up-with-flow-typed)
-    - [What's up with `config/`?](#whats-up-with-config)
-    - [What's up with `components/`?](#whats-up-with-components)
-    - [Why are `.vscode/`, `node_modules/`, `build/`, `components/`, `.next/`, etc hidden in VS Code?](#why-are-vscode-node_modules-build-components-next-etc-hidden-in-vs-code)
-- [Further Research Materials](#further-research-materials)
-
-<!-- /TOC -->
-
-***
-
 ## Required Reading
+
+### 
 
 ### NPM Run Scripts
 
-#### `regenerate`
+<details>
+    <summary><strong>dev</strong></summary>
+(todo)
+</details>
+
+<details>
+    <summary><strong>build</strong></summary>
+(todo)
+</details>
+
+<details>
+    <summary><strong>test</strong></summary>
+(todo)
+</details>
+
+<details>
+    <summary><strong>install-types</strong></summary>
+(todo)
+</details>
+
+<details>
+    <summary><strong>clean-types</strong></summary>
+(todo)
+</details>
+
+<details>
+    <summary><strong>prepare</strong></summary>
+(todo)
+</details>
+
+<details>
+    <summary><strong>start</strong></summary>
+(todo)
+</details>
+
+<details>
+    <summary><strong>regenerate</strong></summary>
 
 Any changes to [gulpfile.js](config/gulpfile.js) or
 [next.config.js](config/next.config.js) *must* be made in the `config/`
@@ -64,75 +109,86 @@ files. To trigger this, use the following command:
 ```bash
 npm run regenerate
 ```
-
-#### `(todo)`
+</details>
 
 ## Good Questions
 
-### I cloned it! What do I do now?
-
-> 0. Explore the [getting started documentation](https://git.xunn.io/DarkTools/ergo-provision/wikis/home)
-1. Delete the `.git/` directory **RIGHT NOW!**
-2. Rename this project directory
-3. Edit `name`, `description`, and `url` keys in [package.json](package.json)
-4. Rename [.env-dist](.env-dist) to `.env`; customize `.env` to your liking
-5. Initialize a new git repository and/or link this repository and branch to gitlab/github
-6. (todo)
-
-### What is this `.env-dist` thing? (AKA: `.env`)
+<details>
+    <summary><strong>What is this `.env-dist` thing? (AKA: `.env`)</strong></summary>
 
 (todo) [.env-dist](.env-dist)
+</details>
 
-### What's going on in `package.json`?
+<details>
+    <summary><strong>What's going on in `package.json`?</strong></summary>
 
 (todo) [package.json](package.json)
+</details>
 
-### What's going on in `babel.config.js`?
+<details>
+    <summary><strong>What's going on in `babel.config.js`?</strong></summary>
 
 (todo) [babel.config.js](babel.config.js)
+</details>
 
-### What's going on in `next.config.js`?
+<details>
+    <summary><strong>What's going on in `next.config.js`?</strong></summary>
 
 (todo) [next.config.js](next.config.js)
+</details>
 
-### Why is `package-lock.js` included in `.gitignore`?
+<details>
+    <summary><strong>Why is `package-lock.js` included in `.gitignore`?</strong></summary>
 
 While incorrect and illegal for npm packages that are going to be published,
 including [package-lock.js](package-lock.js) in your new project's repository
 isn't initially useful thanks to semver semantics. If you determine you need it,
 remove the entry from the root [.gitignore](.gitignore).
+</details>
 
-<detail>
+<details>
     <summary><strong>What are all these other files at the project root?</strong></summary>
-    
-(todo)
-</detail>
-
-### What's up with `static/`?
 
 (todo)
+</details>
 
-### What's up with `pages/`?
-
-(todo)
-
-### What's up with `flow-typed/`?
+<details>
+    <summary><strong>What's up with `static/`?</strong></summary>
 
 (todo)
+</details>
 
-### What's up with `config/`?
-
-(todo)
-
-### What's up with `components/`?
+<details>
+    <summary><strong>What's up with `pages/`?</strong></summary>
 
 (todo)
+</details>
 
-### Why are `.vscode/`, `node_modules/`, `build/`, `components/`, `.next/`, etc hidden in VS Code?
+<details>
+    <summary><strong>What's up with `flow-typed/`?</strong></summary>
+
+(todo)
+</details>
+
+<details>
+    <summary><strong>What's up with `config/`?</strong></summary>
+
+(todo)
+</details>
+
+<details>
+    <summary><strong>What's up with `components/`?</strong></summary>
+
+(todo)
+</details>
+
+<details>
+    <summary><strong>Why are `.vscode/`, `node_modules/`, `build/`, `components/`, `.next/`, etc hidden in VS Code?</strong></summary>
 
 Because of the workplace scope rules defined in
 [.vscode/settings.json](.vscode/settings.json). You can customize them to your
 heart's content. Specifically, the `files.exclude` key.
+</details>
 
 ## Further Research Materials
 
