@@ -40,7 +40,7 @@
         "no-empty-character-class": "warn",
         "no-ex-assign": "warn",
         "no-extra-boolean-cast": "warn",
-        "no-extra-parens": "warn",
+        "no-extra-parens": "off",
         "no-extra-semi": "error",
         "no-func-assign": "error",
         "no-inner-declarations": "error",
@@ -273,6 +273,7 @@
         "sort-imports": "off",
         "symbol-description": "off",
         "template-curly-spacing": "off",
-        "yield-star-spacing": "off"
+        "yield-star-spacing": "off",
+        "flowtype/space-after-type-colon": "off"
     }
 }
