@@ -9,8 +9,15 @@ This is one of several [boilerplate](https://git.xunn.io/boilerplate) futuristic
 - [Simple Quick Start Guide](#simple-quick-start-guide)
 - [Feature Scope](#feature-scope)
 - [Required Reading](#required-reading)
-    - [](#)
-    - [NPM Run Scripts](#npm-run-scripts)
+    - [Skinny Gulp Configuration](#skinny-gulp-configuration)
+    - [Server-side Routing vs Client-side Routing](#server-side-routing-vs-client-side-routing)
+    - [Data *Eventually* Instead of Data Now (i.e. GraphQL, Page Size, and Lazy Loading)](#data-eventually-instead-of-data-now-ie-graphql-page-size-and-lazy-loading)
+    - [One-Way Data Models, Single Source of State, "Smart" vs "Dumb" Components](#one-way-data-models-single-source-of-state-smart-vs-dumb-components)
+    - [Favor Composition Over Inheritance](#favor-composition-over-inheritance)
+    - [Script Tags Should Usually Not Appear In Your Components](#script-tags-should-usually-not-appear-in-your-components)
+    - [Page Refreshes vs Client-side Navigation](#page-refreshes-vs-client-side-navigation)
+    - [Immutability and You](#immutability-and-you)
+- [Available NPM Run Scripts/Commands](#available-npm-run-scriptscommands)
 - [Good Questions](#good-questions)
 - [Further Research Materials](#further-research-materials)
 
@@ -26,7 +33,7 @@ This is one of several [boilerplate](https://git.xunn.io/boilerplate) futuristic
 3. Edit `name`, `description`, and `url` keys in [package.json](package.json)
 4. Rename [.env-dist](.env-dist) to `.env`; customize `.env` to your liking
 5. Initialize a new git repository and/or link this repository and branch to gitlab/github
-6. (todo)
+6. (todo, in case I think of more)
 
 It is recommended that you also check out the so-called [Required Reading](#required-reading) and [FAQ](#further-research-materials) sections if you don't want to get lost.
 
@@ -59,9 +66,45 @@ It is recommended that you also check out the so-called [Required Reading](#requ
 
 ## Required Reading
 
-### 
+Unless you want to get stuck, you should take the time to read through these next few subsections at the very least.
 
-### NPM Run Scripts
+### Skinny Gulp Configuration
+
+(todo)(will eventually be solved by switching to `react-router`)
+
+### Server-side Routing vs Client-side Routing
+
+(todo)
+
+### Data *Eventually* Instead of Data Now (i.e. GraphQL, Page Size, and Lazy Loading)
+
+(todo)(not understanding the universality of your app can result in MASSIVE page sizes)
+
+### One-Way Data Models, Single Source of State, "Smart" vs "Dumb" Components
+
+(todo)
+
+### Favor Composition Over Inheritance
+
+(todo)
+
+### Script Tags Should Usually Not Appear In Your Components
+
+(todo)
+
+### Page Refreshes vs Client-side Navigation
+
+If you want to have a page refresh on navigation, use a plain `<a href="">` tag, instead of the `<Link>` component Next provides.
+
+When a `<Link>` is followed (client-side nav), `getInitialProps()` is called client side. That means you need to ensure that it can safely be called both ways. `componentDidMount()` is only called client side.
+
+(todo)
+
+### Immutability and You
+
+(todo)
+
+## Available NPM Run Scripts/Commands
 
 <details>
     <summary><strong>dev</strong></summary>
@@ -196,3 +239,4 @@ heart's content. Specifically, the `files.exclude` key.
 * [Redux: Basics](https://redux.js.org/basics)
 * [Create React component libraries with Storybook and styled-jsx](https://medium.com/@efreyreg/create-react-component-libraries-with-storybook-and-styled-jsx-8999f423f06b)
 * [Next.js Getting Started Tutorial](https://nextjs.org/learn/)
+* [Migrating an app to Next.js: Lessons learned](https://medium.com/@jamischarles/lessons-learned-with-next-js-change-title-6423b2f2ab8d)
