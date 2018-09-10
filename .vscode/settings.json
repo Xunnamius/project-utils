@@ -3,5 +3,11 @@
     "build": true,
     "flow-typed": true,
     ".vscode": true
-  }
+  },
+  "cSpell.words": [
+    "babelconfigjs",
+    "lockjs",
+    "nextconfigjs",
+    "packagejson"
+  ]
 }
