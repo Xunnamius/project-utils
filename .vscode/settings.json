@@ -1,20 +1,7 @@
 {
-    "css.validate": false,
-    "less.validate": false,
-    "scss.validate": false,
-    "cSpell.words": [
-        "Ldyna",
-        "euphoriareign",
-        "fakepath",
-        "fix",
-        "new",
-        "next",
-        "nextconfig",
-        "nextnodemods",
-        "nextpkgjson",
-        "nextpkgjsonnew",
-        "nextpkglockjson",
-        "pkgjson",
-        "shopify"
-    ]
+  "files.exclude": {
+    "build": true,
+    "flow-typed": true,
+    ".vscode": true
+  }
 }
