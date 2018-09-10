@@ -19,8 +19,6 @@ This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic w
 
 <!-- /TOC -->
 
-***
-
 ## Simple Quick Start Guide
 
 > Recommended: explore the [ErgoDark](https://ergodark.com) [getting started documentation](https://git.xunn.io/DarkTools/ergo-provision/wikis/home)
