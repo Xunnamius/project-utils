@@ -154,36 +154,37 @@ npm run regenerate
 ## Good Questions
 
 <details>
-    <summary><strong>What is this `.env-dist` thing? (AKA: `.env`)</strong></summary>
+    <summary><strong>What is this .env-dist thing? (AKA: .env)</strong></summary>
 
 (todo) [.env-dist](.env-dist)
 </details>
 
 <details>
-    <summary><strong>What's going on in `package.json`?</strong></summary>
+    <summary><strong>What's going on in package.json?</strong></summary>
 
 (todo) [package.json](package.json)
 </details>
 
 <details>
-    <summary><strong>What's going on in `babel.config.js`?</strong></summary>
+    <summary><strong>What's going on in babel.config.js?</strong></summary>
 
 (todo) [babel.config.js](babel.config.js)
 </details>
 
 <details>
-    <summary><strong>What's going on in `next.config.js`?</strong></summary>
+    <summary><strong>What's going on in next.config.js?</strong></summary>
 
 (todo) [next.config.js](next.config.js)
 </details>
 
 <details>
-    <summary><strong>Why is `package-lock.js` included in `.gitignore`?</strong></summary>
+    <summary><strong>Why is package-lock.js included in .gitignore?</strong></summary>
 
 While incorrect and illegal for npm packages that are going to be published,
 including [package-lock.js](package-lock.js) in your new project's repository
 isn't initially useful thanks to semver semantics. If you determine you need it,
 remove the entry from the root [.gitignore](.gitignore).
+
 </details>
 
 <details>
@@ -193,37 +194,37 @@ remove the entry from the root [.gitignore](.gitignore).
 </details>
 
 <details>
-    <summary><strong>What's up with `static/`?</strong></summary>
+    <summary><strong>What's up with static/?</strong></summary>
 
 (todo)
 </details>
 
 <details>
-    <summary><strong>What's up with `pages/`?</strong></summary>
+    <summary><strong>What's up with pages/?</strong></summary>
 
 (todo)
 </details>
 
 <details>
-    <summary><strong>What's up with `flow-typed/`?</strong></summary>
+    <summary><strong>What's up with flow-typed/?</strong></summary>
 
 (todo)
 </details>
 
 <details>
-    <summary><strong>What's up with `config/`?</strong></summary>
+    <summary><strong>What's up with config/?</strong></summary>
 
 (todo)
 </details>
 
 <details>
-    <summary><strong>What's up with `components/`?</strong></summary>
+    <summary><strong>What's up with components/?</strong></summary>
 
 (todo)
 </details>
 
 <details>
-    <summary><strong>Why are `.vscode/`, `node_modules/`, `build/`, `components/`, `.next/`, etc hidden in VS Code?</strong></summary>
+    <summary><strong>Why are .vscode/, node_modules/, build/, components/, .next/, etc hidden in VS Code?</strong></summary>
 
 Because of the workplace scope rules defined in
 [.vscode/settings.json](.vscode/settings.json). You can customize them to your
