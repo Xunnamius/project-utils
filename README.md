@@ -23,7 +23,7 @@ This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic w
 
 ## Simple Quick Start Guide
 
-> 0. Explore the [getting started documentation](https://git.xunn.io/DarkTools/ergo-provision/wikis/home)
+> Recommended: explore the [ErgoDark](https://ergodark.com) [getting started documentation](https://git.xunn.io/DarkTools/ergo-provision/wikis/home)
 
 1. Delete the `.git/` directory **RIGHT NOW!**
 2. Rename this project directory
@@ -31,6 +31,8 @@ This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic w
 4. Rename [.env-dist](.env-dist) to `.env`; customize `.env` to your liking
 5. Initialize a new git repository and/or link this repository and branch to gitlab/github
 6. (todo, in case I think of more)
+
+(todo: replace this process with a gulp command using inquirer.js)
 
 It is recommended that you also check out the so-called [Required Reading](#required-reading) and [FAQ](#further-research-materials) sections if you don't want to get lost.
 
@@ -49,12 +51,12 @@ It is recommended that you also check out the so-called [Required Reading](#requ
     * [Code splitting](https://zeit.co/blog/next#automatic-server-rendering-and-code-splitting)
     * Can use Express, Hapi, or Koa under the hood!
     * [Will eventually migrate to react-router](https://react-etc.net/entry/next-js-to-adopt-react-router) (still keeping PHP-style `pages/` support)
-
-* Optimizations for serving static files through `static/` (not as good as Nginx, though)
+* Easy and painless [SPA](https://medium.com/@pshrmn/demystifying-single-page-applications-3068d0555d46) development
+Optimizations for serving static files through `static/` (not as good as Nginx, though)
 * Local and remote Chrome and Node debugging support
 * Ready for Jest testing
 * Source maps handled automatically (mostly by Next.js itself)
-* Supports and encourages [progressive web app](https://en.wikipedia.org/wiki/Progressive_Web_Apps) (think: Google Docs) development, [universal JavaScript](https://cdb.reacttraining.com/universal-javascript-4761051b7ae9) (rather than [isomorphic JavaScript](https://medium.com/@ghengeveld/isomorphism-vs-universal-javascript-4b47fb481beb)), [everything as a SPA]() and all the other buzzwords and phrases
+* Supports and encourages [progressive web app](https://en.wikipedia.org/wiki/Progressive_Web_Apps) (think: Google Docs) development, [universal JavaScript](https://cdb.reacttraining.com/universal-javascript-4761051b7ae9) (rather than [isomorphic JavaScript](https://medium.com/@ghengeveld/isomorphism-vs-universal-javascript-4b47fb481beb)) and all the other buzzwords and phrases
 * Rich server-less development (ie. no internet connection required after `npm install`)
 * Ready to work behind an Nginx (or any) reverse proxy out-of-box
 * Tiny gulp file (read: offload as many commands to the `scripts` key in [package.json](package.json) as possible)
@@ -237,3 +239,4 @@ heart's content. Specifically, the `files.exclude` key.
 * [Create React component libraries with Storybook and styled-jsx](https://medium.com/@efreyreg/create-react-component-libraries-with-storybook-and-styled-jsx-8999f423f06b)
 * [Next.js Getting Started Tutorial](https://nextjs.org/learn/)
 * [Migrating an app to Next.js: Lessons learned](https://medium.com/@jamischarles/lessons-learned-with-next-js-change-title-6423b2f2ab8d)
+* [How Single-Page Applications Work](https://medium.com/@pshrmn/demystifying-single-page-applications-3068d0555d46)
