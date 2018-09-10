@@ -105,36 +105,43 @@ When a `<Link>` is followed (client-side nav), `getInitialProps()` is called cli
 
 <details>
     <summary><strong>dev</strong></summary>
+    
 (todo)
 </details>
 
 <details>
     <summary><strong>build</strong></summary>
+
 (todo)
 </details>
 
 <details>
     <summary><strong>test</strong></summary>
+
 (todo)
 </details>
 
 <details>
     <summary><strong>install-types</strong></summary>
+
 (todo)
 </details>
 
 <details>
     <summary><strong>clean-types</strong></summary>
+
 (todo)
 </details>
 
 <details>
     <summary><strong>prepare</strong></summary>
+
 (todo)
 </details>
 
 <details>
     <summary><strong>start</strong></summary>
+
 (todo)
 </details>
 
@@ -184,7 +191,6 @@ While incorrect and illegal for npm packages that are going to be published,
 including [package-lock.js](package-lock.js) in your new project's repository
 isn't initially useful thanks to semver semantics. If you determine you need it,
 remove the entry from the root [.gitignore](.gitignore).
-
 </details>
 
 <details>
