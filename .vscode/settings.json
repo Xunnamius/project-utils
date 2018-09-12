@@ -5,8 +5,11 @@
   },
   "cSpell.words": [
     "babelconfigjs",
+    "cleantypes",
+    "gitinit",
     "lockjs",
     "nextconfigjs",
-    "packagejson"
+    "packagejson",
+    "scriptscommands"
   ]
 }

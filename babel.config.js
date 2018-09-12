@@ -1,7 +1,8 @@
 const sourceMapPlugin = 'babel-plugin-source-map-support';
 const sourceMapValue = 'inline';
 
-const devNextBabel = ['next/babel', {
+// ? Next.js-specific Babel settings
+const devNextBabelPreset = ['next/babel', {
     'preset-env': {},
     'transform-runtime': {},
     'styled-jsx': {},
@@ -19,25 +20,20 @@ module.exports = {
     ],
     presets: [
         ['@babel/preset-flow'],
-        ['@babel/preset-react'],
-        ['next/babel']
+        ['@babel/preset-react']
     ],
     env: {
         production: {},
+        debug: {},
         development: {
+            // ? Handled by Next.js and Webpack
             /* sourceMaps: sourceMapValue,
             plugins: [sourceMapPlugin], */
-            presets: [devNextBabel]
-        },
-        debug: {
-            /* sourceMaps: sourceMapValue,
-            plugins: [sourceMapPlugin], */
-            presets: [
-                devNextBabel,
-                ['@babel/preset-react', { development: true }],
-            ]
+            presets: [devNextBabelPreset]
         },
         generator: {
+            sourceMaps: sourceMapValue,
+            plugins: [sourceMapPlugin],
             comments: false,
             presets: [
                 ['@babel/preset-env', {
@@ -49,3 +45,10 @@ module.exports = {
         }
     }
 };
+
+// ? The "debug" environment copies the "development" environment, with a twist!
+module.exports.env.debug = Object.assign({}, module.exports.env.development);
+module.exports.env.debug.presets = [
+    ...module.exports.env.debug.presets,
+    ['@babel/preset-react', { development: true }],
+];
