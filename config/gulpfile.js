@@ -32,6 +32,7 @@ paths.env = '.env';
 paths.envDist = 'dist.env';
 paths.gitProjectDir = '.git';
 paths.gitIgnore = '.gitignore';
+paths.packageLockJson = 'package-lock.json';
 
 paths.regenTargets = [
     `${paths.configs}/*.js`
@@ -160,6 +161,7 @@ const eject = () => term.prompt([
             await execAsync('npm run install-types').stderr.pipe(process.stderr);
 
         await execAsync('rm -f .git').stderr.pipe(process.stderr);
+        await execAsync(`rm ${paths.packageLockJson}`).stderr.pipe(process.stderr);
         await execAsync(`git init`).stderr.pipe(process.stderr);
 
         await execAsync(`cd .. && mv ${parsePath(__dirname).name} ${answers.package.name}`).stderr.pipe(process.stderr);
