@@ -32,8 +32,8 @@ module.exports = {
             presets: [devNextBabelPreset]
         },
         generator: {
-            sourceMaps: sourceMapValue,
-            plugins: [sourceMapPlugin],
+            /* sourceMaps: sourceMapValue,
+            plugins: [sourceMapPlugin], */
             comments: false,
             presets: [
                 ['@babel/preset-env', {
