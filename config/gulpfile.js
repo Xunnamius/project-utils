@@ -126,6 +126,9 @@ const eject = () => term.prompt([
         return log.error('Task aborted!');
 
     try {
+        await execAsync(`mv ${paths.envDist} ${paths.env}`).stderr.pipe(process.stderr);
+        await execAsync(`mv ${paths.launchJsonDist} ${paths.launchJson}`).stderr.pipe(process.stderr);
+
         const delta1 = replaceInFile({
             files: paths.packageJson,
             from: [/("name": ?)".*?"/g, /"(description": ?)".*?"/g, /("url": ?)".*?"/g],
@@ -158,12 +161,8 @@ const eject = () => term.prompt([
 
         await execAsync('rm -f .git').stderr.pipe(process.stderr);
         await execAsync(`git init`).stderr.pipe(process.stderr);
-        await execAsync(`mv ${paths.envDist} ${paths.env}`).stderr.pipe(process.stderr);
-        await execAsync(`mv ${paths.launchJsonDist} ${paths.launchJson}`).stderr.pipe(process.stderr);
 
-        const dir = parsePath(__dirname);
-
-        await execAsync(`cd .. && mv ${dir.name} ${answers.package.name}`).stderr.pipe(process.stderr);
+        await execAsync(`cd .. && mv ${parsePath(__dirname).name} ${answers.package.name}`).stderr.pipe(process.stderr);
 
         log.info('Boilerplate ejection complete!');
         log(`Next steps:\n\t- If you're going to host this project on Github/Gitlab, begin that process now\n\t- Check over package.json for accuracy; remove any unnecessary dependencies/devDependencies\n\t- Look over .env and configure it to your liking\n`);
