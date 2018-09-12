@@ -14,7 +14,7 @@ This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic w
     - [Page Refreshes vs Client-side Navigation](#page-refreshes-vs-client-side-navigation)
     - [Immutability and You](#immutability-and-you)
     - [Other Considerations](#other-considerations)
-- [Available NPM Run Scripts/Commands](#available-npm-run-scriptscommands)
+- [Available NPM Run Scripts](#available-npm-run-scripts)
 - [Other Useful Commands](#other-useful-commands)
 - [Good Questions](#good-questions)
 - [Further Research Materials](#further-research-materials)
@@ -111,7 +111,7 @@ When a `<Link>` is followed (client-side nav), `getInitialProps()` is called cli
 
 (todo)(run regenerate when you change stuff in config/)
 
-## Available NPM Run Scripts/Commands
+## Available NPM Run Scripts
 
 <details>
     <summary><strong>dev</strong></summary>
