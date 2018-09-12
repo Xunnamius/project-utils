@@ -29,11 +29,11 @@ This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic w
 3. Edit `name`, `description`, and `url` keys in [package.json](package.json)
 4. Rename [.env-dist](.env-dist) to `.env`; customize `.env` to your liking
 5. Initialize a new git repository and/or link this repository and branch to gitlab/github
-6. (todo, in case I think of more)
+6. If you're expecting flow support, run `npm run install-types`
 
 (todo: replace this process with a gulp command using inquirer.js)
 
-It is recommended that you also check out the so-called [Required Reading](#required-reading) and [FAQ](#further-research-materials) sections if you don't want to get lost.
+It is recommended that you also check out the [Required Reading](#required-reading) and [FAQ](#further-research-materials) sections if you don't want to get lost.
 
 ## Feature Scope
 

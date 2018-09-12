@@ -11,7 +11,7 @@
     "install-types": "npx flow-typed install",
     "clean-types": "gulp clean-types",
     "regenerate": "gulp regenerate",
-    "prepare": "npm run install-types",
+    "generate": "BABEL_ENV=generator npx babel config --out-dir .",
     "dev": "next",
     "build": "next build",
     "start": "next start"
@@ -26,6 +26,7 @@
     "@babel/plugin-proposal-numeric-separator": "^7.0.0",
     "@babel/plugin-proposal-optional-chaining": "^7.0.0",
     "@babel/plugin-proposal-throw-expressions": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "ajv": "^6.5.3",
@@ -40,6 +41,7 @@
   "devDependencies": {
     "del": "^3.0.0",
     "gulp-tap": "^1.0.1",
+    "flow-typed": "^2.5.1",
     "parse-gitignore": "^1.0.1",
     "@babel/cli": "^7.0.0",
     "@babel/register": "^7.0.0",
@@ -52,7 +54,6 @@
     "eslint-plugin-react": "^7.11.1",
     "fancy-log": "^1.3.2",
     "flow-bin": "^0.80.0",
-    "flow-typed": "^2.5.1",
     "jest": "^23.5.0",
     "source-map": "^0.7.3",
     "source-map-support": "^0.5.9",

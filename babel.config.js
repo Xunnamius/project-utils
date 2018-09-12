@@ -2,11 +2,10 @@ const sourceMapPlugin = 'babel-plugin-source-map-support';
 const sourceMapValue = 'inline';
 
 const devNextBabel = ['next/babel', {
-    '@babel/preset-env': {
-        // targets: {
-        //     node: true
-        // }
-    }
+    'preset-env': {},
+    'transform-runtime': {},
+    'styled-jsx': {},
+    'class-properties': {}
 }];
 
 module.exports = {
@@ -40,7 +39,13 @@ module.exports = {
         },
         generator: {
             comments: false,
-            presets: ['@babel/preset-env']
+            presets: [
+                ['@babel/preset-env', {
+                    targets: {
+                        node: true
+                    }
+                }]
+            ]
         }
     }
 };
