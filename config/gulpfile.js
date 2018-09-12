@@ -160,8 +160,8 @@ const eject = () => term.prompt([
         if(answers.installTypes)
             await execAsync('npm run install-types').stderr.pipe(process.stderr);
 
+        await execAsync(`rm -f ${paths.packageLockJson}`).stderr.pipe(process.stderr);
         await execAsync('rm -f .git').stderr.pipe(process.stderr);
-        await execAsync(`rm ${paths.packageLockJson}`).stderr.pipe(process.stderr);
         await execAsync(`git init`).stderr.pipe(process.stderr);
 
         await execAsync(`cd .. && mv ${parsePath(__dirname).name} ${answers.package.name}`).stderr.pipe(process.stderr);
