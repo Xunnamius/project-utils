@@ -8,10 +8,10 @@
             "type": "node",
             "request": "attach",
             "name": "node:remote",
-            "address": "192.168.115.5",
+            "address": "<your-dev-machine-ip (and/or localhost)>",
             "port": 7777,
             "localRoot": "${workspaceFolder}",
-            "remoteRoot": "/home/xunnamius/repos/boilerplate/shopify-react-webpack-nextjs",
+            "remoteRoot": "</the/absolute/path/to/shopify-react-webpack-nextjs (or whatever your project name is)>",
             "skipFiles": [
                 "${workspaceFolder}/node_modules/**/*.js",
                 "<node_internals>/**/*.js"
@@ -21,7 +21,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "chrome:main",
-            "url": "https://dev.local",
+            "url": "<http-or-https://configure-dev-url-here:port-goes-here>",
             "webRoot": "${workspaceFolder}",
             "skipFiles": [
                 "${workspaceFolder}/node_modules/**/*.js",

@@ -15,6 +15,7 @@ This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic w
     - [Immutability and You](#immutability-and-you)
     - [Other Considerations](#other-considerations)
 - [Available NPM Run Scripts/Commands](#available-npm-run-scriptscommands)
+- [Other Useful Commands](#other-useful-commands)
 - [Good Questions](#good-questions)
 - [Further Research Materials](#further-research-materials)
 
@@ -24,20 +25,24 @@ This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic w
 
 > Recommended: explore the [ErgoDark](https://ergodark.com) [getting started documentation](https://git.xunn.io/DarkTools/ergo-provision/wikis/home)
 
-1. Delete the `.git/` directory **RIGHT NOW!**
-2. Rename this project directory
-3. Edit `name`, `description`, and `url` keys in [package.json](package.json)
-4. Rename [.env-dist](.env-dist) to `.env`; customize `.env` to your liking
-5. Initialize a new git repository and/or link this repository and branch to gitlab/github
-6. If you're expecting flow support, run `npm run install-types`
+To get started, all you have to do is run `npm run init`. The initialization script takes the following actions:
 
-(todo: replace this process with a gulp command using inquirer.js)
+1. Deletes the `.git/` directory
+2. Renames this project directory to a user-defined value
+3. Mutates `name`, `description`, and `url` keys in [package.json](package.json) to user-defined values
+4. Renames [dist.env](dist.env) to `.env`
+5. Initializes a new git repository and/or links this repository and branch to gitlab/github
+6. Runs `npm run install-types` if Flow types are being used
+7. Removes the line in `.gitignore` dealing with `package-lock.json`
+8. Renames [.vscode/launch.dist.json](.vscode/launch.dist.json) to `.vscode/launch.json`; mutates parts of `launch.json` to user-defined values
 
-It is recommended that you also check out the [Required Reading](#required-reading) and [FAQ](#further-research-materials) sections if you don't want to get lost.
+At this point, you should take the time to **customize .env**, **connect this project to version control**, and **remove any unneeded dependencies/devDependencies from [package.json](package.json)**.
+
+It is also recommended that you also check out the [Required Reading](#required-reading) and [FAQ](#further-research-materials) sections if you don't want to get lost.
 
 ## Feature Scope
 
-* **Shopify** ready (see [.env-dist](.env-dist))
+* **Shopify** ready (see [dist.env](dist.env))
 * **React** and **JSX** are fully support
 * **Webpack** and all its powers come preconfigured (webpack can be further customized in [config/next.config.js](config/next.config.js))
 * **Babel** (latest JS features are available in every file everywhere **except in [babel.config.js](babel.config.js)**)
@@ -110,7 +115,7 @@ When a `<Link>` is followed (client-side nav), `getInitialProps()` is called cli
 
 <details>
     <summary><strong>dev</strong></summary>
-    
+
 (todo)
 </details>
 
@@ -163,12 +168,16 @@ npm run regenerate
 ```
 </details>
 
+## Other Useful Commands
+
+(todo)(npx/gulp/etc)
+
 ## Good Questions
 
 <details>
-    <summary><strong>What is this .env-dist thing? (AKA: .env)</strong></summary>
+    <summary><strong>What is this dist.env thing? (AKA: .env)</strong></summary>
 
-(todo) [.env-dist](.env-dist)
+(todo) [dist.env](dist.env)
 </details>
 
 <details>
@@ -190,12 +199,11 @@ npm run regenerate
 </details>
 
 <details>
-    <summary><strong>Why is package-lock.js included in .gitignore?</strong></summary>
+    <summary><strong>Why is package-lock.js initially included in .gitignore?</strong></summary>
 
 While incorrect and illegal for npm packages that are going to be published,
 including [package-lock.js](package-lock.js) in your new project's repository
-isn't initially useful thanks to semver semantics. If you determine you need it,
-remove the entry from the root [.gitignore](.gitignore).
+isn't initially useful thanks to semver semantics. To remove it and other boilerplate stuff, run `npm run init`.
 </details>
 
 <details>
