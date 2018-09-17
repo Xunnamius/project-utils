@@ -178,7 +178,7 @@ const eject = () => term.prompt([
         sh.rm('-f', paths.packageLockJson);
 
         log.info('Removing boilerplate git repository');
-        sh.rm('-f', '.git');
+        sh.rm('-rf', '.git');
 
         log.info('Initializing new git repository');
         sh('git init');
