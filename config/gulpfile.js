@@ -19,6 +19,7 @@ import { parse as parsePath, relative as relPath } from 'path'
 import term from 'inquirer'
 import replaceInFile from 'replace-in-file'
 import sh from 'shelljs'
+import chalk from 'chalk'
 
 sh.config.silent = true;
 sh.config.fatal = true;
@@ -186,12 +187,12 @@ const eject = () => term.prompt([
         log.info(`Renaming project dir to ${answers.package.name}`);
         sh.exec(`cd .. && mv '${parsePath(__dirname).name}' '${answers.package.name}'`);
 
-        log.info('Boilerplate ejection completed successfully!');
+        log.info(chalk.green('Boilerplate ejection completed successfully!'));
         log(`Next steps:\n\t- If you're going to host this project on Github/Gitlab, begin that process now\n\t- Check over package.json for accuracy; remove any unnecessary dependencies/devDependencies\n\t- Check over your vscode launch configuration if you plan on using it\n\t- Look over .env and configure it to your liking\n`);
     }
 
     catch(err) {
-        log.error(`ERROR: ${err.toString()}`);
+        log.error(chalk.red(`ERROR: ${err.toString()}`));
     }
 });
 
