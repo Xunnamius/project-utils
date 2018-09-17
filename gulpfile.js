@@ -127,7 +127,7 @@ const eject = () => _inquirer.default.prompt([{
 
     const delta1 = (0, _replaceInFile.default)({
       files: paths.packageJson,
-      from: [/("name": ?)".*?"/g, /("description": ?)".*?"/g, /("url": ?)".*?"/g],
+      from: [/("name": ?)".*?"/g, /"(description": ?)".*?"/g, /("url": ?)".*?"/g],
       to: [`$1"${answers.package.name}"`, `$1"${answers.package.desc}"`, `$1"${answers.package.repo.url}"`]
     });
     const delta2 = (0, _replaceInFile.default)({
