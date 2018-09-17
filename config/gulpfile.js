@@ -124,7 +124,7 @@ const eject = () => term.prompt([
         message: 'Does everything look good?',
         default: false
     }
-]).then(answers => {
+]).then(async answers => {
     if(!answers.confirm)
         return log.error('Task aborted!');
 
@@ -132,19 +132,19 @@ const eject = () => term.prompt([
         sh.mv(paths.envDist, paths.env);
         sh.mv(paths.launchJsonDist, paths.launchJson);
 
-        const delta1 = replaceInFile({
+        const delta1 = await replaceInFile({
             files: paths.packageJson,
             from: [/("name": ?)".*?"/g, /("description": ?)".*?"/g, /("url": ?)".*?"/g],
             to: [`$1"${answers.package.name}"`, `$1"${answers.package.desc}"`, `$1"${answers.package.repo.url}"`],
         });
 
-        const delta2 = replaceInFile({
+        const delta2 = await replaceInFile({
             files: paths.launchJson,
             from: [/("address": ?)".*?"/g, /("remoteRoot": ?)".*?"/g, /("url": ?)".*?"/g],
             to: [`$1"${answers.debug.address}"`, `$1"${answers.debug.remoteRoot}"`, `$1"${answers.debug.url}"`],
         });
 
-        const delta3 = replaceInFile({
+        const delta3 = await replaceInFile({
             files: paths.gitIgnore,
             from: 'package-lock.json',
             to: '',
