@@ -181,7 +181,7 @@ const eject = () => term.prompt([
         sh.rm('-rf', '.git');
 
         log.info('Initializing new git repository');
-        sh('git init');
+        sh.exec('git init');
 
         log.info(`Renaming project dir to ${answers.package.name}`);
         sh.exec(`cd .. && mv '${parsePath(__dirname).name}' '${answers.package.name}'`);
