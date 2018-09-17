@@ -52,6 +52,7 @@
     "babel-jest": "^23.4.2",
     "babel-loader": "^8.0.2",
     "babel-plugin-source-map-support": "^2.0.1",
+    "chalk": "^2.4.1",
     "del": "^3.0.0",
     "eslint": "^5.5.0",
     "eslint-plugin-flowtype": "^2.50.0",
