@@ -20,6 +20,9 @@ import term from 'inquirer'
 import replaceInFile from 'replace-in-file'
 import sh from 'shelljs'
 
+sh.config.silent = true;
+sh.config.fatal = true;
+
 const paths = {};
 const FLOW_TYPES_DIR = 'flow-typed';
 
@@ -129,21 +132,27 @@ const eject = () => term.prompt([
         return log.error('Task aborted!');
 
     try {
+        log.info(`Moving ${paths.envDist} -> ${paths.env}`);
         sh.mv(paths.envDist, paths.env);
+
+        log.info(`Moving ${paths.launchJsonDist} -> ${paths.launchJson}`);
         sh.mv(paths.launchJsonDist, paths.launchJson);
 
+        log.info(`Mutating ${paths.packageJson}`);
         const delta1 = await replaceInFile({
             files: paths.packageJson,
             from: [/("name": ?)".*?"/g, /("description": ?)".*?"/g, /("url": ?)".*?"/g],
             to: [`$1"${answers.package.name}"`, `$1"${answers.package.desc}"`, `$1"${answers.package.repo.url}"`],
         });
 
+        log.info(`Mutating ${paths.launchJson}`);
         const delta2 = await replaceInFile({
             files: paths.launchJson,
             from: [/("address": ?)".*?"/g, /("remoteRoot": ?)".*?"/g, /("url": ?)".*?"/g],
             to: [`$1"${answers.debug.address}"`, `$1"${answers.debug.remoteRoot}"`, `$1"${answers.debug.url}"`],
         });
 
+        log.info(`Mutating ${paths.gitIgnore}`);
         const delta3 = await replaceInFile({
             files: paths.gitIgnore,
             from: 'package-lock.json',
@@ -160,17 +169,24 @@ const eject = () => term.prompt([
             throw new Error(`There was an error attempting to access "${paths.gitignore}"`);
 
         if(answers.installTypes)
-            sh('npm run install-types');
+        {
+            log.info(`Installing flow types`);
+            sh.exec('npm run install-types');
+        }
 
+        log.info(`Installing flow types`);
         sh.rm('-f', paths.packageLockJson);
+
+        log.info(`Removing boilerplate git repository`);
         // sh.rm('-f', '.git');
-        sh.echo("sh.rm('-f', '.git');");
+
+        log.info(`Initializing new git repository`);
         // sh('git init');
-        sh.echo("sh('git init');");
 
-        sh(`cd .. && mv '${parsePath(__dirname).name}' '${answers.package.name}'`);
+        log.info(`Renaming project dir to ${answers.package.name}`);
+        sh.exec(`cd .. && mv '${parsePath(__dirname).name}' '${answers.package.name}'`);
 
-        log.info('Boilerplate ejection complete!');
+        log.info('Boilerplate ejection completed successfully!');
         log(`Next steps:\n\t- If you're going to host this project on Github/Gitlab, begin that process now\n\t- Check over package.json for accuracy; remove any unnecessary dependencies/devDependencies\n\t- Look over .env and configure it to your liking\n`);
     }
 
