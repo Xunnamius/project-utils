@@ -13,6 +13,7 @@
     "clean-types": "npx gulp cleanTypes",
     "regenerate": "npx gulp regenerate",
     "generate": "BABEL_ENV=generator npx babel config --out-dir .",
+    "prepare": "npm run generate",
     "debug-remote": "node --inspect-brk='0.0.0.0:7777'",
     "debug-remote-gulp": "node --inspect-brk='0.0.0.0:7777' ./node_modules/.bin/gulp",
     "debug-remote-jest": "node --inspect-brk='0.0.0.0:7777' ./node_modules/.bin/jest --runInBand",
