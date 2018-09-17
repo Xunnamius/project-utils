@@ -4,22 +4,23 @@ This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic w
 
 <!-- TOC -->
 
-- [Simple Quick Start Guide](#simple-quick-start-guide)
-- [Feature Scope](#feature-scope)
-- [Required Reading](#required-reading)
-    - [Skinny Gulp Configuration](#skinny-gulp-configuration)
-    - [Server-side Routing vs Client-side Routing](#server-side-routing-vs-client-side-routing)
-    - [Data *Eventually* Instead of Data Now (i.e. GraphQL, Page Size, and Lazy Loading)](#data-eventually-instead-of-data-now-ie-graphql-page-size-and-lazy-loading)
-    - [One-Way Data Models, Single Source of State, "Smart" vs "Dumb" Components](#one-way-data-models-single-source-of-state-smart-vs-dumb-components)
-    - [Favor Composition Over Inheritance](#favor-composition-over-inheritance)
-    - [Script Tags Should Usually Not Appear In Your Components](#script-tags-should-usually-not-appear-in-your-components)
-    - [Page Refreshes vs Client-side Navigation](#page-refreshes-vs-client-side-navigation)
-    - [Immutability and You](#immutability-and-you)
-    - [Other Considerations](#other-considerations)
-- [Available NPM Run Scripts](#available-npm-run-scripts)
-- [Other Useful Commands](#other-useful-commands)
-- [Good Questions](#good-questions)
-- [Further Research Materials](#further-research-materials)
+- [nextjs-react-webpack-gulp-babel](#nextjs-react-webpack-gulp-babel)
+    - [Simple Quick Start Guide](#simple-quick-start-guide)
+    - [Feature Scope](#feature-scope)
+    - [Required Reading](#required-reading)
+        - [Skinny Gulp Configuration](#skinny-gulp-configuration)
+        - [Server-side Routing vs Client-side Routing](#server-side-routing-vs-client-side-routing)
+        - [Data *Eventually* Instead of Data Now (i.e. GraphQL, Page Size, and Lazy Loading)](#data-eventually-instead-of-data-now-ie-graphql-page-size-and-lazy-loading)
+        - [One-Way Data Models, Single Source of State, "Smart" vs "Dumb" Components](#one-way-data-models-single-source-of-state-smart-vs-dumb-components)
+        - [Favor Composition Over Inheritance](#favor-composition-over-inheritance)
+        - [Script Tags Should Usually Not Appear In Your Components](#script-tags-should-usually-not-appear-in-your-components)
+        - [Page Refreshes vs Client-side Navigation](#page-refreshes-vs-client-side-navigation)
+        - [Immutability and You](#immutability-and-you)
+        - [Other Considerations](#other-considerations)
+    - [Available NPM Run Scripts](#available-npm-run-scripts)
+    - [Other Useful Commands](#other-useful-commands)
+    - [Good Questions](#good-questions)
+    - [Further Research Materials](#further-research-materials)
 
 <!-- /TOC -->
 
@@ -153,6 +154,12 @@ When a `<Link>` is followed (client-side nav), `getInitialProps()` is called cli
 
 <details>
     <summary><strong>start</strong></summary>
+
+(todo)
+</details>
+
+<details>
+    <summary><strong>generate</strong></summary>
 
 (todo)
 </details>

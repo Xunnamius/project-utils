@@ -3,9 +3,9 @@
   "description": "<THIS PACKAGE NEEDS A DESCRIPTION>",
   "repository": {
     "type": "git",
-    "url": "https://git.xunn.io/shopify/<THIS URL NEEDS TO BE UPDATED>"
+    "url": "<THIS URL NEEDS TO BE UPDATED>"
   },
-  "version": "0.1.0",
+  "version": "0.0.1",
   "scripts": {
     "init": "npx gulp eject",
     "test": "npx jest",
@@ -59,12 +59,13 @@
     "fancy-log": "^1.3.2",
     "flow-bin": "^0.80.0",
     "flow-typed": "^2.5.1",
+    "gulp": "^4.0.0",
     "gulp-tap": "^1.0.1",
     "inquirer": "^6.2.0",
-    "gulp": "^4.0.0",
     "jest": "^23.5.0",
     "parse-gitignore": "^1.0.1",
     "replace-in-file": "^3.4.2",
+    "shelljs": "^0.8.2",
     "source-map": "^0.7.3",
     "source-map-support": "^0.5.9",
     "stylelint": "^9.5.0",
