@@ -134,7 +134,7 @@ const eject = () => term.prompt([
 
         const delta1 = replaceInFile({
             files: paths.packageJson,
-            from: [/("name": ?)".*?"/g, /"(description": ?)".*?"/g, /("url": ?)".*?"/g],
+            from: [/("name": ?)".*?"/g, /("description": ?)".*?"/g, /("url": ?)".*?"/g],
             to: [`$1"${answers.package.name}"`, `$1"${answers.package.desc}"`, `$1"${answers.package.repo.url}"`],
         });
 
