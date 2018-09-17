@@ -10,7 +10,7 @@
             "name": "node",
             "address": "<your-dev-machine-ip (and/or localhost)>",
             "port": 7777,
-            "localRoot": "${workspaceFolder}/",
+            "localRoot": "${workspaceFolder}",
             // If you have path mapping/remote root problems while debugging,
             // see: https://bit.ly/2ME6T6u
             "remoteRoot": "</the/absolute/path/to/shopify-react-webpack-nextjs (or whatever your project name is)>",
