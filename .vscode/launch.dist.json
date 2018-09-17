@@ -7,32 +7,34 @@
         {
             "type": "node",
             "request": "attach",
-            "name": "node:remote",
+            "name": "node",
             "address": "<your-dev-machine-ip (and/or localhost)>",
             "port": 7777,
-            "localRoot": "${workspaceFolder}",
+            "localRoot": "${workspaceFolder}/",
+            // If you have path mapping/remote root problems while debugging,
+            // see: https://bit.ly/2ME6T6u
             "remoteRoot": "</the/absolute/path/to/shopify-react-webpack-nextjs (or whatever your project name is)>",
-            "skipFiles": [
-                "${workspaceFolder}/node_modules/**/*.js",
-                "<node_internals>/**/*.js"
-            ]
+            // "skipFiles": [
+            //     "/**/node_modules/**",
+            //     "<node_internals>/**"
+            // ],
         },
         {
             "type": "chrome",
             "request": "launch",
-            "name": "chrome:main",
+            "name": "chrome",
             "url": "<http-or-https://configure-dev-url-here:port-goes-here>",
             "webRoot": "${workspaceFolder}",
-            "skipFiles": [
-                "${workspaceFolder}/node_modules/**/*.js",
-                "<node_internals>/**/*.js"
-            ]
+            // "skipFiles": [
+            //     "/**/node_modules/**",
+            //     "<node_internals>/**"
+            // ],
         }
     ],
     "compounds": [
         {
-            "name": "node+chrome:fullstack",
-            "configurations": ["chrome:main", "node:remote"]
+            "name": "fullstack (node+chrome)",
+            "configurations": ["node", "chrome"]
         }
     ]
 }

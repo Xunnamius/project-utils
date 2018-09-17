@@ -15,10 +15,10 @@ import del from 'del'
 import log from 'fancy-log'
 import parseGitIgnore from 'parse-gitignore'
 import { transformSync as babel } from '@babel/core'
-import { execAsync } from 'child_process'
-import { parse as parsePath } from 'path'
+import { parse as parsePath, relative as relPath } from 'path'
 import term from 'inquirer'
 import replaceInFile from 'replace-in-file'
+import sh from 'shelljs'
 
 const paths = {};
 const FLOW_TYPES_DIR = 'flow-typed';
@@ -62,14 +62,16 @@ cleanTypes.description = `Resets the ${FLOW_TYPES_DIR} directory to a pristine s
 // ? If you change this function, run `npm run regenerate` twice: once to
 // ? compile this new function and once again to compile itself with the newly
 // ? compiled logic. If there is an error that prevents regeneration, you can
-// ? run `npm run regenerate` before `npm run regenerate` instead.
+// ? run `npm run generate` then `npm run regenerate` instead.
 const regenerate = () => {
     log(`Regenerating targets: "${paths.regenTargets.join('" "')}"`);
 
     process.env.BABEL_ENV = 'generator';
 
     return gulp.src(paths.regenTargets)
-               .pipe(tap(file => file.contents = Buffer.from(CLI_BANNER + babel(file.contents.toString()).code)))
+               .pipe(tap(file => file.contents = Buffer.from(CLI_BANNER + babel(file.contents.toString(), {
+                   sourceFileName: relPath(__dirname, file.path)
+               }).code)))
                .pipe(gulp.dest('.'));
 };
 
@@ -122,13 +124,13 @@ const eject = () => term.prompt([
         message: 'Does everything look good?',
         default: false
     }
-]).then(async answers => {
+]).then(answers => {
     if(!answers.confirm)
         return log.error('Task aborted!');
 
     try {
-        await execAsync(`mv ${paths.envDist} ${paths.env}`).stderr.pipe(process.stderr);
-        await execAsync(`mv ${paths.launchJsonDist} ${paths.launchJson}`).stderr.pipe(process.stderr);
+        sh.mv(paths.envDist, paths.env);
+        sh.mv(paths.launchJsonDist, paths.launchJson);
 
         const delta1 = replaceInFile({
             files: paths.packageJson,
@@ -158,13 +160,15 @@ const eject = () => term.prompt([
             throw new Error(`There was an error attempting to access "${paths.gitignore}"`);
 
         if(answers.installTypes)
-            await execAsync('npm run install-types').stderr.pipe(process.stderr);
+            sh('npm run install-types');
 
-        await execAsync(`rm -f ${paths.packageLockJson}`).stderr.pipe(process.stderr);
-        await execAsync('echo "rm -f .git"').stderr.pipe(process.stderr);
-        await execAsync(`echo "git init"`).stderr.pipe(process.stderr);
+        sh.rm('-f', paths.packageLockJson);
+        // sh.rm('-f', '.git');
+        sh.echo("sh.rm('-f', '.git');");
+        // sh('git init');
+        sh.echo("sh('git init');");
 
-        await execAsync(`cd .. && mv ${parsePath(__dirname).name} ${answers.package.name}`).stderr.pipe(process.stderr);
+        sh(`cd .. && mv '${parsePath(__dirname).name}' '${answers.package.name}'`);
 
         log.info('Boilerplate ejection complete!');
         log(`Next steps:\n\t- If you're going to host this project on Github/Gitlab, begin that process now\n\t- Check over package.json for accuracy; remove any unnecessary dependencies/devDependencies\n\t- Look over .env and configure it to your liking\n`);
