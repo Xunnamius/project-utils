@@ -4,7 +4,9 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import { readdirSync, lstatSync } from 'fs'
 import path from 'path'
 
-const { ANALYZE_WEBPACK_BUNDLES } = process.env
+require('dotenv').config();
+
+const { ANALYZE_WEBPACK_BUNDLES } = process.env;
 
 const paths = {
     components: `${__dirname}/components`,
