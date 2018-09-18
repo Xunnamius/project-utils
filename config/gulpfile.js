@@ -25,9 +25,9 @@ sh.config.silent = true;
 sh.config.fatal = true;
 
 const paths = {};
-const FLOW_TYPES_DIR = 'flow-typed';
 
-paths.flowTypedGitIgnore = `${FLOW_TYPES_DIR}/.gitignore`;
+paths.flowTyped = 'flow-typed';
+paths.flowTypedGitIgnore = `${paths.flowTyped}/.gitignore`;
 paths.configs = 'config';
 paths.packageJson = 'package.json';
 paths.launchJson = '.vscode/launch.json';
@@ -55,11 +55,11 @@ const readFileAsync = promisify(readFile);
 const cleanTypes = async () => {
     const targets = parseGitIgnore(await readFileAsync(paths.flowTypedGitIgnore));
 
-    log(`Deletion targets @ ${FLOW_TYPES_DIR}/: "${targets.join('" "')}"`);
-    del(targets, { cwd: FLOW_TYPES_DIR });
+    log(`Deletion targets @ ${paths.flowTyped}/: "${targets.join('" "')}"`);
+    del(targets, { cwd: paths.flowTyped });
 };
 
-cleanTypes.description = `Resets the ${FLOW_TYPES_DIR} directory to a pristine state`;
+cleanTypes.description = `Resets the ${paths.flowTyped} directory to a pristine state`;
 
 // * REGENERATE
 
