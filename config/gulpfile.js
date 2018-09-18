@@ -21,6 +21,8 @@ import replaceInFile from 'replace-in-file'
 import sh from 'shelljs'
 import chalk from 'chalk'
 
+require('dotenv').config();
+
 sh.config.silent = true;
 sh.config.fatal = true;
 
