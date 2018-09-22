@@ -190,7 +190,13 @@ const eject = () => term.prompt([
         sh.exec(`cd .. && mv '${parsePath(__dirname).name}' '${answers.package.name}'`);
 
         log.info(chalk.green('Boilerplate ejection completed successfully!'));
-        log(`Next steps:\n\t- If you're going to host this project on Github/Gitlab, begin that process now\n\t- Check over package.json for accuracy; remove any unnecessary dependencies/devDependencies and run scripts\n\t- Check over your VS Code launch configuration if you plan on using it\n\t- Look over .env and configure it to your liking\n\t- Your Gulp file is at config/gulpfile.js (and not the project root). Feel free to customize it!\n`);
+        log(`Next steps:
+\t- If you're going to host this project on Github/Gitlab, begin that process now
+\t- Check over ${paths.packageJson} for accuracy; remove any unnecessary dependencies/devDependencies and run scripts
+\t- Check over ${paths.launchJson} if you plan on using launch configurations
+\t- Look over ${paths.env} and configure it to your liking
+\t- Consider removing ${paths.env} from ${paths.gitIgnore} if there're no secret values being passed
+\t- Your Gulp file is at ./${paths.configs}/gulpfile.js ${chalk.bold('and not the project root')}. Feel free to customize it!\n`);
     }
 
     catch(err) {
