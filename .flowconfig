@@ -10,5 +10,6 @@
 
 [options]
 suppress_comment= \\(.\\|\n\\)*\\flow-disable-line
+esproposal.optional_chaining=enable
 
 [strict]
