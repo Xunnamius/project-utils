@@ -1,11 +1,30 @@
 const sourceMapPlugin = 'babel-plugin-source-map-support';
 const sourceMapValue = 'inline';
 
-// ? Next.js-specific Babel settings
+// ? Next.js-specific Babel settings (inspired by CRA)
 const devNextBabelPreset = ['next/babel', {
     'preset-env': {
+        // ? We want Create React App to be IE 9 compatible until React itself
+        // ? no longer works with IE 9
+        //// targets: 'last 2 chrome versions',
+        targets: {
+            ie: 9,
+        },
+
+        // ? Users cannot override this behavior because this Babel
+        // ? configuration is highly tuned for ES5 support
+        ignoreBrowserslistConfig: true,
+
+        // ? If users import all core-js they're probably not concerned with
+        // ? bundle size. We shouldn't rely on magic to try and shrink it.
+        useBuiltIns: false,
+
+        // ? Do not transform modules to CJS
         // ! MUST BE FALSE (see: https://nextjs.org/docs/#customizing-babel-config)
-        modules: false
+        modules: false,
+
+        // ? Exclude transforms that make all code slower
+        exclude: ['transform-typeof-symbol'],
     },
     'transform-runtime': {},
     'styled-jsx': {},
@@ -13,7 +32,7 @@ const devNextBabelPreset = ['next/babel', {
 }];
 
 // ? Transpile targets for jest tests
-const testTargets = 'last 2 chrome versions';
+const jestTestTargets = '';
 
 module.exports = {
     plugins: [
@@ -37,7 +56,7 @@ module.exports = {
             sourceMaps: sourceMapValue,
             plugins: [sourceMapPlugin],
             presets: [
-                ['@babel/preset-env', { targets: testTargets }],
+                ['@babel/preset-env', { targets: jestTestTargets }],
                 ['@babel/preset-react', { development: true }]
             ]
         },
