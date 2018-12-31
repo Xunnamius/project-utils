@@ -3,7 +3,7 @@
 (todo: talk about ANALYZE_WEBPACK_BUNDLES)
 (todo: adding a new `components` subdir)
 (todo: universe, components, dist, test-nc and test-ib, etc)
-(todo: start with list-tasks)
+(todo: start with list-tasks [but really start with npm install and npm init])
 
 This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic web dev environments your parents warned you about.
 
