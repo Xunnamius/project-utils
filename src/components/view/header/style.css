@@ -1,0 +1,19 @@
+header {
+    width: 100%;
+    height: 50px;
+    padding-top: 25px;
+    background-color: rgb(115, 115, 225);
+    text-align: center;
+    text-transform: uppercase;
+}
+
+header a {
+    color: white;
+    font-weight: bold;
+    padding: 20px;
+    text-decoration: none;
+}
+
+header a:hover {
+    opacity: 0.75;
+}

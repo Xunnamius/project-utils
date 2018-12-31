@@ -1,6 +1,7 @@
-node_modules/
 build/
+node_modules/
 .next
 .env
 .vscode/launch.json
+*.pem
 package-lock.json

@@ -23,6 +23,13 @@ import chalk from 'chalk'
 
 require('dotenv').config();
 
+const {
+    BUNDLE_ANALYZE
+} = process.env;
+
+if(typeof BUNDLE_ANALYZE !== 'string')
+    throw new TypeError('BUNDLE_ANALYZE is improperly defined. Did you copy dist.env -> .env ?');
+
 sh.config.silent = true;
 sh.config.fatal = true;
 
@@ -30,6 +37,8 @@ const paths = {};
 
 paths.flowTyped = 'flow-typed';
 paths.flowTypedGitIgnore = `${paths.flowTyped}/.gitignore`;
+paths.build = `build`;
+paths.buildGitIgnore = `${paths.build}/.gitignore`;
 paths.configs = 'config';
 paths.packageJson = 'package.json';
 paths.launchJson = '.vscode/launch.json';
@@ -51,6 +60,8 @@ const CLI_BANNER = `/**
 */\n\n`;
 
 const readFileAsync = promisify(readFile);
+
+
 
 // * CLEANTYPES
 

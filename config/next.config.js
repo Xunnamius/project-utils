@@ -1,51 +1,66 @@
 /* @flow */
 
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
-import { readdirSync, lstatSync } from 'fs'
-import path from 'path'
+import withBundleAnalyzer from '@zeit/next-bundle-analyzer'
+import styledJsxWebpack from 'styled-jsx/webpack'
 
 require('dotenv').config();
 
-const { ANALYZE_WEBPACK_BUNDLES } = process.env;
+const {
+    BUNDLE_ANALYZE
+} = process.env;
+
+if(typeof BUNDLE_ANALYZE !== 'string')
+    throw new TypeError('BUNDLE_ANALYZE is improperly defined. Did you copy dist.env -> .env ?');
 
 const paths = {
-    components: `${__dirname}/components`,
+    universe: `${__dirname}/src/`,
+    components: `${__dirname}/src/components/`,
 };
 
 module.exports = (phase: string, { defaultConfig }: Object) => { // eslint-disable-line no-unused-vars
-    return {
-        webpack: (config: Object, { isServer }: Object) => {
-            if(ANALYZE_WEBPACK_BUNDLES) {
-                config.plugins.push(new BundleAnalyzerPlugin({
-                    analyzerMode: 'server',
-                    analyzerPort: isServer ? 8888 : 8889,
-                    openAnalyzer: true
-                }))
+    return withBundleAnalyzer({
+        // ? Renames the build dir "build" instead of ".next"
+        distDir: 'build',
+
+        analyzeServer: ['server', 'both'].includes(BUNDLE_ANALYZE),
+        analyzeBrowser: ['browser', 'both'].includes(BUNDLE_ANALYZE),
+        bundleAnalyzerConfig: {
+            server: {
+                analyzerMode: 'static',
+                reportFilename: 'bundle-analysis-server.html'
+            },
+            browser: {
+                analyzerMode: 'static',
+                reportFilename: 'bundle-analysis-client.html'
             }
+        },
 
-            // config.entry = './src/index.js';
-            // config.output = {
-            //     path: __dirname + '/dist',
-            //     publicPath: '/',
-            //     filename: 'bundle.js'
-            // };
+        // ? Webpack configuration
+        // ! Note that the webpack configuration is executed twice: once
+        // ! server-side and once client-side!
+        webpack: (config: Object, { isServer, defaultLoaders }: Object) => {
+            config.module.rules.push({
+                test: /\.css$/,
+                use: [
+                    defaultLoaders.babel,
+                    {
+                        loader: styledJsxWebpack.loader,
+                        options: {
+                            type: 'scoped'
+                        }
+                    }
+                ]
+            });
 
-            // config.devServer = {
-            //     contentBase: './dist'
-            // };
-
-            // config.module.rules.push({
-            //     test: /\.js$/,
-            //     exclude: /node_modules/,
-            //     use: {
-            //         loader: 'babel-loader'
-            //     }
-            // });
-
-            readdirSync(paths.components)
-                .map(dir => [ path.resolve(paths.components, dir), dir ])
-                .filter(([ dirpath ]) => lstatSync(dirpath).isDirectory())
-                .forEach(([ dirpath, dirname ]) => config.resolve.alias[dirname] = dirpath);
+            // ? These are aliases that can be used during JS import calls
+            // ! Note that you must also change these same aliases in .flowconfig
+            // ! Note that you must also change these same aliases in package.json (jest)
+            config.resolve.alias = Object.assign({}, config.resolve.alias, {
+                universe$: paths.universe,
+                components$: paths.components,
+                universe: paths.universe,
+                components: paths.components
+            });
 
             return config;
         },
@@ -59,5 +74,5 @@ module.exports = (phase: string, { defaultConfig }: Object) => { // eslint-disab
         publicRuntimeConfig: {
             // ...
         }
-    }
+    });
 };
