@@ -4,6 +4,8 @@
 (todo: adding a new `components` subdir)
 (todo: universe, components, dist, test-nc and test-ib, etc)
 (todo: start with list-tasks [but really start with npm install and npm init])
+(todo: dev-utils dotenv.config vs devUtils.populateEnv)
+(todo: redux, motion, formik)
 
 This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic web dev environments your parents warned you about.
 
