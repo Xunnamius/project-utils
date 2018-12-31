@@ -27,8 +27,12 @@ const {
     BUNDLE_ANALYZE
 } = process.env;
 
-if(typeof BUNDLE_ANALYZE !== 'string')
-    throw new TypeError('BUNDLE_ANALYZE is improperly defined. Did you copy dist.env -> .env ?');
+// ? Add any sanity checks/sentinels to this function body
+// ! The existence of any new constants added to dist.env should be checked here
+const sanityCheck = () => {
+    if(typeof BUNDLE_ANALYZE !== 'string')
+        throw new TypeError('BUNDLE_ANALYZE is improperly defined. Did you copy dist.env -> .env ?');
+};
 
 sh.config.silent = true;
 sh.config.fatal = true;
@@ -61,11 +65,11 @@ const CLI_BANNER = `/**
 
 const readFileAsync = promisify(readFile);
 
-
-
 // * CLEANTYPES
 
 const cleanTypes = async () => {
+    sanityCheck();
+
     const targets = parseGitIgnore(await readFileAsync(paths.flowTypedGitIgnore));
 
     log(`Deletion targets @ ${paths.flowTyped}/: "${targets.join('" "')}"`);
@@ -81,6 +85,8 @@ cleanTypes.description = `Resets the ${paths.flowTyped} directory to a pristine 
 // ? compiled logic. If there is an error that prevents regeneration, you can
 // ? run `npm run generate` then `npm run regenerate` instead.
 const regenerate = () => {
+    sanityCheck();
+
     log(`Regenerating targets: "${paths.regenTargets.join('" "')}"`);
 
     process.env.BABEL_ENV = 'generator';
