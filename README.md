@@ -6,6 +6,8 @@
 (todo: start with list-tasks [but really start with npm install and npm init])
 (todo: dev-utils dotenv.config vs devUtils.populateEnv)
 (todo: redux, motion, formik)
+(todo: flow; do not use any prop type anything at all ever)
+(todo: recommended global plugins for IDE integrations on Windows/WSL)
 
 This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic web dev environments your parents warned you about.
 

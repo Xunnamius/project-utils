@@ -1,8 +1,13 @@
+// flow-disable-line
+import { populateEnv } from './src/dev-utils'
+
+populateEnv();
+
 const sourceMapPlugin = 'babel-plugin-source-map-support';
 const sourceMapValue = 'inline';
 
-// ? Next.js-specific Babel settings (inspired by CRA)
-const devNextBabelPreset = ['next/babel', {
+// ? Next.js-specific Babel settings
+const nextBabelPreset = ['next/babel', {
     'preset-env': {
         // ? We want Create React App to be IE 9 compatible until React itself
         // ? no longer works with IE 9
@@ -10,10 +15,6 @@ const devNextBabelPreset = ['next/babel', {
         targets: {
             ie: 9,
         },
-
-        // ? Users cannot override this behavior because this Babel
-        // ? configuration is highly tuned for ES5 support
-        ignoreBrowserslistConfig: true,
 
         // ? If users import all core-js they're probably not concerned with
         // ? bundle size. We shouldn't rely on magic to try and shrink it.
@@ -28,11 +29,14 @@ const devNextBabelPreset = ['next/babel', {
     },
     'transform-runtime': {},
     'styled-jsx': {},
-    'class-properties': {}
+    'class-properties': {
+        // ? Justification: https://tinyurl.com/yakv4ggx
+        loose: true
+    }
 }];
 
 // ? Transpile targets for jest tests
-const jestTestTargets = '';
+const jestTestTargets = 'last 2 chrome versions';
 
 module.exports = {
     plugins: [
@@ -43,15 +47,21 @@ module.exports = {
         '@babel/plugin-proposal-json-strings',
         // * https://babeljs.io/blog/2018/09/17/decorators
         ['@babel/plugin-proposal-decorators', { 'decoratorsBeforeExport': true }],
-        '@babel/plugin-proposal-optional-chaining'
+        '@babel/plugin-proposal-optional-chaining',
     ],
     presets: [
         ['@babel/preset-flow'],
         ['@babel/preset-react']
     ],
+    // ? Subkeys under the "env" config key will augment the above configuration
+    // ? depending on the value of NODE_ENV and friends. Default is: development
     env: {
-        production: {},
-        debug: { /* defined elsewhere */ },
+        production: {
+            // ? Handled by Next.js and Webpack
+            /* sourceMaps: sourceMapValue,
+            plugins: [sourceMapPlugin], */
+            presets: [nextBabelPreset]
+        },
         test: {
             sourceMaps: sourceMapValue,
             plugins: [sourceMapPlugin],
@@ -64,7 +74,7 @@ module.exports = {
             // ? Handled by Next.js and Webpack
             /* sourceMaps: sourceMapValue,
             plugins: [sourceMapPlugin], */
-            presets: [devNextBabelPreset]
+            presets: [nextBabelPreset]
         },
         generator: {
             sourceMaps: sourceMapValue,
@@ -77,7 +87,8 @@ module.exports = {
                     }
                 }]
             ]
-        }
+        },
+        debug: { /* defined elsewhere */ },
     }
 };
 
