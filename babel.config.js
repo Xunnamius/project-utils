@@ -1,8 +1,3 @@
-// flow-disable-line
-import { populateEnv } from './src/dev-utils'
-
-populateEnv();
-
 const sourceMapPlugin = 'babel-plugin-source-map-support';
 const sourceMapValue = 'inline';
 
