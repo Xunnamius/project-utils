@@ -2,26 +2,26 @@
 
 import withBundleAnalyzer from '@zeit/next-bundle-analyzer'
 import styledJsxWebpack from 'styled-jsx/webpack'
+// flow-disable-line
+import { populateEnv } from './src/dev-utils'
 
-require('dotenv').config();
+populateEnv();
 
 const {
     BUNDLE_ANALYZE
 } = process.env;
-
-if(typeof BUNDLE_ANALYZE !== 'string')
-    throw new TypeError('BUNDLE_ANALYZE is improperly defined. Did you copy dist.env -> .env ?');
 
 const paths = {
     universe: `${__dirname}/src/`,
     components: `${__dirname}/src/components/`,
 };
 
-module.exports = (phase: string, { defaultConfig }: Object) => { // eslint-disable-line no-unused-vars
+module.exports = (/* phase: string, { defaultConfig }: Object */) => {
     return withBundleAnalyzer({
         // ? Renames the build dir "build" instead of ".next"
         distDir: 'build',
 
+        // ? Selectively enables bundle analysis. See dist.env or README for details
         analyzeServer: ['server', 'both'].includes(BUNDLE_ANALYZE),
         analyzeBrowser: ['browser', 'both'].includes(BUNDLE_ANALYZE),
         bundleAnalyzerConfig: {
@@ -38,7 +38,9 @@ module.exports = (phase: string, { defaultConfig }: Object) => { // eslint-disab
         // ? Webpack configuration
         // ! Note that the webpack configuration is executed twice: once
         // ! server-side and once client-side!
-        webpack: (config: Object, { isServer, defaultLoaders }: Object) => {
+        webpack: (config: Object, { /* isServer, */ defaultLoaders }: Object) => {
+            // ? Anytime we import a file that ends in `.css`, run the special
+            // ? JSX loader so we can do cool css-in-js stuff
             config.module.rules.push({
                 test: /\.css$/,
                 use: [
