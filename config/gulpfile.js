@@ -198,12 +198,13 @@ const eject = () => term.prompt([
 
         log.info(chalk.green('Boilerplate ejection completed successfully!'));
         log(`Next steps:
-\t- If you're going to host this project on Github/Gitlab, begin that process now
-\t- Check over ${paths.packageJson} for accuracy; remove any unnecessary dependencies/devDependencies and run scripts
+\t- If you're going to host this project on Github/Gitlab, complete that process now
+\t- To be safe, remove the "init" command from the available run scripts in ${paths.packageJson}
+\t- Check over ${paths.packageJson} for accuracy; remove any other unnecessary dependencies/devDependencies and run scripts
 \t- Check over ${paths.launchJson} if you plan on using launch configurations
 \t- Look over ${paths.env} and configure it to your liking
-\t- Consider removing ${paths.env} from ${paths.gitIgnore} if there're no secret values being passed
-\t- Your Gulp file is at ./${paths.configs}/gulpfile.js ${chalk.bold('and not the project root')}. Feel free to customize it!\n`);
+\t- Consider removing ${paths.env} from ${paths.gitIgnore} if you don't mind everyone seeing your .env values
+\t- Your Gulp file is at ./${paths.configs}/gulpfile.js ${chalk.bold('and not the project root')}. Customize it!\n`);
     }
 
     catch(err) {
