@@ -55,7 +55,7 @@ It is also recommended that you also check out the [Required Reading](#required-
 ## Feature Scope
 
 * **Shopify** ready (see [dist.env](dist.env))
-* **React** and **JSX** are fully support
+* **React** and **JSX** are fully supported
 * **Webpack** and all its powers come preconfigured (webpack can be further customized in [config/next.config.js](config/next.config.js))
 * **Babel** (latest JS features are available in every file everywhere **except in [babel.config.js](babel.config.js)**)
 * **Next.js** Here's everything you get **FOR FREE NO EXTRA LINES OF CODE FOR YOU**:
@@ -66,7 +66,6 @@ It is also recommended that you also check out the [Required Reading](#required-
     * [Prefetch](https://nextjs.org/docs/#prefetching-pages)
     * [Code splitting](https://zeit.co/blog/next#automatic-server-rendering-and-code-splitting)
     * Can use Express, Hapi, or Koa under the hood!
-    * [Will eventually migrate to react-router](https://react-etc.net/entry/next-js-to-adopt-react-router) (still keeping PHP-style `pages/` support)
 * Easy and painless [SPA](https://medium.com/@pshrmn/demystifying-single-page-applications-3068d0555d46) development
 Optimizations for serving static files through `static/` (not as good as Nginx, though)
 * Local and remote Chrome and Node debugging support
@@ -85,7 +84,7 @@ Unless you want to get stuck, you should take the time to read through these nex
 
 ### Skinny Gulp Configuration
 
-(todo)(will eventually be solved by switching to `react-router`)
+(todo)
 
 ### Server-side Routing vs Client-side Routing
 

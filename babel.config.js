@@ -4,7 +4,7 @@ const sourceMapValue = 'inline';
 // ? Next.js-specific Babel settings
 const nextBabelPreset = ['next/babel', {
     'preset-env': {
-        // ? We want Create React App to be IE 9 compatible until React itself
+        // ? By default, we want to be IE 9 compatible until React itself is
         // ? no longer works with IE 9
         //// targets: 'last 2 chrome versions',
         targets: {
