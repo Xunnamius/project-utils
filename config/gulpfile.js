@@ -193,8 +193,16 @@ const eject = () => term.prompt([
         log.info('Initializing new git repository');
         sh.exec('git init');
 
-        log.info(`Renaming project dir to ${answers.package.name}`);
-        sh.exec(`cd .. && mv '${parsePath(__dirname).base}' '${answers.package.name}'`);
+        let newDirName = parsePath(__dirname).base;
+
+        if(newDirName == answers.package.name)
+        {
+            log.info(`Renaming project dir to ${answers.package.name}`);
+            sh.exec(`cd .. && mv '${newDirName}' '${answers.package.name}'`);
+        }
+
+        else
+            log.info(`(skipped rename procedure since it's unnecessary)`);
 
         log.info(chalk.green('Boilerplate ejection completed successfully!'));
         log(`Next steps:
