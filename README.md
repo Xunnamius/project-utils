@@ -84,7 +84,21 @@ Unless you want to get stuck, you should take the time to read through these nex
 
 ### Skinny Gulp Configuration
 
-(todo)
+Gulp configurations are powerful, JavaScript is fun, and all good devs love
+automating routine tasks. However, with gulp's power comes performance issues.
+Namely, gulp tasks take *much* longer to run compared to direct terminal
+commands.
+
+So, before you start coding up a shiny new heavy-weight gulp task to automate
+some banality, consider adding an NPM script under the `scripts` key in the
+`package.json` file instead. We call the philosophy of favoring light-weight
+shell commands via NPM's `scripts` key over heavy-weight gulp commands "favoring
+a *skinny gulp configuration*".
+
+In keeping with the philosophy, you'll find all of this boilerplate's
+functionality accessible via typical npm run syntax, i.e. `npm run
+command_name_here`. Use `npm run list-tasks` to see a list of all current npm
+scripts and available gulp tasks.
 
 ### Server-side Routing vs Client-side Routing
 
@@ -108,9 +122,12 @@ Unless you want to get stuck, you should take the time to read through these nex
 
 ### Page Refreshes vs Client-side Navigation
 
-If you want to have a page refresh on navigation, use a plain `<a href="">` tag, instead of the `<Link>` component Next provides.
+If you want to have a page refresh on navigation, use a plain `<a href="">` tag,
+instead of the `<Link>` component Next provides.
 
-When a `<Link>` is followed (client-side nav), `getInitialProps()` is called client side. That means you need to ensure that it can safely be called both ways. `componentDidMount()` is only called client side.
+When a `<Link>` is followed (client-side nav), `getInitialProps()` is called
+client side. That means you need to ensure that it can safely be called both
+ways. `componentDidMount()` is only called client side.
 
 (todo)
 
@@ -222,7 +239,8 @@ npm run regenerate
 
 While incorrect and illegal for npm packages that are going to be published,
 including [package-lock.js](package-lock.js) in your new project's repository
-isn't initially useful thanks to semver semantics. To remove it and other boilerplate stuff, run `npm run init`.
+isn't initially useful thanks to semver semantics. To remove it and other
+boilerplate stuff, run `npm run init`.
 </details>
 
 <details>
