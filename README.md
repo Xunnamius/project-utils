@@ -87,9 +87,9 @@ Unless you want to get stuck, you should take the time to read through these nex
 
 ### Skinny Gulp Configuration
 
-Gulp configurations are powerful, JavaScript is fun, and all good devs love
-automating routine tasks. However, with gulp's power comes performance issues.
-Namely, gulp tasks take *much* longer to run compared to direct terminal
+Gulp configurations are powerful, JavaScript is fun, and all good developers
+love automating routine tasks. However, with gulp's power comes performance
+issues. Namely, gulp tasks take *much* longer to run compared to direct terminal
 commands.
 
 So, before you start coding up a shiny new heavy-weight gulp task to automate
