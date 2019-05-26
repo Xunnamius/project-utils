@@ -37,7 +37,9 @@ This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic w
 
 > Recommended: explore the [ErgoDark](https://ergodark.com) [getting started documentation](https://git.xunn.io/DarkTools/ergo-provision/wikis/home)
 
-To get started, all you have to do is clone this repo and run `npm run init`.
+To get started, all you have to do is clone this repo, run `npm install`, then
+`npm run init` and that's it!
+
 The initialization script takes the following actions:
 
 1. Deletes the `.git/` directory
