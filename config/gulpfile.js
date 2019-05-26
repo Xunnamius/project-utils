@@ -207,6 +207,7 @@ const eject = () => term.prompt([
         log.info(chalk.green('Boilerplate ejection completed successfully!'));
         log(`Next steps:
 \t- If you're going to host this project on Github/Gitlab, complete that process now
+\t\t- That might look something like: \`git remote add origin upstream-url-here\`
 \t- To be safe, remove the "init" command from the available run scripts in ${paths.packageJson}
 \t- Check over ${paths.packageJson} for accuracy; remove any other unnecessary dependencies/devDependencies and run scripts
 \t- Check over ${paths.launchJson} if you plan on using launch configurations
