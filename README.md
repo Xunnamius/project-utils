@@ -8,6 +8,7 @@
 (todo: redux, motion, formik)
 (todo: flow; do not use any prop type anything at all ever)
 (todo: recommended global plugins for IDE integrations on Windows/WSL)
+(todo: talk about expectedEnvVariables in package.json)
 
 This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic web dev environments your parents warned you about.
 
