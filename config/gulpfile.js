@@ -194,7 +194,7 @@ const eject = () => term.prompt([
         sh.exec('git init');
 
         log.info(`Renaming project dir to ${answers.package.name}`);
-        sh.exec(`cd .. && mv '${parsePath(__dirname).name}' '${answers.package.name}'`);
+        sh.exec(`cd .. && mv '${parsePath(__dirname).base}' '${answers.package.name}'`);
 
         log.info(chalk.green('Boilerplate ejection completed successfully!'));
         log(`Next steps:

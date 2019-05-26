@@ -100,7 +100,7 @@ a *skinny gulp configuration*".
 
 In keeping with the philosophy, you'll find all of this boilerplate's
 functionality accessible via typical npm run syntax, i.e. `npm run
-command_name_here`. Use `npm run list-tasks` to see a list of all current npm
+command_name_here`. Use `npm run list-tasks` to see a list of all current NPM
 scripts and available gulp tasks.
 
 ### Server-side Routing vs Client-side Routing
@@ -240,7 +240,7 @@ npm run regenerate
 <details>
     <summary><strong>Why is package-lock.js initially included in .gitignore?</strong></summary>
 
-While incorrect and illegal for npm packages that are going to be published,
+While incorrect and illegal for NPM packages that are going to be published,
 including [package-lock.js](package-lock.js) in your new project's repository
 isn't initially useful thanks to semver semantics. To remove it and other
 boilerplate stuff, run `npm run init`.
