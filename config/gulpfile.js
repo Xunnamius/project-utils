@@ -193,12 +193,12 @@ const eject = () => term.prompt([
         log.info('Initializing new git repository');
         sh.exec('git init');
 
-        let newDirName = parsePath(__dirname).base;
+        let oldDirName = parsePath(__dirname).base;
 
-        if(newDirName == answers.package.name)
+        if(oldDirName != answers.package.name)
         {
             log.info(`Renaming project dir to ${answers.package.name}`);
-            sh.exec(`cd .. && mv '${newDirName}' '${answers.package.name}'`);
+            sh.exec(`cd .. && mv '${oldDirName}' '${answers.package.name}'`);
         }
 
         else
