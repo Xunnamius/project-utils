@@ -35,5 +35,7 @@ module.exports = {
         'no-console': 'off',
         'no-unused-vars': 'warn',
         'no-restricted-globals': ['warn'].concat(restrictedGlobals),
+        'react/prop-types': 'off',
+        'jsx-a11y/anchor-is-valid': 'off',
     }
 };
