@@ -10,7 +10,7 @@
 (todo: recommended global plugins for IDE integrations on Windows/WSL)
 (todo: talk about expectedEnvVariables in package.json)
 
-This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic web dev environments your parents warned you about.
+This is one of those [boilerplate](https://github.com/boilerplate) futuristic web dev environments your parents warned you about.
 
 <!-- TOC -->
 
@@ -36,7 +36,7 @@ This is one of those [boilerplate](https://git.xunn.io/boilerplate) futuristic w
 
 ## Simple Quick Start Guide
 
-> Recommended: explore the [ErgoDark](https://ergodark.com) [getting started documentation](https://git.xunn.io/DarkTools/ergo-provision/wikis/home)
+> Recommended: explore the [ErgoDark](https://ergodark.com) [getting started documentation](https://github.com/DarkTools/ergo-provision/wikis/home)
 
 To get started, all you have to do is clone this repo, run `npm install`, then
 `npm run init` and that's it!
@@ -141,7 +141,72 @@ ways. `componentDidMount()` is only called client side.
 
 ### Other Considerations
 
-(todo)(run regenerate when you change stuff in config/)
+- `npm run regenerate` when you change stuff in `config/`!
+- When using styled-jsx, keep your static css in external css files. On the
+  other hand, dynamic CSS should be included in the JSX source. These two types
+  of CSS should not be mixed for performance reasons.
+
+ > "[W]hen your CSS is mostly static we recommend to split it up in static and dynamic styles and use two separate style tags so that, when changing, only the dynamic parts are recomputed/rendered." ~ [zeit/styled-jsx](https://github.com/zeit/styled-jsx#via-interpolated-dynamic-props)
+
+For example, a static external style would be included like this:
+
+```JSX
+<div>
+    <Nav />
+    <style jsx>{style}</style>
+</div>
+```
+
+When including dynamic styles, split them off into their own tag:
+
+```JSX
+<div>
+    <Nav />
+    <style jsx>{style}</style>
+    <style jsx>
+    {`
+        button {
+            padding: ${ 'large' in props ? '50' : '20' }px;
+            background: ${props.theme.background};
+            color: #999;
+            display: inline-block;
+            font-size: 1em;
+        }
+    `}
+    </style>
+</div>
+```
+
+An alternative is to toggle class names a la classic CSS:
+
+```JSX
+const Button = (props) => (
+    <button className={ 'large' in props && 'large' }>
+        { props.children }
+        <style jsx>{`
+        button {
+            padding: 20px;
+            background: #eee;
+            color: #999
+        }
+
+        .large {
+            padding: 50px
+        }
+        `}</style>
+    </button>
+)
+```
+
+This allows something like:
+
+```JSX
+<Button>Hi</Button>
+```
+
+```JSX
+<Button large>Big</Button>
+```
 
 ## Available NPM Run Scripts
 
