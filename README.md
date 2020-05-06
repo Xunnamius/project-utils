@@ -1,4 +1,4 @@
-# nextjs-react-webpack-gulp-babel
+# Next.js Template
 
 (todo: talk about ANALYZE_WEBPACK_BUNDLES)
 (todo: adding a new `components` subdir)
