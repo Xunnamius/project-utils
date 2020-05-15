@@ -8,9 +8,9 @@
   "version": "0.0.1",
   "scripts": {
     "init": "npx gulp eject",
-    "dev": "npx next",
-    "build": "npx next build",
-    "start": "npx next start",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
     "test": "npx jest",
     "install-types": "npx flow-typed install",
     "debug-remote": "node --inspect-brk='0.0.0.0:7777'",
