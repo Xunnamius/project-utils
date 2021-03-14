@@ -1,54 +1,50 @@
 {
   "name": "this-package-needs-a-name",
+  "version": "0.0.1",
   "description": "<THIS PACKAGE NEEDS A DESCRIPTION>",
   "repository": {
     "type": "git",
     "url": "<THIS URL NEEDS TO BE UPDATED>"
   },
-  "version": "0.0.1",
+  "license": "Unlicense",
+  "author": "Xunnamius",
   "scripts": {
-    "init": "npx gulp eject",
-    "dev": "next",
     "build": "next build",
-    "start": "next start",
-    "test": "npx jest",
-    "install-types": "npx flow-typed install",
-    "debug-remote": "node --inspect-brk='0.0.0.0:7777'",
-    "debug-remote-gulp": "node --inspect-brk='0.0.0.0:7777' ./node_modules/.bin/gulp",
-    "debug-remote-jest": "node --inspect-brk='0.0.0.0:7777' ./node_modules/.bin/jest --runInBand",
-    "test-ib": "npx jest --runInBand",
-    "test-nc": "npx jest --no-cache",
-    "clean-types": "npx gulp cleanTypes",
-    "generate": "BABEL_ENV=generator npx babel config --out-dir .",
-    "regenerate": "npx gulp regenerate",
     "bump-major": "npx bump --major --tag --commit --lock --all",
     "bump-minor": "npx bump --minor --tag --commit --lock --all",
     "bump-patch": "npx bump --patch --tag --commit --lock --all",
+    "clean-types": "npx gulp cleanTypes",
+    "debug-remote": "node --inspect-brk='0.0.0.0:7777'",
+    "debug-remote-gulp": "node --inspect-brk='0.0.0.0:7777' ./node_modules/.bin/gulp",
+    "debug-remote-jest": "node --inspect-brk='0.0.0.0:7777' ./node_modules/.bin/jest --runInBand",
+    "dev": "next",
+    "generate": "BABEL_ENV=generator npx babel config --out-dir .",
+    "init": "npx gulp eject",
+    "install-types": "npx flow-typed install",
     "list-tasks": "npm run && echo 'Compiling gulp task list...' && npx gulp --tasks",
+    "regenerate": "npx gulp regenerate",
+    "start": "next start",
+    "test": "npx jest",
+    "test-ib": "npx jest --runInBand",
+    "test-nc": "npx jest --no-cache",
     "preversion": "npm run test-ib",
     "version": "git add --all"
   },
-  "author": "Xunnamius",
-  "license": "ISC",
   "jest": {
-    "testEnvironment": "jsdom",
-    "verbose": true,
-    "transform": {
-      "^.+\\.js$": "<rootDir>/jest.preprocess.js"
-    },
     "moduleNameMapper": {
       "^universe$": "<rootDir>/src",
       "^universe/(.*)$": "<rootDir>/src/$1",
       "^components/(.*)$": "<rootDir>/src/components/$1"
     },
+    "testEnvironment": "jsdom",
     "testPathIgnorePatterns": [
       "/node_modules/"
-    ]
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/jest.preprocess.js"
+    },
+    "verbose": true
   },
-  "expectedEnvVariables": [
-    "BUNDLE_ANALYZE",
-    "NODE_ENV|BABEL_ENV|APP_ENV"
-  ],
   "dependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
@@ -108,5 +104,9 @@
     "stylelint-config-standard": "^18.3.0",
     "version-bump-prompt": "^5.0.1",
     "webpack-bundle-analyzer": "^3.3.2"
-  }
+  },
+  "expectedEnvVariables": [
+    "BUNDLE_ANALYZE",
+    "NODE_ENV|BABEL_ENV|APP_ENV"
+  ]
 }
