@@ -1,0 +1,55 @@
+{
+  "name": "projector-js",
+  "version": "0.0.0-development",
+  "description": "Opinionated project management and CI/CD release flow toolkit for JavaScript",
+  "keywords": [
+    "project",
+    "ci",
+    "cd",
+    "continuous",
+    "integration",
+    "deployment",
+    "management",
+    "toolkit",
+    "projector"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Xunnamius/projector"
+  },
+  "license": "MIT",
+  "author": "Xunnamius",
+  "sideEffects": false,
+  "type": "commonjs",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/cjs/index.js"
+    },
+    "./package": "./package.json",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.mjs",
+  "types": "./dist/types/packages/projector/src/index.d.ts",
+  "files": [
+    "/dist",
+    "/LICENSE",
+    "/package.json",
+    "/README.md"
+  ],
+  "scripts": {
+    "build": "npm run build-dist --",
+    "build-changelog": "conventional-changelog --outfile CHANGELOG.md --config ../../conventional.config.js --release-count 0 --skip-unstable && (if [ \"$CHANGELOG_SKIP_TITLE\" != 'true' ]; then { node -e 'console.log(require(\"../../conventional.config.js\").changelogTitle)'; cat CHANGELOG.md; } > CHANGELOG.md.ignore && mv CHANGELOG.md.ignore CHANGELOG.md; fi) && remark -o --use reference-links --use gfm --use frontmatter CHANGELOG.md && prettier --write CHANGELOG.md",
+    "build-dist": "if [ -r ./next.config.js ]; then next build; else NODE_ENV=production tsc --project tsconfig.types.json && tsconfig-replace-paths --project tsconfig.types.json && (export PKGROOT=`pwd` && cd ../.. && NODE_ENV=production webpack --config-name cjs) && if [ -r ./src/cli.ts ]; then (export PKGROOT=`pwd` && cd ../.. && NODE_ENV=production webpack --config-name cli) && chmod +x ./dist/cli.js; fi && (export PKGROOT=`pwd` && cd ../.. && NODE_ENV=production webpack --config-name esm); fi",
+    "build-docs": "if [ -r ./next.config.js ]; then typedoc --plugin typedoc-plugin-markdown --out docs --readme none lib src test types external-scripts --exclude '**/*.test.*' --exclude external-scripts/bin; else ENTRY=`node -e 'console.log((x => typeof x==\"string\"?x:x.default)(require(\"./package.json\").exports[\".\"]).replace(/\\.\\/dist\\/(?:cjs|esm)\\/(.+)\\.[a-zA-Z0-9]+$/, \"./src/$1.ts\"))'` && echo 'Entry file:' \"$ENTRY\" && typedoc --plugin typedoc-plugin-markdown --out docs --readme none $ENTRY && find docs -name '*.md' -exec sed -i -e 's/Project: //g' {} + && sed -i -e 1,4d docs/README.md; fi && find docs -name '*.md' -exec sed -i -e 's/`__namedParameters`/`\\(destructured\\)`/g' {} + && find docs -name '*.md' -exec sed -i -E 's/`__namedParameters\\.([^`]+)`/`\\({ \\1 }\\)`/g' {} +",
+    "list-tasks": "node -e 'console.log(Object.keys(require(\"./package.json\").scripts).join(\"\\n\"))'"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,14 +1,25 @@
 {
-  "files.exclude": {
-    "flow-typed": true
-  },
   "cSpell.words": [
-    "babelconfigjs",
-    "cleantypes",
-    "gitinit",
-    "lockjs",
-    "nextconfigjs",
-    "packagejson",
-    "scriptscommands"
+    "anyclass",
+    "anyconstructor",
+    "anyfunction",
+    "anykey",
+    "anyobject",
+    "anyprototype",
+    "anyrecord",
+    "awaitedt",
+    "deeppartialt",
+    "ergodarktypes",
+    "tsdef"
+  ],
+  "cSpell.ignoreWords": [
+    "errorjson",
+    "httpstatuscode",
+    "jsonerror",
+    "jsonregexp",
+    "jsonsuccess",
+    "serializedregexp",
+    "serializedvalue",
+    "successjson"
   ]
 }
