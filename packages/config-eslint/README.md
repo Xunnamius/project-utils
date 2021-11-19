@@ -18,14 +18,14 @@
 
 <!-- prettier-ignore-end -->
 
-# @projector-js/config-babel
+# @projector-js/config-eslint
 
 This package needs a README.
 
 ## Install
 
 ```bash
-npm install --save-dev @projector-js/config-babel
+npm install --save-dev @projector-js/config-eslint
 ```
 
 ## Usage
@@ -34,7 +34,7 @@ npm install --save-dev @projector-js/config-babel
 
 ## Documentation
 
-See [each sub-package listed above][4] for information on the types this package
+See [each sub-package listed above][1] for information on the types this package
 makes available. Further documentation can be found under [`docs/`][docs].
 
 ### License
@@ -72,7 +72,7 @@ information.
   'Is this package well-tested?'
 [link-codecov]: https://codecov.io/gh/Xunnamius/projector
 [badge-license]:
-  https://img.shields.io/npm/l/@projector-js/config-babel
+  https://img.shields.io/npm/l/@projector-js/config-eslint
   "This package's source license"
 [link-license]: https://github.com/Xunnamius/projector/blob/main/LICENSE
 [badge-fossa]:
@@ -81,19 +81,19 @@ information.
 [link-fossa]:
   https://app.fossa.com/projects/custom+27276%2Fgit@github.com:Xunnamius%2Fprojector.git
 [badge-npm]:
-  https://api.ergodark.com/badges/npm-pkg-version/@projector-js/config-babel
+  https://api.ergodark.com/badges/npm-pkg-version/@projector-js/config-eslint
   'Install this package using npm or yarn!'
-[link-npm]: https://www.npmjs.com/package/@projector-js/config-babel
+[link-npm]: https://www.npmjs.com/package/@projector-js/config-eslint
 [badge-semantic-release]:
   https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
   'This repo practices continuous integration and deployment!'
 [link-semantic-release]: https://github.com/semantic-release/semantic-release
-[badge-size]: https://badgen.net/bundlephobia/minzip/@projector-js/config-babel
+[badge-size]: https://badgen.net/bundlephobia/minzip/@projector-js/config-eslint
 [badge-tree-shaking]:
-  https://badgen.net/bundlephobia/tree-shaking/@projector-js/config-babel
+  https://badgen.net/bundlephobia/tree-shaking/@projector-js/config-eslint
   'Is this package optimized for Webpack?'
 [link-bundlephobia]:
-  https://bundlephobia.com/result?p=@projector-js/config-babel
+  https://bundlephobia.com/result?p=@projector-js/config-eslint
   'Package size (minified and gzipped)'
 [package-json]: package.json
 [docs]: docs
@@ -101,7 +101,4 @@ information.
 [pr-compare]: https://github.com/xunnamius/projector/compare
 [contributing]: /CONTRIBUTING.md
 [support]: /.github/SUPPORT.md
-[1]: https://www.npmjs.com/package/@xunnamius/types
-[2]: https://www.npmjs.com/package/@xunnamius/next-types
-[3]: https://www.npmjs.com/package/@xunnamius/jest-types
-[4]: /packages
+[1]: /packages

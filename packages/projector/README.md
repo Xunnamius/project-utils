@@ -18,14 +18,14 @@
 
 <!-- prettier-ignore-end -->
 
-# @projector-js/config-babel
+# projector-js
 
 This package needs a README.
 
 ## Install
 
 ```bash
-npm install --save-dev @projector-js/config-babel
+npm install --save-dev projector-js
 ```
 
 ## Usage
@@ -34,7 +34,7 @@ npm install --save-dev @projector-js/config-babel
 
 ## Documentation
 
-See [each sub-package listed above][4] for information on the types this package
+See [each sub-package listed above][1] for information on the types this package
 makes available. Further documentation can be found under [`docs/`][docs].
 
 ### License
@@ -101,7 +101,4 @@ information.
 [pr-compare]: https://github.com/xunnamius/projector/compare
 [contributing]: /CONTRIBUTING.md
 [support]: /.github/SUPPORT.md
-[1]: https://www.npmjs.com/package/@xunnamius/types
-[2]: https://www.npmjs.com/package/@xunnamius/next-types
-[3]: https://www.npmjs.com/package/@xunnamius/jest-types
-[4]: /packages
+[1]: /packages
