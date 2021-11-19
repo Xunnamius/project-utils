@@ -4,7 +4,7 @@
 
 // ? https://nodejs.org/en/about/releases
 const NODE_LTS = 'maintained node versions';
-const pkgName = require('./package.json').name;
+const pkgName = require(`${process.cwd()}/package.json`).name;
 const debug = require('debug')(`${pkgName}:babel-config`);
 
 // ? Fix relative local imports referencing package.json (.dist/bundle/...)
@@ -54,14 +54,8 @@ module.exports = {
     // * Used by `npm run build`
     production: {
       presets: [
-        [
-          '@babel/preset-env',
-          {
-            // ? https://github.com/babel/babel-loader/issues/521#issuecomment-441466991
-            //modules: false,
-            targets: NODE_LTS
-          }
-        ],
+        // ? https://nodejs.org/en/about/releases
+        ['@babel/preset-env', { targets: NODE_LTS }],
         ['@babel/preset-typescript', { allowDeclareFields: true }]
         // ? Minification is handled by Webpack
       ]
