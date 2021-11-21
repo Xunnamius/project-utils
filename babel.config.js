@@ -4,6 +4,8 @@
 
 // ? https://nodejs.org/en/about/releases
 const NODE_LTS = 'maintained node versions';
+const { relative: absToRelPath } = require('path');
+
 const pkgName = require(`${process.cwd()}/package.json`).name;
 const debug = require('debug')(`${pkgName}:babel-config`);
 
@@ -17,6 +19,23 @@ const transformRenameImport = [
 ];
 
 debug('NODE_ENV: %O', process.env.NODE_ENV);
+debug('PKGROOT: %O', process.env.PKGROOT);
+
+// ? !PKGROOT means we're in package subdirectory under root; monorepo === true
+let monorepo = process.env.PKGROOT
+  ? `./${absToRelPath('.', process.env.PKGROOT + '/node_modules')}`
+  : true;
+
+debug('transform-default-named-imports.monorepo : %O', monorepo);
+
+// ? Interoperable named CJS imports for free
+const transformDefaultNamedImports = [
+  'transform-default-named-imports',
+  {
+    monorepo,
+    exclude: [/^next([/?#].+)?/, /^mongodb([/?#].+)?/]
+  }
+];
 
 module.exports = {
   parserOpts: { strictMode: true },
@@ -24,14 +43,7 @@ module.exports = {
     '@babel/plugin-proposal-export-default-from',
     '@babel/plugin-proposal-function-bind',
     '@babel/plugin-proposal-nullish-coalescing-operator',
-    '@babel/plugin-transform-typescript',
-    // ? Interoperable named CJS imports for free
-    [
-      'transform-default-named-imports',
-      {
-        exclude: [/^next([/?#].+)?/, /^mongodb([/?#].+)?/]
-      }
-    ]
+    '@babel/plugin-transform-typescript'
   ],
   // ? Sub-keys under the "env" config key will augment the above
   // ? configuration depending on the value of NODE_ENV and friends. Default
@@ -58,7 +70,8 @@ module.exports = {
         ['@babel/preset-env', { targets: NODE_LTS }],
         ['@babel/preset-typescript', { allowDeclareFields: true }]
         // ? Minification is handled by Webpack
-      ]
+      ],
+      plugins: [transformDefaultNamedImports]
     },
     // * Used by `npm run build-externals`
     external: {
@@ -67,7 +80,7 @@ module.exports = {
         ['@babel/preset-typescript', { allowDeclareFields: true }]
         // ? Minification is handled by Webpack
       ],
-      plugins: [transformRenameImport]
+      plugins: [transformDefaultNamedImports]
     },
     // * Used for compiling ESM code output in ./dist/esm
     esm: {
@@ -82,7 +95,8 @@ module.exports = {
         ],
         ['@babel/preset-typescript', { allowDeclareFields: true }]
         // ? Minification is handled by Webpack
-      ]
+      ],
+      plugins: [transformDefaultNamedImports]
     },
     // * Used for compiling ESM code output in .dist/bundle
     bundle: {
@@ -101,7 +115,8 @@ module.exports = {
       plugins: [
         // ? Ensure all local imports without extensions now end in .mjs
         ['add-import-extension', { extension: 'mjs' }],
-        transformRenameImport
+        transformRenameImport,
+        transformDefaultNamedImports
       ]
     }
   }

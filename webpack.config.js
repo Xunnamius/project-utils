@@ -3,7 +3,7 @@
 // This webpack config is used to transpile src to dist, compile externals,
 // compile executables, etc
 
-const { EnvironmentPlugin, DefinePlugin /* , BannerPlugin */ } = require('webpack');
+const { EnvironmentPlugin, DefinePlugin, BannerPlugin } = require('webpack');
 const { verifyEnvironment } = require('./expect-env');
 const nodeExternals = require('webpack-node-externals');
 

@@ -20,7 +20,7 @@
 
 # @projector-js/config-conventional-changelog
 
-This package needs a README.
+<!-- TODO -->
 
 ## Install
 
@@ -34,8 +34,7 @@ npm install --save-dev @projector-js/config-conventional-changelog
 
 ## Documentation
 
-See [each sub-package listed above][1] for information on the types this package
-makes available. Further documentation can be found under [`docs/`][docs].
+Further documentation can be found under [`docs/`][docs].
 
 ### License
 
@@ -103,4 +102,3 @@ information.
 [pr-compare]: https://github.com/xunnamius/projector/compare
 [contributing]: /CONTRIBUTING.md
 [support]: /.github/SUPPORT.md
-[1]: /packages
