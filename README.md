@@ -14,7 +14,7 @@
 
 # projector-js
 
-This monorepo needs a finished README.
+<!-- TODO -->
 
 ## Install
 
