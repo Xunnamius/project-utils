@@ -42,13 +42,15 @@ export const getRawAliases = () => ({
   '^pkgverse/(.*)$': '<rootDir>/packages/$1',
   '^externals/(.*)$': '<rootDir>/external-scripts/$1',
   '^types/(.*)$': '<rootDir>/types/$1',
+  // ? ESLint/TypeScript will not resolve relative paths correctly, but it's ok.
+  // ? Remedy for errors: add the key to the root package.json (w/ empty value)
   '^package$': './package.json'
 });
 
 /**
  * Takes an alias mapping, validates it, and returns its constituent parts.
  */
-export function getProcessedAliasMapping(mapping: [string, string]) {
+export function getProcessedAliasMapping(mapping: [string, string], warn = false) {
   const aliasMatch = matchers.key.exec(mapping[0]);
   const pathMatch = matchers.value.exec(mapping[1]);
 
@@ -83,7 +85,7 @@ export function getProcessedAliasMapping(mapping: [string, string]) {
     );
   }
 
-  if (pathMatch.groups?.prefix == '.') {
+  if (warn && pathMatch.groups?.prefix == '.') {
     // eslint-disable-next-line no-console
     console.warn(
       `Warning: TypeScript path aliases cannot computed at runtime! This means alias map value "${
@@ -120,7 +122,7 @@ export function getProcessedAliasMapping(mapping: [string, string]) {
  */
 export function getEslintAliases() {
   return Object.entries(getRawAliases()).map((mapping) => {
-    const [aliasMap, pathMap] = getProcessedAliasMapping(mapping);
+    const [aliasMap, pathMap] = getProcessedAliasMapping(mapping, false);
     return [aliasMap.alias, pathMap.path ? `.${pathMap.path}` : '.'];
   });
 }
@@ -135,7 +137,7 @@ export function getWebpackAliases(
   { rootDir }: { rootDir?: string } = { rootDir: undefined }
 ) {
   return Object.entries(getRawAliases()).reduce<Record<string, string>>((o, mapping) => {
-    const [aliasMap, pathMap] = getProcessedAliasMapping(mapping);
+    const [aliasMap, pathMap] = getProcessedAliasMapping(mapping, false);
 
     if (pathMap.prefix == '<rootDir>' && !rootDir) {
       throw new Error(
@@ -163,7 +165,7 @@ export function getJestAliases(
   { rootDir }: { rootDir?: string } = { rootDir: undefined }
 ) {
   return Object.entries(getRawAliases()).reduce<Record<string, string>>((o, mapping) => {
-    const [, pathMap] = getProcessedAliasMapping(mapping);
+    const [, pathMap] = getProcessedAliasMapping(mapping, false);
     let prefix = '<rootDir>';
 
     if (pathMap.prefix == '.') {
@@ -190,7 +192,7 @@ export function getJestAliases(
 export function getTypeScriptAliases() {
   return Object.entries(getRawAliases()).reduce<Record<string, string[]>>(
     (o, mapping) => {
-      const [aliasMap, pathMap] = getProcessedAliasMapping(mapping);
+      const [aliasMap, pathMap] = getProcessedAliasMapping(mapping, true);
       return {
         ...o,
         [`${aliasMap.alias}${aliasMap.suffix == '/(.*)$' ? '/*' : ''}`]: [
