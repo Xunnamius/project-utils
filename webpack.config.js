@@ -98,10 +98,10 @@ const libCjsConfig = {
   target: 'node',
   node: false,
 
-  entry: `${cwd}/src/index.ts`,
+  entry: { index: `${cwd}/src/index.ts` },
 
   output: {
-    filename: 'index.js',
+    filename: '[name].js',
     path: `${cwd}/dist/cjs`,
     library: {
       type: 'commonjs2'
@@ -137,11 +137,11 @@ const libEsmConfig = {
   target: 'node',
   node: false,
 
-  entry: `${cwd}/src/index.ts`,
+  entry: { index: `${cwd}/src/index.ts` },
 
   output: {
     module: true,
-    filename: 'index.mjs',
+    filename: '[name].mjs',
     path: `${cwd}/dist/esm`,
     chunkFormat: 'module',
     library: {
@@ -230,10 +230,10 @@ const cliConfig = {
   target: 'node',
   node: false,
 
-  entry: `${cwd}/src/cli.ts`,
+  entry: { cli: `${cwd}/src/cli.ts` },
 
   output: {
-    filename: 'cli.js',
+    filename: '[name].js',
     path: `${cwd}/dist`
   },
 
