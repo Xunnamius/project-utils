@@ -42,7 +42,10 @@
     "list-tasks": "node -e 'console.log(Object.keys(require(\"./package.json\").scripts).join(\"\\n\"))'"
   },
   "dependencies": {
-    "debug": "^4.3.2"
+    "@projector-js/core": "1.0.0",
+    "debug": "^4.3.2",
+    "webpack": "^5.64.3",
+    "webpack-node-externals": "^3.0.0"
   },
   "engines": {
     "node": ">=12"
