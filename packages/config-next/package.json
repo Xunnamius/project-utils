@@ -1,11 +1,13 @@
 {
-  "name": "@projector-js/config-webpack",
+  "name": "@projector-js/config-next",
   "version": "0.0.0-development",
-  "description": "Shared Webpack configuration used in Projector projects and elsewhere",
+  "description": "Shared Next.js configuration used in Projector projects and elsewhere",
   "keywords": [
     "shared",
     "configuration",
-    "webpack",
+    "next",
+    "next.js",
+    "react",
     "projector"
   ],
   "repository": {
@@ -27,7 +29,7 @@
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
-  "types": "./dist/types/packages/config-webpack/src/index.d.ts",
+  "types": "./dist/types/packages/config-next/src/index.d.ts",
   "files": [
     "/dist",
     "/LICENSE",
