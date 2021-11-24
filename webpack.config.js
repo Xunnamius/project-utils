@@ -278,11 +278,14 @@ try {
 if (monorepoConfig) {
   const configNames = module.exports.map((config, index) => [config.name, index]);
 
-  Object.entries(monorepoConfig).forEach(([targetName, modifyConfigFn]) => {
+  Object.entries(monorepoConfig).forEach(([targetName, configModifier]) => {
     const [, configIndex] = configNames.find((c) => c[0] == targetName) || [];
 
-    if (configIndex !== undefined) {
-      module.exports[configIndex] = modifyConfigFn(module.exports[configIndex]);
+    if (configModifier && configIndex !== undefined) {
+      module.exports[configIndex] =
+        typeof configModifier == 'function'
+          ? configModifier(module.exports[configIndex])
+          : configModifier;
     }
   });
 }
