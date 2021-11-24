@@ -3,8 +3,6 @@ import debugFactory from 'debug';
 import 'jest-extended/all';
 import 'jest-extended';
 
-import type { Promisable } from 'type-fest';
-
 const debug = debugFactory(`${pkgName}:jest-setup`);
 
 debug(`pkgName: "${pkgName}"`);
