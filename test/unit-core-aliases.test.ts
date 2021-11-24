@@ -33,7 +33,7 @@ describe('::getRawAliases', () => {
 });
 
 describe('::getProcessedAliasMapping', () => {
-  it('warns when using a relative alias map value (path)', async () => {
+  it('warns when using a relative alias map value (path) when warn = true', async () => {
     expect.hasAssertions();
 
     await withMockedOutput(({ warnSpy }) => {
@@ -42,7 +42,7 @@ describe('::getProcessedAliasMapping', () => {
     });
 
     await withMockedOutput(({ warnSpy }) => {
-      Alias.getProcessedAliasMapping(['a', './a']);
+      Alias.getProcessedAliasMapping(['a', './a'], true);
       expect(warnSpy).toBeCalled();
     });
   });
@@ -231,6 +231,34 @@ describe('::getJestAliases', () => {
     });
   });
 
+  it('resolves relative path from rootDir even if above root', async () => {
+    expect.hasAssertions();
+
+    jest.spyOn(Alias, 'getRawAliases').mockReturnValue({
+      '^package$': './package.json'
+    } as unknown as ReturnType<typeof Alias.getRawAliases>);
+
+    await withMockedOutput(() => {
+      expect(Alias.getJestAliases({ rootDir: '/some/other/dir' })).toStrictEqual({
+        '^package$': '<rootDir>/../../fake/packages/dir/package.json'
+      });
+    });
+  });
+
+  it('resolves syntactically correct path even if rootDir == cwd', async () => {
+    expect.hasAssertions();
+
+    jest.spyOn(Alias, 'getRawAliases').mockReturnValue({
+      '^package$': './package.json'
+    } as unknown as ReturnType<typeof Alias.getRawAliases>);
+
+    await withMockedOutput(() => {
+      expect(Alias.getJestAliases({ rootDir: '/some/fake/packages/dir' })).toStrictEqual({
+        '^package$': '<rootDir>/package.json'
+      });
+    });
+  });
+
   it('returns expected Jest aliases without rootDir', async () => {
     expect.hasAssertions();
 
@@ -323,5 +351,35 @@ describe('::getTypeScriptAliases', () => {
         'h/*': ['./*']
       });
     });
+  });
+});
+
+test('only getTypeScriptAliases issues a warning when called', async () => {
+  expect.hasAssertions();
+
+  const spy = jest
+    .spyOn(Alias, 'getProcessedAliasMapping')
+    .mockImplementation(
+      () => ['', {}] as unknown as ReturnType<typeof Alias.getProcessedAliasMapping>
+    );
+
+  await withMockedOutput(() => {
+    Alias.getEslintAliases();
+    expect(spy).toBeCalledWith(expect.anything(), false);
+  });
+
+  await withMockedOutput(() => {
+    Alias.getJestAliases({ rootDir: '/something/or/other' });
+    expect(spy).toBeCalledWith(expect.anything(), false);
+  });
+
+  await withMockedOutput(() => {
+    Alias.getWebpackAliases({ rootDir: '/something/or/other' });
+    expect(spy).toBeCalledWith(expect.anything(), false);
+  });
+
+  await withMockedOutput(() => {
+    Alias.getTypeScriptAliases();
+    expect(spy).toBeCalledWith(expect.anything(), true);
   });
 });
