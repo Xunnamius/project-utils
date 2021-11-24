@@ -266,4 +266,25 @@ const cliConfig = {
 
 void externalsConfig, cliConfig;
 module.exports = [libCjsConfig, libEsmConfig];
+
+// ? Load monorepo-specific webpack configs
+
+let monorepoConfig;
+
+try {
+  monorepoConfig = require(`${cwd}/webpack.config.js`);
+} catch (ignored) {}
+
+if (monorepoConfig) {
+  const configNames = module.exports.map((config, index) => [config.name, index]);
+
+  Object.entries(monorepoConfig).forEach(([targetName, modifyConfigFn]) => {
+    const [, configIndex] = configNames.find((c) => c[0] == targetName) || [];
+
+    if (configIndex !== undefined) {
+      module.exports[configIndex] = modifyConfigFn(module.exports[configIndex]);
+    }
+  });
+}
+
 debug('exports: %O', module.exports);
