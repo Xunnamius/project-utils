@@ -1,6 +1,6 @@
 {
   "name": "@projector-js/core",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "The library on which Projector's suite of tools is built",
   "keywords": [
     "library",
