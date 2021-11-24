@@ -174,7 +174,8 @@ export function getJestAliases(
           'JestAliasError: must provide a rootDir argument when using relative alias paths'
         );
       } else {
-        prefix += `/${relativePath(rootDir, process.cwd())}`;
+        const relPath = relativePath(rootDir, process.cwd());
+        prefix += relPath ? `/${relPath}` : '';
       }
     }
 
