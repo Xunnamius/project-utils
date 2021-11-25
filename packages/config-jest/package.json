@@ -28,6 +28,13 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
   "types": "./dist/types/packages/config-jest/src/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/types/packages/config-jest/src/*"
+      ]
+    }
+  },
   "files": [
     "/dist",
     "/LICENSE",

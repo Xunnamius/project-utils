@@ -38,6 +38,13 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
   "types": "./dist/types/packages/core/src/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/types/packages/core/src/*"
+      ]
+    }
+  },
   "files": [
     "/dist",
     "/LICENSE",

@@ -30,6 +30,13 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
   "types": "./dist/types/packages/config-next/src/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/types/packages/config-next/src/*"
+      ]
+    }
+  },
   "files": [
     "/dist",
     "/LICENSE",

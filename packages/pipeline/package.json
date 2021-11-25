@@ -33,6 +33,13 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
   "types": "./dist/types/packages/pipeline/src/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/types/packages/pipeline/src/*"
+      ]
+    }
+  },
   "files": [
     "/dist",
     "/LICENSE",

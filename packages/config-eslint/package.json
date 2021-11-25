@@ -28,6 +28,13 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
   "types": "./dist/types/packages/config-eslint/src/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/types/packages/config-eslint/src/*"
+      ]
+    }
+  },
   "files": [
     "/dist",
     "/LICENSE",
