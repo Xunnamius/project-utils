@@ -14,22 +14,236 @@
 
 # projector-js
 
-<!-- TODO -->
+Simple seamless monorepo _and_ polyrepo project management CLI toolkit and JS
+library using [semantic-release][2], [conventional-changelog][3], and
+[conventional-commits][4] for commit-based automated release flows and
+(optionally) [GitHub Actions][5] and [Dependabot][6] for [CI][7]/[CD][8].
+Supports task concurrency and cross-dependency version synchronization for
+monorepos.
 
-## Install
+Projector leans on as much native npm functionality and popular tooling as
+possible. This means no bootstrapping commands, no custom linking, no "Projector
+config file", nor any reinventions of the familiar features that git, npm, and
+other tooling already provide out of the box.
 
-<!-- TODO -->
+**Projector tries to avoid being Yet Another Thing you have to learn.**
+
+## Feature Overview
+
+> The `p` command comes from `npm i -g @projector-js/cli`. Alternatively,
+> [npx][9] can be used: `npx projector ...` (local install) or
+> `npx projector-js ...` (no install).
+
+- Can be used for both frontend and backend projects
+- Unified interface for both polyrepos (normal repos) and monorepos
+  - The `--root` argument, when used in a polyrepo context, refers to the
+    repository root and can usually be omitted
+- Built on the npm workspaces and scripts functionality with which you're
+  already familiar
+  - The core of Projector relies on git, npm, and semantic-release
+  - Projector ships with configurations for TypeScript, webpack, and Babel
+- Build one, some, or all packages concurrently (via webpack or any bundler or
+  compiler)
+  > `p build -p pkg-1`\
+  > `p build -p pkg-1 -p pkg-2`\
+  > `p build --root`\
+  > `p build`
+- Test one, some, or all packages concurrently (via [Jest][10] or any test
+  framework)
+  > `p test some-specific-test`\
+  > `p test some-* another-test`\
+  > `p test`
+- Release one, some, or all packages concurrently, including on-the-fly
+  changelog and documentation generation and updating cross-dependency versions
+  (via [semantic-release][11])
+  > `p publish -p pkg-1`\
+  > `p publish -p pkg-1 -p pkg-2 -p pkg-3`\
+  > `p publish`
+- Update the dependencies (and/or dev dependencies) of one, some, or all
+  packages (via [npm-check-updates][12])
+  > `p update -p pkg-1`\
+  > `p update -p pkg-1 -p pkg-2`\
+  > `p update --no-commits -p pkg-1 -p pkg-3`\
+  > `p update --root`\
+  > `p update --doctor`\
+  > `p update`
+- Run npm scripts for one, some, or all packages (via [npm-run-script][11])
+  > `p run -p pkg-1 some-npm-script`\
+  > `p run -p pkg-1 -p pkg-2 some-npm-script`\
+  > `p run --root npm-script-at-root`\
+  > `p run npm-script-in-every-package`
+- Run arbitrary npm commands for one, some, or all packages
+  > `p -p pkg-1 npm info`\
+  > `p -p pkg-1 -p pkg-2 npm list --depth=1`\
+  > `p --root npm audit`\
+  > `p npm show`
+- Manage both individual and shared dependencies across packages (via npm
+  workspaces and `package.json`)
+  > `p install -p pkg-1`\
+  > `p install -p pkg-1 -p pkg-2`\
+  > `p install -p pkg-1 -p pkg-3 some-package some-other-package`\
+  > `p install --root --save-dev new-package-installed-to-root`\
+  > `p install new-package-installed-to-all`\
+  > `p install`
+- Create new projects from scratch, or from [custom templates][13]
+  > `p create new-project`\
+  > `p create --monorepo new-project`\
+  > `p create new-project --using /some/path/to/template`\
+  > `p create new-project --monorepo --using https://github.com/some-user/some-repo`
+- Add new packages (only when the current working directory is a monorepo)
+  > `p create new-package`\
+  > `p create new-package --using /some/path/to/template`\
+  > `p create new-package --using https://github.com/some-user/some-repo`
+- Rename projects and/or packages, updating metadata where necessary
+  > `p rename new-pkg-name` (same as `p rename --root new-pkg-name`)\
+  > `p rename pkg-1 pkg-1-new-name`
+- List project and package(s) metadata (especially useful for monorepos)
+  > `p list`
+- Continuous Integration (CI) and Continuous Deployment (CD) support (via GitHub
+  Actions and Dependabot)
+  - See the [`projector-pipeline` marketplace Action][14]
+- Robust debugging output (via [debug][15])
+  - `DEBUG=projector:<package-id>` to view a specific package's output
+  - `DEBUG=projector:<package-id>:all` or `DEBUG=projector:all` to view all
+    output (including verbose output)
+
+## Terminology
+
+- **polyrepo**: a repository containing a single package. The opposite of a
+  _monorepo_.
+- **monorepo**: a repository containing multiple packages. The opposite of a
+  _polyrepo_.
+- **repository root**: the ultimate top-level directory of a git repository and
+  Projector project. Also referred to as "project root", `rootDir` (always an
+  absolute path), or simply "root". Projector projects should never depend on
+  items outside their respective repository roots.
+- **package root**: a subdirectory at `<rootDir>/packages/<package-id>`
+  containing the `package.json` file of an individual package in a monorepo. The
+  name of this directory is also referred to as the `package-id`, which may or
+  may not match the `name` in the package's `package.json` file. Package roots
+  are _never_ referred to as "root".
+
+## Project Structure
+
+All Projector projects require the following:
+
+- A `package.json` file at the root of the repository
+- At least a `main` branch
+
+**Example**
+
+    .
+    ├── package.json
+    ├── package-lock.json
+    ├── src/
+    └── README.md
+
+### Monorepo Structure
+
+For monorepos, the following are additionally required:
+
+- The root `package.json` cannot have any of the following keys: `dependencies`,
+  `version`
+- A `packages/<package-id>/package.json` file exists for each available package.
+  - Necessarily, each `packages/<package-id>` is a package root.
+  - If no packages are available yet, the existence of `packages/` is optional.
+  - `packages/` must contain no directories other than package roots.
+  - `packages/` can contain arbitrary files.
+  - The existence of the `packages/` directory is optional.
+
+**Example**
+
+    .
+    ├── package.json
+    ├── package-lock.json
+    ├── packages/
+    │   ├── pkg-1/
+    │   │   ├── package.json
+    │   │   ├── README.md
+    │   │   └── src/
+    │   └── pkg-2/
+    │       ├── package.json
+    │       ├── README.md
+    │       └── src/
+    └── README.md
 
 ## Usage
 
 <!-- TODO -->
 
-<!-- TODO: monorepo requires lerna-style package structure -->
+### Pre-made Templates (Lenses)
+
+<!-- TODO -->
+
+## System Requirements
+
+- At the moment, Projector is only guaranteed to work on Linux (Ubuntu) systems.
+  It likely works on any unix-based distro. Projector has not been tested on
+  Windows or [WSL][16], though it should work with the latter. Full Windows
+  support may be considered in the future.
+- At the moment, Projector only works with npm. It is likely a short jump to
+  enabling Yarn and/or pnpm support and this may be considered in the future.
+- Projector requires an [actively maintained][17] version of [Node.js and
+  npm][18].
+- Certain Projector components require [Git][19]. See [each individual
+  package][20]'s documentation for further constraints.
+
+## Installation
+
+There are several ways to install Projector: as a _CLI tool_, as a source of
+_shared configuration_, as a _GitHub Action_ (via [the GitHub Actions
+Marketplace][14]), as a _semantic-release plugin_, and as an _imported library_.
+
+### CLI
+
+Install the [omnibus Projector package][21]:
+
+```shell
+npm install --save-dev projector-js
+```
+
+To avoid prefixing every command with `npx projector`, you can install
+[Projector's CLI package][22] globally:
+
+```shell
+npm install -g @projector-js/cli
+```
+
+This makes the `p` and `projector` commands available in your system's PATH.
+
+### Shared Configurations
+
+The following shared configurations are available for Projector projects. See
+each individual package's documentation for installation details.
+
+- Babel ([`@projector-js/config-babel`][23])
+- commitlint ([`@projector-js/config-commitlint`][24])
+- conventional-changelog ([`@projector-js/config-conventional-changelog`][25])
+- ESLint ([`@projector-js/config-eslint`][26])
+- Jest ([`@projector-js/config-jest`][27])
+- lint-staged ([`@projector-js/config-lint-staged`][28])
+- Next.js ([`@projector-js/config-next`][29])
+- Prettier ([`@projector-js/config-prettier`][30])
+- semantic-release ([`@projector-js/config-semantic-release`][31])
+- TSConfig ([`@projector-js/config-tsconfig`][32])
+- webpack ([`@projector-js/config-webpack`][33])
+
+### GitHub Action
+
+See [`projector-pipeline`][14].
+
+### semantic-release Plugin
+
+See [`@projector-js/semantic-release-plugin`][34].
+
+### Imported Library
+
+See [`@projector-js/core`][35].
 
 ## Documentation
 
-See [each package][1] for information on the types they make available and
-further documentation.
+See [each package][1] for further information on the types they make available
+and other specifics.
 
 ### License
 
@@ -72,3 +286,40 @@ information.
 [contributing]: CONTRIBUTING.md
 [support]: .github/SUPPORT.md
 [1]: /packages
+[2]: https://www.npmjs.com/package/semantic-release
+[3]: https://www.npmjs.com/package/conventional-changelog
+[4]: https://www.conventionalcommits.org/en/v1.0.0
+[5]: https://github.com/features/actions
+[6]:
+  https://github.blog/2020-06-01-keep-all-your-packages-up-to-date-with-dependabot/
+[7]: https://en.wikipedia.org/wiki/Continuous_integration
+[8]: https://en.wikipedia.org/wiki/Continuous_deployment
+[9]: https://docs.npmjs.com/cli/v7/commands/npx
+[10]: https://jestjs.io
+
+[11]: <>
+
+[12]: https://www.npmjs.com/package/npm-check-updates
+[13]: #pre-made-templates-lenses
+[14]: https://github.com/marketplace/actions/projector-pipeline
+[15]: https://www.npmjs.com/package/debug
+[16]: https://docs.microsoft.com/en-us/windows/wsl/install
+[17]: https://nodejs.org/en/about/releases
+[18]: https://nodejs.org/en
+[19]: https://git-scm.com
+[20]: packages
+[21]: packages/projector
+[22]: packages/cli
+[23]: packages/config-babel
+[24]: packages/config-commitlint
+[25]: packages/config-conventional-changelog
+[26]: packages/config-eslint
+[27]: packages/config-jest
+[28]: packages/config-lint-staged
+[29]: packages/config-next
+[30]: packages/config-prettier
+[31]: packages/config-semantic-release
+[32]: packages/config-tsconfig
+[33]: packages/config-webpack
+[34]: packages/semantic-release-plugin
+[35]: packages/core
