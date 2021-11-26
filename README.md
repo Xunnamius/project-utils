@@ -104,6 +104,9 @@ other tooling already provide out of the box.
 - Continuous Integration (CI) and Continuous Deployment (CD) support (via GitHub
   Actions and Dependabot)
   - See the [`projector-pipeline` marketplace Action][14]
+- Hook into the Projector lifecycle through its super simple _"plugin" system_
+  - Projector will call an [npm script][39] (à la `npm run an-npm-script`) [with
+    a well-defined name][40] whenever an interesting event occurs
 - Robust debugging output (via [debug][15])
   - `DEBUG=projector:<package-id>` to view a specific package's output
   - `DEBUG=projector:<package-id>:all` or `DEBUG=projector:all` to view all
@@ -177,6 +180,8 @@ For monorepos, the following are additionally required:
 
 <!-- TODO -->
 
+### Plugin System
+
 ## System Requirements
 
 - At the moment, Projector is only guaranteed to work on Linux (Ubuntu) systems.
@@ -186,9 +191,9 @@ For monorepos, the following are additionally required:
 - At the moment, Projector only works with npm. It is likely a short jump to
   enabling Yarn and/or pnpm support and this may be considered in the future.
 - Projector requires an [actively maintained][17] version of [Node.js and
-  npm][18].
-- Certain Projector components require [Git][19]. See [each individual
-  package][20]'s documentation for further constraints.
+  npm][18] be installed.
+- Projector requires [Git][19] be installed.
+- See [each individual package][20]'s documentation for further requirements.
 
 ## Installation
 
@@ -328,3 +333,5 @@ information.
 [36]: https://www.npmjs.com/package/semantic-release-mono
 [37]: https://github.com/semantic-release/semantic-release/pull/1710
 [38]: https://github.com/semantic-release/semantic-release/pull/XXXX
+[39]: https://docs.npmjs.com/cli/v8/using-npm/scripts
+[40]: #plugin-system
