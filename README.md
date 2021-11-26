@@ -35,15 +35,15 @@ other tooling already provide out of the box.
 > `npx projector-js ...` (no install).
 
 - Can be used for both frontend and backend projects
-- Unified interface for both polyrepos (normal repos) and monorepos
+- Presents a unified interface for both polyrepos (normal repos) and monorepos
   - The `--root` argument, when used in a polyrepo context, refers to the
     repository root and can usually be omitted
-- Built on the npm workspaces and scripts functionality with which you're
-  already familiar
-  - The core of Projector relies on git, npm, and [a slightly-divergent
-    semantic-release fork][36] <sup>(until [upstream][37] [PRs][38] are
-    merged)</sup>
-  - Projector ships with configurations for TypeScript, webpack, and Babel
+- Built with tools which you're already familiar
+  - The core of Projector relies on git, npm workspaces and scripts, and [a
+    slightly-divergent semantic-release fork][36] <sup>(until [upstream][37]
+    [PRs][38] are merged)</sup>
+  - Projector ships with configurations for TypeScript, webpack, Babel, and
+    other tools, but you can use your own if you wish
 - Build one, some, or all packages concurrently (via webpack or any bundler or
   compiler)
   > `p build -p pkg-1`\
