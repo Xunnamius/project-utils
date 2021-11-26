@@ -40,7 +40,9 @@ other tooling already provide out of the box.
     repository root and can usually be omitted
 - Built on the npm workspaces and scripts functionality with which you're
   already familiar
-  - The core of Projector relies on git, npm, and semantic-release
+  - The core of Projector relies on git, npm, and [a slightly-divergent
+    semantic-release fork][36] <sup>(until [upstream][37] [PRs][38] are
+    merged)</sup>
   - Projector ships with configurations for TypeScript, webpack, and Babel
 - Build one, some, or all packages concurrently (via webpack or any bundler or
   compiler)
@@ -323,3 +325,6 @@ information.
 [33]: packages/config-webpack
 [34]: packages/semantic-release-plugin
 [35]: packages/core
+[36]: https://www.npmjs.com/package/semantic-release-mono
+[37]: https://github.com/semantic-release/semantic-release/pull/1710
+[38]: https://github.com/semantic-release/semantic-release/pull/XXXX
