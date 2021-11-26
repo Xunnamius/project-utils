@@ -55,9 +55,9 @@ other tooling already provide out of the box.
   > `p test some-specific-test`\
   > `p test some-* another-test`\
   > `p test`
-- Release one, some, or all packages concurrently, including on-the-fly
-  changelog and documentation generation and synchronizing cross-dependency
-  versions (via [semantic-release][11])
+- Release one, some, or all packages concurrently (all-or-nothing), including
+  automatic changelog and documentation generation and cross-dependency version
+  synchronization (via [semantic-release][11])
   > `p publish -p pkg-1`\
   > `p publish -p pkg-1 -p pkg-2 -p pkg-3`\
   > `p publish`
