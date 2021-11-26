@@ -38,7 +38,7 @@ other tooling already provide out of the box.
 - Presents a unified interface for both polyrepos (normal repos) and monorepos
   - The `--root` argument, when used in a polyrepo context, refers to the
     repository root and can usually be omitted
-- Built with tools which you're already familiar
+- Built on tools with which you're already familiar
   - The core of Projector relies on git, npm workspaces and scripts, and [a
     slightly-divergent semantic-release fork][36] <sup>(until [upstream][37]
     [PRs][38] are merged)</sup>
