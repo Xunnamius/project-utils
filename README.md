@@ -104,7 +104,7 @@ other tooling already provide out of the box.
 - Continuous Integration (CI) and Continuous Deployment (CD) support (via GitHub
   Actions and Dependabot)
   - See the [`projector-pipeline` marketplace Action][14]
-- Hook into the Projector lifecycle through its super simple _"plugin" system_
+- Hook into the Projector runtime life cycle with your own "plugins"
   - Projector will call an [npm script][39] (à la `npm run an-npm-script`) [with
     a well-defined name][40] whenever an interesting event occurs
 - Robust debugging output (via [debug][15])
@@ -180,7 +180,7 @@ For monorepos, the following are additionally required:
 
 <!-- TODO -->
 
-### Plugin System
+### Life Cycle Scripts
 
 ## System Requirements
 
@@ -334,4 +334,4 @@ information.
 [37]: https://github.com/semantic-release/semantic-release/pull/1710
 [38]: https://github.com/semantic-release/semantic-release/pull/XXXX
 [39]: https://docs.npmjs.com/cli/v8/using-npm/scripts
-[40]: #plugin-system
+[40]: #life-cycle-scripts
