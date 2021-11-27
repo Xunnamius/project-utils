@@ -215,7 +215,7 @@ Monorepo projects additionally require the following:
 
 <!-- TODO -->
 
-### Quick Start
+### Getting Started
 
 <!-- TODO -->
 
