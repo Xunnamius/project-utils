@@ -13,7 +13,7 @@
 
 <!-- prettier-ignore-end -->
 
-# projector-js
+# 📽️ Projector
 
 Projector is a modern monorepo _and_ polyrepo management toolkit with a focus on
 simplicity and flexibility. It's built around [semantic-release][2],
