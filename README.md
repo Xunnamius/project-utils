@@ -19,7 +19,7 @@ Projector is a modern monorepo _and_ polyrepo management toolkit with a focus on
 simplicity and flexibility. It's built around [semantic-release][2],
 [conventional-changelog][3], and [conventional-commits][4] for commit-based
 automated release flows and (optionally) [GitHub Actions][5] and [Dependabot][6]
-for [CI][7]/[CD][8]. For monorepos, it supports task concurrency and
+for [CI][7]/[CD][8]. For monorepos, it supports Script concurrency and
 cross-dependency version synchronization. Consequently, Projector works with
 most any type of JS project—be it authoring a library, building a serverless
 JAMstack app, bundling a CLI tool, etc.
@@ -28,13 +28,17 @@ Projector leans on as much native npm functionality and popular tooling as
 possible. This means no bootstrapping commands, no custom linking, no "Projector
 config file", no repository commit count limits, nor any reinventions of the
 features that git, npm, semantic-release, conventional-changelog, and other
-tooling already provide. Combined with [custom life cycle plugins][40],
-Projector is flexible enough to integrate with your technology stack of choice.
+tooling already provide.
 
-**Projector tries to avoid being Yet Another Thing you have to learn.** If you
-are familiar with something like [Lerna][11], or already have a favorite stack
-(e.g. Babel + TypeScript + Jest + webpack), [see if Projector meets your
-needs][41].
+**Projector tries to avoid being Yet Another Thing you have to learn.** The
+upside: combined with [custom life cycle plugins][40], Projector is probably
+flexible enough to integrate with your technology stack of choice. The downside:
+compared to [Lerna][11]—the primary inspiration behind Projector's
+creation—Projector only implements a focused subset of features. [See what
+Projector can do][41].
+
+> 🚧 🚧 Projector is still in its infancy as a tool mostly for my own personal
+> use! Check out the [public roadmap][72] to see the lay of things.
 
 ---
 
@@ -42,10 +46,11 @@ needs][41].
 - [Terminology][42]
 - [Project Structure][43]
   - [Monorepo Structure][44]
-- [Usage][45]
-  - [Quick Start][68]
+- [Getting Started][45]
+  - [Getting Started][74]
   - [CLI Command Glossary][70]
   - [Life Cycle Scripts (Plugins)][40]
+  - [Dependency Topology and Script Concurrency][75]
   - [Template Repositories][69]
     - [Pre-made Templates (Lenses)][13]
   - [Badge Swag][71]
@@ -66,90 +71,94 @@ needs][41].
 > [npx][9] can be used: `npx projector ...` (local install) or
 > `npx projector-js ...` (no install).
 
-- Compatible with most any JavaScript/TypeScript project already using npm
-- Presents a unified interface for both polyrepos (normal repos) and monorepos
+- Compatible with JavaScript/TypeScript projects already using npm.
+- Presents a unified interface for both polyrepos (normal repos) and monorepos.
   - The `--root` argument, when used in a polyrepo context, refers to the
-    repository root and can usually be omitted
-- Built on the popular open source tooling you're already familiar with
-  - The primary components of Projector rely on git, npm (especially
-    [workspaces][56] and [scripts][39]), and [a slightly-divergent
-    semantic-release fork][36]
+    repository root and can usually be omitted.
+- Built on popular open source tooling you're likely already familiar with.
+  - The primary components of Projector rely on git, npm (i.e. [workspaces][56]
+    and [scripts][39]), and [a slightly-tweaked semantic-release fork][36].
   - Several _highly opinionated_ configurations [are available][49] for
     TypeScript, webpack, Babel, Jest, and other tools, but you can very easily
-    substitute your own and/or ignore them entirely
+    substitute your own and/or ignore them entirely.
+- Uses [lage][76] and [backfill][77] for topologically-ordered concurrent
+  script/task execution and output caching. This can be fine tuned on a
+  per-project basis if necessary by modifying the root [`lage.config.js`][78]
+  file. See the [Dependency Topology and Script Concurrency][75] section for
+  details.
 - Build one, some, or all packages concurrently (via [webpack][57] or any
-  bundler or compiler)
+  bundler or compiler).
   > `p build -p pkg-1`\
   > `p build -p pkg-1 -p pkg-2`\
+  > `p build -p 'pkg-*'`\
   > `p build --root`\
   > `p build`
 - Test one, some, or all packages concurrently (via [Jest][10] or any test
-  framework)
+  framework).
   > `p test some-specific-test`\
   > `p test --coverage --collectCoverageFrom 'src/**/*.ts*' some-* another-test`\
   > `p test`
 - Release one, some, or all packages concurrently (all-or-nothing), including
   automatic commit-based changelog and documentation generation along with
-  cross-dependency version synchronization (via [semantic-release-atam][36])
+  cross-dependency version synchronization (via [semantic-release-atam][36]).
   > `p publish -p pkg-1`\
   > `p publish -p pkg-1 -p pkg-2 -p pkg-3`\
   > `p publish`
 - Update the dependencies (and/or dev dependencies) of one, some, or all
-  packages (via [npm-check-updates][12])
+  packages (via [npm-check-updates][12]).
   > `p update -p pkg-1`\
   > `p update -p pkg-1 -p pkg-2`\
   > `p update --no-commits -p pkg-1 -p pkg-3`\
   > `p update --root`\
   > `p update --doctor`\
   > `p update`
-- Run npm scripts for one, some, or all packages (via [npm-run-script][39])
+- Run npm scripts for one, some, or all packages (via [npm-run-script][39]).
   > `p run -p pkg-1 npm-script-in-pkg`\
   > `p run -p pkg-1 -p pkg-2 npm-script-in-pkgs`\
   > `p run --root npm-script-at-root-only`\
   > `p run npm-script-at-root-and-in-every-pkg`
-- Run arbitrary npm commands for one, some, or all packages
+- Run arbitrary npm commands for one, some, or all packages.
   > `p -p pkg-1 npm info`\
   > `p -p pkg-1 -p pkg-2 npm list --depth=1`\
   > `p --root npm audit`\
   > `p npm show`
 - Manage both individual and shared dependencies across packages (via npm
-  workspaces and `package.json`)
+  workspaces and `package.json`).
   > `p install -p pkg-1`\
   > `p install -p pkg-1 -p pkg-2`\
-  > `p install -p pkg-1 -p pkg-3 some-package some-other-package`\
+  > `p install -p 'pkg-*' -p ppkkgg some-package some-other-package`\
   > `p install --root --save-dev new-package-installed-to-root`\
   > `p install new-package-installed-to-root-and-every-pkg`\
   > `p install`
-- Create new projects from scratch, or from a [custom template][13]
+- Create new projects from scratch, or from a [custom template][13].
   > `p create new-project`\
   > `p create --monorepo new-project`\
   > `p create new-project --using /some/path/to/template`\
   > `p create new-project --monorepo --using https://github.com/some-user/some-repo`
-- Add new packages (only when the current working directory is a monorepo)
+- Add new packages (only when the current working directory is a monorepo).
   > `p create new-package`\
   > `p create new-package --using /some/path/to/template`\
   > `p create new-package --using https://github.com/some-user/some-repo`
-- Rename projects and/or packages, updating metadata where necessary
+- Rename projects and/or packages, updating metadata where necessary.
   > `p rename --root new-name-at-root-pkg-json`\
   > `p rename pkg-1 pkg-1-new-name`
-- List project and package metadata (especially useful for monorepos)
+- List project and package metadata (especially useful for monorepos).
   > `p list`
 - Plug-and-play Continuous Integration (CI) and Continuous Deployment (CD)
-  support (via GitHub Actions and Dependabot)
-  - See the [`projector-pipeline` marketplace Action][14]
-- Hook into the Projector runtime life cycle with your own "plugins"
+  support (via GitHub Actions and Dependabot).
+  - See the [`projector-pipeline` marketplace Action][14].
+- Hook into the Projector runtime life cycle with your own "plugins".
   - Projector will call an [npm script][39] (à la `npm run an-npm-script`) [with
-    a well-defined name][40] whenever an interesting event occurs
-- Robust debugging output (via [debug][15])
-  - `DEBUG=projector:<package-id>` to view a specific package's output
-  - `DEBUG=projector:<package-id>:all` or `DEBUG=projector:all` to view all
-    output (including potentially very verbose output)
-  - Debug output can be piped to a file if desired
+    a well-defined name][40] whenever an interesting event occurs.
+- Robust synchronized debugging output (via [debug][15]).
+  - `DEBUG=projector` to view a subset of debug output from Projector itself.
+  - `DEBUG=projector:<package-id>` to view an even finer subset of debug output
+    from Projector itself.
+  - `DEBUG=projector:all` to view all debug output Projector generates
+    (potentially _very_ verbose).
+  - Debug output can be piped to a file if desired.
 
 > See [`@projector-js/cli`][22] for all available CLI commands.
-
-> 🚧 🚧 Projector is still in its infancy! Check out the [public roadmap][72] to
-> see the status of each feature.
 
 ## Terminology
 
@@ -224,6 +233,10 @@ Monorepo projects additionally require the following:
 See [`@projector-js/cli`][22].
 
 ### Life Cycle Scripts (Plugins)
+
+<!-- TODO -->
+
+### Dependency Topology and Script Concurrency
 
 <!-- TODO -->
 
@@ -316,7 +329,7 @@ See [`projector-pipeline`][14].
 
 ### semantic-release Plugin
 
-The semantic-release plugin facilitates task concurrency and cross-dependency
+The semantic-release plugin facilitates Script concurrency and cross-dependency
 version synchronization during the release cycle.
 
 First, install the plugin:
@@ -339,8 +352,8 @@ Then, add the plugin to your [`release.config.js`][73] configuration file:
 }
 ```
 
-See [Usage][45] and [`@projector-js/semantic-release-plugin`][34] for more
-details.
+See [Getting Started][45] and [`@projector-js/semantic-release-plugin`][34] for
+more details.
 
 ### Library
 
@@ -486,3 +499,8 @@ information.
 [72]: https://github.com/Xunnamius/projector/projects/1
 [73]:
   https://semantic-release.gitbook.io/semantic-release/usage/configuration#configuration-file
+[74]: #getting-started
+[75]: #dependency-topology-and-script-concurrency
+[76]: https://github.com/microsoft/lage
+[77]: https://github.com/microsoft/backfill
+[78]: https://microsoft.github.io/lage/guide/pipeline.html#defining-a-pipeline
