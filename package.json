@@ -1,19 +1,7 @@
 {
-  "name": "projector",
+  "name": "projector-monorepo",
   "workspaces": [
-    "packages/cli",
-    "packages/config-babel",
-    "packages/config-commitlint",
-    "packages/config-conventional-changelog",
-    "packages/config-eslint",
-    "packages/config-jest",
-    "packages/config-lint-staged",
-    "packages/config-prettier",
-    "packages/config-semantic-release",
-    "packages/config-webpack",
-    "packages/core",
-    "packages/pipeline",
-    "packages/projector"
+    "packages/*"
   ],
   "scripts": {
     "__test-repeat-all": "echo 'Repeating test suite [initializing]...'; (i=0; while [ \"$((( i += 1 ) <= 100 ))\" -ne 0 ]; do sleep 0.1 && echo \"\\r\\033[1A\\033[0KRepeating test suite [run $i/100]...\" && JEST_SILENT_REPORTER_SHOW_WARNINGS=true BABEL_ENV=test jest --reporters=jest-silent-reporter || exit; done) && echo \"All tests passed! Congrats!\"",
@@ -70,7 +58,7 @@
     "jest-circus": "^27.3.1",
     "jest-extended": "^1.1.0",
     "lint-staged": "^12.1.2",
-    "prettier": "^2.4.1",
+    "prettier": "^2.5.0",
     "remark-cli": "^10.0.1",
     "remark-frontmatter": "^4.0.1",
     "remark-gfm": "^3.0.1",
@@ -93,10 +81,10 @@
     "text-extensions": "^2.4.0",
     "tsconfig-replace-paths": "github:xunnamius/tsconfig-replace-paths",
     "type-fest": "^2.6.0",
-    "typedoc": "^0.22.9",
+    "typedoc": "^0.22.10",
     "typedoc-plugin-markdown": "^3.11.7",
     "typescript": "^4.5.2",
-    "webpack": "^5.64.3",
+    "webpack": "^5.64.4",
     "webpack-cli": "^4.9.1"
   }
 }
