@@ -81,11 +81,11 @@ Projector can do][41].
   - Several _highly opinionated_ configurations [are available][49] for
     TypeScript, webpack, Babel, Jest, and other tools, but you can very easily
     substitute your own and/or ignore them entirely.
-- Uses [lage][76] and [backfill][77] for topologically-ordered concurrent
-  script/task execution and output caching. This can be fine tuned on a
-  per-project basis if necessary by modifying the root [`lage.config.js`][78]
-  file. See the [Dependency Topology and Script Concurrency][75] section for
-  details.
+  - Uses [lage][76] and [backfill][77] for topologically-ordered concurrent
+    script/task execution and output caching. This can be fine tuned on a
+    per-project basis if necessary by modifying the root [`lage.config.js`][78]
+    file. See the [Dependency Topology and Script Concurrency][75] section for
+    details.
 - Build one, some, or all packages concurrently (via [webpack][57] or any
   bundler or compiler).
   > `p build -p pkg-1`\
