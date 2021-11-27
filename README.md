@@ -44,10 +44,10 @@ needs][41].
   - [Monorepo Structure][44]
 - [Usage][45]
   - [Quick Start][68]
-  - [Template Repositories][69]
-    - [Pre-made Templates (Lenses)][13]
   - [CLI Command Glossary][70]
   - [Life Cycle Scripts (Plugins)][40]
+  - [Template Repositories][69]
+    - [Pre-made Templates (Lenses)][13]
   - [Badge Swag][71]
 - [System Requirements][46]
 - [Installation][47]
@@ -219,19 +219,19 @@ Monorepo projects additionally require the following:
 
 <!-- TODO -->
 
-### Template Repositories
-
-<!-- TODO -->
-
-#### Pre-made Templates (Lenses)
-
-<!-- TODO -->
-
 ### CLI Command Glossary
 
 See [`@projector-js/cli`][22].
 
 ### Life Cycle Scripts (Plugins)
+
+<!-- TODO -->
+
+### Template Repositories
+
+<!-- TODO -->
+
+#### Pre-made Templates (Lenses)
 
 <!-- TODO -->
 
