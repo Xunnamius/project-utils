@@ -43,8 +43,12 @@ needs][41].
 - [Project Structure][43]
   - [Monorepo Structure][44]
 - [Usage][45]
-  - [Pre-made Templates (Lenses)][13]
-  - [Life Cycle Scripts][40]
+  - [Quick Start][68]
+  - [Template Repositories][69]
+    - [Pre-made Templates (Lenses)][13]
+  - [CLI Command Glossary][70]
+  - [Life Cycle Scripts (Plugins)][40]
+  - [Badge Swag][71]
 - [System Requirements][46]
 - [Installation][47]
   - [CLI][48]
@@ -62,7 +66,7 @@ needs][41].
 > [npx][9] can be used: `npx projector ...` (local install) or
 > `npx projector-js ...` (no install).
 
-- Compatible with almost any JavaScript/TypeScript project already using npm
+- Compatible with most any JavaScript/TypeScript project already using npm
 - Presents a unified interface for both polyrepos (normal repos) and monorepos
   - The `--root` argument, when used in a polyrepo context, refers to the
     repository root and can usually be omitted
@@ -141,6 +145,11 @@ needs][41].
   - `DEBUG=projector:<package-id>:all` or `DEBUG=projector:all` to view all
     output (including potentially very verbose output)
   - Debug output can be piped to a file if desired
+
+> See [`@projector-js/cli`][22] for all available CLI commands.
+
+> 🚧 🚧 Projector is still in its infancy! Check out the [public roadmap][72] to
+> see the status of each feature.
 
 ## Terminology
 
@@ -470,3 +479,8 @@ information.
 [65]: packages/plugin-release-checks
 [66]: packages/plugin-sync-files
 [67]: packages/plugin-sync-vercel-env
+[68]: #quick-start
+[69]: #template-repositories
+[70]: #cli-command-glossary
+[71]: #badge-swag
+[72]: https://github.com/Xunnamius/projector/projects/1
