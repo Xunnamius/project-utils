@@ -6,7 +6,8 @@
 [![Last commit timestamp][badge-last-commit]][link-repo]
 [![Open issues][badge-issues]][link-issues]
 [![Pull requests][badge-pulls]][link-pulls]
-[![Uses Semantic Release!][badge-semantic-release]][link-semantic-release]
+[![Maintained with Projector][badge-projector]][link-projector]
+[![Uses semantic-release][badge-semantic-release]][link-semantic-release]
 
 <!-- badges-end -->
 
@@ -14,19 +15,46 @@
 
 # projector-js
 
-Simple seamless monorepo _and_ polyrepo project management CLI toolkit and JS
-library using [semantic-release][2], [conventional-changelog][3], and
-[conventional-commits][4] for commit-based automated release flows and
-(optionally) [GitHub Actions][5] and [Dependabot][6] for [CI][7]/[CD][8].
-Supports task concurrency and cross-dependency version synchronization for
-monorepos.
+Projector is a modern monorepo _and_ polyrepo management toolkit with a focus on
+simplicity and flexibility. It's built around [semantic-release][2],
+[conventional-changelog][3], and [conventional-commits][4] for commit-based
+automated release flows and (optionally) [GitHub Actions][5] and [Dependabot][6]
+for [CI][7]/[CD][8]. For monorepos, it supports task concurrency and
+cross-dependency version synchronization. Consequently, Projector works with
+most any type of JS project—be it authoring a library, building a serverless
+JAMstack app, bundling a CLI tool, etc.
 
 Projector leans on as much native npm functionality and popular tooling as
 possible. This means no bootstrapping commands, no custom linking, no "Projector
-config file", nor any reinventions of the familiar features that git, npm, and
-other tooling already provide out of the box.
+config file", no repository commit count limits, nor any reinventions of the
+features that git, npm, semantic-release, conventional-changelog, and other
+tooling already provide. Combined with [custom life cycle plugins][40],
+Projector is flexible enough to integrate with your technology stack of choice.
 
-**Projector tries to avoid being Yet Another Thing you have to learn.**
+**Projector tries to avoid being Yet Another Thing you have to learn.** If you
+are familiar with something like [Lerna][11], or already have a favorite stack
+(e.g. Babel + TypeScript + Jest + webpack), [see if Projector meets your
+needs][41].
+
+---
+
+- [Feature Overview][41]
+- [Terminology][42]
+- [Project Structure][43]
+  - [Monorepo Structure][44]
+- [Usage][45]
+  - [Pre-made Templates (Lenses)][13]
+  - [Life Cycle Scripts][40]
+- [System Requirements][46]
+- [Installation][47]
+  - [CLI][48]
+  - [Shared Configurations][49]
+  - [GitHub Action][50]
+  - [semantic-release Plugin][51]
+  - [Library][52]
+- [Documentation][53]
+  - [License][54]
+- [Contributing and Support][55]
 
 ## Feature Overview
 
@@ -34,18 +62,19 @@ other tooling already provide out of the box.
 > [npx][9] can be used: `npx projector ...` (local install) or
 > `npx projector-js ...` (no install).
 
-- Can be used for both frontend and backend projects
+- Compatible with almost any JavaScript/TypeScript project already using npm
 - Presents a unified interface for both polyrepos (normal repos) and monorepos
   - The `--root` argument, when used in a polyrepo context, refers to the
     repository root and can usually be omitted
-- Built on tools with which you are already familiar
-  - The core of Projector relies on git, npm workspaces and scripts, and [a
-    slightly-divergent semantic-release fork][36] <sup>(until [upstream][37]
-    [PRs][38] are merged)</sup>
-  - Projector ships with configurations for TypeScript, webpack, Babel, and
-    other tools, but you can use your own if you wish
-- Build one, some, or all packages concurrently (via webpack or any bundler or
-  compiler)
+- Built on the popular open source tooling you're already familiar with
+  - The primary components of Projector rely on git, npm (especially
+    [workspaces][56] and [scripts][39]), and [a slightly-divergent
+    semantic-release fork][36]
+  - Several _highly opinionated_ configurations [are available][49] for
+    TypeScript, webpack, Babel, Jest, and other tools, but you can very easily
+    substitute your own and/or ignore them entirely
+- Build one, some, or all packages concurrently (via [webpack][57] or any
+  bundler or compiler)
   > `p build -p pkg-1`\
   > `p build -p pkg-1 -p pkg-2`\
   > `p build --root`\
@@ -53,11 +82,11 @@ other tooling already provide out of the box.
 - Test one, some, or all packages concurrently (via [Jest][10] or any test
   framework)
   > `p test some-specific-test`\
-  > `p test some-* another-test`\
+  > `p test --coverage --collectCoverageFrom 'src/**/*.ts*' some-* another-test`\
   > `p test`
 - Release one, some, or all packages concurrently (all-or-nothing), including
-  automatic changelog and documentation generation and cross-dependency version
-  synchronization (via [semantic-release][11])
+  automatic commit-based changelog and documentation generation along with
+  cross-dependency version synchronization (via [semantic-release-atam][36])
   > `p publish -p pkg-1`\
   > `p publish -p pkg-1 -p pkg-2 -p pkg-3`\
   > `p publish`
@@ -69,11 +98,11 @@ other tooling already provide out of the box.
   > `p update --root`\
   > `p update --doctor`\
   > `p update`
-- Run npm scripts for one, some, or all packages (via [npm-run-script][11])
-  > `p run -p pkg-1 some-npm-script`\
-  > `p run -p pkg-1 -p pkg-2 some-npm-script`\
-  > `p run --root npm-script-at-root`\
-  > `p run npm-script-in-every-package`
+- Run npm scripts for one, some, or all packages (via [npm-run-script][39])
+  > `p run -p pkg-1 npm-script-in-pkg`\
+  > `p run -p pkg-1 -p pkg-2 npm-script-in-pkgs`\
+  > `p run --root npm-script-at-root-only`\
+  > `p run npm-script-at-root-and-in-every-pkg`
 - Run arbitrary npm commands for one, some, or all packages
   > `p -p pkg-1 npm info`\
   > `p -p pkg-1 -p pkg-2 npm list --depth=1`\
@@ -85,9 +114,9 @@ other tooling already provide out of the box.
   > `p install -p pkg-1 -p pkg-2`\
   > `p install -p pkg-1 -p pkg-3 some-package some-other-package`\
   > `p install --root --save-dev new-package-installed-to-root`\
-  > `p install new-package-installed-to-all`\
+  > `p install new-package-installed-to-root-and-every-pkg`\
   > `p install`
-- Create new projects from scratch, or from [custom templates][13]
+- Create new projects from scratch, or from a [custom template][13]
   > `p create new-project`\
   > `p create --monorepo new-project`\
   > `p create new-project --using /some/path/to/template`\
@@ -97,12 +126,12 @@ other tooling already provide out of the box.
   > `p create new-package --using /some/path/to/template`\
   > `p create new-package --using https://github.com/some-user/some-repo`
 - Rename projects and/or packages, updating metadata where necessary
-  > `p rename new-pkg-name` (same as `p rename --root new-pkg-name`)\
+  > `p rename --root new-name-at-root-pkg-json`\
   > `p rename pkg-1 pkg-1-new-name`
-- List project and package(s) metadata (especially useful for monorepos)
+- List project and package metadata (especially useful for monorepos)
   > `p list`
-- Continuous Integration (CI) and Continuous Deployment (CD) support (via GitHub
-  Actions and Dependabot)
+- Plug-and-play Continuous Integration (CI) and Continuous Deployment (CD)
+  support (via GitHub Actions and Dependabot)
   - See the [`projector-pipeline` marketplace Action][14]
 - Hook into the Projector runtime life cycle with your own "plugins"
   - Projector will call an [npm script][39] (à la `npm run an-npm-script`) [with
@@ -110,7 +139,8 @@ other tooling already provide out of the box.
 - Robust debugging output (via [debug][15])
   - `DEBUG=projector:<package-id>` to view a specific package's output
   - `DEBUG=projector:<package-id>:all` or `DEBUG=projector:all` to view all
-    output (including verbose output)
+    output (including potentially very verbose output)
+  - Debug output can be piped to a file if desired
 
 ## Terminology
 
@@ -123,51 +153,51 @@ other tooling already provide out of the box.
   absolute path), or simply "root". Projector projects should never depend on
   items outside their respective repository roots.
 - **package root**: a subdirectory at `<rootDir>/packages/<package-id>`
-  containing the `package.json` file of an individual package in a monorepo. The
-  name of this directory is also referred to as the `package-id`, which may or
-  may not match the `name` in the package's `package.json` file. Package roots
-  are _never_ referred to as "root".
+  ([configurable][44]) that contains the `package.json` file of an individual
+  package in a monorepo. The name of this directory is also referred to as the
+  `package-id`, which may or may not match the `name` in the package's
+  `package.json` file. Package roots are _never_ referred to as "root".
 
 ## Project Structure
 
-All Projector projects require the following:
+All Projector projects require at least the following:
 
 - A `package.json` file at the root of the repository
-- At least a `main` branch
+
+That's it.
 
 **Example**
 
     .
-    ├── package.json
+    ├── package.json      <==
     ├── package-lock.json
     ├── src/
     └── README.md
 
 ### Monorepo Structure
 
-For monorepos, the following are additionally required:
+Monorepo projects additionally require the following:
 
-- The root `package.json` cannot have any of the following keys: `dependencies`,
-  `version`
 - A `packages/<package-id>/package.json` file exists for each available package.
   - Necessarily, each `packages/<package-id>` is a package root.
-  - If no packages are available yet, the existence of `packages/` is optional.
-  - `packages/` must contain no directories other than package roots.
-  - `packages/` can contain arbitrary files.
-  - The existence of the `packages/` directory is optional.
+  - Package paths are read from the [`workspaces`][58] array in the root
+    `package.json` file. This means, while it's recommended to stick with the
+    Lerna-style `packages/<package-id>` project structure, you can organize your
+    packages however you want so long as they appear in `workspaces`. [Glob
+    patterns][59] are also supported.
 
 **Example**
 
     .
     ├── package.json
     ├── package-lock.json
-    ├── packages/
-    │   ├── pkg-1/
-    │   │   ├── package.json
+    ├── packages/            <==
+    │   ├── pkg-1/           <==
+    │   │   ├── package.json <==
     │   │   ├── README.md
     │   │   └── src/
-    │   └── pkg-2/
-    │       ├── package.json
+    │   └── pkg-2/           <==
+    │       ├── package.json <==
     │       ├── README.md
     │       └── src/
     └── README.md
@@ -176,18 +206,42 @@ For monorepos, the following are additionally required:
 
 <!-- TODO -->
 
-### Pre-made Templates (Lenses)
+### Quick Start
 
 <!-- TODO -->
 
-### Life Cycle Scripts
+### Template Repositories
+
+<!-- TODO -->
+
+#### Pre-made Templates (Lenses)
+
+<!-- TODO -->
+
+### CLI Command Glossary
+
+See [`@projector-js/cli`][22].
+
+### Life Cycle Scripts (Plugins)
+
+<!-- TODO -->
+
+### Badge Swag
+
+Inspired by Lerna and semantic-release, Projector too has a badge!
+
+[![Maintained with Projector][60]][link-projector]
+
+```markdown
+[![Maintained with Projector](https://img.shields.io/badge/maintained%20with-projector-ccff00.svg)](https://github.com/Xunnamius/projector)
+```
 
 ## System Requirements
 
 - At the moment, Projector is only guaranteed to work on Linux (Ubuntu) systems.
-  It likely works on any unix-based distro. Projector has not been tested on
-  Windows or [WSL][16], though it should work with the latter. Full Windows
-  support may be considered in the future.
+  It likely works on any unix-based OS. Projector has not been tested on Windows
+  or [WSL][16], though it should work with the latter. Full Windows support may
+  be considered in the future.
 - At the moment, Projector only works with npm. It is likely a short jump to
   enabling Yarn and/or pnpm support and this may be considered in the future.
 - Projector requires an [actively maintained][17] version of [Node.js and
@@ -197,13 +251,13 @@ For monorepos, the following are additionally required:
 
 ## Installation
 
-There are several ways to install Projector: as a _CLI tool_, as a source of
+There are several ways to utilize Projector: as a _CLI tool_, as a source of
 _shared configuration_, as a _GitHub Action_ (via [the GitHub Actions
 Marketplace][14]), as a _semantic-release plugin_, and as an _imported library_.
 
 ### CLI
 
-Install the [omnibus Projector package][21]:
+Install the [omnibus Projector package][21] locally:
 
 ```shell
 npm install --save-dev projector-js
@@ -220,8 +274,8 @@ This makes the `p` and `projector` commands available in your system's PATH.
 
 ### Shared Configurations
 
-The following shared configurations are available for Projector projects. See
-each individual package's documentation for installation details.
+The following highly opinionated ready-made configurations are available for
+Projector projects. See each individual package's documentation for details.
 
 - Babel ([`@projector-js/config-babel`][23])
 - commitlint ([`@projector-js/config-commitlint`][24])
@@ -235,17 +289,69 @@ each individual package's documentation for installation details.
 - TSConfig ([`@projector-js/config-tsconfig`][32])
 - webpack ([`@projector-js/config-webpack`][33])
 
+Additionally, several highly opinionated plugins are available. Since plugins
+are low overhead and extremely easy to create, you'll likely want to [write your
+own][40] instead if needed.
+
+- [`@projector-js/plugin-check-project`][61]
+- [`@projector-js/plugin-github-integration`][62]
+- [`@projector-js/plugin-list-types`][63]
+- [`@projector-js/plugin-metrics`][64]
+- [`@projector-js/plugin-release-checks`][65]
+- [`@projector-js/plugin-sync-files`][66]
+- [`@projector-js/plugin-sync-vercel-env`][67]
+
 ### GitHub Action
 
 See [`projector-pipeline`][14].
 
 ### semantic-release Plugin
 
-See [`@projector-js/semantic-release-plugin`][34].
+The semantic-release plugin facilitates task concurrency and cross-dependency
+version synchronization during the release cycle.
 
-### Imported Library
+First, install the plugin:
 
-See [`@projector-js/core`][35].
+```shell
+npm install --save-dev @projector-js/semantic-release-plugin
+```
+
+Then, add the plugin to your `release.config.js` configuration file:
+
+```json
+{
+  ...
+  plugins: [
+    ...
+    ['@projector-js/semantic-release-plugin', { ... }],
+    ...
+  ],
+  ...
+}
+```
+
+See [Usage][45] and [`@projector-js/semantic-release-plugin`][34] for more
+details.
+
+### Library
+
+Projector's core functionality can be invoked programmatically if desired.
+
+First, install `@projector-js/core`:
+
+```shell
+npm install @projector-js/core
+```
+
+Then import it:
+
+```typescript
+import { getEslintAliases() } from '@projector-js/core/import-aliases';
+
+console.log(getEslintAliases());
+```
+
+See [`@projector-js/core`][35] for details.
 
 ## Documentation
 
@@ -288,6 +394,10 @@ information.
   https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
   'This repo practices continuous integration and deployment!'
 [link-semantic-release]: https://github.com/semantic-release/semantic-release
+[badge-projector]:
+  https://img.shields.io/badge/maintained%20with-projector-ccff00.svg
+  'This repo is managed with Projector'
+[link-projector]: https://github.com/Xunnamius/projector
 [choose-new-issue]: https://github.com/xunnamius/projector/issues/new/choose
 [pr-compare]: https://github.com/xunnamius/projector/compare
 [contributing]: CONTRIBUTING.md
@@ -303,9 +413,6 @@ information.
 [8]: https://en.wikipedia.org/wiki/Continuous_deployment
 [9]: https://docs.npmjs.com/cli/v7/commands/npx
 [10]: https://jestjs.io
-
-[11]: <>
-
 [12]: https://www.npmjs.com/package/npm-check-updates
 [13]: #pre-made-templates-lenses
 [14]: https://github.com/marketplace/actions/projector-pipeline
@@ -330,8 +437,36 @@ information.
 [33]: packages/config-webpack
 [34]: packages/semantic-release-plugin
 [35]: packages/core
-[36]: https://www.npmjs.com/package/semantic-release-mono
+[36]: https://www.npmjs.com/package/semantic-release-atam
 [37]: https://github.com/semantic-release/semantic-release/pull/1710
 [38]: https://github.com/semantic-release/semantic-release/pull/XXXX
 [39]: https://docs.npmjs.com/cli/v8/using-npm/scripts
-[40]: #life-cycle-scripts
+[40]: #life-cycle-scripts-plugins
+[11]: https://github.com/lerna/lerna
+[41]: #feature-overview
+[42]: #terminology
+[43]: #project-structure
+[44]: #monorepo-structure
+[45]: #usage
+[46]: #system-requirements
+[47]: #installation
+[48]: #cli
+[49]: #shared-configurations
+[50]: #github-action
+[51]: #semantic-release-plugin
+[52]: #library
+[53]: #documentation
+[54]: #license
+[55]: #contributing-and-support
+[56]: https://docs.npmjs.com/cli/v8/using-npm/workspaces
+[57]: https://webpack.js.org
+[58]: https://docs.npmjs.com/cli/v8/configuring-npm/package-json#workspaces
+[59]: https://www.npmjs.com/package/glob#glob-primer
+[60]: https://img.shields.io/badge/maintained%20with-projector-ccff00.svg
+[61]: packages/plugin-check-project
+[62]: packages/plugin-github-integration
+[63]: packages/plugin-list-types
+[64]: packages/plugin-metrics
+[65]: packages/plugin-release-checks
+[66]: packages/plugin-sync-files
+[67]: packages/plugin-sync-vercel-env
