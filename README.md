@@ -171,7 +171,7 @@ needs][41].
 
 All Projector projects require at least the following:
 
-- A `package.json` file at the root of the repository
+- A `package.json` file at the root of the repository.
 
 That's it.
 
