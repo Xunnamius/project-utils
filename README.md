@@ -189,7 +189,7 @@ Monorepo projects additionally require the following:
 
 - A `packages/<package-id>/package.json` file exists for each available package.
   - Necessarily, each `packages/<package-id>` is a package root.
-  - Package paths are read from the [`workspaces`][58] array in the root
+  - Projector reads package paths from the [`workspaces`][58] array in the root
     `package.json` file. This means, while it's recommended to stick with the
     Lerna-style `packages/<package-id>` project structure, you can organize your
     packages however you want so long as they appear in `workspaces`. [Glob
