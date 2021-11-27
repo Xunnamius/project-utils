@@ -325,7 +325,7 @@ First, install the plugin:
 npm install --save-dev @projector-js/semantic-release-plugin
 ```
 
-Then, add the plugin to your `release.config.js` configuration file:
+Then, add the plugin to your [`release.config.js`][73] configuration file:
 
 ```javascript
 {
@@ -484,3 +484,5 @@ information.
 [70]: #cli-command-glossary
 [71]: #badge-swag
 [72]: https://github.com/Xunnamius/projector/projects/1
+[73]:
+  https://semantic-release.gitbook.io/semantic-release/usage/configuration#configuration-file
