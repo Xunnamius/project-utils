@@ -18,14 +18,14 @@
 
 <!-- prettier-ignore-end -->
 
-# @projector-js/pipeline
+# @projector-js/semantic-release-plugin
 
 <!-- TODO -->
 
 ## Install
 
 ```bash
-npm install --save-dev @projector-js/pipeline
+npm install --save-dev @projector-js/semantic-release-plugin
 ```
 
 ## Usage
@@ -71,7 +71,7 @@ information.
   'Is this package well-tested?'
 [link-codecov]: https://codecov.io/gh/Xunnamius/projector
 [badge-license]:
-  https://img.shields.io/npm/l/@projector-js/pipeline
+  https://img.shields.io/npm/l/@projector-js/semantic-release-plugin
   "This package's source license"
 [link-license]: https://github.com/Xunnamius/projector/blob/main/LICENSE
 [badge-fossa]:
@@ -80,19 +80,20 @@ information.
 [link-fossa]:
   https://app.fossa.com/projects/custom+27276%2Fgit@github.com:Xunnamius%2Fprojector.git
 [badge-npm]:
-  https://api.ergodark.com/badges/npm-pkg-version/@projector-js/pipeline
+  https://api.ergodark.com/badges/npm-pkg-version/@projector-js/semantic-release-plugin
   'Install this package using npm or yarn!'
-[link-npm]: https://www.npmjs.com/package/@projector-js/pipeline
+[link-npm]: https://www.npmjs.com/package/@projector-js/semantic-release-plugin
 [badge-semantic-release]:
   https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
   'This repo practices continuous integration and deployment!'
 [link-semantic-release]: https://github.com/semantic-release/semantic-release
-[badge-size]: https://badgen.net/bundlephobia/minzip/@projector-js/pipeline
+[badge-size]:
+  https://badgen.net/bundlephobia/minzip/@projector-js/semantic-release-plugin
 [badge-tree-shaking]:
-  https://badgen.net/bundlephobia/tree-shaking/@projector-js/pipeline
+  https://badgen.net/bundlephobia/tree-shaking/@projector-js/semantic-release-plugin
   'Is this package optimized for Webpack?'
 [link-bundlephobia]:
-  https://bundlephobia.com/result?p=@projector-js/pipeline
+  https://bundlephobia.com/result?p=@projector-js/semantic-release-plugin
   'Package size (minified and gzipped)'
 [package-json]: package.json
 [docs]: docs

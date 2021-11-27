@@ -1,0 +1,6 @@
+version: 3
+project:
+  name: '@projector-js/plugin-sync-vercel-env'
+targets:
+  only:
+    - type: npm

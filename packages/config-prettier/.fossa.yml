@@ -1,0 +1,6 @@
+version: 3
+project:
+  name: '@projector-js/config-prettier'
+targets:
+  only:
+    - type: npm

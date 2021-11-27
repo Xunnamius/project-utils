@@ -1,0 +1,6 @@
+version: 3
+project:
+  name: '@projector-js/config-tsconfig'
+targets:
+  only:
+    - type: npm

@@ -1,16 +1,14 @@
 {
-  "name": "@projector-js/pipeline",
+  "name": "@projector-js/plugin-check-project",
   "version": "0.0.0-development",
-  "description": "A collection of tools that power the GitHub Actions CI/CD pipeline used by Projector projects",
+  "description": "A Projector plugin that runs analyzes project structure and file contents to ensure correctness",
   "keywords": [
-    "github",
-    "actions",
-    "ci",
-    "cd",
-    "continuous",
-    "integration",
-    "deployment",
-    "pipeline",
+    "project",
+    "plugin",
+    "extension",
+    "check",
+    "lint",
+    "correctness",
     "projector"
   ],
   "repository": {
@@ -32,11 +30,11 @@
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
-  "types": "./dist/types/packages/pipeline/src/index.d.ts",
+  "types": "./dist/types/packages/plugin-check-project/src/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [
-        "dist/types/packages/pipeline/src/*"
+        "dist/types/packages/plugin-check-project/src/*"
       ]
     }
   },

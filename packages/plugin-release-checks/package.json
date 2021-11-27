@@ -1,13 +1,14 @@
 {
-  "name": "projector-js",
+  "name": "@projector-js/plugin-release-checks",
   "version": "0.0.0-development",
-  "description": "Simple modern monorepo and polyrepo project management CLI, CI/CD toolkit, and JS library built around semantic-release",
+  "description": "A Projector plugin that enables extra correctness checks before allowing the package release life cycle to succeed",
   "keywords": [
     "project",
-    "management",
-    "toolkit",
+    "plugin",
+    "extension",
     "release",
-    "lerna",
+    "correctness",
+    "check",
     "projector"
   ],
   "repository": {
@@ -29,11 +30,11 @@
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
-  "types": "./dist/types/packages/projector/src/index.d.ts",
+  "types": "./dist/types/packages/plugin-release-checks/src/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [
-        "dist/types/packages/projector/src/*"
+        "dist/types/packages/plugin-release-checks/src/*"
       ]
     }
   },

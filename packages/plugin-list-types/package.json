@@ -1,13 +1,15 @@
 {
-  "name": "projector-js",
+  "name": "@projector-js/plugin-list-types",
   "version": "0.0.0-development",
-  "description": "Simple modern monorepo and polyrepo project management CLI, CI/CD toolkit, and JS library built around semantic-release",
+  "description": "A Projector plugin that lists the commit types accepted by @projector-js/config-conventional-changelog on demand",
   "keywords": [
     "project",
-    "management",
-    "toolkit",
-    "release",
-    "lerna",
+    "plugin",
+    "extension",
+    "conventional-changelog",
+    "commit",
+    "types",
+    "commit-type",
     "projector"
   ],
   "repository": {
@@ -29,11 +31,11 @@
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
-  "types": "./dist/types/packages/projector/src/index.d.ts",
+  "types": "./dist/types/packages/plugin-metrics/src/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [
-        "dist/types/packages/projector/src/*"
+        "dist/types/packages/plugin-metrics/src/*"
       ]
     }
   },

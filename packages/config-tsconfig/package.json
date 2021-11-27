@@ -1,11 +1,12 @@
 {
-  "name": "@projector-js/config-webpack",
+  "name": "@projector-js/config-tsconfig",
   "version": "0.0.0-development",
-  "description": "Shared Webpack configuration used in Projector projects and elsewhere",
+  "description": "Shared TypeScript configuration files used in Projector projects and elsewhere",
   "keywords": [
     "shared",
     "configuration",
-    "webpack",
+    "typescript",
+    "tsconfig",
     "projector"
   ],
   "repository": {
@@ -27,11 +28,11 @@
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
-  "types": "./dist/types/packages/config-webpack/src/index.d.ts",
+  "types": "./dist/types/packages/config-tsconfig/src/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [
-        "dist/types/packages/config-webpack/src/*"
+        "dist/types/packages/config-tsconfig/src/*"
       ]
     }
   },

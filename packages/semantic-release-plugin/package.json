@@ -1,13 +1,20 @@
 {
-  "name": "projector-js",
+  "name": "@projector-js/semantic-release-plugin",
   "version": "0.0.0-development",
-  "description": "Simple modern monorepo and polyrepo project management CLI, CI/CD toolkit, and JS library built around semantic-release",
+  "description": "A semantic-release plugin enabling concurrent releasing and package version synchronization in monorepo Projector projects",
   "keywords": [
     "project",
-    "management",
-    "toolkit",
+    "github",
+    "ci",
+    "cd",
+    "continuous",
+    "integration",
+    "deployment",
+    "pipeline",
+    "monorepo",
+    "semantic",
     "release",
-    "lerna",
+    "semantic-release",
     "projector"
   ],
   "repository": {
@@ -29,11 +36,11 @@
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
-  "types": "./dist/types/packages/projector/src/index.d.ts",
+  "types": "./dist/types/packages/semantic-release-plugin/src/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [
-        "dist/types/packages/projector/src/*"
+        "dist/types/packages/semantic-release-plugin/src/*"
       ]
     }
   },

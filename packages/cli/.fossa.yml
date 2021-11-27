@@ -1,0 +1,6 @@
+version: 3
+project:
+  name: '@projector-js/cli'
+targets:
+  only:
+    - type: npm
