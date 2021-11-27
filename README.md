@@ -327,7 +327,7 @@ npm install --save-dev @projector-js/semantic-release-plugin
 
 Then, add the plugin to your `release.config.js` configuration file:
 
-```json
+```javascript
 {
   ...
   plugins: [
