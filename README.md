@@ -15,9 +15,9 @@
 
 # 📽️ Projector
 
-> 🚧 🚧 Though I use it as a Lerna replacement to manage and release my
-> software, **Projector is still very much in its infancy**! Check out the
-> [public roadmap][72] to see the lay of things. What follows is [RDD][79] 🙂
+> 🚧 🚧 Though I use it as a Lerna replacement with great success, **Projector
+> is still very much in its infancy**! Check out the [public roadmap][72] to see
+> the lay of things. What follows is [RDD][79] 🙂
 
 Projector is a modern monorepo _and_ polyrepo management toolkit with a focus on
 simplicity and flexibility. It's built around [semantic-release][2],
