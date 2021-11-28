@@ -69,24 +69,40 @@ creation—Projector only implements a focused subset of features.
 
 ## Feature Overview
 
+- Compatible with new and existing npm projects.
+- Presents a unified interface for both polyrepos (normal repos) and monorepos.
+- Built on popular open source tooling.
+  - Projector's core feature set relies on git, npm (i.e. [workspaces][56] and
+    [scripts][39]), and [a slightly-tweaked semantic-release fork][36].
+  - Projector makes several optional [_highly opinionated_ configurations][49]
+    are available for TypeScript, webpack, Babel, Jest, and other tools, but you
+    can very easily substitute your own.
+  - Projector uses [lage][76] and [backfill][77] for topologically-ordered
+    concurrent script/task execution and output caching. See the [Dependency
+    Topology and Script Concurrency][75] section for details.
+  - Projector uses [glob][80] to support easy workspace selection.
+- Provides tooling for Continuous Integration and Deployment (via the
+  [`projector-pipeline` marketplace Action][14]).
+- Supports customization through Projector life cycle "plugins".
+  - Projector will call an [npm script][39] (à la `npm run an-npm-script`) [with
+    a well-defined name][40] whenever an interesting event occurs.
+- Robust debugging output available on demand (via [debug][15]).
+  - Set `DEBUG=projector` to enable debug output when running Projector.
+  - Set `DEBUG=projector:<projector-package-id>` to view debug output from a
+    single Projector package.
+    - `<projector-package-id>` is the name of any package root under
+      [`packages/`][20].
+    - For example: `DEBUG=projector:config-babel`.
+  - Set `DEBUG=projector:all` (or `DEBUG=projector:<projector-package-id>:all`)
+    to view all possible debug output Projector generates, including extra
+    information that is normally hidden (potentially _very_ verbose).
+
+### CLI Examples
+
 > The `p` command comes from `npm i -g @projector-js/cli`. Alternatively,
 > [npx][9] can be used: `npx projector ...` (local install) or
 > `npx projector-js ...` (no install).
 
-- Compatible with JavaScript/TypeScript projects already using npm.
-- Presents a unified interface for both polyrepos (normal repos) and monorepos.
-  - The `--root` argument, when used in a polyrepo context, refers to the
-    repository root and can usually be omitted.
-- Built on popular open source tooling you're likely already familiar with.
-  - The primary components of Projector rely on git, npm (i.e. [workspaces][56]
-    and [scripts][39]), and [a slightly-tweaked semantic-release fork][36].
-  - Several _highly opinionated_ configurations [are available][49] for
-    TypeScript, webpack, Babel, Jest, and other tools, but you can very easily
-    substitute your own and/or ignore them entirely.
-  - Uses [lage][76] and [backfill][77] for topologically-ordered concurrent
-    script/task execution and output caching. This can be fine tuned on a
-    per-project basis. See the [Dependency Topology and Script Concurrency][75]
-    section for details.
 - Build one, some, or all packages concurrently (via [webpack][57] or any
   bundler or compiler).
   > `p build -p pkg-1`\
@@ -110,14 +126,14 @@ creation—Projector only implements a focused subset of features.
   > `p update -p pkg-1`\
   > `p update -p pkg-1 -p pkg-2`\
   > `p update --no-commits -p pkg-1 -p pkg-3`\
-  > `p update --root`\
-  > `p update --doctor`\
+  > `p update --root --doctor`\
   > `p update`
-- Run npm scripts for one, some, or all packages (via [npm-run-script][39]).
-  > `p run -p pkg-1 npm-script-in-pkg`\
-  > `p run -p pkg-1 -p pkg-2 npm-script-in-pkgs`\
+- Run npm scripts for one, some, or all packages (via [lage][76] if configured,
+  otherwise [npm-run-script][39]).
+  > `p run -p pkg-1 npm-script-in-workspace`\
+  > `p run -p pkg-1 -p pkg-2 npm-script-in-workspace`\
   > `p run --root npm-script-at-root-only`\
-  > `p run npm-script-at-root-and-in-every-pkg`
+  > `p run npm-script-at-root-and-in-every-workspace --parallel --if-present`
 - Run arbitrary npm commands for one, some, or all packages.
   > `p -p pkg-1 npm info`\
   > `p -p pkg-1 -p pkg-2 npm list --depth=1`\
@@ -127,37 +143,25 @@ creation—Projector only implements a focused subset of features.
   workspaces and `package.json`).
   > `p install -p pkg-1`\
   > `p install -p pkg-1 -p pkg-2`\
-  > `p install -p 'pkg-*' -p ppkkgg some-package some-other-package`\
-  > `p install --root --save-dev new-package-installed-to-root`\
-  > `p install new-package-installed-to-root-and-every-pkg`\
+  > `p install -p 'pkg-*' -p my-workspace pkg-to-install-1 pkg-to-install-2`\
+  > `p install --root --save-dev pkg-to-install-to-root`\
+  > `p install pkg-to-install-to-root-and-every-workspace`\
   > `p install`
 - Create new projects from scratch, or from a [custom template][13].
   > `p create new-project`\
   > `p create --monorepo new-project`\
   > `p create new-project --using /some/path/to/template`\
   > `p create new-project --monorepo --using https://github.com/some-user/some-repo`
-- Add new packages (only when the current working directory is a monorepo).
+- Add new packages (only when the current working directory is a monorepo root).
   > `p create new-package`\
-  > `p create new-package --using /some/path/to/template`\
+  > `p create @scoped/new-package --at relative/path/to/package/root`\
+  > `p create @scoped/new-package --using /some/path/to/template`\
   > `p create new-package --using https://github.com/some-user/some-repo`
 - Rename projects and/or packages, updating metadata where necessary.
-  > `p rename --root new-name-at-root-pkg-json`\
-  > `p rename pkg-1 pkg-1-new-name`
+  > `p rename --root --new-name new-name-at-root-pkg-json`\
+  > `p rename -p pkg-1 --new-name a-new-name --new-path new/pkg/root`
 - List project and package metadata (especially useful for monorepos).
   > `p list`
-- Plug-and-play Continuous Integration (CI) and Continuous Deployment (CD)
-  support (via GitHub Actions and Dependabot).
-  - See the [`projector-pipeline` marketplace Action][14].
-- Hook into the Projector runtime life cycle with your own "plugins".
-  - Projector will call an [npm script][39] (à la `npm run an-npm-script`) [with
-    a well-defined name][40] whenever an interesting event occurs.
-- Robust synchronized debugging output (via [debug][15]).
-  - `DEBUG=projector` to view a subset of debug output from Projector itself.
-  - `DEBUG=projector:<package-id>` to view an even finer subset of debug output
-    from Projector itself.
-  - `DEBUG=projector:all` to view all debug output Projector generates
-    (potentially _very_ verbose).
-  - Debug output can be piped to a file if desired.
 
 > See [`@projector-js/cli`][22] for all available CLI commands.
 
@@ -176,7 +180,11 @@ creation—Projector only implements a focused subset of features.
   package in a monorepo. The name of this directory is also referred to as the
   `package-id`, which may or may not match the `name` in the package's
   `package.json` file. Package roots are _never_ referred to as "root".
-- **topological order**: <!-- TODO -->
+- [**topological order**][81]: a sequence of packages where a dependent package
+  always comes before its dependencies—a so-called "package dependency order".
+  Topological ordering ensures concurrent tasks are performed at the right time
+  (e.g. (re)build some packages before linting other packages). [Here's an
+  example with pictures][82].
 
 ## Project Structure
 
@@ -198,8 +206,12 @@ That's it.
 
 Monorepo projects additionally require the following:
 
-- A `packages/<package-id>/package.json` file exists for each available package.
-  - Necessarily, each `packages/<package-id>` is a package root.
+- A `workspaces` key
+  <!-- TODO: rework/delete the below and update links since packages/ is no longer canon -->
+- A `<package-path>/<package-id>/package.json` file exists for each available
+  package.
+  - Necessarily, each `<package-path>/<package-id>` is a package root.
+  - By default, `<package-path>` is "packages" but this is configurable.
   - Projector reads package paths from the [`workspaces`][58] array in the root
     `package.json` file. This means, while it's recommended to stick with the
     Lerna-style `packages/<package-id>` project structure, you can organize your
@@ -507,3 +519,6 @@ information.
 [77]: https://github.com/microsoft/backfill
 [78]: https://microsoft.github.io/lage/guide/pipeline.html#defining-a-pipeline
 [79]: https://tom.preston-werner.com/2010/08/23/readme-driven-development.html
+[80]: https://www.npmjs.com/package/glob
+[81]: https://en.wikipedia.org/wiki/Topological_sorting
+[82]: https://microsoft.github.io/lage/guide/levels.html
