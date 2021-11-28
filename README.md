@@ -186,7 +186,7 @@ subset of features.
   always comes before its dependencies—a so-called "package dependency order".
   Topological ordering ensures concurrent tasks are performed at the right time
   (e.g. (re)build some packages before linting other packages). [Here's an
-  example with pictures][82].
+  illustrated example][82].
 
 ## Project Structure
 
@@ -266,7 +266,7 @@ See [`@projector-js/cli`][22].
 
 ### Badge Swag
 
-Inspired by Lerna and semantic-release, Projector too has a badge!
+Like Lerna and semantic-release, Projector too has a badge!
 
 [![Maintained with Projector][60]][link-projector]
 
