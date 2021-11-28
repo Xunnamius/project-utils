@@ -37,8 +37,8 @@ tooling already provide.
 In this way, **Projector tries to avoid being Yet Another Thing you have to
 learn.** The upside: combined with [life cycle plugins][40] (i.e. simple npm
 scripts), Projector is flexible enough to integrate with most technology stacks.
-The downside: compared to [Lerna][11]—the primary inspiration behind Projector's
-creation—Projector only implements a focused subset of features.
+The downside: compared to [Lerna][11], Projector only implements a focused
+subset of features.
 
 [See what Projector can do][41].
 
@@ -326,8 +326,8 @@ Projector projects. See each individual package's documentation for details.
 - webpack ([`@projector-js/config-webpack`][33])
 
 Additionally, several highly opinionated plugins are available. Since plugins
-are low overhead and extremely easy to create, you'll likely want to [write your
-own][40] instead if needed.
+are low overhead and extremely easy to create (you don't even have to make a new
+file!), you'll likely want to [write your own][40] instead.
 
 - [`@projector-js/plugin-check-project`][61]
 - [`@projector-js/plugin-github-integration`][62]
