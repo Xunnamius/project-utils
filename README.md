@@ -44,11 +44,12 @@ subset of features.
 
 ---
 
-- [Feature Overview][41]
+- [Feature Overview][83]
+  - [CLI Examples][41]
 - [Terminology][42]
 - [Project Structure][43]
   - [Monorepo Structure][44]
-- [Getting Started][45]
+- [Usage][45]
   - [Getting Started][74]
   - [CLI Command Glossary][70]
   - [Life Cycle Scripts (Plugins)][40]
@@ -479,7 +480,7 @@ information.
 [39]: https://docs.npmjs.com/cli/v8/using-npm/scripts
 [40]: #life-cycle-scripts-plugins
 [11]: https://github.com/lerna/lerna
-[41]: #feature-overview
+[41]: #cli-examples
 [42]: #terminology
 [43]: #project-structure
 [44]: #monorepo-structure
@@ -522,3 +523,4 @@ information.
 [80]: https://www.npmjs.com/package/glob
 [81]: https://en.wikipedia.org/wiki/Topological_sorting
 [82]: https://microsoft.github.io/lage/guide/levels.html
+[83]: #feature-overview
