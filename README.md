@@ -15,6 +15,10 @@
 
 # 📽️ Projector
 
+> 🚧 🚧 Though I use it as a Lerna replacement to manage and release my
+> software, **Projector is still very much in its infancy**! Check out the
+> [public roadmap][72] to see the lay of things. What follows is [RDD][79] 🙂
+
 Projector is a modern monorepo _and_ polyrepo management toolkit with a focus on
 simplicity and flexibility. It's built around [semantic-release][2],
 [conventional-changelog][3], and [conventional-commits][4] for commit-based
@@ -30,15 +34,13 @@ config file", no repository commit count limits, nor any reinventions of the
 features that git, npm, semantic-release, conventional-changelog, and other
 tooling already provide.
 
-**Projector tries to avoid being Yet Another Thing you have to learn.** The
-upside: combined with [custom life cycle plugins][40], Projector is probably
-flexible enough to integrate with your technology stack of choice. The downside:
-compared to [Lerna][11]—the primary inspiration behind Projector's
-creation—Projector only implements a focused subset of features. [See what
-Projector can do][41].
+In this way, **Projector tries to avoid being Yet Another Thing you have to
+learn.** The upside: combined with [life cycle plugins][40] (i.e. simple npm
+scripts), Projector is flexible enough to integrate with most technology stacks.
+The downside: compared to [Lerna][11]—the primary inspiration behind Projector's
+creation—Projector only implements a focused subset of features.
 
-> 🚧 🚧 Projector is still in its infancy as a tool mostly for my own personal
-> use! Check out the [public roadmap][72] to see the lay of things.
+[See what Projector can do][41].
 
 ---
 
@@ -83,9 +85,8 @@ Projector can do][41].
     substitute your own and/or ignore them entirely.
   - Uses [lage][76] and [backfill][77] for topologically-ordered concurrent
     script/task execution and output caching. This can be fine tuned on a
-    per-project basis if necessary by modifying the root [`lage.config.js`][78]
-    file. See the [Dependency Topology and Script Concurrency][75] section for
-    details.
+    per-project basis. See the [Dependency Topology and Script Concurrency][75]
+    section for details.
 - Build one, some, or all packages concurrently (via [webpack][57] or any
   bundler or compiler).
   > `p build -p pkg-1`\
@@ -505,3 +506,4 @@ information.
 [76]: https://github.com/microsoft/lage
 [77]: https://github.com/microsoft/backfill
 [78]: https://microsoft.github.io/lage/guide/pipeline.html#defining-a-pipeline
+[79]: https://tom.preston-werner.com/2010/08/23/readme-driven-development.html
