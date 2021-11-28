@@ -122,15 +122,8 @@ subset of features.
   > `p publish -p pkg-1`\
   > `p publish -p pkg-1 -p pkg-2 -p pkg-3`\
   > `p publish`
-- Update the dependencies (and/or dev dependencies) of one, some, or all
-  packages (via [npm-check-updates][12]).
-  > `p update -p pkg-1`\
-  > `p update -p pkg-1 -p pkg-2`\
-  > `p update --no-commits -p pkg-1 -p pkg-3`\
-  > `p update --root --doctor`\
-  > `p update`
-- Run npm scripts for one, some, or all packages (via [lage][76] if configured,
-  otherwise [npm-run-script][39]).
+- Run npm scripts for one, some, or all packages concurrently (topological order
+  via [lage][76]) or in parallel/sequentially (via [npm-run-script][39]).
   > `p run -p pkg-1 npm-script-in-workspace`\
   > `p run -p pkg-1 -p pkg-2 npm-script-in-workspace`\
   > `p run --root npm-script-at-root-only`\
@@ -148,6 +141,13 @@ subset of features.
   > `p install --root --save-dev pkg-to-install-to-root`\
   > `p install pkg-to-install-to-root-and-every-workspace`\
   > `p install`
+- Update the dependencies (and/or dev dependencies) of one, some, or all
+  packages (via [npm-check-updates][12]).
+  > `p update -p pkg-1`\
+  > `p update -p pkg-1 -p pkg-2`\
+  > `p update --no-commits -p pkg-1 -p pkg-3`\
+  > `p update --root --doctor`\
+  > `p update`
 - Create new projects from scratch, or from a [custom template][13].
   > `p create new-project`\
   > `p create --monorepo new-project`\
@@ -176,7 +176,8 @@ subset of features.
   Projector project. Also referred to as "project root", `rootDir` (always an
   absolute path), or simply "root". Projector projects should never depend on
   items outside their respective repository roots.
-- **package root**: a subdirectory at `<rootDir>/packages/<package-id>`
+- **package**/**package root**: synonymous with [workspace][56].
+  <!-- TODO: reword me --> A subdirectory at `<rootDir>/packages/<package-id>`
   ([configurable][44]) that contains the `package.json` file of an individual
   package in a monorepo. The name of this directory is also referred to as the
   `package-id`, which may or may not match the `name` in the package's
