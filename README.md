@@ -220,14 +220,14 @@ Monorepos additionally require the following:
 **Example**
 
     .
-    ├── package.json
+    ├── package.json         <==
     ├── package-lock.json
-    ├── packages/            <==
-    │   ├── pkg-1/           <==
+    ├── packages/
+    │   ├── pkg-1/
     │   │   ├── package.json <==
     │   │   ├── README.md
     │   │   └── src/
-    │   └── pkg-2/           <==
+    │   └── pkg-2/
     │       ├── package.json <==
     │       ├── README.md
     │       └── src/
