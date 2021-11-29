@@ -205,7 +205,7 @@ That's it.
 **Example**
 
     .
-    ├── package.json      <==
+    ├── package.json         <==
     ├── package-lock.json
     ├── src/
     └── README.md
