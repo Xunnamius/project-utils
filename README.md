@@ -15,17 +15,17 @@
 
 # 📽️ Projector
 
-> 🚧 🚧 Though I use it as a Lerna replacement with great success, **Projector
-> is still very much in its infancy**! Check out the [public roadmap][72] to see
+> 🚧 🚧 Though I use it in production as a Lerna replacement, **Projector is
+> still very much in its infancy**! Check out the [public roadmap][72] to see
 > the lay of things. What follows is [RDD][79] 🙂
 
-Projector is a modern monorepo _and_ polyrepo management toolkit with a focus on
-simplicity, flexibility, and performance. It's built around
+Projector is a lightweight monorepo _and_ polyrepo management toolkit with a
+focus on simplicity, flexibility, and performance. It's built around
 [semantic-release][2], [conventional-changelog][3], and
 [conventional-commits][4] for commit-based automated release flows and
 (optionally) [GitHub Actions][5] and [Dependabot][6] for [CI][7]/[CD][8]. It
-supports task concurrency and, for monorepos, topological script execution and
-cross-dependency version synchronization.
+supports task concurrency and, for monorepos, topologically ordered execution
+and cross-dependency version synchronization during release.
 
 Projector leans on as much native npm functionality and popular tooling as
 possible. This means no bootstrapping commands, no custom linking, no "Projector
@@ -39,8 +39,7 @@ learn.** If you know how to use npm, you're already 80% there. Combined with
 any type of JS project—be it authoring a library, building a serverless or
 JAMstack app, bundling a CLI tool, etc.
 
-Projector was inspired by [Lerna][11], [Rush][84], [Nx][85], and others. [See
-what Projector can do for you][41].
+[See what Projector can do for you][41], or just [jump right in!][74]
 
 ---
 
@@ -144,8 +143,11 @@ what Projector can do for you][41].
   > `projector install -w pkg-1 -w pkg-2`\
   > `projector install -w 'pkg-*' -w my-workspace install-1 install-2`\
   > `projector install -ws install-to-every-workspace`\
-  > `projector install --save-dev install-to-root`
-- Update the dependencies (dev, peer, etc) of one, some, or all workspaces.
+  > `projector install --save-dev install-to-root`\
+  > `projector uninstall -w pkg-1 install-2`\
+  > `projector uninstall -ws uninstall-from-every-workspace`
+- [Update the dependencies of][12] one, some, or all workspaces, optionally
+  committing the updates by type (`devDependencies`, `peerDependencies`, etc).
   > `projector update -w packages/pkg-1`\
   > `projector update -w ./packages/pkg-1 -w pkg-2`\
   > `projector update --no-commits -w pkg-1 -w pkg-3`\
@@ -161,8 +163,10 @@ what Projector can do for you][41].
   > `projector create --at relative/path/to/package/root`\
   > `projector create @scoped/new-package --using /some/path/to/template`\
   > `projector create new-package --using https://github.com/u/some-repo`
-- Rename/move workspaces, updating metadata where necessary.
+- Rename/move workspaces, updating metadata where necessary and optionally
+  executing a regex-powered "find and replace" across the source.
   > `projector rename -w pkg-1 --to-name a-new-name --to-path new/pkg/root`\
+  > `projector rename -w pkg-1 --to-name a-new-name --find-and-replace`\
   > `projector rename --to-name new-name-at-root-pkg-json`
 - List project and workspace metadata (especially useful for monorepos).
   > `projector list`
@@ -185,6 +189,9 @@ what Projector can do for you][41].
 There are several ways to utilize Projector: as a _CLI tool or npm script_, as a
 source of _shared configuration_, as a _GitHub Action_, as a _semantic-release
 plugin_, and as an _imported library_.
+
+See [Getting Started][74] for details on how to use the various components that
+make up Projector.
 
 ### CLI
 
@@ -262,8 +269,7 @@ Then, add the plugin to your [`release.config.js`][73] configuration file:
 }
 ```
 
-See [Getting Started][45] and [`@projector-js/semantic-release-plugin`][34] for
-more details.
+See [`@projector-js/semantic-release-plugin`][34] for more details.
 
 ### Library
 
@@ -312,6 +318,8 @@ See [`@projector-js/core`][35] for details.
 
 <!-- TODO -->
 
+Caveat: trading off disk space for performance and simplicity!
+
 ### Getting Started
 
 <!-- TODO -->
@@ -321,7 +329,8 @@ See [`@projector-js/core`][35] for details.
 All Projector projects require at least the following:
 
 - A `package.json` file at the root of the repository.
-  - The root `package.json` file **must not** contain a [`workspaces`][56] key.
+  - Projector assumes a project is a polyrepo if the root `package.json` file
+    does not contains a [`workspaces`][56] key.
 
 That's it.
 
@@ -333,12 +342,23 @@ That's it.
     ├── src/
     └── README.md
 
+`package.json`:
+
+```javascript
+{
+  "name": "my-cool-package",
+  "version": "1.0.0",
+  ...
+}
+```
+
 #### Monorepo Structure
 
 Monorepos additionally require the following:
 
 - A [`workspaces`][56] key in the root `package.json` file.
-  - A `package.json` file with a `name` key must exist at each package root.
+  - A `package.json` file with at least a `name` key must exist at each package
+    root.
 
 **Example**
 
@@ -356,13 +376,29 @@ Monorepos additionally require the following:
     │       └── src/
     └── README.md
 
+`package.json`:
+
+```javascript
+{
+  "name": "my-cool-monorepo",
+  "workspaces": ["packages/pkg-1", "packages/pkg-2"],
+  ...
+}
+```
+
+`packages/pkg-1/package.json`:
+
+```javascript
+{
+  "name": "pkg-1",
+  "version": "1.0.0",
+  ...
+}
+```
+
 ### CLI Command Glossary
 
 See [`@projector-js/cli`][22].
-
-### Life Cycle Scripts (Plugins)
-
-<!-- TODO -->
 
 ### Dependency Topology and Script Concurrency
 
@@ -373,6 +409,10 @@ See [`@projector-js/cli`][22].
 <!-- TODO -->
 
 #### Pre-made Templates (Lenses)
+
+<!-- TODO -->
+
+### Life Cycle Scripts (Plugins)
 
 <!-- TODO -->
 
