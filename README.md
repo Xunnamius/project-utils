@@ -123,9 +123,9 @@ what Projector can do for you][41].
   > `projector test some-specific-test`\
   > `projector test --coverage --collectCoverageFrom 'src/**/*.ts' some-test`\
   > `projector test`
-- Release from one, some, or all workspaces concurrently (in topological order;
+- Release from one, some, or all workspaces concurrently (topologically;
   all-or-nothing), including automatic commit-based changelog and documentation
-  generation along with cross-dependency version synchronization (via
+  generation and cross-dependency version synchronization for monorepos (via
   [semantic-release-atam][36]).
   > `projector publish -w pkg-1`\
   > `projector publish -w pkg-1 -w pkg-2 -w pkg-3`\
