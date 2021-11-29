@@ -132,8 +132,7 @@ what Projector can do for you][41].
   > `projector publish -ws`\
   > `projector publish`
 - Run npm scripts within one, some, or all workspaces concurrently (topological
-  order via [`lage`][76]) or in parallel/sequentially (via
-  [npm-run-script][39]).
+  order via [lage][76]) or in parallel/sequentially (via [npm-run-script][39]).
   > `projector run -w pkg-1 script-in-workspace`\
   > `projector run -w pkg-1 -w pkg-2 script-in-workspace`\
   > `projector run -ws script-in-some-workspaces --parallel --if-present`\
