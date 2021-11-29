@@ -46,17 +46,6 @@ what Projector can do for you][41].
 
 - [Feature Overview][83]
   - [CLI Examples][41]
-- [Terminology][42]
-- [Project Structure][43]
-  - [Monorepo Structure][44]
-- [Usage][45]
-  - [Getting Started][74]
-  - [CLI Command Glossary][70]
-  - [Life Cycle Scripts (Plugins)][40]
-  - [Dependency Topology and Script Concurrency][75]
-  - [Template Repositories][69]
-    - [Pre-made Templates (Lenses)][13]
-  - [Badge Swag][71]
 - [System Requirements][46]
 - [Installation][47]
   - [CLI][48]
@@ -64,9 +53,17 @@ what Projector can do for you][41].
   - [GitHub Action][50]
   - [semantic-release Plugin][51]
   - [Library][52]
-- [Documentation][53]
-  - [License][54]
-- [Contributing and Support][55]
+- [Terminology][42]
+- [Usage][45]
+  - [Getting Started][74]
+  - [Project Structure][43]
+    - [Monorepo Structure][44]
+  - [CLI Command Glossary][70]
+  - [Life Cycle Scripts (Plugins)][40]
+  - [Dependency Topology and Script Concurrency][75]
+  - [Template Repositories][69]
+    - [Pre-made Templates (Lenses)][13]
+  - [Badge Swag][71]
 
 ## Feature Overview
 
@@ -169,107 +166,6 @@ what Projector can do for you][41].
   > `projector rename --to-name new-name-at-root-pkg-json`
 - List project and workspace metadata (especially useful for monorepos).
   > `projector list`
-
-## Terminology
-
-- **repository root**: the top-level directory of a git repository and Projector
-  project; it contains the root `package.json` file. This directory is also
-  referred to as: "project root," `rootDir` (always as an absolute path), "root
-  package" (in [npm documentation][56]), "monorepo/polyrepo root," or simply
-  "root".
-- **monorepo**: a repository containing multiple packages/workspaces, each
-  listed under the [`workspaces`][56] key in the root `package.json`. A monorepo
-  is the opposite of a _polyrepo_.
-- **package**/**package root**: synonymous with a [workspace][56] in a monorepo.
-  It contains a package/workspace's `package.json` file. The basename of this
-  directory (e.g. `c` in `/a/b/c/`) is also referred to as the `package-id`,
-  which may or may not match the `name` in the package's `package.json` file.
-  Package roots are _never_ referred to as "root".
-- **polyrepo**: a repository containing a root `package.json` file with no
-  [`workspaces`][56] key. A polyrepo is the opposite of a _monorepo_.
-- [**topological order**][81]: a sequence of packages where a dependent package
-  always comes before its dependencies—a so-called "package dependency order".
-  Topological ordering ensures concurrent tasks are performed at the right time
-  and order (e.g. regenerate types in a core package before linting its
-  dependent packages). [Here's an illustrated example][82].
-
-## Project Structure
-
-All Projector projects require at least the following:
-
-- A `package.json` file at the root of the repository.
-  - The root `package.json` file **must not** contain a [`workspaces`][56] key.
-
-That's it.
-
-**Example**
-
-    .
-    ├── package.json         <==
-    ├── package-lock.json
-    ├── src/
-    └── README.md
-
-### Monorepo Structure
-
-Monorepos additionally require the following:
-
-- A [`workspaces`][56] key in the root `package.json` file.
-  - A `package.json` file with a `name` key must exist at each package root.
-
-**Example**
-
-    .
-    ├── package.json         <==
-    ├── package-lock.json
-    ├── packages/
-    │   ├── pkg-1/
-    │   │   ├── package.json <==
-    │   │   ├── README.md
-    │   │   └── src/
-    │   └── pkg-2/
-    │       ├── package.json <==
-    │       ├── README.md
-    │       └── src/
-    └── README.md
-
-## Usage
-
-<!-- TODO -->
-
-### Getting Started
-
-<!-- TODO -->
-
-### CLI Command Glossary
-
-See [`@projector-js/cli`][22].
-
-### Life Cycle Scripts (Plugins)
-
-<!-- TODO -->
-
-### Dependency Topology and Script Concurrency
-
-<!-- TODO -->
-
-### Template Repositories
-
-<!-- TODO -->
-
-#### Pre-made Templates (Lenses)
-
-<!-- TODO -->
-
-### Badge Swag
-
-Like Lerna and semantic-release, Projector too has a badge!
-
-[![Maintained with Projector][60]][link-projector]
-
-```markdown
-[![Maintained with Projector](https://img.shields.io/badge/maintained%20with-projector-ccff00.svg)](https://github.com/Xunnamius/projector)
-```
 
 ## System Requirements
 
@@ -388,6 +284,107 @@ console.log(getEslintAliases());
 ```
 
 See [`@projector-js/core`][35] for details.
+
+## Terminology
+
+- **repository root**: the top-level directory of a git repository and Projector
+  project; it contains the root `package.json` file. This directory is also
+  referred to as: "project root," `rootDir` (always as an absolute path), "root
+  package" (in [npm documentation][56]), "monorepo/polyrepo root," or simply
+  "root".
+- **monorepo**: a repository containing multiple packages/workspaces, each
+  listed under the [`workspaces`][56] key in the root `package.json`. A monorepo
+  is the opposite of a _polyrepo_.
+- **package**/**package root**: synonymous with a [workspace][56] in a monorepo.
+  It contains a package/workspace's `package.json` file. The basename of this
+  directory (e.g. `c` in `/a/b/c/`) is also referred to as the `package-id`,
+  which may or may not match the `name` in the package's `package.json` file.
+  Package roots are _never_ referred to as "root".
+- **polyrepo**: a repository containing a root `package.json` file with no
+  [`workspaces`][56] key. A polyrepo is the opposite of a _monorepo_.
+- [**topological order**][81]: a sequence of packages where a dependent package
+  always comes before its dependencies—a so-called "package dependency order".
+  Topological ordering ensures concurrent tasks are performed at the right time
+  and order (e.g. regenerate types in a core package before linting its
+  dependent packages). [Here's an illustrated example][82].
+
+## Usage
+
+<!-- TODO -->
+
+### Getting Started
+
+<!-- TODO -->
+
+### Project Structure
+
+All Projector projects require at least the following:
+
+- A `package.json` file at the root of the repository.
+  - The root `package.json` file **must not** contain a [`workspaces`][56] key.
+
+That's it.
+
+**Example**
+
+    .
+    ├── package.json         <==
+    ├── package-lock.json
+    ├── src/
+    └── README.md
+
+#### Monorepo Structure
+
+Monorepos additionally require the following:
+
+- A [`workspaces`][56] key in the root `package.json` file.
+  - A `package.json` file with a `name` key must exist at each package root.
+
+**Example**
+
+    .
+    ├── package.json         <==
+    ├── package-lock.json
+    ├── packages/
+    │   ├── pkg-1/
+    │   │   ├── package.json <==
+    │   │   ├── README.md
+    │   │   └── src/
+    │   └── pkg-2/
+    │       ├── package.json <==
+    │       ├── README.md
+    │       └── src/
+    └── README.md
+
+### CLI Command Glossary
+
+See [`@projector-js/cli`][22].
+
+### Life Cycle Scripts (Plugins)
+
+<!-- TODO -->
+
+### Dependency Topology and Script Concurrency
+
+<!-- TODO -->
+
+### Template Repositories
+
+<!-- TODO -->
+
+#### Pre-made Templates (Lenses)
+
+<!-- TODO -->
+
+### Badge Swag
+
+Like Lerna and semantic-release, Projector too has a badge!
+
+[![Maintained with Projector][60]][link-projector]
+
+```markdown
+[![Maintained with Projector](https://img.shields.io/badge/maintained%20with-projector-ccff00.svg)](https://github.com/Xunnamius/projector)
+```
 
 ## Documentation
 
