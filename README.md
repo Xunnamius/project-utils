@@ -74,7 +74,7 @@ JAMstack app, bundling a CLI tool, etc.
     semantic-release fork][36].
   - Projector provides several optional [_highly opinionated_
     configurations][49] for TypeScript, webpack, Babel, Jest, and other tools,
-    but you can very Optionally, fasily substitute your own.
+    but you can very easily substitute your own.
   - Projector uses [lage][76], [backfill][77], and [Threads.js][86] for
     topologically-ordered concurrent script/task execution and output caching.
     See the [Dependency Topology and Script Concurrency][75] section for
