@@ -286,9 +286,9 @@ Like Lerna and semantic-release, Projector too has a badge!
 
 ## Installation
 
-There are several ways to utilize Projector: as a _CLI tool_, as a source of
-_shared configuration_, as a _GitHub Action_ (via [the GitHub Actions
-Marketplace][14]), as a _semantic-release plugin_, and as an _imported library_.
+There are several ways to utilize Projector: as a _CLI tool or npm script_, as a
+source of _shared configuration_, as a _GitHub Action_, as a _semantic-release
+plugin_, and as an _imported library_.
 
 ### CLI
 
