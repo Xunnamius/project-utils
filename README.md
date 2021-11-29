@@ -215,7 +215,7 @@ That's it.
 Monorepos additionally require the following:
 
 - A [`workspaces`][56] key in the root `package.json` file.
-  - A `package.json` file must exist at each package root with a `name` key.
+  - A `package.json` file with a `name` key must exist at each package root.
 
 **Example**
 
