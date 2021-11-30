@@ -34,10 +34,10 @@ features that git, npm, semantic-release, conventional-changelog, and other
 tooling already provide.
 
 In this way, **Projector tries to avoid being Yet Another Thing you have to
-learn.** If you know how to use npm, you're already 80% there. Combined with
-[life cycle plugins][40], Projector is flexible enough to integrate with most
-any type of JS project—be it authoring a library, building a serverless or
-JAMstack app, bundling a CLI tool, etc.
+learn.** If you know how to use git, npm, and semantic-release, you're already
+90% there. Combined with [life cycle plugins][40], Projector is flexible enough
+to integrate with most JS projects—be it authoring a library, building a
+serverless or JAMstack app, bundling a CLI tool, etc.
 
 [See what Projector can do for you][41], or just [jump right in!][74]
 
@@ -66,12 +66,12 @@ JAMstack app, bundling a CLI tool, etc.
 
 ## Feature Overview
 
-- Compatible with new and existing npm projects.
+- Compatible with new and existing projects.
 - Presents a unified interface for both polyrepo (normal repos) and monorepo
   management.
 - Built on popular open source tooling.
   - Projector's core feature set relies on git, npm, and [a slightly-tweaked
-    semantic-release fork][36].
+    semantic-release fork][2].
   - Projector provides several optional [_highly opinionated_
     configurations][49] for TypeScript, webpack, Babel, Jest, and other tools,
     but you can very easily substitute your own.
@@ -88,7 +88,7 @@ JAMstack app, bundling a CLI tool, etc.
   - Projector will call an [npm script][39] (à la `npm run an-npm-script`) [with
     a well-defined name][40], if it exists, whenever an interesting event
     occurs.
-- Robust debugging output available on demand.
+- Robust [debugging output][15] available on demand.
   - Set `DEBUG=projector` to enable debug output when running Projector.
   - Set `DEBUG=projector:<projector-package-id>` to view debug output from a
     single Projector package.
@@ -122,7 +122,7 @@ JAMstack app, bundling a CLI tool, etc.
 - Release from one, some, or all workspaces concurrently (topologically;
   all-or-nothing), including automatic commit-based changelog and documentation
   generation and cross-dependency version synchronization for monorepos (via
-  [semantic-release-atam][36]).
+  [semantic-release-atPm][2]).
   > `projector publish -w pkg-1`\
   > `projector publish -w pkg-1 -w pkg-2 -w pkg-3`\
   > `projector publish -ws`\
@@ -141,10 +141,10 @@ JAMstack app, bundling a CLI tool, etc.
 - Manage both individual and shared dependencies across workspaces.
   > `projector install -w pkg-1`\
   > `projector install -w pkg-1 -w pkg-2`\
-  > `projector install -w 'pkg-*' -w my-workspace install-1 install-2`\
+  > `projector install -w 'pkg-*' -w my-workspace installed-1 installed-2`\
   > `projector install -ws install-to-every-workspace`\
   > `projector install --save-dev install-to-root`\
-  > `projector uninstall -w pkg-1 install-2`\
+  > `projector uninstall -w pkg-1 installed-2`\
   > `projector uninstall -ws uninstall-from-every-workspace`
 - [Update the dependencies of][12] one, some, or all workspaces, optionally
   committing the updates by type (`devDependencies`, `peerDependencies`, etc).
@@ -223,7 +223,7 @@ Projector projects. See each individual package's documentation for details.
 - lint-staged ([`@projector-js/config-lint-staged`][28])
 - Next.js ([`@projector-js/config-next`][29])
 - Prettier ([`@projector-js/config-prettier`][30])
-- semantic-release ([`@projector-js/config-semantic-release`][31])
+- semantic-release-atam ([`@projector-js/config-semantic-release-atam`][31])
 - TSConfig ([`@projector-js/config-tsconfig`][32])
 - webpack ([`@projector-js/config-webpack`][33])
 
@@ -322,9 +322,337 @@ Caveat: trading off disk space for performance and simplicity!
 
 ### Getting Started
 
-<!-- TODO -->
+You can use [`projector create`][22] to initialize a new project, but suppose we
+already have a project we've been working on at `/repos/my-project`. It has the
+following structure:
 
-### Project Structure
+<details><summary>Expand Example</summary>
+<p>
+
+    .
+    ├── .git
+    ├── package.json
+    ├── package-lock.json
+    ├── packages/
+    │   ├── pkg-1/
+    │   │   ├── package.json
+    │   │   ├── README.md
+    │   │   └── src/
+    │   └── pkg-2/
+    │       ├── package.json
+    │       ├── README.md
+    │       └── src/
+    ├── test/
+    ├── README.md
+    └── release.config.js
+
+`package.json`:
+
+```javascript
+{
+  "name": "my-cool-monorepo",
+  "workspaces": ["packages/pkg-1", "packages/pkg-2"],
+  "scripts": {
+    "test": "jest --coverage --collectCoverageFrom '**/src/**/*.js' general-tests",
+    ...
+  },
+  ...
+}
+```
+
+`packages/pkg-1/package.json`:
+
+```javascript
+{
+  "name": "pkg-1",
+  "version": "1.1.2",
+  ...
+}
+```
+
+`packages/pkg-2/package.json`:
+
+```javascript
+{
+  "name": "@my-namespace/pkg",
+  "version": "3.0.1",
+  ...
+}
+```
+
+`git tag`:
+
+```shell
+$ git tag | cat
+pkg-1@1.0.0
+pkg-2@1.0.0
+pkg-2@2.0.0
+pkg-2@2.1.0
+pkg-1@1.1.0
+pkg-1@1.1.1
+pkg-2@3.0.0
+pkg-1@1.1.2
+pkg-2@3.0.1
+```
+
+> Note how tag structure is based on [`package-id`][42] rather than the name of
+> the package. This is [configurable][25].
+
+</p>
+</details>
+
+After [installing Projector's CLI][47], we can list information about the
+project.
+
+<details><summary>Expand Example</summary>
+<p>
+
+```shell
+$ projector list
+Monday, Nov 29, 2021, 12:02:59.556 PM PST
+[12:02:59.578 PM] [projector] › »  Listing project metadata
+M my-cool-monorepo@ /repos/my-project [⇡»✘!?]
+├── pkg-1@1.1.2 (⬆1.2.0) [✘!]
+└── @my-namespace/pkg@3.0.1 [?]
+```
+
+This tells us that:
+
+- The project is a monorepo (`M`) rather than a polyrepo (`P`)
+- The project is named "my-cool-monorepo"
+- The project's root (`rootDir`) is at `/repos/my-project`
+- The root `package.json` does not list a version
+- [git status][36] reports the project is ahead of the current remote branch
+  (`⇡`), has renamed files (`»`), has deleted files (`✘`), has unstaged changes
+  (`!`), and has untracked changes (`?`).\
+  ㅤ
+- The latest release of `pkg-1` is `1.1.2` (taken from `version` key).
+- If `projector publish` is run, the next released version of `pkg-1` will be
+  `1.2.0`
+- [git status][36] reports the `packages/pkg-1` directory has deleted files
+  (`✘`) and unstaged changes (`!`).\
+  ㅤ
+- The latest release of `@my-namespace/pkg` is `3.0.1` (taken from `version`
+  key).
+- If `projector publish` is run, no new release of `@my-namespace/pkg` will be
+  made.
+- [git status][36] reports the `packages/pkg-2` directory has untracked changes
+  (`?`).
+
+</p>
+</details>
+
+Next, we'll rename `pkg-1` to `@my-namespace/core`.
+
+<details><summary>Expand Example</summary>
+<p>
+
+```shell
+$ projector rename -w pkg-1 --to-name @my-namespace/core --find-and-replace
+Monday, Nov 29, 2021, 12:03:01.981 PM PST
+[12:03:02.013 PM] [projector] › »  Renaming "pkg-1" (at packages/pkg-1) to "@my-namespace/core" (at packages/pkg-1)
+[12:03:02.040 PM] [projector] › ℹ  Update "name" key in packages/pkg-1/package.json
+[12:03:02.040 PM] [projector] › ℹ  Update "name" key in packages/pkg-1/package.json
+[12:03:02.059 PM] [projector] › ℹ  Find all strings matching /^pkg-1$/ and replace with "@my-namespace/core"
+[12:03:02.123 PM] [projector] [find-replace] › ℹ  2 replacements in README.md
+[12:03:02.248 PM] [projector] [find-replace] › ℹ  7 replacements in packages/pkg-1/README.md
+[12:03:02.359 PM] [projector] › ℹ  Rebuild node_modules
+
+added 2 packages, and audited 47 packages in 1s
+
+7 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+[12:03:03.222 PM] [projector] › ✔ Rename successful
+```
+
+> If you've used [semantic-release][2] before, the output style should look very
+> familiar.
+
+`packages/pkg-1/package.json`:
+
+```javascript
+{
+  "name": "@my-namespace/core",
+  "version": "1.1.2",
+  ...
+}
+```
+
+</p>
+</details>
+
+Let's run `projector list` again.
+
+<details><summary>Expand Example</summary>
+<p>
+
+```shell
+$ projector list
+Monday, Nov 29, 2021, 12:04:20.420 PM PST
+[12:04:20.442 PM] [projector] › »  Listing project metadata
+M my-cool-monorepo@ /repos/my-project [⇡»✘!?]
+├── @my-namespace/core@1.1.2 (⬆1.2.0) [✘!]
+└── @my-namespace/pkg@3.0.1 [?]
+```
+
+</p>
+</details>
+
+While `@my-namespace/core` is technically a new package, the next release
+version will be `1.2.0` since its `package-id` has not changed. If we'd updated
+`@my-namespace/core`'s path too ([or used a different `tagFormat` setting][25]),
+the `package-id` would be different and the next release version would be
+`1.0.0` regardless of what version is listed in `package.json`.
+
+We can run `npm show` in the `packages/pkg-1` directory to prove
+`@my-namespace/core` has not yet been published.
+
+<details><summary>Expand Example</summary>
+<p>
+
+```shell
+$ projector -w pkg-1 npm show
+Monday, Nov 29, 2021, 12:05:12.911 PM PST
+[12:05:12.978 PM] [projector] › »  Executing command (at packages/pkg-1) npm show
+npm ERR! code E404
+npm ERR! 404 Not Found - GET https://registry.npmjs.org/@my-namespace%2fcore - Not found
+npm ERR! 404
+npm ERR! 404  '@my-namespace/core@latest' is not in this registry.
+npm ERR! 404 You should bug the author to publish it (or use the name yourself!)
+npm ERR! 404
+npm ERR! 404 Note that you can also install from a
+npm ERR! 404 tarball, folder, http url, or git url.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/user/.npm/_logs/2021-11-29T21_54_47_723Z-debug.log
+[12:05:13.117 PM] [projector] › ✖ Failed to execute command
+```
+
+> Note how we can use `-w` to refer to a package by its `package-id` regardless
+> of its `name`; `-w '**/core'`, `-w @my-namespace/core`, `-w '**/pkg-1'`, and
+> `-w packages/pkg-1` would also have worked.
+
+</p>
+</details>
+
+When we did the find-and-replace on `pkg-1` earlier, it updated the source at
+`packages/pkg-2/src/...`. Suppose we also added `@my-namespace/core` as a
+dependency of `@my-namespace/pkg`. Let's commit these changes, run unit tests on
+`@my-namespace/pkg`, and release both packages.
+
+<details><summary>Expand Example</summary>
+<p>
+
+```shell
+$ git add packages
+
+$ git commit -S -m 'update package structure'
+[main 6ff080e] update package structure
+ ...
+
+$ projector test p2-tests
+Monday, Nov 29, 2021, 12:07:47.776 PM PST
+[12:07:47.780 PM] [projector] › »  Executing command (at root) npm test p2-tests
+
+> test
+> jest --coverage --collectCoverageFrom '**/src/**/*.js' general-tests "p2-tests"
+
+ PASS  test/general-tests-1.test.js
+ PASS  test/general-tests-2.test.js
+ PASS  test/general-tests-3.test.js
+ PASS  test/p2-tests.test.js
+ PASS  test/p2-tests-integration.test.js
+----------|---------|----------|---------|---------|-------------------
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+----------|---------|----------|---------|---------|-------------------
+...
+----------|---------|----------|---------|---------|-------------------
+
+Test Suites: 5 passed, 5 total
+Tests:       1 todo, 31 passed, 32 total
+Snapshots:   0 total
+Time:        0.58 s, estimated 1 s
+Ran all test suites.
+[12:07:48.336 PM] [projector] › ✔ Tests completed successfully
+```
+
+> Note that the `test` command—unlike `build`, `publish`, or `run`—relies on the
+> underlying test framework (Jest in this case) to deal with concurrency. All
+> arguments after "test" will be passed as-is to the underlying test framework.
+
+```shell
+$ projector publish -ws
+Monday, Nov 29, 2021, 12:07:55.101 PM PST
+[12:07:55.123 PM] [projector] › »  Publishing all packages
+[12:07:55.130 PM] [projector] › ℹ  Publishing package "@my-namespace/core" at packages/pkg-1
+[12:07:55 PM] [semantic-release] › ℹ  Running semantic-release-atam version 18.0.0
+...
+[12:07:55 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analysis of 104 commits complete: minor release
+...
+[12:08:14 PM] [semantic-release] [@semantic-release/npm] › ℹ  Publishing version 1.2.0 to npm registry on dist-tag latest
+npm notice
+npm notice 📦  @my-namespace/core@1.2.0
+npm notice === Tarball Contents ===
+npm notice 3.7kB README.md
+...
+npm notice 3.5kB package.json
+npm notice === Tarball Details ===
+npm notice name:          @my-namespace/core
+npm notice version:       1.2.0
+npm notice filename:      @my-namespace/core-1.2.0.tgz
+npm notice package size:  7.2 kB
+npm notice unpacked size: 25.8 kB
+npm notice shasum:        ...
+npm notice integrity:     ...
+npm notice total files:   14
+npm notice
++ @my-namespace/core@1.2.0
+[12:08:16 PM] [semantic-release] [@semantic-release/npm] › ℹ  Published @my-namespace/core@1.2.0 to dist-tag @latest on https://registry.npmjs.org/
+...
+[12:08:16 PM] [semantic-release] [@semantic-release/github] › ℹ  Published GitHub release: ...
+...
+[12:08:49 PM] [semantic-release] › ✔  Published release 1.2.0 on default channel
+[12:08:49.371 PM] [projector] › ℹ  Publishing package "@my-namespace/pkg" at packages/pkg-2
+[12:07:55.481 PM] [semantic-release] › ℹ  Running semantic-release-atam version 18.0.0
+...
+[12:07:55 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analysis of 122 commits complete: patch release
+...
+[12:08:15 PM] [semantic-release] [@semantic-release/npm] › ℹ  Publishing version 3.0.2 to npm registry on dist-tag latest
+npm notice
+npm notice 📦  @my-namespace/pkg@3.0.2
+npm notice === Tarball Contents ===
+npm notice 7.3kB README.md
+...
+npm notice 5.3kB package.json
+npm notice === Tarball Details ===
+npm notice name:          @my-namespace/pkg
+npm notice version:       3.0.2
+npm notice filename:      @my-namespace/pkg-3.0.2.tgz
+npm notice package size:  10.6 kB
+npm notice unpacked size: 44.8 kB
+npm notice shasum:        ...
+npm notice integrity:     ...
+npm notice total files:   6
+npm notice
++ @my-namespace/pkg@3.0.2
+[12:08:16 PM] [semantic-release] [@semantic-release/npm] › ℹ  Published @my-namespace/pkg@3.0.2 to dist-tag @latest on https://registry.npmjs.org/
+...
+[12:08:16 PM] [semantic-release] [@semantic-release/github] › ℹ  Published GitHub release: ...
+...
+[12:08:49 PM] [semantic-release] › ✔  Published release 3.0.2 on default channel
+[12:08:49.891 PM] [projector] › ✔ Released 2 packages successfully
+```
+
+</p>
+</details>
+
+### CLI Command Glossary
+
+See [`@projector-js/cli`][22].
+
+### Projector Project Structure
 
 All Projector projects require at least the following:
 
@@ -336,7 +664,11 @@ That's it.
 
 **Example**
 
+<details><summary>Expand Example</summary>
+<p>
+
     .
+    ├── .git
     ├── package.json         <==
     ├── package-lock.json
     ├── src/
@@ -352,6 +684,9 @@ That's it.
 }
 ```
 
+</p>
+</details>
+
 #### Monorepo Structure
 
 Monorepos additionally require the following:
@@ -362,7 +697,11 @@ Monorepos additionally require the following:
 
 **Example**
 
+<details><summary>Expand Example</summary>
+<p>
+
     .
+    ├── .git
     ├── package.json         <==
     ├── package-lock.json
     ├── packages/
@@ -396,9 +735,18 @@ Monorepos additionally require the following:
 }
 ```
 
-### CLI Command Glossary
+`packages/pkg-2/package.json`:
 
-See [`@projector-js/cli`][22].
+```javascript
+{
+  "name": "pkg-2",
+  "version": "1.0.0",
+  ...
+}
+```
+
+</p>
+</details>
 
 ### Dependency Topology and Script Concurrency
 
@@ -430,6 +778,11 @@ Like Lerna and semantic-release, Projector too has a badge!
 
 See [each package][1] for further information on the types they make available
 and other specifics.
+
+### Credits
+
+Projector is a tool I made mostly for my own personal use and inspired by the
+pure awesomeness that is: [Lerna][11], [Rush][84], and [Nx][85].
 
 ### License
 
@@ -476,7 +829,7 @@ information.
 [contributing]: CONTRIBUTING.md
 [support]: .github/SUPPORT.md
 [1]: /packages
-[2]: https://www.npmjs.com/package/semantic-release
+[2]: https://www.npmjs.com/package/semantic-release-atam
 [3]: https://www.npmjs.com/package/conventional-changelog
 [4]: https://www.conventionalcommits.org/en/v1.0.0
 [5]: https://github.com/features/actions
@@ -505,12 +858,11 @@ information.
 [28]: packages/config-lint-staged
 [29]: packages/config-next
 [30]: packages/config-prettier
-[31]: packages/config-semantic-release
+[31]: packages/config-semantic-release-atam
 [32]: packages/config-tsconfig
 [33]: packages/config-webpack
 [34]: packages/semantic-release-plugin
 [35]: packages/core
-[36]: https://www.npmjs.com/package/semantic-release-atam
 [37]: https://github.com/semantic-release/semantic-release/pull/1710
 [38]: https://github.com/semantic-release/semantic-release/pull/XXXX
 [39]: https://docs.npmjs.com/cli/v8/using-npm/scripts
@@ -566,3 +918,4 @@ information.
 [87]: https://www.npmjs.com/package/inquirer
 [88]: https://docs.npmjs.com/cli/v7/using-npm/config#workspace
 [89]: https://docs.npmjs.com/cli/v8/configuring-npm/package-json#name
+[36]: https://git-scm.com/docs/git-status
