@@ -441,7 +441,8 @@ This tells us that:
 - The root `package.json` does not list a version
 - [git status][36] reports the project is ahead of the current remote branch
   (`⇡`), has renamed files (`»`), has deleted files (`✘`), has unstaged changes
-  (`!`), and has untracked changes (`?`).\
+  (`!`), and has untracked changes (`?`). See [the full list of status
+  symbols][37].\
   ㅤ
 - The latest release of `pkg-1` is `1.1.2` (taken from `version` key).
 - If `projector publish` is run, the next released version of `pkg-1` will be
@@ -1015,3 +1016,4 @@ information.
 [96]: packages/plugin-list
 [97]: packages/plugin-prepare
 [98]: packages/plugin-test
+[37]: packages/cli#status-symbols
