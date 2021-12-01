@@ -1,5 +1,0 @@
-version: 3
-project: '@projector-js/plugin-github-setup'
-targets:
-  only:
-    - type: npm

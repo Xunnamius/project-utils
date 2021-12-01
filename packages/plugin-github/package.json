@@ -1,7 +1,7 @@
 {
-  "name": "@projector-js/plugin-github-setup",
+  "name": "@projector-js/plugin-github",
   "version": "0.0.0-development",
-  "description": "A Projector plugin capable of configuring the GitHub counterpart to a local repository",
+  "description": "A Projector plugin for interacting with the counterpart GitHub repository",
   "keywords": [
     "project",
     "plugin",
@@ -31,11 +31,11 @@
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
-  "types": "./dist/types/packages/plugin-github-setup/src/index.d.ts",
+  "types": "./dist/types/packages/plugin-github/src/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [
-        "dist/types/packages/plugin-github-setup/src/*"
+        "dist/types/packages/plugin-github/src/*"
       ]
     }
   },
