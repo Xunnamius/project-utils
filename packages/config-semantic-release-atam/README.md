@@ -24,6 +24,8 @@
 
 list minimum requirements to be met for monorepo functionality
 
+lernaPackage => workspace setting
+
 ## Install
 
 ```bash

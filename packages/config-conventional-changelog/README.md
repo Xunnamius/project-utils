@@ -26,6 +26,8 @@ via [`tagFormat` in semantic-release's configuration file][1]
 
 list minimum requirements to be met for monorepo functionality
 
+lernaPackage => workspace
+
 ## Install
 
 ```bash
