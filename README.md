@@ -56,14 +56,19 @@ serverless or JAMstack app, bundling a CLI tool, etc.
 - [Terminology][42]
 - [Usage][45]
   - [Getting Started][74]
-  - [Project Structure][43]
-    - [Monorepo Structure][44]
+    - [Cross-Dependency Version Coherence][38]
   - [CLI Command Glossary][70]
-  - [Life Cycle Scripts (Plugins)][40]
+  - [Projector Project Structure][90]
+    - [Monorepo Structure][44]
   - [Dependency Topology and Script Concurrency][75]
   - [Template Repositories][69]
     - [Pre-made Templates (Lenses)][13]
+  - [Life Cycle Scripts (Plugins)][40]
   - [Badge Swag][71]
+- [Documentation][53]
+  - [Credits][99]
+  - [License][54]
+- [Contributing and Support][55]
 
 ## Feature Overview
 
@@ -331,12 +336,66 @@ See [`@projector-js/core`][35] for details.
 
 ## Usage
 
-<!-- TODO -->
+To use Projector, one must first [install the CLI][48].
+
+From there, you can use [`projector create`][100] to create a new monorepo or
+polyrepo. See [Getting Started][74] to walk through inspecting, testing, and
+publishing an existing monorepo.
+
+[Pre-made configurations][49] are used to configure their respective tooling,
+and can be tweaked. For example, `@projector-js/config-eslint` can be used in
+`.eslintrc.js` like so:
+
+```javascript
+module.exports = require('@projector-js/config-eslint')((config) => {
+  return {
+    ...config,
+    overrides: [
+      {
+        files: ['*.test.*'],
+        extends: ['plugin:jest/all', 'plugin:jest/style'],
+        rules: {
+          'jest/lowercase': 'off',
+          'jest/consistent-test-it': 'off'
+        }
+      }
+    ]
+  };
+});
+```
+
+If your project is a monorepo, you'll have to use [semantic-release-atam][2] and
+the [semantic-release plugin][51].
+
+[Projector plugins][49] are tiny executables called by Projector as npm scripts.
+See [Life Cycle Scripts (plugins)][40] for details on Projector's plugin system.
+
+For example, `@projector-js/plugin-build` and `@projector-js/plugin-format` can
+be added to Projector via the root `package.json` file:
+
+```javascript
+{
+  "name": "my-monorepo",
+  "workspaces": [ ... ],
+  "scripts": {
+    "build": "npm run build-dist --",
+    "build-changelog": "npx plugin-build changelog",
+    "build-dist": "npx plugin-build dist",
+    "build-docs": "npx plugin-build docs",
+    "format": "npx plugin-format"
+    ...
+  }
+  ...
+}
+```
+
+If you're pushing to GitHub and using GitHub Actions, you can set up CI/CD and
+Dependabot for your project using Projector's [GitHub Action][50].
 
 ### Getting Started
 
 You can use [`projector create`][22] to initialize a new project, but suppose we
-already have a project we've been working on at `/repos/my-project`. It has the
+already have a monorepo we've been working on at `/repos/my-project`. It has the
 following structure:
 
 <details><summary>Expand Example</summary>
@@ -779,10 +838,10 @@ Monorepos additionally require the following:
   - semantic-release-atam is a drop-in replacement for semantic-release, but
     with annotated tag and monorepo (ATAM) support.
 - [`@projector-js/semantic-release-plugin`][51] installed and configured.
-- conventional-changelog configuration must meet the minimum requirements listed
-  in [`@projector-js/config-conventional-changelog`][25].
-- semantic-release-atam configuration must meet the minimum requirements listed
-  in [`@projector-js/config-semantic-release-atam`][31].
+- conventional-changelog installation and configuration must meet the minimum
+  requirements listed in [`@projector-js/config-conventional-changelog`][25].
+- semantic-release-atam installation and configuration must meet the minimum
+  requirements listed in [`@projector-js/config-semantic-release-atam`][31].
 
 **Example**
 
@@ -1017,3 +1076,6 @@ information.
 [97]: packages/plugin-prepare
 [98]: packages/plugin-test
 [37]: packages/cli#status-symbols
+[38]: #cross-dependency-version-coherence
+[99]: #credits
+[100]: packages/cli#projector-create
