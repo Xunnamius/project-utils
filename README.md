@@ -509,8 +509,8 @@ Let's run `projector list` again.
 $ projector list
 Monday, Nov 29, 2021, 12:04:20.420 PM PST
 [12:04:20.442 PM] [projector] › »  Listing project metadata
-M my-cool-monorepo@ /repos/my-project [⇡»✘!?]
-├── @my-namespace/core@1.1.2 (⬆1.2.0) [»]
+M my-cool-monorepo@ /repos/my-project [⇡»✘?]
+├── @my-namespace/core@1.1.2 (⬆1.2.0) [?]
 └── @my-namespace/pkg@3.0.1 [?]
 ```
 
