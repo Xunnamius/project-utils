@@ -4,7 +4,7 @@ const debug = require('debug')(
   `${require(`${process.cwd()}/package.json`).name}:semantic-release-config`
 );
 
-// TODO: turn this into @projector-js/config-semantic-release
+// TODO: turn this into @projector-js/config-semantic-release-atam
 
 const updateChangelog =
   process.env.UPDATE_CHANGELOG === 'true' ||
