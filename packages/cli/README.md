@@ -22,6 +22,48 @@
 
 <!-- TODO -->
 
+- The `--root` argument, when used in a polyrepo context, refers to the
+  repository root and can usually be omitted.
+- `-w` vs `-p`
+
+> The `p` and alias `projector` command comes from `npm i -g @projector-js/cli`.
+> Alternatively, npx can be used: `npx projector ...` (when installed locally)
+> or `npx projector-js ...` (when not installed).
+
+glob `-w` has a specific priority order
+
+`create` has alias `init`
+
+`--parallel` vs `--concurrency 1` (or N) vs `--sequential`
+
+confirm when calling `create` within a directory that contains a `package.json`
+without `workspaces` key. `--monorepo` (and all other options) settable from
+CLI; still, ask via inquirer too.
+
+tests and some other commands are done from root
+
+`clean` command that calls clean script eventually but also cleans up tmp
+articles in /tmp and elsewhere
+
+git output symbols inspired by
+[https://github.com/spaceship-prompt/spaceship-prompt][1]
+
+in monorepo mode, publishing from the main repository is not possible
+
+package-id used for git tags
+
+publish will fail if whole repo is not clean
+
+publish will fail if not enough disk space remaining
+
+Caveat: publish command in a monorepo context trades off disk space for perf
+(concurrency).
+
+publish will keep temp release dirs around
+
+publish will bind mount `node_modules` and any other files and dirs specified in
+`.gitignore`
+
 ## Install
 
 ```bash
@@ -100,3 +142,4 @@ information.
 [pr-compare]: https://github.com/xunnamius/projector/compare
 [contributing]: /CONTRIBUTING.md
 [support]: /.github/SUPPORT.md
+[1]: https://github.com/spaceship-prompt/spaceship-prompt

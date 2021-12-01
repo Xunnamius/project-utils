@@ -1,15 +1,14 @@
 {
-  "name": "@projector-js/plugin-metrics",
+  "name": "@projector-js/plugin-dev",
   "version": "0.0.0-development",
-  "description": "A Projector plugin that constructs reports aggregating various metrics across one or more projects",
+  "description": "A Projector plugin that runs the Next.js dev server",
   "keywords": [
     "project",
     "plugin",
     "extension",
-    "report",
-    "aggregate",
-    "data",
-    "metrics",
+    "Next.js",
+    "next",
+    "dev",
     "projector"
   ],
   "repository": {
@@ -31,11 +30,11 @@
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
-  "types": "./dist/types/packages/plugin-metrics/src/index.d.ts",
+  "types": "./dist/types/packages/plugin-dev/src/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [
-        "dist/types/packages/plugin-metrics/src/*"
+        "dist/types/packages/plugin-dev/src/*"
       ]
     }
   },

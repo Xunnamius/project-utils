@@ -1,7 +1,7 @@
 {
   "name": "@projector-js/plugin-list-types",
   "version": "0.0.0-development",
-  "description": "A Projector plugin that lists the commit types accepted by @projector-js/config-conventional-changelog on demand",
+  "description": "A Projector plugin that lists the commit types accepted by @projector-js/config-conventional-changelog",
   "keywords": [
     "project",
     "plugin",
@@ -31,11 +31,11 @@
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
-  "types": "./dist/types/packages/plugin-metrics/src/index.d.ts",
+  "types": "./dist/types/packages/plugin-list-types/src/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [
-        "dist/types/packages/plugin-metrics/src/*"
+        "dist/types/packages/plugin-list-types/src/*"
       ]
     }
   },

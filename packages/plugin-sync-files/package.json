@@ -1,7 +1,7 @@
 {
   "name": "@projector-js/plugin-sync-files",
   "version": "0.0.0-development",
-  "description": "A Projector plugin that enables per-project bi-directional file synchronization",
+  "description": "A Projector plugin that facilitates bi-directional file synchronization",
   "keywords": [
     "project",
     "plugin",

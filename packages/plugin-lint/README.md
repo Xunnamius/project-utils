@@ -18,18 +18,23 @@
 
 <!-- prettier-ignore-end -->
 
-# @projector-js/config-conventional-changelog
+# @projector-js/plugin-lint
 
 <!-- TODO -->
 
-via [`tagFormat` in semantic-release's configuration file][1]
+fail when in monorepo and root `package.json` has `dependencies` or `version`
 
-list minimum requirements to be met for monorepo functionality
+fail if workspace doesn't have `package.json`; or missing `name`; or missing
+`version` and private is not `false`
+
+fail if monorepo package is missing license, fossa, README.md, tsconfigs, any of
+the necessary package.json keys, or the key values are not pointing to the
+proper places
 
 ## Install
 
 ```bash
-npm install --save-dev @projector-js/config-conventional-changelog
+npm install --save-dev @projector-js/plugin-lint
 ```
 
 ## Usage
@@ -75,7 +80,7 @@ information.
   'Is this package well-tested?'
 [link-codecov]: https://codecov.io/gh/Xunnamius/projector
 [badge-license]:
-  https://img.shields.io/npm/l/@projector-js/config-conventional-changelog
+  https://img.shields.io/npm/l/@projector-js/plugin-lint
   "This package's source license"
 [link-license]: https://github.com/Xunnamius/projector/blob/main/LICENSE
 [badge-fossa]:
@@ -84,21 +89,19 @@ information.
 [link-fossa]:
   https://app.fossa.com/projects/custom+27276%2Fgit@github.com:Xunnamius%2Fprojector.git
 [badge-npm]:
-  https://api.ergodark.com/badges/npm-pkg-version/@projector-js/config-conventional-changelog
+  https://api.ergodark.com/badges/npm-pkg-version/@projector-js/plugin-lint
   'Install this package using npm or yarn!'
-[link-npm]:
-  https://www.npmjs.com/package/@projector-js/config-conventional-changelog
+[link-npm]: https://www.npmjs.com/package/@projector-js/plugin-lint
 [badge-semantic-release]:
   https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
   'This repo practices continuous integration and deployment!'
 [link-semantic-release]: https://github.com/semantic-release/semantic-release
-[badge-size]:
-  https://badgen.net/bundlephobia/minzip/@projector-js/config-conventional-changelog
+[badge-size]: https://badgen.net/bundlephobia/minzip/@projector-js/plugin-lint
 [badge-tree-shaking]:
-  https://badgen.net/bundlephobia/tree-shaking/@projector-js/config-conventional-changelog
+  https://badgen.net/bundlephobia/tree-shaking/@projector-js/plugin-lint
   'Is this package optimized for Webpack?'
 [link-bundlephobia]:
-  https://bundlephobia.com/result?p=@projector-js/config-conventional-changelog
+  https://bundlephobia.com/result?p=@projector-js/plugin-lint
   'Package size (minified and gzipped)'
 [package-json]: package.json
 [docs]: docs
@@ -106,5 +109,3 @@ information.
 [pr-compare]: https://github.com/xunnamius/projector/compare
 [contributing]: /CONTRIBUTING.md
 [support]: /.github/SUPPORT.md
-[1]:
-  https://semantic-release.gitbook.io/semantic-release/usage/configuration#configuration-file

@@ -1,15 +1,11 @@
 {
-  "name": "@projector-js/plugin-metrics",
+  "name": "@projector-js/config-husky",
   "version": "0.0.0-development",
-  "description": "A Projector plugin that constructs reports aggregating various metrics across one or more projects",
+  "description": "Shared Husky configuration used in Projector projects and elsewhere",
   "keywords": [
-    "project",
-    "plugin",
-    "extension",
-    "report",
-    "aggregate",
-    "data",
-    "metrics",
+    "shared",
+    "configuration",
+    "husky",
     "projector"
   ],
   "repository": {
@@ -31,11 +27,11 @@
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
-  "types": "./dist/types/packages/plugin-metrics/src/index.d.ts",
+  "types": "./dist/types/packages/config-husky/src/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [
-        "dist/types/packages/plugin-metrics/src/*"
+        "dist/types/packages/config-husky/src/*"
       ]
     }
   },

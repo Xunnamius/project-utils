@@ -1,15 +1,15 @@
 {
-  "name": "@projector-js/plugin-metrics",
+  "name": "@projector-js/plugin-github-setup",
   "version": "0.0.0-development",
-  "description": "A Projector plugin that constructs reports aggregating various metrics across one or more projects",
+  "description": "A Projector plugin capable of configuring the GitHub counterpart to a local repository",
   "keywords": [
     "project",
     "plugin",
     "extension",
-    "report",
-    "aggregate",
-    "data",
-    "metrics",
+    "github",
+    "api",
+    "integration",
+    "setup",
     "projector"
   ],
   "repository": {
@@ -31,11 +31,11 @@
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
-  "types": "./dist/types/packages/plugin-metrics/src/index.d.ts",
+  "types": "./dist/types/packages/plugin-github-setup/src/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [
-        "dist/types/packages/plugin-metrics/src/*"
+        "dist/types/packages/plugin-github-setup/src/*"
       ]
     }
   },

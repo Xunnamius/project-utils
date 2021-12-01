@@ -1,15 +1,13 @@
 {
-  "name": "@projector-js/plugin-metrics",
+  "name": "@projector-js/plugin-clean",
   "version": "0.0.0-development",
-  "description": "A Projector plugin that constructs reports aggregating various metrics across one or more projects",
+  "description": "A Projector plugin that cleans up the repo and other artifacts",
   "keywords": [
     "project",
     "plugin",
     "extension",
-    "report",
-    "aggregate",
-    "data",
-    "metrics",
+    "clean",
+    "cleanup",
     "projector"
   ],
   "repository": {
@@ -31,11 +29,11 @@
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
-  "types": "./dist/types/packages/plugin-metrics/src/index.d.ts",
+  "types": "./dist/types/packages/plugin-clean/src/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [
-        "dist/types/packages/plugin-metrics/src/*"
+        "dist/types/packages/plugin-clean/src/*"
       ]
     }
   },

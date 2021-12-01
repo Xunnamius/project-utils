@@ -1,15 +1,16 @@
 {
-  "name": "@projector-js/plugin-metrics",
+  "name": "@projector-js/plugin-sync-vercel",
   "version": "0.0.0-development",
-  "description": "A Projector plugin that constructs reports aggregating various metrics across one or more projects",
+  "description": "A Projector plugin that facilitates bi-directional .env synchronization with Vercel",
   "keywords": [
     "project",
     "plugin",
     "extension",
-    "report",
-    "aggregate",
-    "data",
-    "metrics",
+    "sync",
+    "synchronize",
+    "env",
+    "environment",
+    "vercel",
     "projector"
   ],
   "repository": {
@@ -31,11 +32,11 @@
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
-  "types": "./dist/types/packages/plugin-metrics/src/index.d.ts",
+  "types": "./dist/types/packages/plugin-sync-vercel/src/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [
-        "dist/types/packages/plugin-metrics/src/*"
+        "dist/types/packages/plugin-sync-vercel/src/*"
       ]
     }
   },

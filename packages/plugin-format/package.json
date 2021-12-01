@@ -1,15 +1,14 @@
 {
-  "name": "@projector-js/plugin-metrics",
+  "name": "@projector-js/plugin-format",
   "version": "0.0.0-development",
-  "description": "A Projector plugin that constructs reports aggregating various metrics across one or more projects",
+  "description": "A Projector plugin that formats a repository using prettier and remark",
   "keywords": [
     "project",
     "plugin",
     "extension",
-    "report",
-    "aggregate",
-    "data",
-    "metrics",
+    "prettier",
+    "remark",
+    "format",
     "projector"
   ],
   "repository": {
@@ -31,11 +30,11 @@
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/bundle/index.mjs",
-  "types": "./dist/types/packages/plugin-metrics/src/index.d.ts",
+  "types": "./dist/types/packages/plugin-format/src/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [
-        "dist/types/packages/plugin-metrics/src/*"
+        "dist/types/packages/plugin-format/src/*"
       ]
     }
   },
