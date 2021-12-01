@@ -55,7 +55,7 @@
     "execa": "^5.1.1",
     "husky": "^7.0.4",
     "jest": "^27.3.1",
-    "jest-circus": "^27.3.1",
+    "jest-circus": "^27.4.2",
     "jest-extended": "^1.1.0",
     "lint-staged": "^12.1.2",
     "prettier": "^2.5.0",
