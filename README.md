@@ -392,6 +392,30 @@ be added to Projector via the root `package.json` file:
 If you're pushing to GitHub and using GitHub Actions, you can set up CI/CD and
 Dependabot for your project using Projector's [GitHub Action][50].
 
+For advanced topological task running, configure [lage and backfill][101].
+
+```javascript
+{
+  "name": "my-monorepo",
+  "workspaces": [ ... ],
+  "scripts": {
+    "build": "npm run build-dist --",
+    "build-changelog": "npx plugin-build changelog",
+    "build-dist": "npx plugin-build dist",
+    "build-docs": "npx plugin-build docs",
+    "format": "npx plugin-format"
+    ...
+  },
+  "lage": {
+    "pipeline": {
+      "build": ["^build"],
+      "test": ["build"]
+    }
+  }
+  ...
+}
+```
+
 ### Getting Started
 
 You can use [`projector create`][22] to initialize a new project, but suppose we
@@ -1079,3 +1103,4 @@ information.
 [38]: #cross-dependency-version-coherence
 [99]: #credits
 [100]: packages/cli#projector-create
+[101]: https://microsoft.github.io/lage/guide/config.html
