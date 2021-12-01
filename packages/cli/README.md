@@ -64,6 +64,13 @@ publish will keep temp release dirs around
 publish will bind mount `node_modules` and any other files and dirs specified in
 `.gitignore`
 
+If going with conventional-changelog, consider using [the CLI version patched to
+work properly with monorepos][2]:
+
+```bash
+npm install --save-dev https://gitpkg.now.sh/xunnamius/conventional-changelog/packages/conventional-changelog-cli
+```
+
 ## Install
 
 ```bash
@@ -143,3 +150,4 @@ information.
 [contributing]: /CONTRIBUTING.md
 [support]: /.github/SUPPORT.md
 [1]: https://github.com/spaceship-prompt/spaceship-prompt
+[2]: https://github.com/conventional-changelog/conventional-changelog/pull/865
