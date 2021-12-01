@@ -379,10 +379,10 @@ be added to Projector via the root `package.json` file:
   "workspaces": [ ... ],
   "scripts": {
     "build": "npm run build-dist --",
-    "build-changelog": "npx plugin-build changelog",
-    "build-dist": "npx plugin-build dist",
-    "build-docs": "npx plugin-build docs",
-    "format": "npx plugin-format"
+    "build-changelog": "plugin-build changelog",
+    "build-dist": "plugin-build dist",
+    "build-docs": "plugin-build docs",
+    "format": "plugin-format"
     ...
   }
   ...
@@ -400,10 +400,10 @@ For advanced topological task running, configure [lage and backfill][101].
   "workspaces": [ ... ],
   "scripts": {
     "build": "npm run build-dist --",
-    "build-changelog": "npx plugin-build changelog",
-    "build-dist": "npx plugin-build dist",
-    "build-docs": "npx plugin-build docs",
-    "format": "npx plugin-format"
+    "build-changelog": "plugin-build changelog",
+    "build-dist": "plugin-build dist",
+    "build-docs": "plugin-build docs",
+    "format": "plugin-format"
     ...
   },
   "lage": {
