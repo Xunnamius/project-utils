@@ -25,7 +25,7 @@ focus on simplicity, flexibility, and performance. It's built around
 [conventional-commits][4] for commit-based automated release flows and
 (optionally) [GitHub Actions][5] and [Dependabot][6] for [CI][7]/[CD][8]. It
 supports task concurrency and, for monorepos, topologically ordered execution
-and cross-dependency version synchronization during release.
+and cross-dependency version coherence during release.
 
 Projector leans on as much native npm functionality and popular tooling as
 possible. This means **your project is never locked-in to using Projector**;
@@ -124,7 +124,7 @@ serverless or JAMstack app, bundling a CLI tool, etc.
   > `projector test`
 - Release from one, some, or all workspaces concurrently (topologically;
   all-or-nothing), including automatic commit-based changelog generation and
-  cross-dependency version synchronization for monorepos (via
+  cross-dependency version coherence for monorepos (via
   [semantic-release-atam][2]).
   > `projector publish -w pkg-1`\
   > `projector publish -w pkg-1 -w pkg-2 -w pkg-3`\
@@ -244,7 +244,7 @@ make a new file), you'll likely want to [write your own][40] instead.
 - [`@projector-js/plugin-clean`][92]
 - [`@projector-js/plugin-dev`][93]
 - [`@projector-js/plugin-format`][94]
-- [`@projector-js/plugin-github-setup`][95]
+- [`@projector-js/plugin-github`][95]
 - [`@projector-js/plugin-lint`][61]
 - [`@projector-js/plugin-list`][96]
 - [`@projector-js/plugin-list-types`][63]
@@ -261,8 +261,8 @@ See [`projector-pipeline`][14].
 ### semantic-release Plugin
 
 For monorepos, the semantic-release plugin enforces cross-dependency version
-synchronization and topological ordering during the release cycle. **Installing
-this plugin is required when publishing monorepo packages using Projector**.
+coherence and topological ordering during the release cycle. **Installing this
+plugin is required when publishing monorepo packages using Projector**.
 
 First, install the plugin:
 
@@ -665,7 +665,7 @@ npm notice
 </p>
 </details>
 
-#### Cross-Dependency Version Synchronization
+#### Cross-Dependency Version Coherence
 
 Let's run `projector list` a final time, but with the `--with-cross-deps`
 argument.
@@ -696,7 +696,7 @@ versions at publish time: as Projector published `@my-namespace/core` at version
 at `packages/pkg-2/package.json` from `"1.1.2"` to `"1.2.0"` and committed the
 change. Later, Projector published `@my-namespace/pkg` at version `3.0.2`, which
 included the updated cross-dependency. This is so-called "cross-dependency
-version synchronization".
+version coherence".
 
 `packages/pkg-2/package.json`:
 
@@ -952,8 +952,6 @@ information.
 [33]: packages/config-webpack
 [34]: packages/semantic-release-plugin
 [35]: packages/core
-[37]: https://github.com/semantic-release/semantic-release/pull/1710
-[38]: https://github.com/semantic-release/semantic-release/pull/XXXX
 [39]: https://docs.npmjs.com/cli/v8/using-npm/scripts
 [40]: #life-cycle-scripts-plugins
 [11]: https://github.com/lerna/lerna
@@ -1013,7 +1011,7 @@ information.
 [92]: packages/plugin-clean
 [93]: packages/plugin-dev
 [94]: packages/plugin-format
-[95]: packages/plugin-github-setup
+[95]: packages/plugin-github
 [96]: packages/plugin-list
 [97]: packages/plugin-prepare
 [98]: packages/plugin-test
