@@ -15,7 +15,7 @@
 
 # 📽️ Projector
 
-> 🚧 🚧 Though I use it in production as a Lerna replacement, **Projector is
+> 🚧 **EXPERIMENTAL** 🚧 Though I use it as a Lerna replacement, **Projector is
 > still very much in its infancy**! Check out the [public roadmap][72] to see
 > the lay of things. What follows is [RDD][79] 🙂
 
@@ -28,7 +28,8 @@ supports task concurrency and, for monorepos, topologically ordered execution
 and cross-dependency version synchronization during release.
 
 Projector leans on as much native npm functionality and popular tooling as
-possible. This means no bootstrapping commands, no custom linking, no "Projector
+possible. This means **your project is never locked-in to using Projector**;
+there are no bootstrapping commands, no custom linking, no sprawling "Projector
 config file," no repository commit count limits, nor any reinventions of the
 features that git, npm, semantic-release, conventional-changelog, and other
 tooling already provide.
@@ -72,9 +73,9 @@ serverless or JAMstack app, bundling a CLI tool, etc.
 - Built on popular open source tooling.
   - Projector's core feature set relies on git, npm, and [a slightly-tweaked
     semantic-release fork][2].
-  - Projector provides several optional [_highly opinionated_
-    configurations][49] for TypeScript, webpack, Babel, Jest, and other tools,
-    but you can very easily substitute your own.
+  - Projector provides several [opinionated pre-made configurations and
+    plugins][49] for TypeScript, webpack, Babel, Jest, and other tools, but you
+    can (and should) easily substitute your own.
   - Projector uses [lage][76], [backfill][77], and [Threads.js][86] for
     topologically-ordered concurrent script/task execution and output caching.
     See the [Dependency Topology and Script Concurrency][75] section for
@@ -84,9 +85,10 @@ serverless or JAMstack app, bundling a CLI tool, etc.
     dependencies, and [Inquirer.js][87] to gather input.
 - Turnkey support for Continuous Integration and Deployment with
   [`projector-pipeline`][14].
-- Supports deep customizations through simple npm-esque "life cycle plugins".
-  - Projector will call an [npm script][39] (à la `npm run an-npm-script`) [with
-    a well-defined name][40], if it exists, whenever an interesting event
+- Supports deep customizations through simple npm-esque [life cycle
+  plugins][40].
+  - Projector will call an [npm script][39] (à la `npm run an-npm-script`) with
+    a [well-defined name][62], if it exists, whenever an interesting event
     occurs.
 - Robust [debugging output][15] available on demand.
   - Set `DEBUG=projector` to enable debug output when running Projector.
@@ -100,7 +102,8 @@ serverless or JAMstack app, bundling a CLI tool, etc.
 
 ### CLI Examples
 
-> See [`@projector-js/cli`][22] for all available CLI commands.
+> See [`@projector-js/cli`][22] for all available CLI commands and their
+> options.
 
 > [Like npm][88], the `-w` option, short for "workspace," matches against 1) an
 > exact path or parent path in the [`workspaces` config][56] or 2) an exact
@@ -120,9 +123,9 @@ serverless or JAMstack app, bundling a CLI tool, etc.
   > `projector test --coverage --collectCoverageFrom 'src/**/*.ts' some-test`\
   > `projector test`
 - Release from one, some, or all workspaces concurrently (topologically;
-  all-or-nothing), including automatic commit-based changelog and documentation
-  generation and cross-dependency version synchronization for monorepos (via
-  [semantic-release-atPm][2]).
+  all-or-nothing), including automatic commit-based changelog generation and
+  cross-dependency version synchronization for monorepos (via
+  [semantic-release-atam][2]).
   > `projector publish -w pkg-1`\
   > `projector publish -w pkg-1 -w pkg-2 -w pkg-3`\
   > `projector publish -ws`\
@@ -147,7 +150,8 @@ serverless or JAMstack app, bundling a CLI tool, etc.
   > `projector uninstall -w pkg-1 installed-2`\
   > `projector uninstall -ws uninstall-from-every-workspace`
 - [Update the dependencies of][12] one, some, or all workspaces, optionally
-  committing the updates by type (`devDependencies`, `peerDependencies`, etc).
+  committing the updates by type (e.g. `devDependencies`, `peerDependencies`,
+  etc).
   > `projector update -w packages/pkg-1`\
   > `projector update -w ./packages/pkg-1 -w pkg-2`\
   > `projector update --no-commits -w pkg-1 -w pkg-3`\
@@ -212,13 +216,14 @@ This makes the `p` and `projector` commands available in your system's PATH.
 
 ### Shared Configurations
 
-The following highly opinionated ready-made configurations are available for
-Projector projects. See each individual package's documentation for details.
+The following tweakable (but opinionated) tooling configurations are available
+for Projector projects. See each individual package's documentation for details.
 
 - Babel ([`@projector-js/config-babel`][23])
 - commitlint ([`@projector-js/config-commitlint`][24])
 - conventional-changelog ([`@projector-js/config-conventional-changelog`][25])
 - ESLint ([`@projector-js/config-eslint`][26])
+- Husky ([`@projector-js/config-husky`][65])
 - Jest ([`@projector-js/config-jest`][27])
 - lint-staged ([`@projector-js/config-lint-staged`][28])
 - Next.js ([`@projector-js/config-next`][29])
@@ -227,17 +232,27 @@ Projector projects. See each individual package's documentation for details.
 - TSConfig ([`@projector-js/config-tsconfig`][32])
 - webpack ([`@projector-js/config-webpack`][33])
 
-Additionally, several highly opinionated plugins are available. Since plugins
-are low overhead and extremely easy to create (you don't even have to make a new
-file!), you'll likely want to [write your own][40] instead.
+[Unless you're using a monorepo][44], these configurations are entirely optional
+and should only be used if you don't already have your own tooling stack
+configured. See [Projector Project Structure][90] for more details.
 
-- [`@projector-js/plugin-lint-project`][61]
-- [`@projector-js/plugin-github-integration`][62]
+Additionally, several opinionated [life cycle plugins][40] are available. Since
+plugins are low overhead and _extremely_ easy to create (you don't even have to
+make a new file), you'll likely want to [write your own][40] instead.
+
+- [`@projector-js/plugin-build`][91]
+- [`@projector-js/plugin-clean`][92]
+- [`@projector-js/plugin-dev`][93]
+- [`@projector-js/plugin-format`][94]
+- [`@projector-js/plugin-github-setup`][95]
+- [`@projector-js/plugin-lint`][61]
+- [`@projector-js/plugin-list`][96]
 - [`@projector-js/plugin-list-types`][63]
 - [`@projector-js/plugin-metrics`][64]
-- [`@projector-js/plugin-release-checks`][65]
+- [`@projector-js/plugin-prepare`][97]
 - [`@projector-js/plugin-sync-files`][66]
-- [`@projector-js/plugin-sync-vercel-env`][67]
+- [`@projector-js/plugin-sync-vercel`][67]
+- [`@projector-js/plugin-test`][98]
 
 ### GitHub Action
 
@@ -245,9 +260,9 @@ See [`projector-pipeline`][14].
 
 ### semantic-release Plugin
 
-The semantic-release plugin enforces cross-dependency version synchronization
-and topological ordering during the release cycle and is therefore required when
-releasing from a monorepo.
+For monorepos, the semantic-release plugin enforces cross-dependency version
+synchronization and topological ordering during the release cycle. **Installing
+this plugin is required when publishing monorepo packages using Projector**.
 
 First, install the plugin:
 
@@ -318,8 +333,6 @@ See [`@projector-js/core`][35] for details.
 
 <!-- TODO -->
 
-Caveat: trading off disk space for performance and simplicity!
-
 ### Getting Started
 
 You can use [`projector create`][22] to initialize a new project, but suppose we
@@ -376,6 +389,10 @@ following structure:
 {
   "name": "@my-namespace/pkg",
   "version": "3.0.1",
+  "dependencies": {
+    "@my-namespace/core": "1.1.2",
+    ...
+  }
   ...
 }
 ```
@@ -493,7 +510,7 @@ $ projector list
 Monday, Nov 29, 2021, 12:04:20.420 PM PST
 [12:04:20.442 PM] [projector] › »  Listing project metadata
 M my-cool-monorepo@ /repos/my-project [⇡»✘!?]
-├── @my-namespace/core@1.1.2 (⬆1.2.0) [✘!]
+├── @my-namespace/core@1.1.2 (⬆1.2.0) [»]
 └── @my-namespace/pkg@3.0.1 [?]
 ```
 
@@ -539,7 +556,7 @@ npm ERR!     /home/user/.npm/_logs/2021-11-29T21_54_47_723Z-debug.log
 
 When we did the find-and-replace on `pkg-1` earlier, it updated the source at
 `packages/pkg-2/src/...`. Suppose we also added `@my-namespace/core` as a
-dependency of `@my-namespace/pkg`. Let's commit these changes, run unit tests on
+dependency of `@my-namespace/pkg`. Let's commit all changes, run unit tests on
 `@my-namespace/pkg`, and release both packages.
 
 <details><summary>Expand Example</summary>
@@ -648,6 +665,59 @@ npm notice
 </p>
 </details>
 
+#### Cross-Dependency Version Synchronization
+
+Let's run `projector list` a final time, but with the `--with-cross-deps`
+argument.
+
+<details><summary>Expand Example</summary>
+<p>
+
+```shell
+$ projector list --with-cross-deps
+Monday, Nov 29, 2021, 12:09:00.333 PM PST
+[12:09:00.424 PM] [projector] › »  Listing project metadata
+M my-cool-monorepo@ /repos/my-project
+├── @my-namespace/core@1.2.0
+└─┬ @my-namespace/pkg@3.0.2
+  └── @my-namespace/core@1.2.0 🔗
+```
+
+</p>
+</details>
+
+Calling `projector list` with `--with-cross-deps` reveals _cross-dependencies_
+(🔗), which are packages depended upon by other packages in the same monorepo.
+
+Since `projector publish` 1) publishes packages [concurrently where possible,
+but ultimately in topological order][75] and 2) synchronizes cross-dependency
+versions at publish time: as Projector published `@my-namespace/core` at version
+`1.2.0`, it automatically updated the `dependencies['@my-namespace/core']` key
+at `packages/pkg-2/package.json` from `"1.1.2"` to `"1.2.0"` and committed the
+change. Later, Projector published `@my-namespace/pkg` at version `3.0.2`, which
+included the updated cross-dependency. This is so-called "cross-dependency
+version synchronization".
+
+`packages/pkg-2/package.json`:
+
+<details><summary>Expand Example</summary>
+<p>
+
+```javascript
+{
+  "name": "@my-namespace/pkg",
+  "version": "3.0.2",
+  "dependencies": {
+    "@my-namespace/core": "1.2.0",
+    ...
+  }
+  ...
+}
+```
+
+</p>
+</details>
+
 ### CLI Command Glossary
 
 See [`@projector-js/cli`][22].
@@ -660,7 +730,16 @@ All Projector projects require at least the following:
   - Projector assumes a project is a polyrepo if the root `package.json` file
     does not contains a [`workspaces`][56] key.
 
-That's it.
+That's it. TypeScript, Babel, semantic-release, etc are all yours to setup as
+you please, or you can use a [tweakable pre-made configuration][49].
+
+<!-- prettier-ignore-start -->
+
+If your repository is using annotated tags, consider using
+[semantic-release-atam][2], which is a semantic-release fork with
+***a***nnotated ***t***ag ***a***nd ***m***onorepo support. **Do not install semantic-release and semantic-release-atam at the same time!**
+
+<!-- prettier-ignore-end -->
 
 **Example**
 
@@ -694,6 +773,15 @@ Monorepos additionally require the following:
 - A [`workspaces`][56] key in the root `package.json` file.
   - A `package.json` file with at least a `name` key must exist at each package
     root.
+- [semantic-release-atam][2] installed (**and the original semantic-release not
+  installed**).
+  - semantic-release-atam is a drop-in replacement for semantic-release, but
+    with annotated tag and monorepo (ATAM) support.
+- [`@projector-js/semantic-release-plugin`][51] installed and configured.
+- conventional-changelog configuration must meet the minimum requirements listed
+  in [`@projector-js/config-conventional-changelog`][25].
+- semantic-release-atam configuration must meet the minimum requirements listed
+  in [`@projector-js/config-semantic-release-atam`][31].
 
 **Example**
 
@@ -713,6 +801,7 @@ Monorepos additionally require the following:
     │       ├── package.json <==
     │       ├── README.md
     │       └── src/
+    ├── release.config.js    <==
     └── README.md
 
 `package.json`:
@@ -781,8 +870,8 @@ and other specifics.
 
 ### Credits
 
-Projector is a tool I made mostly for my own personal use and inspired by the
-pure awesomeness that is: [Lerna][11], [Rush][84], and [Nx][85].
+Projector is a tool I made for my own personal use. It was inspired by the pure
+awesomeness that is [Lerna][11], [Rush][84], and [Nx][85].
 
 ### License
 
@@ -888,13 +977,11 @@ information.
 [58]: https://docs.npmjs.com/cli/v8/configuring-npm/package-json#workspaces
 [59]: https://www.npmjs.com/package/glob#glob-primer
 [60]: https://img.shields.io/badge/maintained%20with-projector-ccff00.svg
-[61]: packages/plugin-lint-project
-[62]: packages/plugin-github-integration
+[61]: packages/plugin-lint
 [63]: packages/plugin-list-types
 [64]: packages/plugin-metrics
-[65]: packages/plugin-release-checks
 [66]: packages/plugin-sync-files
-[67]: packages/plugin-sync-vercel-env
+[67]: packages/plugin-sync-vercel
 [68]: #quick-start
 [69]: #template-repositories
 [70]: #cli-command-glossary
@@ -919,3 +1006,14 @@ information.
 [88]: https://docs.npmjs.com/cli/v7/using-npm/config#workspace
 [89]: https://docs.npmjs.com/cli/v8/configuring-npm/package-json#name
 [36]: https://git-scm.com/docs/git-status
+[62]: #life-cycle-operation-order
+[65]: packages/config-husky
+[90]: #projector-project-structure
+[91]: packages/plugin-build
+[92]: packages/plugin-clean
+[93]: packages/plugin-dev
+[94]: packages/plugin-format
+[95]: packages/plugin-github-setup
+[96]: packages/plugin-list
+[97]: packages/plugin-prepare
+[98]: packages/plugin-test
