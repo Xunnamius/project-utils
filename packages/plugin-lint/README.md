@@ -31,6 +31,8 @@ fail if monorepo package is missing license, fossa, README.md, tsconfigs, any of
 the necessary package.json keys, or the key values are not pointing to the
 proper places
 
+error if two packages have same package-id
+
 ## Install
 
 ```bash

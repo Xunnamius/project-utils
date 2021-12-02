@@ -28,6 +28,9 @@ list minimum requirements to be met for monorepo functionality
 
 lernaPackage => workspace
 
+If going with conventional-changelog as your changelog generator, consider using
+the version patched to work properly with monorepos ([PR pending][2]):
+
 ## Install
 
 ```bash
@@ -110,3 +113,4 @@ information.
 [support]: /.github/SUPPORT.md
 [1]:
   https://semantic-release.gitbook.io/semantic-release/usage/configuration#configuration-file
+[2]: https://github.com/conventional-changelog/conventional-changelog/pull/865
