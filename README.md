@@ -24,8 +24,8 @@ focus on simplicity, flexibility, and performance. It's built around
 [semantic-release][2], [conventional-changelog][3], and
 [conventional-commits][4] for commit-based automated release flows and
 (optionally) [GitHub Actions][5] and [Dependabot][6] for [CI][7]/[CD][8]. It
-supports task concurrency and, for monorepos, topologically ordered execution
-and cross-dependency version coherence during release.
+supports task concurrency and, for monorepos, [topologically ordered][42]
+execution and [cross-dependency version coherence][38] during release.
 
 Projector leans on as much native npm functionality and popular tooling as
 possible. This means **your project is never locked-in to using Projector**;
@@ -76,8 +76,7 @@ serverless or JAMstack app, bundling a CLI tool, etc.
 - Presents a unified interface for both polyrepo (normal repos) and monorepo
   management.
 - Built on popular open source tooling.
-  - Projector's core feature set relies on git, npm, and [a slightly-tweaked
-    semantic-release fork][2].
+  - Projector's core feature set relies on git, npm, and semantic-release.
   - Projector provides several [opinionated pre-made configurations and
     plugins][49] for TypeScript, webpack, Babel, Jest, and other tools, but you
     can (and should) easily substitute your own.
@@ -117,6 +116,10 @@ serverless or JAMstack app, bundling a CLI tool, etc.
 > workspaces with `name` "some-pkg-1" and "another-pkg-2" in their
 > `package.json` files. The `-ws` option is supported as well.
 
+> Commands executed _concurrently_ can be run in topological order, in simple
+> parallel, or sequentially (no concurrency) depending on CLI arguments. See the
+> [Dependency Topology and Script Concurrency][75] section for details.
+
 - Build one, some, or all workspaces concurrently.
   > `projector build -w pkg-1`\
   > `projector build -w pkg-1 -w pkg-2`\
@@ -127,21 +130,19 @@ serverless or JAMstack app, bundling a CLI tool, etc.
   > `projector test some-specific-test`\
   > `projector test --coverage --collectCoverageFrom 'src/**/*.ts' some-test`\
   > `projector test`
-- Release from one, some, or all workspaces concurrently (topologically;
-  all-or-nothing), including automatic commit-based changelog generation and
-  cross-dependency version coherence for monorepos (via
-  [semantic-release-atam][2]).
+- Release from one, some, or all workspaces concurrently, including automatic
+  commit-based changelog generation and, for monorepos, [cross-dependency
+  version coherence][38].
   > `projector publish -w pkg-1`\
   > `projector publish -w pkg-1 -w pkg-2 -w pkg-3`\
   > `projector publish -ws`\
   > `projector publish`
-- Run npm scripts within one, some, or all workspaces concurrently (topological
-  order via [lage][76]) or in parallel/sequentially (via [npm-run-script][39]).
+- Run npm scripts within one, some, or all workspaces concurrently.
   > `projector run -w pkg-1 script-in-workspace`\
   > `projector run -w pkg-1 -w pkg-2 script-in-workspace`\
   > `projector run -ws script-in-some-workspaces --parallel --if-present`\
   > `projector run script-at-root-only`
-- Run arbitrary npm commands within one, some, or all workspaces.
+- Run arbitrary npm commands within one, some, or all workspaces .
   > `projector -w pkg-1 npm info`\
   > `projector -w pkg-1 -w pkg-2 npm list --depth=1`\
   > `projector -ws npm audit`\
@@ -328,28 +329,29 @@ See [`@projector-js/core`][35] for details.
   Package roots are _never_ referred to as "root".
 - **polyrepo**: a repository containing a root `package.json` file with no
   [`workspaces`][56] key. A polyrepo is the opposite of a _monorepo_.
-- [**topological order**][81]: a sequence of packages where a dependent package
-  always comes before its dependencies—a so-called "package dependency order".
-  Topological ordering ensures concurrent tasks are performed at the right time
-  and order (e.g. regenerate types in a core package before linting its
-  dependent packages). [Here's an illustrated example][82].
+- [**topological order**][81]: a sequence of packages where dependent packages
+  always come before their dependencies—a so-called "package dependency order".
+  Topological ordering ensures otherwise-concurrent tasks are performed at the
+  right time and order (e.g. regenerate types in a core package before linting
+  its dependent packages). [Here's an illustrated example][82].
 
 ## Usage
 
-To use Projector, one must first [install the CLI][48].
+To use Projector, you must first [install the CLI][48].
 
 From there, you can use [`projector create`][100] to create a new monorepo or
-polyrepo. See [Getting Started][74] to walk through inspecting, testing, and
-publishing an existing monorepo.
+polyrepo if you want. See [Getting Started][74] to walk through inspecting,
+testing, and publishing an existing monorepo instead.
 
-[Pre-made configurations][49] are used to configure their respective tooling,
-and can be tweaked. For example, `@projector-js/config-eslint` can be used in
-`.eslintrc.js` like so:
+If you don't already have your own tooling setup, [pre-made configurations][49]
+can be used to configure their respective tools, and are easily tweaked. For
+example, `@projector-js/config-eslint` can be used in `.eslintrc.js` like so:
 
 ```javascript
 module.exports = require('@projector-js/config-eslint')((config) => {
   return {
     ...config,
+    // ? Tweak the overrides key in the shared config
     overrides: [
       {
         files: ['*.test.*'],
@@ -364,40 +366,27 @@ module.exports = require('@projector-js/config-eslint')((config) => {
 });
 ```
 
-If your project is a monorepo, you'll have to use [semantic-release-atam][2] and
-the [semantic-release plugin][51].
+If your project is a monorepo, you'll have to use [semantic-release-atam][2]
+(PRs pending) and the [semantic-release plugin][51] **instead of** the normal
+semantic-release. semantic-release-atam is a drop-in replacement for
+semantic-release. Additionally, if you're using conventional-changelog, consider
+using [the version patched to work better with monorepos][25] (PRs pending)
+instead.
 
-[Projector plugins][49] are tiny executables called by Projector as npm scripts.
-See [Life Cycle Scripts (plugins)][40] for details on Projector's plugin system.
+Projector's primary job is to run npm scripts at the right time; [Projector
+plugins][49] are portable plug and play npm scripts. See [Life Cycle Scripts
+(plugins)][40] for details on Projector's plugin system. And since they're just
+npm scripts with a fancy name, plugins are easy to author yourself, even
+directly in the relevant `package.json` file (no new file needed).
 
-For example, `@projector-js/plugin-build` and `@projector-js/plugin-format` can
-be added to Projector via the root `package.json` file:
+For example, the `@projector-js/plugin-build` and `@projector-js/plugin-format`
+plugins can be added to package via `package.json`:
 
 ```javascript
 {
-  "name": "my-monorepo",
-  "workspaces": [ ... ],
-  "scripts": {
-    "build": "npm run build-dist --",
-    "build-changelog": "plugin-build changelog",
-    "build-dist": "plugin-build dist",
-    "build-docs": "plugin-build docs",
-    "format": "plugin-format"
-    ...
-  }
+  "name": "@my-monorepo/pkg",
+  "version": "2.5.8",
   ...
-}
-```
-
-If you're pushing to GitHub and using GitHub Actions, you can set up CI/CD and
-Dependabot for your project using Projector's [GitHub Action][50].
-
-For advanced topological task running, configure [lage and backfill][101].
-
-```javascript
-{
-  "name": "my-monorepo",
-  "workspaces": [ ... ],
   "scripts": {
     "build": "npm run build-dist --",
     "build-changelog": "plugin-build changelog",
@@ -406,15 +395,15 @@ For advanced topological task running, configure [lage and backfill][101].
     "format": "plugin-format"
     ...
   },
-  "lage": {
-    "pipeline": {
-      "build": ["^build"],
-      "test": ["build"]
-    }
-  }
   ...
 }
 ```
+
+If you're pushing to GitHub and using GitHub Actions, you can set up CI/CD and
+Dependabot for your project using Projector's [GitHub Action][50].
+
+Finally, you can optionally setup [advanced concurrent task pipelines and
+caching][75], if desired.
 
 ### Getting Started
 
@@ -475,7 +464,7 @@ following structure:
   "dependencies": {
     "@my-namespace/core": "1.1.2",
     ...
-  }
+  },
   ...
 }
 ```
@@ -794,7 +783,7 @@ version coherence".
   "dependencies": {
     "@my-namespace/core": "1.2.0",
     ...
-  }
+  },
   ...
 }
 ```
@@ -821,7 +810,8 @@ you please, or you can use a [tweakable pre-made configuration][49].
 
 If your repository is using annotated tags, consider using
 [semantic-release-atam][2], which is a semantic-release fork with
-***a***nnotated ***t***ag ***a***nd ***m***onorepo support. **Do not install semantic-release and semantic-release-atam at the same time!**
+***a***nnotated ***t***ag ***a***nd ***m***onorepo support (PRs pending). **Do
+not install semantic-release and semantic-release-atam at the same time!**
 
 <!-- prettier-ignore-end -->
 
@@ -861,11 +851,10 @@ Monorepos additionally require the following:
   installed**).
   - semantic-release-atam is a drop-in replacement for semantic-release, but
     with annotated tag and monorepo (ATAM) support.
-- [`@projector-js/semantic-release-plugin`][51] installed and configured.
-- conventional-changelog installation and configuration must meet the minimum
-  requirements listed in [`@projector-js/config-conventional-changelog`][25].
-- semantic-release-atam installation and configuration must meet the minimum
-  requirements listed in [`@projector-js/config-semantic-release-atam`][31].
+  - semantic-release-atam installation and configuration must meet the minimum
+    requirements listed in [`@projector-js/config-semantic-release-atam`][31].
+  - [`@projector-js/semantic-release-plugin`][51] must also be installed and
+    configured.
 
 **Example**
 
@@ -1002,8 +991,8 @@ information.
 [contributing]: CONTRIBUTING.md
 [support]: .github/SUPPORT.md
 [1]: /packages
-[2]: https://www.npmjs.com/package/semantic-release-atam
-[3]: https://www.npmjs.com/package/conventional-changelog
+[2]: https://github.com/Xunnamius/semantic-release-atam
+[3]: https://github.com/Xunnamius/conventional-changelog
 [4]: https://www.conventionalcommits.org/en/v1.0.0
 [5]: https://github.com/features/actions
 [6]:
