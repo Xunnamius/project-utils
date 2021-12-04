@@ -130,9 +130,8 @@ serverless or JAMstack app, bundling a CLI tool, etc.
   > `projector test some-specific-test`\
   > `projector test --coverage --collectCoverageFrom 'src/**/*.ts' some-test`\
   > `projector test`
-- Release from one, some, or all workspaces concurrently, including automatic
-  commit-based changelog generation and, for monorepos, [cross-dependency
-  version coherence][38].
+- Release from one, some, or all workspaces concurrently (including
+  [cross-dependency version coherence][38] for monorepos).
   > `projector publish -w pkg-1`\
   > `projector publish -w pkg-1 -w pkg-2 -w pkg-3`\
   > `projector publish -ws`\
@@ -142,7 +141,7 @@ serverless or JAMstack app, bundling a CLI tool, etc.
   > `projector run -w pkg-1 -w pkg-2 script-in-workspace`\
   > `projector run -ws script-in-some-workspaces --parallel --if-present`\
   > `projector run script-at-root-only`
-- Run arbitrary npm commands within one, some, or all workspaces .
+- Run arbitrary npm commands within one, some, or all workspaces.
   > `projector -w pkg-1 npm info`\
   > `projector -w pkg-1 -w pkg-2 npm list --depth=1`\
   > `projector -ws npm audit`\
@@ -399,8 +398,8 @@ plugins can be added to package via `package.json`:
 }
 ```
 
-If you're pushing to GitHub and using GitHub Actions, you can set up CI/CD and
-Dependabot for your project using Projector's [GitHub Action][50].
+If you're pushing to GitHub and using GitHub Actions, you can optionally set up
+CI/CD for your project using Projector's [GitHub Action][50].
 
 Finally, you can optionally setup [advanced concurrent task pipelines and
 caching][75], if desired.
@@ -677,7 +676,7 @@ $ projector publish -ws
 Monday, Nov 29, 2021, 12:07:55.101 PM PST
 [12:07:55.123 PM] [projector] › »  Publishing all packages
 [12:07:55.130 PM] [projector] › ℹ  Publishing package "@my-namespace/core" at packages/pkg-1
-[12:07:55 PM] [semantic-release] › ℹ  Running semantic-release-atam version 18.0.0
+[12:07:55 PM] [semantic-release] › ℹ  Running semantic-release version 18.0.0
 ...
 [12:07:55 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analysis of 104 commits complete: minor release
 ...
@@ -705,7 +704,7 @@ npm notice
 ...
 [12:08:49 PM] [semantic-release] › ✔  Published release 1.2.0 on default channel
 [12:08:49.371 PM] [projector] › ℹ  Publishing package "@my-namespace/pkg" at packages/pkg-2
-[12:07:55.481 PM] [semantic-release] › ℹ  Running semantic-release-atam version 18.0.0
+[12:07:55.481 PM] [semantic-release] › ℹ  Running semantic-release version 18.0.0
 ...
 [12:07:55 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analysis of 122 commits complete: patch release
 ...
@@ -849,12 +848,16 @@ Monorepos additionally require the following:
     root.
 - [semantic-release-atam][2] installed (**and the original semantic-release not
   installed**).
-  - semantic-release-atam is a drop-in replacement for semantic-release, but
-    with annotated tag and monorepo (ATAM) support.
+  - semantic-release-atam is a drop-in replacement for semantic-release with
+    added support for annotated tag and monorepo (ATAM).
   - semantic-release-atam installation and configuration must meet the minimum
     requirements listed in [`@projector-js/config-semantic-release-atam`][31].
   - [`@projector-js/semantic-release-plugin`][51] must also be installed and
     configured.
+
+Note that ["fixed," "locked," or "synchronized"][102] package versions, where
+every package maintains the same version number on every release, goes against
+the purpose of semantic-release and so is not currently supported.
 
 **Example**
 
@@ -1093,3 +1096,4 @@ information.
 [99]: #credits
 [100]: packages/cli#projector-create
 [101]: https://microsoft.github.io/lage/guide/config.html
+[102]: https://github.com/lerna/lerna#fixedlocked-mode-default
