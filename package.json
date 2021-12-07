@@ -35,7 +35,7 @@
     "@types/jest": "^27.0.3",
     "@types/node": "^16.11.10",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
-    "@typescript-eslint/parser": "^5.4.0",
+    "@typescript-eslint/parser": "^5.6.0",
     "@xunnamius/conventional-changelog-projector": "^1.1.1",
     "babel-jest": "^27.3.1",
     "babel-loader": "^8.2.3",
