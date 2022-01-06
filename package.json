@@ -1,5 +1,12 @@
 {
   "name": "projector-monorepo",
+  "private": true,
+  "homepage": "https://github.com/Xunnamius/projector",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Xunnamius/projector",
+    "lens": "next"
+  },
   "workspaces": [
     "packages/*"
   ],
@@ -45,7 +52,7 @@
     "babel-plugin-transform-default-named-imports": "^1.2.1",
     "babel-plugin-transform-rename-import": "^2.3.0",
     "confusing-browser-globals": "^1.0.10",
-    "conventional-changelog-cli": "https://gitpkg.now.sh/xunnamius/conventional-changelog/packages/conventional-changelog-cli",
+    "conventional-changelog-cli": "https://xunn.at/conventional-changelog-cli",
     "dotenv": "^10.0.0",
     "eslint": "^8.3.0",
     "eslint-import-resolver-alias": "^1.1.2",
@@ -75,11 +82,11 @@
     "remark-reference-links": "^6.0.1",
     "remark-validate-links": "^11.0.2",
     "semantic-release": "github:xunnamius/semantic-release",
-    "sort-package-json": "github:xunnamius/sort-package-json",
+    "sort-package-json": "^1.53.1",
     "source-map-support": "^0.5.21",
     "spellchecker": "^3.7.1",
     "text-extensions": "^2.4.0",
-    "tsconfig-replace-paths": "github:xunnamius/tsconfig-replace-paths",
+    "tsconfig-replace-paths": "^0.0.11",
     "type-fest": "^2.6.0",
     "typedoc": "^0.22.10",
     "typedoc-plugin-markdown": "^3.11.7",

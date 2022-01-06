@@ -68,7 +68,7 @@ If going with conventional-changelog, consider using [the CLI version patched to
 work properly with monorepos][2]:
 
 ```bash
-npm install --save-dev https://gitpkg.now.sh/xunnamius/conventional-changelog/packages/conventional-changelog-cli
+npm install --save-dev https://xunn.at/conventional-changelog-cli
 ```
 
 ## Install
@@ -101,7 +101,7 @@ information.
 [badge-blm]: https://api.ergodark.com/badges/blm 'Join the movement!'
 [link-blm]: https://secure.actblue.com/donate/ms_blm_homepage_2019
 [badge-maintenance]:
-  https://img.shields.io/maintenance/active/2021
+  https://img.shields.io/maintenance/active/2022
   'Is this package maintained?'
 [link-repo]: https://github.com/xunnamius/projector
 [badge-last-commit]:

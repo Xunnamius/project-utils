@@ -11,6 +11,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "inlineSourceMap": true,
+    "incremental": true,
     "isolatedModules": true,
     "lib": [
       "ESNext",
