@@ -20,18 +20,113 @@
 
 # @projector-js/plugin-lint
 
-<!-- TODO -->
+This opinionated CLI tool checks a Node project for correctness. TypeScript
+([`tsc`][1]) is used for type checking, [ESLint][2] for static analysis of
+JavaScript/TypeScript source, and [Remark][3] for analysis of Markdown source.
+Further checks are performed to ensure the project is optimally structured and
+conforms to best practices, including a flag (`--monorepo`) to enable
+monorepo-specific checks (i.e. "monorepo mode").
 
-fail when in monorepo and root `package.json` has `dependencies` or `version`
+See the [usage section][4] for more information.
 
-fail if workspace doesn't have `package.json`; or missing `name`; or missing
-`version` and private is not `false`
+Specifically, the following structural/conformity checks are performed:
 
-fail if monorepo package is missing license, fossa, README.md, tsconfigs, any of
-the necessary package.json keys, or the key values are not pointing to the
-proper places
+- ⛔ Errors when `package.json` file is missing
+- ⛔ Errors when `dist` directory or its subdirectories contain `.tsbuildinfo`
+  files
+- ⛔ Errors when `package.json` does not contain `name`, `description`,
+  `repository`, `license`, `author`, or `type` keys
+- ⛔ Errors when `package.json` does not contain `version`, `keywords`,
+  `homepage`, `sideEffects`, `exports`, `typesVersions`, `files`, `engines`, or
+  `publishConfig` keys
+  - If the `private` key exists and is set to `true`, this check is skipped
+- ⛔ Errors when the same dependency appears under both `dependencies` and
+  `devDependencies` keys in `package.json`
+- ⛔ Errors when `package.json` contains the `files` key but its array is
+  missing `"/dist"`, `"/LICENSE"`, `"/package.json"`, or `"/README.md"` elements
+- ⛔ Errors when `package.json` is missing the `exports["./package"]` or
+  `exports["./package.json"]` key paths, or if they point to files that do not
+  exist
+- ⛔ Errors when missing `LICENSE` or `README.md` files
+- ⛔ Errors when unpublished git commits have "fixup" or "mergeme" in their
+  subject
+  - This is evidence that the commit tree needs to be cleaned up before changes
+    are merged upstream!
+- ⚠️ Warns when missing `tsconfig.json`, `tsconfig.docs.json`,
+  `tsconfig.eslint.json`, `tsconfig.lint.json`, or `tsconfig.types.json` files
+  - If in monorepo mode and `package.json` does not contain a `workspaces` key,
+    only `tsconfig.docs.json`, `tsconfig.lint.json`, and `tsconfig.types.json`
+    are checked for existence
+- ⚠️ Warns when `version` is [experimental][5] (i.e. `<1.0.0`).
+  - This excludes the special placeholder version `0.0.0-development`
+- ⚠️ Warns when any `exports` key values in `package.json` point to files that
+  do not exist
+- ⚠️ Warns when `package.json` contains the outdated `main`, `module`, or
+  `types` keys
+  - Use `exports` instead
+  - Once TypeScript [ships support for the `types` export condition][6],
+    `typesVersions` will be considered "outdated" as well
+- ⚠️ Warns when `package.json` contains the `engines` key but is missing the
+  `engines.node` key path, or if it is not set to [the earliest maintained LTS
+  version of Node.js][7]
+  - For example: `{ "engines": { "node": ">=12.22.10" }}` (as of Feb 2022)
+- ⚠️ Warns when depending on a [pinned][8] package version (like `"x.y.z"`
+  instead of `"^x.y.z"`)
+  - Use [`package-lock.json`][9] + [`npm ci`][10] instead
+- ⚠️ Warns when depending on a [dist-tag package version][11] (like `"next"` or
+  `"latest"`) instead of a proper semver (like `"~x.y.z"`)
+- ⚠️ Warns when `package.json` is missing the `config.docs.entry` key path, or
+  if it points to a file that does not exist
+- ⚠️ Warns when `README.md` does not contain the standard badge topmatter, or
+  when the topmatter pointing to the wrong package name and/or repo uri
 
-error if two packages have same package-id
+These additional checks are performed _unless_ executing in monorepo mode and
+`package.json` _does not_ contain the `workspaces` key:
+
+- ⚠️ Warns when missing `.codecov.yml`, `.editorconfig`, `.eslintrc.js`,
+  `.fossa.yml`, `.gitattributes`, `.gitignore`, `.prettierignore`,
+  `.spellcheckignore`, `babel.config.js`, `commitlint.config.js`,
+  `conventional.config.js`, `jest.config.js`, `lint-staged.config.js`,
+  `webpack.config.js`, or `prettier.config.js` files
+- ⚠️ Warns when missing the `.github`, `.husky`, `.vscode`, or `types`
+  directories
+- ⚠️ Warns when missing `CONTRIBUTING.md` or `release.config.js` files
+  - If the `package.json` `private` key exists and is set to `true`, this check
+    is skipped
+- ⚠️ Warns when missing `CONTRIBUTING.md` file
+  - If the `package.json` `private` key exists and is set to `true`, this check
+    is skipped
+
+These additional checks are performed _only if_ executing in monorepo mode and
+`package.json` contains the `workspaces` key (i.e. cwd is [project root][12]):
+
+- All [package roots][12] defined in the `package.json` `workspaces` key are
+  recursively linted.
+- ⛔ Errors when any two packages share the same `package.json` `name` key
+- ⛔ Errors when any two packages share the same [package-id][12]
+- ⛔ Errors if a package exists on the filesystem but is not present in
+  `package.json` `workspaces`
+  - This check is skipped if `workspaces` entries do not share a common
+    parent/ancestor directory
+- ⚠️ Warns when the [package roots][12] defined in the `package.json`
+  `workspaces` key do not all share a common parent/ancestor directory
+  - This is a problem because it disables the check for packages that exist on
+    the filesystem that are missing corresponding `workspaces` entries
+- ⚠️ Warns when `package.json` contains `dependencies` or `version` keys
+
+These additional checks are performed _only if_ executing in monorepo mode and
+`package.json` _does not_ contain the `workspaces` key (i.e. cwd is [package
+root][12]):
+
+- ⛔ Errors when this package shares the same `package.json` `name` key as
+  another package in the monorepo
+- ⛔ Errors when this package shares the same [package-id][12] as another
+  package in the monorepo
+- ⛔ Errors when this package's source imports another package (from the same
+  monorepo) but doesn't list said package in `package.json` `dependencies` keys
+  - This check is performed via static analysis (ESLint plugin), so dynamic
+    imports are excluded
+  - [Self-referential imports][13] are excluded from this check
 
 ## Install
 
@@ -41,7 +136,43 @@ npm install --save-dev @projector-js/plugin-lint
 
 ## Usage
 
-<!-- TODO -->
+Standalone usage:
+
+```bash
+npx @projector-js/plugin-lint
+```
+
+Or, if configured to work with [Projector][14]:
+
+```bash
+npm run lint
+```
+
+Help text (use `--help` to get the most up-to-date version):
+
+    plugin-lint
+
+    Check a project for correctness.
+
+    Options:
+      --help      Show help                                                [boolean]
+      --version   Show version number                                      [boolean]
+      --silent    Nothing will be printed to stdout or stderr              [boolean]
+      --rootDir   The project root directory containing ESLint and TypeScript
+                  configuration files, and that relative paths and globs are
+                  resolved against.                [string] [default: process.cwd()]
+      --srcPath   Absolute or relative paths that resolve to one or more directories
+                  containing source files, or to one or more source files
+                  themselves.                           [array] [default: ["./src"]]
+      --mdPath    Absolute paths, relative paths, and/or globs that resolve to one
+                  or more markdown files.
+                   [array] [default: all files ending in .md not under node_modules]
+      --project   An absolute or relative path to a TypeScript tsconfig.json
+                  configuration file.       [string] [default: "tsconfig.lint.json"]
+      --monorepo  If set, the first package.json file found containing a
+                  "workspaces" key will be used for monorepo-specific linting tasks.
+                  The search begins at the directory specified by --rootDir. If not
+                  set or unset, no monorepo-specific linting is performed. [boolean]
 
 ## Documentation
 
@@ -60,8 +191,8 @@ project][link-repo] to let me know you found it useful! ✊🏿 Thank you!
 See [CONTRIBUTING.md][contributing] and [SUPPORT.md][support] for more
 information.
 
-[badge-blm]: https://api.ergodark.com/badges/blm 'Join the movement!'
-[link-blm]: https://secure.actblue.com/donate/ms_blm_homepage_2019
+[badge-blm]: https://xunn.at/badge-blm 'Join the movement!'
+[link-blm]: https://xunn.at/donate-blm
 [badge-maintenance]:
   https://img.shields.io/maintenance/active/2022
   'Is this package maintained?'
@@ -105,9 +236,26 @@ information.
 [link-bundlephobia]:
   https://bundlephobia.com/result?p=@projector-js/plugin-lint
   'Package size (minified and gzipped)'
-[package-json]: package.json
 [docs]: docs
 [choose-new-issue]: https://github.com/xunnamius/projector/issues/new/choose
 [pr-compare]: https://github.com/xunnamius/projector/compare
 [contributing]: /CONTRIBUTING.md
 [support]: /.github/SUPPORT.md
+[1]: https://www.npmjs.com/package/typescript
+[2]: https://www.npmjs.com/package/eslint
+[3]: https://www.npmjs.com/package/remark
+[4]: #usage
+[5]:
+  https://semver.org/#how-should-i-deal-with-revisions-in-the-0yz-initial-development-phase
+[6]:
+  https://github.com/microsoft/TypeScript/issues/33079#issuecomment-1040634703
+[7]: https://endoflife.date/nodejs
+[8]:
+  https://dev.to/lucifer1004/it-is-not-always-right-to-pin-your-dependencies-36jg
+[9]: https://docs.npmjs.com/cli/v8/configuring-npm/package-lock-json
+[10]: https://docs.npmjs.com/cli/v8/commands/npm-ci
+[11]: https://docs.npmjs.com/cli/v8/commands/npm-dist-tag#description
+[12]: /README.md#terminology
+[13]:
+  https://nodejs.org/api/packages.html#self-referencing-a-package-using-its-name
+[14]: https://github.com/Xunnamius/projector
