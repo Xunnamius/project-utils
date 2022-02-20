@@ -20,6 +20,8 @@
 
 # @projector-js/plugin-lint
 
+> See the [usage section][4] for more information.
+
 This opinionated CLI tool checks a Node project for correctness. TypeScript
 ([`tsc`][1]) is used for type checking, [ESLint][2] for static analysis of
 JavaScript/TypeScript source, and [Remark][3] for analysis of Markdown source.
@@ -27,9 +29,8 @@ Further checks are performed to ensure the project is optimally structured and
 conforms to best practices, including a flag (`--monorepo`) to enable
 monorepo-specific checks (i.e. "monorepo mode").
 
-See the [usage section][4] for more information.
-
-Specifically, the following structural/conformity checks are performed:
+Specifically, in addition to type checking and static analysis, the following
+checks are performed:
 
 - ⛔ Errors when `package.json` file is missing
 - ⛔ Errors when `dist` directory or its subdirectories contain `.tsbuildinfo`
@@ -57,7 +58,7 @@ Specifically, the following structural/conformity checks are performed:
   - If in monorepo mode and `package.json` does not contain a `workspaces` key,
     only `tsconfig.docs.json`, `tsconfig.lint.json`, and `tsconfig.types.json`
     are checked for existence
-- ⚠️ Warns when `version` is [experimental][5] (i.e. `<1.0.0`).
+- ⚠️ Warns when `version` is [experimental][5] (i.e. `<1.0.0`)
   - This excludes the special placeholder version `0.0.0-development`
 - ⚠️ Warns when any `exports` key values in `package.json` point to files that
   do not exist
@@ -78,7 +79,7 @@ Specifically, the following structural/conformity checks are performed:
 - ⚠️ Warns when `package.json` is missing the `config.docs.entry` key path, or
   if it points to a file that does not exist
 - ⚠️ Warns when `README.md` does not contain the standard badge topmatter, or
-  when the topmatter pointing to the wrong package name and/or repo uri
+  when said topmatter is pointing to the wrong package name and/or repo uri
 
 These additional checks are performed _unless_ executing in monorepo mode and
 `package.json` _does not_ contain the `workspaces` key:
@@ -124,7 +125,7 @@ root][12]):
   package in the monorepo
 - ⛔ Errors when this package's source imports another package (from the same
   monorepo) but doesn't list said package in `package.json` `dependencies` keys
-  - This check is performed via static analysis (ESLint plugin), so dynamic
+  - This check is performed via static analysis ([`eslint-`][15]), so dynamic
     imports are excluded
   - [Self-referential imports][13] are excluded from this check
 
@@ -157,7 +158,8 @@ Help text (use `--help` to get the most up-to-date version):
     Options:
       --help      Show help                                                [boolean]
       --version   Show version number                                      [boolean]
-      --silent    Nothing will be printed to stdout or stderr              [boolean]
+      --silent    Nothing will be printed to stdout or stderr
+                                                          [boolean] [default: false]
       --rootDir   The project root directory containing ESLint and TypeScript
                   configuration files, and that relative paths and globs are
                   resolved against.                [string] [default: process.cwd()]
@@ -166,13 +168,14 @@ Help text (use `--help` to get the most up-to-date version):
                   themselves.                           [array] [default: ["./src"]]
       --mdPath    Absolute paths, relative paths, and/or globs that resolve to one
                   or more markdown files.
-                   [array] [default: all files ending in .md not under node_modules]
+                  [array] [default: all files ending in .md not under node_modules]
       --project   An absolute or relative path to a TypeScript tsconfig.json
                   configuration file.       [string] [default: "tsconfig.lint.json"]
-      --monorepo  If set, the first package.json file found containing a
-                  "workspaces" key will be used for monorepo-specific linting tasks.
-                  The search begins at the directory specified by --rootDir. If not
-                  set or unset, no monorepo-specific linting is performed. [boolean]
+      --monorepo  The first package.json file found containing a "workspaces" key
+                  will be considered the project root for monorepo-specific checks.
+                  The search begins with the package.json file at the directory
+                  specified by --rootDir and continues upward.
+                                                          [boolean] [default: false]
 
 ## Documentation
 
@@ -259,3 +262,5 @@ information.
 [13]:
   https://nodejs.org/api/packages.html#self-referencing-a-package-using-its-name
 [14]: https://github.com/Xunnamius/projector
+
+[15]: <>
