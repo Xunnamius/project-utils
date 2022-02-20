@@ -44,7 +44,8 @@ export function configureProgram(program?: Program): Context {
     .options({
       silent: {
         describe: 'Nothing will be printed to stdout or stderr',
-        type: 'boolean'
+        type: 'boolean',
+        default: false
       },
       rootDir: {
         describe:
@@ -79,8 +80,9 @@ export function configureProgram(program?: Program): Context {
       },
       monorepo: {
         describe:
-          'The first package.json file found containing a "workspaces" key will be the basis for monorepo-specific linting tasks. The search begins at the directory specified by --rootDir and continues upward. If not set, monorepo-specific linting is disabled.',
-        type: 'boolean'
+          'The first package.json file found containing a "workspaces" key will be considered the project root for monorepo-specific checks. The search begins with the package.json file at the directory specified by --rootDir and continues upward.',
+        type: 'boolean',
+        default: false
       }
     });
 
