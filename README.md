@@ -316,8 +316,8 @@ See [`@projector-js/core`][35] for details.
 - **repository root**: the top-level directory of a git repository and Projector
   project; it contains the root `package.json` file. This directory is also
   referred to as: "project root," `rootDir` (always as an absolute path), "root
-  package" (in [npm documentation][56]), "monorepo/polyrepo root," or simply
-  "root".
+  package" (in [npm documentation][56]), "monorepo/polyrepo/repo root," or
+  simply "root".
 - **monorepo**: a repository containing multiple packages/workspaces, each
   listed under the [`workspaces`][56] key in the root `package.json`. A monorepo
   is the opposite of a _polyrepo_.
@@ -936,7 +936,7 @@ Like Lerna and semantic-release, Projector too has a badge!
 [![Maintained with Projector][60]][link-projector]
 
 ```markdown
-[![Maintained with Projector](https://img.shields.io/badge/maintained%20with-projector-ccff00.svg)](https://github.com/Xunnamius/projector)
+[![Maintained with Projector](https://xunn.at/badge-projector)](https://github.com/Xunnamius/projector)
 ```
 
 ## Documentation
@@ -962,8 +962,8 @@ project][link-repo] to let me know you found it useful! ✊🏿 Thank you!
 See [CONTRIBUTING.md][contributing] and [SUPPORT.md][support] for more
 information.
 
-[badge-blm]: https://api.ergodark.com/badges/blm 'Join the movement!'
-[link-blm]: https://secure.actblue.com/donate/ms_blm_homepage_2019
+[badge-blm]: https://xunn.at/badge-blm 'Join the movement!'
+[link-blm]: https://xunn.at/donate-blm
 [link-repo]: https://github.com/xunnamius/projector
 [badge-last-commit]:
   https://img.shields.io/github/last-commit/xunnamius/projector
@@ -986,7 +986,7 @@ information.
   'This repo practices continuous integration and deployment!'
 [link-semantic-release]: https://github.com/semantic-release/semantic-release
 [badge-projector]:
-  https://img.shields.io/badge/maintained%20with-projector-ccff00.svg
+  https://xunn.at/badge-projector
   'This repo is managed with Projector'
 [link-projector]: https://github.com/Xunnamius/projector
 [choose-new-issue]: https://github.com/xunnamius/projector/issues/new/choose
@@ -1050,7 +1050,7 @@ information.
 [57]: https://webpack.js.org
 [58]: https://docs.npmjs.com/cli/v8/configuring-npm/package-json#workspaces
 [59]: https://www.npmjs.com/package/glob#glob-primer
-[60]: https://img.shields.io/badge/maintained%20with-projector-ccff00.svg
+[60]: https://xunn.at/badge-projector
 [61]: packages/plugin-lint
 [63]: packages/plugin-list-types
 [64]: packages/plugin-metrics
