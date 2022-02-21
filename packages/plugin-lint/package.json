@@ -61,7 +61,10 @@
   },
   "dependencies": {
     "@projector-js/core": "^1.0.0",
+    "browserlist": "^1.0.1",
     "debug": "^4.3.3",
+    "espree": "^9.3.1",
+    "mdast-util-from-markdown": "^1.2.0",
     "objectpath": "^2.0.0",
     "strip-ansi": "^6.0.1"
   },
