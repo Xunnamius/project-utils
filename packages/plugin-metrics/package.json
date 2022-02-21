@@ -30,7 +30,7 @@
     "./package.json": "./package.json"
   },
   "main": "./dist/cjs/index.js",
-  "module": "./dist/bundle/index.mjs",
+  "module": "./dist/shakable/index.mjs",
   "types": "./dist/types/packages/plugin-metrics/src/index.d.ts",
   "typesVersions": {
     "*": {
@@ -48,15 +48,16 @@
   "scripts": {
     "build": "npm run build-dist --",
     "build-changelog": "conventional-changelog --outfile CHANGELOG.md --config ../../conventional.config.js --release-count 0 --skip-unstable && (if [ \"$CHANGELOG_SKIP_TITLE\" != 'true' ]; then { node -e 'console.log(require(\"../../conventional.config.js\").changelogTitle)'; cat CHANGELOG.md; } > CHANGELOG.md.ignore && mv CHANGELOG.md.ignore CHANGELOG.md; fi) && remark -o --use reference-links --use gfm --use frontmatter CHANGELOG.md && prettier --write CHANGELOG.md",
-    "build-dist": "if [ -r ./next.config.js ]; then next build; else NODE_ENV=production tsc --project tsconfig.types.json && tsconfig-replace-paths --project tsconfig.types.json && (export PKGROOT=`pwd` && cd ../.. && NODE_ENV=production webpack --config-name cjs) && if [ -r ./src/cli.ts ]; then (export PKGROOT=`pwd` && cd ../.. && NODE_ENV=production webpack --config-name cli) && chmod +x ./dist/cli.js; fi && (export PKGROOT=`pwd` && cd ../.. && NODE_ENV=esm webpack --config-name esm) && NODE_ENV=bundle babel src --extensions .ts --out-dir dist/bundle --out-file-extension .mjs --root-mode upward; fi",
+    "build-dist": "if [ -r ./next.config.js ]; then next build; else NODE_ENV=production tsc --project tsconfig.types.json --incremental false && tsconfig-replace-paths --project tsconfig.types.json && (export PKGROOT=`pwd` && cd ../.. && NODE_ENV=production webpack --config-name cjs-static) && if [ -r ./src/cli.ts ]; then (export PKGROOT=`pwd` && cd ../.. && NODE_ENV=production webpack --config-name cli) && chmod +x ./dist/cli.js; fi && NODE_ENV=esm-shakable babel src --extensions .ts --out-dir dist/esm-shakable --out-file-extension .mjs --root-mode upward; fi",
     "build-docs": "if [ -r ./next.config.js ]; then typedoc --plugin typedoc-plugin-markdown --out docs --readme none lib src test types external-scripts --exclude '**/*.test.*' --exclude external-scripts/bin; else ENTRY=`node -e 'console.log((x => typeof x==\"string\"?x:x.default)(require(\"./package.json\").exports[\".\"]).replace(/\\.\\/dist\\/(?:cjs|esm)\\/(.+)\\.[a-zA-Z0-9]+$/, \"./src/$1.ts\"))'` && echo 'Entry file:' \"$ENTRY\" && typedoc --plugin typedoc-plugin-markdown --out docs --readme none $ENTRY && find docs -name '*.md' -exec sed -i -e 's/Project: //g' {} + && sed -i -e 1,4d docs/README.md; fi && find docs -name '*.md' -exec sed -i -e 's/`__namedParameters`/`\\(destructured\\)`/g' {} + && find docs -name '*.md' -exec sed -i -E 's/`__namedParameters\\.([^`]+)`/`\\({ \\1 }\\)`/g' {} +",
+    "clean": "git ls-files --exclude-standard --ignored --others --directory | grep -vE '^((\\.(env|vscode|husky))|next-env\\.d\\.ts|node_modules)($|\\/)' | xargs -p rm -rf",
     "list-tasks": "node -e 'console.log(Object.keys(require(\"./package.json\").scripts).join(\"\\n\"))'"
   },
   "dependencies": {
     "debug": "^4.3.2"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=14.19.0"
   },
   "publishConfig": {
     "access": "public"
