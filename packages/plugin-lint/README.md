@@ -53,6 +53,8 @@ checks are performed:
   subject
   - This is evidence that the commit tree needs to be cleaned up before changes
     are merged upstream!
+- ⛔ Errors when any `exports` entry points in `package.json` point to files
+  that do not exist
 - ⚠️ Warns when missing `tsconfig.json`, `tsconfig.docs.json`,
   `tsconfig.eslint.json`, `tsconfig.lint.json`, or `tsconfig.types.json` files
   - If in monorepo mode and `package.json` does not contain a `workspaces` key,
@@ -60,8 +62,6 @@ checks are performed:
     are checked for existence
 - ⚠️ Warns when `version` is [experimental][5] (i.e. `<1.0.0`)
   - This excludes the special placeholder version `0.0.0-development`
-- ⚠️ Warns when any `exports` key values in `package.json` point to files that
-  do not exist
 - ⚠️ Warns when `package.json` contains the outdated `main`, `module`, or
   `types` keys
   - Use `exports` instead
@@ -80,29 +80,56 @@ checks are performed:
   if it points to a file that does not exist
 - ⚠️ Warns when `README.md` does not contain the standard badge topmatter, or
   when said topmatter is pointing to the wrong package name and/or repo uri
+- ⚠️ Warns when standard links in `README.md` are pointing to the wrong package
+  name and/or repo uri
 
 These additional checks are performed _unless_ executing in monorepo mode and
 `package.json` _does not_ contain the `workspaces` key:
 
-- ⚠️ Warns when missing `.codecov.yml`, `.editorconfig`, `.eslintrc.js`,
-  `.fossa.yml`, `.gitattributes`, `.gitignore`, `.prettierignore`,
-  `.spellcheckignore`, `babel.config.js`, `commitlint.config.js`,
-  `conventional.config.js`, `jest.config.js`, `lint-staged.config.js`,
-  `webpack.config.js`, or `prettier.config.js` files
-- ⚠️ Warns when missing the `.github`, `.husky`, `.vscode`, or `types`
-  directories
-- ⚠️ Warns when missing `CONTRIBUTING.md` or `release.config.js` files
+- ⚠️ Warns when any of the following files are missing:
+  - `.codecov.yml`
+  - `.editorconfig`
+  - `.eslintrc.js`
+  - `.fossa.yml`
+  - `.gitattributes`
+  - `.gitignore`
+  - `.prettierignore`
+  - `.spellcheckignore`
+  - `babel.config.js`
+  - `commitlint.config.js`
+  - `conventional.config.js`
+  - `jest.config.js`
+  - `lint-staged.config.js`
+  - `webpack.config.js`
+  - `prettier.config.js`
+  - `CONTRIBUTING.md`
+  - `SECURITY.md`
+  - `.github/ISSUE_TEMPLATE/BUG_REPORT.md`
+  - `.github/ISSUE_TEMPLATE/config.yml`
+  - `.github/ISSUE_TEMPLATE/FEATURE_REQUEST.md`
+  - `.github/workflows/README.md`
+  - `.github/CODE_OF_CONDUCT.md`
+  - `.github/CODEOWNERS`
+  - `.github/dependabot.yml`
+  - `.github/pipeline.config.js`
+  - `.github/PULL_REQUEST_TEMPLATE.md`
+  - `.github/SUPPORT.md`
+- ⚠️ Warns when missing the `release.config.js` file
   - If the `package.json` `private` key exists and is set to `true`, this check
     is skipped
-- ⚠️ Warns when missing `CONTRIBUTING.md` file
-  - If the `package.json` `private` key exists and is set to `true`, this check
-    is skipped
+- ⚠️ Warns when missing the `.github`, `.github/ISSUE_TEMPLATE`,
+  `.github/workflows`, `.husky`, or `types` directories
+- ⚠️ Warns when `SECURITY.md` or `.github/SUPPORT.md` do not contain the
+  standard badge topmatter, or when said topmatter is pointing to the wrong
+  package name and/or repo uri
+- ⚠️ Warns when standard links in `CONTRIBUTING.md`, `SECURITY.md`, or
+  `.github/SUPPORT.md` are pointing to the wrong package name and/or repo uri
 
 These additional checks are performed _only if_ executing in monorepo mode and
 `package.json` contains the `workspaces` key (i.e. cwd is [project root][12]):
 
 - All [package roots][12] defined in the `package.json` `workspaces` key are
-  recursively linted.
+  recursively linted
 - ⛔ Errors when any two packages share the same `package.json` `name` key
 - ⛔ Errors when any two packages share the same [package-id][12]
 - ⛔ Errors if a package exists on the filesystem but is not present in
