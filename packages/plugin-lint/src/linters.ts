@@ -10,10 +10,6 @@ type UnifiedReturnType = Promise<{
   summary: string;
 }>;
 
-export const baselinePackageJson = {
-  // TODO
-};
-
 /**
  * Checks a project or package for structural correctness, adherence to standard
  * practices, and avoidance of certain anti-patterns. The project's package.json
@@ -26,6 +22,10 @@ export async function runProjectLinter({
    * The project or package root directory. Must contain a package.json file.
    */
   rootDir: string;
+  /**
+   * If additional monorepo-specific checks should be performed.
+   */
+  monorepo: boolean;
 }): UnifiedReturnType {
   try {
     const packageJson: PackageJson = JSON.parse(
@@ -33,7 +33,7 @@ export async function runProjectLinter({
     );
 
     // TODO
-    void packageJson, baselinePackageJson;
+    void packageJson;
 
     return {
       success: false,

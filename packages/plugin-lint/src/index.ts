@@ -95,19 +95,21 @@ export function configureProgram(program?: Program): Context {
       debug('saw argv: %O', argv);
 
       const finalArgv = await finalProgram.parse(argv);
+      const silent = finalArgv.silent as boolean;
+      const monorepo = finalArgv.monorepo as boolean;
       const tsconfig = finalArgv.project as string;
       const rootDir = finalArgv.rootDir as string;
       const sourcePaths = finalArgv.srcPath as string[];
       const markdownPaths = finalArgv.mdPath as string[];
 
       const results = await Promise.all([
-        runProjectLinter({ rootDir }),
+        runProjectLinter({ rootDir, monorepo }),
         runTypescriptLinter({ rootDir, tsconfig }),
         runEslintLinter({ rootDir, sourcePaths, tsconfig }),
         runRemarkLinter({ rootDir, markdownPaths })
       ]);
 
-      if (!finalArgv.silent) {
+      if (!silent) {
         let firstToOutput = true;
         const outputSeparator = () => {
           console.log(`${!firstToOutput ? '\n---\n' : ''}`);
