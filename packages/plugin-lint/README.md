@@ -141,14 +141,6 @@ root][12]):
   recursively linted
 - ⛔ Errors when any two packages share the same `package.json` `name` key
 - ⛔ Errors when any two packages share the same [package-id][12]
-- ⛔ Errors if a package exists on the filesystem but is not present in
-  `package.json` `workspaces`
-  - This check is skipped if `workspaces` entries do not share a common
-    parent/ancestor directory
-- ⚠️ Warns when the [package roots][12] defined in the `package.json`
-  `workspaces` key do not all share a common parent/ancestor directory
-  - This is a problem because it disables the check for packages that exist on
-    the filesystem that are missing corresponding `workspaces` entries
 - ⚠️ Warns when `package.json` contains `dependencies` or `version` keys
   - Given the existence of Next.js projects that might double as monorepos, this
     warning may be removed in a future version
@@ -162,7 +154,7 @@ These additional checks are performed _only if_ executing in monorepo mode and
 - ⛔ Errors when this package shares the same [package-id][12] as another
   package in the monorepo
 - ⛔ Errors when this package's source imports another package (from the same
-  monorepo) but doesn't list said package in `package.json` `dependencies` keys
+  monorepo) but doesn't list said package in `package.json` `dependencies` key
   - This check is performed via ESLint static analysis
     ([`@projector-js/eslint-plugin`][15]), so dynamic imports are excluded
   - [Self-referential imports][13] are excluded from this check
