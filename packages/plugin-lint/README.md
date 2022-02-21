@@ -135,7 +135,7 @@ These additional checks are performed only if linting a [monorepo project
 root][12]:
 
 - ⚠️ Warns when `package.json` contains `dependencies` or `version` keys
-  - If a `next.config.js` file exists, this check is skipped.
+  - If a `next.config.js` file exists, this check is skipped
 - All [package roots][12] defined in the `package.json` `workspaces` key are
   recursively linted
 
@@ -149,6 +149,8 @@ root][12]:
 - ⛔ † Errors when this package's source imports another package (from the same
   monorepo) but doesn't list said package in `package.json` `dependencies` key
   - [Self-referential imports][13] are excluded from this check
+- ⚠️ Warns when `package.json` contains `devDependencies`
+  - These should be located in the project root's package.json file instead
 
 > † This check is performed using [Espree][16] AST static analysis. Dynamic
 > imports are not checked.
