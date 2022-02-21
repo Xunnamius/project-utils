@@ -79,12 +79,6 @@ export function configureProgram(program?: Program): Context {
           'An absolute or relative path to a TypeScript tsconfig.json configuration file.',
         type: 'string',
         default: 'tsconfig.lint.json'
-      },
-      monorepo: {
-        describe:
-          'The first package.json file found containing a "workspaces" key will be considered the project root for monorepo-specific checks. The search begins with the package.json file at the directory specified by --rootDir and continues upward.',
-        type: 'boolean',
-        default: false
       }
     });
 
@@ -96,14 +90,13 @@ export function configureProgram(program?: Program): Context {
 
       const finalArgv = await finalProgram.parse(argv);
       const silent = finalArgv.silent as boolean;
-      const monorepo = finalArgv.monorepo as boolean;
       const tsconfig = finalArgv.project as string;
       const rootDir = finalArgv.rootDir as string;
       const sourcePaths = finalArgv.srcPath as string[];
       const markdownPaths = finalArgv.mdPath as string[];
 
       const results = await Promise.all([
-        runProjectLinter({ rootDir, monorepo }),
+        runProjectLinter({ rootDir }),
         runTypescriptLinter({ rootDir, tsconfig }),
         runEslintLinter({ rootDir, sourcePaths, tsconfig }),
         runRemarkLinter({ rootDir, markdownPaths })
