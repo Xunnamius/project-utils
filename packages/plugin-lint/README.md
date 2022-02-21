@@ -80,11 +80,18 @@ checks are performed:
   if it points to a file that does not exist
 - ⚠️ Warns when `README.md` does not contain the standard badge topmatter, or
   when said topmatter is pointing to the wrong package name and/or repo uri
-- ⚠️ Warns when standard links in `README.md` are pointing to the wrong package
-  name and/or repo uri
+  - When in monorepo mode, what is considered "standard topmatter" changes
+    depending on the current working directory being the [project root][12] vs a
+    [package root][12]
+- ⚠️ Warns when standard links in `README.md` are missing, or are pointing to
+  the wrong package name and/or repo uri
+  - When in monorepo mode, what is considered "standard links" changes depending
+    on the current working directory being the [project root][12] vs a [package
+    root][12]
 
-These additional checks are performed _unless_ executing in monorepo mode and
-`package.json` _does not_ contain the `workspaces` key:
+These additional checks are performed _unless_ executing in monorepo mode when
+`package.json` _does not_ contain the `workspaces` key (i.e. unless cwd is a
+[package root][12]):
 
 - ⚠️ Warns when any of the following files are missing:
   - `.codecov.yml`
@@ -123,10 +130,12 @@ These additional checks are performed _unless_ executing in monorepo mode and
   standard badge topmatter, or when said topmatter is pointing to the wrong
   package name and/or repo uri
 - ⚠️ Warns when standard links in `CONTRIBUTING.md`, `SECURITY.md`, or
-  `.github/SUPPORT.md` are pointing to the wrong package name and/or repo uri
+  `.github/SUPPORT.md` are missing, or are pointing to the wrong package name
+  and/or repo uri
 
 These additional checks are performed _only if_ executing in monorepo mode and
-`package.json` contains the `workspaces` key (i.e. cwd is [project root][12]):
+`package.json` contains the `workspaces` key (i.e. only if cwd is the [project
+root][12]):
 
 - All [package roots][12] defined in the `package.json` `workspaces` key are
   recursively linted
@@ -141,10 +150,12 @@ These additional checks are performed _only if_ executing in monorepo mode and
   - This is a problem because it disables the check for packages that exist on
     the filesystem that are missing corresponding `workspaces` entries
 - ⚠️ Warns when `package.json` contains `dependencies` or `version` keys
+  - Given the existence of Next.js projects that might double as monorepos, this
+    warning may be removed in a future version
 
 These additional checks are performed _only if_ executing in monorepo mode and
-`package.json` _does not_ contain the `workspaces` key (i.e. cwd is [package
-root][12]):
+`package.json` _does not_ contain the `workspaces` key (i.e. only if cwd is a
+[package root][12]):
 
 - ⛔ Errors when this package shares the same `package.json` `name` key as
   another package in the monorepo
