@@ -1,7 +1,12 @@
 import { name as pkgName } from 'package';
-import { configureProgram } from './index';
 import { debugFactory } from 'multiverse/debug-extended';
-import { CliError, LinterError } from './error';
+
+// ! BEWARE: this is the ONLY relative import that is externalized by default
+// ! (for code deduplication). Centralize local exports into ./src/index.ts or
+// ! manually configure Webpack to output additional bundles under
+// ! ./dist/cjs-static; otherwise, local imports from ./dist/cli.js will fail.
+// ! This protects against any potential dual package hazards!
+import { configureProgram, CliError, LinterError } from './index';
 
 const debug = debugFactory(`${pkgName}:cli`);
 

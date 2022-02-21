@@ -23,6 +23,8 @@ export type Context = {
 
 const debug = debugFactory(`plugin-lint:parse`);
 
+export * from './error';
+
 /**
  * Create and return a pre-configured Yargs instance (program) and argv parser.
  */
