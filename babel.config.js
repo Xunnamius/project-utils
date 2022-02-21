@@ -9,15 +9,6 @@ const { relative: absToRelPath } = require('path');
 const pkgName = require(`${process.cwd()}/package.json`).name;
 const debug = require('debug')(`${pkgName}:babel-config`);
 
-// ? Fix relative local imports referencing package.json (.dist/bundle/...)
-const transformRenameImport = [
-  'transform-rename-import',
-  {
-    // ? See: https://bit.ly/38hFTa8
-    replacements: [{ original: 'package', replacement: `${pkgName}/package.json` }]
-  }
-];
-
 debug('NODE_ENV: %O', process.env.NODE_ENV);
 debug('PKGROOT: %O', process.env.PKGROOT);
 
@@ -28,22 +19,22 @@ let monorepo = process.env.PKGROOT
 
 debug('transform-default-named-imports.monorepo : %O', monorepo);
 
-// ? Interoperable named CJS imports for free
-const transformDefaultNamedImports = [
-  'transform-default-named-imports',
-  {
-    monorepo,
-    exclude: [/^next([/?#].+)?/, /^mongodb([/?#].+)?/]
-  }
-];
-
 module.exports = {
   parserOpts: { strictMode: true },
   plugins: [
+    '@babel/plugin-syntax-import-assertions',
     '@babel/plugin-proposal-export-default-from',
     '@babel/plugin-proposal-function-bind',
     '@babel/plugin-proposal-nullish-coalescing-operator',
-    '@babel/plugin-transform-typescript'
+    '@babel/plugin-transform-typescript',
+    // ? Interoperable named CJS imports for free
+    [
+      'transform-default-named-imports',
+      {
+        monorepo,
+        exclude: [/^next([/?#].+)?/, /^mongodb([/?#].+)?/]
+      }
+    ]
   ],
   // ? Sub-keys under the "env" config key will augment the above
   // ? configuration depending on the value of NODE_ENV and friends. Default
@@ -66,12 +57,17 @@ module.exports = {
     // * Used by `npm run build`
     production: {
       presets: [
-        // ? https://nodejs.org/en/about/releases
-        ['@babel/preset-env', { targets: NODE_LTS }],
+        [
+          '@babel/preset-env',
+          {
+            // ? https://github.com/babel/babel-loader/issues/521#issuecomment-441466991
+            //modules: false,
+            targets: NODE_LTS
+          }
+        ],
         ['@babel/preset-typescript', { allowDeclareFields: true }]
         // ? Minification is handled by Webpack
-      ],
-      plugins: [transformDefaultNamedImports]
+      ]
     },
     // * Used by `npm run build-externals`
     external: {
@@ -79,11 +75,10 @@ module.exports = {
         ['@babel/preset-env', { targets: { node: true } }],
         ['@babel/preset-typescript', { allowDeclareFields: true }]
         // ? Minification is handled by Webpack
-      ],
-      plugins: [transformDefaultNamedImports]
+      ]
     },
-    // * Used for compiling ESM code output in ./dist/esm
-    esm: {
+    // * Used for compiling tree shakable ESM code output in ./dist/esm-shakable
+    'esm-shakable': {
       presets: [
         [
           '@babel/preset-env',
@@ -96,27 +91,28 @@ module.exports = {
         ['@babel/preset-typescript', { allowDeclareFields: true }]
         // ? Minification is handled by Webpack
       ],
-      plugins: [transformDefaultNamedImports]
-    },
-    // * Used for compiling ESM code output in .dist/bundle
-    bundle: {
-      presets: [
-        [
-          '@babel/preset-env',
-          {
-            // ? https://babeljs.io/docs/en/babel-preset-env#modules
-            modules: false,
-            targets: NODE_LTS
-          }
-        ],
-        ['@babel/preset-typescript', { allowDeclareFields: true }]
-        // ? The end user will handle minification
-      ],
       plugins: [
         // ? Ensure all local imports without extensions now end in .mjs
-        ['add-import-extension', { extension: 'mjs' }],
-        transformRenameImport,
-        transformDefaultNamedImports
+        // TODO: write own version of add-import-extension that isn't broken
+        // [
+        //   'add-import-extension',
+        //   {
+        //     extension: 'mjs',
+        //     observedScriptExtensions: ['js', 'ts', 'jsx', 'tsx']
+        //   }
+        // ],
+        // ? Fix ESM relative local imports referencing package.json
+        [
+          'transform-rename-import',
+          {
+            // ? See: https://bit.ly/38hFTa8
+            replacements: [
+              { original: 'package', replacement: `${pkgName}/package.json` },
+              // TODO: add customizer (parallel features of webpack customizer)
+              { original: '../baseline.json', replacement: `../../baseline.json` }
+            ]
+          }
+        ]
       ]
     }
   }

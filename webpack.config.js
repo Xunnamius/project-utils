@@ -3,11 +3,13 @@
 // This webpack config is used to transpile src to dist, compile externals,
 // compile executables, etc
 
+const { toss } = require('toss-expression');
 const { EnvironmentPlugin, DefinePlugin, BannerPlugin } = require('webpack');
 const { verifyEnvironment } = require('./expect-env');
 const nodeExternals = require('webpack-node-externals');
 
-const cwd = process.env.PKGROOT;
+// TODO: warn when defaulting to process.cwd (when no PKGROOT is given)
+const cwd = process.env.PKGROOT || process.cwd();
 const pkgName = require(`${cwd}/package.json`).name;
 const debug = require('debug')(`${pkgName}:webpack-config`);
 
@@ -28,6 +30,8 @@ const pathParts = cwd.replace(`${__dirname}/`, '').split('/');
 
 debug('pathParts: %O', pathParts);
 
+// TODO: when generalizing this, the below is no longer an error, just a
+// TODO: polyrepo 😉
 if (pathParts.length < 2 || pathParts[0] != 'packages') {
   throw new Error(`assert failed: illegal cwd: ${cwd}`);
 }
@@ -58,19 +62,11 @@ try {
 debug('sanitized process env: %O', sanitizedProcessEnv);
 verifyEnvironment();
 
-const envPlugins = ({ esm /*: boolean */ }) => [
+const envPlugins = () => [
   // ? NODE_ENV is not a "default" (unlike below) but an explicit overwrite
   new DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(nodeEnv)
   }),
-  // ? NODE_ESM is true when we're compiling in ESM mode (useful in source)
-  ...(esm
-    ? [
-        new DefinePlugin({
-          'process.env.NODE_ESM': String(esm)
-        })
-      ]
-    : []),
   // ? Load our .env results as the defaults (overridden by process.env)
   new EnvironmentPlugin({ ...sanitizedEnv, ...sanitizedProcessEnv }),
   // ? Create shim process.env for undefined vars
@@ -79,215 +75,202 @@ const envPlugins = ({ esm /*: boolean */ }) => [
   new DefinePlugin({ 'process.env': '{}' })
 ];
 
-const externals = ({ esm /*: boolean */ }) => [
-  nodeExternals({ importType: esm ? 'node-commonjs' : 'commonjs' }),
+// TODO: export this too and all the others (config-webpack)
+const externals = (options) => [
+  ...(options?.externalizeNodeModules !== false
+    ? [nodeExternals({ importType: 'commonjs', ...options })]
+    : []),
   ({ request }, cb) => {
     if (request == 'package') {
       // ? Externalize special "package" (alias of package.json) imports
-      cb(null, `${esm ? 'node-commonjs' : 'commonjs'} ${pkgName}/package.json`);
-    } else if (/\.json$/.test(request)) {
+      cb(null, `commonjs ${pkgName}/package.json`);
+    } else if (options?.externalizeJson !== false && request.endsWith('.json')) {
       // ? Externalize all other .json imports
-      cb(null, `${esm ? 'node-commonjs' : 'commonjs'} ${request}`);
+      cb(null, `commonjs ${request}`);
     } else cb();
+  },
+  ...(options?.additionalExternals || [])
+];
+
+const selectAndCustomizeConfigs = (selectedConfigs) => {
+  const availableConfigNames = availableConfigs.map((config) => config.name);
+
+  Object.entries(selectedConfigs).forEach(([targetConfigName, configModifier]) => {
+    const targetConfigIndex = availableConfigNames.indexOf(targetConfigName);
+
+    if (targetConfigIndex == -1) {
+      typeof configModifier == 'object' && configModifier
+        ? // ? Must be a totally new custom configuration
+          module.exports.push(configModifier)
+        : toss(new Error(`webpack configuration "${targetConfigName}" is not available`));
+    } else {
+      const targetConfig = availableConfigs[targetConfigIndex];
+
+      module.exports.push(
+        typeof configModifier == 'function'
+          ? (configModifier(targetConfig), targetConfig)
+          : typeof configModifier == 'object' && configModifier
+          ? configModifier
+          : !configModifier
+          ? toss(new Error(`invalid webpack configuration value: ${configModifier}`))
+          : targetConfig
+      );
+    }
+  });
+};
+
+const availableConfigs = [
+  {
+    name: 'cjs-static',
+    mode: 'production',
+    target: 'node',
+    node: false,
+
+    entry: {},
+
+    output: {
+      filename: '[name].js',
+      path: `${cwd}/dist/cjs-static`,
+      library: {
+        type: 'commonjs-static'
+      }
+    },
+
+    externals: externals(),
+    externalsPresets: { node: true },
+
+    stats: {
+      orphanModules: true,
+      providedExports: true,
+      usedExports: true,
+      errorDetails: true
+    },
+
+    resolve: {
+      extensions: ['.ts', '.wasm', '.mjs', '.cjs', '.js', '.json'],
+      alias: IMPORT_ALIASES
+    },
+    module: {
+      rules: [{ test: /\.(ts|js)x?$/, loader: 'babel-loader', exclude: /node_modules/ }]
+    },
+    optimization: { usedExports: true },
+    plugins: [...envPlugins()]
+  },
+  {
+    name: 'externals',
+    mode: 'production',
+    target: 'node',
+    node: false,
+
+    entry: {},
+
+    output: {
+      filename: '[name].js',
+      path: `${cwd}/external-scripts/bin`
+    },
+
+    externals: externals(),
+    externalsPresets: { node: true },
+
+    stats: {
+      orphanModules: true,
+      providedExports: true,
+      usedExports: true,
+      errorDetails: true
+    },
+
+    resolve: {
+      extensions: ['.ts', '.wasm', '.mjs', '.cjs', '.js', '.json'],
+      alias: IMPORT_ALIASES
+    },
+    module: {
+      rules: [
+        {
+          test: /\.(ts|js)x?$/,
+          exclude: /node_modules/,
+          use: 'babel-loader'
+        }
+      ]
+    },
+    optimization: { usedExports: true },
+    plugins: [
+      ...envPlugins(),
+      // * ▼ For non-bundled externals, make entry file executable w/ shebang
+      new BannerPlugin({ banner: '#!/usr/bin/env node', raw: true, entryOnly: true })
+    ]
+  },
+  {
+    name: 'cli',
+    mode: 'production',
+    target: 'node',
+    node: false,
+
+    entry: { cli: `${cwd}/src/cli.ts` },
+
+    output: {
+      filename: '[name].js',
+      path: `${cwd}/dist`
+    },
+
+    externals: externals({
+      additionalExternals: [
+        // ? Externalize all relative (local) imports
+        // ! WARNING: all local imports must have accompanying CJS bundles and
+        // ! corresponding entries under the package.json `exports` key!
+        ({ request, contextInfo: { issuer } }, cb) => {
+          if (issuer == `${cwd}/src/cli.ts` && request.startsWith('./')) {
+            cb(
+              null,
+              `commonjs ${pkgName}${request == './index' ? '' : `/${request.slice(2)}`}`
+            );
+          } else cb();
+        }
+      ]
+    }),
+    externalsPresets: { node: true },
+
+    stats: {
+      orphanModules: true,
+      providedExports: true,
+      usedExports: true,
+      errorDetails: true
+    },
+
+    resolve: {
+      extensions: ['.ts', '.wasm', '.mjs', '.cjs', '.js', '.json'],
+      alias: IMPORT_ALIASES
+    },
+    module: {
+      rules: [{ test: /\.(ts|js)x?$/, loader: 'babel-loader', exclude: /node_modules/ }]
+    },
+    optimization: { usedExports: true },
+    plugins: [
+      ...envPlugins(),
+      // * ▼ For bundled CLI applications, make entry file executable w/ shebang
+      new BannerPlugin({ banner: '#!/usr/bin/env node', raw: true, entryOnly: true })
+    ]
   }
 ];
 
-const libCjsConfig = {
-  name: 'cjs',
-  mode: 'production',
-  target: 'node',
-  node: false,
-
-  entry: { index: `${cwd}/src/index.ts` },
-
-  output: {
-    filename: '[name].js',
-    path: `${cwd}/dist/cjs`,
-    library: {
-      type: 'commonjs2'
-    }
-  },
-
-  externals: externals({ esm: false }),
-  externalsPresets: { node: true },
-
-  stats: {
-    orphanModules: true,
-    providedExports: true,
-    usedExports: true,
-    errorDetails: true
-  },
-
-  resolve: {
-    extensions: ['.ts', '.wasm', '.mjs', '.cjs', '.js', '.json'],
-    // ! If changed, also update these aliases in tsconfig.json,
-    // ! jest.config.js, next.config.ts, and .eslintrc.js
-    alias: IMPORT_ALIASES
-  },
-  module: {
-    rules: [{ test: /\.(ts|js)x?$/, loader: 'babel-loader', exclude: /node_modules/ }]
-  },
-  optimization: { usedExports: true },
-  plugins: [...envPlugins({ esm: false })]
-};
-
-const libEsmConfig = {
-  name: 'esm',
-  mode: 'production',
-  target: 'node',
-  node: false,
-
-  entry: { index: `${cwd}/src/index.ts` },
-
-  output: {
-    module: true,
-    filename: '[name].mjs',
-    path: `${cwd}/dist/esm`,
-    chunkFormat: 'module',
-    library: {
-      type: 'module'
-    }
-  },
-
-  experiments: {
-    outputModule: true
-  },
-
-  externals: externals({ esm: true }),
-  externalsPresets: { node: true },
-
-  stats: {
-    orphanModules: true,
-    providedExports: true,
-    usedExports: true,
-    errorDetails: true
-  },
-
-  resolve: {
-    extensions: ['.ts', '.wasm', '.mjs', '.cjs', '.js', '.json'],
-    // ! If changed, also update these aliases in tsconfig.json,
-    // ! jest.config.js, next.config.ts, and .eslintrc.js
-    alias: IMPORT_ALIASES
-  },
-  module: {
-    rules: [{ test: /\.(ts|js)x?$/, loader: 'babel-loader', exclude: /node_modules/ }]
-  },
-  optimization: { usedExports: true },
-  plugins: [...envPlugins({ esm: true })]
-};
-
-const externalsConfig = {
-  name: 'externals',
-  mode: 'production',
-  target: 'node',
-  node: false,
-
-  entry: {
-    'is-next-compat': `${cwd}/external-scripts/is-next-compat.ts`
-  },
-
-  output: {
-    filename: '[name].js',
-    path: `${cwd}/external-scripts/bin`
-  },
-
-  externals: externals({ esm: false }),
-  externalsPresets: { node: true },
-
-  stats: {
-    orphanModules: true,
-    providedExports: true,
-    usedExports: true,
-    errorDetails: true
-  },
-
-  resolve: {
-    extensions: ['.ts', '.wasm', '.mjs', '.cjs', '.js', '.json'],
-    // ! If changed, also update these aliases in tsconfig.json,
-    // ! jest.config.js, next.config.ts, and .eslintrc.js
-    alias: IMPORT_ALIASES
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(ts|js)x?$/,
-        exclude: /node_modules/,
-        use: 'babel-loader'
-      }
-    ]
-  },
-  optimization: { usedExports: true },
-  plugins: [
-    ...envPlugins({ esm: false }),
-    // * ▼ For non-bundled externals, make entry file executable w/ shebang
-    new BannerPlugin({ banner: '#!/usr/bin/env node', raw: true, entryOnly: true })
-  ]
-};
-
-const cliConfig = {
-  name: 'cli',
-  mode: 'production',
-  target: 'node',
-  node: false,
-
-  entry: { cli: `${cwd}/src/cli.ts` },
-
-  output: {
-    filename: '[name].js',
-    path: `${cwd}/dist`
-  },
-
-  externals: externals({ esm: false }),
-  externalsPresets: { node: true },
-
-  stats: {
-    orphanModules: true,
-    providedExports: true,
-    usedExports: true,
-    errorDetails: true
-  },
-
-  resolve: {
-    extensions: ['.ts', '.wasm', '.mjs', '.cjs', '.js', '.json'],
-    // ! If changed, also update these aliases in tsconfig.json,
-    // ! jest.config.js, next.config.ts, and .eslintrc.js
-    alias: IMPORT_ALIASES
-  },
-  module: {
-    rules: [{ test: /\.(ts|js)x?$/, loader: 'babel-loader', exclude: /node_modules/ }]
-  },
-  optimization: { usedExports: true },
-  plugins: [
-    ...envPlugins({ esm: false }),
-    // * ▼ For bundled CLI applications, make entry file executable w/ shebang
-    new BannerPlugin({ banner: '#!/usr/bin/env node', raw: true, entryOnly: true })
-  ]
-};
-
-void externalsConfig, cliConfig;
-module.exports = [libCjsConfig, libEsmConfig];
-
-// ? Load monorepo-specific webpack configs
-
-let monorepoConfig;
+module.exports = [];
+let monorepoConfigs = undefined;
 
 try {
-  monorepoConfig = require(`${cwd}/webpack.config.js`);
+  // ? Attempt to load monorepo-specific webpack configs if in monorepo context
+  if (__dirname != cwd) {
+    monorepoConfigs = require(`${cwd}/webpack.config.js`);
+  }
 } catch (ignored) {}
 
-if (monorepoConfig) {
-  const configNames = module.exports.map((config, index) => [config.name, index]);
+selectAndCustomizeConfigs(
+  monorepoConfigs ?? {
+    // TODO: generalize this? Is a fallback here even necessary? Maybe remove...
+    'cjs-static': (config) => (config.entry['index'] = `${cwd}/src/index.ts`)
+  }
+);
 
-  Object.entries(monorepoConfig).forEach(([targetName, configModifier]) => {
-    const [, configIndex] = configNames.find((c) => c[0] == targetName) || [];
-
-    if (configModifier && configIndex !== undefined) {
-      module.exports[configIndex] =
-        typeof configModifier == 'function'
-          ? configModifier(module.exports[configIndex])
-          : configModifier;
-    }
-  });
+if (!module.exports.length) {
+  throw new Error('webpack was not configured');
 }
 
 debug('exports: %O', module.exports);

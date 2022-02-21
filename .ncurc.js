@@ -2,9 +2,7 @@
 
 module.exports = {
   reject: [
-    // ? Pin the non-borked version of babel-plugin-add-import-extension
-    'babel-plugin-add-import-extension',
-    // ? Pin the working version of execa
+    // ? Pin the CJS version of execa
     'execa'
   ]
 };
