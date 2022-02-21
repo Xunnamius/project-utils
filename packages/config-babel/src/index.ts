@@ -40,7 +40,7 @@ export default function main(options?: Options): Record<string, unknown> {
   // ? https://nodejs.org/en/about/releases
   const NODE_LTS = 'maintained node versions';
 
-  // ? Fix relative local imports referencing package.json (.dist/bundle/...)
+  // ? Fix relative local imports referencing package.json (.dist/shakable/...)
   const transformRenameImport = [
     'transform-rename-import',
     {
@@ -131,7 +131,7 @@ export default function main(options?: Options): Record<string, unknown> {
           ],
           plugins: [transformDefaultNamedImports]
         },
-        // * Used for compiling ESM code output in .dist/bundle
+        // * Used for compiling ESM code output in .dist/shakable
         bundle: {
           presets: [
             [
