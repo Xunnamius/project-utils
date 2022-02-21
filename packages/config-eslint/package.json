@@ -49,7 +49,7 @@
     "list-tasks": "node -e 'console.log(Object.keys(require(\"./package.json\").scripts).join(\"\\n\"))'"
   },
   "dependencies": {
-    "debug": "^4.3.2"
+    "debug": "^4.3.3"
   },
   "engines": {
     "node": ">=12"
