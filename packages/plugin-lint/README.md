@@ -22,15 +22,15 @@
 
 > See the [usage section][4] for more information.
 
-This opinionated CLI tool checks a Node project for correctness. TypeScript
-([`tsc`][1]) is used for type checking, [ESLint][2] for static analysis of
-JavaScript/TypeScript source, and [Remark][3] for analysis of Markdown source.
-Further checks are performed to ensure the project is optimally structured and
-conforms to best practices, including a flag (`--monorepo`) to enable
-monorepo-specific checks (i.e. "monorepo mode").
+This opinionated CLI tool checks a Node.js project for correctness. TypeScript
+([tsc][1]) is used for type checking, [ESLint][2] and [Espree][16] for static
+analysis of JavaScript/TypeScript source, and [Remark][3] and [mdast][17] for
+analysis of Markdown source. Further checks are performed to ensure the project
+is optimally structured and conforms to best practices, including detecting when
+running in a monorepo root vs a monorepo package vs a polyrepo.
 
-Specifically, in addition to type checking and static analysis, the following
-checks are performed:
+Specifically, in addition to type checking and static analysis with tsc and
+ESLint, the following checks are performed:
 
 - ⛔ Errors when `package.json` file is missing
 - ⛔ Errors when `dist` directory or its subdirectories contain `.tsbuildinfo`
@@ -57,9 +57,8 @@ checks are performed:
   that do not exist
 - ⚠️ Warns when missing `tsconfig.json`, `tsconfig.docs.json`,
   `tsconfig.eslint.json`, `tsconfig.lint.json`, or `tsconfig.types.json` files
-  - If in monorepo mode and `package.json` does not contain a `workspaces` key,
-    only `tsconfig.docs.json`, `tsconfig.lint.json`, and `tsconfig.types.json`
-    are checked for existence
+  - When linting a [monorepo package root][12], only `tsconfig.docs.json`,
+    `tsconfig.lint.json`, and `tsconfig.types.json` are checked for existence
 - ⚠️ Warns when `version` is [experimental][5] (i.e. `<1.0.0`)
   - This excludes the special placeholder version `0.0.0-development`
 - ⚠️ Warns when `package.json` contains the outdated `main`, `module`, or
@@ -78,20 +77,19 @@ checks are performed:
   `"latest"`) instead of a proper semver (like `"~x.y.z"`)
 - ⚠️ Warns when `package.json` is missing the `config.docs.entry` key path, or
   if it points to a file that does not exist
-- ⚠️ Warns when `README.md` does not contain the standard badge topmatter, or
+- ⚠️ ‡ Warns when `README.md` does not contain the standard badge topmatter, or
   when said topmatter is pointing to the wrong package name and/or repo uri
-  - When in monorepo mode, what is considered "standard topmatter" changes
+  - When linting a monorepo, what is considered "standard topmatter" changes
     depending on the current working directory being the [project root][12] vs a
     [package root][12]
-- ⚠️ Warns when standard links in `README.md` are missing, or are pointing to
+- ⚠️ ‡ Warns when standard links in `README.md` are missing, or are pointing to
   the wrong package name and/or repo uri
-  - When in monorepo mode, what is considered "standard links" changes depending
-    on the current working directory being the [project root][12] vs a [package
-    root][12]
+  - When linting a monorepo, what is considered "standard links" changes
+    depending on the current working directory being the [project root][12] vs a
+    [package root][12]
 
-These additional checks are performed _unless_ executing in monorepo mode when
-`package.json` _does not_ contain the `workspaces` key (i.e. unless cwd is a
-[package root][12]):
+These additional checks are performed unless linting a [monorepo package
+root][12]:
 
 - ⚠️ Warns when any of the following files are missing:
   - `.codecov.yml`
@@ -126,38 +124,37 @@ These additional checks are performed _unless_ executing in monorepo mode when
     is skipped
 - ⚠️ Warns when missing the `.github`, `.github/ISSUE_TEMPLATE`,
   `.github/workflows`, `.husky`, or `types` directories
-- ⚠️ Warns when `SECURITY.md` or `.github/SUPPORT.md` do not contain the
+- ⚠️ ‡ Warns when `SECURITY.md` or `.github/SUPPORT.md` do not contain the
   standard badge topmatter, or when said topmatter is pointing to the wrong
   package name and/or repo uri
-- ⚠️ Warns when standard links in `CONTRIBUTING.md`, `SECURITY.md`, or
+- ⚠️ ‡ Warns when standard links in `CONTRIBUTING.md`, `SECURITY.md`, or
   `.github/SUPPORT.md` are missing, or are pointing to the wrong package name
   and/or repo uri
 
-These additional checks are performed _only if_ executing in monorepo mode and
-`package.json` contains the `workspaces` key (i.e. only if cwd is the [project
-root][12]):
+These additional checks are performed only if linting a [monorepo project
+root][12]:
 
+- ⚠️ Warns when `package.json` contains `dependencies` or `version` keys
+  - If a `next.config.js` file exists, this check is skipped.
 - All [package roots][12] defined in the `package.json` `workspaces` key are
   recursively linted
-- ⛔ Errors when any two packages share the same `package.json` `name` key
-- ⛔ Errors when any two packages share the same [package-id][12]
-- ⚠️ Warns when `package.json` contains `dependencies` or `version` keys
-  - Given the existence of Next.js projects that might double as monorepos, this
-    warning may be removed in a future version
 
-These additional checks are performed _only if_ executing in monorepo mode and
-`package.json` _does not_ contain the `workspaces` key (i.e. only if cwd is a
-[package root][12]):
+These additional checks are performed only if linting a [monorepo package
+root][12]:
 
 - ⛔ Errors when this package shares the same `package.json` `name` key as
   another package in the monorepo
 - ⛔ Errors when this package shares the same [package-id][12] as another
   package in the monorepo
-- ⛔ Errors when this package's source imports another package (from the same
+- ⛔ † Errors when this package's source imports another package (from the same
   monorepo) but doesn't list said package in `package.json` `dependencies` key
-  - This check is performed via ESLint static analysis
-    ([`@projector-js/eslint-plugin`][15]), so dynamic imports are excluded
   - [Self-referential imports][13] are excluded from this check
+
+> † This check is performed using [Espree][16] AST static analysis. Dynamic
+> imports are not checked.
+>
+> ‡ This check is performed using [mdast-util-from-markdown][17] AST static
+> analysis.
 
 ## Install
 
@@ -201,11 +198,6 @@ Help text (use `--help` to get the most up-to-date version):
                   [array] [default: all files ending in .md not under node_modules]
       --project   An absolute or relative path to a TypeScript tsconfig.json
                   configuration file.       [string] [default: "tsconfig.lint.json"]
-      --monorepo  The first package.json file found containing a "workspaces" key
-                  will be considered the project root for monorepo-specific checks.
-                  The search begins with the package.json file at the directory
-                  specified by --rootDir and continues upward.
-                                                          [boolean] [default: false]
 
 ## Documentation
 
@@ -293,3 +285,5 @@ information.
   https://nodejs.org/api/packages.html#self-referencing-a-package-using-its-name
 [14]: https://github.com/Xunnamius/projector
 [15]: /packages/eslint-plugin
+[16]: https://www.npmjs.com/package/espree
+[17]: https://github.com/syntax-tree/mdast-util-from-markdown
