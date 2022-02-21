@@ -88,7 +88,7 @@ export function getProcessedAliasMapping(mapping: [string, string], warn = false
   if (warn && pathMatch.groups?.prefix == '.') {
     // eslint-disable-next-line no-console
     console.warn(
-      `Warning: TypeScript path aliases cannot computed at runtime! This means alias map value "${
+      `Warning: TypeScript path aliases cannot be computed at runtime! This means alias map value "${
         mapping[1]
       }" will be interpreted as "<rootDir>${mapping[1].slice(
         1
