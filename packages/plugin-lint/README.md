@@ -125,8 +125,8 @@ root][12]):
   package in the monorepo
 - ⛔ Errors when this package's source imports another package (from the same
   monorepo) but doesn't list said package in `package.json` `dependencies` keys
-  - This check is performed via static analysis ([`eslint-`][15]), so dynamic
-    imports are excluded
+  - This check is performed via ESLint static analysis
+    ([`@projector-js/eslint-plugin`][15]), so dynamic imports are excluded
   - [Self-referential imports][13] are excluded from this check
 
 ## Install
@@ -262,5 +262,4 @@ information.
 [13]:
   https://nodejs.org/api/packages.html#self-referencing-a-package-using-its-name
 [14]: https://github.com/Xunnamius/projector
-
-[15]: <>
+[15]: /packages/eslint-plugin
