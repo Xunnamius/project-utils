@@ -1,8 +1,12 @@
 import { run } from 'multiverse/run';
-import { readFile } from 'fs/promises';
+import { ErrorMessage } from './error';
 import stripAnsi from 'strip-ansi';
+import chalk from 'chalk';
 
-import type { PackageJson } from 'type-fest';
+import {
+  getRunContext,
+  PackageJsonNotFoundError
+} from '@projector-js/core/monorepo-utils';
 
 type UnifiedReturnType = Promise<{
   success: boolean;
@@ -22,23 +26,74 @@ export async function runProjectLinter({
    * The project or package root directory. Must contain a package.json file.
    */
   rootDir: string;
-  /**
-   * If additional monorepo-specific checks should be performed.
-   */
-  monorepo: boolean;
 }): UnifiedReturnType {
   try {
-    const packageJson: PackageJson = JSON.parse(
-      await readFile(`${rootDir}/package.json`, 'utf-8')
-    );
+    const outputTree: { [filename: string]: string[] } = {};
 
-    // TODO
-    void packageJson;
+    let errorCount = 0;
+    let warnCount = 0;
+    let currentFile = `${rootDir}/package.json`;
+
+    const report = (type: 'warn' | 'error', message: string) => {
+      type == 'warn' ? warnCount++ : errorCount++;
+      if (!outputTree[currentFile]) outputTree[currentFile] = [];
+      outputTree[currentFile].push(
+        `${
+          type == 'warn'
+            ? chalk.hex('#340343').bgYellow(' warn ')
+            : chalk.hex('#340343').bgRed(' err! ')
+        } ${message}`
+      );
+    };
+
+    const ctx = (() => {
+      try {
+        return getRunContext({ cwd: rootDir });
+      } catch (e) {
+        if (e instanceof PackageJsonNotFoundError) {
+          report('error', ErrorMessage.MissingFile(currentFile));
+          return undefined;
+        } else throw e;
+      }
+    })();
+
+    report('error', 'fake error 1');
+    report('error', 'fake error 2');
+    report('warn', 'fake warning 1');
+    currentFile = `${rootDir}/fakefile.md`;
+    report('error', 'fake error 3');
+
+    // ? These checks are performed across all contexts
+    // TODO: use browserlist to get earliest "maintained node versions" and
+    // TODO: convert this into an or (||) list, e.g.:
+    // TODO: ^12.20.0 || ^14.13.1 || >=16.0.0
+
+    if (ctx !== undefined) {
+      // ? These checks are performed UNLESS linting a monorepo package root
+      if (ctx.context == 'polyrepo' || ctx.package.id) {
+      }
+
+      if (ctx.context == 'monorepo') {
+        // ? These checks are performed ONLY IF linting a monorepo project root
+        if (ctx.package.id) {
+        }
+        // ? These checks are performed ONLY IF linting a monorepo package root
+        else {
+        }
+      }
+    }
 
     return {
-      success: false,
-      output: undefined,
-      summary: 'x errors, y warnings' || 'no issues'
+      success: errorCount == 0,
+      output: Object.entries(outputTree).reduce<string>(
+        (output, [filename, messages]) => {
+          return `${output}\n\n${chalk.underline(filename)}\n  ${messages.join(
+            '\n  '
+          )}`.trim();
+        },
+        ''
+      ),
+      summary: `${errorCount} errors, ${warnCount} warnings` || 'no issues'
     };
   } catch (e) {
     throw new Error(`project linting failed: ${e}`);
