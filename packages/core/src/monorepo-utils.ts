@@ -2,6 +2,7 @@ import { readFileSync as readFile } from 'fs';
 import { dirname, basename } from 'path';
 import findGitRoot from 'find-git-root';
 import findPackageJson from 'find-package-json';
+import mapWorkspaces from '@npmcli/map-workspaces';
 
 import type { PackageJson } from 'type-fest';
 import type { PackageWithPath } from 'find-package-json';
@@ -31,29 +32,46 @@ export type RunContext = {
      * The project root package.json file's contents.
      */
     json: PackageJson;
+    /**
+     * A mapping of package names to directory paths in a monorepo `context` or
+     * `null` in a polyrepo `context`.
+     */
+    packages: Map<string, string> | null;
   };
   /**
-   * Package root data in a monorepo `context`, or `undefined` in a polyrepo
+   * Package root data in a monorepo `context`, or `null` in a polyrepo
    * `context`. When `cwd` is only contained by the project root in a monorepo
    * `context`, `package.id` will be `null`.
    */
-  package:
-    | {
-        /**
-         * The package-id of the package whose root contains `cwd` or `null` if
-         * `cwd` is only contained by the project root.
-         */
-        id: string | null;
-        /**
-         * The absolute path to the root of the project that contains `cwd`.
-         */
-        root: string;
-        /**
-         * The package.json contents of the package whose root contains `cwd`.
-         */
-        json: PackageWithPath;
-      }
-    | undefined;
+  package: {
+    /**
+     * The package-id of the package whose root contains `cwd` or `null` if
+     * `cwd` is only contained by the project root.
+     */
+    id: string | null;
+    /**
+     * The absolute path to the root of the project that contains `cwd`.
+     */
+    root: string;
+    /**
+     * The package.json contents of the package whose root contains `cwd`.
+     */
+    json: PackageWithPath;
+  } | null;
+};
+
+export type MonorepoRunContext = RunContext & {
+  context: 'monorepo';
+  project: RunContext['project'] & {
+    packages: NonNullable<RunContext['project']['packages']>;
+  };
+  package: NonNullable<RunContext['package']>;
+};
+
+export type PolyrepoRunContext = RunContext & {
+  context: 'polyrepo';
+  project: RunContext['project'] & { packages: null };
+  package: null;
 };
 
 export function getRunContext({ cwd }: { cwd: string } = { cwd: process.cwd() }) {
@@ -86,31 +104,31 @@ export function getRunContext({ cwd }: { cwd: string } = { cwd: process.cwd() })
   const pkg = findPackageJson(cwd).next();
   const packageJson = pkg.value as PackageWithPath;
   const packageRoot = dirname(pkg.filename as string);
-
-  const result = {
-    context,
-    project: {
-      root: repoRoot,
-      json: rootJson
-    }
-  } as RunContext;
+  const packages = mapWorkspaces({ cwd, pkg: rootJson });
 
   if (context == 'monorepo') {
     return {
-      ...result,
+      context,
+      project: {
+        root: repoRoot,
+        json: rootJson,
+        packages
+      },
       package: {
         id: packageRoot == repoRoot ? null : basename(packageRoot),
         root: packageRoot,
         json: packageJson
       }
-    } as RunContext & {
-      context: 'monorepo';
-      package: NonNullable<RunContext['package']>;
-    };
+    } as MonorepoRunContext;
   } else {
     return {
-      ...result,
-      package: undefined
-    } as RunContext & { context: 'polyrepo'; package: undefined };
+      context,
+      project: {
+        root: repoRoot,
+        json: rootJson,
+        packages: null
+      },
+      package: null
+    } as PolyrepoRunContext;
   }
 }
