@@ -57,7 +57,7 @@
   },
   "config": {
     "docs": {
-      "entry": "./src/index.ts"
+      "entry": "./src/*"
     }
   },
   "dependencies": {
