@@ -313,12 +313,12 @@ See [`@projector-js/core`][35] for details.
 
 ## Terminology
 
-- **repository root**: the top-level directory of a git repository and Projector
+- **project root**: the top-level directory of a git repository and Projector
   project; it contains the root `package.json` file. This directory is also
-  referred to as: "project root," `rootDir` (always as an absolute path), "root
-  package" (in [npm documentation][56]), "monorepo/polyrepo/repo root," or
+  referred to as: "repository root," `rootDir` (always as an absolute path),
+  "root package" (in [npm documentation][56]), "monorepo/polyrepo/repo root," or
   simply "root".
-- **monorepo**: a repository containing multiple packages/workspaces, each
+- **monorepo**: a git repository containing multiple packages/workspaces, each
   listed under the [`workspaces`][56] key in the root `package.json`. A monorepo
   is the opposite of a _polyrepo_.
 - **package**/**package root**: synonymous with a [workspace][56] in a monorepo.
@@ -326,7 +326,7 @@ See [`@projector-js/core`][35] for details.
   directory (e.g. `c` in `/a/b/c/`) is also referred to as the `package-id`,
   which may or may not match the `name` in the package's `package.json` file.
   Package roots are _never_ referred to as "root".
-- **polyrepo**: a repository containing a root `package.json` file with no
+- **polyrepo**: a git repository containing a root `package.json` file with no
   [`workspaces`][56] key. A polyrepo is the opposite of a _monorepo_.
 - [**topological order**][81]: a sequence of packages where dependent packages
   always come before their dependencies—a so-called "package dependency order".
