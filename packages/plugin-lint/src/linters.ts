@@ -64,9 +64,11 @@ export async function runProjectLinter({
     report('error', 'fake error 3');
 
     // ? These checks are performed across all contexts
-    // TODO: use browserlist to get earliest "maintained node versions" and
+    // TODO: use browserslist to get earliest "maintained node versions" and
     // TODO: convert this into an or (||) list, e.g.:
     // TODO: ^12.20.0 || ^14.13.1 || >=16.0.0
+
+    // TODO: when recursively linting, output path of each package
 
     if (ctx !== undefined) {
       // ? These checks are performed UNLESS linting a monorepo package root
