@@ -22,6 +22,9 @@
 
 <!-- TODO -->
 
+build-docs config.docs.entry can be a simple path, an array of paths, a glob
+path, or an array of glob paths
+
 ## Install
 
 ```bash
