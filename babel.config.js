@@ -26,15 +26,16 @@ module.exports = {
     '@babel/plugin-proposal-export-default-from',
     '@babel/plugin-proposal-function-bind',
     '@babel/plugin-proposal-nullish-coalescing-operator',
-    '@babel/plugin-transform-typescript',
+    '@babel/plugin-transform-typescript'
     // ? Interoperable named CJS imports for free
-    [
-      'transform-default-named-imports',
-      {
-        monorepo,
-        exclude: [/^next([/?#].+)?/, /^mongodb([/?#].+)?/]
-      }
-    ]
+    // TODO: is this obsoleted by cjs-static?
+    // [
+    //   'transform-default-named-imports',
+    //   {
+    //     monorepo,
+    //     exclude: [/^next([/?#].+)?/, /^mongodb([/?#].+)?/]
+    //   }
+    // ]
   ],
   // ? Sub-keys under the "env" config key will augment the above
   // ? configuration depending on the value of NODE_ENV and friends. Default
