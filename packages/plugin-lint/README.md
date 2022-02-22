@@ -60,7 +60,7 @@ ESLint, the following checks are performed:
   - When linting a [monorepo package root][12], only `tsconfig.docs.json`,
     `tsconfig.lint.json`, and `tsconfig.types.json` are checked for existence
 - ⚠️ Warns when `version` is [experimental][5] (i.e. `<1.0.0`)
-  - This excludes the special placeholder version `0.0.0-development`
+  - This INCLUDES the obsoleted "placeholder" version `0.0.0-development`
 - ⚠️ Warns when `package.json` contains the outdated `main`, `module`, or
   `types` keys
   - Use `exports` instead
