@@ -71,7 +71,7 @@
     "strip-ansi": "^6.0.1"
   },
   "engines": {
-    "node": ">=14.19.0"
+    "node": "^14.19.0 || ^16.13.0 || >=17.4.0"
   },
   "publishConfig": {
     "access": "public"
