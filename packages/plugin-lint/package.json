@@ -1,6 +1,6 @@
 {
   "name": "@projector-js/plugin-lint",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "A Projector plugin that checks project structure and source for correctness",
   "keywords": [
     "project",
