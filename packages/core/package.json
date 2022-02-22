@@ -56,10 +56,7 @@
     "list-tasks": "node -e 'console.log(Object.keys(require(\"./package.json\").scripts).join(\"\\n\"))'"
   },
   "dependencies": {
-    "debug": "^4.3.3",
-    "execa": "^5.1.1",
-    "is-valid-path": "^0.1.1",
-    "toss-expression": "^0.1.1"
+    "is-valid-path": "^0.1.1"
   },
   "engines": {
     "node": ">=14.19.0"
