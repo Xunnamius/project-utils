@@ -126,7 +126,7 @@ export function configureProgram(program?: Program): Context {
 
         if (results[0].output) {
           outputSeparator();
-          console.log(`:Project:\n${results[0].output}`);
+          console.log(`:Project:\n\n${results[0].output}`);
         }
 
         console.log(`${firstToOutput ? '' : '\n'}:: Linting results ::`);
