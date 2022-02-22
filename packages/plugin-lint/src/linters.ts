@@ -40,8 +40,8 @@ export async function runProjectLinter({
       outputTree[currentFile].push(
         `${
           type == 'warn'
-            ? chalk.hex('#340343').bgYellow(' warn ')
-            : chalk.hex('#340343').bgRed(' err! ')
+            ? chalk.hex('#340343').bgYellow(' wrn ')
+            : chalk.hex('#340343').bgRed(' err ')
         } ${message}`
       );
     };
