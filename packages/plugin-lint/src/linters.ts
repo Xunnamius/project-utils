@@ -40,8 +40,8 @@ export async function runProjectLinter({
       outputTree[currentFile].push(
         `${
           type == 'warn'
-            ? chalk.hex('#340343').bgYellow(' wrn ')
-            : chalk.hex('#340343').bgRed(' err ')
+            ? chalk.hex('#340343').bgYellow(' warn ')
+            : chalk.hex('#340343').bgRed(' ERR! ')
         } ${message}`
       );
     };
@@ -67,8 +67,6 @@ export async function runProjectLinter({
     // TODO: use browserslist to get earliest "maintained node versions" and
     // TODO: convert this into an or (||) list, e.g.:
     // TODO: ^12.20.0 || ^14.13.1 || >=16.0.0
-
-    // TODO: when recursively linting, output path of each package
 
     if (ctx !== undefined) {
       // ? These checks are performed UNLESS linting a monorepo package root
