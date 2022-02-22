@@ -68,7 +68,7 @@
     "find-package-json": "^1.2.0",
     "mdast-util-from-markdown": "^1.2.0",
     "objectpath": "^2.0.0",
-    "strip-ansi": "^6.0.1"
+    "strip-ansi": "^7.0.1"
   },
   "engines": {
     "node": "^14.19.0 || ^16.13.0 || >=17.4.0"
