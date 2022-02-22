@@ -1,6 +1,6 @@
 {
   "name": "@projector-js/plugin-build",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "A Projector plugin that builds a package",
   "keywords": [
     "project",

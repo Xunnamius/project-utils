@@ -1,6 +1,6 @@
 {
   "name": "projector-js",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "Simple modern monorepo and polyrepo project management CLI, CI/CD toolkit, and JS library built around semantic-release",
   "keywords": [
     "project",

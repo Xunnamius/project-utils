@@ -25,7 +25,7 @@ file. The format is based on [Conventional Commits][9]; this project adheres to
   object overrides ([0192ae2][7])
 - **packages/core:** add custom webpack config ([76aee50][8])
 
-## 0.0.0-development (2021-11-24)
+## 1.0.0 (2021-11-24)
 
 #### ✨ Features
 

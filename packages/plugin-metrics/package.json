@@ -1,6 +1,6 @@
 {
   "name": "@projector-js/plugin-metrics",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "A Projector plugin that constructs reports aggregating various metrics across one or more projects",
   "keywords": [
     "project",

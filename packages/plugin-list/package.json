@@ -1,6 +1,6 @@
 {
   "name": "@projector-js/plugin-list",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "A Projector plugin that lists all available npm scripts in an aesthetically pleasing manner",
   "keywords": [
     "project",

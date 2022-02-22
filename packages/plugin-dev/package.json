@@ -1,6 +1,6 @@
 {
   "name": "@projector-js/plugin-dev",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "A Projector plugin that runs the Next.js dev server",
   "keywords": [
     "project",

@@ -1,6 +1,6 @@
 {
   "name": "@projector-js/cli",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "CLI frontend for Projector",
   "keywords": [
     "cli",

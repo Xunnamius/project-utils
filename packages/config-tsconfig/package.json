@@ -1,6 +1,6 @@
 {
   "name": "@projector-js/config-tsconfig",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "Shared TypeScript configuration files used in Projector projects and elsewhere",
   "keywords": [
     "shared",

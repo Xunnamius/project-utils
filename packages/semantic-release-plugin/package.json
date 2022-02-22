@@ -1,6 +1,6 @@
 {
   "name": "@projector-js/semantic-release-plugin",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "A semantic-release plugin enabling concurrent releasing and package version synchronization in monorepo Projector projects",
   "keywords": [
     "project",

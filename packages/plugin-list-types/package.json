@@ -1,6 +1,6 @@
 {
   "name": "@projector-js/plugin-list-types",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "A Projector plugin that lists the commit types accepted by @projector-js/config-conventional-changelog",
   "keywords": [
     "project",

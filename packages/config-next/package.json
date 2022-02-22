@@ -1,6 +1,6 @@
 {
   "name": "@projector-js/config-next",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "Shared Next.js configuration used in Projector projects and elsewhere",
   "keywords": [
     "shared",

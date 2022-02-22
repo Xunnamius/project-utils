@@ -1,6 +1,6 @@
 {
   "name": "@projector-js/plugin-format",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "A Projector plugin that formats a repository using prettier and remark",
   "keywords": [
     "project",

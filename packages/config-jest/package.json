@@ -1,6 +1,6 @@
 {
   "name": "@projector-js/config-jest",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "Shared Jest configuration used in Projector projects and elsewhere",
   "keywords": [
     "shared",

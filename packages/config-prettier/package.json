@@ -1,6 +1,6 @@
 {
   "name": "@projector-js/config-prettier",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "Shared Prettier configuration used in Projector projects and elsewhere",
   "keywords": [
     "shared",

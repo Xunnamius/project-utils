@@ -1,6 +1,6 @@
 {
   "name": "@projector-js/plugin-clean",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "A Projector plugin that cleans up the repo and other artifacts",
   "keywords": [
     "project",

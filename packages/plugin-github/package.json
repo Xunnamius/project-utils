@@ -1,6 +1,6 @@
 {
   "name": "@projector-js/plugin-github",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "A Projector plugin for interacting with the counterpart GitHub repository",
   "keywords": [
     "project",
