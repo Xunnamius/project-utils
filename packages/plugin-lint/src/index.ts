@@ -103,6 +103,9 @@ export function configureProgram(program?: Program): Context {
       ]);
 
       if (!silent) {
+        // TODO: output path of each package (especially when recursively linting)
+        // TODO: add "pre-push" mode and corresponding husky hook
+
         let firstToOutput = true;
         const outputSeparator = () => {
           console.log(`${!firstToOutput ? '\n---\n' : ''}`);
