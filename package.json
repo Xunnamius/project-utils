@@ -25,7 +25,7 @@
     "test-unit": "BABEL_ENV=test jest $JEST_CLI --coverage --collectCoverageFrom 'src/**/*.ts*' --collectCoverageFrom 'lib/**/*.ts*' --collectCoverageFrom 'external-scripts/**/*.ts*' --testPathIgnorePatterns test/integration-*.test.ts* dist"
   },
   "devDependencies": {
-    "@babel/cli": "^7.17.3",
+    "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.5",
     "@babel/eslint-parser": "^7.17.0",
     "@babel/plugin-proposal-export-default-from": "^7.16.7",
@@ -42,9 +42,9 @@
     "@types/find-package-json": "^1.2.2",
     "@types/is-valid-path": "^0.1.0",
     "@types/jest": "^27.4.0",
-    "@types/node": "^17.0.18",
-    "@typescript-eslint/eslint-plugin": "^5.12.0",
-    "@typescript-eslint/parser": "^5.12.0",
+    "@types/node": "^17.0.19",
+    "@typescript-eslint/eslint-plugin": "^5.12.1",
+    "@typescript-eslint/parser": "^5.12.1",
     "@xunnamius/conventional-changelog-projector": "^1.1.1",
     "babel-jest": "^27.5.1",
     "babel-loader": "^8.2.3",
