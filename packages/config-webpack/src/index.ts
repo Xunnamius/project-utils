@@ -1,8 +1,8 @@
-import { EnvironmentPlugin, DefinePlugin, BannerPlugin } from 'webpack';
-import nodeExternals from 'webpack-node-externals';
-import debugFactory from 'debug';
-import { getWebpackAliases } from '@projector-js/core/import-aliases';
-import { getRunContext } from '@projector-js/core/monorepo-utils';
+import { debugFactory } from 'multiverse/debug-extended';
+// import { EnvironmentPlugin, DefinePlugin, BannerPlugin } from 'webpack';
+// import nodeExternals from 'webpack-node-externals';
+// import { getWebpackAliases } from '@projector-js/core/import-aliases';
+// import { getRunContext } from '@projector-js/core/monorepo-utils';
 
 const configName = 'config-webpack';
 
@@ -22,12 +22,13 @@ export default function main(options?: Options): Record<string, unknown> {
   cwd = cwd ?? process.cwd();
   pkgName = pkgName ?? require(`${cwd}/package.json`).name;
   monorepoMode = !!monorepoMode;
+  void monorepoMode;
   customize = customize ?? ((c) => c);
 
   const debug = debugFactory(`${pkgName}:${configName}`);
 
   // TODO: break off this code into separate monorepo tooling (along with other)
-  const pathParts = cwd.replace(`${__dirname}/`, '').split('/');
+  //const pathParts = cwd.replace(`${__dirname}/`, '').split('/');
 
   debug('NODE_ENV: %O', process.env.NODE_ENV);
 
