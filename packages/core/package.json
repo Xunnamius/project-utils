@@ -55,6 +55,11 @@
     "clean": "git ls-files --exclude-standard --ignored --others --directory | grep -vE '^((\\.(env|vscode|husky))|next-env\\.d\\.ts|node_modules)($|\\/)' | xargs -p rm -rf",
     "list-tasks": "node -e 'console.log(Object.keys(require(\"./package.json\").scripts).join(\"\\n\"))'"
   },
+  "config": {
+    "docs": {
+      "entry": "./src/index.ts"
+    }
+  },
   "dependencies": {
     "@npmcli/map-workspaces": "^2.0.1",
     "is-valid-path": "^0.1.1"
