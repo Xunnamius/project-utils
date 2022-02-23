@@ -62,7 +62,7 @@
   "dependencies": {
     "@projector-js/core": "^1.0.0",
     "browserlist": "^1.0.1",
-    "chalk": "^4.1.2",
+    "chalk": "^5.0.0",
     "espree": "^9.3.1",
     "find-git-root": "^1.0.4",
     "find-package-json": "^1.2.0",
