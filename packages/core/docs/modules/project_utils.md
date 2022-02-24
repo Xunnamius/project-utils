@@ -33,7 +33,7 @@ An object representing a monorepo runtime context.
 
 #### Defined in
 
-packages/core/src/project-utils.ts:91
+[packages/core/src/project-utils.ts:91][13]
 
 ---
 
@@ -46,7 +46,7 @@ An object representing a polyrepo runtime context.
 
 #### Defined in
 
-packages/core/src/project-utils.ts:101
+[packages/core/src/project-utils.ts:101][14]
 
 ---
 
@@ -67,7 +67,7 @@ project.
 
 #### Defined in
 
-packages/core/src/project-utils.ts:26
+[packages/core/src/project-utils.ts:26][15]
 
 ---
 
@@ -87,7 +87,7 @@ An object representing a runtime context.
 
 #### Defined in
 
-packages/core/src/project-utils.ts:71
+[packages/core/src/project-utils.ts:71][16]
 
 ---
 
@@ -107,7 +107,7 @@ An object representing a package in a monorepo project.
 
 #### Defined in
 
-packages/core/src/project-utils.ts:53
+[packages/core/src/project-utils.ts:53][17]
 
 ---
 
@@ -117,7 +117,7 @@ packages/core/src/project-utils.ts:53
 
 #### Defined in
 
-packages/core/src/project-utils.ts:20
+[packages/core/src/project-utils.ts:20][18]
 
 ## Functions
 
@@ -134,7 +134,7 @@ useful for testing purposes.
 
 #### Defined in
 
-packages/core/src/project-utils.ts:126
+[packages/core/src/project-utils.ts:126][19]
 
 ---
 
@@ -159,7 +159,7 @@ directory.
 
 #### Defined in
 
-packages/core/src/project-utils.ts:309
+[packages/core/src/project-utils.ts:309][20]
 
 ---
 
@@ -190,7 +190,7 @@ workspace information.
 
 #### Defined in
 
-packages/core/src/project-utils.ts:169
+[packages/core/src/project-utils.ts:169][21]
 
 ---
 
@@ -213,7 +213,7 @@ Determine the package-id of a package from its root directory path.
 
 #### Defined in
 
-packages/core/src/project-utils.ts:110
+[packages/core/src/project-utils.ts:110][22]
 
 ---
 
@@ -236,7 +236,7 @@ Read in and parse the contents of a package.json file, memoizing the result.
 
 #### Defined in
 
-packages/core/src/project-utils.ts:133
+[packages/core/src/project-utils.ts:133][23]
 
 [1]: ../README.md
 [2]: project_utils.md#monoreporuncontext
@@ -250,3 +250,25 @@ packages/core/src/project-utils.ts:133
 [10]: project_utils.md#getworkspacepackages
 [11]: project_utils.md#packageroottoid
 [12]: project_utils.md#readpackagejson
+[13]:
+  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L91
+[14]:
+  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L101
+[15]:
+  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L26
+[16]:
+  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L71
+[17]:
+  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L53
+[18]:
+  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L20
+[19]:
+  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L126
+[20]:
+  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L309
+[21]:
+  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L169
+[22]:
+  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L110
+[23]:
+  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L133

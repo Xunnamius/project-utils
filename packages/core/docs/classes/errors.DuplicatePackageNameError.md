@@ -57,7 +57,7 @@ field as another workspace.
 
 #### Defined in
 
-packages/core/src/errors.ts:108
+[packages/core/src/errors.ts:108][15]
 
 • **new DuplicatePackageNameError**(`pkgName`, `firstPath`, `secondPath`,
 `message`)
@@ -80,7 +80,7 @@ DuplicateWorkspaceError.constructor
 
 #### Defined in
 
-packages/core/src/errors.ts:113
+[packages/core/src/errors.ts:113][16]
 
 ## Properties
 
@@ -96,7 +96,7 @@ packages/core/src/errors.ts:113
 
 #### Inherited from
 
-[DuplicateWorkspaceError][3].[message][15]
+[DuplicateWorkspaceError][3].[message][17]
 
 #### Defined in
 
@@ -110,7 +110,7 @@ node_modules/typescript/lib/lib.es5.d.ts:1023
 
 #### Inherited from
 
-[DuplicateWorkspaceError][3].[name][16]
+[DuplicateWorkspaceError][3].[name][18]
 
 #### Defined in
 
@@ -136,7 +136,7 @@ node_modules/typescript/lib/lib.es5.d.ts:1022
 
 #### Inherited from
 
-[DuplicateWorkspaceError][3].[stack][17]
+[DuplicateWorkspaceError][3].[stack][19]
 
 #### Defined in
 
@@ -155,7 +155,7 @@ node_modules/typescript/lib/lib.es5.d.ts:1024
 
 Optional override for formatting stack traces
 
-**`see`** [https://v8.dev/docs/stack-trace-api#customizing-stack-traces][18]
+**`see`** [https://v8.dev/docs/stack-trace-api#customizing-stack-traces][20]
 
 ##### Parameters
 
@@ -170,7 +170,7 @@ Optional override for formatting stack traces
 
 #### Inherited from
 
-[DuplicateWorkspaceError][3].[prepareStackTrace][19]
+[DuplicateWorkspaceError][3].[prepareStackTrace][21]
 
 #### Defined in
 
@@ -184,7 +184,7 @@ node_modules/@types/node/globals.d.ts:11
 
 #### Inherited from
 
-[DuplicateWorkspaceError][3].[stackTraceLimit][20]
+[DuplicateWorkspaceError][3].[stackTraceLimit][22]
 
 #### Defined in
 
@@ -211,7 +211,7 @@ Create .stack property on a target object
 
 #### Inherited from
 
-[DuplicateWorkspaceError][3].[captureStackTrace][21]
+[DuplicateWorkspaceError][3].[captureStackTrace][23]
 
 #### Defined in
 
@@ -231,10 +231,14 @@ node_modules/@types/node/globals.d.ts:4
 [12]: errors.DuplicatePackageNameError.md#stacktracelimit
 [13]: errors.DuplicatePackageNameError.md#capturestacktrace
 [14]: errors.DuplicateWorkspaceError.md#constructor
-[15]: errors.DuplicateWorkspaceError.md#message
-[16]: errors.DuplicateWorkspaceError.md#name
-[17]: errors.DuplicateWorkspaceError.md#stack
-[18]: https://v8.dev/docs/stack-trace-api#customizing-stack-traces
-[19]: errors.DuplicateWorkspaceError.md#preparestacktrace
-[20]: errors.DuplicateWorkspaceError.md#stacktracelimit
-[21]: errors.DuplicateWorkspaceError.md#capturestacktrace
+[15]:
+  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/errors.ts#L108
+[16]:
+  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/errors.ts#L113
+[17]: errors.DuplicateWorkspaceError.md#message
+[18]: errors.DuplicateWorkspaceError.md#name
+[19]: errors.DuplicateWorkspaceError.md#stack
+[20]: https://v8.dev/docs/stack-trace-api#customizing-stack-traces
+[21]: errors.DuplicateWorkspaceError.md#preparestacktrace
+[22]: errors.DuplicateWorkspaceError.md#stacktracelimit
+[23]: errors.DuplicateWorkspaceError.md#capturestacktrace

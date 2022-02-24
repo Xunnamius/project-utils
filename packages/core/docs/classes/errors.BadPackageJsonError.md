@@ -53,7 +53,7 @@ Represents encountering an unparsable package.json file.
 
 #### Defined in
 
-packages/core/src/errors.ts:76
+[packages/core/src/errors.ts:76][14]
 
 • **new BadPackageJsonError**(`packageJsonPath`, `cause`, `message`)
 
@@ -74,7 +74,7 @@ ContextError.constructor
 
 #### Defined in
 
-packages/core/src/errors.ts:81
+[packages/core/src/errors.ts:81][15]
 
 ## Properties
 
@@ -90,7 +90,7 @@ packages/core/src/errors.ts:81
 
 #### Inherited from
 
-[ContextError][3].[message][14]
+[ContextError][3].[message][16]
 
 #### Defined in
 
@@ -104,7 +104,7 @@ node_modules/typescript/lib/lib.es5.d.ts:1023
 
 #### Inherited from
 
-[ContextError][3].[name][15]
+[ContextError][3].[name][17]
 
 #### Defined in
 
@@ -124,7 +124,7 @@ node_modules/typescript/lib/lib.es5.d.ts:1022
 
 #### Inherited from
 
-[ContextError][3].[stack][16]
+[ContextError][3].[stack][18]
 
 #### Defined in
 
@@ -143,7 +143,7 @@ node_modules/typescript/lib/lib.es5.d.ts:1024
 
 Optional override for formatting stack traces
 
-**`see`** [https://v8.dev/docs/stack-trace-api#customizing-stack-traces][17]
+**`see`** [https://v8.dev/docs/stack-trace-api#customizing-stack-traces][19]
 
 ##### Parameters
 
@@ -158,7 +158,7 @@ Optional override for formatting stack traces
 
 #### Inherited from
 
-[ContextError][3].[prepareStackTrace][18]
+[ContextError][3].[prepareStackTrace][20]
 
 #### Defined in
 
@@ -172,7 +172,7 @@ node_modules/@types/node/globals.d.ts:11
 
 #### Inherited from
 
-[ContextError][3].[stackTraceLimit][19]
+[ContextError][3].[stackTraceLimit][21]
 
 #### Defined in
 
@@ -199,7 +199,7 @@ Create .stack property on a target object
 
 #### Inherited from
 
-[ContextError][3].[captureStackTrace][20]
+[ContextError][3].[captureStackTrace][22]
 
 #### Defined in
 
@@ -218,10 +218,14 @@ node_modules/@types/node/globals.d.ts:4
 [11]: errors.BadPackageJsonError.md#stacktracelimit
 [12]: errors.BadPackageJsonError.md#capturestacktrace
 [13]: errors.ContextError.md#constructor
-[14]: errors.ContextError.md#message
-[15]: errors.ContextError.md#name
-[16]: errors.ContextError.md#stack
-[17]: https://v8.dev/docs/stack-trace-api#customizing-stack-traces
-[18]: errors.ContextError.md#preparestacktrace
-[19]: errors.ContextError.md#stacktracelimit
-[20]: errors.ContextError.md#capturestacktrace
+[14]:
+  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/errors.ts#L76
+[15]:
+  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/errors.ts#L81
+[16]: errors.ContextError.md#message
+[17]: errors.ContextError.md#name
+[18]: errors.ContextError.md#stack
+[19]: https://v8.dev/docs/stack-trace-api#customizing-stack-traces
+[20]: errors.ContextError.md#preparestacktrace
+[21]: errors.ContextError.md#stacktracelimit
+[22]: errors.ContextError.md#capturestacktrace
