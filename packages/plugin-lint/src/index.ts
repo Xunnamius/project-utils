@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import yargs from 'yargs/yargs';
 import { debugFactory } from 'multiverse/debug-extended';
-import { LinterError } from './error';
+import { LinterError } from './errors';
 
 import {
   runEslintLinter,
@@ -23,7 +23,7 @@ export type Context = {
 
 const debug = debugFactory(`plugin-lint:parse`);
 
-export * from './error';
+export * from './errors';
 
 /**
  * Create and return a pre-configured Yargs instance (program) and argv parser.

@@ -1,18 +1,20 @@
 import { run } from 'multiverse/run';
-import { ErrorMessage } from './error';
+import { ErrorMessage } from './errors';
 import stripAnsi from 'strip-ansi';
 import chalk from 'chalk';
 
-import {
-  getRunContext,
-  PackageJsonNotFoundError
-} from '@projector-js/core/monorepo-utils';
+import { getRunContext } from '@projector-js/core/project-utils';
+import { PackageJsonNotFoundError } from '@projector-js/core/errors';
 
 type UnifiedReturnType = Promise<{
   success: boolean;
   output: string | undefined;
   summary: string;
 }>;
+
+// TODO: use regular expression to check for expected summary syntax (hide if no
+// TODO: match) and also to extract summary data (instead of all the splitting
+// TODO: and slicing)
 
 /**
  * Checks a project or package for structural correctness, adherence to standard
@@ -53,14 +55,18 @@ export async function runProjectLinter({
         if (e instanceof PackageJsonNotFoundError) {
           report('error', ErrorMessage.MissingFile(currentFile));
           return undefined;
-        } else throw e;
+        }
+
+        // TODO: add error reports for duplicate name/id and anything else
+
+        throw e;
       }
     })();
 
     report('error', 'fake error 1');
     report('error', 'fake error 2');
     report('warn', 'fake warning 1');
-    currentFile = `${rootDir}/fakefile.md`;
+    currentFile = `${rootDir}/fake-file.md`;
     report('error', 'fake error 3');
 
     // ? These checks are performed across all contexts
@@ -70,12 +76,12 @@ export async function runProjectLinter({
 
     if (ctx !== undefined) {
       // ? These checks are performed UNLESS linting a monorepo package root
-      if (ctx.context == 'polyrepo' || ctx.package.id) {
+      if (ctx.context == 'polyrepo' || ctx.package) {
       }
 
       if (ctx.context == 'monorepo') {
         // ? These checks are performed ONLY IF linting a monorepo project root
-        if (ctx.package.id) {
+        if (!ctx.package) {
         }
         // ? These checks are performed ONLY IF linting a monorepo package root
         else {

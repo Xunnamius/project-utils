@@ -1,13 +1,25 @@
 import ObjectPath from 'objectpath';
+import { makeNamedError } from 'named-app-errors';
 
+/**
+ * Represents an exception during the CLI runtime.
+ */
 export class CliError extends Error {
   constructor(public readonly exitCode = 1, message?: string) {
     super(message ?? 'an error occurred while executing this program');
   }
 }
+makeNamedError(CliError, 'CliError');
 
+/**
+ * Represents a linting error.
+ */
 export class LinterError extends CliError {}
+makeNamedError(LinterError, 'LinterError');
 
+/**
+ * A collection of possible linting errors and warnings.
+ */
 export const ErrorMessage = {
   MissingFile: (filePath: string) => `Missing file: ${filePath}`,
   MissingDirectory: (dirPath: string) => `Missing directory: ${dirPath}`,
