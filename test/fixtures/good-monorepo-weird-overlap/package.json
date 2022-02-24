@@ -1,0 +1,12 @@
+{
+  "name": "good-monorepo-weird-overlap",
+  "type": "commonjs",
+  "workspaces": [
+    "pkgs/*",
+    "pkgs/pkg-20",
+    "**/*"
+  ],
+  "scripts": {
+    "test": "echo 'it works!'"
+  }
+}

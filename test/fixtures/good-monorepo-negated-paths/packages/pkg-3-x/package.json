@@ -1,0 +1,11 @@
+{
+  "name": "@namespace/pkg-3",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "test": "echo 'it works!'"
+  }
+}

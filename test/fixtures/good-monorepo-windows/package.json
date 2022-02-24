@@ -1,0 +1,12 @@
+{
+  "name": "good-monorepo-windows",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "workspaces": [
+    "packages\\deep\\pkg",
+    "\\packages\\deep\\wkg\\"
+  ],
+  "scripts": {
+    "test": "echo 'it works!'"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "good-monorepo-weird-boneless",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "workspaces": [
+    "*"
+  ],
+  "scripts": {
+    "test": "echo 'it works!'"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "good-monorepo",
+  "type": "commonjs",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "echo 'it works!'"
+  }
+}

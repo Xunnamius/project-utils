@@ -1,0 +1,14 @@
+{
+  "name": "good-monorepo-negated-paths",
+  "type": "commonjs",
+  "workspaces": [
+    "!!packages/*",
+    "!packages/pkg-5",
+    "!!!**/pkg-*-x",
+    "!!!!packages/*3*",
+    "!!!!!packages/*2"
+  ],
+  "scripts": {
+    "test": "echo 'it works!'"
+  }
+}

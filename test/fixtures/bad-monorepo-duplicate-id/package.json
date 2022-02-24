@@ -1,0 +1,11 @@
+{
+  "name": "bad-monorepo-duplicate-id",
+  "type": "commonjs",
+  "workspaces": [
+    "packages-1/pkg-1",
+    "packages-2/pkg-1"
+  ],
+  "scripts": {
+    "test": "echo 'it works!'"
+  }
+}

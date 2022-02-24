@@ -1,0 +1,10 @@
+{
+  "name": "bad-monorepo-duplicate-name",
+  "type": "commonjs",
+  "workspaces": [
+    "pkg/*"
+  ],
+  "scripts": {
+    "test": "echo 'it works!'"
+  }
+}

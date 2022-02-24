@@ -1,0 +1,13 @@
+{
+  "name": "good-monorepo-weird-yarn",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "test": "echo 'it works!'"
+  }
+}

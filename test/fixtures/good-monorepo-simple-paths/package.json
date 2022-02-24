@@ -1,0 +1,11 @@
+{
+  "name": "good-monorepo-simple-paths",
+  "type": "commonjs",
+  "workspaces": [
+    "pkgs/pkg-1",
+    "pkgs/pkg-10"
+  ],
+  "scripts": {
+    "test": "echo 'it works!'"
+  }
+}
