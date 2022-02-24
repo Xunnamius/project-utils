@@ -2,7 +2,7 @@ import { debugFactory } from 'multiverse/debug-extended';
 // import { EnvironmentPlugin, DefinePlugin, BannerPlugin } from 'webpack';
 // import nodeExternals from 'webpack-node-externals';
 // import { getWebpackAliases } from '@projector-js/core/import-aliases';
-// import { getRunContext } from '@projector-js/core/monorepo-utils';
+// import { getRunContext } from '@projector-js/core/project-utils';
 
 const configName = 'config-webpack';
 
