@@ -1,4 +1,3 @@
-import { toss } from 'toss-expression';
 import isValidPath from 'is-valid-path';
 import { relative as relativePath } from 'path';
 
@@ -50,7 +49,22 @@ export const getRawAliases = () => ({
 /**
  * Takes an alias mapping, validates it, and returns its constituent parts.
  */
-export function getProcessedAliasMapping(mapping: [string, string], warn = false) {
+export function getProcessedAliasMapping({
+  mapping,
+  issueTypescriptWarning = false
+}: {
+  /**
+   * A single mapping between an alias `key` and its real path `value`.
+   */
+  mapping: [key: string, value: string];
+  /**
+   * If true, attempting to resolve an alias at runtime, which TypeScript does
+   * not support, will trigger a TypeScript-specific warning.
+   *
+   * @default false
+   */
+  issueTypescriptWarning?: boolean;
+}) {
   const aliasMatch = matchers.key.exec(mapping[0]);
   const pathMatch = matchers.value.exec(mapping[1]);
 
@@ -81,11 +95,11 @@ export function getProcessedAliasMapping(mapping: [string, string], warn = false
 
   if (pathMatch.groups?.path && !isValidPath(pathMatch.groups.path)) {
     throw new Error(
-      `encountered illegal alias map value "${mapping[1]}": "${pathMatch.groups.path}" is not a valid filesystem path`
+      `encountered illegal alias map value "${mapping[1]}": "${pathMatch.groups.path}" is not a valid path`
     );
   }
 
-  if (warn && pathMatch.groups?.prefix == '.') {
+  if (issueTypescriptWarning && pathMatch.groups?.prefix == '.') {
     // eslint-disable-next-line no-console
     console.warn(
       `Warning: TypeScript path aliases cannot be computed at runtime! This means alias map value "${
@@ -99,15 +113,11 @@ export function getProcessedAliasMapping(mapping: [string, string], warn = false
   return [
     {
       prefix: (aliasMatch.groups?.prefix as '^' | null) || null,
-      alias:
-        aliasMatch.groups?.alias ||
-        toss(new Error(`expected an alias but it is missing`)),
+      alias: aliasMatch.groups?.alias as string,
       suffix: (aliasMatch.groups?.suffix as '/(.*)$' | '$' | null) || null
     },
     {
-      prefix:
-        (pathMatch.groups?.prefix as '.' | '<rootDir>') ||
-        toss(new Error(`expected a prefix but it is missing`)),
+      prefix: pathMatch.groups?.prefix as '.' | '<rootDir>',
       path: pathMatch.groups?.path || null,
       suffix: (pathMatch.groups?.suffix as '/$1' | null) || null
     }
@@ -122,7 +132,7 @@ export function getProcessedAliasMapping(mapping: [string, string], warn = false
  */
 export function getEslintAliases() {
   return Object.entries(getRawAliases()).map((mapping) => {
-    const [aliasMap, pathMap] = getProcessedAliasMapping(mapping, false);
+    const [aliasMap, pathMap] = getProcessedAliasMapping({ mapping });
     return [aliasMap.alias, pathMap.path ? `.${pathMap.path}` : '.'];
   });
 }
@@ -133,11 +143,17 @@ export function getEslintAliases() {
  *
  * See also: https://webpack.js.org/configuration/resolve/#resolvealias
  */
-export function getWebpackAliases(
-  { rootDir }: { rootDir?: string } = { rootDir: undefined }
-) {
+export function getWebpackAliases({
+  rootDir
+}: {
+  /**
+   * The root directory of the project as an absolute path. Supplying a
+   * relative path will lead to undefined behavior.
+   */
+  rootDir?: string;
+} = {}) {
   return Object.entries(getRawAliases()).reduce<Record<string, string>>((o, mapping) => {
-    const [aliasMap, pathMap] = getProcessedAliasMapping(mapping, false);
+    const [aliasMap, pathMap] = getProcessedAliasMapping({ mapping });
 
     if (pathMap.prefix == '<rootDir>' && !rootDir) {
       throw new Error(
@@ -161,11 +177,17 @@ export function getWebpackAliases(
  * See also:
  * https://jestjs.io/docs/configuration#modulenamemapper-objectstring-string--arraystring
  */
-export function getJestAliases(
-  { rootDir }: { rootDir?: string } = { rootDir: undefined }
-) {
+export function getJestAliases({
+  rootDir
+}: {
+  /**
+   * The root directory of the project as an absolute path. Supplying a
+   * relative path will lead to undefined behavior.
+   */
+  rootDir?: string;
+} = {}) {
   return Object.entries(getRawAliases()).reduce<Record<string, string>>((o, mapping) => {
-    const [, pathMap] = getProcessedAliasMapping(mapping, false);
+    const [, pathMap] = getProcessedAliasMapping({ mapping });
     let prefix = '<rootDir>';
 
     if (pathMap.prefix == '.') {
@@ -193,7 +215,10 @@ export function getJestAliases(
 export function getTypeScriptAliases() {
   return Object.entries(getRawAliases()).reduce<Record<string, string[]>>(
     (o, mapping) => {
-      const [aliasMap, pathMap] = getProcessedAliasMapping(mapping, true);
+      const [aliasMap, pathMap] = getProcessedAliasMapping({
+        mapping,
+        issueTypescriptWarning: true
+      });
       return {
         ...o,
         [`${aliasMap.alias}${aliasMap.suffix == '/(.*)$' ? '/*' : ''}`]: [

@@ -2,8 +2,6 @@ import * as Alias from 'pkgverse/core/src/import-aliases';
 
 import { withMockedOutput } from 'testverse/setup';
 
-// TODO: hide TypeScript warning using mock-output package
-
 beforeEach(() => {
   jest.spyOn(Alias, 'getRawAliases').mockReturnValue({
     a: './a',
@@ -26,7 +24,7 @@ describe('::getRawAliases', () => {
 
     await withMockedOutput(() => {
       Object.entries(Alias.getRawAliases()).map((mapping) => {
-        expect(() => Alias.getProcessedAliasMapping(mapping)).not.toThrow();
+        expect(() => Alias.getProcessedAliasMapping({ mapping })).not.toThrow();
       });
     });
   });
@@ -37,12 +35,15 @@ describe('::getProcessedAliasMapping', () => {
     expect.hasAssertions();
 
     await withMockedOutput(({ warnSpy }) => {
-      Alias.getProcessedAliasMapping(['a', '<rootDir>/a']);
+      Alias.getProcessedAliasMapping({ mapping: ['a', '<rootDir>/a'] });
       expect(warnSpy).not.toBeCalled();
     });
 
     await withMockedOutput(({ warnSpy }) => {
-      Alias.getProcessedAliasMapping(['a', './a'], true);
+      Alias.getProcessedAliasMapping({
+        mapping: ['a', './a'],
+        issueTypescriptWarning: true
+      });
       expect(warnSpy).toBeCalled();
     });
   });
@@ -51,16 +52,24 @@ describe('::getProcessedAliasMapping', () => {
     expect.hasAssertions();
 
     await withMockedOutput(() => {
-      expect(() => Alias.getProcessedAliasMapping(['a', './a'])).not.toThrow();
-      expect(() => Alias.getProcessedAliasMapping(['a', '<rootDir>/a'])).not.toThrow();
-      expect(() => Alias.getProcessedAliasMapping(['a$', '<rootDir>/a'])).not.toThrow();
-
       expect(() =>
-        Alias.getProcessedAliasMapping(['a/(.*)$', '<rootDir>/a/$1'])
+        Alias.getProcessedAliasMapping({ mapping: ['a', './a'] })
       ).not.toThrow();
 
       expect(() =>
-        Alias.getProcessedAliasMapping(['^a/(.*)$', '<rootDir>/a/$1'])
+        Alias.getProcessedAliasMapping({ mapping: ['a', '<rootDir>/a'] })
+      ).not.toThrow();
+
+      expect(() =>
+        Alias.getProcessedAliasMapping({ mapping: ['a$', '<rootDir>/a'] })
+      ).not.toThrow();
+
+      expect(() =>
+        Alias.getProcessedAliasMapping({ mapping: ['a/(.*)$', '<rootDir>/a/$1'] })
+      ).not.toThrow();
+
+      expect(() =>
+        Alias.getProcessedAliasMapping({ mapping: ['^a/(.*)$', '<rootDir>/a/$1'] })
       ).not.toThrow();
     });
   });
@@ -68,13 +77,15 @@ describe('::getProcessedAliasMapping', () => {
   it('throws on bad alias:path "a":"a"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping(['a', 'a'])).toThrow(/invalid syntax/);
+    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a', 'a'] })).toThrow(
+      /invalid syntax/
+    );
   });
 
   it('throws on bad alias:path "a/b":"./a"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping(['a/b', './a'])).toThrow(
+    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a/b', './a'] })).toThrow(
       /invalid syntax/
     );
   });
@@ -82,33 +93,39 @@ describe('::getProcessedAliasMapping', () => {
   it('throws on bad alias:path "$":"./a"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping(['$', './a'])).toThrow(/invalid syntax/);
+    expect(() => Alias.getProcessedAliasMapping({ mapping: ['$', './a'] })).toThrow(
+      /invalid syntax/
+    );
   });
 
   it('throws on bad alias:path "$$":"./a"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping(['$$', './a'])).toThrow(/invalid syntax/);
+    expect(() => Alias.getProcessedAliasMapping({ mapping: ['$$', './a'] })).toThrow(
+      /invalid syntax/
+    );
   });
 
   it('throws on bad alias:path "a/":"./a"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping(['a/', './a'])).toThrow(/invalid syntax/);
+    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a/', './a'] })).toThrow(
+      /invalid syntax/
+    );
   });
 
   it('throws on bad alias:path "a/(.*)$/(.*)$":"./a"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping(['a/(.*)$/(.*)$', './a'])).toThrow(
-      /invalid syntax/
-    );
+    expect(() =>
+      Alias.getProcessedAliasMapping({ mapping: ['a/(.*)$/(.*)$', './a'] })
+    ).toThrow(/invalid syntax/);
   });
 
   it('throws on bad path ".d.json"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping(['a', '.d.json'])).toThrow(
+    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a', '.d.json'] })).toThrow(
       /invalid syntax/
     );
   });
@@ -116,31 +133,31 @@ describe('::getProcessedAliasMapping', () => {
   it('throws on bad path "e/e/e/e.json"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping(['a', 'e/e/e/e.json'])).toThrow(
-      /invalid syntax/
-    );
+    expect(() =>
+      Alias.getProcessedAliasMapping({ mapping: ['a', 'e/e/e/e.json'] })
+    ).toThrow(/invalid syntax/);
   });
 
   it('throws on bad path ".e/e/e/e.json"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping(['a', '.e/e/e/e.json'])).toThrow(
-      /invalid syntax/
-    );
+    expect(() =>
+      Alias.getProcessedAliasMapping({ mapping: ['a', '.e/e/e/e.json'] })
+    ).toThrow(/invalid syntax/);
   });
 
   it('throws on bad path "<rootDir>e/e/e/e.json"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping(['a', '<rootDir>e/e/e/e.json'])).toThrow(
-      /invalid syntax/
-    );
+    expect(() =>
+      Alias.getProcessedAliasMapping({ mapping: ['a', '<rootDir>e/e/e/e.json'] })
+    ).toThrow(/invalid syntax/);
   });
 
   it('throws on bad path "./e.json/"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping(['a', './e.json/'])).toThrow(
+    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a', './e.json/'] })).toThrow(
       /invalid syntax/
     );
   });
@@ -148,7 +165,7 @@ describe('::getProcessedAliasMapping', () => {
   it('throws on bad alias:path "a/(.*)$":"."', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping(['a/(.*)$', '.'])).toThrow(
+    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a/(.*)$', '.'] })).toThrow(
       /must end with "\/\$1"/
     );
   });
@@ -156,40 +173,48 @@ describe('::getProcessedAliasMapping', () => {
   it('throws on bad alias:path "a/(.*)$":"<rootDir>"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping(['a/(.*)$', '<rootDir>'])).toThrow(
-      /must end with "\/\$1"/
-    );
+    expect(() =>
+      Alias.getProcessedAliasMapping({ mapping: ['a/(.*)$', '<rootDir>'] })
+    ).toThrow(/must end with "\/\$1"/);
   });
 
   it('throws on bad alias:path "a/(.*)$":"<rootDir>/some/path"', async () => {
     expect.hasAssertions();
 
     expect(() =>
-      Alias.getProcessedAliasMapping(['a/(.*)$', '<rootDir>/some/path'])
+      Alias.getProcessedAliasMapping({ mapping: ['a/(.*)$', '<rootDir>/some/path'] })
     ).toThrow(/must end with "\/\$1"/);
   });
 
   it('throws on bad alias:path "a":"<rootDir>/$1"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping(['a', '<rootDir>/$1'])).toThrow(
-      /must end with "\/\(\.\*\)\$"/
-    );
+    expect(() =>
+      Alias.getProcessedAliasMapping({ mapping: ['a', '<rootDir>/$1'] })
+    ).toThrow(/must end with "\/\(\.\*\)\$"/);
   });
 
   it('throws on bad alias:path "a":"./$1"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping(['a', './$1'])).toThrow(
+    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a', './$1'] })).toThrow(
       /must end with "\/\(\.\*\)\$"/
     );
   });
 
-  it('throws on bad alias:path "a":"./some/path/$1"', async () => {
+  it('throws on bad alias:path "a":"./?/?/?"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping(['a', './some/path/$1'])).toThrow(
-      /must end with "\/\(\.\*\)\$"/
+    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a', './?/?/?'] })).toThrow(
+      /not a valid path$/
+    );
+  });
+
+  it('throws on bad alias:path "":"./?/?/?"', async () => {
+    expect.hasAssertions();
+
+    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a', './?/?/?'] })).toThrow(
+      /not a valid path$/
     );
   });
 });
@@ -365,21 +390,24 @@ test('only getTypeScriptAliases issues a warning when called', async () => {
 
   await withMockedOutput(() => {
     Alias.getEslintAliases();
-    expect(spy).toBeCalledWith(expect.anything(), false);
+    expect(spy).toBeCalledWith({ mapping: expect.anything() });
   });
 
   await withMockedOutput(() => {
     Alias.getJestAliases({ rootDir: '/something/or/other' });
-    expect(spy).toBeCalledWith(expect.anything(), false);
+    expect(spy).toBeCalledWith({ mapping: expect.anything() });
   });
 
   await withMockedOutput(() => {
     Alias.getWebpackAliases({ rootDir: '/something/or/other' });
-    expect(spy).toBeCalledWith(expect.anything(), false);
+    expect(spy).toBeCalledWith({ mapping: expect.anything() });
   });
 
   await withMockedOutput(() => {
     Alias.getTypeScriptAliases();
-    expect(spy).toBeCalledWith(expect.anything(), true);
+    expect(spy).toBeCalledWith({
+      mapping: expect.anything(),
+      issueTypescriptWarning: true
+    });
   });
 });
