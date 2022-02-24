@@ -24,12 +24,19 @@
       "node": "./dist/cjs-static/import-aliases.js",
       "default": "./dist/esm-shakable/import-aliases.mjs"
     },
-    "./monorepo-utils": {
-      "docs": "./src/monorepo-utils.ts",
-      "types": "./dist/types/packages/core/src/monorepo-utils.d.ts",
-      "module": "./dist/esm-shakable/monorepo-utils.mjs",
-      "node": "./dist/cjs-static/monorepo-utils.js",
-      "default": "./dist/esm-shakable/monorepo-utils.mjs"
+    "./project-utils": {
+      "docs": "./src/project-utils.ts",
+      "types": "./dist/types/packages/core/src/project-utils.d.ts",
+      "module": "./dist/esm-shakable/project-utils.mjs",
+      "node": "./dist/cjs-static/project-utils.js",
+      "default": "./dist/esm-shakable/project-utils.mjs"
+    },
+    "./errors": {
+      "docs": "./src/errors.ts",
+      "types": "./dist/types/packages/core/src/errors.d.ts",
+      "module": "./dist/esm-shakable/errors.mjs",
+      "node": "./dist/cjs-static/errors.js",
+      "default": "./dist/esm-shakable/errors.mjs"
     },
     "./package": "./package.json",
     "./package.json": "./package.json"
