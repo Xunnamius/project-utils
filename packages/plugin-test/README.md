@@ -22,6 +22,15 @@
 
 <!-- TODO -->
 
+Calls codecov with the appropriate flags for monorepos. Codecov coverage data is
+uploaded for all unit test types. Not integration tests (not discernible in most
+cases). Only one flag used at once, and they are used automatically by this
+plugin depending on context data (no manual input required). Need to specify
+`-f` flag (and store coverage locally/per monorepo package) as well as `-F` Flag
+flag. Use automatic flag management. One flag per upload type; flags will look
+like `pkgNameOrId` for monorepos. Polyrepos should not use flags. See:
+[https://docs.codecov.com/docs/flags][1]
+
 ## Install
 
 ```bash
@@ -100,3 +109,4 @@ information.
 [pr-compare]: https://github.com/xunnamius/projector/compare
 [contributing]: /CONTRIBUTING.md
 [support]: /.github/SUPPORT.md
+[1]: https://docs.codecov.com/docs/flags

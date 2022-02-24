@@ -22,6 +22,9 @@
 
 <!-- TODO -->
 
+Note that order matters, and that negated patterns only affect previously
+defined patterns and not future patterns. Given an example.
+
 ## Install
 
 ```bash
