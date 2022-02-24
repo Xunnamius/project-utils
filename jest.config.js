@@ -21,5 +21,12 @@ module.exports = {
     '^package$': '<rootDir>/package.json'
   },
   setupFilesAfterEnv: ['./test/setup.ts'],
-  collectCoverageFrom: ['src/**/*.ts?(x)', 'external-scripts/**/*.ts?(x)']
+  collectCoverageFrom: [
+    'src/**/*.ts?(x)',
+    'lib/**/*.ts?(x)',
+    'external-scripts/**/*.ts?(x)',
+    'packages/*/src/**/*.ts?(x)'
+  ],
+  // ? Make sure jest-haste-map doesn't try to parse and cache fixtures
+  modulePathIgnorePatterns: ['<rootDir>/test/fixtures']
 };

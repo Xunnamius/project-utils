@@ -2,7 +2,7 @@
 
 module.exports = {
   reject: [
-    // ? Pin the CJS version of execa
+    // ? Pin the CJS version
     'execa'
   ]
 };
