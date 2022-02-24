@@ -2,8 +2,10 @@
 
 ### Modules
 
-- [import-aliases][1]
-- [monorepo-utils][2]
+- [errors][1]
+- [import-aliases][2]
+- [project-utils][3]
 
-[1]: modules/import_aliases.md
-[2]: modules/monorepo_utils.md
+[1]: modules/errors.md
+[2]: modules/import_aliases.md
+[3]: modules/project_utils.md

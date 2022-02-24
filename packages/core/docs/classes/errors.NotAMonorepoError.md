@@ -1,14 +1,16 @@
-[@projector-js/core][1] / [monorepo-utils][2] / PackageJsonNotFoundError
+[@projector-js/core][1] / [errors][2] / NotAMonorepoError
 
-# Class: PackageJsonNotFoundError
+# Class: NotAMonorepoError
 
-[monorepo-utils][2].PackageJsonNotFoundError
+[errors][2].NotAMonorepoError
+
+Represents unexpectedly encountering a project that is not a monorepo.
 
 ## Hierarchy
 
 - [`ContextError`][3]
 
-  ↳ **`PackageJsonNotFoundError`**
+  ↳ **`NotAMonorepoError`**
 
 ## Table of contents
 
@@ -32,21 +34,36 @@
 
 ### constructor
 
-• **new PackageJsonNotFoundError**(`message?`)
+• **new NotAMonorepoError**()
 
-#### Parameters
+Represents unexpectedly encountering a project that is not a monorepo.
 
-| Name       | Type     |
-| :--------- | :------- |
-| `message?` | `string` |
-
-#### Inherited from
+#### Overrides
 
 [ContextError][3].[constructor][11]
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1028
+packages/core/src/errors.ts:35
+
+• **new NotAMonorepoError**(`message`)
+
+This constructor syntax is used by subclasses when calling this constructor via
+`super`.
+
+#### Parameters
+
+| Name      | Type     |
+| :-------- | :------- |
+| `message` | `string` |
+
+#### Overrides
+
+ContextError.constructor
+
+#### Defined in
+
+packages/core/src/errors.ts:40
 
 ## Properties
 
@@ -166,20 +183,20 @@ Create .stack property on a target object
 node_modules/@types/node/globals.d.ts:4
 
 [1]: ../README.md
-[2]: ../modules/monorepo_utils.md
-[3]: monorepo_utils.ContextError.md
-[4]: monorepo_utils.PackageJsonNotFoundError.md#constructor
-[5]: monorepo_utils.PackageJsonNotFoundError.md#message
-[6]: monorepo_utils.PackageJsonNotFoundError.md#name
-[7]: monorepo_utils.PackageJsonNotFoundError.md#stack
-[8]: monorepo_utils.PackageJsonNotFoundError.md#preparestacktrace
-[9]: monorepo_utils.PackageJsonNotFoundError.md#stacktracelimit
-[10]: monorepo_utils.PackageJsonNotFoundError.md#capturestacktrace
-[11]: monorepo_utils.ContextError.md#constructor
-[12]: monorepo_utils.ContextError.md#message
-[13]: monorepo_utils.ContextError.md#name
-[14]: monorepo_utils.ContextError.md#stack
+[2]: ../modules/errors.md
+[3]: errors.ContextError.md
+[4]: errors.NotAMonorepoError.md#constructor
+[5]: errors.NotAMonorepoError.md#message
+[6]: errors.NotAMonorepoError.md#name
+[7]: errors.NotAMonorepoError.md#stack
+[8]: errors.NotAMonorepoError.md#preparestacktrace
+[9]: errors.NotAMonorepoError.md#stacktracelimit
+[10]: errors.NotAMonorepoError.md#capturestacktrace
+[11]: errors.ContextError.md#constructor
+[12]: errors.ContextError.md#message
+[13]: errors.ContextError.md#name
+[14]: errors.ContextError.md#stack
 [15]: https://v8.dev/docs/stack-trace-api#customizing-stack-traces
-[16]: monorepo_utils.ContextError.md#preparestacktrace
-[17]: monorepo_utils.ContextError.md#stacktracelimit
-[18]: monorepo_utils.ContextError.md#capturestacktrace
+[16]: errors.ContextError.md#preparestacktrace
+[17]: errors.ContextError.md#stacktracelimit
+[18]: errors.ContextError.md#capturestacktrace

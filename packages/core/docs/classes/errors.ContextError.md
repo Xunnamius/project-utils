@@ -1,8 +1,10 @@
-[@projector-js/core][1] / [monorepo-utils][2] / ContextError
+[@projector-js/core][1] / [errors][2] / ContextError
 
 # Class: ContextError
 
-[monorepo-utils][2].ContextError
+[errors][2].ContextError
+
+Represents an exception during context resolution.
 
 ## Hierarchy
 
@@ -12,27 +14,31 @@
 
   ↳↳ [`NotAGitRepositoryError`][3]
 
-  ↳↳ [`PackageJsonNotFoundError`][4]
+  ↳↳ [`NotAMonorepoError`][4]
 
-  ↳↳ [`BadPackageJsonError`][5]
+  ↳↳ [`PackageJsonNotFoundError`][5]
+
+  ↳↳ [`BadPackageJsonError`][6]
+
+  ↳↳ [`DuplicateWorkspaceError`][7]
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor][6]
+- [constructor][8]
 
 ### Properties
 
-- [message][7]
-- [name][8]
-- [stack][9]
-- [prepareStackTrace][10]
-- [stackTraceLimit][11]
+- [message][9]
+- [name][10]
+- [stack][11]
+- [prepareStackTrace][12]
+- [stackTraceLimit][13]
 
 ### Methods
 
-- [captureStackTrace][12]
+- [captureStackTrace][14]
 
 ## Constructors
 
@@ -109,7 +115,7 @@ node_modules/typescript/lib/lib.es5.d.ts:1024
 
 Optional override for formatting stack traces
 
-**`see`** [https://v8.dev/docs/stack-trace-api#customizing-stack-traces][13]
+**`see`** [https://v8.dev/docs/stack-trace-api#customizing-stack-traces][15]
 
 ##### Parameters
 
@@ -172,15 +178,17 @@ Error.captureStackTrace
 node_modules/@types/node/globals.d.ts:4
 
 [1]: ../README.md
-[2]: ../modules/monorepo_utils.md
-[3]: monorepo_utils.NotAGitRepositoryError.md
-[4]: monorepo_utils.PackageJsonNotFoundError.md
-[5]: monorepo_utils.BadPackageJsonError.md
-[6]: monorepo_utils.ContextError.md#constructor
-[7]: monorepo_utils.ContextError.md#message
-[8]: monorepo_utils.ContextError.md#name
-[9]: monorepo_utils.ContextError.md#stack
-[10]: monorepo_utils.ContextError.md#preparestacktrace
-[11]: monorepo_utils.ContextError.md#stacktracelimit
-[12]: monorepo_utils.ContextError.md#capturestacktrace
-[13]: https://v8.dev/docs/stack-trace-api#customizing-stack-traces
+[2]: ../modules/errors.md
+[3]: errors.NotAGitRepositoryError.md
+[4]: errors.NotAMonorepoError.md
+[5]: errors.PackageJsonNotFoundError.md
+[6]: errors.BadPackageJsonError.md
+[7]: errors.DuplicateWorkspaceError.md
+[8]: errors.ContextError.md#constructor
+[9]: errors.ContextError.md#message
+[10]: errors.ContextError.md#name
+[11]: errors.ContextError.md#stack
+[12]: errors.ContextError.md#preparestacktrace
+[13]: errors.ContextError.md#stacktracelimit
+[14]: errors.ContextError.md#capturestacktrace
+[15]: https://v8.dev/docs/stack-trace-api#customizing-stack-traces

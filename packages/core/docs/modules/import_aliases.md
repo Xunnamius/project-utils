@@ -30,7 +30,7 @@ See also: [https://www.npmjs.com/package/eslint-import-resolver-alias][8]
 
 #### Defined in
 
-[packages/core/src/import-aliases.ts:123][9]
+[packages/core/src/import-aliases.ts:133][9]
 
 ---
 
@@ -46,10 +46,10 @@ See also:
 
 #### Parameters
 
-| Name             | Type     |
-| :--------------- | :------- |
-| `(destructured)` | `Object` |
-| `({ rootDir? })` | `string` |
+| Name             | Type     | Description                                                                                                       |
+| :--------------- | :------- | :---------------------------------------------------------------------------------------------------------------- |
+| `(destructured)` | `Object` | -                                                                                                                 |
+| `({ rootDir? })` | `string` | The root directory of the project as an absolute path. Supplying a relative path will lead to undefined behavior. |
 
 #### Returns
 
@@ -57,25 +57,26 @@ See also:
 
 #### Defined in
 
-[packages/core/src/import-aliases.ts:164][11]
+[packages/core/src/import-aliases.ts:180][11]
 
 ---
 
 ### getProcessedAliasMapping
 
-▸ **getProcessedAliasMapping**(`mapping`, `warn?`): readonly \[{ `alias`:
-`string` ; `prefix`: `null` | `"^"` ; `suffix`: `null` | `"/(.*)$"` | `"$"` }, {
-`path`: `null` | `string` ; `prefix`: `"."` | `"<rootDir>"` ; `suffix`: `null` |
-`"/$1"` }]
+▸ **getProcessedAliasMapping**(`(destructured)`): readonly \[{ `alias`: `string`
+; `prefix`: `null` | `"^"` ; `suffix`: `null` | `"/(.*)$"` | `"$"` }, { `path`:
+`null` | `string` ; `prefix`: `"."` | `"<rootDir>"` ; `suffix`: `null` | `"/$1"`
+}]
 
 Takes an alias mapping, validates it, and returns its constituent parts.
 
 #### Parameters
 
-| Name      | Type                  | Default value |
-| :-------- | :-------------------- | :------------ |
-| `mapping` | \[`string`, `string`] | `undefined`   |
-| `warn`    | `boolean`             | `false`       |
+| Name                            | Type                          | Description                                                                                                                                            |
+| :------------------------------ | :---------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `(destructured)`                | `Object`                      | -                                                                                                                                                      |
+| `({ issueTypescriptWarning? })` | `boolean`                     | If true, attempting to resolve an alias at runtime, which TypeScript does not support, will trigger a TypeScript-specific warning. **`default`** false |
+| `({ mapping })`                 | \[key: string, value: string] | A single mapping between an alias `key` and its real path `value`.                                                                                     |
 
 #### Returns
 
@@ -85,7 +86,7 @@ readonly \[{ `alias`: `string` ; `prefix`: `null` | `"^"` ; `suffix`: `null` |
 
 #### Defined in
 
-[packages/core/src/import-aliases.ts:53][12]
+[packages/core/src/import-aliases.ts:52][12]
 
 ---
 
@@ -132,7 +133,7 @@ syntax.
 
 #### Defined in
 
-[packages/core/src/import-aliases.ts:38][13]
+[packages/core/src/import-aliases.ts:37][13]
 
 ---
 
@@ -149,7 +150,7 @@ external TypeScript configurations at `compilerOptions.paths`.
 
 #### Defined in
 
-[packages/core/src/import-aliases.ts:193][14]
+[packages/core/src/import-aliases.ts:215][14]
 
 ---
 
@@ -164,10 +165,10 @@ See also: [https://webpack.js.org/configuration/resolve/#resolvealias][15]
 
 #### Parameters
 
-| Name             | Type     |
-| :--------------- | :------- |
-| `(destructured)` | `Object` |
-| `({ rootDir? })` | `string` |
+| Name             | Type     | Description                                                                                                       |
+| :--------------- | :------- | :---------------------------------------------------------------------------------------------------------------- |
+| `(destructured)` | `Object` | -                                                                                                                 |
+| `({ rootDir? })` | `string` | The root directory of the project as an absolute path. Supplying a relative path will lead to undefined behavior. |
 
 #### Returns
 
@@ -175,7 +176,7 @@ See also: [https://webpack.js.org/configuration/resolve/#resolvealias][15]
 
 #### Defined in
 
-[packages/core/src/import-aliases.ts:136][16]
+[packages/core/src/import-aliases.ts:146][16]
 
 [1]: ../README.md
 [2]: import_aliases.md#geteslintaliases
@@ -186,17 +187,17 @@ See also: [https://webpack.js.org/configuration/resolve/#resolvealias][15]
 [7]: import_aliases.md#getwebpackaliases
 [8]: https://www.npmjs.com/package/eslint-import-resolver-alias
 [9]:
-  https://github.com/Xunnamius/projector/blob/5198046/packages/core/src/import-aliases.ts#L123
+  https://github.com/Xunnamius/projector/blob/a82a038/packages/core/src/import-aliases.ts#L133
 [10]:
   https://jestjs.io/docs/configuration#modulenamemapper-objectstring-string--arraystring
 [11]:
-  https://github.com/Xunnamius/projector/blob/5198046/packages/core/src/import-aliases.ts#L164
+  https://github.com/Xunnamius/projector/blob/a82a038/packages/core/src/import-aliases.ts#L180
 [12]:
-  https://github.com/Xunnamius/projector/blob/5198046/packages/core/src/import-aliases.ts#L53
+  https://github.com/Xunnamius/projector/blob/a82a038/packages/core/src/import-aliases.ts#L52
 [13]:
-  https://github.com/Xunnamius/projector/blob/5198046/packages/core/src/import-aliases.ts#L38
+  https://github.com/Xunnamius/projector/blob/a82a038/packages/core/src/import-aliases.ts#L37
 [14]:
-  https://github.com/Xunnamius/projector/blob/5198046/packages/core/src/import-aliases.ts#L193
+  https://github.com/Xunnamius/projector/blob/a82a038/packages/core/src/import-aliases.ts#L215
 [15]: https://webpack.js.org/configuration/resolve/#resolvealias
 [16]:
-  https://github.com/Xunnamius/projector/blob/5198046/packages/core/src/import-aliases.ts#L136
+  https://github.com/Xunnamius/projector/blob/a82a038/packages/core/src/import-aliases.ts#L146

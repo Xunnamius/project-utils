@@ -1,38 +1,45 @@
-[@projector-js/core][1] / [monorepo-utils][2] / NotAGitRepositoryError
+[@projector-js/core][1] / [errors][2] / DuplicateWorkspaceError
 
-# Class: NotAGitRepositoryError
+# Class: DuplicateWorkspaceError
 
-[monorepo-utils][2].NotAGitRepositoryError
+[errors][2].DuplicateWorkspaceError
+
+Represents encountering two or more workspaces that cannot be differentiated
+from each other.
 
 ## Hierarchy
 
 - [`ContextError`][3]
 
-  ↳ **`NotAGitRepositoryError`**
+  ↳ **`DuplicateWorkspaceError`**
+
+  ↳↳ [`DuplicatePackageNameError`][4]
+
+  ↳↳ [`DuplicatePackageIdError`][5]
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor][4]
+- [constructor][6]
 
 ### Properties
 
-- [message][5]
-- [name][6]
-- [stack][7]
-- [prepareStackTrace][8]
-- [stackTraceLimit][9]
+- [message][7]
+- [name][8]
+- [stack][9]
+- [prepareStackTrace][10]
+- [stackTraceLimit][11]
 
 ### Methods
 
-- [captureStackTrace][10]
+- [captureStackTrace][12]
 
 ## Constructors
 
 ### constructor
 
-• **new NotAGitRepositoryError**(`message?`)
+• **new DuplicateWorkspaceError**(`message?`)
 
 #### Parameters
 
@@ -42,7 +49,7 @@
 
 #### Inherited from
 
-[ContextError][3].[constructor][11]
+[ContextError][3].[constructor][13]
 
 #### Defined in
 
@@ -56,7 +63,7 @@ node_modules/typescript/lib/lib.es5.d.ts:1028
 
 #### Inherited from
 
-[ContextError][3].[message][12]
+[ContextError][3].[message][14]
 
 #### Defined in
 
@@ -70,7 +77,7 @@ node_modules/typescript/lib/lib.es5.d.ts:1023
 
 #### Inherited from
 
-[ContextError][3].[name][13]
+[ContextError][3].[name][15]
 
 #### Defined in
 
@@ -84,7 +91,7 @@ node_modules/typescript/lib/lib.es5.d.ts:1022
 
 #### Inherited from
 
-[ContextError][3].[stack][14]
+[ContextError][3].[stack][16]
 
 #### Defined in
 
@@ -103,7 +110,7 @@ node_modules/typescript/lib/lib.es5.d.ts:1024
 
 Optional override for formatting stack traces
 
-**`see`** [https://v8.dev/docs/stack-trace-api#customizing-stack-traces][15]
+**`see`** [https://v8.dev/docs/stack-trace-api#customizing-stack-traces][17]
 
 ##### Parameters
 
@@ -118,7 +125,7 @@ Optional override for formatting stack traces
 
 #### Inherited from
 
-[ContextError][3].[prepareStackTrace][16]
+[ContextError][3].[prepareStackTrace][18]
 
 #### Defined in
 
@@ -132,7 +139,7 @@ node_modules/@types/node/globals.d.ts:11
 
 #### Inherited from
 
-[ContextError][3].[stackTraceLimit][17]
+[ContextError][3].[stackTraceLimit][19]
 
 #### Defined in
 
@@ -159,27 +166,29 @@ Create .stack property on a target object
 
 #### Inherited from
 
-[ContextError][3].[captureStackTrace][18]
+[ContextError][3].[captureStackTrace][20]
 
 #### Defined in
 
 node_modules/@types/node/globals.d.ts:4
 
 [1]: ../README.md
-[2]: ../modules/monorepo_utils.md
-[3]: monorepo_utils.ContextError.md
-[4]: monorepo_utils.NotAGitRepositoryError.md#constructor
-[5]: monorepo_utils.NotAGitRepositoryError.md#message
-[6]: monorepo_utils.NotAGitRepositoryError.md#name
-[7]: monorepo_utils.NotAGitRepositoryError.md#stack
-[8]: monorepo_utils.NotAGitRepositoryError.md#preparestacktrace
-[9]: monorepo_utils.NotAGitRepositoryError.md#stacktracelimit
-[10]: monorepo_utils.NotAGitRepositoryError.md#capturestacktrace
-[11]: monorepo_utils.ContextError.md#constructor
-[12]: monorepo_utils.ContextError.md#message
-[13]: monorepo_utils.ContextError.md#name
-[14]: monorepo_utils.ContextError.md#stack
-[15]: https://v8.dev/docs/stack-trace-api#customizing-stack-traces
-[16]: monorepo_utils.ContextError.md#preparestacktrace
-[17]: monorepo_utils.ContextError.md#stacktracelimit
-[18]: monorepo_utils.ContextError.md#capturestacktrace
+[2]: ../modules/errors.md
+[3]: errors.ContextError.md
+[4]: errors.DuplicatePackageNameError.md
+[5]: errors.DuplicatePackageIdError.md
+[6]: errors.DuplicateWorkspaceError.md#constructor
+[7]: errors.DuplicateWorkspaceError.md#message
+[8]: errors.DuplicateWorkspaceError.md#name
+[9]: errors.DuplicateWorkspaceError.md#stack
+[10]: errors.DuplicateWorkspaceError.md#preparestacktrace
+[11]: errors.DuplicateWorkspaceError.md#stacktracelimit
+[12]: errors.DuplicateWorkspaceError.md#capturestacktrace
+[13]: errors.ContextError.md#constructor
+[14]: errors.ContextError.md#message
+[15]: errors.ContextError.md#name
+[16]: errors.ContextError.md#stack
+[17]: https://v8.dev/docs/stack-trace-api#customizing-stack-traces
+[18]: errors.ContextError.md#preparestacktrace
+[19]: errors.ContextError.md#stacktracelimit
+[20]: errors.ContextError.md#capturestacktrace
