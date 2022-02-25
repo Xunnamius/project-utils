@@ -36,19 +36,17 @@ describe('::packageRootToId', () => {
   test('translates a path to a package id', async () => {
     expect.hasAssertions();
 
-    expect(Utils.packageRootToId({ packageRoot: '/repo/path/packages/pkg-1' })).toBe(
-      'pkg-1'
-    );
+    expect(Utils.packageRootToId({ root: '/repo/path/packages/pkg-1' })).toBe('pkg-1');
   });
 });
 
 describe('::readPackageJson', () => {
-  test('accepts a package root and returns parsed package.json contents', async () => {
+  test('accepts a package directory and returns parsed package.json contents', async () => {
     expect.hasAssertions();
 
-    expect(
-      Utils.readPackageJson({ packageRoot: Fixtures.goodPackageJson.root })
-    ).toStrictEqual(Fixtures.goodPackageJson.json);
+    expect(Utils.readPackageJson({ root: Fixtures.goodPackageJson.root })).toStrictEqual(
+      Fixtures.goodPackageJson.json
+    );
   });
 
   test('returns cached result on subsequent calls', async () => {
@@ -56,11 +54,11 @@ describe('::readPackageJson', () => {
 
     const expectedJson = Fixtures.goodPackageJson.json;
     const actualJson = Utils.readPackageJson({
-      packageRoot: Fixtures.goodPackageJson.root
+      root: Fixtures.goodPackageJson.root
     });
 
     expect(actualJson).toStrictEqual(expectedJson);
-    expect(Utils.readPackageJson({ packageRoot: Fixtures.goodPackageJson.root })).toBe(
+    expect(Utils.readPackageJson({ root: Fixtures.goodPackageJson.root })).toBe(
       actualJson
     );
   });
@@ -68,7 +66,7 @@ describe('::readPackageJson', () => {
   test('throws a PackageJsonNotFoundError on readFileSync failure', async () => {
     expect.hasAssertions();
 
-    expect(() => Utils.readPackageJson({ packageRoot: '/does/not/exist' })).toThrowError(
+    expect(() => Utils.readPackageJson({ root: '/does/not/exist' })).toThrowError(
       Errors.PackageJsonNotFoundError
     );
   });
@@ -81,7 +79,7 @@ describe('::readPackageJson', () => {
       .mockImplementation(() => toss(new Error('fake JSON error')));
 
     expect(() =>
-      Utils.readPackageJson({ packageRoot: Fixtures.goodPackageJson.root })
+      Utils.readPackageJson({ root: Fixtures.goodPackageJson.root })
     ).toThrowError(Errors.BadPackageJsonError);
   });
 });
@@ -129,7 +127,7 @@ describe('::getWorkspacePackages', () => {
     checkForExpectedPackages(result.packages, 'goodMonorepo');
   });
 
-  test('returns expected packages, packages.unnamed, cwdPackage when cwd is a package root', async () => {
+  test('returns expected packages, packages.unnamed, cwdPackage when cwd is a sub-root', async () => {
     expect.hasAssertions();
 
     const result = Utils.getWorkspacePackages({
@@ -141,7 +139,7 @@ describe('::getWorkspacePackages', () => {
     checkForExpectedPackages(result.packages, 'goodMonorepo');
   });
 
-  test('returns expected packages, packages.unnamed, cwdPackage when cwd is under the project root but not under a package root', async () => {
+  test('returns expected packages, packages.unnamed, cwdPackage when cwd is under the project root but not under a sub-root', async () => {
     expect.hasAssertions();
 
     const result = Utils.getWorkspacePackages({
@@ -153,7 +151,7 @@ describe('::getWorkspacePackages', () => {
     checkForExpectedPackages(result.packages, 'goodMonorepo');
   });
 
-  test('returns expected packages, packages.unnamed, cwdPackage when cwd is somewhere under a package root', async () => {
+  test('returns expected packages, packages.unnamed, cwdPackage when cwd is somewhere under a sub-root', async () => {
     expect.hasAssertions();
 
     const result = Utils.getWorkspacePackages({

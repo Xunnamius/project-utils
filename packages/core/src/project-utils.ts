@@ -40,8 +40,8 @@ export type RootPackage = {
   packages:
     | (Map<WorkspacePackageName, WorkspacePackage> & {
         /**
-         * A mapping of packages missing the `"name"` field in
-         * their respective package.json files to WorkspacePackage objects.
+         * A mapping of packages missing the `"name"` field in their respective
+         * package.json files to WorkspacePackage objects.
          */
         unnamed: Map<WorkspacePackageName, WorkspacePackage>;
         /**
@@ -85,8 +85,8 @@ export type RunContext = {
   project: RootPackage;
   /**
    * An object representing the current package (determined by cwd) in a
-   * monorepo context, or `null` in a polyrepo context or when cwd is not within
-   * any package root in a monorepo context.
+   * monorepo context, or `null` if in a polyrepo context or when cwd is not
+   * within any sub-root in a monorepo context.
    */
   package: WorkspacePackage | null;
 };
@@ -114,15 +114,15 @@ export type PolyrepoRunContext = RunContext & {
  * Determine the package-id of a package from its root directory path.
  */
 export function packageRootToId({
-  packageRoot
+  root
 }: {
   /**
    * The absolute path to the root directory of a package. Supplying a relative
    * path will lead to undefined behavior.
    */
-  packageRoot: string;
+  root: string;
 }) {
-  return basename(packageRoot);
+  return basename(root);
 }
 
 /**
@@ -137,20 +137,20 @@ export function clearPackageJsonCache() {
  * Read in and parse the contents of a package.json file, memoizing the result.
  */
 export function readPackageJson({
-  packageRoot
+  root
 }: {
   /**
    * The absolute path to the root directory of a package.
-   * `${packageRoot}/package.json` must exist. Supplying a relative path will
-   * lead to undefined behavior.
+   * `${root}/package.json` must exist. Supplying a relative path will lead to
+   * undefined behavior.
    */
-  packageRoot: string;
+  root: string;
 }) {
-  if (_packageJsonReadCache.has(packageRoot)) {
-    return _packageJsonReadCache.get(packageRoot) as PackageJson;
+  if (_packageJsonReadCache.has(root)) {
+    return _packageJsonReadCache.get(root) as PackageJson;
   }
 
-  const packageJsonPath = `${packageRoot}/package.json`;
+  const packageJsonPath = `${root}/package.json`;
   const rawJson = (() => {
     try {
       return readFile(packageJsonPath, 'utf-8');
@@ -161,7 +161,7 @@ export function readPackageJson({
 
   try {
     const json = JSON.parse(rawJson) as PackageJson;
-    _packageJsonReadCache.set(packageRoot, json);
+    _packageJsonReadCache.set(root, json);
     return json;
   } catch (e) {
     throw new BadPackageJsonError(packageJsonPath, e);
@@ -202,7 +202,7 @@ export function getWorkspacePackages(options: {
 
   let workspaces = (() => {
     try {
-      return readPackageJson({ packageRoot: projectRoot }).workspaces;
+      return readPackageJson({ root: projectRoot }).workspaces;
     } catch {
       return undefined;
     }
@@ -248,12 +248,12 @@ export function getWorkspacePackages(options: {
     // ? Ensure only directories are matched
     pattern = pattern.endsWith('/') ? pattern : `${pattern}/`;
 
-    for (const packageRoot of globSync(pattern, globOptions)) {
+    for (const root of globSync(pattern, globOptions)) {
       try {
         const workspacePackage = {
-          id: packageRootToId({ packageRoot }),
-          root: packageRoot,
-          json: readPackageJson({ packageRoot })
+          id: packageRootToId({ root }),
+          root,
+          json: readPackageJson({ root })
         } as WorkspacePackage & { id: NonNullable<WorkspacePackage['id']> };
 
         if (negate) {
@@ -292,7 +292,7 @@ export function getWorkspacePackages(options: {
         }
       } catch (e) {
         if (e instanceof PackageJsonNotFoundError) {
-          packages.broken.push(packageRoot);
+          packages.broken.push(root);
         } else {
           throw e;
         }
@@ -301,11 +301,11 @@ export function getWorkspacePackages(options: {
   }
 
   const cwdPackageRoot = dirname(findUp('package.json', { cwd }) as string);
-  const cwdPackageName = readPackageJson({ packageRoot: cwdPackageRoot }).name;
+  const cwdPackageName = readPackageJson({ root: cwdPackageRoot }).name;
 
   const cwdPackage =
     (cwdPackageName && packages.get(cwdPackageName)) ||
-    packages.unnamed.get(packageRootToId({ packageRoot: cwdPackageRoot })) ||
+    packages.unnamed.get(packageRootToId({ root: cwdPackageRoot })) ||
     null;
 
   return { packages, cwdPackage };
@@ -335,7 +335,7 @@ export function getRunContext(
     }
   })();
 
-  const rootJson = readPackageJson({ packageRoot: repoRoot });
+  const rootJson = readPackageJson({ root: repoRoot });
   const context = !!rootJson.workspaces ? 'monorepo' : 'polyrepo';
 
   if (context == 'monorepo') {
