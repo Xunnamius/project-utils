@@ -89,19 +89,18 @@ export async function runProjectLinter({
         if (e instanceof PackageJsonNotFoundError) {
           report('error', ErrorMessage.MissingFile(currentFile));
         } else if (e instanceof BadPackageJsonError) {
-          report('error', ErrorMessage.MissingFile(currentFile));
+          currentFile = e.packageJsonPath;
+          report('error', ErrorMessage.PackageJsonUnparsable(currentFile));
         } else if (e instanceof NotAGitRepositoryError) {
-          report('error', ErrorMessage.MissingFile(currentFile));
+          report('error', ErrorMessage.NotAGitRepository());
         } else if (e instanceof DuplicatePackageIdError) {
-          report('error', ErrorMessage.MissingFile(currentFile));
+          report('error', e.message[0].toUpperCase() + e.message.slice(1));
         } else if (e instanceof DuplicatePackageNameError) {
-          report('error', ErrorMessage.MissingFile(currentFile));
-        }
-
-        // TODO: add error reports for duplicate name/id and anything else
-        else {
+          report('error', e.message[0].toUpperCase() + e.message.slice(1));
+        } else {
           throw e;
         }
+
         return undefined;
       }
     })();
@@ -110,6 +109,7 @@ export async function runProjectLinter({
     // TODO: use browserslist to get earliest "maintained node versions" and
     // TODO: convert this into an or (||) list, e.g.:
     // TODO: ^12.20.0 || ^14.13.1 || >=16.0.0
+    // TODO: (project root and each package root)
 
     if (ctx !== undefined) {
       // ? These checks are performed UNLESS linting a monorepo package root

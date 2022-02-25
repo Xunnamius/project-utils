@@ -4,5 +4,6 @@ import * as Linters from '../src/linters';
 describe('::', () => {
   test('todo', async () => {
     expect.hasAssertions();
+    void Linters;
   });
 });
