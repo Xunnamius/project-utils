@@ -63,8 +63,7 @@ export function configureProgram(program?: Program): Context {
           'Absolute or relative paths that resolve to one or more directories ' +
           'containing source files, or to one or more source files themselves.',
         type: 'array',
-        default: ['./src'],
-        defaultDescription: '["./src"]'
+        default: ['./src']
       },
       mdPath: {
         describe:
