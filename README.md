@@ -313,21 +313,22 @@ See [`@projector-js/core`][35] for details.
 
 ## Terminology
 
+- **polyrepo**: a git repository containing a root `package.json` file with no
+  [`workspaces`][56] field. A polyrepo is the opposite of a _monorepo_.
+- **monorepo**: a git repository containing multiple packages/workspaces, each
+  listed under the [`workspaces`][56] field in the root `package.json`. A
+  monorepo is the opposite of a _polyrepo_.
 - **project root**: the top-level directory of a git repository and Projector
   project; it contains the root `package.json` file. This directory is also
   referred to as: "repository root," `rootDir` (always as an absolute path),
   "root package" (in [npm documentation][56]), "monorepo/polyrepo/repo root," or
-  simply "root".
-- **monorepo**: a git repository containing multiple packages/workspaces, each
-  listed under the [`workspaces`][56] key in the root `package.json`. A monorepo
-  is the opposite of a _polyrepo_.
-- **package**/**package root**: synonymous with a [workspace][56] in a monorepo.
-  It contains a package/workspace's `package.json` file. The basename of this
-  directory (e.g. `c` in `/a/b/c/`) is also referred to as the `package-id`,
-  which may or may not match the `name` in the package's `package.json` file.
-  Package roots are _never_ referred to as "root".
-- **polyrepo**: a git repository containing a root `package.json` file with no
-  [`workspaces`][56] key. A polyrepo is the opposite of a _monorepo_.
+  simply "root" (.e.g. "root `package.json`").
+- **package root**: synonymous with a [workspace][56] in a monorepo. It contains
+  a package/workspace's `package.json` file. The basename of this directory
+  (e.g. `c` in `/a/b/c/`) is also referred to as the `package-id`, which may or
+  may not match the `name` field in the package's `package.json` file. These
+  directories are also referred to as a "monorepo package" or simply "sub-root"
+  (.e.g. "sub-root `package.json`").
 - [**topological order**][81]: a sequence of packages where dependent packages
   always come before their dependencies—a so-called "package dependency order".
   Topological ordering ensures otherwise-concurrent tasks are performed at the
@@ -515,14 +516,14 @@ This tells us that:
   (`!`), and has untracked changes (`?`). See [the full list of status
   symbols][37].\
   ㅤ
-- The latest release of `pkg-1` is `1.1.2` (taken from `version` key).
+- The latest release of `pkg-1` is `1.1.2` (taken from `version` field).
 - If `projector publish` is run, the next released version of `pkg-1` will be
   `1.2.0`
 - [git status][36] reports the `packages/pkg-1` directory has deleted files
   (`✘`) and unstaged changes (`!`).\
   ㅤ
 - The latest release of `@my-namespace/pkg` is `3.0.1` (taken from `version`
-  key).
+  field).
 - If `projector publish` is run, no new release of `@my-namespace/pkg` will be
   made.
 - [git status][36] reports the `packages/pkg-2` directory has untracked changes
@@ -540,8 +541,8 @@ Next, we'll rename `pkg-1` to `@my-namespace/core`.
 $ projector rename -w pkg-1 --to-name @my-namespace/core --find-and-replace
 Monday, Nov 29, 2021, 12:03:01.981 PM PST
 [12:03:02.013 PM] [projector] › »  Renaming "pkg-1" (at packages/pkg-1) to "@my-namespace/core" (at packages/pkg-1)
-[12:03:02.040 PM] [projector] › ℹ  Update "name" key in packages/pkg-1/package.json
-[12:03:02.040 PM] [projector] › ℹ  Update "name" key in packages/pkg-1/package.json
+[12:03:02.040 PM] [projector] › ℹ  Update "name" field in packages/pkg-1/package.json
+[12:03:02.040 PM] [projector] › ℹ  Update "name" field in packages/pkg-1/package.json
 [12:03:02.059 PM] [projector] › ℹ  Find all strings matching /^pkg-1$/ and replace with "@my-namespace/core"
 [12:03:02.123 PM] [projector] [find-replace] › ℹ  2 replacements in README.md
 [12:03:02.248 PM] [projector] [find-replace] › ℹ  7 replacements in packages/pkg-1/README.md
@@ -764,7 +765,7 @@ Calling `projector list` with `--with-cross-deps` reveals _cross-dependencies_
 Since `projector publish` 1) publishes packages [concurrently where possible,
 but ultimately in topological order][75] and 2) synchronizes cross-dependency
 versions at publish time: as Projector published `@my-namespace/core` at version
-`1.2.0`, it automatically updated the `dependencies['@my-namespace/core']` key
+`1.2.0`, it automatically updated the `dependencies['@my-namespace/core']` field
 at `packages/pkg-2/package.json` from `"1.1.2"` to `"1.2.0"` and committed the
 change. Later, Projector published `@my-namespace/pkg` at version `3.0.2`, which
 included the updated cross-dependency. This is so-called "cross-dependency
@@ -800,7 +801,7 @@ All Projector projects require at least the following:
 
 - A `package.json` file at the root of the repository.
   - Projector assumes a project is a polyrepo if the root `package.json` file
-    does not contains a [`workspaces`][56] key.
+    does not contains a [`workspaces`][56] field.
 
 That's it. TypeScript, Babel, semantic-release, etc are all yours to setup as
 you please, or you can use a [tweakable pre-made configuration][49].
@@ -843,9 +844,9 @@ not install semantic-release and semantic-release-atam at the same time!**
 
 Monorepos additionally require the following:
 
-- A [`workspaces`][56] key in the root `package.json` file.
-  - A `package.json` file with at least a `name` key must exist at each package
-    root.
+- A [`workspaces`][56] field in the root `package.json` file.
+  - A `package.json` file with at least a `name` field must exist at each
+    package root.
 - [semantic-release-atam][2] installed (**and the original semantic-release not
   installed**).
   - semantic-release-atam is a drop-in replacement for semantic-release with
