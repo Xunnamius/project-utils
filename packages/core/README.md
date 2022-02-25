@@ -22,6 +22,8 @@
 
 <!-- TODO -->
 
+None of the exported functions are async. This is on purpose.
+
 Note that order matters, and that negated patterns only affect previously
 defined patterns and not future patterns. Given an example.
 
