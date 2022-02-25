@@ -2,9 +2,15 @@ import { run } from 'multiverse/run';
 import { ErrorMessage } from './errors';
 import stripAnsi from 'strip-ansi';
 import chalk from 'chalk';
-
 import { getRunContext } from '@projector-js/core/project-utils';
-import { PackageJsonNotFoundError } from '@projector-js/core/errors';
+
+import {
+  PackageJsonNotFoundError,
+  BadPackageJsonError,
+  NotAGitRepositoryError,
+  DuplicatePackageIdError,
+  DuplicatePackageNameError
+} from '@projector-js/core/errors';
 
 type UnifiedReturnType = Promise<{
   success: boolean;
@@ -12,9 +18,22 @@ type UnifiedReturnType = Promise<{
   summary: string;
 }>;
 
-// TODO: use regular expression to check for expected summary syntax (hide if no
-// TODO: match) and also to extract summary data (instead of all the splitting
-// TODO: and slicing)
+/**
+ * Accepts the `lastLine` of linter output and the result of `RegExp.exec` where
+ * the `errors` and `warning` capture groups have been defined and returns a
+ * normalized summary of the number of errors and warnings that occurred.
+ */
+function summarizeOutput(lastLine: string, lastLineMeta: ReturnType<RegExp['exec']>) {
+  return !lastLine
+    ? 'no issues'
+    : lastLineMeta?.groups?.errors || lastLineMeta?.groups?.warnings
+    ? `${lastLineMeta.groups.errors || 0} error${
+        parseInt(lastLineMeta.groups.errors) != 1 ? 's' : ''
+      }, ${lastLineMeta.groups.warnings || 0} warning${
+        parseInt(lastLineMeta.groups.warnings) != 1 ? 's' : ''
+      }`
+    : '1 error';
+}
 
 /**
  * Checks a project or package for structural correctness, adherence to standard
@@ -54,20 +73,23 @@ export async function runProjectLinter({
       } catch (e) {
         if (e instanceof PackageJsonNotFoundError) {
           report('error', ErrorMessage.MissingFile(currentFile));
-          return undefined;
+        } else if (e instanceof BadPackageJsonError) {
+          report('error', ErrorMessage.MissingFile(currentFile));
+        } else if (e instanceof NotAGitRepositoryError) {
+          report('error', ErrorMessage.MissingFile(currentFile));
+        } else if (e instanceof DuplicatePackageIdError) {
+          report('error', ErrorMessage.MissingFile(currentFile));
+        } else if (e instanceof DuplicatePackageNameError) {
+          report('error', ErrorMessage.MissingFile(currentFile));
         }
 
         // TODO: add error reports for duplicate name/id and anything else
-
-        throw e;
+        else {
+          throw e;
+        }
+        return undefined;
       }
     })();
-
-    report('error', 'fake error 1');
-    report('error', 'fake error 2');
-    report('warn', 'fake warning 1');
-    currentFile = `${rootDir}/fake-file.md`;
-    report('error', 'fake error 3');
 
     // ? These checks are performed across all contexts
     // TODO: use browserslist to get earliest "maintained node versions" and
@@ -133,16 +155,14 @@ export async function runTypescriptLinter({
     }
   );
 
-  const lastLine = tscOutput.all?.trimEnd().split('\n').slice(-1)[0];
+  const lastLine = tscOutput.all?.trimEnd().split('\n').at(-1) || '';
+  const lastLineMeta =
+    /Found ((?<errors>\d+) errors?(, )?)?((?<warnings>\d+) warning)?/.exec(lastLine);
 
   return {
     success: tscOutput.code == 0,
     output: tscOutput.all,
-    summary: !lastLine
-      ? 'no issues'
-      : lastLine?.startsWith('Found')
-      ? lastLine.slice(6, -1).trim()
-      : '1 error'
+    summary: summarizeOutput(lastLine, lastLineMeta)
   };
 }
 
@@ -183,18 +203,21 @@ export async function runEslintLinter({
     { cwd: rootDir, all: true }
   );
 
+  const lastLine =
+    stripAnsi(eslintOutput.all?.trimEnd() || '')
+      .split('\n')
+      .filter(Boolean)
+      .at(-1) || '';
+
+  const lastLineMeta =
+    /problems? \(((?<errors>\d+) errors?(, )?)?((?<warnings>\d+) warning)?/.exec(
+      lastLine
+    );
+
   return {
     success: eslintOutput.code == 0,
     output: eslintOutput.all,
-    summary:
-      stripAnsi(eslintOutput.all?.trimEnd() || '')
-        .split('\n')
-        .filter(Boolean)
-        .slice(-1)[0]
-        ?.split('(')
-        .slice(-1)[0]
-        ?.slice(0, -1)
-        .trim() || 'no issues'
+    summary: summarizeOutput(lastLine, lastLineMeta)
   };
 }
 
@@ -256,14 +279,18 @@ export async function runRemarkLinter({
     { cwd: rootDir, all: true }
   );
 
+  const lastLine =
+    stripAnsi(remarkOutput.all?.trimEnd() || '')
+      .split('\n')
+      .filter(Boolean)
+      .at(-1) || '';
+
+  const lastLineMeta =
+    /((?<errors>\d+) errors?(,.*?)?)?((?<warnings>\d+) warning)?/g.exec(lastLine);
+
   return {
     success: remarkOutput.code == 0,
     output: remarkOutput.all,
-    summary:
-      stripAnsi(remarkOutput.all?.trimEnd() || '')
-        .split('\n')
-        .slice(-1)[0]
-        ?.replace(/[^a-zA-Z0-9\s]/g, '')
-        .trim() || 'no issues'
+    summary: summarizeOutput(lastLine, lastLineMeta)
   };
 }
