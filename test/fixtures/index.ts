@@ -20,6 +20,7 @@ export type Fixture = {
 export type FixtureName =
   | 'badMonorepoDuplicateId'
   | 'badMonorepoDuplicateName'
+  | 'badPolyrepoNoPackageJson'
   | 'goodMonorepo'
   | 'goodMonorepoDuplicateId'
   | 'goodMonorepoNegatedPaths'
@@ -96,6 +97,11 @@ createFixture({
 createFixture({
   fixtureName: 'badMonorepoDuplicateName',
   root: `bad-monorepo-duplicate-name`
+});
+
+createFixture({
+  fixtureName: 'badPolyrepoNoPackageJson',
+  root: `bad-polyrepo-no-package-json`
 });
 
 createFixture({
