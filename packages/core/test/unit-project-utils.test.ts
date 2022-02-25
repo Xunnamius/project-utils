@@ -1,9 +1,28 @@
 import * as Utils from 'pkgverse/core/src/project-utils';
 import * as Errors from 'pkgverse/core/src/errors';
-import { Fixtures } from 'testverse/fixtures';
+import { FixtureName, Fixtures } from 'testverse/fixtures';
 import { toss } from 'toss-expression';
 
 const spies = {} as Record<string, jest.SpyInstance>;
+
+const checkForExpectedPackages = (
+  result: Utils.RootPackage['packages'],
+  fixtureName: FixtureName
+) => {
+  const res = result as NonNullable<typeof result>;
+
+  expect(result).not.toBeNull();
+
+  expect(Array.from(res.entries())).toStrictEqual<[string, Utils.WorkspacePackage][]>(
+    Fixtures[fixtureName].namedPkgMapData
+  );
+
+  expect(Array.from(res.unnamed.entries())).toStrictEqual<
+    [string, Utils.WorkspacePackage][]
+  >(Fixtures[fixtureName].unnamedPkgMapData);
+
+  expect(res.broken).toStrictEqual(Fixtures[fixtureName].brokenPkgRoots);
+};
 
 beforeEach(() => {
   spies.mockedProcessCwd = jest
@@ -107,14 +126,7 @@ describe('::getWorkspacePackages', () => {
     });
 
     expect(result.cwdPackage).toBeNull();
-
-    expect(Array.from(result.packages.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepo.namedPkgMapData);
-
-    expect(Array.from(result.packages.unnamed.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepo.unnamedPkgMapData);
+    checkForExpectedPackages(result.packages, 'goodMonorepo');
   });
 
   test('returns expected packages, packages.unnamed, cwdPackage when cwd is a package root', async () => {
@@ -126,14 +138,7 @@ describe('::getWorkspacePackages', () => {
     });
 
     expect(result.cwdPackage).toStrictEqual(Fixtures.goodMonorepo.namedPkgMapData[0][1]);
-
-    expect(Array.from(result.packages.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepo.namedPkgMapData);
-
-    expect(Array.from(result.packages.unnamed.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepo.unnamedPkgMapData);
+    checkForExpectedPackages(result.packages, 'goodMonorepo');
   });
 
   test('returns expected packages, packages.unnamed, cwdPackage when cwd is under the project root but not under a package root', async () => {
@@ -145,14 +150,7 @@ describe('::getWorkspacePackages', () => {
     });
 
     expect(result.cwdPackage).toBeNull();
-
-    expect(Array.from(result.packages.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepo.namedPkgMapData);
-
-    expect(Array.from(result.packages.unnamed.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepo.unnamedPkgMapData);
+    checkForExpectedPackages(result.packages, 'goodMonorepo');
   });
 
   test('returns expected packages, packages.unnamed, cwdPackage when cwd is somewhere under a package root', async () => {
@@ -164,14 +162,7 @@ describe('::getWorkspacePackages', () => {
     });
 
     expect(result.cwdPackage).toStrictEqual(Fixtures.goodMonorepo.namedPkgMapData[0][1]);
-
-    expect(Array.from(result.packages.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepo.namedPkgMapData);
-
-    expect(Array.from(result.packages.unnamed.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepo.unnamedPkgMapData);
+    checkForExpectedPackages(result.packages, 'goodMonorepo');
   });
 
   test('works with simple workspace paths', async () => {
@@ -185,14 +176,7 @@ describe('::getWorkspacePackages', () => {
     expect(result.cwdPackage).toStrictEqual(
       Fixtures.goodMonorepoSimplePaths.namedPkgMapData[0][1]
     );
-
-    expect(Array.from(result.packages.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepoSimplePaths.namedPkgMapData);
-
-    expect(Array.from(result.packages.unnamed.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepoSimplePaths.unnamedPkgMapData);
+    checkForExpectedPackages(result.packages, 'goodMonorepoSimplePaths');
   });
 
   test('treats absolute workspace paths as if they were relative', async () => {
@@ -204,14 +188,7 @@ describe('::getWorkspacePackages', () => {
     });
 
     expect(result.cwdPackage).toBeNull();
-
-    expect(Array.from(result.packages.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepoWeirdAbsolute.namedPkgMapData);
-
-    expect(Array.from(result.packages.unnamed.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepoWeirdAbsolute.unnamedPkgMapData);
+    checkForExpectedPackages(result.packages, 'goodMonorepoWeirdAbsolute');
   });
 
   test('works with workspace paths using Windows-style path separators', async () => {
@@ -226,13 +203,7 @@ describe('::getWorkspacePackages', () => {
       Fixtures.goodMonorepoWindows.namedPkgMapData[0][1]
     );
 
-    expect(Array.from(result.packages.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepoWindows.namedPkgMapData);
-
-    expect(Array.from(result.packages.unnamed.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepoWindows.unnamedPkgMapData);
+    checkForExpectedPackages(result.packages, 'goodMonorepoWindows');
   });
 
   test('all workspace paths are normalized to ignore non-directories', async () => {
@@ -244,14 +215,7 @@ describe('::getWorkspacePackages', () => {
     });
 
     expect(result.cwdPackage).toBeNull();
-
-    expect(Array.from(result.packages.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepoWeirdBoneless.namedPkgMapData);
-
-    expect(Array.from(result.packages.unnamed.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepoWeirdBoneless.unnamedPkgMapData);
+    checkForExpectedPackages(result.packages, 'goodMonorepoWeirdBoneless');
   });
 
   test('does not return duplicates when dealing with overlapping workspace glob paths, some negated', async () => {
@@ -263,14 +227,7 @@ describe('::getWorkspacePackages', () => {
     });
 
     expect(result.cwdPackage).toBeNull();
-
-    expect(Array.from(result.packages.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepoWeirdOverlap.namedPkgMapData);
-
-    expect(Array.from(result.packages.unnamed.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepoWeirdOverlap.unnamedPkgMapData);
+    checkForExpectedPackages(result.packages, 'goodMonorepoWeirdOverlap');
   });
 
   test('works with nthly-negated workspace paths where order matters', async () => {
@@ -282,17 +239,10 @@ describe('::getWorkspacePackages', () => {
     });
 
     expect(result.cwdPackage).toBeNull();
-
-    expect(Array.from(result.packages.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepoNegatedPaths.namedPkgMapData);
-
-    expect(Array.from(result.packages.unnamed.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepoNegatedPaths.unnamedPkgMapData);
+    checkForExpectedPackages(result.packages, 'goodMonorepoNegatedPaths');
   });
 
-  test('ignores explicit paths that lack a package.json file', async () => {
+  test('workspace directories without a package.json file are classified "broken"', async () => {
     expect.hasAssertions();
 
     const result = Utils.getWorkspacePackages({
@@ -301,14 +251,7 @@ describe('::getWorkspacePackages', () => {
     });
 
     expect(result.cwdPackage).toBeNull();
-
-    expect(Array.from(result.packages.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepoNonPackageDir.namedPkgMapData);
-
-    expect(Array.from(result.packages.unnamed.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepoNonPackageDir.unnamedPkgMapData);
+    checkForExpectedPackages(result.packages, 'goodMonorepoNonPackageDir');
   });
 
   test('throws a DuplicatePackageNameError when two packages have the same "name" field in package.json', async () => {
@@ -336,14 +279,7 @@ describe('::getWorkspacePackages', () => {
     });
 
     expect(result.cwdPackage).toBeNull();
-
-    expect(Array.from(result.packages.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepoDuplicateId.namedPkgMapData);
-
-    expect(Array.from(result.packages.unnamed.entries())).toStrictEqual<
-      [string, Utils.WorkspacePackage][]
-    >(Fixtures.goodMonorepoDuplicateId.unnamedPkgMapData);
+    checkForExpectedPackages(result.packages, 'goodMonorepoDuplicateId');
   });
 });
 
@@ -430,21 +366,12 @@ describe('::getRunContext', () => {
   test('project.packages is populated with correct WorkspacePackage objects in monorepo context', async () => {
     expect.hasAssertions();
 
-    expect(
-      Array.from(
-        Utils.getRunContext({
-          cwd: Fixtures.goodMonorepo.root
-        }).project.packages?.entries() as unknown as unknown[]
-      )
-    ).toStrictEqual(Fixtures.goodMonorepo.namedPkgMapData);
-
-    expect(
-      Array.from(
-        Utils.getRunContext({
-          cwd: Fixtures.goodMonorepo.root
-        }).project.packages?.unnamed.entries() as unknown as unknown[]
-      )
-    ).toStrictEqual(Fixtures.goodMonorepo.unnamedPkgMapData);
+    checkForExpectedPackages(
+      Utils.getRunContext({
+        cwd: Fixtures.goodMonorepo.root
+      }).project.packages,
+      'goodMonorepo'
+    );
   });
 
   test('project.packages is null when in polyrepo context', async () => {

@@ -18,6 +18,7 @@ import type { IOptions as GlobOptions } from 'glob';
 const _packageJsonReadCache = new Map<string, PackageJson>();
 
 export type WorkspacePackageName = string;
+export type AbsolutePath = string;
 
 /**
  * An object representing the root or "top-level" package in a monorepo or
@@ -43,6 +44,11 @@ export type RootPackage = {
          * their respective package.json files to WorkspacePackage objects.
          */
         unnamed: Map<WorkspacePackageName, WorkspacePackage>;
+        /**
+         * An array of "broken" pseudo-package directories that are matching
+         * workspace paths but are missing a package.json file.
+         */
+        broken: AbsolutePath[];
       })
     | null;
 };
@@ -220,7 +226,8 @@ export function getWorkspacePackages(options: {
   };
 
   const packages = new Map() as NonNullable<RootPackage['packages']>;
-  packages.unnamed = new Map() as NonNullable<RootPackage['packages']>['unnamed'];
+  packages.unnamed = new Map();
+  packages.broken = [];
 
   for (let pattern of workspaces) {
     const excl = pattern.match(/^!+/);
@@ -284,7 +291,9 @@ export function getWorkspacePackages(options: {
           }
         }
       } catch (e) {
-        if (!(e instanceof PackageJsonNotFoundError)) {
+        if (e instanceof PackageJsonNotFoundError) {
+          packages.broken.push(packageRoot);
+        } else {
           throw e;
         }
       }
