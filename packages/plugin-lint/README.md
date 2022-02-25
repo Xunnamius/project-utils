@@ -58,7 +58,7 @@ ESLint, the following checks are performed:
   that do not exist
 - ⚠️ Warns when missing `tsconfig.json`, `tsconfig.docs.json`,
   `tsconfig.eslint.json`, `tsconfig.lint.json`, or `tsconfig.types.json` files
-  - When linting a [monorepo package root][12], only `tsconfig.docs.json`,
+  - When linting a [monorepo sub-root][12], only `tsconfig.docs.json`,
     `tsconfig.lint.json`, and `tsconfig.types.json` are checked for existence
 - ⚠️ Warns when `version` is [experimental][5] (i.e. `<1.0.0`)
   - This INCLUDES the obsoleted "placeholder" version `0.0.0-development`
@@ -148,8 +148,8 @@ monorepo][12]:
   - Since the typical [root package of a monorepo][12] is only encountered in
     development, any dependencies should always be `devDependencies`
   - If a `next.config.js` file exists, this check is skipped
-- All valid [package roots][12] defined in the `package.json` `workspaces` field
-  are recursively linted
+- All valid [sub-roots][12] defined in the `package.json` `workspaces` field are
+  recursively linted
 
 These additional checks are performed only if linting a [monorepo package
 root][12]:

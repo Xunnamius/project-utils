@@ -16,7 +16,7 @@ module.exports = {
   // debugString: true, // false is treated the same as null/commented out
   // ? Or you can type out a custom debug namespace string instead, e.g.:
   // debugString: '@your-namespace/some-package:*',
-  // ? This key can only appear in local pipeline config and not global.
+  // ? This field can only appear in local pipeline config and not global.
   // ? See also: https://www.npmjs.com/package/debug#wildcards
   // ? For even more debugging tools, see: https://bit.ly/2R6NAdZ
   //

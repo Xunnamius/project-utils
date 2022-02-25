@@ -78,7 +78,7 @@ export default function main(options?: Options): Record<string, unknown> {
         '@babel/plugin-proposal-nullish-coalescing-operator',
         '@babel/plugin-transform-typescript'
       ],
-      // ? Sub-keys under the "env" config key will augment the above
+      // ? Sub-keys under the "env" config field will augment the above
       // ? configuration depending on the value of NODE_ENV and friends. Default
       // ? is: development
       env: {

@@ -34,26 +34,26 @@ export const ErrorMessage = {
   PackageJsonDuplicateDependency: (dep: string) =>
     `The "${dep}" package appears in both "dependencies" and "devDependencies" in package.json`,
   PackageJsonMissingValue: (key: string, value: string) =>
-    `The "${key}" key in package.json does not include value "${value}"`,
+    `The "${key}" field in package.json does not include value "${value}"`,
   PackageJsonMissingEntryPoint: (entryPoint: string) =>
     `The "exports['${entryPoint}']" entry point is missing in package.json`,
   CommitNeedsFixup: (sha: string) =>
     `Commit "${sha}" contains "fixup" or "mergeme" in its subject and should be squashed/merged`,
   PackageJsonExperimentalVersion: () =>
-    `The "version" key in package.json contains an experimental semver (e.g. 0.x.y)`,
+    `The "version" field in package.json contains an experimental semver (e.g. 0.x.y)`,
   PackageJsonBadEntryPoint: (exportsPath: string[]) =>
     `The "${ObjectPath.stringify([
       'exports',
       ...exportsPath
     ])}" entry point references a non-existent file in package.json`,
   PackageJsonBadEngine: (ltsVersion: string) =>
-    `The "engines.node" key in package.json should reference the earliest maintenance version (i.e. ">=${ltsVersion}")`,
+    `The "engines.node" field in package.json should reference the earliest maintenance version (i.e. ">=${ltsVersion}")`,
   PackageJsonPinnedDependency: (dep: string) =>
     `The "${dep}" package is pinned in package.json`,
   PackageJsonTaggedDependency: (dep: string) =>
     `The "${dep}" package is using a dist-tag instead of a semver in package.json`,
   PackageJsonBadConfigDocsEntry: () =>
-    `The "config.docs.entry" key in package.json references a non-existent file`,
+    `The "config.docs.entry" field in package.json references a non-existent file`,
   MarkdownMissingTopmatter: (id: string, fileName: string) =>
     `The "${id}" topmatter is missing in ${fileName}`,
   MarkdownBadTopmatter: (id: string, fileName: string) =>

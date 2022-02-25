@@ -216,7 +216,7 @@ const availableConfigs = [
       additionalExternals: [
         // ? Externalize all relative (local) imports
         // ! WARNING: all local imports must have accompanying CJS bundles and
-        // ! corresponding entries under the package.json `exports` key!
+        // ! corresponding entries under the package.json `exports` field!
         ({ request, contextInfo: { issuer } }, cb) => {
           if (issuer == `${cwd}/src/cli.ts` && request.startsWith('./')) {
             cb(

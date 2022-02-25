@@ -37,7 +37,7 @@ glob `-w` has a specific priority order
 `--parallel` vs `--concurrency 1` (or N) vs `--sequential`
 
 confirm when calling `create` within a directory that contains a `package.json`
-without `workspaces` key. `--monorepo` (and all other options) settable from
+without `workspaces` field. `--monorepo` (and all other options) settable from
 CLI; still, ask via inquirer too.
 
 tests and some other commands are done from root
