@@ -209,9 +209,9 @@ node_modules/@types/node/globals.d.ts:4
 [11]: errors.PackageJsonNotFoundError.md#capturestacktrace
 [12]: errors.ContextError.md#constructor
 [13]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/errors.ts#L57
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/errors.ts#L57
 [14]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/errors.ts#L62
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/errors.ts#L62
 [15]: errors.ContextError.md#message
 [16]: errors.ContextError.md#name
 [17]: errors.ContextError.md#stack

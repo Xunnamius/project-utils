@@ -232,9 +232,9 @@ node_modules/@types/node/globals.d.ts:4
 [13]: errors.DuplicatePackageNameError.md#capturestacktrace
 [14]: errors.DuplicateWorkspaceError.md#constructor
 [15]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/errors.ts#L108
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/errors.ts#L108
 [16]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/errors.ts#L113
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/errors.ts#L113
 [17]: errors.DuplicateWorkspaceError.md#message
 [18]: errors.DuplicateWorkspaceError.md#name
 [19]: errors.DuplicateWorkspaceError.md#stack

@@ -194,9 +194,9 @@ node_modules/@types/node/globals.d.ts:4
 [10]: errors.NotAMonorepoError.md#capturestacktrace
 [11]: errors.ContextError.md#constructor
 [12]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/errors.ts#L35
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/errors.ts#L35
 [13]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/errors.ts#L40
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/errors.ts#L40
 [14]: errors.ContextError.md#message
 [15]: errors.ContextError.md#name
 [16]: errors.ContextError.md#stack

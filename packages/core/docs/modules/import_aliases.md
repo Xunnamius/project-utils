@@ -187,17 +187,17 @@ See also: [https://webpack.js.org/configuration/resolve/#resolvealias][15]
 [7]: import_aliases.md#getwebpackaliases
 [8]: https://www.npmjs.com/package/eslint-import-resolver-alias
 [9]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/import-aliases.ts#L133
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/import-aliases.ts#L133
 [10]:
   https://jestjs.io/docs/configuration#modulenamemapper-objectstring-string--arraystring
 [11]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/import-aliases.ts#L180
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/import-aliases.ts#L180
 [12]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/import-aliases.ts#L52
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/import-aliases.ts#L52
 [13]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/import-aliases.ts#L37
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/import-aliases.ts#L37
 [14]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/import-aliases.ts#L215
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/import-aliases.ts#L215
 [15]: https://webpack.js.org/configuration/resolve/#resolvealias
 [16]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/import-aliases.ts#L146
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/import-aliases.ts#L146

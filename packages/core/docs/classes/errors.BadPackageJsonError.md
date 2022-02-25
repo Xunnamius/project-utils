@@ -219,9 +219,9 @@ node_modules/@types/node/globals.d.ts:4
 [12]: errors.BadPackageJsonError.md#capturestacktrace
 [13]: errors.ContextError.md#constructor
 [14]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/errors.ts#L76
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/errors.ts#L76
 [15]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/errors.ts#L81
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/errors.ts#L81
 [16]: errors.ContextError.md#message
 [17]: errors.ContextError.md#name
 [18]: errors.ContextError.md#stack

@@ -6,47 +6,58 @@
 
 ### Type aliases
 
-- [MonorepoRunContext][2]
-- [PolyrepoRunContext][3]
-- [RootPackage][4]
-- [RunContext][5]
-- [WorkspacePackage][6]
-- [WorkspacePackageName][7]
+- [AbsolutePath][2]
+- [MonorepoRunContext][3]
+- [PolyrepoRunContext][4]
+- [RootPackage][5]
+- [RunContext][6]
+- [WorkspacePackage][7]
+- [WorkspacePackageName][8]
 
 ### Functions
 
-- [clearPackageJsonCache][8]
-- [getRunContext][9]
-- [getWorkspacePackages][10]
-- [packageRootToId][11]
-- [readPackageJson][12]
+- [clearPackageJsonCache][9]
+- [getRunContext][10]
+- [getWorkspacePackages][11]
+- [packageRootToId][12]
+- [readPackageJson][13]
 
 ## Type aliases
 
+### AbsolutePath
+
+Ƭ **AbsolutePath**: `string`
+
+#### Defined in
+
+[packages/core/src/project-utils.ts:21][14]
+
+---
+
 ### MonorepoRunContext
 
-Ƭ **MonorepoRunContext**: [`RunContext`][5] & { `context`: `"monorepo"` ;
-`project`: [`RootPackage`][4] & { `packages`:
-`NonNullable`<[`RootPackage`][4]\[`"packages"`]> } }
+Ƭ **MonorepoRunContext**: [`RunContext`][6] & { `context`: `"monorepo"` ;
+`project`: [`RootPackage`][5] & { `packages`:
+`NonNullable`<[`RootPackage`][5]\[`"packages"`]> } }
 
 An object representing a monorepo runtime context.
 
 #### Defined in
 
-[packages/core/src/project-utils.ts:91][13]
+[packages/core/src/project-utils.ts:97][15]
 
 ---
 
 ### PolyrepoRunContext
 
-Ƭ **PolyrepoRunContext**: [`RunContext`][5] & { `context`: `"polyrepo"` ;
-`package`: `null` ; `project`: [`RootPackage`][4] & { `packages`: `null` } }
+Ƭ **PolyrepoRunContext**: [`RunContext`][6] & { `context`: `"polyrepo"` ;
+`package`: `null` ; `project`: [`RootPackage`][5] & { `packages`: `null` } }
 
 An object representing a polyrepo runtime context.
 
 #### Defined in
 
-[packages/core/src/project-utils.ts:101][14]
+[packages/core/src/project-utils.ts:107][16]
 
 ---
 
@@ -59,15 +70,15 @@ project.
 
 #### Type declaration
 
-| Name       | Type                                                                                                                                               | Description                                                                                   |
-| :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------- |
-| `json`     | `PackageJson`                                                                                                                                      | The contents of the root package's package.json file.                                         |
-| `packages` | `Map`<[`WorkspacePackageName`][7], [`WorkspacePackage`][6]> & { `unnamed`: `Map`<[`WorkspacePackageName`][7], [`WorkspacePackage`][6]> } \| `null` | A mapping of package names to WorkspacePackage objects in a monorepo or `null` in a polyrepo. |
-| `root`     | `string`                                                                                                                                           | The absolute path to the root directory of the entire project.                                |
+| Name       | Type                                                                                                                                                                                  | Description                                                                                   |
+| :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :-------------------------------------------------------------------------------------------- |
+| `json`     | `PackageJson`                                                                                                                                                                         | The contents of the root package's package.json file.                                         |
+| `packages` | `Map`<[`WorkspacePackageName`][8], [`WorkspacePackage`][7]> & { `broken`: [`AbsolutePath`][2]\[] ; `unnamed`: `Map`<[`WorkspacePackageName`][8], [`WorkspacePackage`][7]> } \| `null` | A mapping of package names to WorkspacePackage objects in a monorepo or `null` in a polyrepo. |
+| `root`     | `string`                                                                                                                                                                              | The absolute path to the root directory of the entire project.                                |
 
 #### Defined in
 
-[packages/core/src/project-utils.ts:26][15]
+[packages/core/src/project-utils.ts:27][17]
 
 ---
 
@@ -82,12 +93,12 @@ An object representing a runtime context.
 | Name      | Type                              | Description                                                                                                                                                                             |
 | :-------- | :-------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `context` | `"monorepo"` \| `"polyrepo"`      | Whether node is executing in a monorepo or a polyrepo context.                                                                                                                          |
-| `package` | [`WorkspacePackage`][6] \| `null` | An object representing the current package (determined by cwd) in a monorepo context, or `null` in a polyrepo context or when cwd is not within any package root in a monorepo context. |
-| `project` | [`RootPackage`][4]                | Repository root package data.                                                                                                                                                           |
+| `package` | [`WorkspacePackage`][7] \| `null` | An object representing the current package (determined by cwd) in a monorepo context, or `null` in a polyrepo context or when cwd is not within any package root in a monorepo context. |
+| `project` | [`RootPackage`][5]                | Repository root package data.                                                                                                                                                           |
 
 #### Defined in
 
-[packages/core/src/project-utils.ts:71][16]
+[packages/core/src/project-utils.ts:77][18]
 
 ---
 
@@ -107,7 +118,7 @@ An object representing a package in a monorepo project.
 
 #### Defined in
 
-[packages/core/src/project-utils.ts:53][17]
+[packages/core/src/project-utils.ts:59][19]
 
 ---
 
@@ -117,7 +128,7 @@ An object representing a package in a monorepo project.
 
 #### Defined in
 
-[packages/core/src/project-utils.ts:20][18]
+[packages/core/src/project-utils.ts:20][20]
 
 ## Functions
 
@@ -134,14 +145,14 @@ useful for testing purposes.
 
 #### Defined in
 
-[packages/core/src/project-utils.ts:126][19]
+[packages/core/src/project-utils.ts:132][21]
 
 ---
 
 ### getRunContext
 
-▸ **getRunContext**(`options?`): [`MonorepoRunContext`][2] |
-[`PolyrepoRunContext`][3]
+▸ **getRunContext**(`options?`): [`MonorepoRunContext`][3] |
+[`PolyrepoRunContext`][4]
 
 Returns information about the project structure at the current working
 directory.
@@ -155,11 +166,11 @@ directory.
 
 #### Returns
 
-[`MonorepoRunContext`][2] | [`PolyrepoRunContext`][3]
+[`MonorepoRunContext`][3] | [`PolyrepoRunContext`][4]
 
 #### Defined in
 
-[packages/core/src/project-utils.ts:309][20]
+[packages/core/src/project-utils.ts:318][22]
 
 ---
 
@@ -183,14 +194,14 @@ workspace information.
 
 `Object`
 
-| Name         | Type                                                                                               |
-| :----------- | :------------------------------------------------------------------------------------------------- |
-| `cwdPackage` | `null` \| [`WorkspacePackage`][6]                                                                  |
-| `packages`   | `Map`<`string`, [`WorkspacePackage`][6]> & { `unnamed`: `Map`<`string`, [`WorkspacePackage`][6]> } |
+| Name         | Type                                                                                                                       |
+| :----------- | :------------------------------------------------------------------------------------------------------------------------- |
+| `cwdPackage` | `null` \| [`WorkspacePackage`][7]                                                                                          |
+| `packages`   | `Map`<`string`, [`WorkspacePackage`][7]> & { `broken`: `string`\[] ; `unnamed`: `Map`<`string`, [`WorkspacePackage`][7]> } |
 
 #### Defined in
 
-[packages/core/src/project-utils.ts:169][21]
+[packages/core/src/project-utils.ts:175][23]
 
 ---
 
@@ -213,7 +224,7 @@ Determine the package-id of a package from its root directory path.
 
 #### Defined in
 
-[packages/core/src/project-utils.ts:110][22]
+[packages/core/src/project-utils.ts:116][24]
 
 ---
 
@@ -236,39 +247,42 @@ Read in and parse the contents of a package.json file, memoizing the result.
 
 #### Defined in
 
-[packages/core/src/project-utils.ts:133][23]
+[packages/core/src/project-utils.ts:139][25]
 
 [1]: ../README.md
-[2]: project_utils.md#monoreporuncontext
-[3]: project_utils.md#polyreporuncontext
-[4]: project_utils.md#rootpackage
-[5]: project_utils.md#runcontext
-[6]: project_utils.md#workspacepackage
-[7]: project_utils.md#workspacepackagename
-[8]: project_utils.md#clearpackagejsoncache
-[9]: project_utils.md#getruncontext
-[10]: project_utils.md#getworkspacepackages
-[11]: project_utils.md#packageroottoid
-[12]: project_utils.md#readpackagejson
-[13]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L91
+[2]: project_utils.md#absolutepath
+[3]: project_utils.md#monoreporuncontext
+[4]: project_utils.md#polyreporuncontext
+[5]: project_utils.md#rootpackage
+[6]: project_utils.md#runcontext
+[7]: project_utils.md#workspacepackage
+[8]: project_utils.md#workspacepackagename
+[9]: project_utils.md#clearpackagejsoncache
+[10]: project_utils.md#getruncontext
+[11]: project_utils.md#getworkspacepackages
+[12]: project_utils.md#packageroottoid
+[13]: project_utils.md#readpackagejson
 [14]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L101
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/project-utils.ts#L21
 [15]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L26
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/project-utils.ts#L97
 [16]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L71
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/project-utils.ts#L107
 [17]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L53
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/project-utils.ts#L27
 [18]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L20
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/project-utils.ts#L77
 [19]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L126
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/project-utils.ts#L59
 [20]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L309
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/project-utils.ts#L20
 [21]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L169
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/project-utils.ts#L132
 [22]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L110
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/project-utils.ts#L318
 [23]:
-  https://github.com/Xunnamius/projector/blob/03441d9/packages/core/src/project-utils.ts#L133
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/project-utils.ts#L175
+[24]:
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/project-utils.ts#L116
+[25]:
+  https://github.com/Xunnamius/projector/blob/874a1da/packages/core/src/project-utils.ts#L139
