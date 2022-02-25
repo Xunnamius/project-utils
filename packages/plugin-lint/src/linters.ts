@@ -21,8 +21,8 @@ type UnifiedReturnType = Promise<{
 /**
  * Filters out empty and debug lines from linter output.
  *
- * Until something is done about https://github.com/nodejs/node/issues/34799,
- * we unfortunately have to remove the annoying debugging lines manually...
+ * Until something is done about https://github.com/nodejs/node/issues/34799, we
+ * unfortunately have to remove the annoying debugging lines manually...
  */
 const ignoreEmptyAndDebugLines = (line: string) => {
   return (
@@ -37,7 +37,7 @@ const ignoreEmptyAndDebugLines = (line: string) => {
  * the `errors` and `warning` capture groups have been defined and returns a
  * normalized summary of the number of errors and warnings that occurred.
  */
-function summarizeOutput(lastLine: string, lastLineMeta: ReturnType<RegExp['exec']>) {
+const summarizeOutput = (lastLine: string, lastLineMeta: ReturnType<RegExp['exec']>) => {
   const errors = parseInt(lastLineMeta?.groups?.errors || '0');
   const warnings = parseInt(lastLineMeta?.groups?.warnings || '0');
 
@@ -48,7 +48,7 @@ function summarizeOutput(lastLine: string, lastLineMeta: ReturnType<RegExp['exec
         warnings != 1 ? 's' : ''
       }`
     : '1 error, 0 warnings';
-}
+};
 
 /**
  * Checks a project or package for structural correctness, adherence to standard
@@ -59,7 +59,7 @@ export async function runProjectLinter({
   rootDir
 }: {
   /**
-   * The project or package root directory. Must contain a package.json file.
+   * The project or a package root directory. Must contain a package.json file.
    */
   rootDir: string;
 }): UnifiedReturnType {
@@ -105,22 +105,23 @@ export async function runProjectLinter({
       }
     })();
 
-    // ? These checks are performed across all contexts
-    // TODO: use browserslist to get earliest "maintained node versions" and
-    // TODO: convert this into an or (||) list, e.g.:
-    // TODO: ^12.20.0 || ^14.13.1 || >=16.0.0
-    // TODO: (project root and each package root)
+    // ? These checks are performed across all contexts TODO: use browserslist
+    // to get earliest "maintained node versions" and TODO: convert this into an
+    // or (||) list, e.g.: TODO: ^12.20.0 || ^14.13.1 || >=16.0.0 TODO: (project
+    // root and each package root)
+
+    // TODO: checks should be async
 
     if (ctx !== undefined) {
-      // ? These checks are performed UNLESS linting a monorepo package root
+      // ? These checks are performed UNLESS linting a sub-root
       if (ctx.context == 'polyrepo' || ctx.package) {
       }
 
       if (ctx.context == 'monorepo') {
-        // ? These checks are performed ONLY IF linting a monorepo project root
+        // ? These checks are performed ONLY IF linting a monorepo root
         if (!ctx.package) {
         }
-        // ? These checks are performed ONLY IF linting a monorepo package root
+        // ? These checks are performed ONLY IF linting a sub-root
         else {
         }
       }
@@ -138,7 +139,9 @@ export async function runProjectLinter({
       ),
       summary:
         errorCount + warnCount
-          ? `${errorCount} errors, ${warnCount} warnings`
+          ? `${errorCount} error${errorCount != 1 ? 's' : ''}, ${warnCount} warning${
+              warnCount != 1 ? 's' : ''
+            }`
           : 'no issues'
     };
   } catch (e) {
@@ -299,8 +302,8 @@ export async function runRemarkLinter({
       'lint-no-unused-definitions',
       '--use',
       'validate-links',
-      // ? We specify the paths twice here because, without more than one .md
-      // ? file specified, remark will shit all over stdout for whatever reason.
+      // ? We specify the paths twice here because, without more than one .md ?
+      // file specified, remark will shit all over stdout for whatever reason.
       ...markdownPaths,
       ...markdownPaths
     ],
