@@ -162,10 +162,8 @@ root][12]:
   - These should be located in the project root's `package.json` file instead
 
 > † This check is performed using [Espree][16] AST static analysis. Dynamic
-> imports are not checked.
->
-> ‡ This check is performed using [mdast-util-from-markdown][17] AST static
-> analysis.
+> imports are not checked.\
+> ‡ This check is performed using [mdast-util-from-markdown][17] AST static analysis.
 
 ## Install
 
