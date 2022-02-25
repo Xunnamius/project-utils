@@ -11,7 +11,6 @@ export type Fixture = {
 export type FixtureName =
   | 'badMonorepoDuplicateId'
   | 'badMonorepoDuplicateName'
-  | 'badPackageJson'
   | 'goodMonorepo'
   | 'goodMonorepoDuplicateId'
   | 'goodMonorepoNegatedPaths'
@@ -34,12 +33,6 @@ export const Fixtures: Record<FixtureName, Fixture> = {
   },
   badMonorepoDuplicateName: {
     root: `${__dirname}/bad-monorepo-duplicate-name`,
-    json: undefined,
-    namedPkgMapData: [],
-    unnamedPkgMapData: []
-  },
-  badPackageJson: {
-    root: `${__dirname}/bad-package-json`,
     json: undefined,
     namedPkgMapData: [],
     unnamedPkgMapData: []

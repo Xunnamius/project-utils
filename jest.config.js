@@ -26,7 +26,5 @@ module.exports = {
     'lib/**/*.ts?(x)',
     'external-scripts/**/*.ts?(x)',
     'packages/*/src/**/*.ts?(x)'
-  ],
-  // ? Make sure jest-haste-map doesn't try to parse and cache fixtures
-  modulePathIgnorePatterns: ['<rootDir>/test/fixtures']
+  ]
 };

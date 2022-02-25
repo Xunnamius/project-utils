@@ -1,6 +1,7 @@
 import * as Utils from 'pkgverse/core/src/project-utils';
 import * as Errors from 'pkgverse/core/src/errors';
 import { Fixtures } from 'testverse/fixtures';
+import { toss } from 'toss-expression';
 
 const spies = {} as Record<string, jest.SpyInstance>;
 
@@ -56,8 +57,12 @@ describe('::readPackageJson', () => {
   test('throws a BadPackageJsonError on JSON.parse failure', async () => {
     expect.hasAssertions();
 
+    jest
+      .spyOn(JSON, 'parse')
+      .mockImplementation(() => toss(new Error('fake JSON error')));
+
     expect(() =>
-      Utils.readPackageJson({ packageRoot: Fixtures.badPackageJson.root })
+      Utils.readPackageJson({ packageRoot: Fixtures.goodPackageJson.root })
     ).toThrowError(Errors.BadPackageJsonError);
   });
 });
