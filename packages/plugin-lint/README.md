@@ -32,21 +32,22 @@ running in a monorepo root vs a monorepo package vs a polyrepo.
 Specifically, in addition to type checking and static analysis with tsc and
 ESLint, the following checks are performed:
 
-- ⛔ Errors when `package.json` file is missing
+- ⛔ Errors when the project is not a git repository
+- ⛔ Errors when `package.json` file is missing or unparsable
 - ⛔ Errors when `dist` directory or its subdirectories contain `.tsbuildinfo`
   files
 - ⛔ Errors when `package.json` does not contain `name`, `description`,
-  `repository`, `license`, `author`, or `type` keys
+  `repository`, `license`, `author`, or `type` fields
 - ⛔ Errors when `package.json` does not contain `version`, `keywords`,
   `homepage`, `sideEffects`, `exports`, `typesVersions`, `files`, `engines`, or
-  `publishConfig` keys
-  - If the `private` key exists and is set to `true`, this check is skipped
+  `publishConfig` fields
+  - If the `private` field exists and is set to `true`, this check is skipped
 - ⛔ Errors when the same dependency appears under both `dependencies` and
-  `devDependencies` keys in `package.json`
-- ⛔ Errors when `package.json` contains the `files` key but its array is
+  `devDependencies` fields in `package.json`
+- ⛔ Errors when `package.json` contains the `files` field but its array is
   missing `"/dist"`, `"/LICENSE"`, `"/package.json"`, or `"/README.md"` elements
 - ⛔ Errors when `package.json` is missing the `exports["./package"]` or
-  `exports["./package.json"]` key paths, or if they point to files that do not
+  `exports["./package.json"]` field paths, or if they point to files that do not
   exist
 - ⛔ Errors when missing `LICENSE` or `README.md` files
 - ⛔ Errors when unpublished git commits have "fixup" or "mergeme" in their
@@ -62,12 +63,12 @@ ESLint, the following checks are performed:
 - ⚠️ Warns when `version` is [experimental][5] (i.e. `<1.0.0`)
   - This INCLUDES the obsoleted "placeholder" version `0.0.0-development`
 - ⚠️ Warns when `package.json` contains the outdated `main`, `module`, or
-  `types` keys
+  `types` fields
   - Use `exports` instead
   - Once TypeScript [ships support for the `types` export condition][6],
     `typesVersions` will be considered "outdated" as well
-- ⚠️ Warns when `package.json` contains the `engines` key but is missing the
-  `engines.node` key path, or if it is not set to [the earliest maintained LTS
+- ⚠️ Warns when `package.json` contains the `engines` field but is missing the
+  `engines.node` field path, or if it is not set to [the earliest maintained LTS
   version of Node.js][7]
   - For example: `{ "engines": { "node": ">=12.22.10" }}` (as of Feb 2022)
 - ⚠️ Warns when depending on a [pinned][8] package version (like `"x.y.z"`
@@ -75,20 +76,27 @@ ESLint, the following checks are performed:
   - Use [`package-lock.json`][9] + [`npm ci`][10] instead
 - ⚠️ Warns when depending on a [dist-tag package version][11] (like `"next"` or
   `"latest"`) instead of a proper semver (like `"~x.y.z"`)
-- ⚠️ Warns when `package.json` is missing the `config.docs.entry` key path, or
+- ⚠️ Warns when `package.json` is missing the `config.docs.entry` field path, or
   if it points to a file that does not exist
 - ⚠️ ‡ Warns when `README.md` does not contain the standard badge topmatter, or
   when said topmatter is pointing to the wrong package name and/or repo uri
   - When linting a monorepo, what is considered "standard topmatter" changes
-    depending on the current working directory being the [project root][12] vs a
-    [package root][12]
+    depending on the current working directory being within the [package
+    root][12] versus a [project root][12]
 - ⚠️ ‡ Warns when standard links in `README.md` are missing, or are pointing to
   the wrong package name and/or repo uri
   - When linting a monorepo, what is considered "standard links" changes
-    depending on the current working directory being the [project root][12] vs a
-    [package root][12]
+    depending on the current working directory being within the [package
+    root][12] vs a [project root][12]
 
-These additional checks are performed unless linting a [monorepo package
+These additional checks are performed if the current project is a monorepo:
+
+- ⛔ Errors when a package shares the same `package.json` `name` field as
+  another package in the monorepo
+- ⛔ Errors when an unnamed package shares the same [package-id][12] as another
+  unnamed package in the monorepo
+
+These additional checks are performed except when linting a [monorepo package
 root][12]:
 
 - ⚠️ Warns when any of the following files are missing:
@@ -120,8 +128,8 @@ root][12]:
   - `.github/PULL_REQUEST_TEMPLATE.md`
   - `.github/SUPPORT.md`
 - ⚠️ Warns when missing the `release.config.js` file
-  - If the `package.json` `private` key exists and is set to `true`, this check
-    is skipped
+  - If the `package.json` `private` field exists and is set to `true`, this
+    check is skipped
 - ⚠️ Warns when missing the `.github`, `.github/ISSUE_TEMPLATE`,
   `.github/workflows`, `.husky`, or `types` directories
 - ⚠️ ‡ Warns when `SECURITY.md` or `.github/SUPPORT.md` do not contain the
@@ -131,26 +139,27 @@ root][12]:
   `.github/SUPPORT.md` are missing, or are pointing to the wrong package name
   and/or repo uri
 
-These additional checks are performed only if linting a [monorepo project
-root][12]:
+These additional checks are performed only if linting [the root package of a
+monorepo][12]:
 
-- ⚠️ Warns when `package.json` contains `dependencies` or `version` keys
+- ⛔ Errors when the `package.json` `workspaces` field contains a path that
+  points to a directory without a `package.json` file
+- ⚠️ Warns when `package.json` contains `dependencies` or `version` fields
+  - Since the typical [root package of a monorepo][12] is only encountered in
+    development, any dependencies should always be `devDependencies`
   - If a `next.config.js` file exists, this check is skipped
-- All [package roots][12] defined in the `package.json` `workspaces` key are
-  recursively linted
+- All valid [package roots][12] defined in the `package.json` `workspaces` field
+  are recursively linted
 
 These additional checks are performed only if linting a [monorepo package
 root][12]:
 
-- ⛔ Errors when this package shares the same `package.json` `name` key as
-  another package in the monorepo
-- ⛔ Errors when this package shares the same [package-id][12] as another
-  package in the monorepo
-- ⛔ † Errors when this package's source imports another package (from the same
-  monorepo) but doesn't list said package in `package.json` `dependencies` key
+- ⛔ Errors when this package's `package.json` file is not parsable
+- ⛔ † Errors when this package's source imports another package from the same
+  monorepo but doesn't list said package in `package.json` `dependencies` field
   - [Self-referential imports][13] are excluded from this check
 - ⚠️ Warns when `package.json` contains `devDependencies`
-  - These should be located in the project root's package.json file instead
+  - These should be located in the project root's `package.json` file instead
 
 > † This check is performed using [Espree][16] AST static analysis. Dynamic
 > imports are not checked.
