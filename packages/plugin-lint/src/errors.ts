@@ -21,10 +21,13 @@ makeNamedError(LinterError, 'LinterError');
  * A collection of possible linting errors and warnings.
  */
 export const ErrorMessage = {
+  NotAGitRepository: () =>
+    'The current working directory must be within a Git repository',
   MissingFile: (filePath: string) => `Missing file: ${filePath}`,
   MissingDirectory: (dirPath: string) => `Missing directory: ${dirPath}`,
-  IllegalFileInDirectory: (dirPath: string, fileName: string) =>
-    `File ${fileName} is not allowed in ${dirPath}`,
+  IllegalItemInDirectory: (itemPath: string, dirPath: string) =>
+    `${itemPath} is not allowed in ${dirPath}`,
+  PackageJsonUnparsable: (filePath: string) => `Could not parse ${filePath} as JSON`,
   PackageJsonMissingKey: (key: string) => `The "${key}" key is missing in package.json`,
   PackageJsonObsoleteKey: (key: string) =>
     `The obsolete "${key}" key should not be used in package.json`,
