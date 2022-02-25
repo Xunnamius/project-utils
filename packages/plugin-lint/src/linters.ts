@@ -19,20 +19,35 @@ type UnifiedReturnType = Promise<{
 }>;
 
 /**
+ * Filters out empty and debug lines from linter output.
+ *
+ * Until something is done about https://github.com/nodejs/node/issues/34799,
+ * we unfortunately have to remove the annoying debugging lines manually...
+ */
+const ignoreEmptyAndDebugLines = (line: string) => {
+  return (
+    line &&
+    line != 'Debugger attached.' &&
+    line != 'Waiting for the debugger to disconnect...'
+  );
+};
+
+/**
  * Accepts the `lastLine` of linter output and the result of `RegExp.exec` where
  * the `errors` and `warning` capture groups have been defined and returns a
  * normalized summary of the number of errors and warnings that occurred.
  */
 function summarizeOutput(lastLine: string, lastLineMeta: ReturnType<RegExp['exec']>) {
+  const errors = parseInt(lastLineMeta?.groups?.errors || '0');
+  const warnings = parseInt(lastLineMeta?.groups?.warnings || '0');
+
   return !lastLine
     ? 'no issues'
-    : lastLineMeta?.groups?.errors || lastLineMeta?.groups?.warnings
-    ? `${lastLineMeta.groups.errors || 0} error${
-        parseInt(lastLineMeta.groups.errors) != 1 ? 's' : ''
-      }, ${lastLineMeta.groups.warnings || 0} warning${
-        parseInt(lastLineMeta.groups.warnings) != 1 ? 's' : ''
+    : errors + warnings
+    ? `${errors} error${errors != 1 ? 's' : ''}, ${warnings} warning${
+        warnings != 1 ? 's' : ''
       }`
-    : '1 error';
+    : '1 error, 0 warnings';
 }
 
 /**
@@ -121,7 +136,10 @@ export async function runProjectLinter({
         },
         ''
       ),
-      summary: `${errorCount} errors, ${warnCount} warnings` || 'no issues'
+      summary:
+        errorCount + warnCount
+          ? `${errorCount} errors, ${warnCount} warnings`
+          : 'no issues'
     };
   } catch (e) {
     throw new Error(`project linting failed: ${e}`);
@@ -155,7 +173,15 @@ export async function runTypescriptLinter({
     }
   );
 
-  const lastLine = tscOutput.all?.trimEnd().split('\n').at(-1) || '';
+  const lastLine =
+    tscOutput.all
+      ?.trimEnd()
+      .split('\n')
+      // ? Speedup: only consider the last 5 lines
+      .slice(-5)
+      .filter(ignoreEmptyAndDebugLines)
+      .at(-1) || '';
+
   const lastLineMeta =
     /Found ((?<errors>\d+) errors?(, )?)?((?<warnings>\d+) warning)?/.exec(lastLine);
 
@@ -206,7 +232,9 @@ export async function runEslintLinter({
   const lastLine =
     stripAnsi(eslintOutput.all?.trimEnd() || '')
       .split('\n')
-      .filter(Boolean)
+      // ? Speedup: only consider the last 5 lines
+      .slice(-5)
+      .filter((line) => ignoreEmptyAndDebugLines(line) && !line.includes('--fix'))
       .at(-1) || '';
 
   const lastLineMeta =
@@ -282,15 +310,24 @@ export async function runRemarkLinter({
   const lastLine =
     stripAnsi(remarkOutput.all?.trimEnd() || '')
       .split('\n')
-      .filter(Boolean)
+      // ? Speedup: only consider the last 5 lines
+      .slice(-5)
+      .filter(ignoreEmptyAndDebugLines)
       .at(-1) || '';
 
   const lastLineMeta =
-    /((?<errors>\d+) errors?(,.*?)?)?((?<warnings>\d+) warning)?/g.exec(lastLine);
+    /(?:(?<errors1>\d+) errors?, .*?(?<warnings1>\d+) warning)|(?:(?<errors2>\d+) errors?)|(?:(?<warnings2>\d+) warning)/.exec(
+      lastLine
+    );
 
   return {
     success: remarkOutput.code == 0,
     output: remarkOutput.all,
-    summary: summarizeOutput(lastLine, lastLineMeta)
+    summary: summarizeOutput(lastLine, {
+      groups: {
+        errors: lastLineMeta?.groups?.errors1 || lastLineMeta?.groups?.errors2,
+        warnings: lastLineMeta?.groups?.warnings1 || lastLineMeta?.groups?.warnings2
+      }
+    } as unknown as RegExpExecArray)
   };
 }
