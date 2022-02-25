@@ -30,7 +30,7 @@ export type RootPackage = {
    */
   root: string;
   /**
-   * The contents of the root package's package.json file.
+   * The contents of the root package.json file.
    */
   json: PackageJson;
   /**

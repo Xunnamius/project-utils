@@ -27,7 +27,7 @@ This opinionated CLI tool checks a Node.js project for correctness. TypeScript
 analysis of JavaScript/TypeScript source, and [Remark][3] and [mdast][17] for
 analysis of Markdown source. Further checks are performed to ensure the project
 is optimally structured and conforms to best practices, including detecting when
-running in a monorepo root vs a monorepo package vs a polyrepo.
+running in a monorepo root vs a polyrepo root vs a sub-root.
 
 Specifically, in addition to type checking and static analysis with tsc and
 ESLint, the following checks are performed:
@@ -96,8 +96,7 @@ These additional checks are performed if the current project is a monorepo:
 - ⛔ Errors when an unnamed package shares the same [package-id][12] as another
   unnamed package in the monorepo
 
-These additional checks are performed except when linting a [monorepo package
-root][12]:
+These additional checks are performed except when linting a [sub-root][12]:
 
 - ⚠️ Warns when any of the following files are missing:
   - `.codecov.yml`
@@ -139,8 +138,7 @@ root][12]:
   `.github/SUPPORT.md` are missing, or are pointing to the wrong package name
   and/or repo uri
 
-These additional checks are performed only if linting [the root package of a
-monorepo][12]:
+These additional checks are performed only if linting a [monorepo root][12]:
 
 - ⛔ Errors when the `package.json` `workspaces` field contains a path that
   points to a directory without a `package.json` file
@@ -151,8 +149,7 @@ monorepo][12]:
 - All valid [sub-roots][12] defined in the `package.json` `workspaces` field are
   recursively linted
 
-These additional checks are performed only if linting a [monorepo package
-root][12]:
+These additional checks are performed only if linting a [sub-root][12]:
 
 - ⛔ Errors when this package's `package.json` file is not parsable
 - ⛔ † Errors when this package's source imports another package from the same

@@ -267,7 +267,7 @@ See [`projector-pipeline`][14].
 
 For monorepos, the semantic-release plugin enforces cross-dependency version
 coherence and topological ordering during the release cycle. **Installing this
-plugin is required when publishing monorepo packages using Projector**.
+plugin is required when publishing a monorepo's packages using Projector**.
 
 First, install the plugin:
 

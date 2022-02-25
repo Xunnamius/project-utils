@@ -47,7 +47,7 @@ describe('::runProjectLinter', () => {
     });
   });
 
-  test('errors if monorepo package has unparsable package.json', async () => {
+  test('errors if sub-root has unparsable package.json', async () => {
     expect.hasAssertions();
 
     const parse = JSON.parse;
@@ -70,7 +70,7 @@ describe('::runProjectLinter', () => {
     });
   });
 
-  test('errors if two monorepo packages share the same name', async () => {
+  test('errors if two sub-roots share the same name', async () => {
     expect.hasAssertions();
 
     await expect(
@@ -82,7 +82,7 @@ describe('::runProjectLinter', () => {
     });
   });
 
-  test('errors if two unnamed monorepo packages share the same package-id', async () => {
+  test('errors if two unnamed sub-roots share the same package-id', async () => {
     expect.hasAssertions();
 
     await expect(
