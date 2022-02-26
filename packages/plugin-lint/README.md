@@ -50,7 +50,7 @@ ESLint, the following checks are performed:
   `exports["./package.json"]` field paths, or if they point to files that do not
   exist
 - ⛔ Errors when missing `LICENSE` or `README.md` files
-- ⛔ Errors when unpublished git commits have "fixup" or "mergeme" in their
+- ⛔ ⹋ Errors when an unpublished git commit has "fixup" or "mergeme" in its
   subject
   - This is evidence that the commit tree needs to be cleaned up before changes
     are merged upstream!
@@ -60,7 +60,8 @@ ESLint, the following checks are performed:
   `tsconfig.eslint.json`, `tsconfig.lint.json`, or `tsconfig.types.json` files
   - When linting a [monorepo sub-root][12], only `tsconfig.docs.json`,
     `tsconfig.lint.json`, and `tsconfig.types.json` are checked for existence
-- ⚠️ Warns when `version` is [experimental][5] (i.e. `<1.0.0`)
+- ⚠️ Warns when `package.json` contains an [experimental][5] `version` field
+  (i.e. `<1.0.0`)
   - This INCLUDES the obsoleted "placeholder" version `0.0.0-development`
 - ⚠️ Warns when `package.json` contains the outdated `main`, `module`, or
   `types` fields
@@ -161,7 +162,9 @@ These additional checks are performed only if linting a [sub-root][12]:
 
 > † This check is performed using [Espree][16] AST static analysis. Dynamic
 > imports are not checked.\
-> ‡ This check is performed using [mdast-util-from-markdown][17] AST static analysis.
+> ‡ This check is performed using [mdast-util-from-markdown][17] AST static analysis.\
+> ⹋ When in `--pre-push` mode, only these checks are performed. All others are
+> skipped.
 
 ## Install
 
