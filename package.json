@@ -24,10 +24,6 @@
     "test-repeat-unit": "npm run __test-repeat-unit --silent",
     "test-unit": "BABEL_ENV=test jest $JEST_CLI --coverage --collectCoverageFrom 'src/**/*.ts*' --collectCoverageFrom 'lib/**/*.ts*' --collectCoverageFrom 'external-scripts/**/*.ts*' --testPathIgnorePatterns test/integration-*.test.ts* dist"
   },
-  "dependencies": {
-    "simple-git": "^3.2.6",
-    "unique-filename": "^1.1.1"
-  },
   "devDependencies": {
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.5",
@@ -72,6 +68,7 @@
     "jest-circus": "^27.5.1",
     "jest-extended": "^2.0.0",
     "lint-staged": "^12.3.4",
+    "named-app-errors": "^3.0.3",
     "prettier": "^2.5.1",
     "remark-cli": "^10.0.1",
     "remark-frontmatter": "^4.0.1",
@@ -89,6 +86,7 @@
     "remark-reference-links": "^6.0.1",
     "remark-validate-links": "^11.0.2",
     "semantic-release": "https://xunn.at/semantic-release-atam",
+    "simple-git": "^3.2.6",
     "sort-package-json": "^1.54.0",
     "source-map-support": "^0.5.21",
     "spellchecker": "^3.7.1",
@@ -99,6 +97,7 @@
     "typedoc": "^0.22.12",
     "typedoc-plugin-markdown": "^3.11.14",
     "typescript": "^4.5.5",
+    "unique-filename": "^1.1.1",
     "webpack": "^5.69.1",
     "webpack-cli": "^4.9.2"
   }
