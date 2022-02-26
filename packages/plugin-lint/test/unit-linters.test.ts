@@ -1,7 +1,12 @@
+import * as Linters from '../src/linters';
 import { Fixtures } from 'testverse/fixtures';
 import { toss } from 'toss-expression';
 import { ErrorMessage } from '../src/errors';
-import * as Linters from '../src/linters';
+import { clearPackageJsonCache } from 'pkgverse/core/src/project-utils';
+
+beforeEach(() => {
+  clearPackageJsonCache();
+});
 
 // TODO: test all the combinations of error/warning messages
 describe('::runProjectLinter', () => {
@@ -47,13 +52,28 @@ describe('::runProjectLinter', () => {
     });
   });
 
-  test('errors when a sub-root `package.json` file is missing', async () => {
+  test('errors when a sub-root package.json file is missing', async () => {
+    expect.hasAssertions();
+
+    await expect(
+      Linters.runProjectLinter({ rootDir: Fixtures.badMonorepoNonPackageDir.root })
+    ).resolves.toStrictEqual({
+      success: false,
+      summary: expect.stringContaining('1 error, 0 warnings'),
+      output: expect.stringContaining(
+        ErrorMessage.MissingFile(
+          `${Fixtures.badMonorepoNonPackageDir.brokenPkgRoots[0]}/package.json`
+        )
+      )
+    });
+  });
+
+  test('errors when a sub-root package.json file is unparsable', async () => {
     expect.hasAssertions();
 
     const parse = JSON.parse;
     jest
       .spyOn(JSON, 'parse')
-      .mockImplementationOnce(parse)
       .mockImplementationOnce(parse)
       .mockImplementationOnce(() => toss(new Error('badness')));
 
@@ -70,7 +90,7 @@ describe('::runProjectLinter', () => {
     });
   });
 
-  test('errors when a sub-root `package.json` file is unparsable', async () => {
+  test('errors when a sub-root package.json file is unparsable', async () => {
     expect.hasAssertions();
 
     const parse = JSON.parse;

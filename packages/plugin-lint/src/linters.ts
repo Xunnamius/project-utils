@@ -2,7 +2,7 @@ import { run } from 'multiverse/run';
 import { ErrorMessage } from './errors';
 import stripAnsi from 'strip-ansi';
 import chalk from 'chalk';
-import { getRunContext } from '@projector-js/core/project-utils';
+import { getRunContext } from 'pkgverse/core/src/project-utils';
 
 import {
   PackageJsonNotFoundError,
@@ -10,7 +10,7 @@ import {
   NotAGitRepositoryError,
   DuplicatePackageIdError,
   DuplicatePackageNameError
-} from '@projector-js/core/errors';
+} from 'pkgverse/core/src/errors';
 
 type UnifiedReturnType = Promise<{
   success: boolean;
@@ -105,10 +105,11 @@ export async function runProjectLinter({
       }
     })();
 
-    // ? These checks are performed across all contexts TODO: use browserslist
-    // to get earliest "maintained node versions" and TODO: convert this into an
-    // or (||) list, e.g.: TODO: ^12.20.0 || ^14.13.1 || >=16.0.0 TODO: (project
-    // root and each package root)
+    // ? These checks are performed across all contexts
+    // TODO: use browserslist to get earliest "maintained node versions" and
+    // TODO: convert this into an or (||) list, e.g.:
+    // TODO: ^12.20.0 || ^14.13.1 || >=16.0.0
+    // TODO: (project root and each package root)
 
     // TODO: checks should be async
 
