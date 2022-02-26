@@ -5,7 +5,7 @@ import * as Linters from '../src/linters';
 
 // TODO: test all the combinations of error/warning messages
 describe('::runProjectLinter', () => {
-  test('errors if project root is not a git repo', async () => {
+  test('errors when the project is not a git repository', async () => {
     expect.hasAssertions();
 
     await expect(
@@ -17,7 +17,7 @@ describe('::runProjectLinter', () => {
     });
   });
 
-  test('errors if project root is missing package.json', async () => {
+  test('errors when package.json file is missing', async () => {
     expect.hasAssertions();
 
     await expect(
@@ -31,7 +31,7 @@ describe('::runProjectLinter', () => {
     });
   });
 
-  test('errors if project root has unparsable package.json', async () => {
+  test('errors when package.json file is unparsable', async () => {
     expect.hasAssertions();
 
     jest.spyOn(JSON, 'parse').mockImplementation(() => toss(new Error('badness')));
@@ -47,7 +47,30 @@ describe('::runProjectLinter', () => {
     });
   });
 
-  test('errors if sub-root has unparsable package.json', async () => {
+  test('errors when a sub-root `package.json` file is missing', async () => {
+    expect.hasAssertions();
+
+    const parse = JSON.parse;
+    jest
+      .spyOn(JSON, 'parse')
+      .mockImplementationOnce(parse)
+      .mockImplementationOnce(parse)
+      .mockImplementationOnce(() => toss(new Error('badness')));
+
+    await expect(
+      Linters.runProjectLinter({ rootDir: Fixtures.goodMonorepo.root })
+    ).resolves.toStrictEqual({
+      success: false,
+      summary: expect.stringContaining('1 error, 0 warnings'),
+      output: expect.stringContaining(
+        ErrorMessage.PackageJsonUnparsable(
+          `${Fixtures.goodMonorepo.namedPkgMapData[1][1].root}/package.json`
+        )
+      )
+    });
+  });
+
+  test('errors when a sub-root `package.json` file is unparsable', async () => {
     expect.hasAssertions();
 
     const parse = JSON.parse;
@@ -79,6 +102,18 @@ describe('::runProjectLinter', () => {
       success: false,
       summary: expect.stringContaining('1 error, 0 warnings'),
       output: expect.stringMatching(/"pkg".+?\/pkg-1.+?\/pkg-2/ms)
+    });
+  });
+
+  test('errors if two unnamed sub-roots share the same package-id', async () => {
+    expect.hasAssertions();
+
+    await expect(
+      Linters.runProjectLinter({ rootDir: Fixtures.badMonorepoDuplicateId.root })
+    ).resolves.toStrictEqual({
+      success: false,
+      summary: expect.stringContaining('1 error, 0 warnings'),
+      output: expect.stringMatching(/"pkg-1".+?\/pkg-1.+?\/pkg-1/ms)
     });
   });
 
