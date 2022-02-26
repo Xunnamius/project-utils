@@ -1,5 +1,5 @@
 {
-  "name": "good-monorepo-non-package-dir",
+  "name": "bad-monorepo-non-package-dir",
   "type": "commonjs",
   "workspaces": [
     "pkgs/pkg-1",
