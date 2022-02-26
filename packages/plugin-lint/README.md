@@ -37,9 +37,9 @@ ESLint, the following checks are performed:
 - ⛔ Errors when the `dist` directory or its subdirectories contain
   `.tsbuildinfo` files
 - ⛔ Errors when `package.json` does not contain `name`, `description`,
-  `repository`, `license`, `author`, or `type` fields
+  `homepage`, `repository`, `license`, `author`, or `type` fields
 - ⛔ Errors when `package.json` does not contain `version`, `keywords`,
-  `homepage`, `sideEffects`, `exports`, `typesVersions`, `files`, `engines`, or
+  `sideEffects`, `exports`, `typesVersions`, `files`, `engines`, or
   `publishConfig` fields
   - If the `private` field exists and is set to `true`, this check is skipped
 - ⛔ Errors when the same dependency appears under both `dependencies` and
