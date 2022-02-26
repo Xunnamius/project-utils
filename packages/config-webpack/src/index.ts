@@ -1,8 +1,8 @@
 import { debugFactory } from 'multiverse/debug-extended';
 // import { EnvironmentPlugin, DefinePlugin, BannerPlugin } from 'webpack';
 // import nodeExternals from 'webpack-node-externals';
-// import { getWebpackAliases } from '@projector-js/core/import-aliases';
-// import { getRunContext } from '@projector-js/core/project-utils';
+// import { getWebpackAliases } from 'pkgverse/core/src/import-aliases';
+// import { getRunContext } from 'pkgverse/core/src/project-utils';
 
 const configName = 'config-webpack';
 
