@@ -244,12 +244,12 @@ describe('::getWorkspacePackages', () => {
     expect.hasAssertions();
 
     const result = Utils.getWorkspacePackages({
-      projectRoot: Fixtures.goodMonorepoNonPackageDir.root,
-      cwd: Fixtures.goodMonorepoNonPackageDir.root
+      projectRoot: Fixtures.badMonorepoNonPackageDir.root,
+      cwd: Fixtures.badMonorepoNonPackageDir.root
     });
 
     expect(result.cwdPackage).toBeNull();
-    checkForExpectedPackages(result.packages, 'goodMonorepoNonPackageDir');
+    checkForExpectedPackages(result.packages, 'badMonorepoNonPackageDir');
   });
 
   test('throws a DuplicatePackageNameError when two packages have the same "name" field in package.json', async () => {
