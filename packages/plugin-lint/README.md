@@ -60,8 +60,9 @@ ESLint, the following checks are performed:
   `tsconfig.eslint.json`, `tsconfig.lint.json`, or `tsconfig.types.json` files
   - When linting a [monorepo sub-root][12], only `tsconfig.docs.json`,
     `tsconfig.lint.json`, and `tsconfig.types.json` are checked for existence
-- ⚠️ Warns when `package.json` contains an [experimental][5] `version` field
-  (i.e. `<1.0.0`)
+- ⚠️ Warns when `package.json` `license` field is not `"MIT"`
+- ⚠️ Warns when `package.json` contains an [experimental][5] `version` (i.e.
+  `<1.0.0`)
   - This INCLUDES the obsoleted "placeholder" version `0.0.0-development`
 - ⚠️ Warns when `package.json` contains the outdated `main`, `module`, or
   `types` fields
