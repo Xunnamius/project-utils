@@ -33,9 +33,9 @@ Specifically, in addition to type checking and static analysis with tsc and
 ESLint, the following checks are performed:
 
 - ⛔ Errors when the project is not a git repository
-- ⛔ Errors when `package.json` file is missing or unparsable
-- ⛔ Errors when `dist` directory or its subdirectories contain `.tsbuildinfo`
-  files
+- ⛔ Errors when the `package.json` file is missing or unparsable
+- ⛔ Errors when the `dist` directory or its subdirectories contain
+  `.tsbuildinfo` files
 - ⛔ Errors when `package.json` does not contain `name`, `description`,
   `repository`, `license`, `author`, or `type` fields
 - ⛔ Errors when `package.json` does not contain `version`, `keywords`,
@@ -91,6 +91,7 @@ ESLint, the following checks are performed:
 
 These additional checks are performed if the current project is a monorepo:
 
+- ⛔ Errors when a sub-root `package.json` file is missing or unparsable
 - ⛔ Errors when a package shares the same `package.json` `name` field as
   another package in the monorepo
 - ⛔ Errors when an unnamed package shares the same [package-id][12] as another
