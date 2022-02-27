@@ -1,3 +1,4 @@
+import { debugFactory } from 'multiverse/debug-extended';
 import { run } from 'multiverse/run';
 import { ErrorMessage } from './errors';
 import stripAnsi from 'strip-ansi';
@@ -11,6 +12,8 @@ import {
   DuplicatePackageIdError,
   DuplicatePackageNameError
 } from 'pkgverse/core/src/errors';
+
+const debug = debugFactory('@projector-js/plugin-lint:linters');
 
 type UnifiedReturnType = Promise<{
   success: boolean;
@@ -37,12 +40,18 @@ const ignoreEmptyAndDebugLines = (line: string) => {
  * the `errors` and `warning` capture groups have been defined and returns a
  * normalized summary of the number of errors and warnings that occurred.
  */
-const summarizeOutput = (lastLine: string, lastLineMeta: ReturnType<RegExp['exec']>) => {
+const summarizeOutput = (
+  exitCode: number,
+  lastLine: string,
+  lastLineMeta: ReturnType<RegExp['exec']>
+) => {
   const errors = parseInt(lastLineMeta?.groups?.errors || '0');
   const warnings = parseInt(lastLineMeta?.groups?.warnings || '0');
 
   return !lastLine
-    ? 'no issues'
+    ? exitCode == 0
+      ? 'no issues'
+      : 'unknown issue'
     : errors + warnings
     ? `${errors} error${errors != 1 ? 's' : ''}, ${warnings} warning${
         warnings != 1 ? 's' : ''
@@ -84,6 +93,8 @@ export async function runProjectLinter({
 
     const ctx = (() => {
       try {
+        // ? Technically we could accept cwd instead of forcing rootDir, but
+        // ? accepting a cwd would not align with the other linter interfaces...
         return getRunContext({ cwd: rootDir });
       } catch (e) {
         if (e instanceof PackageJsonNotFoundError) {
@@ -105,7 +116,6 @@ export async function runProjectLinter({
       }
     })();
 
-    // ? These checks are performed across all contexts
     // TODO: use browserslist to get earliest "maintained node versions" and
     // TODO: convert this into an or (||) list, e.g.:
     // TODO: ^12.20.0 || ^14.13.1 || >=16.0.0
@@ -113,7 +123,12 @@ export async function runProjectLinter({
 
     // TODO: checks should be async
 
+    // TODO: use debug
+
+    // ? These checks are performed across all contexts
     if (ctx !== undefined) {
+      void debug;
+
       // ? These checks are performed UNLESS linting a sub-root
       if (ctx.context == 'polyrepo' || ctx.package) {
       }
@@ -191,8 +206,8 @@ export async function runTypescriptLinter({
 
   return {
     success: tscOutput.code == 0,
-    output: tscOutput.all,
-    summary: summarizeOutput(lastLine, lastLineMeta)
+    output: tscOutput.all || tscOutput.shortMessage,
+    summary: summarizeOutput(tscOutput.code, lastLine, lastLineMeta)
   };
 }
 
@@ -248,8 +263,8 @@ export async function runEslintLinter({
 
   return {
     success: eslintOutput.code == 0,
-    output: eslintOutput.all,
-    summary: summarizeOutput(lastLine, lastLineMeta)
+    output: eslintOutput.all || eslintOutput.shortMessage,
+    summary: summarizeOutput(eslintOutput.code, lastLine, lastLineMeta)
   };
 }
 
@@ -326,8 +341,8 @@ export async function runRemarkLinter({
 
   return {
     success: remarkOutput.code == 0,
-    output: remarkOutput.all,
-    summary: summarizeOutput(lastLine, {
+    output: remarkOutput.all || remarkOutput.shortMessage,
+    summary: summarizeOutput(remarkOutput.code, lastLine, {
       groups: {
         errors: lastLineMeta?.groups?.errors1 || lastLineMeta?.groups?.errors2,
         warnings: lastLineMeta?.groups?.warnings1 || lastLineMeta?.groups?.warnings2
