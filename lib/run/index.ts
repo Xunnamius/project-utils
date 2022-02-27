@@ -1,7 +1,7 @@
 import execa from 'execa';
 import { debugFactory } from 'multiverse/debug-extended';
 
-import type { ExecaReturnValue } from 'execa';
+import type { ExecaReturnValue, ExecaSyncError } from 'execa';
 
 const debug = debugFactory('@xunnamius/run:runtime');
 
@@ -33,7 +33,7 @@ export async function run(file: string, args?: string[], options?: RunOptions) {
   const result = (await execa(file, args, {
     reject: false,
     ...options
-  })) as ExecaReturnValue & { code: ExecaReturnValue['exitCode'] };
+  })) as ExecaReturnValue & ExecaSyncError & { code: ExecaReturnValue['exitCode'] };
 
   result.code = result.exitCode;
   debug('execution result: %O', result);
