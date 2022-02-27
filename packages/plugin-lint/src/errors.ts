@@ -22,12 +22,12 @@ makeNamedError(LinterError, 'LinterError');
  */
 export const ErrorMessage = {
   NotAGitRepository: () => 'The project is not Git repository',
-  PackageIdCollision: (packageId: string, packageJsonPath: string) =>
+  DuplicatePackageId: (packageId: string, packagePath: string) =>
     `${ErrorMessage.PackageJsonMissingKey(
       'name'
-    )}.\nThis is not a problem except that package-id "${packageId}" is already used by another unnamed package: ${packageJsonPath}`,
-  PackageNameCollision: (packageName: string, packageJsonPath: string) =>
-    `The package name "${packageName}" is already used by another package: ${packageJsonPath}`,
+    )}.\nThis is not a problem except that package-id "${packageId}" is already used by another unnamed package: ${packagePath}`,
+  DuplicatePackageName: (packageName: string, packagePath: string) =>
+    `The package name "${packageName}" is already used by another package: ${packagePath}`,
   FatalMissingFile: () =>
     `${ErrorMessage.MissingFile()}.\nThe file must exist for compatibility with Projector-based workflows`,
   MissingFile: () => `The file does not exist but is expected`,
