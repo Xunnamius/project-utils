@@ -1,0 +1,10 @@
+{
+  "name": "bad-polyrepo",
+  "type": "commonjs",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "test": "echo 'it works!'"
+  }
+}

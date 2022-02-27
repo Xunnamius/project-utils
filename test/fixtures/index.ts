@@ -18,8 +18,11 @@ export type Fixture = {
  * A type representing the name of an available fixture.
  */
 export type FixtureName =
+  | 'badMonorepo'
   | 'badMonorepoDuplicateId'
   | 'badMonorepoDuplicateName'
+  | 'badMonorepoNonPackageDir'
+  | 'badPolyrepo'
   | 'badPolyrepoNoPackageJson'
   | 'goodMonorepo'
   | 'goodMonorepoDuplicateId'
@@ -90,30 +93,44 @@ const createFixture = ({
 };
 
 createFixture({
+  fixtureName: 'badMonorepo',
+  root: 'bad-monorepo',
+  unnamedPkgMapData: [
+    { name: 'pkg-1', root: 'packages/pkg-1' },
+    { name: 'pkg-2', root: 'packages/pkg-2' }
+  ]
+});
+
+createFixture({
   fixtureName: 'badMonorepoDuplicateId',
-  root: `bad-monorepo-duplicate-id`
+  root: 'bad-monorepo-duplicate-id'
 });
 
 createFixture({
   fixtureName: 'badMonorepoDuplicateName',
-  root: `bad-monorepo-duplicate-name`
+  root: 'bad-monorepo-duplicate-name'
 });
 
 createFixture({
   fixtureName: 'badMonorepoNonPackageDir',
-  root: `bad-monorepo-non-package-dir`,
+  root: 'bad-monorepo-non-package-dir',
   namedPkgMapData: [{ name: 'pkg-1', root: 'pkgs/pkg-1' }],
   brokenPkgRoots: ['pkgs/pkg-10']
 });
 
 createFixture({
+  fixtureName: 'badPolyrepo',
+  root: 'bad-polyrepo'
+});
+
+createFixture({
   fixtureName: 'badPolyrepoNoPackageJson',
-  root: `bad-polyrepo-no-package-json`
+  root: 'bad-polyrepo-no-package-json'
 });
 
 createFixture({
   fixtureName: 'goodMonorepo',
-  root: `good-monorepo`,
+  root: 'good-monorepo',
   namedPkgMapData: [
     { name: 'pkg-1', root: 'packages/pkg-1' },
     { name: '@namespaced/pkg', root: 'packages/pkg-2' }
@@ -126,7 +143,7 @@ createFixture({
 
 createFixture({
   fixtureName: 'goodMonorepoDuplicateId',
-  root: `good-monorepo-duplicate-id`,
+  root: 'good-monorepo-duplicate-id',
   namedPkgMapData: [
     { name: 'pkg-1', root: 'packages-1/pkg-1' },
     { name: 'pkg-2', root: 'packages-2/pkg-1' }
@@ -135,7 +152,7 @@ createFixture({
 
 createFixture({
   fixtureName: 'goodMonorepoNegatedPaths',
-  root: `good-monorepo-negated-paths`,
+  root: 'good-monorepo-negated-paths',
   namedPkgMapData: [
     { name: 'pkg-1', root: 'packages/pkg-1' },
     { name: '@namespace/pkg-3', root: 'packages/pkg-3-x' }
@@ -144,7 +161,7 @@ createFixture({
 
 createFixture({
   fixtureName: 'goodMonorepoSimplePaths',
-  root: `good-monorepo-simple-paths`,
+  root: 'good-monorepo-simple-paths',
   namedPkgMapData: [
     { name: 'pkg-1', root: 'pkgs/pkg-1' },
     { name: 'pkg-10', root: 'pkgs/pkg-10' }
@@ -153,7 +170,7 @@ createFixture({
 
 createFixture({
   fixtureName: 'goodMonorepoWeirdAbsolute',
-  root: `good-monorepo-weird-absolute`,
+  root: 'good-monorepo-weird-absolute',
   namedPkgMapData: [
     { name: 'pkg-1', root: 'packages/pkg-1' },
     { name: 'pkg-2', root: 'packages/pkg-2' }
@@ -162,13 +179,13 @@ createFixture({
 
 createFixture({
   fixtureName: 'goodMonorepoWeirdBoneless',
-  root: `good-monorepo-weird-boneless`,
+  root: 'good-monorepo-weird-boneless',
   namedPkgMapData: [{ name: 'pkg-1', root: 'pkg-1' }]
 });
 
 createFixture({
   fixtureName: 'goodMonorepoWeirdOverlap',
-  root: `good-monorepo-weird-overlap`,
+  root: 'good-monorepo-weird-overlap',
   namedPkgMapData: [
     { name: 'pkg-1', root: 'pkgs/pkg-1' },
     { name: 'pkg-2', root: 'pkgs/pkg-20' }
@@ -185,7 +202,7 @@ createFixture({
 
 createFixture({
   fixtureName: 'goodMonorepoWeirdYarn',
-  root: `good-monorepo-weird-yarn`,
+  root: 'good-monorepo-weird-yarn',
   namedPkgMapData: [
     { name: 'pkg-1', root: 'packages/pkg-1' },
     { name: 'pkg-2', root: 'packages/pkg-2' }
@@ -194,12 +211,12 @@ createFixture({
 
 createFixture({
   fixtureName: 'goodMonorepoWindows',
-  root: `good-monorepo-windows`,
+  root: 'good-monorepo-windows',
   namedPkgMapData: [
     { name: 'pkg-1', root: 'packages/deep/pkg' },
     { name: 'pkg-2', root: 'packages/deep/wkg' }
   ]
 });
 
-createFixture({ fixtureName: 'goodPackageJson', root: `good-package-json` });
-createFixture({ fixtureName: 'goodPolyrepo', root: `good-polyrepo` });
+createFixture({ fixtureName: 'goodPackageJson', root: 'good-package-json' });
+createFixture({ fixtureName: 'goodPolyrepo', root: 'good-polyrepo' });
