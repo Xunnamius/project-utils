@@ -78,6 +78,12 @@ export function configureProgram(program?: Program): Context {
           'An absolute or relative path to a TypeScript tsconfig.json configuration file.',
         type: 'string',
         default: 'tsconfig.lint.json'
+      },
+      'pre-push-only': {
+        describe:
+          'In pre-push mode, a limited subset of checks are performed. Pre-push linting mode is meant to be invoked by the "pre-push" Git hook.',
+        type: 'boolean',
+        default: false
       }
     });
 
