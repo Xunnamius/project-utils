@@ -22,6 +22,7 @@ export type Context = {
 };
 
 const debug = debugFactory(`plugin-lint:parse`);
+const defaultMarkdownGlob = '{{,.}*.md,!(node_modules)/**/{,.}*.md,.*/**/{,.}*.md}';
 
 export * from './errors';
 
@@ -68,10 +69,10 @@ export function configureProgram(program?: Program): Context {
       'md-path': {
         describe:
           'Absolute paths, relative paths, and/or globs that resolve to one ' +
-          'or more markdown files.',
+          'or more markdown files. If a single argument ending in "/" is given, the default glob pattern will be appended to this argument instead.',
         type: 'array',
-        default: ['{{,.}*.md,!(node_modules)/**/{,.}*.md,.*/**/{,.}*.md}'],
-        defaultDescription: 'all files ending in .md not under node_modules'
+        default: [defaultMarkdownGlob],
+        defaultDescription: '.md files not under node_modules'
       },
       project: {
         describe:
@@ -104,6 +105,11 @@ export function configureProgram(program?: Program): Context {
       debug('finalArgv.tsconfig: %O', tsconfig);
       debug('finalArgv.rootDir: %O', rootDir);
       debug('finalArgv.sourcePaths: %O', sourcePaths);
+
+      if (markdownPaths.length == 1 && markdownPaths[0].endsWith('/')) {
+        markdownPaths[0] += defaultMarkdownGlob;
+      }
+
       debug('finalArgv.markdownPaths: %O', markdownPaths);
 
       const results = await Promise.all([
