@@ -8,7 +8,7 @@ import escapeRegexp from 'escape-string-regexp';
 const stringContainingErrorMessage = (currentFile: string, errorMessage: string) => {
   return expect.stringMatching(
     RegExp(
-      `^.+${escapeRegexp(currentFile)}.+(?:\n  .*?)+${escapeRegexp(errorMessage)}$`,
+      `^.+${escapeRegexp(currentFile)}(?!/).+(?:\n  .*?)+ ${escapeRegexp(errorMessage)}$`,
       'm'
     )
   );
@@ -28,7 +28,7 @@ describe('::runProjectLinter', () => {
       success: false,
       summary: expect.stringContaining('1 error, 0 warnings'),
       output: stringContainingErrorMessage(
-        '/does/not/exist/package.json',
+        '/does/not/exist',
         ErrorMessage.NotAGitRepository()
       )
     });
@@ -44,7 +44,7 @@ describe('::runProjectLinter', () => {
       summary: expect.stringContaining('1 error, 0 warnings'),
       output: stringContainingErrorMessage(
         `${Fixtures.badPolyrepoNoPackageJson.root}/package.json`,
-        ErrorMessage.MissingFile(`${Fixtures.badPolyrepoNoPackageJson.root}/package.json`)
+        ErrorMessage.FatalMissingFile()
       )
     });
   });
@@ -61,7 +61,7 @@ describe('::runProjectLinter', () => {
       summary: expect.stringContaining('1 error, 0 warnings'),
       output: stringContainingErrorMessage(
         `${Fixtures.goodMonorepo.root}/package.json`,
-        ErrorMessage.PackageJsonUnparsable(`${Fixtures.goodMonorepo.root}/package.json`)
+        ErrorMessage.PackageJsonUnparsable()
       )
     });
   });
@@ -76,14 +76,18 @@ describe('::runProjectLinter', () => {
     expect(monorepo.output).toStrictEqual(
       stringContainingErrorMessage(
         `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/dist/tsconfig.fake.tsbuildinfo`,
-        ErrorMessage.IllegalItemInDirectory(`${Fixtures.badMonorepo.root}/dist`)
+        ErrorMessage.IllegalItemInDirectory(
+          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/dist`
+        )
       )
     );
 
     expect(monorepo.output).toStrictEqual(
       stringContainingErrorMessage(
         `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/dist/sub-dir/tsconfig.fake.tsbuildinfo`,
-        ErrorMessage.IllegalItemInDirectory(`${Fixtures.badMonorepo.root}/dist`)
+        ErrorMessage.IllegalItemInDirectory(
+          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/dist`
+        )
       )
     );
 
@@ -93,7 +97,7 @@ describe('::runProjectLinter', () => {
 
     expect(polyrepo.output).toStrictEqual(
       stringContainingErrorMessage(
-        `${Fixtures.badPolyrepo.unnamedPkgMapData[0][1].root}/dist/tsconfig.fake.tsbuildinfo`,
+        `${Fixtures.badPolyrepo.root}/dist/tsconfig.fake.tsbuildinfo`,
         ErrorMessage.IllegalItemInDirectory(`${Fixtures.badPolyrepo.root}/dist`)
       )
     );
@@ -245,16 +249,17 @@ describe('::runProjectLinter', () => {
     it('errors when a sub-root package.json file is missing', async () => {
       expect.hasAssertions();
 
-      await expect(
-        Linters.runProjectLinter({ rootDir: Fixtures.badMonorepoNonPackageDir.root })
-      ).resolves.toStrictEqual({
-        success: false,
-        summary: expect.stringContaining('1 error, 0 warnings'),
-        output: expect.stringContaining(
-          ErrorMessage.MissingFile(
-            `${Fixtures.badMonorepoNonPackageDir.brokenPkgRoots[0]}/package.json`
+      const monorepo = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoNonPackageDir.root
+      });
+
+      Fixtures.badMonorepoNonPackageDir.brokenPkgRoots.forEach((pkgRoot) => {
+        expect(monorepo.output).toStrictEqual(
+          stringContainingErrorMessage(
+            `${pkgRoot}/package.json`,
+            ErrorMessage.MissingFile()
           )
-        )
+        );
       });
     });
 
@@ -275,9 +280,7 @@ describe('::runProjectLinter', () => {
         summary: expect.stringContaining('1 error, 0 warnings'),
         output: stringContainingErrorMessage(
           `${Fixtures.goodMonorepo.namedPkgMapData[1][1].root}/package.json`,
-          ErrorMessage.PackageJsonUnparsable(
-            `${Fixtures.goodMonorepo.namedPkgMapData[1][1].root}/package.json`
-          )
+          ErrorMessage.PackageJsonUnparsable()
         )
       });
     });
@@ -285,25 +288,57 @@ describe('::runProjectLinter', () => {
     it('errors if two sub-roots share the same name', async () => {
       expect.hasAssertions();
 
-      await expect(
-        Linters.runProjectLinter({ rootDir: Fixtures.badMonorepoDuplicateName.root })
-      ).resolves.toStrictEqual({
-        success: false,
-        summary: expect.stringContaining('1 error, 0 warnings'),
-        output: expect.stringMatching(/"pkg".+?\/pkg-1.+?\/pkg-2/ms)
+      const monorepo = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoDuplicateName.root
       });
+
+      expect(monorepo.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoDuplicateName.root}/pkg/pkg-1`,
+          ErrorMessage.DuplicatePackageName(
+            'pkg',
+            `${Fixtures.badMonorepoDuplicateName.root}/pkg/pkg-2`
+          )
+        )
+      );
+
+      expect(monorepo.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoDuplicateName.root}/pkg/pkg-2`,
+          ErrorMessage.DuplicatePackageName(
+            'pkg',
+            `${Fixtures.badMonorepoDuplicateName.root}/pkg/pkg-1`
+          )
+        )
+      );
     });
 
     it('errors if two unnamed sub-roots share the same package-id', async () => {
       expect.hasAssertions();
 
-      await expect(
-        Linters.runProjectLinter({ rootDir: Fixtures.badMonorepoDuplicateId.root })
-      ).resolves.toStrictEqual({
-        success: false,
-        summary: expect.stringContaining('1 error, 0 warnings'),
-        output: expect.stringMatching(/"pkg-1".+?\/pkg-1.+?\/pkg-1/ms)
+      const monorepo = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoDuplicateId.root
       });
+
+      expect(monorepo.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoDuplicateId.root}/packages-1/pkg-1`,
+          ErrorMessage.DuplicatePackageId(
+            'pkg-1',
+            `${Fixtures.badMonorepoDuplicateId.root}/packages-2/pkg-1`
+          )
+        )
+      );
+
+      expect(monorepo.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoDuplicateId.root}/packages-2/pkg-1`,
+          ErrorMessage.DuplicatePackageId(
+            'pkg-1',
+            `${Fixtures.badMonorepoDuplicateId.root}/packages-1/pkg-1`
+          )
+        )
+      );
     });
   });
 

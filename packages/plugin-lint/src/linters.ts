@@ -94,25 +94,38 @@ export async function runProjectLinter({
       };
 
     const ctx = (() => {
-      const report = reportFactory(rootDir);
       try {
         // ? Technically we could accept cwd instead of forcing rootDir, but
         // ? accepting a cwd would not align with the other linter interfaces...
         return getRunContext({ cwd: rootDir });
       } catch (e) {
         if (e instanceof PackageJsonNotFoundError) {
-          report('error', ErrorMessage.MissingFile(rootDir));
-        } else if (e instanceof BadPackageJsonError) {
-          reportFactory(e.packageJsonPath)(
+          reportFactory(`${rootDir}/package.json`)(
             'error',
-            ErrorMessage.PackageJsonUnparsable(rootDir)
+            ErrorMessage.FatalMissingFile()
           );
+        } else if (e instanceof BadPackageJsonError) {
+          reportFactory(e.packageJsonPath)('error', ErrorMessage.PackageJsonUnparsable());
         } else if (e instanceof NotAGitRepositoryError) {
-          report('error', ErrorMessage.NotAGitRepository());
+          reportFactory(rootDir)('error', ErrorMessage.NotAGitRepository());
         } else if (e instanceof DuplicatePackageIdError) {
-          report('error', e.message[0].toUpperCase() + e.message.slice(1));
+          reportFactory(e.firstPath)(
+            'error',
+            ErrorMessage.DuplicatePackageId(e.id, e.secondPath)
+          );
+          reportFactory(e.secondPath)(
+            'error',
+            ErrorMessage.DuplicatePackageId(e.id, e.firstPath)
+          );
         } else if (e instanceof DuplicatePackageNameError) {
-          report('error', e.message[0].toUpperCase() + e.message.slice(1));
+          reportFactory(e.firstPath)(
+            'error',
+            ErrorMessage.DuplicatePackageName(e.pkgName, e.secondPath)
+          );
+          reportFactory(e.secondPath)(
+            'error',
+            ErrorMessage.DuplicatePackageName(e.pkgName, e.firstPath)
+          );
         } else {
           throw e;
         }
@@ -131,25 +144,34 @@ export async function runProjectLinter({
     // TODO: use debug
 
     // ? Checks are performed in "parallel"
-    //const tasks = [];
+    const tasks: Promise<unknown>[] = [];
 
     // ? These checks are performed across all contexts
     if (ctx !== undefined) {
-      void debug;
-
       // ? These checks are performed UNLESS linting a sub-root
-      if (ctx.context == 'polyrepo' || ctx.package) {
+      if (ctx.context == 'polyrepo' || !ctx.package) {
       }
 
       if (ctx.context == 'monorepo') {
         // ? These checks are performed ONLY IF linting a monorepo root
         if (!ctx.package) {
+          if (ctx.project.packages.broken.length) {
+            ctx.project.packages.broken.forEach((pkgRoot) =>
+              reportFactory(`${pkgRoot}/package.json`)(
+                'error',
+                ErrorMessage.MissingFile()
+              )
+            );
+          }
         }
         // ? These checks are performed ONLY IF linting a sub-root
         else {
         }
       }
     }
+
+    // ? Wait for checks to finish
+    await Promise.all(tasks);
 
     return {
       success: errorCount == 0,
