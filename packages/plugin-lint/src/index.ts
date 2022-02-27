@@ -150,7 +150,7 @@ export function configureProgram(program?: Program): Context {
 
         outputBuffer += `${firstToOutput ? '' : '\n\n'}:: Linting results ::\n`;
 
-        outputBuffer += `Remark: ${results[3].success ? '✅' : '❌'} (${
+        outputBuffer += `Remark:     ${results[3].success ? '✅' : '❌'} (${
           results[3].summary
         })\n`;
 
@@ -158,11 +158,11 @@ export function configureProgram(program?: Program): Context {
           results[1].summary
         })\n`;
 
-        outputBuffer += `ESLint: ${results[2].success ? '✅' : '❌'} (${
+        outputBuffer += `ESLint:     ${results[2].success ? '✅' : '❌'} (${
           results[2].summary
         })\n`;
 
-        outputBuffer += `Project: ${results[0].success ? '✅' : '❌'} (${
+        outputBuffer += `Project:    ${results[0].success ? '✅' : '❌'} (${
           results[0].summary
         })\n`;
 
