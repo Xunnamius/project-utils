@@ -3,6 +3,16 @@ import { Fixtures } from 'testverse/fixtures';
 import { toss } from 'toss-expression';
 import { ErrorMessage } from '../src/errors';
 import { clearPackageJsonCache } from 'pkgverse/core/src/project-utils';
+import escapeRegexp from 'escape-string-regexp';
+
+const stringContainingErrorMessage = (currentFile: string, errorMessage: string) => {
+  return expect.stringMatching(
+    RegExp(
+      `^.+${escapeRegexp(currentFile)}.+(?:\n  .*?)+${escapeRegexp(errorMessage)}$`,
+      'm'
+    )
+  );
+};
 
 beforeEach(() => {
   clearPackageJsonCache();
@@ -17,7 +27,10 @@ describe('::runProjectLinter', () => {
     ).resolves.toStrictEqual({
       success: false,
       summary: expect.stringContaining('1 error, 0 warnings'),
-      output: expect.stringContaining(ErrorMessage.NotAGitRepository())
+      output: stringContainingErrorMessage(
+        '/does/not/exist/package.json',
+        ErrorMessage.NotAGitRepository()
+      )
     });
   });
 
@@ -29,7 +42,8 @@ describe('::runProjectLinter', () => {
     ).resolves.toStrictEqual({
       success: false,
       summary: expect.stringContaining('1 error, 0 warnings'),
-      output: expect.stringContaining(
+      output: stringContainingErrorMessage(
+        `${Fixtures.badPolyrepoNoPackageJson.root}/package.json`,
         ErrorMessage.MissingFile(`${Fixtures.badPolyrepoNoPackageJson.root}/package.json`)
       )
     });
@@ -45,7 +59,8 @@ describe('::runProjectLinter', () => {
     ).resolves.toStrictEqual({
       success: false,
       summary: expect.stringContaining('1 error, 0 warnings'),
-      output: expect.stringContaining(
+      output: stringContainingErrorMessage(
+        `${Fixtures.goodMonorepo.root}/package.json`,
         ErrorMessage.PackageJsonUnparsable(`${Fixtures.goodMonorepo.root}/package.json`)
       )
     });
@@ -53,12 +68,68 @@ describe('::runProjectLinter', () => {
 
   it('errors when the dist directory or its subdirectories contain .tsbuildinfo files', async () => {
     expect.hasAssertions();
-    // TODO: monorepo and polyrepo
+
+    const monorepo = await Linters.runProjectLinter({
+      rootDir: Fixtures.badMonorepo.root
+    });
+
+    expect(monorepo.output).toStrictEqual(
+      stringContainingErrorMessage(
+        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/dist/tsconfig.fake.tsbuildinfo`,
+        ErrorMessage.IllegalItemInDirectory(`${Fixtures.badMonorepo.root}/dist`)
+      )
+    );
+
+    expect(monorepo.output).toStrictEqual(
+      stringContainingErrorMessage(
+        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/dist/sub-dir/tsconfig.fake.tsbuildinfo`,
+        ErrorMessage.IllegalItemInDirectory(`${Fixtures.badMonorepo.root}/dist`)
+      )
+    );
+
+    const polyrepo = await Linters.runProjectLinter({
+      rootDir: Fixtures.badPolyrepo.root
+    });
+
+    expect(polyrepo.output).toStrictEqual(
+      stringContainingErrorMessage(
+        `${Fixtures.badPolyrepo.unnamedPkgMapData[0][1].root}/dist/tsconfig.fake.tsbuildinfo`,
+        ErrorMessage.IllegalItemInDirectory(`${Fixtures.badPolyrepo.root}/dist`)
+      )
+    );
   });
 
   it('errors when package.json does not contain necessary fields', async () => {
     expect.hasAssertions();
-    // TODO: monorepo and polyrepo
+
+    const monorepo = await Linters.runProjectLinter({
+      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[1][1].root
+    });
+
+    expect(monorepo.output).toStrictEqual(
+      ErrorMessage.PackageJsonMissingKey(
+        'tsconfig.fake.tsbuildinfo',
+        `${Fixtures.badMonorepo.root}/dist`
+      )
+    );
+
+    expect(monorepo.output).toStrictEqual(
+      ErrorMessage.IllegalItemInDirectory(
+        'sub-dir/tsconfig.fake2.tsbuildinfo',
+        `${Fixtures.badMonorepo.root}/dist`
+      )
+    );
+
+    const polyrepo = await Linters.runProjectLinter({
+      rootDir: Fixtures.badPolyrepo.root
+    });
+
+    expect(polyrepo.output).toStrictEqual(
+      ErrorMessage.IllegalItemInDirectory(
+        'tsconfig.fake.tsbuildinfo',
+        `${Fixtures.badPolyrepo.root}/dist`
+      )
+    );
   });
 
   it('errors when package.json does not contain certain fields unless "private" field is set to "true"', async () => {
@@ -202,7 +273,8 @@ describe('::runProjectLinter', () => {
       ).resolves.toStrictEqual({
         success: false,
         summary: expect.stringContaining('1 error, 0 warnings'),
-        output: expect.stringContaining(
+        output: stringContainingErrorMessage(
+          `${Fixtures.goodMonorepo.namedPkgMapData[1][1].root}/package.json`,
           ErrorMessage.PackageJsonUnparsable(
             `${Fixtures.goodMonorepo.namedPkgMapData[1][1].root}/package.json`
           )

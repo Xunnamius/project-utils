@@ -25,35 +25,33 @@ export const ErrorMessage = {
     'The current working directory must be within a Git repository',
   MissingFile: (filePath: string) => `Missing file: ${filePath}`,
   MissingDirectory: (dirPath: string) => `Missing directory: ${dirPath}`,
-  IllegalItemInDirectory: (itemPath: string, dirPath: string) =>
-    `${itemPath} is not allowed in ${dirPath}`,
+  IllegalItemInDirectory: (dirPath: string) =>
+    `This file or directory must not exist under ${dirPath}`,
   PackageJsonUnparsable: (filePath: string) => `Could not parse ${filePath} as JSON`,
-  PackageJsonMissingKey: (key: string) => `The "${key}" key is missing in package.json`,
-  PackageJsonObsoleteKey: (key: string) =>
-    `The obsolete "${key}" key should not be used in package.json`,
+  PackageJsonMissingKey: (key: string) => `The "${key}" key is missing`,
+  PackageJsonObsoleteKey: (key: string) => `The obsolete "${key}" key should not be used`,
   PackageJsonDuplicateDependency: (dep: string) =>
-    `The "${dep}" package appears in both "dependencies" and "devDependencies" in package.json`,
+    `The "${dep}" package appears in both "dependencies" and "devDependencies"`,
   PackageJsonMissingValue: (key: string, value: string) =>
-    `The "${key}" field in package.json does not include value "${value}"`,
+    `The "${key}" field does not include value "${value}"`,
   PackageJsonMissingEntryPoint: (entryPoint: string) =>
-    `The "exports['${entryPoint}']" entry point is missing in package.json`,
+    `The "exports['${entryPoint}']" entry point is missing`,
   CommitNeedsFixup: (sha: string) =>
     `Commit "${sha}" contains "fixup" or "mergeme" in its subject and should be squashed/merged`,
   PackageJsonExperimentalVersion: () =>
-    `The "version" field in package.json contains an experimental semver (e.g. 0.x.y)`,
+    `The "version" field contains an experimental semver (e.g. 0.x.y)`,
   PackageJsonBadEntryPoint: (exportsPath: string[]) =>
     `The "${ObjectPath.stringify([
       'exports',
       ...exportsPath
-    ])}" entry point references a non-existent file in package.json`,
+    ])}" entry point references a non-existent file`,
   PackageJsonBadEngine: (ltsVersion: string) =>
-    `The "engines.node" field in package.json should reference the earliest maintenance version (i.e. ">=${ltsVersion}")`,
-  PackageJsonPinnedDependency: (dep: string) =>
-    `The "${dep}" package is pinned in package.json`,
+    `The "engines.node" field should reference the earliest maintenance version (i.e. ">=${ltsVersion}")`,
+  PackageJsonPinnedDependency: (dep: string) => `The "${dep}" package is pinned`,
   PackageJsonTaggedDependency: (dep: string) =>
-    `The "${dep}" package is using a dist-tag instead of a semver in package.json`,
+    `The "${dep}" package is using a dist-tag instead of a semver`,
   PackageJsonBadConfigDocsEntry: () =>
-    `The "config.docs.entry" field in package.json references a non-existent file`,
+    `The "config.docs.entry" field references a non-existent file`,
   MarkdownMissingTopmatter: (id: string, fileName: string) =>
     `The "${id}" topmatter is missing in ${fileName}`,
   MarkdownBadTopmatter: (id: string, fileName: string) =>

@@ -13,6 +13,8 @@ import {
   DuplicatePackageNameError
 } from 'pkgverse/core/src/errors';
 
+// ? Speedup: only consider the last 5 lines
+const numLinesToConsider = 5;
 const debug = debugFactory('@projector-js/plugin-lint:linters');
 
 type UnifiedReturnType = Promise<{
@@ -29,7 +31,7 @@ type UnifiedReturnType = Promise<{
  */
 const ignoreEmptyAndDebugLines = (line: string) => {
   return (
-    line &&
+    stripAnsi(line) &&
     line != 'Debugger attached.' &&
     line != 'Waiting for the debugger to disconnect...'
   );
@@ -77,31 +79,34 @@ export async function runProjectLinter({
 
     let errorCount = 0;
     let warnCount = 0;
-    let currentFile = `${rootDir}/package.json`;
 
-    const report = (type: 'warn' | 'error', message: string) => {
-      type == 'warn' ? warnCount++ : errorCount++;
-      if (!outputTree[currentFile]) outputTree[currentFile] = [];
-      outputTree[currentFile].push(
-        `${
-          type == 'warn'
-            ? chalk.hex('#340343').bgYellow(' warn ')
-            : chalk.hex('#340343').bgRed(' ERR! ')
-        } ${message}`
-      );
-    };
+    const reportFactory =
+      (currentFile: string) => (type: 'warn' | 'error', message: string) => {
+        type == 'warn' ? warnCount++ : errorCount++;
+        if (!outputTree[currentFile]) outputTree[currentFile] = [];
+        outputTree[currentFile].push(
+          `${
+            type == 'warn'
+              ? chalk.hex('#340343').bgYellow(' warn ')
+              : chalk.hex('#340343').bgRed(' ERR! ')
+          } ${message}`
+        );
+      };
 
     const ctx = (() => {
+      const report = reportFactory(rootDir);
       try {
         // ? Technically we could accept cwd instead of forcing rootDir, but
         // ? accepting a cwd would not align with the other linter interfaces...
         return getRunContext({ cwd: rootDir });
       } catch (e) {
         if (e instanceof PackageJsonNotFoundError) {
-          report('error', ErrorMessage.MissingFile(currentFile));
+          report('error', ErrorMessage.MissingFile(rootDir));
         } else if (e instanceof BadPackageJsonError) {
-          currentFile = e.packageJsonPath;
-          report('error', ErrorMessage.PackageJsonUnparsable(currentFile));
+          reportFactory(e.packageJsonPath)(
+            'error',
+            ErrorMessage.PackageJsonUnparsable(rootDir)
+          );
         } else if (e instanceof NotAGitRepositoryError) {
           report('error', ErrorMessage.NotAGitRepository());
         } else if (e instanceof DuplicatePackageIdError) {
@@ -124,6 +129,9 @@ export async function runProjectLinter({
     // TODO: checks should be async
 
     // TODO: use debug
+
+    // ? Checks are performed in "parallel"
+    //const tasks = [];
 
     // ? These checks are performed across all contexts
     if (ctx !== undefined) {
@@ -196,8 +204,7 @@ export async function runTypescriptLinter({
     tscOutput.all
       ?.trimEnd()
       .split('\n')
-      // ? Speedup: only consider the last 5 lines
-      .slice(-5)
+      .slice(-numLinesToConsider)
       .filter(ignoreEmptyAndDebugLines)
       .at(-1) || '';
 
@@ -248,22 +255,53 @@ export async function runEslintLinter({
     { cwd: rootDir, all: true }
   );
 
+  let output = eslintOutput.all?.trimEnd() || '';
+
+  // ? Split this into two so we can save the knowledge from this step for later
+  const lastLinesWithContent = stripAnsi(output)
+    .split('\n')
+    .slice(-numLinesToConsider)
+    .filter(ignoreEmptyAndDebugLines);
+
   const lastLine =
-    stripAnsi(eslintOutput.all?.trimEnd() || '')
-      .split('\n')
-      // ? Speedup: only consider the last 5 lines
-      .slice(-5)
-      .filter((line) => ignoreEmptyAndDebugLines(line) && !line.includes('--fix'))
-      .at(-1) || '';
+    lastLinesWithContent.filter((line) => !line.includes('--fix')).at(-1) || '';
 
   const lastLineMeta =
     /problems? \(((?<errors>\d+) errors?(, )?)?((?<warnings>\d+) warning)?/.exec(
       lastLine
     );
 
+  // ? Use slice to get rid of empty newlines surrounded by ansi codes and
+  // ? other undesirable lines that should not appear at the start of output
+  for (
+    let numLinesConsidered = 0;
+    numLinesConsidered < numLinesToConsider;
+    numLinesConsidered++
+  ) {
+    const indexOfNewLine = output.indexOf('\n');
+    // ? Stop deleting on the first line that isn't empty or ignorable
+    if (indexOfNewLine < 0 || ignoreEmptyAndDebugLines(output.slice(0, indexOfNewLine))) {
+      break;
+    } else {
+      // ? DELETE!
+      output = output.slice(indexOfNewLine + 1);
+    }
+  }
+
+  // ? Use slice to get rid of empty newlines surrounded by ansi codes and
+  // ? other undesirable lines that should not appear at the end of output
+  for (
+    let numLinesToRemove = -numLinesToConsider + lastLinesWithContent.length;
+    output && numLinesToRemove < 0;
+    numLinesToRemove++
+  ) {
+    // ? DELETE!
+    output = output.slice(0, output.lastIndexOf('\n') + 1);
+  }
+
   return {
     success: eslintOutput.code == 0,
-    output: eslintOutput.all || eslintOutput.shortMessage,
+    output: output || eslintOutput.shortMessage,
     summary: summarizeOutput(eslintOutput.code, lastLine, lastLineMeta)
   };
 }
@@ -329,8 +367,7 @@ export async function runRemarkLinter({
   const lastLine =
     stripAnsi(remarkOutput.all?.trimEnd() || '')
       .split('\n')
-      // ? Speedup: only consider the last 5 lines
-      .slice(-5)
+      .slice(-numLinesToConsider)
       .filter(ignoreEmptyAndDebugLines)
       .at(-1) || '';
 
