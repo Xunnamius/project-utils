@@ -164,8 +164,8 @@ These additional checks are performed only if linting a [sub-root][12]:
 > † This check is performed using [Espree][16] AST static analysis. Dynamic
 > imports are not checked.\
 > ‡ This check is performed using [mdast-util-from-markdown][17] AST static analysis.\
-> ⹋ When in `--pre-push` mode, only these checks are performed. All others are
-> skipped.
+> ⹋ When in pre-push mode (`--pre-push-only`), only these checks are performed.
+> All others are skipped.
 
 ## Install
 
