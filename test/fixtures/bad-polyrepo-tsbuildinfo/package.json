@@ -1,0 +1,10 @@
+{
+  "name": "bad-polyrepo-tsbuildinfo",
+  "type": "commonjs",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "echo 'it works!'"
+  }
+}
