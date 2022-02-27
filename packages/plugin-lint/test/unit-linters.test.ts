@@ -105,35 +105,6 @@ describe('::runProjectLinter', () => {
 
   it('errors when package.json does not contain necessary fields', async () => {
     expect.hasAssertions();
-
-    const monorepo = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[1][1].root
-    });
-
-    expect(monorepo.output).toStrictEqual(
-      ErrorMessage.PackageJsonMissingKey(
-        'tsconfig.fake.tsbuildinfo',
-        `${Fixtures.badMonorepo.root}/dist`
-      )
-    );
-
-    expect(monorepo.output).toStrictEqual(
-      ErrorMessage.IllegalItemInDirectory(
-        'sub-dir/tsconfig.fake2.tsbuildinfo',
-        `${Fixtures.badMonorepo.root}/dist`
-      )
-    );
-
-    const polyrepo = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root
-    });
-
-    expect(polyrepo.output).toStrictEqual(
-      ErrorMessage.IllegalItemInDirectory(
-        'tsconfig.fake.tsbuildinfo',
-        `${Fixtures.badPolyrepo.root}/dist`
-      )
-    );
   });
 
   it('errors when package.json does not contain certain fields unless "private" field is set to "true"', async () => {
