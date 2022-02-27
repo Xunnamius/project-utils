@@ -21,15 +21,23 @@ makeNamedError(LinterError, 'LinterError');
  * A collection of possible linting errors and warnings.
  */
 export const ErrorMessage = {
-  NotAGitRepository: () =>
-    'The current working directory must be within a Git repository',
-  MissingFile: (filePath: string) => `Missing file: ${filePath}`,
-  MissingDirectory: (dirPath: string) => `Missing directory: ${dirPath}`,
+  NotAGitRepository: () => 'The project is not Git repository',
+  PackageIdCollision: (packageId: string, packageJsonPath: string) =>
+    `${ErrorMessage.PackageJsonMissingKey(
+      'name'
+    )}.\nThis is not a problem except that package-id "${packageId}" is already used by another unnamed package: ${packageJsonPath}`,
+  PackageNameCollision: (packageName: string, packageJsonPath: string) =>
+    `The package name "${packageName}" is already used by another package: ${packageJsonPath}`,
+  FatalMissingFile: () =>
+    `${ErrorMessage.MissingFile()}.\nThe file must exist for compatibility with Projector-based workflows`,
+  MissingFile: () => `The file does not exist but is expected`,
+  MissingDirectory: () => `The directory does not exist but is expected`,
   IllegalItemInDirectory: (dirPath: string) =>
-    `This file or directory must not exist under ${dirPath}`,
-  PackageJsonUnparsable: (filePath: string) => `Could not parse ${filePath} as JSON`,
-  PackageJsonMissingKey: (key: string) => `The "${key}" key is missing`,
-  PackageJsonObsoleteKey: (key: string) => `The obsolete "${key}" key should not be used`,
+    `The file or directory should not exist under ${dirPath}`,
+  PackageJsonUnparsable: () => `The file could not be parsed as JSON`,
+  PackageJsonMissingKey: (key: string) => `The file is missing the "${key}" field`,
+  PackageJsonObsoleteKey: (key: string) =>
+    `The file contains the obsolete "${key}" field`,
   PackageJsonDuplicateDependency: (dep: string) =>
     `The "${dep}" package appears in both "dependencies" and "devDependencies"`,
   PackageJsonMissingValue: (key: string, value: string) =>
@@ -37,7 +45,7 @@ export const ErrorMessage = {
   PackageJsonMissingEntryPoint: (entryPoint: string) =>
     `The "exports['${entryPoint}']" entry point is missing`,
   CommitNeedsFixup: (sha: string) =>
-    `Commit "${sha}" contains "fixup" or "mergeme" in its subject and should be squashed/merged`,
+    `The commit "${sha}" contains "fixup" or "mergeme" in its subject and should be squashed/merged`,
   PackageJsonExperimentalVersion: () =>
     `The "version" field contains an experimental semver (e.g. 0.x.y)`,
   PackageJsonBadEntryPoint: (exportsPath: string[]) =>
@@ -45,19 +53,15 @@ export const ErrorMessage = {
       'exports',
       ...exportsPath
     ])}" entry point references a non-existent file`,
-  PackageJsonBadEngine: (ltsVersion: string) =>
-    `The "engines.node" field should reference the earliest maintenance version (i.e. ">=${ltsVersion}")`,
+  PackageJsonBadEngine: (engineSemver: string) =>
+    `The "engines.node" field should use the recommended value: "${engineSemver}")`,
   PackageJsonPinnedDependency: (dep: string) => `The "${dep}" package is pinned`,
   PackageJsonTaggedDependency: (dep: string) =>
-    `The "${dep}" package is using a dist-tag instead of a semver`,
+    `The "${dep}" package was installed using a dist-tag instead of a semver`,
   PackageJsonBadConfigDocsEntry: () =>
     `The "config.docs.entry" field references a non-existent file`,
-  MarkdownMissingTopmatter: (id: string, fileName: string) =>
-    `The "${id}" topmatter is missing in ${fileName}`,
-  MarkdownBadTopmatter: (id: string, fileName: string) =>
-    `The "${id}" topmatter is misconfigured in ${fileName}`,
-  MarkdownMissingLink: (id: string, fileName: string) =>
-    `The "${id}" standard link is missing in ${fileName}`,
-  MarkdownBadLink: (id: string, fileName: string) =>
-    `The "${id}" standard link is misconfigured in ${fileName}`
+  MarkdownMissingTopmatter: (item: string) => `The "${item}" topmatter item is missing`,
+  MarkdownBadTopmatter: (item: string) => `The "${item}" topmatter item is misconfigured`,
+  MarkdownMissingLink: (link: string) => `The "${link}" standard link is missing`,
+  MarkdownBadLink: (link: string) => `The "${link}" standard link is misconfigured`
 };
