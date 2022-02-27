@@ -41,7 +41,7 @@ export function configureProgram(program?: Program): Context {
   finalProgram
     .scriptName('plugin-lint')
     .usage('$0\n\nCheck a project for correctness.')
-    .strictOptions()
+    .strict()
     .string('_')
     .options({
       silent: {
@@ -49,7 +49,7 @@ export function configureProgram(program?: Program): Context {
         type: 'boolean',
         default: false
       },
-      rootDir: {
+      'root-dir': {
         describe:
           'The project root directory containing ESLint and TypeScript ' +
           'configuration files, and that relative paths and globs are ' +
@@ -58,14 +58,14 @@ export function configureProgram(program?: Program): Context {
         default: process.cwd(),
         defaultDescription: 'process.cwd()'
       },
-      srcPath: {
+      'src-path': {
         describe:
           'Absolute or relative paths that resolve to one or more directories ' +
           'containing source files, or to one or more source files themselves.',
         type: 'array',
         default: ['./src']
       },
-      mdPath: {
+      'md-path': {
         describe:
           'Absolute paths, relative paths, and/or globs that resolve to one ' +
           'or more markdown files.',
@@ -75,7 +75,7 @@ export function configureProgram(program?: Program): Context {
       },
       project: {
         describe:
-          'An absolute or relative path to a TypeScript tsconfig.json configuration file.',
+          'An absolute or relative path to, or file name of a TypeScript tsconfig.json configuration file.',
         type: 'string',
         default: 'tsconfig.lint.json'
       },
