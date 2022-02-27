@@ -1,4 +1,3 @@
-import { debugFactory } from 'multiverse/debug-extended';
 import { run } from 'multiverse/run';
 import { ErrorMessage } from './errors';
 import stripAnsi from 'strip-ansi';
@@ -15,7 +14,6 @@ import {
 
 // ? Speedup: only consider the last 5 lines
 const numLinesToConsider = 5;
-const debug = debugFactory('@projector-js/plugin-lint:linters');
 
 type UnifiedReturnType = Promise<{
   success: boolean;
