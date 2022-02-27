@@ -93,7 +93,7 @@ ESLint, the following checks are performed:
 
 These additional checks are performed if the current project is a monorepo:
 
-- ⛔ Errors when a sub-root `package.json` file is missing or unparsable
+- ⛔ Errors when a sub-root `package.json` file is unparsable
 - ⛔ Errors when a package shares the same `package.json` `name` field as
   another package in the monorepo
 - ⛔ Errors when an unnamed package shares the same [package-id][12] as another
@@ -154,7 +154,6 @@ These additional checks are performed only if linting a [monorepo root][12]:
 
 These additional checks are performed only if linting a [sub-root][12]:
 
-- ⛔ Errors when this package's `package.json` file is not parsable
 - ⛔ † Errors when this package's source imports another package from the same
   monorepo but doesn't list said package in `package.json` `dependencies` field
   - [Self-referential imports][13] are excluded from this check
