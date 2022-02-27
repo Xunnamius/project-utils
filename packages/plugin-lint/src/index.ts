@@ -115,48 +115,52 @@ export function configureProgram(program?: Program): Context {
 
       if (!silent) {
         let firstToOutput = true;
+        let outputBuffer = '';
+
         const outputSeparator = () => {
-          console.log(`${!firstToOutput ? '\n---\n' : ''}`);
+          outputBuffer += `${!firstToOutput ? '\n---\n' : ''}\n`;
           firstToOutput = false;
         };
 
         if (results[3].output) {
           outputSeparator();
-          console.log(`:Remark:\n\n${results[3].output}`);
+          outputBuffer += `:Remark:\n\n${results[3].output}\n`;
         }
 
         if (results[1].output) {
           outputSeparator();
-          process.stdout.write(`:TypeScript:\n\n${results[1].output}`);
+          outputBuffer += `:TypeScript:\n\n${results[1].output}\n`;
         }
 
         if (results[2].output) {
           outputSeparator();
-          process.stdout.write(`:ESLint:\n${results[2].output}`);
+          outputBuffer += `:ESLint:\n\n${results[2].output}\n`;
         }
 
         if (results[0].output) {
           outputSeparator();
-          console.log(`:Project:\n\n${results[0].output}`);
+          outputBuffer += `:Project:\n\n${results[0].output}\n`;
         }
 
-        console.log(`${firstToOutput ? '' : '\n'}:: Linting results ::`);
+        outputBuffer += `${firstToOutput ? '' : '\n\n'}:: Linting results ::\n`;
 
-        console.log(
-          `Remark: ${results[3].success ? '✅' : '❌'} (${results[3].summary})`
-        );
+        outputBuffer += `Remark: ${results[3].success ? '✅' : '❌'} (${
+          results[3].summary
+        })\n`;
 
-        console.log(
-          `TypeScript: ${results[1].success ? '✅' : '❌'} (${results[1].summary})`
-        );
+        outputBuffer += `TypeScript: ${results[1].success ? '✅' : '❌'} (${
+          results[1].summary
+        })\n`;
 
-        console.log(
-          `ESLint: ${results[2].success ? '✅' : '❌'} (${results[2].summary})`
-        );
+        outputBuffer += `ESLint: ${results[2].success ? '✅' : '❌'} (${
+          results[2].summary
+        })\n`;
 
-        console.log(
-          `Project: ${results[0].success ? '✅' : '❌'} (${results[0].summary})`
-        );
+        outputBuffer += `Project: ${results[0].success ? '✅' : '❌'} (${
+          results[0].summary
+        })\n`;
+
+        process.stdout.write(outputBuffer.replace(/\n\n\n+/g, '\n\n'));
       }
 
       if (results.some(({ success }) => !success)) {
