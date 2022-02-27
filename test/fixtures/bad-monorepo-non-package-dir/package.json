@@ -3,7 +3,8 @@
   "type": "commonjs",
   "workspaces": [
     "pkgs/pkg-1",
-    "pkgs/pkg-10"
+    "pkgs/pkg-10",
+    "pkgs/pkg-100"
   ],
   "scripts": {
     "test": "echo 'it works!'"

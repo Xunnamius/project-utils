@@ -115,7 +115,7 @@ createFixture({
   fixtureName: 'badMonorepoNonPackageDir',
   root: 'bad-monorepo-non-package-dir',
   namedPkgMapData: [{ name: 'pkg-1', root: 'pkgs/pkg-1' }],
-  brokenPkgRoots: ['pkgs/pkg-10']
+  brokenPkgRoots: ['pkgs/pkg-10', 'pkgs/pkg-100']
 });
 
 createFixture({
