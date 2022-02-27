@@ -100,6 +100,12 @@ export function configureProgram(program?: Program): Context {
       const sourcePaths = finalArgv.srcPath as string[];
       const markdownPaths = finalArgv.mdPath as string[];
 
+      debug('finalArgv.silent: %O', silent);
+      debug('finalArgv.tsconfig: %O', tsconfig);
+      debug('finalArgv.rootDir: %O', rootDir);
+      debug('finalArgv.sourcePaths: %O', sourcePaths);
+      debug('finalArgv.markdownPaths: %O', markdownPaths);
+
       const results = await Promise.all([
         runProjectLinter({ rootDir }),
         runTypescriptLinter({ rootDir, tsconfig }),
@@ -108,9 +114,6 @@ export function configureProgram(program?: Program): Context {
       ]);
 
       if (!silent) {
-        // TODO: output path of each package (especially when recursively linting)
-        // TODO: add "pre-push" mode and corresponding husky hook
-
         let firstToOutput = true;
         const outputSeparator = () => {
           console.log(`${!firstToOutput ? '\n---\n' : ''}`);
