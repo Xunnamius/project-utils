@@ -22,12 +22,13 @@
 
 > See the [usage section][4] for more information.
 
-This opinionated CLI tool checks a Node.js project for correctness. TypeScript
-([tsc][1]) is used for type checking, [ESLint][2] and [Espree][16] for static
-analysis of JavaScript/TypeScript source, and [Remark][3] and [mdast][17] for
-analysis of Markdown source. Further checks are performed to ensure the project
-is optimally structured and conforms to best practices, including detecting when
-running in a monorepo root vs a polyrepo root vs a sub-root.
+This opinionated CLI tool checks a Node.js project for correctness. It should be
+run [after the project has been built](/packages/plugin-build). TypeScript
+([tsc][1]) is used for type checking, [ESLint][2] and [Babel][16] for static
+analysis of JavaScript/TypeScript build output, and [Remark][3] and [mdast][17]
+for analysis of Markdown source. Further checks are performed to ensure the
+project is optimally structured and conforms to best practices, including
+detecting when running in a monorepo root vs a polyrepo root vs a sub-root.
 
 Specifically, in addition to type checking and static analysis with tsc and
 ESLint, the following checks are performed:
@@ -165,7 +166,7 @@ These additional checks are performed only if linting a [sub-root][12]:
 - ⚠️ Warns when `package.json` contains `devDependencies`
   - These should be located in the project root's `package.json` file instead
 
-> † This check is performed using [Espree][16] AST static analysis. Dynamic
+> † This check is performed using [Babel][16] AST static analysis. Dynamic
 > imports are not checked.\
 > ‡ This check is performed using [mdast-util-from-markdown][17] AST static analysis.\
 > ⹋ When in pre-push mode (`--pre-push-only`), only these checks are performed.
@@ -300,5 +301,5 @@ information.
   https://nodejs.org/api/packages.html#self-referencing-a-package-using-its-name
 [14]: https://github.com/Xunnamius/projector
 [15]: /packages/eslint-plugin
-[16]: https://www.npmjs.com/package/espree
+[16]: https://babeljs.io/docs/en/babel-core
 [17]: https://github.com/syntax-tree/mdast-util-from-markdown
