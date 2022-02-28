@@ -8,7 +8,7 @@ import escapeRegexp from 'escape-string-regexp';
 const stringContainingErrorMessage = (currentFile: string, errorMessage: string) => {
   return expect.stringMatching(
     RegExp(
-      `^.+${escapeRegexp(currentFile)}(?!/).+(?:\n  .*?)+ ${escapeRegexp(errorMessage)}$`,
+      `^.*${escapeRegexp(currentFile)}(?!/).*(?:\n  .*?)+ ${escapeRegexp(errorMessage)}$`,
       'm'
     )
   );
