@@ -24,6 +24,7 @@ export type FixtureName =
   | 'badMonorepoNonPackageDir'
   | 'badPolyrepo'
   | 'badPolyrepoNoPackageJson'
+  | 'badPolyrepoPrivate'
   | 'goodMonorepo'
   | 'goodMonorepoDuplicateId'
   | 'goodMonorepoNegatedPaths'
@@ -96,8 +97,10 @@ createFixture({
   fixtureName: 'badMonorepo',
   root: 'bad-monorepo',
   unnamedPkgMapData: [
+    { name: 'empty', root: 'packages/empty' },
     { name: 'tsbuildinfo', root: 'packages/tsbuildinfo' },
-    { name: 'empty', root: 'packages/empty' }
+    { name: 'x-private', root: 'packages/x-private' },
+    { name: 'xx-bad-deps', root: 'packages/xx-bad-deps' }
   ]
 });
 
@@ -126,6 +129,11 @@ createFixture({
 createFixture({
   fixtureName: 'badPolyrepoNoPackageJson',
   root: 'bad-polyrepo-no-package-json'
+});
+
+createFixture({
+  fixtureName: 'badPolyrepoPrivate',
+  root: 'bad-polyrepo-private'
 });
 
 createFixture({
