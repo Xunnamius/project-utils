@@ -23,12 +23,12 @@
 > See the [usage section][4] for more information.
 
 This opinionated CLI tool checks a Node.js project for correctness. It should be
-run [after the project has been built](/packages/plugin-build). TypeScript
-([tsc][1]) is used for type checking, [ESLint][2] and [Babel][16] for static
-analysis of JavaScript/TypeScript build output, and [Remark][3] and [mdast][17]
-for analysis of Markdown source. Further checks are performed to ensure the
-project is optimally structured and conforms to best practices, including
-detecting when running in a monorepo root vs a polyrepo root vs a sub-root.
+run [after the project has been built][18]. TypeScript ([tsc][1]) is used for
+type checking, [ESLint][2] and [Babel][16] for static analysis of
+JavaScript/TypeScript build output, and [Remark][3] and [mdast][17] for analysis
+of Markdown source. Further checks are performed to ensure the project is
+optimally structured and conforms to best practices, including detecting when
+running in a monorepo root vs a polyrepo root vs a sub-root.
 
 Specifically, in addition to type checking and static analysis with tsc and
 ESLint, the following checks are performed:
@@ -44,6 +44,7 @@ ESLint, the following checks are performed:
   `sideEffects`, `exports`, `typesVersions`, `files`, or `publishConfig` fields
   - When linting a [monorepo root][12], or if the `private` field exists and is
     set to `true`, this check is skipped
+  - When linting a [monorepo root][12], the check for `name` becomes a warning
 - ⛔ Errors when the same dependency appears under both `dependencies` and
   `devDependencies` fields in `package.json`
 - ⛔ Errors when `package.json` contains the `files` field but its array is
@@ -72,12 +73,14 @@ ESLint, the following checks are performed:
   - Once TypeScript [ships support for the `types` export condition][6],
     `typesVersions` will be considered "outdated" as well
 - ⚠️ Warns when `package.json` contains the `engines` field but is missing the
-  `engines.node` field path, or if it is not set to [the earliest maintained LTS
-  version of Node.js][7]
-  - For example: `{ "engines": { "node": ">=12.22.10" }}` (as of Feb 2022)
+  `engines.node` field path, or if it is not set to [the maintained and LTS
+  versions of Node.js][7]
+  - For example: `{ "engines": { "node": "^12.20.0 || ^14.13.1 || >=16.0.0" }}`
+    (as of Feb 2022)
 - ⚠️ Warns when depending on a [pinned][8] package version (like `"x.y.z"`
   instead of `"^x.y.z"`)
-  - Use [`package-lock.json`][9] + [`npm ci`][10] instead
+  - Use [`package-lock.json`][9] + [`npm ci`][10] if you want to guarantee the
+    same dependencies are consistently installed
 - ⚠️ Warns when depending on a [dist-tag package version][11] (like `"next"` or
   `"latest"`) instead of a proper semver (like `"~x.y.z"`)
 - ⚠️ Warns when `package.json` is missing the `config.docs.entry` field path, or
@@ -303,3 +306,4 @@ information.
 [15]: /packages/eslint-plugin
 [16]: https://babeljs.io/docs/en/babel-core
 [17]: https://github.com/syntax-tree/mdast-util-from-markdown
+[18]: /packages/plugin-build
