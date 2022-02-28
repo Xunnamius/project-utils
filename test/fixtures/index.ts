@@ -96,8 +96,8 @@ createFixture({
   fixtureName: 'badMonorepo',
   root: 'bad-monorepo',
   unnamedPkgMapData: [
-    { name: 'pkg-1', root: 'packages/pkg-1' },
-    { name: 'pkg-2', root: 'packages/pkg-2' }
+    { name: 'tsbuildinfo', root: 'packages/tsbuildinfo' },
+    { name: 'empty', root: 'packages/empty' }
   ]
 });
 

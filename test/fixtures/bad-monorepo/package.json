@@ -1,10 +1,5 @@
 {
-  "name": "bad-monorepo",
-  "type": "commonjs",
   "workspaces": [
     "packages/*"
-  ],
-  "scripts": {
-    "test": "echo 'it works!'"
-  }
+  ]
 }
