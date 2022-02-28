@@ -20,6 +20,12 @@ let monorepo = process.env.PKGROOT
 debug('transform-default-named-imports.monorepo : %O', monorepo);
 
 module.exports = {
+  babelrcRoots: [
+    // ? Keep the root as a root
+    '.',
+    // ? Also consider monorepo packages' .babelrc.json files
+    './packages/*'
+  ],
   parserOpts: { strictMode: true },
   plugins: [
     '@babel/plugin-syntax-import-assertions',
