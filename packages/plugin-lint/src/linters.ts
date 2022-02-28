@@ -1,8 +1,11 @@
 import { run } from 'multiverse/run';
 import { ErrorMessage } from './errors';
+import { getRunContext } from 'pkgverse/core/src/project-utils';
+import { access } from 'fs/promises';
+import { glob } from 'glob';
+import { promisify } from 'util';
 import stripAnsi from 'strip-ansi';
 import chalk from 'chalk';
-import { getRunContext } from 'pkgverse/core/src/project-utils';
 
 import {
   PackageJsonNotFoundError,
@@ -12,8 +15,51 @@ import {
   DuplicatePackageNameError
 } from 'pkgverse/core/src/errors';
 
+import type { PackageJson } from 'type-fest';
+
 // ? Speedup: only consider the last 5 lines
 const numLinesToConsider = 5;
+
+// ? Files that must exist in both roots and sub-roots (relative paths)
+export const requiredFiles = ['LICENSE', 'README.md'] as const;
+
+// ? Required fields in all roots and sub-roots
+export const globalPkgJsonRequiredFields = [
+  'homepage',
+  'repository',
+  'license',
+  'author',
+  'engines',
+  'type'
+] as const;
+
+// ? Required fields in monorepo sub-roots and polyrepo roots
+export const nonMonoRootPkgJsonRequiredFields = ['description'] as const;
+
+// ? Required fields in all roots and sub-roots when "private" != `true`
+export const publicPkgJsonRequiredFields = [
+  'name',
+  'version',
+  'keywords',
+  'sideEffects',
+  'exports',
+  'typesVersions',
+  'files',
+  'publishConfig'
+] as const;
+
+// ? Required "files" field values (absolute paths)
+export const pkgJsonRequiredFiles = [
+  '/dist',
+  '/LICENSE',
+  '/package.json',
+  '/README.md'
+] as const;
+
+// ? Required "exports" field keys
+export const pkgJsonRequiredExports = ['./package', './package.json'] as const;
+
+const globAsync = promisify(glob);
 
 type UnifiedReturnType = Promise<{
   success: boolean;
@@ -78,7 +124,7 @@ export async function runProjectLinter({
     let errorCount = 0;
     let warnCount = 0;
 
-    const reportFactory =
+    const reporterFactory =
       (currentFile: string) => (type: 'warn' | 'error', message: string) => {
         type == 'warn' ? warnCount++ : errorCount++;
         if (!outputTree[currentFile]) outputTree[currentFile] = [];
@@ -98,29 +144,32 @@ export async function runProjectLinter({
         return getRunContext({ cwd: rootDir });
       } catch (e) {
         if (e instanceof PackageJsonNotFoundError) {
-          reportFactory(`${rootDir}/package.json`)(
+          reporterFactory(`${rootDir}/package.json`)(
             'error',
             ErrorMessage.FatalMissingFile()
           );
         } else if (e instanceof BadPackageJsonError) {
-          reportFactory(e.packageJsonPath)('error', ErrorMessage.PackageJsonUnparsable());
+          reporterFactory(e.packageJsonPath)(
+            'error',
+            ErrorMessage.PackageJsonUnparsable()
+          );
         } else if (e instanceof NotAGitRepositoryError) {
-          reportFactory(rootDir)('error', ErrorMessage.NotAGitRepository());
+          reporterFactory(rootDir)('error', ErrorMessage.NotAGitRepository());
         } else if (e instanceof DuplicatePackageIdError) {
-          reportFactory(e.firstPath)(
+          reporterFactory(e.firstPath)(
             'error',
             ErrorMessage.DuplicatePackageId(e.id, e.secondPath)
           );
-          reportFactory(e.secondPath)(
+          reporterFactory(e.secondPath)(
             'error',
             ErrorMessage.DuplicatePackageId(e.id, e.firstPath)
           );
         } else if (e instanceof DuplicatePackageNameError) {
-          reportFactory(e.firstPath)(
+          reporterFactory(e.firstPath)(
             'error',
             ErrorMessage.DuplicatePackageName(e.pkgName, e.secondPath)
           );
-          reportFactory(e.secondPath)(
+          reporterFactory(e.secondPath)(
             'error',
             ErrorMessage.DuplicatePackageName(e.pkgName, e.firstPath)
           );
@@ -132,39 +181,146 @@ export async function runProjectLinter({
       }
     })();
 
-    // TODO: use browserslist to get earliest "maintained node versions" and
-    // TODO: convert this into an or (||) list, e.g.:
-    // TODO: ^12.20.0 || ^14.13.1 || >=16.0.0
-    // TODO: (project root and each package root)
-
-    // TODO: checks should be async
-
-    // TODO: use debug
-
     // ? Checks are performed in "parallel"
     const tasks: Promise<unknown>[] = [];
 
     // ? These checks are performed across all contexts
     if (ctx !== undefined) {
-      // ? These checks are performed UNLESS linting a sub-root
-      if (ctx.context == 'polyrepo' || !ctx.package) {
-      }
+      const inMonorepoRoot = ctx.context == 'monorepo' && !ctx.package;
+      const inMonorepoSubRoot = !!ctx.package;
 
-      if (ctx.context == 'monorepo') {
-        // ? These checks are performed ONLY IF linting a monorepo root
-        if (!ctx.package) {
-          if (ctx.project.packages.broken.length) {
-            ctx.project.packages.broken.forEach((pkgRoot) =>
-              reportFactory(`${pkgRoot}/package.json`)(
-                'error',
-                ErrorMessage.MissingFile()
-              )
-            );
+      const rootAndSubRootTests = (root: string, json: PackageJson) => {
+        const report = reporterFactory(`${root}/package.json`);
+
+        // ? package.json must have required fields
+        globalPkgJsonRequiredFields.forEach((field) => {
+          if (json[field] === undefined) {
+            report('error', ErrorMessage.PackageJsonMissingKey(field));
+          }
+        });
+
+        // ? package.json must have required fields (if not a monorepo root)
+        if (!inMonorepoRoot) {
+          nonMonoRootPkgJsonRequiredFields.forEach((field) => {
+            if (json[field] === undefined) {
+              report('error', ErrorMessage.PackageJsonMissingKey(field));
+            }
+          });
+
+          // ? package.json must also have required fields (if not private)
+          if (!json.private) {
+            publicPkgJsonRequiredFields.forEach((field) => {
+              if (json[field] === undefined) {
+                report('error', ErrorMessage.PackageJsonMissingKey(field));
+              }
+            });
           }
         }
-        // ? These checks are performed ONLY IF linting a sub-root
-        else {
+
+        // ? No duplicate dependencies
+        if (json.dependencies && json.devDependencies) {
+          const devDeps = Object.keys(json.devDependencies);
+          Object.keys(json.dependencies)
+            .filter((d) => devDeps.includes(d))
+            .forEach((dep) => {
+              report('error', ErrorMessage.PackageJsonDuplicateDependency(dep));
+            });
         }
+
+        // ? Has baseline distributable contents whitelist
+        if (json.files) {
+          pkgJsonRequiredFiles.forEach((file) => {
+            if (!json.files?.includes(file)) {
+              report('error', ErrorMessage.PackageJsonMissingValue('files', file));
+            }
+          });
+        }
+
+        // ? Has standard entry points
+        if (json.exports) {
+          const xports =
+            typeof json.exports == 'string' || Array.isArray(json.exports)
+              ? {}
+              : json.exports;
+
+          const entryPoints = Object.keys(xports);
+
+          pkgJsonRequiredExports.forEach((requiredEntryPoint) => {
+            if (!entryPoints.includes(requiredEntryPoint)) {
+              report(
+                'error',
+                ErrorMessage.PackageJsonMissingEntryPoint(requiredEntryPoint)
+              );
+            }
+          });
+        }
+
+        // ? No .tsbuildinfo files allowed under dist
+        tasks.push(
+          (async () => {
+            const files = await globAsync('dist/**/*.tsbuildinfo', {
+              cwd: root,
+              absolute: true,
+              ignore: ['**/node_modules/**']
+            });
+
+            for (const filePath of files) {
+              reporterFactory(filePath)(
+                'error',
+                ErrorMessage.IllegalItemInDirectory(`${root}/dist`)
+              );
+            }
+          })()
+        );
+
+        // ? Has requiredFiles
+        tasks.push(
+          Promise.all(
+            requiredFiles.map(async (file) => {
+              const filePath = `${root}/${file}`;
+              try {
+                await access(filePath);
+              } catch {
+                reporterFactory(filePath)('error', ErrorMessage.MissingFile());
+              }
+            })
+          )
+        );
+      };
+
+      // TODO: use browserslist to get earliest "maintained node versions" and
+      // TODO: convert this into an or (||) list, e.g.:
+      // TODO: ^12.20.0 || ^14.13.1 || >=16.0.0
+      // TODO: (project root and each package root)
+
+      // TODO: run/filesystem checks should be async
+
+      // TODO: use debug
+
+      rootAndSubRootTests(ctx.project.root, ctx.project.json);
+
+      // ? These checks are performed ONLY IF linting a monorepo root
+      if (inMonorepoRoot) {
+        if (ctx.project.packages.broken.length) {
+          ctx.project.packages.broken.forEach((pkgRoot) =>
+            reporterFactory(`${pkgRoot}/package.json`)(
+              'error',
+              ErrorMessage.MissingFile()
+            )
+          );
+        }
+
+        Array.from(ctx.project.packages.values())
+          .concat(Array.from(ctx.project.packages.unnamed.values()))
+          .forEach(({ root, json }) => {
+            rootAndSubRootTests(root, json);
+          });
+      }
+
+      // ? These checks are performed ONLY IF linting a sub-root
+      if (inMonorepoSubRoot) {
+      } // ? These checks are performed IF NOT linting a sub-root
+      else {
       }
     }
 
