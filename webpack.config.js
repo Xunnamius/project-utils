@@ -126,7 +126,7 @@ const externals = (options) => [
             throw new PkgverseResolverError(
               `${pkgJsonPath} must have "name" and "exports" fields`
             );
-          } else if (typeof pkg.exports == 'string') {
+          } else if (typeof pkg.exports == 'string' || Array.isArray(pkg.exports)) {
             throw new PkgverseResolverError(
               `${pkgJsonPath} must have a "exports" field with an object value (saw a string instead)`
             );
