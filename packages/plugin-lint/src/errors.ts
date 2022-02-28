@@ -39,29 +39,34 @@ export const ErrorMessage = {
   PackageJsonObsoleteKey: (key: string) =>
     `The file contains the obsolete "${key}" field`,
   PackageJsonDuplicateDependency: (dep: string) =>
-    `The "${dep}" package appears in both "dependencies" and "devDependencies"`,
+    `The file includes the "${dep}" dependency in both "dependencies" and "devDependencies"`,
   PackageJsonMissingValue: (key: string, value: string) =>
-    `The "${key}" field does not include value "${value}"`,
+    `The file has the "${key}" field but it is missing value "${value}"`,
   PackageJsonMissingEntryPoint: (entryPoint: string) =>
-    `The "exports['${entryPoint}']" entry point is missing`,
-  CommitNeedsFixup: (sha: string) =>
-    `The commit "${sha}" contains "fixup" or "mergeme" in its subject and should be squashed/merged`,
+    `The file is missing the "exports['${entryPoint}']" entry point`,
+  CommitNeedsFixup: () =>
+    `The commit contains "fixup" or "mergeme" in its subject and should be squashed/merged`,
   PackageJsonExperimentalVersion: () =>
-    `The "version" field contains an experimental semver (e.g. 0.x.y)`,
+    `The file's "version" field has an experimental semver value (e.g. 0.x.y)`,
   PackageJsonBadEntryPoint: (exportsPath: string[]) =>
-    `The "${ObjectPath.stringify([
+    `The file's "${ObjectPath.stringify([
       'exports',
       ...exportsPath
     ])}" entry point references a non-existent file`,
   PackageJsonBadEngine: (engineSemver: string) =>
-    `The "engines.node" field should use the recommended value: "${engineSemver}")`,
-  PackageJsonPinnedDependency: (dep: string) => `The "${dep}" package is pinned`,
+    `The file's "engines.node" field should use the recommended value: "${engineSemver}")`,
+  PackageJsonPinnedDependency: (dep: string) =>
+    `The file references a pinned version of the "${dep}" dependency`,
   PackageJsonTaggedDependency: (dep: string) =>
-    `The "${dep}" package was installed using a dist-tag instead of a semver`,
+    `The file references a dist-tag version of the "${dep}" dependency`,
   PackageJsonBadConfigDocsEntry: () =>
-    `The "config.docs.entry" field references a non-existent file`,
-  MarkdownMissingTopmatter: (item: string) => `The "${item}" topmatter item is missing`,
-  MarkdownBadTopmatter: (item: string) => `The "${item}" topmatter item is misconfigured`,
-  MarkdownMissingLink: (link: string) => `The "${link}" standard link is missing`,
-  MarkdownBadLink: (link: string) => `The "${link}" standard link is misconfigured`
+    `The file's "config.docs.entry" field references a non-existent file`,
+  MarkdownMissingTopmatter: (item: string) =>
+    `The file is missing the "${item}" topmatter item`,
+  MarkdownBadTopmatter: (item: string) =>
+    `The file has misconfigured the "${item}" topmatter item`,
+  MarkdownMissingLink: (link: string) =>
+    `The file is missing the "${link}" standard link`,
+  MarkdownBadLink: (link: string) =>
+    `The file has misconfigured the "${link}" standard link`
 };
