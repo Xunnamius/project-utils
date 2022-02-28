@@ -34,19 +34,19 @@ export type RootPackage = {
    */
   json: PackageJson;
   /**
-   * A mapping of package names to WorkspacePackage objects in a monorepo or
-   * `null` in a polyrepo.
+   * A mapping of sub-root package names to WorkspacePackage objects in a
+   * monorepo or `null` in a polyrepo.
    */
   packages:
     | (Map<WorkspacePackageName, WorkspacePackage> & {
         /**
-         * A mapping of packages missing the `"name"` field in their respective
-         * package.json files to WorkspacePackage objects.
+         * A mapping of sub-root packages missing the `"name"` field in their
+         * respective package.json files to WorkspacePackage objects.
          */
         unnamed: Map<WorkspacePackageName, WorkspacePackage>;
         /**
-         * An array of "broken" pseudo-package directories that are matching
-         * workspace paths but are missing a package.json file.
+         * An array of "broken" pseudo-sub-root pseudo-package directories that
+         * are matching workspace paths but are missing a package.json file.
          */
         broken: AbsolutePath[];
       })
@@ -84,7 +84,7 @@ export type RunContext = {
    */
   project: RootPackage;
   /**
-   * An object representing the current package (determined by cwd) in a
+   * An object representing the current sub-root (determined by cwd) in a
    * monorepo context, or `null` if in a polyrepo context or when cwd is not
    * within any sub-root in a monorepo context.
    */
