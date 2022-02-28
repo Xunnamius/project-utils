@@ -20,7 +20,7 @@ import type { PackageJson } from 'type-fest';
 // ? Speedup: only consider the last 5 lines
 const numLinesToConsider = 5;
 
-// ? Files that must exist in both roots and sub-roots (relative paths)
+// ? Files that must exist in all roots and sub-roots (relative paths)
 export const requiredFiles = ['LICENSE', 'README.md'] as const;
 
 // ? Required fields in all roots and sub-roots
@@ -33,10 +33,11 @@ export const globalPkgJsonRequiredFields = [
   'type'
 ] as const;
 
-// ? Required fields in monorepo sub-roots and polyrepo roots
+// ? Additionally required fields in monorepo sub-roots and polyrepo roots
 export const nonMonoRootPkgJsonRequiredFields = ['description'] as const;
 
-// ? Required fields in all roots and sub-roots when "private" != `true`
+// ? Additionally required fields in monorepo sub-roots and polyrepo roots when
+// ? "private" != `true`
 export const publicPkgJsonRequiredFields = [
   'name',
   'version',
@@ -186,10 +187,17 @@ export async function runProjectLinter({
 
     // ? These checks are performed across all contexts
     if (ctx !== undefined) {
-      const inMonorepoRoot = ctx.context == 'monorepo' && !ctx.package;
-      const inMonorepoSubRoot = !!ctx.package;
+      const startedAtMonorepoRoot = ctx.context == 'monorepo' && !ctx.package;
 
-      const rootAndSubRootTests = (root: string, json: PackageJson) => {
+      const rootAndSubRootChecks = ({
+        root,
+        json,
+        isCheckingMonorepoRoot
+      }: {
+        root: string;
+        json: PackageJson;
+        isCheckingMonorepoRoot: boolean;
+      }) => {
         const report = reporterFactory(`${root}/package.json`);
 
         // ? package.json must have required fields
@@ -200,7 +208,7 @@ export async function runProjectLinter({
         });
 
         // ? package.json must have required fields (if not a monorepo root)
-        if (!inMonorepoRoot) {
+        if (!isCheckingMonorepoRoot) {
           nonMonoRootPkgJsonRequiredFields.forEach((field) => {
             if (json[field] === undefined) {
               report('error', ErrorMessage.PackageJsonMissingKey(field));
@@ -297,10 +305,14 @@ export async function runProjectLinter({
 
       // TODO: use debug
 
-      rootAndSubRootTests(ctx.project.root, ctx.project.json);
+      rootAndSubRootChecks({
+        root: ctx.package?.root || ctx.project.root,
+        json: ctx.package?.json || ctx.project.json,
+        isCheckingMonorepoRoot: startedAtMonorepoRoot
+      });
 
       // ? These checks are performed ONLY IF linting a monorepo root
-      if (inMonorepoRoot) {
+      if (startedAtMonorepoRoot) {
         if (ctx.project.packages.broken.length) {
           ctx.project.packages.broken.forEach((pkgRoot) =>
             reporterFactory(`${pkgRoot}/package.json`)(
@@ -313,13 +325,13 @@ export async function runProjectLinter({
         Array.from(ctx.project.packages.values())
           .concat(Array.from(ctx.project.packages.unnamed.values()))
           .forEach(({ root, json }) => {
-            rootAndSubRootTests(root, json);
+            rootAndSubRootChecks({ root, json, isCheckingMonorepoRoot: false });
           });
       }
 
       // ? These checks are performed ONLY IF linting a sub-root
-      if (inMonorepoSubRoot) {
-      } // ? These checks are performed IF NOT linting a sub-root
+      if (ctx.package) {
+      } // ? These checks are performed ONLY IF NOT linting a sub-root
       else {
       }
     }
