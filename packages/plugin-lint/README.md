@@ -36,12 +36,13 @@ ESLint, the following checks are performed:
 - ⛔ Errors when the `package.json` file is missing or unparsable
 - ⛔ Errors when the `dist` directory or its subdirectories contain
   `.tsbuildinfo` files
-- ⛔ Errors when `package.json` does not contain `name`, `description`,
-  `homepage`, `repository`, `license`, `author`, or `type` fields
-- ⛔ Errors when `package.json` does not contain `version`, `keywords`,
-  `sideEffects`, `exports`, `typesVersions`, `files`, `engines`, or
-  `publishConfig` fields
-  - If the `private` field exists and is set to `true`, this check is skipped
+- ⛔ Errors when `package.json` does not contain `description`, `homepage`,
+  `repository`, `license`, `author`, `engines`, or `type` fields
+  - When linting a [monorepo root][12], the check for `description` is skipped
+- ⛔ Errors when `package.json` does not contain `name`, `version`, `keywords`,
+  `sideEffects`, `exports`, `typesVersions`, `files`, or `publishConfig` fields
+  - When linting a [monorepo root][12], or if the `private` field exists and is
+    set to `true`, this check is skipped
 - ⛔ Errors when the same dependency appears under both `dependencies` and
   `devDependencies` fields in `package.json`
 - ⛔ Errors when `package.json` contains the `files` field but its array is
@@ -149,13 +150,17 @@ These additional checks are performed only if linting a [monorepo root][12]:
   - Since the typical [root package of a monorepo][12] is only encountered in
     development, any dependencies should always be `devDependencies`
   - If a `next.config.js` file exists, this check is skipped
+- ⚠️ Warns when `package.json` is missing the `private` field or if it is not
+  set to `true`
+  - If a `next.config.js` file exists, this check is skipped
+- ⚠️ Warns when `package.json` is missing the `name` field
 - All valid [sub-roots][12] defined in the `package.json` `workspaces` field are
   recursively linted
 
 These additional checks are performed only if linting a [sub-root][12]:
 
 - ⛔ † Errors when this package's source imports another package from the same
-  monorepo but doesn't list said package in `package.json` `dependencies` field
+  monorepo but does not list said package in `package.json` `dependencies` field
   - [Self-referential imports][13] are excluded from this check
 - ⚠️ Warns when `package.json` contains `devDependencies`
   - These should be located in the project root's `package.json` file instead
