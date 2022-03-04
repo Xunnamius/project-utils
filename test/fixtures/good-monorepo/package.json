@@ -1,6 +1,6 @@
 {
   "name": "good-monorepo",
-  "version": "1.2.3",
+  "version": "0.0.0-monorepo",
   "type": "commonjs",
   "workspaces": [
     "packages/*"

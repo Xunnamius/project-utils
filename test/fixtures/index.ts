@@ -19,16 +19,19 @@ export type Fixture = {
  */
 export type FixtureName =
   | 'badMonorepo'
+  | 'badMonorepoBadMdFiles'
   | 'badMonorepoDuplicateId'
   | 'badMonorepoDuplicateName'
+  | 'badMonorepoEmptyMdFiles'
   | 'badMonorepoNonPackageDir'
   | 'badPolyrepo'
+  | 'badPolyrepoBadMdFiles'
+  | 'badPolyrepoEmptyMdFiles'
   | 'badPolyrepoNoPackageJson'
   | 'badPolyrepoPrivate'
   | 'goodMonorepo'
   | 'goodMonorepoDuplicateId'
   | 'goodMonorepoNegatedPaths'
-  | 'badMonorepoNonPackageDir'
   | 'goodMonorepoSimplePaths'
   | 'goodMonorepoWeirdAbsolute'
   | 'goodMonorepoWeirdBoneless'
@@ -100,8 +103,24 @@ createFixture({
     { name: 'empty', root: 'packages/empty' },
     { name: 'tsbuildinfo', root: 'packages/tsbuildinfo' },
     { name: 'x-private', root: 'packages/x-private' },
-    { name: 'xx-bad-deps', root: 'packages/xx-bad-deps' }
+    { name: 'xx-bad-deps', root: 'packages/xx-bad-deps' },
+    { name: 'xx-bad-engines', root: 'packages/xx-bad-engines' },
+    { name: 'xx-bad-exports', root: 'packages/xx-bad-exports' },
+    { name: 'xx-bad-exports-2', root: 'packages/xx-bad-exports-2' },
+    { name: 'xx-bad-exports-3', root: 'packages/xx-bad-exports-3' },
+    { name: 'xx-bad-exports-outdated', root: 'packages/xx-bad-exports-outdated' },
+    { name: 'xx-bad-files', root: 'packages/xx-bad-files' },
+    { name: 'xx-bad-importer', root: 'packages/xx-bad-importer' },
+    { name: 'xx-bad-license', root: 'packages/xx-bad-license' },
+    { name: 'xx-bad-version-1', root: 'packages/xx-bad-version-1' },
+    { name: 'xx-bad-version-2', root: 'packages/xx-bad-version-2' }
   ]
+});
+
+createFixture({
+  fixtureName: 'badMonorepoBadMdFiles',
+  root: 'bad-monorepo-bad-md-files',
+  unnamedPkgMapData: [{ name: 'md-bad', root: 'packages/md-bad' }]
 });
 
 createFixture({
@@ -115,6 +134,12 @@ createFixture({
 });
 
 createFixture({
+  fixtureName: 'badMonorepoEmptyMdFiles',
+  root: 'bad-monorepo-empty-md-files',
+  unnamedPkgMapData: [{ name: 'md-empty', root: 'packages/md-empty' }]
+});
+
+createFixture({
   fixtureName: 'badMonorepoNonPackageDir',
   root: 'bad-monorepo-non-package-dir',
   namedPkgMapData: [{ name: 'pkg-1', root: 'pkgs/pkg-1' }],
@@ -124,6 +149,16 @@ createFixture({
 createFixture({
   fixtureName: 'badPolyrepo',
   root: 'bad-polyrepo'
+});
+
+createFixture({
+  fixtureName: 'badPolyrepoBadMdFiles',
+  root: 'bad-polyrepo-bad-md-files'
+});
+
+createFixture({
+  fixtureName: 'badPolyrepoEmptyMdFiles',
+  root: 'bad-polyrepo-empty-md-files'
 });
 
 createFixture({
@@ -141,7 +176,8 @@ createFixture({
   root: 'good-monorepo',
   namedPkgMapData: [
     { name: 'pkg-1', root: 'packages/pkg-1' },
-    { name: '@namespaced/pkg', root: 'packages/pkg-2' }
+    { name: '@namespaced/pkg', root: 'packages/pkg-2' },
+    { name: '@namespaced/importer', root: 'packages/pkg-import' }
   ],
   unnamedPkgMapData: [
     { name: 'unnamed-pkg-1', root: 'packages/unnamed-pkg-1' },

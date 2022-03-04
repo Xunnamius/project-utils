@@ -1,0 +1,10 @@
+{
+  "exports": "./dist/nope.js",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/types/src/*"
+      ]
+    }
+  }
+}
