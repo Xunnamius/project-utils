@@ -53,6 +53,11 @@ export const ErrorMessage = {
       'exports',
       ...exportsPath
     ])}" entry point references a non-existent file`,
+  PackageJsonBadTypesEntryPoint: (typesPath: string[]) =>
+    `The file's "${ObjectPath.stringify([
+      'typesVersions',
+      ...typesPath
+    ])}" entry point references no existing files`,
   PackageJsonBadEngine: (engineSemver: string) =>
     `The file's "engines.node" field should use the recommended value: "${engineSemver}")`,
   PackageJsonPinnedDependency: (dep: string) =>

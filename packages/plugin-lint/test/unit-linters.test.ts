@@ -336,27 +336,206 @@ describe('::runProjectLinter', () => {
 
   it('errors when package.json contains the "files" field but its array is missing necessary values', async () => {
     expect.hasAssertions();
-    // TODO: monorepo and polyrepo
+
+    const monorepoRoot = await Linters.runProjectLinter({
+      rootDir: Fixtures.badMonorepo.root
+    });
+
+    const monorepoSubRoot = await Linters.runProjectLinter({
+      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[9][1].root
+    });
+
+    const polyrepoRoot = await Linters.runProjectLinter({
+      rootDir: Fixtures.badPolyrepo.root
+    });
+
+    Linters.pkgJsonRequiredFiles.forEach((field) => {
+      expect(monorepoRoot.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepo.root}/package.json`,
+          ErrorMessage.PackageJsonMissingValue('files', field)
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepo.unnamedPkgMapData[9][1].root}/package.json`,
+          ErrorMessage.PackageJsonMissingValue('files', field)
+        )
+      );
+    });
+
+    expect(polyrepoRoot.output).toStrictEqual(
+      stringContainingErrorMessage(
+        `${Fixtures.badPolyrepo.root}/package.json`,
+        ErrorMessage.PackageJsonMissingKey('files')
+      )
+    );
   });
 
   it('errors when package.json "exports" field is missing self-referencing entry points', async () => {
     expect.hasAssertions();
-    // TODO: monorepo and polyrepo
+
+    const monorepoSubRoot1 = await Linters.runProjectLinter({
+      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[5][1].root
+    });
+
+    const monorepoSubRoot2 = await Linters.runProjectLinter({
+      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[6][1].root
+    });
+
+    expect(monorepoSubRoot1.output).toStrictEqual(
+      stringContainingErrorMessage(
+        `${Fixtures.badMonorepo.unnamedPkgMapData[5][1].root}/package.json`,
+        ErrorMessage.PackageJsonMissingEntryPoint('./package')
+      )
+    );
+
+    expect(monorepoSubRoot1.output).toStrictEqual(
+      stringContainingErrorMessage(
+        `${Fixtures.badMonorepo.unnamedPkgMapData[5][1].root}/package.json`,
+        ErrorMessage.PackageJsonMissingEntryPoint('./package.json')
+      )
+    );
+
+    expect(monorepoSubRoot2.output).toStrictEqual(
+      stringContainingErrorMessage(
+        `${Fixtures.badMonorepo.unnamedPkgMapData[6][1].root}/package.json`,
+        ErrorMessage.PackageJsonMissingEntryPoint('./package')
+      )
+    );
+
+    expect(monorepoSubRoot2.output).toStrictEqual(
+      stringContainingErrorMessage(
+        `${Fixtures.badMonorepo.unnamedPkgMapData[6][1].root}/package.json`,
+        ErrorMessage.PackageJsonMissingEntryPoint('./package.json')
+      )
+    );
   });
 
   it('errors when missing LICENSE or README.md files', async () => {
     expect.hasAssertions();
-    // TODO: monorepo and polyrepo
+
+    const monorepoRoot = await Linters.runProjectLinter({
+      rootDir: Fixtures.badMonorepo.root
+    });
+
+    const monorepoSubRoot = await Linters.runProjectLinter({
+      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[9][1].root
+    });
+
+    const polyrepoRoot = await Linters.runProjectLinter({
+      rootDir: Fixtures.badPolyrepo.root
+    });
+
+    Linters.requiredFiles.forEach((file) => {
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepo.root}/${file}`,
+          ErrorMessage.MissingFile()
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepo.unnamedPkgMapData[9][1].root}/${file}`,
+          ErrorMessage.MissingFile()
+        )
+      );
+
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepo.root}/${file}`,
+          ErrorMessage.MissingFile()
+        )
+      );
+    });
   });
 
   it('errors when unpublished git commits have certain keywords in their subject', async () => {
     expect.hasAssertions();
-    // TODO: monorepo and polyrepo
+
+    const monorepoRoot = await Linters.runProjectLinter({
+      rootDir: Fixtures.badMonorepo.root
+    });
+
+    const monorepoSubRoot = await Linters.runProjectLinter({
+      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[9][1].root
+    });
+
+    const polyrepoRoot = await Linters.runProjectLinter({
+      rootDir: Fixtures.badPolyrepo.root
+    });
+
+    Linters.requiredFiles.forEach((file) => {
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepo.root}/${file}`,
+          ErrorMessage.MissingFile()
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepo.unnamedPkgMapData[9][1].root}/${file}`,
+          ErrorMessage.MissingFile()
+        )
+      );
+
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepo.root}/${file}`,
+          ErrorMessage.MissingFile()
+        )
+      );
+    });
   });
 
-  it('errors when any "exports" entry points in package.json point to files that do not exist', async () => {
+  it('errors when any "exports" or "typesVersions" entry points in package.json point to files that do not exist', async () => {
     expect.hasAssertions();
-    // TODO: monorepo and polyrepo
+
+    const monorepoSubRoot1 = await Linters.runProjectLinter({
+      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[6][1].root
+    });
+
+    const monorepoSubRoot2 = await Linters.runProjectLinter({
+      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[7][1].root
+    });
+
+    expect(monorepoSubRoot1.output).toStrictEqual(
+      stringContainingErrorMessage(
+        `${Fixtures.badMonorepo.unnamedPkgMapData[6][1].root}/package.json`,
+        ErrorMessage.PackageJsonBadTypesEntryPoint(['*', '*'])
+      )
+    );
+
+    expect(monorepoSubRoot2.output).toStrictEqual(
+      stringContainingErrorMessage(
+        `${Fixtures.badMonorepo.unnamedPkgMapData[7][1].root}/package.json`,
+        ErrorMessage.PackageJsonBadTypesEntryPoint(['*', 'special.d.ts'])
+      )
+    );
+
+    expect(monorepoSubRoot2.output).toStrictEqual(
+      stringContainingErrorMessage(
+        `${Fixtures.badMonorepo.unnamedPkgMapData[7][1].root}/package.json`,
+        ErrorMessage.PackageJsonBadEntryPoint(['.', 'default'])
+      )
+    );
+
+    expect(monorepoSubRoot2.output).toStrictEqual(
+      stringContainingErrorMessage(
+        `${Fixtures.badMonorepo.unnamedPkgMapData[7][1].root}/package.json`,
+        ErrorMessage.PackageJsonBadEntryPoint(['.', 'node', 'custom'])
+      )
+    );
+
+    expect(monorepoSubRoot2.output).toStrictEqual(
+      stringContainingErrorMessage(
+        `${Fixtures.badMonorepo.unnamedPkgMapData[7][1].root}/package.json`,
+        ErrorMessage.PackageJsonBadEntryPoint(['./package'])
+      )
+    );
   });
 
   it('warns when missing certain tsconfig files in a polyrepo or monorepo root', async () => {

@@ -1,5 +1,5 @@
 import { run } from 'multiverse/run';
-import { ErrorMessage } from './errors';
+import { CliError, ErrorMessage } from './errors';
 import { getRunContext } from 'pkgverse/core/src/project-utils';
 import { access } from 'fs/promises';
 import { glob } from 'glob';
@@ -16,6 +16,7 @@ import {
 } from 'pkgverse/core/src/errors';
 
 import type { PackageJson } from 'type-fest';
+import { toss } from 'toss-expression';
 
 // ? Speedup: only consider the last 5 lines
 const numLinesToConsider = 5;
@@ -68,6 +69,8 @@ type UnifiedReturnType = Promise<{
   summary: string;
 }>;
 
+type ExportsPaths = { paths: string[]; fullPath: string[] };
+
 /**
  * Filters out empty and debug lines from linter output.
  *
@@ -104,6 +107,20 @@ const summarizeOutput = (
         warnings != 1 ? 's' : ''
       }`
     : '1 error, 0 warnings';
+};
+
+/**
+ * Flatten the package.json `"exports"` field into an array of entry points.
+ */
+const deepFlat = (
+  o: NonNullable<PackageJson['exports']>,
+  fullPath: string[] = []
+): ExportsPaths[] => {
+  return typeof o == 'string'
+    ? [{ paths: [o], fullPath }]
+    : !o || Array.isArray(o)
+    ? [{ paths: o, fullPath }]
+    : Object.entries(o).flatMap(([k, v]) => deepFlat(v, [...fullPath, k]));
 };
 
 /**
@@ -245,9 +262,11 @@ export async function runProjectLinter({
         }
 
         // ? Has standard entry points
-        if (json.exports) {
+        if (json.exports !== undefined) {
           const xports =
-            typeof json.exports == 'string' || Array.isArray(json.exports)
+            !json.exports ||
+            typeof json.exports == 'string' ||
+            Array.isArray(json.exports)
               ? {}
               : json.exports;
 
@@ -260,6 +279,57 @@ export async function runProjectLinter({
                 ErrorMessage.PackageJsonMissingEntryPoint(requiredEntryPoint)
               );
             }
+          });
+
+          const distPaths = entryPoints.flatMap((entryPoint) =>
+            deepFlat(xports[entryPoint], [entryPoint])
+          );
+
+          // ? Entry points exist
+          distPaths.forEach(({ paths, fullPath }) => {
+            tasks.push(
+              (async () => {
+                const results = await Promise.all(
+                  paths.map((path) => {
+                    return globAsync(path, {
+                      cwd: root,
+                      ignore: ['**/node_modules/**']
+                    }).then((files) => !!files.length);
+                  })
+                );
+
+                if (!results.some(Boolean)) {
+                  report('error', ErrorMessage.PackageJsonBadEntryPoint(fullPath));
+                }
+              })()
+            );
+          });
+        }
+
+        // ? Types entry points exist
+        if (json.typesVersions) {
+          Object.entries(json.typesVersions).forEach(([version, spec]) => {
+            Object.entries(spec).forEach(([alias, paths]) => {
+              tasks.push(
+                (async () => {
+                  const results = await Promise.all(
+                    paths.map((path) => {
+                      return globAsync(path, {
+                        cwd: root,
+                        ignore: ['**/node_modules/**']
+                      }).then((files) => !!files.length);
+                    })
+                  );
+
+                  if (!results.some(Boolean)) {
+                    report(
+                      'error',
+                      ErrorMessage.PackageJsonBadTypesEntryPoint([version, alias])
+                    );
+                  }
+                })()
+              );
+            });
           });
         }
 
@@ -293,6 +363,35 @@ export async function runProjectLinter({
               }
             })
           )
+        );
+
+        // ? Has no unpublished fixup/mergeme commits
+        tasks.push(
+          (async () => {
+            const status = await run('git', ['status', '-sb'], { reject: true });
+            const rawRefs = status.stdout.split('\n')[0];
+
+            // ? Repos not tracking upstream won't return "..."
+            if (rawRefs.includes('...')) {
+              const refs = rawRefs.split(' ').at(-1) || toss(new CliError(2));
+              const commits = await run(
+                'git',
+                ['log', '--oneline', refs, '--grep', 'fixup', '--grep', 'mergeme'],
+                { reject: true }
+              );
+
+              commits.stdout
+                .split('\n')
+                .filter(Boolean)
+                .forEach((commit) => {
+                  const sha = commit.split(' ')[0];
+                  reporterFactory(`git commit ${sha}`)(
+                    'error',
+                    ErrorMessage.CommitNeedsFixup()
+                  );
+                });
+            }
+          })()
         );
       };
 
