@@ -44,7 +44,6 @@ ESLint, the following checks are performed:
   `sideEffects`, `exports`, `typesVersions`, `files`, or `publishConfig` fields
   - When linting a [monorepo root][12], or if the `private` field exists and is
     set to `true`, this check is skipped
-  - When linting a [monorepo root][12], the check for `name` becomes a warning
 - ⛔ Errors when the same dependency appears under both `dependencies` and
   `devDependencies` fields in `package.json`
 - ⛔ Errors when `package.json` contains the `files` field but its array is
@@ -61,6 +60,8 @@ ESLint, the following checks are performed:
   point to files that do not exist
 - ⚠️ Warns when missing `tsconfig.json`, `tsconfig.docs.json`,
   `tsconfig.eslint.json`, `tsconfig.lint.json`, or `tsconfig.types.json` files
+  - When linting a [monorepo root][12], only `tsconfig.json`,
+    `tsconfig.lint.json`, and `tsconfig.eslint.json` are checked for existence
   - When linting a [monorepo sub-root][12], only `tsconfig.docs.json`,
     `tsconfig.lint.json`, and `tsconfig.types.json` are checked for existence
 - ⚠️ Warns when `package.json` `license` field is not `"MIT"`
@@ -75,7 +76,8 @@ ESLint, the following checks are performed:
 - ⚠️ Warns when `package.json` contains the `engines` field but is missing the
   `engines.node` field path, or if it is not set to [the maintained and LTS
   versions of Node.js][7]
-  - For example: `{ "engines": { "node": "^12.20.0 || ^14.13.1 || >=16.0.0" }}`
+  - For example:
+    `{ "engines": { "node": "^12.22.0 || ^14.19.0 || ^16.13.0 || >=17.4.0" }}`
     (as of Feb 2022)
 - ⚠️ Warns when depending on a [pinned][8] package version (like `"x.y.z"`
   instead of `"^x.y.z"`)

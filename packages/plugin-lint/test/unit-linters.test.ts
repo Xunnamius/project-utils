@@ -1,9 +1,14 @@
 import * as Linters from '../src/linters';
+import * as Constants from '../src/constants';
 import { Fixtures } from 'testverse/fixtures';
 import { toss } from 'toss-expression';
 import { ErrorMessage } from '../src/errors';
 import { clearPackageJsonCache } from 'pkgverse/core/src/project-utils';
+import { asMockedFunction } from '@xunnamius/jest-types';
+import { run } from 'multiverse/run';
 import escapeRegexp from 'escape-string-regexp';
+
+jest.mock('multiverse/run');
 
 const stringContainingErrorMessage = (currentFile: string, errorMessage: string) => {
   return expect.stringMatching(
@@ -14,7 +19,10 @@ const stringContainingErrorMessage = (currentFile: string, errorMessage: string)
   );
 };
 
+const mockedRun = asMockedFunction(run);
+
 beforeEach(() => {
+  mockedRun.mockImplementation(jest.requireActual('multiverse/run').run);
   clearPackageJsonCache();
 });
 
@@ -119,7 +127,7 @@ describe('::runProjectLinter', () => {
     });
 
     // ? Works when linting a monorepo root
-    Linters.globalPkgJsonRequiredFields.forEach((field) => {
+    Constants.globalPkgJsonRequiredFields.forEach((field) => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           `${Fixtures.badMonorepo.root}/package.json`,
@@ -129,7 +137,7 @@ describe('::runProjectLinter', () => {
     });
 
     // ? Works when linting a sub-root explicitly
-    Linters.globalPkgJsonRequiredFields.forEach((field) => {
+    Constants.globalPkgJsonRequiredFields.forEach((field) => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
@@ -139,7 +147,7 @@ describe('::runProjectLinter', () => {
     });
 
     // ? Works when linting a polyrepo root
-    Linters.globalPkgJsonRequiredFields.forEach((field) => {
+    Constants.globalPkgJsonRequiredFields.forEach((field) => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           `${Fixtures.badPolyrepo.root}/package.json`,
@@ -157,7 +165,7 @@ describe('::runProjectLinter', () => {
     });
 
     // ? Also lints sub-roots when linting a monorepo root
-    Linters.globalPkgJsonRequiredFields.forEach((field) => {
+    Constants.globalPkgJsonRequiredFields.forEach((field) => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
@@ -175,7 +183,7 @@ describe('::runProjectLinter', () => {
     });
 
     // ? Linting one sub-root should not report errors from a different sub-root
-    Linters.globalPkgJsonRequiredFields.forEach((field) => {
+    Constants.globalPkgJsonRequiredFields.forEach((field) => {
       expect(monorepoOtherSubRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
@@ -200,7 +208,7 @@ describe('::runProjectLinter', () => {
       rootDir: Fixtures.badPolyrepo.root
     });
 
-    Linters.nonMonoRootPkgJsonRequiredFields.forEach((field) => {
+    Constants.nonMonoRootPkgJsonRequiredFields.forEach((field) => {
       expect(monorepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           `${Fixtures.badMonorepo.root}/package.json`,
@@ -209,7 +217,7 @@ describe('::runProjectLinter', () => {
       );
     });
 
-    Linters.nonMonoRootPkgJsonRequiredFields.forEach((field) => {
+    Constants.nonMonoRootPkgJsonRequiredFields.forEach((field) => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
@@ -218,7 +226,7 @@ describe('::runProjectLinter', () => {
       );
     });
 
-    Linters.nonMonoRootPkgJsonRequiredFields.forEach((field) => {
+    Constants.nonMonoRootPkgJsonRequiredFields.forEach((field) => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           `${Fixtures.badPolyrepo.root}/package.json`,
@@ -251,7 +259,7 @@ describe('::runProjectLinter', () => {
       rootDir: Fixtures.badPolyrepoPrivate.root
     });
 
-    Linters.publicPkgJsonRequiredFields.forEach((field) => {
+    Constants.publicPkgJsonRequiredFields.forEach((field) => {
       expect(monorepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           `${Fixtures.badMonorepo.root}/package.json`,
@@ -260,7 +268,7 @@ describe('::runProjectLinter', () => {
       );
     });
 
-    Linters.publicPkgJsonRequiredFields.forEach((field) => {
+    Constants.publicPkgJsonRequiredFields.forEach((field) => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
@@ -269,7 +277,7 @@ describe('::runProjectLinter', () => {
       );
     });
 
-    Linters.publicPkgJsonRequiredFields.forEach((field) => {
+    Constants.publicPkgJsonRequiredFields.forEach((field) => {
       expect(monorepoPrivateSubRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           `${Fixtures.badMonorepo.unnamedPkgMapData[2][1].root}/package.json`,
@@ -278,7 +286,7 @@ describe('::runProjectLinter', () => {
       );
     });
 
-    Linters.publicPkgJsonRequiredFields.forEach((field) => {
+    Constants.publicPkgJsonRequiredFields.forEach((field) => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           `${Fixtures.badPolyrepo.root}/package.json`,
@@ -287,7 +295,7 @@ describe('::runProjectLinter', () => {
       );
     });
 
-    Linters.publicPkgJsonRequiredFields.forEach((field) => {
+    Constants.publicPkgJsonRequiredFields.forEach((field) => {
       expect(polyrepoPrivateRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           `${Fixtures.badPolyrepoPrivate.root}/package.json`,
@@ -349,7 +357,7 @@ describe('::runProjectLinter', () => {
       rootDir: Fixtures.badPolyrepo.root
     });
 
-    Linters.pkgJsonRequiredFiles.forEach((field) => {
+    Constants.pkgJsonRequiredFiles.forEach((field) => {
       expect(monorepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           `${Fixtures.badMonorepo.root}/package.json`,
@@ -428,7 +436,7 @@ describe('::runProjectLinter', () => {
       rootDir: Fixtures.badPolyrepo.root
     });
 
-    Linters.requiredFiles.forEach((file) => {
+    Constants.requiredFiles.forEach((file) => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           `${Fixtures.badMonorepo.root}/${file}`,
@@ -454,38 +462,31 @@ describe('::runProjectLinter', () => {
 
   it('errors when unpublished git commits have certain keywords in their subject', async () => {
     expect.hasAssertions();
+    const commits: string[] = [];
+
+    mockedRun.mockImplementation((_, args) => {
+      if (args?.includes('A...B')) {
+        commits.push(Math.random().toString(16).slice(2, 8));
+        commits.push(Math.random().toString(16).slice(2, 8));
+        return {
+          stdout: `${commits.at(-2)} X Y Z\n${commits.at(-1)} A B C`
+        } as unknown as ReturnType<typeof run>;
+      } else {
+        return {
+          stdout: '## A...B\none two-three\nfour five-six'
+        } as unknown as ReturnType<typeof run>;
+      }
+    });
 
     const monorepoRoot = await Linters.runProjectLinter({
       rootDir: Fixtures.badMonorepo.root
     });
 
-    const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[9][1].root
-    });
-
-    const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root
-    });
-
-    Linters.requiredFiles.forEach((file) => {
+    commits.forEach((commit) => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
-          `${Fixtures.badMonorepo.root}/${file}`,
-          ErrorMessage.MissingFile()
-        )
-      );
-
-      expect(monorepoSubRoot.output).toStrictEqual(
-        stringContainingErrorMessage(
-          `${Fixtures.badMonorepo.unnamedPkgMapData[9][1].root}/${file}`,
-          ErrorMessage.MissingFile()
-        )
-      );
-
-      expect(polyrepoRoot.output).toStrictEqual(
-        stringContainingErrorMessage(
-          `${Fixtures.badPolyrepo.root}/${file}`,
-          ErrorMessage.MissingFile()
+          `git commit ${commit}`,
+          ErrorMessage.CommitNeedsFixup()
         )
       );
     });

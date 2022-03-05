@@ -4,6 +4,8 @@ import { getRunContext } from 'pkgverse/core/src/project-utils';
 import { access } from 'fs/promises';
 import { glob } from 'glob';
 import { promisify } from 'util';
+import semver from 'semver';
+import browserslist from 'browserslist';
 import stripAnsi from 'strip-ansi';
 import chalk from 'chalk';
 
@@ -15,51 +17,24 @@ import {
   DuplicatePackageNameError
 } from 'pkgverse/core/src/errors';
 
+import {
+  globalPkgJsonRequiredFields,
+  monorepoRootTsconfigFiles,
+  nonMonoRootPkgJsonRequiredFields,
+  numLinesToConsider,
+  pkgJsonLicense,
+  pkgJsonObsoleteEntryKeys,
+  pkgJsonRequiredExports,
+  pkgJsonRequiredFiles,
+  pkgVersionWhitelist,
+  polyrepoTsconfigFiles,
+  publicPkgJsonRequiredFields,
+  requiredFiles,
+  subRootTsconfigFiles
+} from './constants';
+
 import type { PackageJson } from 'type-fest';
 import { toss } from 'toss-expression';
-
-// ? Speedup: only consider the last 5 lines
-const numLinesToConsider = 5;
-
-// ? Files that must exist in all roots and sub-roots (relative paths)
-export const requiredFiles = ['LICENSE', 'README.md'] as const;
-
-// ? Required fields in all roots and sub-roots
-export const globalPkgJsonRequiredFields = [
-  'homepage',
-  'repository',
-  'license',
-  'author',
-  'engines',
-  'type'
-] as const;
-
-// ? Additionally required fields in monorepo sub-roots and polyrepo roots
-export const nonMonoRootPkgJsonRequiredFields = ['description'] as const;
-
-// ? Additionally required fields in monorepo sub-roots and polyrepo roots when
-// ? "private" != `true`
-export const publicPkgJsonRequiredFields = [
-  'name',
-  'version',
-  'keywords',
-  'sideEffects',
-  'exports',
-  'typesVersions',
-  'files',
-  'publishConfig'
-] as const;
-
-// ? Required "files" field values (absolute paths)
-export const pkgJsonRequiredFiles = [
-  '/dist',
-  '/LICENSE',
-  '/package.json',
-  '/README.md'
-] as const;
-
-// ? Required "exports" field keys
-export const pkgJsonRequiredExports = ['./package', './package.json'] as const;
 
 const globAsync = promisify(glob);
 
@@ -70,6 +45,12 @@ type UnifiedReturnType = Promise<{
 }>;
 
 type ExportsPaths = { paths: string[]; fullPath: string[] };
+
+type ReporterFactory = (
+  currentFile: string
+) => (type: ReportType, message: string) => void;
+
+type ReportType = 'warn' | 'error';
 
 /**
  * Filters out empty and debug lines from linter output.
@@ -124,6 +105,27 @@ const deepFlat = (
 };
 
 /**
+ * Check if a list of `files` (paths relative to `root`) exist.
+ */
+const checkFilesExist = (
+  files: readonly string[],
+  root: string,
+  reporterFactory: ReporterFactory,
+  type: ReportType = 'error'
+) => {
+  return Promise.all(
+    files.map(async (file) => {
+      const filePath = `${root}/${file}`;
+      try {
+        await access(filePath);
+      } catch {
+        reporterFactory(filePath)(type, ErrorMessage.MissingFile());
+      }
+    })
+  );
+};
+
+/**
  * Checks a project or package for structural correctness, adherence to standard
  * practices, and avoidance of certain anti-patterns. The project's package.json
  * file will also be validated.
@@ -142,18 +144,17 @@ export async function runProjectLinter({
     let errorCount = 0;
     let warnCount = 0;
 
-    const reporterFactory =
-      (currentFile: string) => (type: 'warn' | 'error', message: string) => {
-        type == 'warn' ? warnCount++ : errorCount++;
-        if (!outputTree[currentFile]) outputTree[currentFile] = [];
-        outputTree[currentFile].push(
-          `${
-            type == 'warn'
-              ? chalk.hex('#340343').bgYellow(' warn ')
-              : chalk.hex('#340343').bgRed(' ERR! ')
-          } ${message}`
-        );
-      };
+    const reporterFactory: ReporterFactory = (currentFile) => (type, message) => {
+      type == 'warn' ? warnCount++ : errorCount++;
+      if (!outputTree[currentFile]) outputTree[currentFile] = [];
+      outputTree[currentFile].push(
+        `${
+          type == 'warn'
+            ? chalk.hex('#340343').bgYellow(' warn ')
+            : chalk.hex('#340343').bgRed(' ERR! ')
+        } ${message}`
+      );
+    };
 
     const ctx = (() => {
       try {
@@ -351,19 +352,8 @@ export async function runProjectLinter({
           })()
         );
 
-        // ? Has requiredFiles
-        tasks.push(
-          Promise.all(
-            requiredFiles.map(async (file) => {
-              const filePath = `${root}/${file}`;
-              try {
-                await access(filePath);
-              } catch {
-                reporterFactory(filePath)('error', ErrorMessage.MissingFile());
-              }
-            })
-          )
-        );
+        // ? Has required files
+        tasks.push(checkFilesExist(requiredFiles, root, reporterFactory));
 
         // ? Has no unpublished fixup/mergeme commits
         tasks.push(
@@ -393,16 +383,67 @@ export async function runProjectLinter({
             }
           })()
         );
+
+        // ? Has correct license
+        if (json.license != pkgJsonLicense) {
+          report('warn', ErrorMessage.PackageJsonMissingValue('license', pkgJsonLicense));
+        }
+
+        // ? Has non-experimental version
+        if (
+          json.version &&
+          !pkgVersionWhitelist.includes(
+            json.version as typeof pkgVersionWhitelist[number]
+          ) &&
+          semver.major(json.version) == 0
+        ) {
+          report('warn', ErrorMessage.PackageJsonExperimentalVersion());
+        }
+
+        // ? Does not use outdated entry fields
+        pkgJsonObsoleteEntryKeys.forEach((outdatedKey) => {
+          if (json[outdatedKey]) {
+            report('warn', ErrorMessage.PackageJsonObsoleteKey(outdatedKey));
+          }
+        });
+
+        // ? Has maintained node version engines.node entries
+        if (json.engines) {
+          if (json.engines.node) {
+            const expectedNodeEngines = browserslist('maintained node versions')
+              .reverse()
+              .map(
+                (v, ndx, arr) =>
+                  `${ndx == arr.length - 1 ? '>=' : '^'}${v.split(' ').at(-1)}`
+              )
+              .join(' || ');
+            if (json.engines.node != expectedNodeEngines) {
+              report('warn', ErrorMessage.PackageJsonBadEngine(expectedNodeEngines));
+            }
+          } else {
+            report('warn', ErrorMessage.PackageJsonMissingKey('engines.node'));
+          }
+        }
+
+        // ? Has no pinned or dist-tag dependencies
+        [
+          json.dependencies,
+          json.devDependencies,
+          json.peerDependencies,
+          json.bundleDependencies,
+          json.optionalDependencies
+        ].forEach((depsObj) => {
+          if (depsObj) {
+            Object.entries(depsObj).forEach(([dep, semvr]) => {
+              if (!Number.isNaN(parseInt(semvr[0]))) {
+                report('warn', ErrorMessage.PackageJsonPinnedDependency(dep));
+              } else if (!semver.valid(semvr) && !semver.validRange(semvr)) {
+                report('warn', ErrorMessage.PackageJsonTaggedDependency(dep));
+              }
+            });
+          }
+        });
       };
-
-      // TODO: use browserslist to get earliest "maintained node versions" and
-      // TODO: convert this into an or (||) list, e.g.:
-      // TODO: ^12.20.0 || ^14.13.1 || >=16.0.0
-      // TODO: (project root and each package root)
-
-      // TODO: run/filesystem checks should be async
-
-      // TODO: use debug
 
       rootAndSubRootChecks({
         root: ctx.package?.root || ctx.project.root,
@@ -412,6 +453,17 @@ export async function runProjectLinter({
 
       // ? These checks are performed ONLY IF linting a monorepo root
       if (startedAtMonorepoRoot) {
+        // ? Has certain tsconfig files
+        tasks.push(
+          checkFilesExist(
+            monorepoRootTsconfigFiles,
+            ctx.project.root,
+            reporterFactory,
+            'warn'
+          )
+        );
+
+        // ? Has no "broken" packages (workspaces missing a package.json file)
         if (ctx.project.packages.broken.length) {
           ctx.project.packages.broken.forEach((pkgRoot) =>
             reporterFactory(`${pkgRoot}/package.json`)(
@@ -421,17 +473,34 @@ export async function runProjectLinter({
           );
         }
 
+        // ? Recursively lint all sub-roots
         Array.from(ctx.project.packages.values())
           .concat(Array.from(ctx.project.packages.unnamed.values()))
           .forEach(({ root, json }) => {
             rootAndSubRootChecks({ root, json, isCheckingMonorepoRoot: false });
           });
       }
+      // ? These checks are performed ONLY IF linting a polyrepo root
+      else if (!ctx.package) {
+        // ? Has certain tsconfig files
+        tasks.push(
+          checkFilesExist(
+            polyrepoTsconfigFiles,
+            ctx.project.root,
+            reporterFactory,
+            'warn'
+          )
+        );
+      }
 
       // ? These checks are performed ONLY IF linting a sub-root
       if (ctx.package) {
+        const root = ctx.package.root;
+        // ? Has certain tsconfig files
+        tasks.push(checkFilesExist(subRootTsconfigFiles, root, reporterFactory, 'warn'));
       } // ? These checks are performed ONLY IF NOT linting a sub-root
       else {
+        const root = ctx.project.root;
       }
     }
 

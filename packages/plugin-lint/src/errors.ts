@@ -58,8 +58,8 @@ export const ErrorMessage = {
       'typesVersions',
       ...typesPath
     ])}" entry point references no existing files`,
-  PackageJsonBadEngine: (engineSemver: string) =>
-    `The file's "engines.node" field should use the recommended value: "${engineSemver}")`,
+  PackageJsonBadEngine: (expectedEnginesSemver: string) =>
+    `The file's "engines.node" field should use the recommended value: "${expectedEnginesSemver}")`,
   PackageJsonPinnedDependency: (dep: string) =>
     `The file references a pinned version of the "${dep}" dependency`,
   PackageJsonTaggedDependency: (dep: string) =>
