@@ -144,6 +144,9 @@ export async function runProjectLinter({
     let errorCount = 0;
     let warnCount = 0;
 
+    /**
+     * Log an error or a warning
+     */
     const reporterFactory: ReporterFactory = (currentFile) => (type, message) => {
       type == 'warn' ? warnCount++ : errorCount++;
       if (!outputTree[currentFile]) outputTree[currentFile] = [];
@@ -200,10 +203,10 @@ export async function runProjectLinter({
       }
     })();
 
-    // ? Checks are performed in "parallel"
+    // ? Checks are performed asynchronously
     const tasks: Promise<unknown>[] = [];
 
-    // ? These checks are performed across all contexts
+    // ? Some checks are performed regardless of context
     if (ctx !== undefined) {
       const startedAtMonorepoRoot = ctx.context == 'monorepo' && !ctx.package;
 
@@ -233,7 +236,7 @@ export async function runProjectLinter({
             }
           });
 
-          // ? package.json must also have required fields (if not private)
+          // ? package.json must also have required fields (if not "private")
           if (!json.private) {
             publicPkgJsonRequiredFields.forEach((field) => {
               if (json[field] === undefined) {
@@ -389,7 +392,7 @@ export async function runProjectLinter({
           report('warn', ErrorMessage.PackageJsonMissingValue('license', pkgJsonLicense));
         }
 
-        // ? Has non-experimental version
+        // ? Has non-experimental non-whitelisted version
         if (
           json.version &&
           !pkgVersionWhitelist.includes(
@@ -443,6 +446,29 @@ export async function runProjectLinter({
             });
           }
         });
+
+        // ? Has a docs entry point pointing to an existing file
+        const docsEntry = (json?.config?.docs as Record<string, string>)?.entry;
+        if (!docsEntry) {
+          report('warn', ErrorMessage.PackageJsonMissingKey('config.docs.entry'));
+        } else {
+          tasks.push(
+            (async () => {
+              const filePath = `${root}/${docsEntry}`;
+              try {
+                await access(filePath);
+              } catch {
+                reporterFactory(filePath)(
+                  'warn',
+                  ErrorMessage.PackageJsonBadConfigDocsEntry()
+                );
+              }
+            })()
+          );
+        }
+
+        // ? README.md has standard well-configured topmatter and links
+        // TODO
       };
 
       rootAndSubRootChecks({
@@ -473,6 +499,18 @@ export async function runProjectLinter({
           );
         }
 
+        // ? Has a "name" field
+        // TODO
+
+        // ? Has no "dependencies" field
+        // TODO
+
+        // ? Has no non-whitelisted "version" field unless next.config.js exists
+        // TODO
+
+        // ? Is "private" unless next.config.js exists
+        // TODO
+
         // ? Recursively lint all sub-roots
         Array.from(ctx.project.packages.values())
           .concat(Array.from(ctx.project.packages.unnamed.values()))
@@ -496,11 +534,34 @@ export async function runProjectLinter({
       // ? These checks are performed ONLY IF linting a sub-root
       if (ctx.package) {
         const root = ctx.package.root;
+
         // ? Has certain tsconfig files
         tasks.push(checkFilesExist(subRootTsconfigFiles, root, reporterFactory, 'warn'));
+
+        // ? Has no unlisted cross-dependencies
+        // TODO
+
+        // ? Has no "devDependencies"
+        // TODO
       } // ? These checks are performed ONLY IF NOT linting a sub-root
       else {
         const root = ctx.project.root;
+
+        // ? Has standard files
+        // TODO
+
+        // ? Has standard directories
+        // TODO
+
+        // ? Has release.config.js if not private
+        // TODO
+
+        // ? SECURITY.md and SUPPORT.md has standard topmatter and links
+        // TODO
+
+        // ? CONTRIBUTING.md, SECURITY.md, and SUPPORT.md have well-configured
+        // ? topmatter and links
+        // TODO
       }
     }
 
