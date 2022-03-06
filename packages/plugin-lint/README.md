@@ -90,13 +90,13 @@ ESLint, the following checks are performed:
 - ⚠️ ‡ Warns when `README.md` does not contain the standard badge topmatter, or
   when said topmatter is pointing to the wrong package name and/or repo uri
   - When linting a monorepo, what is considered "standard topmatter" changes
-    depending on the current working directory being within the [package
-    root][12] versus a [project root][12]
+    depending on the current working directory being within the [project
+    root][12] versus a [sub-root][12]
 - ⚠️ ‡ Warns when standard links in `README.md` are missing, or are pointing to
   the wrong package name and/or repo uri
   - When linting a monorepo, what is considered "standard links" changes
-    depending on the current working directory being within the [package
-    root][12] vs a [project root][12]
+    depending on the current working directory being within the [project
+    root][12] vs a [sub-root][12]
 
 These additional checks are performed if the current project is a monorepo:
 

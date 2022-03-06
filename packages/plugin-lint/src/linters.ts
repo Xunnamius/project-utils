@@ -4,6 +4,8 @@ import { getRunContext } from 'pkgverse/core/src/project-utils';
 import { access } from 'fs/promises';
 import { glob } from 'glob';
 import { promisify } from 'util';
+import { toss } from 'toss-expression';
+import { readFile } from 'fs/promises';
 import semver from 'semver';
 import browserslist from 'browserslist';
 import stripAnsi from 'strip-ansi';
@@ -34,7 +36,8 @@ import {
 } from './constants';
 
 import type { PackageJson } from 'type-fest';
-import { toss } from 'toss-expression';
+
+const getRemark = () => import('mdast-util-from-markdown');
 
 const globAsync = promisify(glob);
 
@@ -210,7 +213,10 @@ export async function runProjectLinter({
     if (ctx !== undefined) {
       const startedAtMonorepoRoot = ctx.context == 'monorepo' && !ctx.package;
 
-      const rootAndSubRootChecks = ({
+      /**
+       * Shared checks across monorepo/polyrepo roots and sub-roots
+       */
+      const rootAndSubRootChecks = async ({
         root,
         json,
         isCheckingMonorepoRoot
@@ -468,10 +474,28 @@ export async function runProjectLinter({
         }
 
         // ? README.md has standard well-configured topmatter and links
+        const readmePath = `${root}/README.md`;
+        const remark = await getRemark();
+        const ast = remark.fromMarkdown(await readFile(readmePath));
+        let sawBadgesStart = false;
+
+        for (const child of ast.children) {
+          if (child.type == 'html' && child.value == topmatterBadgesStart) {
+            sawBadgesStart = true;
+            continue;
+          }
+          break;
+        }
+
+        if (!sawBadgesStart) {
+          reporterFactory(readmePath)('warn', ErrorMessage.MarkdownMissingTopmatter());
+        }
+
+        // ? README.md first header is the package's name if not monorepo root
         // TODO
       };
 
-      rootAndSubRootChecks({
+      await rootAndSubRootChecks({
         root: ctx.package?.root || ctx.project.root,
         json: ctx.package?.json || ctx.project.json,
         isCheckingMonorepoRoot: startedAtMonorepoRoot
@@ -512,11 +536,19 @@ export async function runProjectLinter({
         // TODO
 
         // ? Recursively lint all sub-roots
-        Array.from(ctx.project.packages.values())
-          .concat(Array.from(ctx.project.packages.unnamed.values()))
-          .forEach(({ root, json }) => {
-            rootAndSubRootChecks({ root, json, isCheckingMonorepoRoot: false });
-          });
+        tasks.push(
+          Promise.all(
+            Array.from(ctx.project.packages.values())
+              .concat(Array.from(ctx.project.packages.unnamed.values()))
+              .map(({ root, json }) => {
+                return rootAndSubRootChecks({
+                  root,
+                  json,
+                  isCheckingMonorepoRoot: false
+                });
+              })
+          )
+        );
       }
       // ? These checks are performed ONLY IF linting a polyrepo root
       else if (!ctx.package) {
@@ -538,10 +570,10 @@ export async function runProjectLinter({
         // ? Has certain tsconfig files
         tasks.push(checkFilesExist(subRootTsconfigFiles, root, reporterFactory, 'warn'));
 
-        // ? Has no unlisted cross-dependencies
+        // ? Has no "devDependencies"
         // TODO
 
-        // ? Has no "devDependencies"
+        // ? Has no unlisted cross-dependencies
         // TODO
       } // ? These checks are performed ONLY IF NOT linting a sub-root
       else {
@@ -553,7 +585,7 @@ export async function runProjectLinter({
         // ? Has standard directories
         // TODO
 
-        // ? Has release.config.js if not private
+        // ? Has release.config.js (if not "private")
         // TODO
 
         // ? SECURITY.md and SUPPORT.md has standard topmatter and links
