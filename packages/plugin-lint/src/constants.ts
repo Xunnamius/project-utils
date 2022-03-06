@@ -150,6 +150,41 @@ export const markdownStandardTopmatter = {
         label: 'link-semantic-release',
         url: () => 'https://github.com/semantic-release/semantic-release'
       }
+    },
+    vulnerabilities: {
+      label: 'badge-vulnerabilities',
+      alt: 'Snyk vulnerability check',
+      url: (user: string, repo: string) =>
+        `https://snyk.io/test/github/${user}/${repo}/badge.svg`,
+      title: 'Number of vulnerabilities (scanned by Snyk)',
+      link: {
+        label: 'link-vulnerabilities',
+        url: (user: string, repo: string) => `https://snyk.io/test/github/${user}/${repo}`
+      }
+    },
+    issuesResolution: {
+      label: 'badge-issues-resolution',
+      alt: 'Average issue resolution time',
+      url: (user: string, repo: string) =>
+        `https://isitmaintained.com/badge/resolution/${user}/${repo}.svg`,
+      title: 'Average time to resolve an issue',
+      link: {
+        label: 'link-issue-resolution',
+        url: (user: string, repo: string) =>
+          `https://isitmaintained.com/project/${user}/${repo}`
+      }
+    },
+    issuesPercentage: {
+      label: 'badge-issues-percentage',
+      alt: 'Open issues percentage',
+      url: (user: string, repo: string) =>
+        `https://isitmaintained.com/badge/open/${user}/${repo}.svg`,
+      title: 'Open issues as a percentage of all issues',
+      link: {
+        label: 'link-issues-percentage',
+        url: (user: string, repo: string) =>
+          `https://github.com/${user}/${repo}/issues?q=`
+      }
     }
   }
 } as const;
@@ -157,7 +192,35 @@ export const markdownStandardTopmatter = {
 /**
  * Standard Markdown reference links (i.e. links and references)
  */
-export const markdownStandardLinks = {};
+export const markdownStandardLinks = {
+  openIssues: {
+    label: 'open-issues',
+    url: (user: string, repo: string) => `https://github.com/${user}/${repo}/issues?q=`
+  },
+  chooseNewIssue: {
+    label: 'choose-new-issue',
+    url: (user: string, repo: string) =>
+      `https://github.com/${user}/${repo}/issues/new/choose`
+  },
+  prCompare: {
+    label: 'pr-compare',
+    url: (user: string, repo: string) => `https://github.com/${user}/${repo}/compare`
+  },
+  securityMailTo: {
+    label: 'security-mail-to',
+    url: () =>
+      'mailto:security@ergodark.com?subject=ALERT%3A%20SECURITY%20INCIDENT%3A%20%28five%20word%20summary%29'
+  },
+  husky: {
+    label: 'husky',
+    url: (user: string, repo: string) =>
+      `https://github.com/${user}/${repo}/tree/main/.husky`
+  },
+  fork: {
+    label: 'fork',
+    url: (user: string, repo: string) => `https://github.com/${user}/${repo}/fork`
+  }
+};
 
 /**
  * TSConfig files that must exist in polyrepo roots (relative paths)
