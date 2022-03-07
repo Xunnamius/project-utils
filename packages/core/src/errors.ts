@@ -7,6 +7,25 @@ export class ContextError extends Error {}
 makeNamedError(ContextError, 'ContextError');
 
 /**
+ * Represents encountering a path that is unexpectedly not absolute.
+ */
+export class PathIsNotAbsoluteError extends ContextError {
+  /**
+   * Represents encountering a path that is unexpectedly not absolute.
+   */
+  constructor(path: string);
+  /**
+   * This constructor syntax is used by subclasses when calling this constructor
+   * via `super`.
+   */
+  constructor(path: string, message: string);
+  constructor(public readonly path: string, message: string | undefined = undefined) {
+    super(message ?? `"${path}" is not an absolute path`);
+  }
+}
+makeNamedError(PathIsNotAbsoluteError, 'PathIsNotAbsoluteError');
+
+/**
  * Represents encountering a project that is not a git repository.
  */
 export class NotAGitRepositoryError extends ContextError {
@@ -54,14 +73,14 @@ export class PackageJsonNotFoundError extends ContextError {
   /**
    * Represents a failure to find a package.json file.
    */
-  constructor(cause: unknown);
+  constructor(reason: unknown);
   /**
    * This constructor syntax is used by subclasses when calling this constructor
    * via `super`.
    */
-  constructor(cause: unknown, message: string);
-  constructor(public readonly cause: unknown, message: string | undefined = undefined) {
-    super(message ?? `unable to load package.json: ${cause}`);
+  constructor(reason: unknown, message: string);
+  constructor(public readonly reason: unknown, message: string | undefined = undefined) {
+    super(message ?? `unable to load package.json: ${reason}`);
   }
 }
 makeNamedError(PackageJsonNotFoundError, 'PackageJsonNotFoundError');
@@ -73,18 +92,18 @@ export class BadPackageJsonError extends ContextError {
   /**
    * Represents encountering an unparsable package.json file.
    */
-  constructor(packageJsonPath: string, cause: unknown);
+  constructor(packageJsonPath: string, reason: unknown);
   /**
    * This constructor syntax is used by subclasses when calling this constructor
    * via `super`.
    */
-  constructor(packageJsonPath: string, cause: unknown, message: string);
+  constructor(packageJsonPath: string, reason: unknown, message: string);
   constructor(
     public readonly packageJsonPath: string,
-    public readonly cause: unknown,
+    public readonly reason: unknown,
     message: string | undefined = undefined
   ) {
-    super(message ?? `unable to parse ${packageJsonPath}: ${cause}`);
+    super(message ?? `unable to parse ${packageJsonPath}: ${reason}`);
   }
 }
 makeNamedError(BadPackageJsonError, 'BadPackageJsonError');

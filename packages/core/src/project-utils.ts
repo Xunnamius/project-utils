@@ -1,5 +1,5 @@
 import { readFileSync as readFile } from 'fs';
-import { dirname, basename } from 'path';
+import { dirname, basename, isAbsolute } from 'path';
 import { sync as globSync } from 'glob';
 import { sync as findUp } from 'find-up';
 
@@ -9,7 +9,8 @@ import {
   DuplicatePackageNameError,
   NotAGitRepositoryError,
   NotAMonorepoError,
-  PackageJsonNotFoundError
+  PackageJsonNotFoundError,
+  PathIsNotAbsoluteError
 } from './errors';
 
 import type { PackageJson } from 'type-fest';
@@ -111,17 +112,26 @@ export type PolyrepoRunContext = RunContext & {
 };
 
 /**
+ * Throws if the provided path is not absolute.
+ */
+export function ensurePathIsAbsolute({ path }: { path: string }) {
+  if (!isAbsolute(path)) {
+    throw new PathIsNotAbsoluteError(path);
+  }
+}
+
+/**
  * Determine the package-id of a package from its root directory path.
  */
 export function packageRootToId({
   root
 }: {
   /**
-   * The absolute path to the root directory of a package. Supplying a relative
-   * path will lead to undefined behavior.
+   * The absolute path to the root directory of a package.
    */
   root: string;
 }) {
+  ensurePathIsAbsolute({ path: root });
   return basename(root);
 }
 
@@ -141,11 +151,12 @@ export function readPackageJson({
 }: {
   /**
    * The absolute path to the root directory of a package.
-   * `${root}/package.json` must exist. Supplying a relative path will lead to
-   * undefined behavior.
+   * `${root}/package.json` must exist.
    */
   root: string;
 }) {
+  ensurePathIsAbsolute({ path: root });
+
   if (_packageJsonReadCache.has(root)) {
     return _packageJsonReadCache.get(root) as PackageJson;
   }
@@ -174,13 +185,11 @@ export function readPackageJson({
  */
 export function getWorkspacePackages(options: {
   /**
-   * The absolute path to the root directory of a project. Supplying a relative
-   * path will lead to undefined behavior.
+   * The absolute path to the root directory of a project.
    */
   projectRoot: string;
   /**
-   * The current working directory as an absolute path. Supplying a relative
-   * path or a path outside of `projectRoot` will lead to undefined behavior.
+   * The current working directory as an absolute path.
    *
    * @default process.cwd()
    */
@@ -199,6 +208,9 @@ export function getWorkspacePackages(options: {
     cwd = process.cwd(),
     globOptions = {}
   } = options;
+
+  ensurePathIsAbsolute({ path: projectRoot });
+  ensurePathIsAbsolute({ path: cwd });
 
   let workspaces = (() => {
     try {
@@ -318,8 +330,7 @@ export function getWorkspacePackages(options: {
 export function getRunContext(
   options: {
     /**
-     * The current working directory as an absolute path. Supplying a relative
-     * path will lead to undefined behavior.
+     * The current working directory as an absolute path.
      *
      * @default process.cwd()
      */
@@ -327,6 +338,9 @@ export function getRunContext(
   } = {}
 ) {
   const { cwd = process.cwd() } = options;
+
+  ensurePathIsAbsolute({ path: cwd });
+
   const repoRoot = (() => {
     try {
       return dirname(findUp('.git', { cwd, type: 'directory' }) as string);

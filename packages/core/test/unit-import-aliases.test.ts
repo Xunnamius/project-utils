@@ -311,6 +311,20 @@ describe('::getJestAliases', () => {
       expect(() => Alias.getJestAliases()).toThrow(/must provide a rootDir argument/);
     });
   });
+
+  it('throws if using relative alias path with relative rootDir argument', async () => {
+    expect.hasAssertions();
+
+    jest.spyOn(Alias, 'getRawAliases').mockReturnValue({
+      a: './a'
+    } as unknown as ReturnType<typeof Alias.getRawAliases>);
+
+    await withMockedOutput(() => {
+      expect(() => Alias.getJestAliases({ rootDir: 'relative/path' })).toThrow(
+        /is not an absolute path/
+      );
+    });
+  });
 });
 
 describe('::getWebpackAliases', () => {
@@ -356,6 +370,20 @@ describe('::getWebpackAliases', () => {
 
     await withMockedOutput(() => {
       expect(() => Alias.getWebpackAliases()).toThrow(/must provide a rootDir argument/);
+    });
+  });
+
+  it('throws if using "<rootDir>" in alias path with relative rootDir argument', async () => {
+    expect.hasAssertions();
+
+    jest.spyOn(Alias, 'getRawAliases').mockReturnValue({
+      a: '<rootDir>/a'
+    } as unknown as ReturnType<typeof Alias.getRawAliases>);
+
+    await withMockedOutput(() => {
+      expect(() => Alias.getWebpackAliases({ rootDir: 'relative/root' })).toThrow(
+        /is not an absolute path/
+      );
     });
   });
 });

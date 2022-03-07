@@ -32,11 +32,33 @@ beforeEach(() => {
   Utils.clearPackageJsonCache();
 });
 
+describe('::ensurePathIsAbsolute', () => {
+  test('throws a PathIsNotAbsoluteError error if path is not absolute', async () => {
+    expect.hasAssertions();
+
+    expect(() => Utils.ensurePathIsAbsolute({ path: '/absolute/path' })).not.toThrow();
+    expect(() => Utils.ensurePathIsAbsolute({ path: 'relative/path' })).toThrowError(
+      Errors.PathIsNotAbsoluteError
+    );
+    expect(() => Utils.ensurePathIsAbsolute({ path: './relative/path' })).toThrowError(
+      Errors.PathIsNotAbsoluteError
+    );
+  });
+});
+
 describe('::packageRootToId', () => {
   test('translates a path to a package id', async () => {
     expect.hasAssertions();
 
     expect(Utils.packageRootToId({ root: '/repo/path/packages/pkg-1' })).toBe('pkg-1');
+  });
+
+  test('throws a PathIsNotAbsoluteError error if path is not absolute', async () => {
+    expect.hasAssertions();
+
+    expect(() =>
+      Utils.packageRootToId({ root: 'repo/path/packages/pkg-1' })
+    ).toThrowError(Errors.PathIsNotAbsoluteError);
   });
 });
 
@@ -63,6 +85,14 @@ describe('::readPackageJson', () => {
     );
   });
 
+  test('throws a PathIsNotAbsoluteError error if path is not absolute', async () => {
+    expect.hasAssertions();
+
+    expect(() => Utils.readPackageJson({ root: 'does/not/exist' })).toThrowError(
+      Errors.PathIsNotAbsoluteError
+    );
+  });
+
   test('throws a PackageJsonNotFoundError on readFileSync failure', async () => {
     expect.hasAssertions();
 
@@ -85,6 +115,14 @@ describe('::readPackageJson', () => {
 });
 
 describe('::getWorkspacePackages', () => {
+  test('throws a PathIsNotAbsoluteError error when passed relative projectRoot', async () => {
+    expect.hasAssertions();
+
+    expect(() => Utils.getWorkspacePackages({ projectRoot: 'fake/root' })).toThrowError(
+      Errors.PathIsNotAbsoluteError
+    );
+  });
+
   test('throws a NotAMonorepo error when passed non-existent projectRoot', async () => {
     expect.hasAssertions();
 
@@ -285,6 +323,14 @@ describe('::getRunContext', () => {
   test('uses process.cwd when given no cwd parameter', async () => {
     expect.hasAssertions();
     expect(() => Utils.getRunContext()).toThrow(Errors.NotAGitRepositoryError);
+  });
+
+  test('throws a PathIsNotAbsoluteError when passed a relative cwd', async () => {
+    expect.hasAssertions();
+
+    expect(() => Utils.getRunContext({ cwd: 'does/not/exist' })).toThrowError(
+      Errors.PathIsNotAbsoluteError
+    );
   });
 
   test('throws a NotAGitRepositoryError when failing to find a .git directory', async () => {

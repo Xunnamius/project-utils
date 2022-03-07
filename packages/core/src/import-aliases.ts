@@ -1,5 +1,6 @@
 import isValidPath from 'is-valid-path';
 import { relative as relativePath } from 'path';
+import { ensurePathIsAbsolute } from './project-utils';
 
 /**
  * Regular expressions used to parse out components of raw alias keys and
@@ -147,18 +148,21 @@ export function getWebpackAliases({
   rootDir
 }: {
   /**
-   * The root directory of the project as an absolute path. Supplying a
-   * relative path will lead to undefined behavior.
+   * The root directory of the project as an absolute path.
    */
   rootDir?: string;
 } = {}) {
   return Object.entries(getRawAliases()).reduce<Record<string, string>>((o, mapping) => {
     const [aliasMap, pathMap] = getProcessedAliasMapping({ mapping });
 
-    if (pathMap.prefix == '<rootDir>' && !rootDir) {
-      throw new Error(
-        'WebpackAliasError: must provide a rootDir argument when using <rootDir> in alias paths'
-      );
+    if (pathMap.prefix == '<rootDir>') {
+      if (!rootDir) {
+        throw new Error(
+          'WebpackAliasError: must provide a rootDir argument when using <rootDir> in alias paths'
+        );
+      } else {
+        ensurePathIsAbsolute({ path: rootDir });
+      }
     }
 
     return {
@@ -181,8 +185,7 @@ export function getJestAliases({
   rootDir
 }: {
   /**
-   * The root directory of the project as an absolute path. Supplying a
-   * relative path will lead to undefined behavior.
+   * The root directory of the project as an absolute path.
    */
   rootDir?: string;
 } = {}) {
@@ -196,6 +199,7 @@ export function getJestAliases({
           'JestAliasError: must provide a rootDir argument when using relative alias paths'
         );
       } else {
+        ensurePathIsAbsolute({ path: rootDir });
         const relPath = relativePath(rootDir, process.cwd());
         prefix += relPath ? `/${relPath}` : '';
       }
