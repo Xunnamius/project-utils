@@ -106,7 +106,7 @@ These additional checks are performed if the current project is a monorepo:
 - ⛔ Errors when an unnamed package shares the same [package-id][12] as another
   unnamed package in the monorepo
 
-These additional checks are performed except when linting a [sub-root][12]:
+These additional checks are performed _except_ when linting a [sub-root][12]:
 
 - ⚠️ Warns when any of the following files are missing:
   - `.codecov.yml`
@@ -153,13 +153,13 @@ These additional checks are performed only if linting a [monorepo root][12]:
 - ⛔ Errors when the `package.json` `workspaces` field contains a path that
   points to a directory without a `package.json` file
 - ⚠️ Warns when `package.json` contains `dependencies` or `version` fields
-  (`0.0.0-monorepo is allowed`)
+  (`0.0.0-monorepo` is allowed)
   - Since the typical [root package of a monorepo][12] is only encountered in
     development, any dependencies should always be `devDependencies`
   - If a `next.config.js` file exists, this check is skipped
 - ⚠️ Warns when `package.json` is missing the `private` field or if it is not
   set to `true`
-  - If a `next.config.js` file exists, this check is skipped
+  - Typically, a [monorepo's root package][12] is never published
 - ⚠️ Warns when `package.json` is missing the `name` field
 - All valid [sub-roots][12] defined in the `package.json` `workspaces` field are
   recursively linted
@@ -169,6 +169,7 @@ These additional checks are performed only if linting a [sub-root][12]:
 - ⛔ † Errors when this package's source imports another package from the same
   monorepo but does not list said package in `package.json` `dependencies` field
   - [Self-referential imports][13] are excluded from this check
+- ⚠️ Warns when `package.json` is missing the `config.codecov.flag` field
 - ⚠️ Warns when `package.json` contains `devDependencies`
   - These should be located in the project root's `package.json` file instead
 
