@@ -20,6 +20,9 @@ export interface RunOptions extends execa.Options {
   reject?: boolean;
 }
 
+export type RunReturnType = ExecaReturnValue &
+  ExecaSyncError & { code: ExecaReturnValue['exitCode'] };
+
 /**
  * Runs (executes) `file` with the given arguments (`args`) with respect to the
  * given `options`.
@@ -33,7 +36,7 @@ export async function run(file: string, args?: string[], options?: RunOptions) {
   const result = (await execa(file, args, {
     reject: false,
     ...options
-  })) as ExecaReturnValue & ExecaSyncError & { code: ExecaReturnValue['exitCode'] };
+  })) as RunReturnType;
 
   result.code = result.exitCode;
   debug('execution result: %O', result);
