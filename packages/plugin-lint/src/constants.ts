@@ -24,9 +24,20 @@ export const pkgVersionWhitelist = ['0.0.0-monorepo'] as const;
 export const pkgJsonObsoleteEntryKeys = ['main', 'module', 'types'] as const;
 
 /**
- * Standard Markdown topmatter (i.e. badges, surrounding comments, references)
+ * Parameters for configuring standard Markdown urls
  */
-export const markdownStandardTopmatter = {
+export type StandardUrlParams = {
+  user: string;
+  repo: string;
+  pkgName: string;
+  flag?: string;
+};
+
+/**
+ * Standard Markdown topmatter (i.e. badges, surrounding comments, references)
+ * for topmatter badges that appear in `README.md`. Note that order matters!
+ */
+export const markdownReadmeStandardTopmatter = {
   comment: {
     start: '<!-- badges-start -->',
     end: '<!-- badges-end -->'
@@ -35,190 +46,254 @@ export const markdownStandardTopmatter = {
     blm: {
       label: 'badge-blm',
       alt: 'Black Lives Matter!',
-      url: () => 'https://xunn.at/badge-blm',
+      url: (_: StandardUrlParams) => 'https://xunn.at/badge-blm',
       title: 'Join the movement!',
       link: {
         label: 'link-blm',
-        url: () => 'https://xunn.at/donate-blm'
+        url: (_: StandardUrlParams) => 'https://xunn.at/donate-blm'
       }
     },
     maintenance: {
       label: 'badge-maintenance',
       alt: 'Maintenance status',
-      url: () => `https://img.shields.io/maintenance/active/${new Date().getFullYear()}`,
+      url: (_: StandardUrlParams) =>
+        `https://img.shields.io/maintenance/active/${new Date().getFullYear()}`,
       title: 'Is this package maintained?',
       link: {
         label: 'link-maintenance',
-        url: (user: string, repo: string) => `https://github.com/${user}/${repo}`
+        url: ({ user, repo }: StandardUrlParams) => `https://github.com/${user}/${repo}`
       }
     },
     lastCommit: {
       label: 'badge-last-commit',
       alt: 'Last commit timestamp',
-      url: (user: string, repo: string) =>
+      url: ({ user, repo }: StandardUrlParams) =>
         `https://img.shields.io/github/last-commit/${user}/${repo}`,
       title: 'Latest commit timestamp',
       link: {
         label: 'link-last-commit',
-        url: (user: string, repo: string) => `https://github.com/${user}/${repo}`
+        url: ({ user, repo }: StandardUrlParams) => `https://github.com/${user}/${repo}`
       }
     },
     issues: {
       label: 'badge-issues',
       alt: 'Open issues',
-      url: (user: string, repo: string) =>
+      url: ({ user, repo }: StandardUrlParams) =>
         `https://img.shields.io/github/issues/${user}/${repo}`,
       title: 'Open issues',
       link: {
         label: 'link-issues',
-        url: (user: string, repo: string) =>
+        url: ({ user, repo }: StandardUrlParams) =>
           `https://github.com/${user}/${repo}/issues?q=`
       }
     },
     pulls: {
       label: 'badge-pulls',
       alt: 'Pull requests',
-      url: (user: string, repo: string) =>
+      url: ({ user, repo }: StandardUrlParams) =>
         `https://img.shields.io/github/issues-pr/${user}/${repo}`,
       title: 'Open pull requests',
       link: {
         label: 'link-pulls',
-        url: (user: string, repo: string) => `https://github.com/${user}/${repo}/pulls`
+        url: ({ user, repo }: StandardUrlParams) =>
+          `https://github.com/${user}/${repo}/pulls`
       }
     },
     codecov: {
       label: 'badge-codecov',
       alt: 'Codecov',
-      url: (user: string, repo: string, flag: string) =>
+      url: ({ user, repo, flag }: StandardUrlParams) =>
         `https://codecov.io/gh/${user}/${repo}/branch/main/graph/badge.svg${
           flag ? `?flag=${flag}` : ''
         }`,
       title: 'Is this package well-tested?',
       link: {
         label: 'link-codecov',
-        url: (user: string, repo: string) => `https://codecov.io/gh/${user}/${repo}`
+        url: ({ user, repo }: StandardUrlParams) =>
+          `https://codecov.io/gh/${user}/${repo}`
       }
     },
     license: {
       label: 'badge-license',
       alt: 'Source license',
-      url: (pkgName: string) => `https://img.shields.io/npm/l/${pkgName}`,
+      url: ({ pkgName }: StandardUrlParams) => `https://img.shields.io/npm/l/${pkgName}`,
       title: "This package's source license",
       link: {
         label: 'link-license',
-        url: (user: string, repo: string) =>
+        url: ({ user, repo }: StandardUrlParams) =>
           `https://github.com/${user}/${repo}/blob/main/LICENSE`
       }
     },
     treeShaking: {
       label: 'badge-tree-shaking',
       alt: 'Tree shaking support',
-      url: () => 'https://xunn.at/badge-tree-shaking',
+      url: (_: StandardUrlParams) => 'https://xunn.at/badge-tree-shaking',
       title: 'Is this package optimized for Webpack?',
       link: {
         label: 'link-tree-shaking',
-        url: (pkgName: string) => `https://npm.anvaka.com/#/view/2d/${pkgName}`
+        url: ({ pkgName }: StandardUrlParams) =>
+          `https://npm.anvaka.com/#/view/2d/${pkgName}`
       }
     },
     size: {
       label: 'badge-size',
       alt: 'Compressed package size',
-      url: (pkgName: string) => `https://packagephobia.com/badge?p=${pkgName}`,
+      url: ({ pkgName }: StandardUrlParams) =>
+        `https://packagephobia.com/badge?p=${pkgName}`,
       title: 'Is this package optimized for Webpack?',
       link: {
         label: 'link-size',
-        url: (pkgName: string) => `https://packagephobia.com/result?p=${pkgName}`
+        url: ({ pkgName }: StandardUrlParams) =>
+          `https://packagephobia.com/result?p=${pkgName}`
       }
     },
     npm: {
       label: 'badge-npm',
       alt: 'NPM version',
-      url: (pkgName: string) => `https://xunn.at/npm-pkg-version/${pkgName}`,
+      url: ({ pkgName }: StandardUrlParams) =>
+        `https://xunn.at/npm-pkg-version/${pkgName}`,
       title: 'Install this package using npm or yarn!',
       link: {
         label: 'link-npm',
-        url: (pkgName: string) => `https://www.npmjs.com/package/${pkgName}`
+        url: ({ pkgName }: StandardUrlParams) =>
+          `https://www.npmjs.com/package/${pkgName}`
       }
     },
     semanticRelease: {
       label: 'badge-semantic-release',
       alt: 'Uses Semantic Release!',
-      url: () =>
+      url: (_: StandardUrlParams) =>
         'https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg',
       title: 'This repo practices continuous integration and deployment!',
       link: {
         label: 'link-semantic-release',
-        url: () => 'https://github.com/semantic-release/semantic-release'
-      }
-    },
-    vulnerabilities: {
-      label: 'badge-vulnerabilities',
-      alt: 'Snyk vulnerability check',
-      url: (user: string, repo: string) =>
-        `https://snyk.io/test/github/${user}/${repo}/badge.svg`,
-      title: 'Number of vulnerabilities (scanned by Snyk)',
-      link: {
-        label: 'link-vulnerabilities',
-        url: (user: string, repo: string) => `https://snyk.io/test/github/${user}/${repo}`
-      }
-    },
-    issuesResolution: {
-      label: 'badge-issues-resolution',
-      alt: 'Average issue resolution time',
-      url: (user: string, repo: string) =>
-        `https://isitmaintained.com/badge/resolution/${user}/${repo}.svg`,
-      title: 'Average time to resolve an issue',
-      link: {
-        label: 'link-issue-resolution',
-        url: (user: string, repo: string) =>
-          `https://isitmaintained.com/project/${user}/${repo}`
-      }
-    },
-    issuesPercentage: {
-      label: 'badge-issues-percentage',
-      alt: 'Open issues percentage',
-      url: (user: string, repo: string) =>
-        `https://isitmaintained.com/badge/open/${user}/${repo}.svg`,
-      title: 'Open issues as a percentage of all issues',
-      link: {
-        label: 'link-issues-percentage',
-        url: (user: string, repo: string) =>
-          `https://github.com/${user}/${repo}/issues?q=`
+        url: (_: StandardUrlParams) =>
+          'https://github.com/semantic-release/semantic-release'
       }
     }
   }
 } as const;
 
 /**
- * Standard Markdown reference links (i.e. links and references)
+ * Standard Markdown topmatter (i.e. badges, surrounding comments, references)
+ * for topmatter badges that appear in `SECURITY.md`. Note that order matters!
  */
-export const markdownStandardLinks = {
-  openIssues: {
-    label: 'open-issues',
-    url: (user: string, repo: string) => `https://github.com/${user}/${repo}/issues?q=`
+export const markdownSecurityStandardTopmatter = {
+  vulnerabilities: {
+    label: 'badge-vulnerabilities',
+    alt: 'Snyk vulnerability check',
+    url: ({ user, repo }: StandardUrlParams) =>
+      `https://snyk.io/test/github/${user}/${repo}/badge.svg`,
+    title: 'Number of vulnerabilities (scanned by Snyk)',
+    link: {
+      label: 'link-vulnerabilities',
+      url: ({ user, repo }: StandardUrlParams) =>
+        `https://snyk.io/test/github/${user}/${repo}`
+    }
+  }
+};
+
+/**
+ * Standard Markdown topmatter (i.e. badges, surrounding comments, references)
+ * for topmatter badges that appear in `SUPPORT.md`. Note that order matters!
+ */
+export const markdownSupportStandardTopmatter = {
+  issuesResolution: {
+    label: 'badge-issues-resolution',
+    alt: 'Average issue resolution time',
+    url: ({ user, repo }: StandardUrlParams) =>
+      `https://isitmaintained.com/badge/resolution/${user}/${repo}.svg`,
+    title: 'Average time to resolve an issue',
+    link: {
+      label: 'link-issue-resolution',
+      url: ({ user, repo }: StandardUrlParams) =>
+        `https://isitmaintained.com/project/${user}/${repo}`
+    }
   },
+  issuesPercentage: {
+    label: 'badge-issues-percentage',
+    alt: 'Open issues percentage',
+    url: ({ user, repo }: StandardUrlParams) =>
+      `https://isitmaintained.com/badge/open/${user}/${repo}.svg`,
+    title: 'Open issues as a percentage of all issues',
+    link: {
+      label: 'link-issues-percentage',
+      url: ({ user, repo }: StandardUrlParams) =>
+        `https://github.com/${user}/${repo}/issues?q=`
+    }
+  }
+};
+
+/**
+ * Standard Markdown reference links (i.e. links and references) for README.md
+ */
+export const markdownReadmeStandardLinks = {
+  docs: { label: 'docs', url: (_: StandardUrlParams) => 'docs' },
   chooseNewIssue: {
     label: 'choose-new-issue',
-    url: (user: string, repo: string) =>
+    url: ({ user, repo }: StandardUrlParams) =>
       `https://github.com/${user}/${repo}/issues/new/choose`
   },
   prCompare: {
     label: 'pr-compare',
-    url: (user: string, repo: string) => `https://github.com/${user}/${repo}/compare`
+    url: ({ user, repo }: StandardUrlParams) =>
+      `https://github.com/${user}/${repo}/compare`
+  },
+  contributing: {
+    label: 'contributing',
+    url: (_: StandardUrlParams) => 'CONTRIBUTING.md'
+  },
+  support: { label: 'support', url: (_: StandardUrlParams) => '.github/SUPPORT.md' }
+};
+
+/**
+ * Standard Markdown reference links (i.e. links and references) for SECURITY.md
+ */
+export const markdownSecurityStandardLinks = {
+  openIssues: {
+    label: 'open-issues',
+    url: ({ user, repo }: StandardUrlParams) =>
+      `https://github.com/${user}/${repo}/issues?q=`
+  },
+  chooseNewIssue: {
+    label: 'choose-new-issue',
+    url: ({ user, repo }: StandardUrlParams) =>
+      `https://github.com/${user}/${repo}/issues/new/choose`
   },
   securityMailTo: {
     label: 'security-mail-to',
-    url: () =>
+    url: (_: StandardUrlParams) =>
       'mailto:security@ergodark.com?subject=ALERT%3A%20SECURITY%20INCIDENT%3A%20%28five%20word%20summary%29'
+  }
+};
+
+/**
+ * Standard Markdown reference links (i.e. links and references) for SUPPORT.md
+ */
+export const markdownSupportStandardLinks = {
+  openIssues: {
+    label: 'open-issues',
+    url: ({ user, repo }: StandardUrlParams) =>
+      `https://github.com/${user}/${repo}/issues?q=`
+  },
+  chooseNewIssue: {
+    label: 'choose-new-issue',
+    url: ({ user, repo }: StandardUrlParams) =>
+      `https://github.com/${user}/${repo}/issues/new/choose`
+  },
+  prCompare: {
+    label: 'pr-compare',
+    url: ({ user, repo }: StandardUrlParams) =>
+      `https://github.com/${user}/${repo}/compare`
   },
   husky: {
     label: 'husky',
-    url: (user: string, repo: string) =>
+    url: ({ user, repo }: StandardUrlParams) =>
       `https://github.com/${user}/${repo}/tree/main/.husky`
   },
   fork: {
     label: 'fork',
-    url: (user: string, repo: string) => `https://github.com/${user}/${repo}/fork`
+    url: ({ user, repo }: StandardUrlParams) => `https://github.com/${user}/${repo}/fork`
   }
 };
 

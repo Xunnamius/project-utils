@@ -54,7 +54,7 @@ export function configureProgram(program?: Program): Context {
         describe:
           'The project root directory containing ESLint and TypeScript ' +
           'configuration files, and that relative paths and globs are ' +
-          'resolved against.',
+          'resolved against. This must be an absolute path.',
         type: 'string',
         default: process.cwd(),
         defaultDescription: 'process.cwd()'

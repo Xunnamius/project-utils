@@ -1,11 +1,10 @@
 import { run } from 'multiverse/run';
 import { CliError, ErrorMessage } from './errors';
 import { getRunContext } from 'pkgverse/core/src/project-utils';
-import { access } from 'fs/promises';
+import { access, readFile } from 'fs/promises';
 import { glob } from 'glob';
 import { promisify } from 'util';
 import { toss } from 'toss-expression';
-import { readFile } from 'fs/promises';
 import semver from 'semver';
 import browserslist from 'browserslist';
 import stripAnsi from 'strip-ansi';
@@ -21,6 +20,7 @@ import {
 
 import {
   globalPkgJsonRequiredFields,
+  markdownReadmeStandardTopmatter,
   monorepoRootTsconfigFiles,
   nonMonoRootPkgJsonRequiredFields,
   numLinesToConsider,
@@ -35,9 +35,12 @@ import {
   subRootTsconfigFiles
 } from './constants';
 
+import type { StandardUrlParams } from './constants';
 import type { PackageJson } from 'type-fest';
 
-const getRemark = () => import('mdast-util-from-markdown');
+type Definition = import('mdast-util-from-markdown/lib').Definition;
+
+const getRemark = () => import(/* webpackIgnore: true */ 'mdast-util-from-markdown');
 
 const globAsync = promisify(glob);
 
@@ -126,6 +129,17 @@ const checkFilesExist = (
       }
     })
   );
+};
+
+/**
+ * Returns the expected value for `package.json` `node.engines` field
+ */
+export const getExpectedNodeEngines = () => {
+  return browserslist('maintained node versions')
+    .map((v) => v.split(' ').at(-1) as string)
+    .sort(semver.compareBuild)
+    .map((v, ndx, arr) => `${ndx == arr.length - 1 ? '>=' : '^'}${v}`)
+    .join(' || ');
 };
 
 /**
@@ -219,18 +233,20 @@ export async function runProjectLinter({
       const rootAndSubRootChecks = async ({
         root,
         json,
-        isCheckingMonorepoRoot
+        isCheckingMonorepoRoot,
+        isCheckingMonorepoSubRoot
       }: {
         root: string;
         json: PackageJson;
         isCheckingMonorepoRoot: boolean;
+        isCheckingMonorepoSubRoot: boolean;
       }) => {
-        const report = reporterFactory(`${root}/package.json`);
+        const reportPkg = reporterFactory(`${root}/package.json`);
 
         // ? package.json must have required fields
         globalPkgJsonRequiredFields.forEach((field) => {
           if (json[field] === undefined) {
-            report('error', ErrorMessage.PackageJsonMissingKey(field));
+            reportPkg('error', ErrorMessage.PackageJsonMissingKey(field));
           }
         });
 
@@ -238,7 +254,7 @@ export async function runProjectLinter({
         if (!isCheckingMonorepoRoot) {
           nonMonoRootPkgJsonRequiredFields.forEach((field) => {
             if (json[field] === undefined) {
-              report('error', ErrorMessage.PackageJsonMissingKey(field));
+              reportPkg('error', ErrorMessage.PackageJsonMissingKey(field));
             }
           });
 
@@ -246,32 +262,32 @@ export async function runProjectLinter({
           if (!json.private) {
             publicPkgJsonRequiredFields.forEach((field) => {
               if (json[field] === undefined) {
-                report('error', ErrorMessage.PackageJsonMissingKey(field));
+                reportPkg('error', ErrorMessage.PackageJsonMissingKey(field));
               }
             });
           }
         }
 
-        // ? No duplicate dependencies
+        // ? package.json has duplicate dependencies
         if (json.dependencies && json.devDependencies) {
           const devDeps = Object.keys(json.devDependencies);
           Object.keys(json.dependencies)
             .filter((d) => devDeps.includes(d))
             .forEach((dep) => {
-              report('error', ErrorMessage.PackageJsonDuplicateDependency(dep));
+              reportPkg('error', ErrorMessage.PackageJsonDuplicateDependency(dep));
             });
         }
 
-        // ? Has baseline distributable contents whitelist
+        // ? package.json has baseline distributable contents whitelist
         if (json.files) {
           pkgJsonRequiredFiles.forEach((file) => {
             if (!json.files?.includes(file)) {
-              report('error', ErrorMessage.PackageJsonMissingValue('files', file));
+              reportPkg('error', ErrorMessage.PackageJsonMissingValue('files', file));
             }
           });
         }
 
-        // ? Has standard entry points
+        // ? package.json has standard entry points
         if (json.exports !== undefined) {
           const xports =
             !json.exports ||
@@ -284,7 +300,7 @@ export async function runProjectLinter({
 
           pkgJsonRequiredExports.forEach((requiredEntryPoint) => {
             if (!entryPoints.includes(requiredEntryPoint)) {
-              report(
+              reportPkg(
                 'error',
                 ErrorMessage.PackageJsonMissingEntryPoint(requiredEntryPoint)
               );
@@ -295,7 +311,7 @@ export async function runProjectLinter({
             deepFlat(xports[entryPoint], [entryPoint])
           );
 
-          // ? Entry points exist
+          // ? package.json entry points exist
           distPaths.forEach(({ paths, fullPath }) => {
             tasks.push(
               (async () => {
@@ -309,7 +325,7 @@ export async function runProjectLinter({
                 );
 
                 if (!results.some(Boolean)) {
-                  report('error', ErrorMessage.PackageJsonBadEntryPoint(fullPath));
+                  reportPkg('error', ErrorMessage.PackageJsonBadEntryPoint(fullPath));
                 }
               })()
             );
@@ -332,7 +348,7 @@ export async function runProjectLinter({
                   );
 
                   if (!results.some(Boolean)) {
-                    report(
+                    reportPkg(
                       'error',
                       ErrorMessage.PackageJsonBadTypesEntryPoint([version, alias])
                     );
@@ -395,42 +411,33 @@ export async function runProjectLinter({
 
         // ? Has correct license
         if (json.license != pkgJsonLicense) {
-          report('warn', ErrorMessage.PackageJsonMissingValue('license', pkgJsonLicense));
+          reportPkg(
+            'warn',
+            ErrorMessage.PackageJsonMissingValue('license', pkgJsonLicense)
+          );
         }
 
         // ? Has non-experimental non-whitelisted version
-        if (
-          json.version &&
-          !pkgVersionWhitelist.includes(
-            json.version as typeof pkgVersionWhitelist[number]
-          ) &&
-          semver.major(json.version) == 0
-        ) {
-          report('warn', ErrorMessage.PackageJsonExperimentalVersion());
+        if (!isCheckingMonorepoRoot && json.version && semver.major(json.version) == 0) {
+          reportPkg('warn', ErrorMessage.PackageJsonExperimentalVersion());
         }
 
         // ? Does not use outdated entry fields
         pkgJsonObsoleteEntryKeys.forEach((outdatedKey) => {
           if (json[outdatedKey]) {
-            report('warn', ErrorMessage.PackageJsonObsoleteKey(outdatedKey));
+            reportPkg('warn', ErrorMessage.PackageJsonObsoleteKey(outdatedKey));
           }
         });
 
         // ? Has maintained node version engines.node entries
         if (json.engines) {
           if (json.engines.node) {
-            const expectedNodeEngines = browserslist('maintained node versions')
-              .reverse()
-              .map(
-                (v, ndx, arr) =>
-                  `${ndx == arr.length - 1 ? '>=' : '^'}${v.split(' ').at(-1)}`
-              )
-              .join(' || ');
+            const expectedNodeEngines = getExpectedNodeEngines();
             if (json.engines.node != expectedNodeEngines) {
-              report('warn', ErrorMessage.PackageJsonBadEngine(expectedNodeEngines));
+              reportPkg('warn', ErrorMessage.PackageJsonBadEngine(expectedNodeEngines));
             }
           } else {
-            report('warn', ErrorMessage.PackageJsonMissingKey('engines.node'));
+            reportPkg('warn', ErrorMessage.PackageJsonMissingKey('engines.node'));
           }
         }
 
@@ -445,63 +452,248 @@ export async function runProjectLinter({
           if (depsObj) {
             Object.entries(depsObj).forEach(([dep, semvr]) => {
               if (!Number.isNaN(parseInt(semvr[0]))) {
-                report('warn', ErrorMessage.PackageJsonPinnedDependency(dep));
-              } else if (!semver.valid(semvr) && !semver.validRange(semvr)) {
-                report('warn', ErrorMessage.PackageJsonTaggedDependency(dep));
+                reportPkg('warn', ErrorMessage.PackageJsonPinnedDependency(dep));
+              } else if (
+                !semver.valid(semvr) &&
+                !semver.validRange(semvr) &&
+                !semvr.startsWith('https://xunn.at')
+              ) {
+                reportPkg('warn', ErrorMessage.PackageJsonNonSemverDependency(dep));
               }
             });
           }
         });
 
-        // ? Has a docs entry point pointing to an existing file
-        const docsEntry = (json?.config?.docs as Record<string, string>)?.entry;
-        if (!docsEntry) {
-          report('warn', ErrorMessage.PackageJsonMissingKey('config.docs.entry'));
-        } else {
-          tasks.push(
-            (async () => {
-              const filePath = `${root}/${docsEntry}`;
-              try {
-                await access(filePath);
-              } catch {
-                reporterFactory(filePath)(
-                  'warn',
-                  ErrorMessage.PackageJsonBadConfigDocsEntry()
-                );
-              }
-            })()
-          );
+        // ? Has a docs entry point pointing to an existing file (if not a
+        // ? monorepo root)
+        if (!isCheckingMonorepoRoot) {
+          const docsEntry = (json?.config?.docs as Record<string, string>)?.entry;
+          if (!docsEntry) {
+            reportPkg('warn', ErrorMessage.PackageJsonMissingKey('config.docs.entry'));
+          } else {
+            tasks.push(
+              (async () => {
+                const doesExist = await globAsync(docsEntry, {
+                  cwd: root,
+                  ignore: ['**/node_modules/**']
+                }).then((files) => !!files.length);
+                if (!doesExist) {
+                  reportPkg('warn', ErrorMessage.PackageJsonBadConfigDocsEntry());
+                }
+              })()
+            );
+          }
         }
 
         // ? README.md has standard well-configured topmatter and links
         const readmePath = `${root}/README.md`;
+        const reportReadme = reporterFactory(readmePath);
         const remark = await getRemark();
-        const ast = remark.fromMarkdown(await readFile(readmePath));
-        let sawBadgesStart = false;
 
-        for (const child of ast.children) {
-          if (child.type == 'html' && child.value == topmatterBadgesStart) {
-            sawBadgesStart = true;
-            continue;
+        const ast = await (async () => {
+          try {
+            return remark.fromMarkdown(await readFile(readmePath));
+          } catch (e) {
+            if (!(e as Error).message.includes('ENOENT')) {
+              throw e;
+            }
           }
-          break;
+        })();
+
+        if (ast) {
+          const startIndex = ast.children.findIndex(
+            (child) =>
+              child.type == 'html' &&
+              child.value == markdownReadmeStandardTopmatter.comment.start
+          );
+
+          const startChild = ast.children[startIndex] || {};
+          const endChild = ast.children[startIndex + 2] || {};
+          const topmatter = ast.children[startIndex + 1] || {};
+
+          if (
+            startChild.type != 'html' ||
+            startChild.value != markdownReadmeStandardTopmatter.comment.end
+          ) {
+            reportReadme('warn', ErrorMessage.MarkdownInvalidSyntaxOpeningComment());
+          } else if (
+            endChild.type != 'html' ||
+            endChild.value != markdownReadmeStandardTopmatter.comment.end
+          ) {
+            reportReadme('warn', ErrorMessage.MarkdownInvalidSyntaxClosingComment());
+          } else {
+            let handled = false;
+            let wellOrdered = true;
+            const seenBadgeKeys = [] as string[];
+            const badgeKeyOrder = Object.keys(markdownReadmeStandardTopmatter.badge);
+
+            if (topmatter.type == 'paragraph') {
+              topmatter.children.forEach((badgeLinkRef, ndx) => {
+                if (badgeLinkRef.type == 'linkReference') {
+                  const [badgeKey, badgeSpec] =
+                    Object.entries(markdownReadmeStandardTopmatter.badge).find(
+                      ([, spec]) =>
+                        badgeLinkRef.label && spec.link.label == badgeLinkRef.label
+                    ) || [];
+
+                  handled = true;
+
+                  if (badgeKey && badgeSpec) {
+                    wellOrdered = wellOrdered && badgeKeyOrder.indexOf(badgeKey) == ndx;
+                    seenBadgeKeys.push(badgeKey);
+
+                    if (
+                      badgeLinkRef.children.length != 1 ||
+                      badgeLinkRef.children[0].type != 'imageReference'
+                    ) {
+                      reportReadme(
+                        'warn',
+                        ErrorMessage.MarkdownInvalidSyntaxLinkRef(badgeLinkRef.label)
+                      );
+                    } else {
+                      const badgeImageRef = badgeLinkRef.children[0];
+                      const linkRefDef = ast.children.find(
+                        (child): child is Definition =>
+                          child.type == 'definition' && child.label == badgeLinkRef.label
+                      );
+
+                      const imageRefDef = ast.children.find(
+                        (child): child is Definition =>
+                          child.type == 'definition' && child.label == badgeImageRef.label
+                      );
+
+                      if (badgeImageRef.label != badgeSpec.label) {
+                        reportReadme(
+                          'warn',
+                          ErrorMessage.MarkdownBadTopmatterImageRefLabel(
+                            badgeImageRef.label,
+                            badgeSpec.label
+                          )
+                        );
+                      }
+
+                      if (badgeImageRef.alt != badgeSpec.alt) {
+                        reportReadme(
+                          'warn',
+                          ErrorMessage.MarkdownBadTopmatterImageRefAlt(
+                            badgeImageRef.label,
+                            badgeSpec.alt
+                          )
+                        );
+                      }
+
+                      if (!linkRefDef) {
+                        reportReadme(
+                          'warn',
+                          ErrorMessage.MarkdownBadTopmatterMissingLinkRefDef(
+                            badgeLinkRef.label
+                          )
+                        );
+                      } else if (!imageRefDef) {
+                        reportReadme(
+                          'warn',
+                          ErrorMessage.MarkdownBadTopmatterMissingImageRefDef(
+                            badgeImageRef.label
+                          )
+                        );
+                      } else {
+                        const match =
+                          /^https:\/\/github.com\/(?<user>[^/]+)\/(?<repo>[^/]+)/.exec(
+                            typeof json.repository == 'string'
+                              ? json.repository
+                              : json.repository?.url || ''
+                          );
+
+                        if (json.name && match?.groups?.user && match?.groups?.repo) {
+                          const urlParams: StandardUrlParams = {
+                            pkgName: json.name,
+                            repo: match.groups.repo,
+                            user: match.groups.user,
+                            flag: (json.config?.codecov as Record<string, string>)?.flag
+                          };
+
+                          if (imageRefDef.title != badgeSpec.title) {
+                            reportReadme(
+                              'warn',
+                              ErrorMessage.MarkdownBadTopmatterImageRefDefTitle(
+                                badgeImageRef.label,
+                                badgeSpec.title
+                              )
+                            );
+                          } else if (imageRefDef.url != badgeSpec.url(urlParams)) {
+                            reportReadme(
+                              'warn',
+                              ErrorMessage.MarkdownBadTopmatterImageRefDefUrl(
+                                badgeImageRef.label,
+                                badgeSpec.url(urlParams)
+                              )
+                            );
+                          } else if (linkRefDef.url != badgeSpec.link.url(urlParams)) {
+                            reportReadme(
+                              'warn',
+                              ErrorMessage.MarkdownBadTopmatterLinkRefDefUrl(
+                                linkRefDef.label,
+                                badgeSpec.link.url(urlParams)
+                              )
+                            );
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              });
+            }
+
+            if (!handled) {
+              reportReadme('warn', ErrorMessage.MarkdownMissingTopmatter());
+            } else {
+              if (!wellOrdered) {
+                reportReadme('warn', ErrorMessage.MarkdownTopmatterOutOfOrder());
+              }
+
+              badgeKeyOrder
+                .filter((k) => !seenBadgeKeys.includes(k))
+                .forEach((topmatter) => {
+                  reportReadme(
+                    'warn',
+                    ErrorMessage.MarkdownMissingTopmatterItem(topmatter)
+                  );
+                });
+            }
+          }
         }
 
-        if (!sawBadgesStart) {
-          reporterFactory(readmePath)('warn', ErrorMessage.MarkdownMissingTopmatter());
-        }
+        // ? These checks are performed ONLY IF linting a sub-root
+        if (isCheckingMonorepoSubRoot) {
+          // ? Has certain tsconfig files
+          tasks.push(
+            checkFilesExist(subRootTsconfigFiles, root, reporterFactory, 'warn')
+          );
 
-        // ? README.md first header is the package's name if not monorepo root
-        // TODO
+          // ? Has codecov flag config
+          if (!(json.config?.codecov as Record<string, string>)?.flag) {
+            reportPkg('warn', ErrorMessage.PackageJsonMissingKey('config.codecov.flag'));
+          }
+
+          // ? Has no "devDependencies"
+          if (ctx.project.json.devDependencies) {
+            reportPkg('warn', ErrorMessage.PackageJsonIllegalKey('devDependencies'));
+          }
+
+          // ? Has no unlisted cross-dependencies
+          // TODO
+        }
       };
 
       await rootAndSubRootChecks({
         root: ctx.package?.root || ctx.project.root,
         json: ctx.package?.json || ctx.project.json,
-        isCheckingMonorepoRoot: startedAtMonorepoRoot
+        isCheckingMonorepoRoot: startedAtMonorepoRoot,
+        isCheckingMonorepoSubRoot: !!ctx.package
       });
 
-      // ? These checks are performed ONLY IF linting a monorepo root
+      // ? These additional checks are performed ONLY IF linting a monorepo root
       if (startedAtMonorepoRoot) {
         // ? Has certain tsconfig files
         tasks.push(
@@ -523,17 +715,44 @@ export async function runProjectLinter({
           );
         }
 
-        // ? Has a "name" field
-        // TODO
+        const reportPkg = reporterFactory(`${ctx.project.root}/package.json`);
+        const isNextJsProject = await (async () => {
+          try {
+            await access(`${ctx.project.root}/next.config.json`);
+            return true;
+          } catch {}
+          return false;
+        })();
 
-        // ? Has no "dependencies" field
-        // TODO
+        // ? Has a "name" field (the case where !private is already covered)
+        if (ctx.project.json.private && !ctx.project.json.name) {
+          reportPkg('warn', ErrorMessage.PackageJsonMissingKey('name'));
+        }
 
-        // ? Has no non-whitelisted "version" field unless next.config.js exists
-        // TODO
+        // ? Is "private" (`private` == `true`)
+        if (ctx.project.json.private === undefined) {
+          reportPkg('warn', ErrorMessage.PackageJsonMissingKey('private'));
+        } else if (ctx.project.json.private !== true) {
+          reportPkg('warn', ErrorMessage.PackageJsonMissingValue('private', 'true'));
+        }
 
-        // ? Is "private" unless next.config.js exists
-        // TODO
+        // ? ... unless next.config.js exists
+        if (!isNextJsProject) {
+          // ? Has no "dependencies" field
+          if (ctx.project.json.dependencies) {
+            reportPkg('warn', ErrorMessage.PackageJsonIllegalKey('dependencies'));
+          }
+
+          // ? Has no non-whitelisted "version" field
+          if (
+            ctx.project.json.version &&
+            !pkgVersionWhitelist.includes(
+              ctx.project.json.version as typeof pkgVersionWhitelist[number]
+            )
+          ) {
+            reportPkg('warn', ErrorMessage.PackageJsonIllegalKey('version'));
+          }
+        }
 
         // ? Recursively lint all sub-roots
         tasks.push(
@@ -544,13 +763,14 @@ export async function runProjectLinter({
                 return rootAndSubRootChecks({
                   root,
                   json,
-                  isCheckingMonorepoRoot: false
+                  isCheckingMonorepoRoot: false,
+                  isCheckingMonorepoSubRoot: true
                 });
               })
           )
         );
       }
-      // ? These checks are performed ONLY IF linting a polyrepo root
+      // ? These additional checks are performed ONLY IF linting a polyrepo root
       else if (!ctx.package) {
         // ? Has certain tsconfig files
         tasks.push(
@@ -563,21 +783,10 @@ export async function runProjectLinter({
         );
       }
 
-      // ? These checks are performed ONLY IF linting a sub-root
-      if (ctx.package) {
-        const root = ctx.package.root;
-
-        // ? Has certain tsconfig files
-        tasks.push(checkFilesExist(subRootTsconfigFiles, root, reporterFactory, 'warn'));
-
-        // ? Has no "devDependencies"
-        // TODO
-
-        // ? Has no unlisted cross-dependencies
-        // TODO
-      } // ? These checks are performed ONLY IF NOT linting a sub-root
-      else {
+      // ? These additional checks are performed ONLY IF NOT linting a sub-root
+      if (!ctx.package) {
         const root = ctx.project.root;
+        const reportPkg = reporterFactory(`${root}/package.json`);
 
         // ? Has standard files
         // TODO
@@ -585,7 +794,7 @@ export async function runProjectLinter({
         // ? Has standard directories
         // TODO
 
-        // ? Has release.config.js (if not "private")
+        // ? Has release.config.js if not "private" (`private` == `true`)
         // TODO
 
         // ? SECURITY.md and SUPPORT.md has standard topmatter and links
@@ -618,7 +827,7 @@ export async function runProjectLinter({
           : 'no issues'
     };
   } catch (e) {
-    throw new Error(`project linting failed: ${e}`);
+    throw new Error(`project linting failed: ${e}`, { cause: e as Error });
   }
 }
 
