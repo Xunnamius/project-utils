@@ -1,0 +1,160 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [
+        {
+          "type": "text",
+          "value": "Contributing",
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 3,
+              "offset": 2
+            },
+            "end": {
+              "line": 1,
+              "column": 15,
+              "offset": 14
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 15,
+          "offset": 14
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Hi there! First off, we're thrilled 🤩 you want contribute to this project!",
+          "position": {
+            "start": {
+              "line": 3,
+              "column": 1,
+              "offset": 16
+            },
+            "end": {
+              "line": 3,
+              "column": 76,
+              "offset": 91
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 3,
+          "column": 1,
+          "offset": 16
+        },
+        "end": {
+          "line": 3,
+          "column": 76,
+          "offset": 91
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "1",
+      "label": "1",
+      "title": null,
+      "url": "https://www.dataschool.io/how-to-contribute-on-github",
+      "position": {
+        "start": {
+          "line": 154,
+          "column": 1,
+          "offset": 7356
+        },
+        "end": {
+          "line": 154,
+          "column": 59,
+          "offset": 7414
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "2",
+      "label": "2",
+      "title": null,
+      "url": "/.github/CODE_OF_CONDUCT.md",
+      "position": {
+        "start": {
+          "line": 155,
+          "column": 1,
+          "offset": 7415
+        },
+        "end": {
+          "line": 155,
+          "column": 33,
+          "offset": 7447
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "3",
+      "label": "3",
+      "title": null,
+      "url": "https://github.com/features/actions",
+      "position": {
+        "start": {
+          "line": 156,
+          "column": 1,
+          "offset": 7448
+        },
+        "end": {
+          "line": 156,
+          "column": 41,
+          "offset": 7488
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "4",
+      "label": "4",
+      "title": null,
+      "url": "https://github.com/Xunnamius/projector/tree/main/.husky",
+      "position": {
+        "start": {
+          "line": 157,
+          "column": 1,
+          "offset": 7489
+        },
+        "end": {
+          "line": 157,
+          "column": 61,
+          "offset": 7549
+        }
+      }
+    }
+  ],
+  "position": {
+    "start": {
+      "line": 1,
+      "column": 1,
+      "offset": 0
+    },
+    "end": {
+      "line": 192,
+      "column": 1,
+      "offset": 9254
+    }
+  }
+}

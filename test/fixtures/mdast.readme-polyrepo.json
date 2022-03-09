@@ -1,0 +1,1416 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "html",
+      "value": "<!-- prettier-ignore-start -->",
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 31,
+          "offset": 30
+        }
+      }
+    },
+    {
+      "type": "html",
+      "value": "<!-- badges-start -->",
+      "position": {
+        "start": {
+          "line": 3,
+          "column": 1,
+          "offset": 32
+        },
+        "end": {
+          "line": 3,
+          "column": 22,
+          "offset": 53
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Black Lives Matter!",
+              "position": {
+                "start": {
+                  "line": 5,
+                  "column": 2,
+                  "offset": 56
+                },
+                "end": {
+                  "line": 5,
+                  "column": 35,
+                  "offset": 89
+                }
+              },
+              "label": "badge-blm",
+              "identifier": "badge-blm",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 5,
+              "column": 1,
+              "offset": 55
+            },
+            "end": {
+              "line": 5,
+              "column": 46,
+              "offset": 100
+            }
+          },
+          "label": "link-blm",
+          "identifier": "link-blm",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 5,
+              "column": 46,
+              "offset": 100
+            },
+            "end": {
+              "line": 6,
+              "column": 1,
+              "offset": 101
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Maintenance status",
+              "position": {
+                "start": {
+                  "line": 6,
+                  "column": 2,
+                  "offset": 102
+                },
+                "end": {
+                  "line": 6,
+                  "column": 42,
+                  "offset": 142
+                }
+              },
+              "label": "badge-maintenance",
+              "identifier": "badge-maintenance",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 6,
+              "column": 1,
+              "offset": 101
+            },
+            "end": {
+              "line": 6,
+              "column": 54,
+              "offset": 154
+            }
+          },
+          "label": "link-repo",
+          "identifier": "link-repo",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 6,
+              "column": 54,
+              "offset": 154
+            },
+            "end": {
+              "line": 7,
+              "column": 1,
+              "offset": 155
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Last commit timestamp",
+              "position": {
+                "start": {
+                  "line": 7,
+                  "column": 2,
+                  "offset": 156
+                },
+                "end": {
+                  "line": 7,
+                  "column": 45,
+                  "offset": 199
+                }
+              },
+              "label": "badge-last-commit",
+              "identifier": "badge-last-commit",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 7,
+              "column": 1,
+              "offset": 155
+            },
+            "end": {
+              "line": 7,
+              "column": 57,
+              "offset": 211
+            }
+          },
+          "label": "link-repo",
+          "identifier": "link-repo",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 7,
+              "column": 57,
+              "offset": 211
+            },
+            "end": {
+              "line": 8,
+              "column": 1,
+              "offset": 212
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Open issues",
+              "position": {
+                "start": {
+                  "line": 8,
+                  "column": 2,
+                  "offset": 213
+                },
+                "end": {
+                  "line": 8,
+                  "column": 30,
+                  "offset": 241
+                }
+              },
+              "label": "badge-issues",
+              "identifier": "badge-issues",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 8,
+              "column": 1,
+              "offset": 212
+            },
+            "end": {
+              "line": 8,
+              "column": 44,
+              "offset": 255
+            }
+          },
+          "label": "link-issues",
+          "identifier": "link-issues",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 8,
+              "column": 44,
+              "offset": 255
+            },
+            "end": {
+              "line": 9,
+              "column": 1,
+              "offset": 256
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Pull requests",
+              "position": {
+                "start": {
+                  "line": 9,
+                  "column": 2,
+                  "offset": 257
+                },
+                "end": {
+                  "line": 9,
+                  "column": 31,
+                  "offset": 286
+                }
+              },
+              "label": "badge-pulls",
+              "identifier": "badge-pulls",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 9,
+              "column": 1,
+              "offset": 256
+            },
+            "end": {
+              "line": 9,
+              "column": 44,
+              "offset": 299
+            }
+          },
+          "label": "link-pulls",
+          "identifier": "link-pulls",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 9,
+              "column": 44,
+              "offset": 299
+            },
+            "end": {
+              "line": 10,
+              "column": 1,
+              "offset": 300
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Codecov",
+              "position": {
+                "start": {
+                  "line": 10,
+                  "column": 2,
+                  "offset": 301
+                },
+                "end": {
+                  "line": 10,
+                  "column": 27,
+                  "offset": 326
+                }
+              },
+              "label": "badge-codecov",
+              "identifier": "badge-codecov",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 10,
+              "column": 1,
+              "offset": 300
+            },
+            "end": {
+              "line": 10,
+              "column": 42,
+              "offset": 341
+            }
+          },
+          "label": "link-codecov",
+          "identifier": "link-codecov",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 10,
+              "column": 42,
+              "offset": 341
+            },
+            "end": {
+              "line": 11,
+              "column": 1,
+              "offset": 342
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Source license",
+              "position": {
+                "start": {
+                  "line": 11,
+                  "column": 2,
+                  "offset": 343
+                },
+                "end": {
+                  "line": 11,
+                  "column": 34,
+                  "offset": 375
+                }
+              },
+              "label": "badge-license",
+              "identifier": "badge-license",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 11,
+              "column": 1,
+              "offset": 342
+            },
+            "end": {
+              "line": 11,
+              "column": 49,
+              "offset": 390
+            }
+          },
+          "label": "link-license",
+          "identifier": "link-license",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 11,
+              "column": 49,
+              "offset": 390
+            },
+            "end": {
+              "line": 12,
+              "column": 1,
+              "offset": 391
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Tree shaking support",
+              "position": {
+                "start": {
+                  "line": 12,
+                  "column": 2,
+                  "offset": 392
+                },
+                "end": {
+                  "line": 12,
+                  "column": 45,
+                  "offset": 435
+                }
+              },
+              "label": "badge-tree-shaking",
+              "identifier": "badge-tree-shaking",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 12,
+              "column": 1,
+              "offset": 391
+            },
+            "end": {
+              "line": 12,
+              "column": 65,
+              "offset": 455
+            }
+          },
+          "label": "link-bundlephobia",
+          "identifier": "link-bundlephobia",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 12,
+              "column": 65,
+              "offset": 455
+            },
+            "end": {
+              "line": 13,
+              "column": 1,
+              "offset": 456
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Compressed package size",
+              "position": {
+                "start": {
+                  "line": 13,
+                  "column": 2,
+                  "offset": 457
+                },
+                "end": {
+                  "line": 13,
+                  "column": 40,
+                  "offset": 495
+                }
+              },
+              "label": "badge-size",
+              "identifier": "badge-size",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 13,
+              "column": 1,
+              "offset": 456
+            },
+            "end": {
+              "line": 13,
+              "column": 60,
+              "offset": 515
+            }
+          },
+          "label": "link-bundlephobia",
+          "identifier": "link-bundlephobia",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 13,
+              "column": 60,
+              "offset": 515
+            },
+            "end": {
+              "line": 14,
+              "column": 1,
+              "offset": 516
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "NPM version",
+              "position": {
+                "start": {
+                  "line": 14,
+                  "column": 2,
+                  "offset": 517
+                },
+                "end": {
+                  "line": 14,
+                  "column": 27,
+                  "offset": 542
+                }
+              },
+              "label": "badge-npm",
+              "identifier": "badge-npm",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 14,
+              "column": 1,
+              "offset": 516
+            },
+            "end": {
+              "line": 14,
+              "column": 38,
+              "offset": 553
+            }
+          },
+          "label": "link-npm",
+          "identifier": "link-npm",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 14,
+              "column": 38,
+              "offset": 553
+            },
+            "end": {
+              "line": 15,
+              "column": 1,
+              "offset": 554
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Uses Semantic Release!",
+              "position": {
+                "start": {
+                  "line": 15,
+                  "column": 2,
+                  "offset": 555
+                },
+                "end": {
+                  "line": 15,
+                  "column": 51,
+                  "offset": 604
+                }
+              },
+              "label": "badge-semantic-release",
+              "identifier": "badge-semantic-release",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 15,
+              "column": 1,
+              "offset": 554
+            },
+            "end": {
+              "line": 15,
+              "column": 75,
+              "offset": 628
+            }
+          },
+          "label": "link-semantic-release",
+          "identifier": "link-semantic-release",
+          "referenceType": "full"
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 5,
+          "column": 1,
+          "offset": 55
+        },
+        "end": {
+          "line": 15,
+          "column": 75,
+          "offset": 628
+        }
+      }
+    },
+    {
+      "type": "html",
+      "value": "<!-- badges-end -->",
+      "position": {
+        "start": {
+          "line": 17,
+          "column": 1,
+          "offset": 630
+        },
+        "end": {
+          "line": 17,
+          "column": 20,
+          "offset": 649
+        }
+      }
+    },
+    {
+      "type": "html",
+      "value": "<!-- prettier-ignore-end -->",
+      "position": {
+        "start": {
+          "line": 19,
+          "column": 1,
+          "offset": 651
+        },
+        "end": {
+          "line": 19,
+          "column": 29,
+          "offset": 679
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [
+        {
+          "type": "text",
+          "value": "next-test-api-route-handler",
+          "position": {
+            "start": {
+              "line": 21,
+              "column": 3,
+              "offset": 683
+            },
+            "end": {
+              "line": 21,
+              "column": 30,
+              "offset": 710
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 21,
+          "column": 1,
+          "offset": 681
+        },
+        "end": {
+          "line": 21,
+          "column": 30,
+          "offset": 710
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-blm",
+      "label": "badge-blm",
+      "title": "Join the movement!",
+      "url": "https://xunn.at/badge-blm",
+      "position": {
+        "start": {
+          "line": 630,
+          "column": 1,
+          "offset": 22519
+        },
+        "end": {
+          "line": 630,
+          "column": 60,
+          "offset": 22578
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-blm",
+      "label": "link-blm",
+      "title": null,
+      "url": "https://xunn.at/donate-blm",
+      "position": {
+        "start": {
+          "line": 631,
+          "column": 1,
+          "offset": 22579
+        },
+        "end": {
+          "line": 631,
+          "column": 39,
+          "offset": 22617
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-maintenance",
+      "label": "badge-maintenance",
+      "title": "Is this package maintained?",
+      "url": "https://img.shields.io/maintenance/active/2022",
+      "position": {
+        "start": {
+          "line": 632,
+          "column": 1,
+          "offset": 22618
+        },
+        "end": {
+          "line": 634,
+          "column": 32,
+          "offset": 22719
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-repo",
+      "label": "link-repo",
+      "title": null,
+      "url": "https://github.com/xunnamius/next-test-api-route-handler",
+      "position": {
+        "start": {
+          "line": 635,
+          "column": 1,
+          "offset": 22720
+        },
+        "end": {
+          "line": 635,
+          "column": 70,
+          "offset": 22789
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-last-commit",
+      "label": "badge-last-commit",
+      "title": "Latest commit timestamp",
+      "url": "https://img.shields.io/github/last-commit/xunnamius/next-test-api-route-handler",
+      "position": {
+        "start": {
+          "line": 636,
+          "column": 1,
+          "offset": 22790
+        },
+        "end": {
+          "line": 638,
+          "column": 28,
+          "offset": 22920
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-issues",
+      "label": "badge-issues",
+      "title": "Open issues",
+      "url": "https://img.shields.io/github/issues/Xunnamius/next-test-api-route-handler",
+      "position": {
+        "start": {
+          "line": 639,
+          "column": 1,
+          "offset": 22921
+        },
+        "end": {
+          "line": 641,
+          "column": 16,
+          "offset": 23029
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-issues",
+      "label": "link-issues",
+      "title": null,
+      "url": "https://github.com/Xunnamius/next-test-api-route-handler/issues?q=",
+      "position": {
+        "start": {
+          "line": 642,
+          "column": 1,
+          "offset": 23030
+        },
+        "end": {
+          "line": 643,
+          "column": 69,
+          "offset": 23113
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-pulls",
+      "label": "badge-pulls",
+      "title": "Open pull requests",
+      "url": "https://img.shields.io/github/issues-pr/xunnamius/next-test-api-route-handler",
+      "position": {
+        "start": {
+          "line": 644,
+          "column": 1,
+          "offset": 23114
+        },
+        "end": {
+          "line": 646,
+          "column": 23,
+          "offset": 23231
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-pulls",
+      "label": "link-pulls",
+      "title": null,
+      "url": "https://github.com/xunnamius/next-test-api-route-handler/pulls",
+      "position": {
+        "start": {
+          "line": 647,
+          "column": 1,
+          "offset": 23232
+        },
+        "end": {
+          "line": 647,
+          "column": 77,
+          "offset": 23308
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-codecov",
+      "label": "badge-codecov",
+      "title": "Is this package well-tested?",
+      "url": "https://codecov.io/gh/Xunnamius/next-test-api-route-handler/branch/main/graph/badge.svg?token=HWRIOBAAPW",
+      "position": {
+        "start": {
+          "line": 648,
+          "column": 1,
+          "offset": 23309
+        },
+        "end": {
+          "line": 650,
+          "column": 33,
+          "offset": 23465
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-codecov",
+      "label": "link-codecov",
+      "title": null,
+      "url": "https://codecov.io/gh/Xunnamius/next-test-api-route-handler",
+      "position": {
+        "start": {
+          "line": 651,
+          "column": 1,
+          "offset": 23466
+        },
+        "end": {
+          "line": 651,
+          "column": 76,
+          "offset": 23541
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-license",
+      "label": "badge-license",
+      "title": "This package's source license",
+      "url": "https://img.shields.io/npm/l/next-test-api-route-handler",
+      "position": {
+        "start": {
+          "line": 652,
+          "column": 1,
+          "offset": 23542
+        },
+        "end": {
+          "line": 654,
+          "column": 34,
+          "offset": 23651
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-license",
+      "label": "link-license",
+      "title": null,
+      "url": "https://github.com/Xunnamius/next-test-api-route-handler/blob/main/LICENSE",
+      "position": {
+        "start": {
+          "line": 655,
+          "column": 1,
+          "offset": 23652
+        },
+        "end": {
+          "line": 656,
+          "column": 77,
+          "offset": 23744
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-fossa",
+      "label": "badge-fossa",
+      "title": "Analysis of this package's license obligations",
+      "url": "https://app.fossa.com/api/projects/git%2Bgithub.com%2FXunnamius%2Fnext-test-api-route-handler.svg?type=large",
+      "position": {
+        "start": {
+          "line": 657,
+          "column": 1,
+          "offset": 23745
+        },
+        "end": {
+          "line": 659,
+          "column": 51,
+          "offset": 23921
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-fossa",
+      "label": "link-fossa",
+      "title": null,
+      "url": "https://app.fossa.com/projects/git%2Bgithub.com%2FXunnamius%2Fnext-test-api-route-handler",
+      "position": {
+        "start": {
+          "line": 660,
+          "column": 1,
+          "offset": 23922
+        },
+        "end": {
+          "line": 661,
+          "column": 92,
+          "offset": 24027
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-npm",
+      "label": "badge-npm",
+      "title": "Install this package using npm or yarn!",
+      "url": "https://api.ergodark.com/badges/npm-pkg-version/next-test-api-route-handler",
+      "position": {
+        "start": {
+          "line": 662,
+          "column": 1,
+          "offset": 24028
+        },
+        "end": {
+          "line": 664,
+          "column": 44,
+          "offset": 24162
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-npm",
+      "label": "link-npm",
+      "title": null,
+      "url": "https://www.npmjs.com/package/next-test-api-route-handler",
+      "position": {
+        "start": {
+          "line": 665,
+          "column": 1,
+          "offset": 24163
+        },
+        "end": {
+          "line": 665,
+          "column": 70,
+          "offset": 24232
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-semantic-release",
+      "label": "badge-semantic-release",
+      "title": "This repo practices continuous integration and deployment!",
+      "url": "https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg",
+      "position": {
+        "start": {
+          "line": 666,
+          "column": 1,
+          "offset": 24233
+        },
+        "end": {
+          "line": 668,
+          "column": 63,
+          "offset": 24412
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-semantic-release",
+      "label": "link-semantic-release",
+      "title": null,
+      "url": "https://github.com/semantic-release/semantic-release",
+      "position": {
+        "start": {
+          "line": 669,
+          "column": 1,
+          "offset": 24413
+        },
+        "end": {
+          "line": 669,
+          "column": 78,
+          "offset": 24490
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-size",
+      "label": "badge-size",
+      "title": null,
+      "url": "https://badgen.net/bundlephobia/minzip/next-test-api-route-handler",
+      "position": {
+        "start": {
+          "line": 670,
+          "column": 1,
+          "offset": 24491
+        },
+        "end": {
+          "line": 670,
+          "column": 81,
+          "offset": 24571
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-tree-shaking",
+      "label": "badge-tree-shaking",
+      "title": "Is this package optimized for Webpack?",
+      "url": "https://badgen.net/bundlephobia/tree-shaking/next-test-api-route-handler",
+      "position": {
+        "start": {
+          "line": 671,
+          "column": 1,
+          "offset": 24572
+        },
+        "end": {
+          "line": 673,
+          "column": 43,
+          "offset": 24711
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-bundlephobia",
+      "label": "link-bundlephobia",
+      "title": "Package size (minified and gzipped)",
+      "url": "https://bundlephobia.com/result?p=next-test-api-route-handler",
+      "position": {
+        "start": {
+          "line": 674,
+          "column": 1,
+          "offset": 24712
+        },
+        "end": {
+          "line": 676,
+          "column": 40,
+          "offset": 24836
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "package-json",
+      "label": "package-json",
+      "title": null,
+      "url": "package.json",
+      "position": {
+        "start": {
+          "line": 677,
+          "column": 1,
+          "offset": 24837
+        },
+        "end": {
+          "line": 677,
+          "column": 29,
+          "offset": 24865
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "docs",
+      "label": "docs",
+      "title": null,
+      "url": "docs",
+      "position": {
+        "start": {
+          "line": 678,
+          "column": 1,
+          "offset": 24866
+        },
+        "end": {
+          "line": 678,
+          "column": 13,
+          "offset": 24878
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "choose-new-issue",
+      "label": "choose-new-issue",
+      "title": null,
+      "url": "https://github.com/Xunnamius/next-test-api-route-handler/issues/new/choose",
+      "position": {
+        "start": {
+          "line": 679,
+          "column": 1,
+          "offset": 24879
+        },
+        "end": {
+          "line": 680,
+          "column": 77,
+          "offset": 24975
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "pr-compare",
+      "label": "pr-compare",
+      "title": null,
+      "url": "https://github.com/Xunnamius/next-test-api-route-handler/compare",
+      "position": {
+        "start": {
+          "line": 681,
+          "column": 1,
+          "offset": 24976
+        },
+        "end": {
+          "line": 681,
+          "column": 79,
+          "offset": 25054
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "contributing",
+      "label": "contributing",
+      "title": null,
+      "url": "CONTRIBUTING.md",
+      "position": {
+        "start": {
+          "line": 682,
+          "column": 1,
+          "offset": 25055
+        },
+        "end": {
+          "line": 682,
+          "column": 32,
+          "offset": 25086
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "support",
+      "label": "support",
+      "title": null,
+      "url": ".github/SUPPORT.md",
+      "position": {
+        "start": {
+          "line": 683,
+          "column": 1,
+          "offset": 25087
+        },
+        "end": {
+          "line": 683,
+          "column": 30,
+          "offset": 25116
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "cjs-mojito",
+      "label": "cjs-mojito",
+      "title": null,
+      "url": "https://dev.to/jakobjingleheimer/configuring-commonjs-es-modules-for-nodejs-12ed#publish-only-a-cjs-distribution-with-property-exports",
+      "position": {
+        "start": {
+          "line": 684,
+          "column": 1,
+          "offset": 25117
+        },
+        "end": {
+          "line": 685,
+          "column": 137,
+          "offset": 25267
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "commonjs-static",
+      "label": "commonjs-static",
+      "title": null,
+      "url": "https://webpack.js.org/configuration/output/#type-commonjs-static",
+      "position": {
+        "start": {
+          "line": 686,
+          "column": 1,
+          "offset": 25268
+        },
+        "end": {
+          "line": 687,
+          "column": 68,
+          "offset": 25354
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "local-pkg",
+      "label": "local-pkg",
+      "title": null,
+      "url": "https://github.com/nodejs/node/blob/8d8e06a345043bec787e904edc9a2f5c5e9c275f/doc/api/packages.md#type",
+      "position": {
+        "start": {
+          "line": 688,
+          "column": 1,
+          "offset": 25355
+        },
+        "end": {
+          "line": 689,
+          "column": 104,
+          "offset": 25471
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "exports-module-key",
+      "label": "exports-module-key",
+      "title": null,
+      "url": "https://webpack.js.org/guides/package-exports/#providing-commonjs-and-esm-version-stateless",
+      "position": {
+        "start": {
+          "line": 690,
+          "column": 1,
+          "offset": 25472
+        },
+        "end": {
+          "line": 691,
+          "column": 94,
+          "offset": 25587
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "exports-types-key",
+      "label": "exports-types-key",
+      "title": null,
+      "url": "https://devblogs.microsoft.com/typescript/announcing-typescript-4-5-beta/#packagejson-exports-imports-and-self-referencing",
+      "position": {
+        "start": {
+          "line": 692,
+          "column": 1,
+          "offset": 25588
+        },
+        "end": {
+          "line": 693,
+          "column": 125,
+          "offset": 25733
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "exports-conditions",
+      "label": "exports-conditions",
+      "title": null,
+      "url": "https://webpack.js.org/guides/package-exports/#reference-syntax",
+      "position": {
+        "start": {
+          "line": 694,
+          "column": 1,
+          "offset": 25734
+        },
+        "end": {
+          "line": 695,
+          "column": 66,
+          "offset": 25821
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "side-effects-key",
+      "label": "side-effects-key",
+      "title": null,
+      "url": "https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free",
+      "position": {
+        "start": {
+          "line": 696,
+          "column": 1,
+          "offset": 25822
+        },
+        "end": {
+          "line": 697,
+          "column": 80,
+          "offset": 25921
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "dual-package-hazard",
+      "label": "dual-package-hazard",
+      "title": null,
+      "url": "https://nodejs.org/api/packages.html#dual-package-hazard",
+      "position": {
+        "start": {
+          "line": 698,
+          "column": 1,
+          "offset": 25922
+        },
+        "end": {
+          "line": 698,
+          "column": 80,
+          "offset": 26001
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "tree-shaking",
+      "label": "tree-shaking",
+      "title": null,
+      "url": "https://webpack.js.org/guides/tree-shaking",
+      "position": {
+        "start": {
+          "line": 699,
+          "column": 1,
+          "offset": 26002
+        },
+        "end": {
+          "line": 699,
+          "column": 59,
+          "offset": 26060
+        }
+      }
+    }
+  ],
+  "position": {
+    "start": { "line": 1, "column": 1, "offset": 0 },
+    "end": { "line": 1101, "column": 1, "offset": 37413 }
+  }
+}

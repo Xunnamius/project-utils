@@ -1,0 +1,466 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "html",
+      "value": "<!-- prettier-ignore-start -->",
+      "position": {
+        "start": { "line": 1, "column": 1, "offset": 0 },
+        "end": { "line": 1, "column": 31, "offset": 30 }
+      }
+    },
+    {
+      "type": "html",
+      "value": "<!-- badges-start -->",
+      "position": {
+        "start": { "line": 3, "column": 1, "offset": 32 },
+        "end": { "line": 3, "column": 22, "offset": 53 }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Black Lives Matter!",
+              "position": {
+                "start": { "line": 5, "column": 2, "offset": 56 },
+                "end": { "line": 5, "column": 35, "offset": 89 }
+              },
+              "label": "badge-blm",
+              "identifier": "badge-blm",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": { "line": 5, "column": 1, "offset": 55 },
+            "end": { "line": 5, "column": 46, "offset": 100 }
+          },
+          "label": "link-blm",
+          "identifier": "link-blm",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": { "line": 5, "column": 46, "offset": 100 },
+            "end": { "line": 6, "column": 1, "offset": 101 }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Last commit timestamp",
+              "position": {
+                "start": { "line": 6, "column": 2, "offset": 102 },
+                "end": { "line": 6, "column": 45, "offset": 145 }
+              },
+              "label": "badge-last-commit",
+              "identifier": "badge-last-commit",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": { "line": 6, "column": 1, "offset": 101 },
+            "end": { "line": 6, "column": 57, "offset": 157 }
+          },
+          "label": "link-repo",
+          "identifier": "link-repo",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": { "line": 6, "column": 57, "offset": 157 },
+            "end": { "line": 7, "column": 1, "offset": 158 }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Open issues",
+              "position": {
+                "start": { "line": 7, "column": 2, "offset": 159 },
+                "end": { "line": 7, "column": 30, "offset": 187 }
+              },
+              "label": "badge-issues",
+              "identifier": "badge-issues",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": { "line": 7, "column": 1, "offset": 158 },
+            "end": { "line": 7, "column": 44, "offset": 201 }
+          },
+          "label": "link-issues",
+          "identifier": "link-issues",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": { "line": 7, "column": 44, "offset": 201 },
+            "end": { "line": 8, "column": 1, "offset": 202 }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Pull requests",
+              "position": {
+                "start": { "line": 8, "column": 2, "offset": 203 },
+                "end": { "line": 8, "column": 31, "offset": 232 }
+              },
+              "label": "badge-pulls",
+              "identifier": "badge-pulls",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": { "line": 8, "column": 1, "offset": 202 },
+            "end": { "line": 8, "column": 44, "offset": 245 }
+          },
+          "label": "link-pulls",
+          "identifier": "link-pulls",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": { "line": 8, "column": 44, "offset": 245 },
+            "end": { "line": 9, "column": 1, "offset": 246 }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Maintained with Projector",
+              "position": {
+                "start": { "line": 9, "column": 2, "offset": 247 },
+                "end": { "line": 9, "column": 47, "offset": 292 }
+              },
+              "label": "badge-projector",
+              "identifier": "badge-projector",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": { "line": 9, "column": 1, "offset": 246 },
+            "end": { "line": 9, "column": 64, "offset": 309 }
+          },
+          "label": "link-projector",
+          "identifier": "link-projector",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": { "line": 9, "column": 64, "offset": 309 },
+            "end": { "line": 10, "column": 1, "offset": 310 }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Uses semantic-release",
+              "position": {
+                "start": { "line": 10, "column": 2, "offset": 311 },
+                "end": { "line": 10, "column": 50, "offset": 359 }
+              },
+              "label": "badge-semantic-release",
+              "identifier": "badge-semantic-release",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": { "line": 10, "column": 1, "offset": 310 },
+            "end": { "line": 10, "column": 74, "offset": 383 }
+          },
+          "label": "link-semantic-release",
+          "identifier": "link-semantic-release",
+          "referenceType": "full"
+        }
+      ],
+      "position": {
+        "start": { "line": 5, "column": 1, "offset": 55 },
+        "end": { "line": 10, "column": 74, "offset": 383 }
+      }
+    },
+    {
+      "type": "html",
+      "value": "<!-- badges-end -->",
+      "position": {
+        "start": { "line": 12, "column": 1, "offset": 385 },
+        "end": { "line": 12, "column": 20, "offset": 404 }
+      }
+    },
+    {
+      "type": "html",
+      "value": "<!-- prettier-ignore-end -->",
+      "position": {
+        "start": { "line": 14, "column": 1, "offset": 406 },
+        "end": { "line": 14, "column": 29, "offset": 434 }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [
+        {
+          "type": "text",
+          "value": "📽️ Projector",
+          "position": {
+            "start": { "line": 16, "column": 3, "offset": 438 },
+            "end": { "line": 16, "column": 16, "offset": 451 }
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 16, "column": 1, "offset": 436 },
+        "end": { "line": 16, "column": 16, "offset": 451 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-blm",
+      "label": "badge-blm",
+      "title": "Join the movement!",
+      "url": "https://xunn.at/badge-blm",
+      "position": {
+        "start": { "line": 966, "column": 1, "offset": 32120 },
+        "end": { "line": 966, "column": 60, "offset": 32179 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-blm",
+      "label": "link-blm",
+      "title": null,
+      "url": "https://xunn.at/donate-blm",
+      "position": {
+        "start": { "line": 967, "column": 1, "offset": 32180 },
+        "end": { "line": 967, "column": 39, "offset": 32218 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-repo",
+      "label": "link-repo",
+      "title": null,
+      "url": "https://github.com/xunnamius/projector",
+      "position": {
+        "start": { "line": 968, "column": 1, "offset": 32219 },
+        "end": { "line": 968, "column": 52, "offset": 32270 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-last-commit",
+      "label": "badge-last-commit",
+      "title": "Latest commit timestamp",
+      "url": "https://img.shields.io/github/last-commit/xunnamius/projector",
+      "position": {
+        "start": { "line": 969, "column": 1, "offset": 32271 },
+        "end": { "line": 971, "column": 28, "offset": 32383 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-issues",
+      "label": "badge-issues",
+      "title": "Open issues",
+      "url": "https://img.shields.io/github/issues/Xunnamius/projector",
+      "position": {
+        "start": { "line": 972, "column": 1, "offset": 32384 },
+        "end": { "line": 974, "column": 16, "offset": 32474 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-issues",
+      "label": "link-issues",
+      "title": null,
+      "url": "https://github.com/Xunnamius/projector/issues?q=",
+      "position": {
+        "start": { "line": 975, "column": 1, "offset": 32475 },
+        "end": { "line": 975, "column": 64, "offset": 32538 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-pulls",
+      "label": "badge-pulls",
+      "title": "Open pull requests",
+      "url": "https://img.shields.io/github/issues-pr/xunnamius/projector",
+      "position": {
+        "start": { "line": 976, "column": 1, "offset": 32539 },
+        "end": { "line": 978, "column": 23, "offset": 32638 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-pulls",
+      "label": "link-pulls",
+      "title": null,
+      "url": "https://github.com/xunnamius/projector/pulls",
+      "position": {
+        "start": { "line": 979, "column": 1, "offset": 32639 },
+        "end": { "line": 979, "column": 59, "offset": 32697 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-fossa",
+      "label": "badge-fossa",
+      "title": "Analysis of this package's license obligations",
+      "url": "https://app.fossa.com/api/projects/custom%2B27276%2Fgit%40github.com%3AXunnamius%2Fprojector.git.svg?type=large",
+      "position": {
+        "start": { "line": 980, "column": 1, "offset": 32698 },
+        "end": { "line": 982, "column": 51, "offset": 32877 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-fossa",
+      "label": "link-fossa",
+      "title": null,
+      "url": "https://app.fossa.com/projects/custom+27276%2Fgit@github.com:Xunnamius%2Fprojector.git",
+      "position": {
+        "start": { "line": 983, "column": 1, "offset": 32878 },
+        "end": { "line": 984, "column": 89, "offset": 32980 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-semantic-release",
+      "label": "badge-semantic-release",
+      "title": "This repo practices continuous integration and deployment!",
+      "url": "https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg",
+      "position": {
+        "start": { "line": 985, "column": 1, "offset": 32981 },
+        "end": { "line": 987, "column": 63, "offset": 33160 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-semantic-release",
+      "label": "link-semantic-release",
+      "title": null,
+      "url": "https://github.com/semantic-release/semantic-release",
+      "position": {
+        "start": { "line": 988, "column": 1, "offset": 33161 },
+        "end": { "line": 988, "column": 78, "offset": 33238 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-projector",
+      "label": "badge-projector",
+      "title": "This repo is managed with Projector",
+      "url": "https://xunn.at/badge-projector",
+      "position": {
+        "start": { "line": 989, "column": 1, "offset": 33239 },
+        "end": { "line": 991, "column": 40, "offset": 33331 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-projector",
+      "label": "link-projector",
+      "title": null,
+      "url": "https://github.com/Xunnamius/projector",
+      "position": {
+        "start": { "line": 992, "column": 1, "offset": 33332 },
+        "end": { "line": 992, "column": 57, "offset": 33388 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "choose-new-issue",
+      "label": "choose-new-issue",
+      "title": null,
+      "url": "https://github.com/xunnamius/projector/issues/new/choose",
+      "position": {
+        "start": { "line": 993, "column": 1, "offset": 33389 },
+        "end": { "line": 993, "column": 77, "offset": 33465 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "pr-compare",
+      "label": "pr-compare",
+      "title": null,
+      "url": "https://github.com/xunnamius/projector/compare",
+      "position": {
+        "start": { "line": 994, "column": 1, "offset": 33466 },
+        "end": { "line": 994, "column": 61, "offset": 33526 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "contributing",
+      "label": "contributing",
+      "title": null,
+      "url": "CONTRIBUTING.md",
+      "position": {
+        "start": { "line": 995, "column": 1, "offset": 33527 },
+        "end": { "line": 995, "column": 32, "offset": 33558 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "support",
+      "label": "support",
+      "title": null,
+      "url": ".github/SUPPORT.md",
+      "position": {
+        "start": { "line": 996, "column": 1, "offset": 33559 },
+        "end": { "line": 996, "column": 30, "offset": 33588 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "1",
+      "label": "1",
+      "title": null,
+      "url": "/packages",
+      "position": {
+        "start": { "line": 997, "column": 1, "offset": 33589 },
+        "end": { "line": 997, "column": 15, "offset": 33603 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "2",
+      "label": "2",
+      "title": null,
+      "url": "https://github.com/Xunnamius/semantic-release-atam",
+      "position": {
+        "start": { "line": 998, "column": 1, "offset": 33604 },
+        "end": { "line": 998, "column": 56, "offset": 33659 }
+      }
+    }
+  ],
+  "position": {
+    "start": { "line": 1, "column": 1, "offset": 0 },
+    "end": { "line": 1101, "column": 1, "offset": 37413 }
+  }
+}

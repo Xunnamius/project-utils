@@ -1,0 +1,1226 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "html",
+      "value": "<!-- prettier-ignore-start -->",
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 31,
+          "offset": 30
+        }
+      }
+    },
+    {
+      "type": "html",
+      "value": "<!-- badges-start -->",
+      "position": {
+        "start": {
+          "line": 3,
+          "column": 1,
+          "offset": 32
+        },
+        "end": {
+          "line": 3,
+          "column": 22,
+          "offset": 53
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Black Lives Matter!",
+              "position": {
+                "start": {
+                  "line": 5,
+                  "column": 2,
+                  "offset": 56
+                },
+                "end": {
+                  "line": 5,
+                  "column": 35,
+                  "offset": 89
+                }
+              },
+              "label": "badge-blm",
+              "identifier": "badge-blm",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 5,
+              "column": 1,
+              "offset": 55
+            },
+            "end": {
+              "line": 5,
+              "column": 46,
+              "offset": 100
+            }
+          },
+          "label": "link-blm",
+          "identifier": "link-blm",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 5,
+              "column": 46,
+              "offset": 100
+            },
+            "end": {
+              "line": 6,
+              "column": 1,
+              "offset": 101
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Maintenance status",
+              "position": {
+                "start": {
+                  "line": 6,
+                  "column": 2,
+                  "offset": 102
+                },
+                "end": {
+                  "line": 6,
+                  "column": 42,
+                  "offset": 142
+                }
+              },
+              "label": "badge-maintenance",
+              "identifier": "badge-maintenance",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 6,
+              "column": 1,
+              "offset": 101
+            },
+            "end": {
+              "line": 6,
+              "column": 54,
+              "offset": 154
+            }
+          },
+          "label": "link-repo",
+          "identifier": "link-repo",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 6,
+              "column": 54,
+              "offset": 154
+            },
+            "end": {
+              "line": 7,
+              "column": 1,
+              "offset": 155
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Last commit timestamp",
+              "position": {
+                "start": {
+                  "line": 7,
+                  "column": 2,
+                  "offset": 156
+                },
+                "end": {
+                  "line": 7,
+                  "column": 45,
+                  "offset": 199
+                }
+              },
+              "label": "badge-last-commit",
+              "identifier": "badge-last-commit",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 7,
+              "column": 1,
+              "offset": 155
+            },
+            "end": {
+              "line": 7,
+              "column": 57,
+              "offset": 211
+            }
+          },
+          "label": "link-repo",
+          "identifier": "link-repo",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 7,
+              "column": 57,
+              "offset": 211
+            },
+            "end": {
+              "line": 8,
+              "column": 1,
+              "offset": 212
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Open issues",
+              "position": {
+                "start": {
+                  "line": 8,
+                  "column": 2,
+                  "offset": 213
+                },
+                "end": {
+                  "line": 8,
+                  "column": 30,
+                  "offset": 241
+                }
+              },
+              "label": "badge-issues",
+              "identifier": "badge-issues",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 8,
+              "column": 1,
+              "offset": 212
+            },
+            "end": {
+              "line": 8,
+              "column": 44,
+              "offset": 255
+            }
+          },
+          "label": "link-issues",
+          "identifier": "link-issues",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 8,
+              "column": 44,
+              "offset": 255
+            },
+            "end": {
+              "line": 9,
+              "column": 1,
+              "offset": 256
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Pull requests",
+              "position": {
+                "start": {
+                  "line": 9,
+                  "column": 2,
+                  "offset": 257
+                },
+                "end": {
+                  "line": 9,
+                  "column": 31,
+                  "offset": 286
+                }
+              },
+              "label": "badge-pulls",
+              "identifier": "badge-pulls",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 9,
+              "column": 1,
+              "offset": 256
+            },
+            "end": {
+              "line": 9,
+              "column": 44,
+              "offset": 299
+            }
+          },
+          "label": "link-pulls",
+          "identifier": "link-pulls",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 9,
+              "column": 44,
+              "offset": 299
+            },
+            "end": {
+              "line": 10,
+              "column": 1,
+              "offset": 300
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Codecov",
+              "position": {
+                "start": {
+                  "line": 10,
+                  "column": 2,
+                  "offset": 301
+                },
+                "end": {
+                  "line": 10,
+                  "column": 27,
+                  "offset": 326
+                }
+              },
+              "label": "badge-codecov",
+              "identifier": "badge-codecov",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 10,
+              "column": 1,
+              "offset": 300
+            },
+            "end": {
+              "line": 10,
+              "column": 42,
+              "offset": 341
+            }
+          },
+          "label": "link-codecov",
+          "identifier": "link-codecov",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 10,
+              "column": 42,
+              "offset": 341
+            },
+            "end": {
+              "line": 11,
+              "column": 1,
+              "offset": 342
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Source license",
+              "position": {
+                "start": {
+                  "line": 11,
+                  "column": 2,
+                  "offset": 343
+                },
+                "end": {
+                  "line": 11,
+                  "column": 34,
+                  "offset": 375
+                }
+              },
+              "label": "badge-license",
+              "identifier": "badge-license",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 11,
+              "column": 1,
+              "offset": 342
+            },
+            "end": {
+              "line": 11,
+              "column": 49,
+              "offset": 390
+            }
+          },
+          "label": "link-license",
+          "identifier": "link-license",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 11,
+              "column": 49,
+              "offset": 390
+            },
+            "end": {
+              "line": 12,
+              "column": 1,
+              "offset": 391
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Tree shaking support",
+              "position": {
+                "start": {
+                  "line": 12,
+                  "column": 2,
+                  "offset": 392
+                },
+                "end": {
+                  "line": 12,
+                  "column": 45,
+                  "offset": 435
+                }
+              },
+              "label": "badge-tree-shaking",
+              "identifier": "badge-tree-shaking",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 12,
+              "column": 1,
+              "offset": 391
+            },
+            "end": {
+              "line": 12,
+              "column": 65,
+              "offset": 455
+            }
+          },
+          "label": "link-bundlephobia",
+          "identifier": "link-bundlephobia",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 12,
+              "column": 65,
+              "offset": 455
+            },
+            "end": {
+              "line": 13,
+              "column": 1,
+              "offset": 456
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Compressed package size",
+              "position": {
+                "start": {
+                  "line": 13,
+                  "column": 2,
+                  "offset": 457
+                },
+                "end": {
+                  "line": 13,
+                  "column": 40,
+                  "offset": 495
+                }
+              },
+              "label": "badge-size",
+              "identifier": "badge-size",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 13,
+              "column": 1,
+              "offset": 456
+            },
+            "end": {
+              "line": 13,
+              "column": 60,
+              "offset": 515
+            }
+          },
+          "label": "link-bundlephobia",
+          "identifier": "link-bundlephobia",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 13,
+              "column": 60,
+              "offset": 515
+            },
+            "end": {
+              "line": 14,
+              "column": 1,
+              "offset": 516
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "NPM version",
+              "position": {
+                "start": {
+                  "line": 14,
+                  "column": 2,
+                  "offset": 517
+                },
+                "end": {
+                  "line": 14,
+                  "column": 27,
+                  "offset": 542
+                }
+              },
+              "label": "badge-npm",
+              "identifier": "badge-npm",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 14,
+              "column": 1,
+              "offset": 516
+            },
+            "end": {
+              "line": 14,
+              "column": 38,
+              "offset": 553
+            }
+          },
+          "label": "link-npm",
+          "identifier": "link-npm",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "\n",
+          "position": {
+            "start": {
+              "line": 14,
+              "column": 38,
+              "offset": 553
+            },
+            "end": {
+              "line": 15,
+              "column": 1,
+              "offset": 554
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Uses Semantic Release!",
+              "position": {
+                "start": {
+                  "line": 15,
+                  "column": 2,
+                  "offset": 555
+                },
+                "end": {
+                  "line": 15,
+                  "column": 51,
+                  "offset": 604
+                }
+              },
+              "label": "badge-semantic-release",
+              "identifier": "badge-semantic-release",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 15,
+              "column": 1,
+              "offset": 554
+            },
+            "end": {
+              "line": 15,
+              "column": 75,
+              "offset": 628
+            }
+          },
+          "label": "link-semantic-release",
+          "identifier": "link-semantic-release",
+          "referenceType": "full"
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 5,
+          "column": 1,
+          "offset": 55
+        },
+        "end": {
+          "line": 15,
+          "column": 75,
+          "offset": 628
+        }
+      }
+    },
+    {
+      "type": "html",
+      "value": "<!-- badges-end -->",
+      "position": {
+        "start": {
+          "line": 17,
+          "column": 1,
+          "offset": 630
+        },
+        "end": {
+          "line": 17,
+          "column": 20,
+          "offset": 649
+        }
+      }
+    },
+    {
+      "type": "html",
+      "value": "<!-- prettier-ignore-end -->",
+      "position": {
+        "start": {
+          "line": 19,
+          "column": 1,
+          "offset": 651
+        },
+        "end": {
+          "line": 19,
+          "column": 29,
+          "offset": 679
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [
+        {
+          "type": "text",
+          "value": "@projector-js/plugin-lint",
+          "position": {
+            "start": {
+              "line": 21,
+              "column": 3,
+              "offset": 683
+            },
+            "end": {
+              "line": 21,
+              "column": 28,
+              "offset": 708
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 21,
+          "column": 1,
+          "offset": 681
+        },
+        "end": {
+          "line": 21,
+          "column": 28,
+          "offset": 708
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-blm",
+      "label": "badge-blm",
+      "title": "Join the movement!",
+      "url": "https://xunn.at/badge-blm",
+      "position": {
+        "start": {
+          "line": 242,
+          "column": 1,
+          "offset": 10733
+        },
+        "end": {
+          "line": 242,
+          "column": 60,
+          "offset": 10792
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-blm",
+      "label": "link-blm",
+      "title": null,
+      "url": "https://xunn.at/donate-blm",
+      "position": {
+        "start": {
+          "line": 243,
+          "column": 1,
+          "offset": 10793
+        },
+        "end": {
+          "line": 243,
+          "column": 39,
+          "offset": 10831
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-maintenance",
+      "label": "badge-maintenance",
+      "title": "Is this package maintained?",
+      "url": "https://img.shields.io/maintenance/active/2022",
+      "position": {
+        "start": {
+          "line": 244,
+          "column": 1,
+          "offset": 10832
+        },
+        "end": {
+          "line": 246,
+          "column": 32,
+          "offset": 10933
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-repo",
+      "label": "link-repo",
+      "title": null,
+      "url": "https://github.com/xunnamius/projector",
+      "position": {
+        "start": {
+          "line": 247,
+          "column": 1,
+          "offset": 10934
+        },
+        "end": {
+          "line": 247,
+          "column": 52,
+          "offset": 10985
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-last-commit",
+      "label": "badge-last-commit",
+      "title": "Latest commit timestamp",
+      "url": "https://img.shields.io/github/last-commit/xunnamius/projector",
+      "position": {
+        "start": {
+          "line": 248,
+          "column": 1,
+          "offset": 10986
+        },
+        "end": {
+          "line": 250,
+          "column": 28,
+          "offset": 11098
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-issues",
+      "label": "badge-issues",
+      "title": "Open issues",
+      "url": "https://img.shields.io/github/issues/Xunnamius/projector",
+      "position": {
+        "start": {
+          "line": 251,
+          "column": 1,
+          "offset": 11099
+        },
+        "end": {
+          "line": 253,
+          "column": 16,
+          "offset": 11189
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-issues",
+      "label": "link-issues",
+      "title": null,
+      "url": "https://github.com/Xunnamius/projector/issues?q=",
+      "position": {
+        "start": {
+          "line": 254,
+          "column": 1,
+          "offset": 11190
+        },
+        "end": {
+          "line": 254,
+          "column": 64,
+          "offset": 11253
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-pulls",
+      "label": "badge-pulls",
+      "title": "Open pull requests",
+      "url": "https://img.shields.io/github/issues-pr/xunnamius/projector",
+      "position": {
+        "start": {
+          "line": 255,
+          "column": 1,
+          "offset": 11254
+        },
+        "end": {
+          "line": 257,
+          "column": 23,
+          "offset": 11353
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-pulls",
+      "label": "link-pulls",
+      "title": null,
+      "url": "https://github.com/xunnamius/projector/pulls",
+      "position": {
+        "start": {
+          "line": 258,
+          "column": 1,
+          "offset": 11354
+        },
+        "end": {
+          "line": 258,
+          "column": 59,
+          "offset": 11412
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-codecov",
+      "label": "badge-codecov",
+      "title": "Is this package well-tested?",
+      "url": "https://codecov.io/gh/Xunnamius/projector/branch/main/graph/badge.svg?token=HWRIOBAAPW",
+      "position": {
+        "start": {
+          "line": 259,
+          "column": 1,
+          "offset": 11413
+        },
+        "end": {
+          "line": 261,
+          "column": 33,
+          "offset": 11551
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-codecov",
+      "label": "link-codecov",
+      "title": null,
+      "url": "https://codecov.io/gh/Xunnamius/projector",
+      "position": {
+        "start": {
+          "line": 262,
+          "column": 1,
+          "offset": 11552
+        },
+        "end": {
+          "line": 262,
+          "column": 58,
+          "offset": 11609
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-license",
+      "label": "badge-license",
+      "title": "This package's source license",
+      "url": "https://img.shields.io/npm/l/@projector-js/plugin-lint",
+      "position": {
+        "start": {
+          "line": 263,
+          "column": 1,
+          "offset": 11610
+        },
+        "end": {
+          "line": 265,
+          "column": 34,
+          "offset": 11717
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-license",
+      "label": "link-license",
+      "title": null,
+      "url": "https://github.com/Xunnamius/projector/blob/main/LICENSE",
+      "position": {
+        "start": {
+          "line": 266,
+          "column": 1,
+          "offset": 11718
+        },
+        "end": {
+          "line": 266,
+          "column": 73,
+          "offset": 11790
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-fossa",
+      "label": "badge-fossa",
+      "title": "Analysis of this package's license obligations",
+      "url": "https://app.fossa.com/api/projects/custom%2B27276%2Fgit%40github.com%3AXunnamius%2Fprojector.git.svg?type=large",
+      "position": {
+        "start": {
+          "line": 267,
+          "column": 1,
+          "offset": 11791
+        },
+        "end": {
+          "line": 269,
+          "column": 51,
+          "offset": 11970
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-fossa",
+      "label": "link-fossa",
+      "title": null,
+      "url": "https://app.fossa.com/projects/custom+27276%2Fgit@github.com:Xunnamius%2Fprojector.git",
+      "position": {
+        "start": {
+          "line": 270,
+          "column": 1,
+          "offset": 11971
+        },
+        "end": {
+          "line": 271,
+          "column": 89,
+          "offset": 12073
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-npm",
+      "label": "badge-npm",
+      "title": "Install this package using npm or yarn!",
+      "url": "https://api.ergodark.com/badges/npm-pkg-version/@projector-js/plugin-lint",
+      "position": {
+        "start": {
+          "line": 272,
+          "column": 1,
+          "offset": 12074
+        },
+        "end": {
+          "line": 274,
+          "column": 44,
+          "offset": 12206
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-npm",
+      "label": "link-npm",
+      "title": null,
+      "url": "https://www.npmjs.com/package/@projector-js/plugin-lint",
+      "position": {
+        "start": {
+          "line": 275,
+          "column": 1,
+          "offset": 12207
+        },
+        "end": {
+          "line": 275,
+          "column": 68,
+          "offset": 12274
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-semantic-release",
+      "label": "badge-semantic-release",
+      "title": "This repo practices continuous integration and deployment!",
+      "url": "https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg",
+      "position": {
+        "start": {
+          "line": 276,
+          "column": 1,
+          "offset": 12275
+        },
+        "end": {
+          "line": 278,
+          "column": 63,
+          "offset": 12454
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-semantic-release",
+      "label": "link-semantic-release",
+      "title": null,
+      "url": "https://github.com/semantic-release/semantic-release",
+      "position": {
+        "start": {
+          "line": 279,
+          "column": 1,
+          "offset": 12455
+        },
+        "end": {
+          "line": 279,
+          "column": 78,
+          "offset": 12532
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-size",
+      "label": "badge-size",
+      "title": null,
+      "url": "https://badgen.net/bundlephobia/minzip/@projector-js/plugin-lint",
+      "position": {
+        "start": {
+          "line": 280,
+          "column": 1,
+          "offset": 12533
+        },
+        "end": {
+          "line": 280,
+          "column": 79,
+          "offset": 12611
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "badge-tree-shaking",
+      "label": "badge-tree-shaking",
+      "title": "Is this package optimized for Webpack?",
+      "url": "https://badgen.net/bundlephobia/tree-shaking/@projector-js/plugin-lint",
+      "position": {
+        "start": {
+          "line": 281,
+          "column": 1,
+          "offset": 12612
+        },
+        "end": {
+          "line": 283,
+          "column": 43,
+          "offset": 12749
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-bundlephobia",
+      "label": "link-bundlephobia",
+      "title": "Package size (minified and gzipped)",
+      "url": "https://bundlephobia.com/result?p=@projector-js/plugin-lint",
+      "position": {
+        "start": {
+          "line": 284,
+          "column": 1,
+          "offset": 12750
+        },
+        "end": {
+          "line": 286,
+          "column": 40,
+          "offset": 12872
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "docs",
+      "label": "docs",
+      "title": null,
+      "url": "docs",
+      "position": {
+        "start": {
+          "line": 287,
+          "column": 1,
+          "offset": 12873
+        },
+        "end": {
+          "line": 287,
+          "column": 13,
+          "offset": 12885
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "choose-new-issue",
+      "label": "choose-new-issue",
+      "title": null,
+      "url": "https://github.com/xunnamius/projector/issues/new/choose",
+      "position": {
+        "start": {
+          "line": 288,
+          "column": 1,
+          "offset": 12886
+        },
+        "end": {
+          "line": 288,
+          "column": 77,
+          "offset": 12962
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "pr-compare",
+      "label": "pr-compare",
+      "title": null,
+      "url": "https://github.com/xunnamius/projector/compare",
+      "position": {
+        "start": {
+          "line": 289,
+          "column": 1,
+          "offset": 12963
+        },
+        "end": {
+          "line": 289,
+          "column": 61,
+          "offset": 13023
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "contributing",
+      "label": "contributing",
+      "title": null,
+      "url": "/CONTRIBUTING.md",
+      "position": {
+        "start": {
+          "line": 290,
+          "column": 1,
+          "offset": 13024
+        },
+        "end": {
+          "line": 290,
+          "column": 33,
+          "offset": 13056
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "support",
+      "label": "support",
+      "title": null,
+      "url": "/.github/SUPPORT.md",
+      "position": {
+        "start": {
+          "line": 291,
+          "column": 1,
+          "offset": 13057
+        },
+        "end": {
+          "line": 291,
+          "column": 31,
+          "offset": 13087
+        }
+      }
+    }
+  ],
+  "position": {
+    "start": { "line": 1, "column": 1, "offset": 0 },
+    "end": { "line": 1101, "column": 1, "offset": 37413 }
+  }
+}

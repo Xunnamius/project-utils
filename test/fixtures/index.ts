@@ -19,20 +19,31 @@ export type Fixture = {
  */
 export type FixtureName =
   | 'badMonorepo'
-  | 'badMonorepoBadMdFiles'
   | 'badMonorepoDuplicateId'
   | 'badMonorepoDuplicateName'
   | 'badMonorepoEmptyMdFiles'
   | 'badMonorepoNonPackageDir'
   | 'badPolyrepo'
-  | 'badPolyrepoBadMdFiles'
+  | 'badPolyrepoDocsEntry'
   | 'badPolyrepoEmptyMdFiles'
+  | 'badPolyrepoEngines'
+  | 'badPolyrepoEngines2'
+  | 'badPolyrepoExports'
+  | 'badPolyrepoExports2'
+  | 'badPolyrepoExports3'
+  | 'badPolyrepoExportsOutdated'
+  | 'badPolyrepoFiles'
+  | 'badPolyrepoImporter'
+  | 'badPolyrepoLicense'
   | 'badPolyrepoNoPackageJson'
   | 'badPolyrepoPrivate'
+  | 'badPolyrepoVersion1'
+  | 'badPolyrepoVersion2'
   | 'goodMonorepo'
   | 'goodMonorepoDuplicateId'
   | 'goodMonorepoNegatedPaths'
   | 'goodMonorepoSimplePaths'
+  | 'goodMonorepoVersion'
   | 'goodMonorepoWeirdAbsolute'
   | 'goodMonorepoWeirdBoneless'
   | 'goodMonorepoWeirdOverlap'
@@ -113,14 +124,10 @@ createFixture({
     { name: 'xx-bad-importer', root: 'packages/xx-bad-importer' },
     { name: 'xx-bad-license', root: 'packages/xx-bad-license' },
     { name: 'xx-bad-version-1', root: 'packages/xx-bad-version-1' },
-    { name: 'xx-bad-version-2', root: 'packages/xx-bad-version-2' }
+    { name: 'xx-bad-version-2', root: 'packages/xx-bad-version-2' },
+    { name: 'xxx-bad-engines-2', root: 'packages/xxx-bad-engines-2' },
+    { name: 'xxy-bad-docs-entry', root: 'packages/xxy-bad-docs-entry' }
   ]
-});
-
-createFixture({
-  fixtureName: 'badMonorepoBadMdFiles',
-  root: 'bad-monorepo-bad-md-files',
-  unnamedPkgMapData: [{ name: 'md-bad', root: 'packages/md-bad' }]
 });
 
 createFixture({
@@ -152,13 +159,58 @@ createFixture({
 });
 
 createFixture({
-  fixtureName: 'badPolyrepoBadMdFiles',
-  root: 'bad-polyrepo-bad-md-files'
+  fixtureName: 'badPolyrepoDocsEntry',
+  root: 'bad-polyrepo-docs-entry'
 });
 
 createFixture({
   fixtureName: 'badPolyrepoEmptyMdFiles',
   root: 'bad-polyrepo-empty-md-files'
+});
+
+createFixture({
+  fixtureName: 'badPolyrepoEngines',
+  root: 'bad-polyrepo-engines'
+});
+
+createFixture({
+  fixtureName: 'badPolyrepoEngines2',
+  root: 'bad-polyrepo-engines-2'
+});
+
+createFixture({
+  fixtureName: 'badPolyrepoExports',
+  root: 'bad-polyrepo-exports'
+});
+
+createFixture({
+  fixtureName: 'badPolyrepoExports2',
+  root: 'bad-polyrepo-exports-2'
+});
+
+createFixture({
+  fixtureName: 'badPolyrepoExports3',
+  root: 'bad-polyrepo-exports-3'
+});
+
+createFixture({
+  fixtureName: 'badPolyrepoExportsOutdated',
+  root: 'bad-polyrepo-exports-outdated'
+});
+
+createFixture({
+  fixtureName: 'badPolyrepoFiles',
+  root: 'bad-polyrepo-files'
+});
+
+createFixture({
+  fixtureName: 'badPolyrepoImporter',
+  root: 'bad-polyrepo-importer'
+});
+
+createFixture({
+  fixtureName: 'badPolyrepoLicense',
+  root: 'bad-polyrepo-license'
 });
 
 createFixture({
@@ -169,6 +221,16 @@ createFixture({
 createFixture({
   fixtureName: 'badPolyrepoPrivate',
   root: 'bad-polyrepo-private'
+});
+
+createFixture({
+  fixtureName: 'badPolyrepoVersion1',
+  root: 'bad-polyrepo-version-1'
+});
+
+createFixture({
+  fixtureName: 'badPolyrepoVersion2',
+  root: 'bad-polyrepo-version-2'
 });
 
 createFixture({
@@ -210,6 +272,12 @@ createFixture({
     { name: 'pkg-1', root: 'pkgs/pkg-1' },
     { name: 'pkg-10', root: 'pkgs/pkg-10' }
   ]
+});
+
+createFixture({
+  fixtureName: 'goodMonorepoVersion',
+  root: 'good-monorepo-version',
+  namedPkgMapData: [{ name: 'pkg-1', root: 'packages/pkg-1' }]
 });
 
 createFixture({

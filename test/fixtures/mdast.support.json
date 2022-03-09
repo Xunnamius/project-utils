@@ -1,0 +1,292 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [
+        {
+          "type": "text",
+          "value": "Support ",
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 3,
+              "offset": 2
+            },
+            "end": {
+              "line": 1,
+              "column": 11,
+              "offset": 10
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Average time to resolve an issue",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 12,
+                  "offset": 11
+                },
+                "end": {
+                  "line": 1,
+                  "column": 50,
+                  "offset": 49
+                }
+              },
+              "label": "1",
+              "identifier": "1",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 11,
+              "offset": 10
+            },
+            "end": {
+              "line": 1,
+              "column": 54,
+              "offset": 53
+            }
+          },
+          "label": "2",
+          "identifier": "2",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": " ",
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 54,
+              "offset": 53
+            },
+            "end": {
+              "line": 1,
+              "column": 55,
+              "offset": 54
+            }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "imageReference",
+              "alt": "Percentage of issues still open",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 56,
+                  "offset": 55
+                },
+                "end": {
+                  "line": 1,
+                  "column": 93,
+                  "offset": 92
+                }
+              },
+              "label": "3",
+              "identifier": "3",
+              "referenceType": "full"
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 55,
+              "offset": 54
+            },
+            "end": {
+              "line": 1,
+              "column": 97,
+              "offset": 96
+            }
+          },
+          "label": "2",
+          "identifier": "2",
+          "referenceType": "full"
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 97,
+          "offset": 96
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Need help? Want to help this project? See below!",
+          "position": {
+            "start": {
+              "line": 3,
+              "column": 1,
+              "offset": 98
+            },
+            "end": {
+              "line": 3,
+              "column": 49,
+              "offset": 146
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 3,
+          "column": 1,
+          "offset": 98
+        },
+        "end": {
+          "line": 3,
+          "column": 49,
+          "offset": 146
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "1",
+      "label": "1",
+      "title": null,
+      "url": "https://isitmaintained.com/badge/resolution/Xunnamius/projector.svg",
+      "position": {
+        "start": {
+          "line": 48,
+          "column": 1,
+          "offset": 1901
+        },
+        "end": {
+          "line": 48,
+          "column": 73,
+          "offset": 1973
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "2",
+      "label": "2",
+      "title": "Average time to resolve an issue",
+      "url": "https://isitmaintained.com/project/Xunnamius/projector",
+      "position": {
+        "start": {
+          "line": 49,
+          "column": 1,
+          "offset": 1974
+        },
+        "end": {
+          "line": 51,
+          "column": 37,
+          "offset": 2072
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "3",
+      "label": "3",
+      "title": null,
+      "url": "https://isitmaintained.com/badge/open/Xunnamius/projector.svg",
+      "position": {
+        "start": {
+          "line": 52,
+          "column": 1,
+          "offset": 2073
+        },
+        "end": {
+          "line": 52,
+          "column": 67,
+          "offset": 2139
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "4",
+      "label": "4",
+      "title": null,
+      "url": "https://github.com/Xunnamius/projector/issues?q=",
+      "position": {
+        "start": {
+          "line": 53,
+          "column": 1,
+          "offset": 2140
+        },
+        "end": {
+          "line": 53,
+          "column": 54,
+          "offset": 2193
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "5",
+      "label": "5",
+      "title": null,
+      "url": "https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments",
+      "position": {
+        "start": {
+          "line": 54,
+          "column": 1,
+          "offset": 2194
+        },
+        "end": {
+          "line": 55,
+          "column": 82,
+          "offset": 2280
+        }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "6",
+      "label": "6",
+      "title": null,
+      "url": "https://github.com/Xunnamius/projector/issues/new/choose",
+      "position": {
+        "start": {
+          "line": 56,
+          "column": 1,
+          "offset": 2281
+        },
+        "end": {
+          "line": 56,
+          "column": 62,
+          "offset": 2342
+        }
+      }
+    }
+  ],
+  "position": {
+    "start": {
+      "line": 1,
+      "column": 1,
+      "offset": 0
+    },
+    "end": {
+      "line": 57,
+      "column": 1,
+      "offset": 2343
+    }
+  }
+}
