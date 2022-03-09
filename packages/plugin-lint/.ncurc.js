@@ -2,9 +2,8 @@
 
 module.exports = {
   reject: [
-    // ? Pin the CJS version
+    // ? Pin the CJS versions
     'strip-ansi',
-    // ? Pin the CJS version
     'chalk'
   ]
 };
