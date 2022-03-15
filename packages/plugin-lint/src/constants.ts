@@ -33,6 +33,8 @@ export type StandardUrlParams = {
   flag?: string;
 };
 
+export type Condition = 'monorepo' | 'polyrepo' | 'subroot';
+
 /**
  * Standard Markdown topmatter (i.e. badges, surrounding comments, references)
  * for topmatter badges that appear in `README.md`. Note that order matters!
@@ -44,6 +46,7 @@ export const markdownReadmeStandardTopmatter = {
   },
   badge: {
     blm: {
+      conditions: ['monorepo', 'polyrepo', 'subroot'] as Condition[],
       label: 'badge-blm',
       alt: 'Black Lives Matter!',
       url: (_: StandardUrlParams) => 'https://xunn.at/badge-blm',
@@ -54,6 +57,7 @@ export const markdownReadmeStandardTopmatter = {
       }
     },
     maintenance: {
+      conditions: ['monorepo', 'polyrepo', 'subroot'] as Condition[],
       label: 'badge-maintenance',
       alt: 'Maintenance status',
       url: (_: StandardUrlParams) =>
@@ -65,6 +69,7 @@ export const markdownReadmeStandardTopmatter = {
       }
     },
     lastCommit: {
+      conditions: ['monorepo', 'polyrepo', 'subroot'] as Condition[],
       label: 'badge-last-commit',
       alt: 'Last commit timestamp',
       url: ({ user, repo }: StandardUrlParams) =>
@@ -76,6 +81,7 @@ export const markdownReadmeStandardTopmatter = {
       }
     },
     issues: {
+      conditions: ['monorepo', 'polyrepo', 'subroot'] as Condition[],
       label: 'badge-issues',
       alt: 'Open issues',
       url: ({ user, repo }: StandardUrlParams) =>
@@ -88,6 +94,7 @@ export const markdownReadmeStandardTopmatter = {
       }
     },
     pulls: {
+      conditions: ['monorepo', 'polyrepo', 'subroot'] as Condition[],
       label: 'badge-pulls',
       alt: 'Pull requests',
       url: ({ user, repo }: StandardUrlParams) =>
@@ -100,6 +107,7 @@ export const markdownReadmeStandardTopmatter = {
       }
     },
     codecov: {
+      conditions: ['polyrepo', 'subroot'] as Condition[],
       label: 'badge-codecov',
       alt: 'Codecov',
       url: ({ user, repo, flag }: StandardUrlParams) =>
@@ -114,6 +122,7 @@ export const markdownReadmeStandardTopmatter = {
       }
     },
     license: {
+      conditions: ['polyrepo', 'subroot'] as Condition[],
       label: 'badge-license',
       alt: 'Source license',
       url: ({ pkgName }: StandardUrlParams) => `https://img.shields.io/npm/l/${pkgName}`,
@@ -125,6 +134,7 @@ export const markdownReadmeStandardTopmatter = {
       }
     },
     treeShaking: {
+      conditions: ['polyrepo', 'subroot'] as Condition[],
       label: 'badge-tree-shaking',
       alt: 'Tree shaking support',
       url: (_: StandardUrlParams) => 'https://xunn.at/badge-tree-shaking',
@@ -136,6 +146,7 @@ export const markdownReadmeStandardTopmatter = {
       }
     },
     size: {
+      conditions: ['polyrepo', 'subroot'] as Condition[],
       label: 'badge-size',
       alt: 'Compressed package size',
       url: ({ pkgName }: StandardUrlParams) =>
@@ -148,6 +159,7 @@ export const markdownReadmeStandardTopmatter = {
       }
     },
     npm: {
+      conditions: ['polyrepo', 'subroot'] as Condition[],
       label: 'badge-npm',
       alt: 'NPM version',
       url: ({ pkgName }: StandardUrlParams) =>
@@ -160,8 +172,9 @@ export const markdownReadmeStandardTopmatter = {
       }
     },
     semanticRelease: {
+      conditions: ['monorepo', 'polyrepo', 'subroot'] as Condition[],
       label: 'badge-semantic-release',
-      alt: 'Uses Semantic Release!',
+      alt: 'This repo uses semantic-release!',
       url: (_: StandardUrlParams) =>
         'https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg',
       title: 'This repo practices continuous integration and deployment!',

@@ -39,6 +39,8 @@ export const ErrorMessage = {
   PackageJsonIllegalKey: (key: string) =>
     `The file should not contain the "${key}" field`,
   PackageJsonMissingKey: (key: string) => `The file is missing the "${key}" field`,
+  PackageJsonMissingKeysCheckSkipped: () =>
+    `Some checks were skipped because package.json is missing the "repository" and/or "name" fields, or the "repository" field does not contain a GitHub url`,
   PackageJsonObsoleteKey: (key: string) =>
     `The file contains the obsolete "${key}" field`,
   PackageJsonDuplicateDependency: (dep: string) =>
@@ -75,52 +77,52 @@ export const ErrorMessage = {
   MarkdownUnknownTopmatterItem: (item: string) =>
     `The file contains the unknown or out-of-context topmatter item "${item}"`,
   MarkdownTopmatterOutOfOrder: () =>
-    `The file topmatter items appear in a non-standard order`,
+    `The file's topmatter items appear in a non-standard order`,
   MarkdownInvalidSyntaxOpeningComment: () =>
     `The file has invalid topmatter syntax: missing opening comment "${markdownReadmeStandardTopmatter.comment.start}"`,
   MarkdownInvalidSyntaxClosingComment: () =>
     `The file has invalid topmatter syntax: missing closing comment "${markdownReadmeStandardTopmatter.comment.end}"`,
   MarkdownInvalidSyntaxLinkRef: (label: string | null | undefined) =>
     `The file has invalid topmatter syntax: "${
-      label ?? '(unlabeled)'
+      label || '(unlabeled)'
     }" link reference should have exactly 1 image reference child element`,
-  MarkdownBadTopmatterImageRefLabel: (
+  MarkdownBadTopmatterLinkRefLabel: (
     actualLabel: string | null | undefined,
     expectedLabel: string
   ) =>
     `The file has a misconfigured topmatter item: "${
-      actualLabel ?? '(unlabeled)'
-    }" image reference label should be "${expectedLabel}"`,
+      actualLabel || '(unlabeled)'
+    }" link reference label should be "${expectedLabel}"`,
   MarkdownBadTopmatterImageRefAlt: (
     actualLabel: string | null | undefined,
     expectedLabel: string
   ) =>
     `The file has a misconfigured topmatter item: "${
-      actualLabel ?? '(unlabeled)'
+      actualLabel || '(unlabeled)'
     }" image reference alt text should be "${expectedLabel}"`,
   MarkdownBadTopmatterMissingLinkRefDef: (label: string | null | undefined) =>
     `The file has a misconfigured topmatter item: "${
-      label ?? '(unlabeled)'
+      label || '(unlabeled)'
     }" link reference definition is missing`,
   MarkdownBadTopmatterMissingImageRefDef: (label: string | null | undefined) =>
     `The file has a misconfigured topmatter item: "${
-      label ?? '(unlabeled)'
+      label || '(unlabeled)'
     }" image reference definition is missing`,
   MarkdownBadTopmatterImageRefDefTitle: (
     label: string | null | undefined,
     title: string
   ) =>
     `The file has a misconfigured topmatter item: "${
-      label ?? '(unlabeled)'
-    }" title text should be "${title}"`,
+      label || '(unlabeled)'
+    }" image reference definition title text should be "${title}"`,
   MarkdownBadTopmatterImageRefDefUrl: (label: string | null | undefined, url: string) =>
     `The file has a misconfigured topmatter item: "${
-      label ?? '(unlabeled)'
-    }" url should be "${url}"`,
+      label || '(unlabeled)'
+    }" image reference definition url should be "${url}"`,
   MarkdownBadTopmatterLinkRefDefUrl: (label: string | null | undefined, url: string) =>
     `The file has a misconfigured topmatter item: "${
-      label ?? '(unlabeled)'
-    }" url should be "${url}"`,
+      label || '(unlabeled)'
+    }" link reference definition url should be "${url}"`,
   MarkdownMissingLink: (link: string) =>
     `The file is missing the "${link}" standard link`,
   MarkdownBadLinkX: () => `The file has misconfigured standard link: X`

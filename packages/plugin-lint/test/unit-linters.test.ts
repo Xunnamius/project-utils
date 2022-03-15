@@ -1,5 +1,8 @@
+/* eslint-disable jest/no-conditional-expect */
 import * as Linters from '../src/linters';
 import * as Constants from '../src/constants';
+import * as Core from 'pkgverse/core/src/project-utils';
+import fs from 'fs/promises';
 import { Fixtures } from 'testverse/fixtures';
 import { toss } from 'toss-expression';
 import { ErrorMessage } from '../src/errors';
@@ -9,6 +12,7 @@ import { run, RunReturnType } from 'multiverse/run';
 import escapeRegexp from 'escape-string-regexp';
 // ? Secretly an ES module, but mocked as a CJS module
 import { fromMarkdown } from 'mdast-util-from-markdown';
+import { PathLike } from 'fs';
 
 jest.mock('multiverse/run');
 
@@ -16,14 +20,6 @@ jest.mock('mdast-util-from-markdown', () => {
   return {
     fromMarkdown: jest.fn(),
     __esModule: true
-  };
-});
-
-jest.mock('fs/promises', () => {
-  const fs = jest.requireActual('fs/promises');
-  return {
-    ...fs,
-    readFile: jest.fn().mockImplementation(fs.readFile)
   };
 });
 
@@ -39,6 +35,7 @@ const stringContainingErrorMessage = (currentFile: string, errorMessage: string)
 const actualRun = jest.requireActual('multiverse/run').run;
 const mockMdastReadmePolyrepo = require('testverse/fixtures/mdast.readme-polyrepo');
 const mockMdastReadmeMonorepo = require('testverse/fixtures/mdast.readme-monorepo');
+const mockMdastReadmeMonorepoOOOrder = require('testverse/fixtures/mdast.readme-monorepo-ooo');
 const mockMdastReadmeSubroot = require('testverse/fixtures/mdast.readme-subroot');
 const mockMdastSecurity = require('testverse/fixtures/mdast.security');
 const mockMdastContributing = require('testverse/fixtures/mdast.contributing');
@@ -1019,69 +1016,1046 @@ describe('::runProjectLinter', () => {
     );
   });
 
-  it('warns when README.md is missing topmatter', async () => {
-    expect.hasAssertions();
+  describe('(topmatter README.md tests)', () => {
+    beforeEach(() => {
+      const readFileSpy = jest.spyOn(fs, 'readFile');
+      const _access = fs.access;
+      const accessSpy = jest.spyOn(fs, 'access');
 
-    const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepoEmptyMdFiles.root
+      readFileSpy.mockImplementation(() => Promise.resolve(''));
+      accessSpy.mockImplementation((path: PathLike, mode?: number) =>
+        path.toString().endsWith('/README.md') ? Promise.resolve() : _access(path, mode)
+      );
     });
 
-    const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root
+    it('warns when README.md is missing topmatter opening comment', async () => {
+      expect.hasAssertions();
+
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.root
+      });
+
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root
+      });
+
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownInvalidSyntaxOpeningComment()
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.MarkdownInvalidSyntaxOpeningComment()
+        )
+      );
+
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownInvalidSyntaxOpeningComment()
+        )
+      );
     });
 
-    const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepoEmptyMdFiles.root
+    it('warns when README.md is missing topmatter closing comment', async () => {
+      expect.hasAssertions();
+
+      mockedFromMarkdown.mockImplementation(() => ({
+        type: 'root',
+        children: [
+          {
+            type: 'html',
+            value: '<!-- badges-start -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          }
+        ]
+      }));
+
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.root
+      });
+
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root
+      });
+
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownInvalidSyntaxClosingComment()
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.MarkdownInvalidSyntaxClosingComment()
+        )
+      );
+
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownInvalidSyntaxClosingComment()
+        )
+      );
     });
 
-    expect(monorepoRoot.output).toStrictEqual(
-      stringContainingErrorMessage(
-        `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
-        ErrorMessage.MarkdownMissingTopmatter()
-      )
-    );
+    it('warns when README.md has invalid badge syntax', async () => {
+      expect.hasAssertions();
 
-    expect(monorepoSubRoot.output).toStrictEqual(
-      stringContainingErrorMessage(
-        `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
-        ErrorMessage.MarkdownMissingTopmatter()
-      )
-    );
+      mockedFromMarkdown.mockImplementation(() => ({
+        type: 'root',
+        children: [
+          {
+            type: 'html',
+            value: '<!-- badges-start -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          },
+          {
+            type: 'paragraph',
+            children: [
+              {
+                type: 'linkReference',
+                children: [],
+                position: {
+                  start: { line: 5, column: 1, offset: 55 },
+                  end: { line: 5, column: 46, offset: 100 }
+                },
+                label: 'link-blm',
+                identifier: 'link-blm',
+                referenceType: 'full'
+              }
+            ]
+          },
+          {
+            type: 'html',
+            value: '<!-- badges-end -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          }
+        ]
+      }));
 
-    expect(polyrepoRoot.output).toStrictEqual(
-      stringContainingErrorMessage(
-        `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
-        ErrorMessage.MarkdownMissingTopmatter()
-      )
-    );
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.root
+      });
 
-    // TODO: bundlephobia size and treeshakability badges are replaced
-    // TODO:     (xunn.io size solution should cache result for 24 hours)
-  });
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root
+      });
 
-  it('warns when README.md has unknown or out-of-context topmatter', async () => {
-    expect.hasAssertions();
-    // TODO: monorepo and polyrepo
-  });
+      mockedFromMarkdown.mockImplementation(() => ({
+        type: 'root',
+        children: [
+          {
+            type: 'html',
+            value: '<!-- badges-start -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          },
+          {
+            type: 'paragraph',
+            children: [
+              {
+                type: 'linkReference',
+                children: [],
+                position: {
+                  start: { line: 5, column: 1, offset: 55 },
+                  end: { line: 5, column: 46, offset: 100 }
+                },
+                label: '',
+                identifier: '',
+                referenceType: 'full'
+              }
+            ]
+          },
+          {
+            type: 'html',
+            value: '<!-- badges-end -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          }
+        ]
+      }));
 
-  it('warns when README.md topmatter is incorrectly configured', async () => {
-    expect.hasAssertions();
-    // TODO: monorepo and polyrepo
-  });
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root
+      });
 
-  it('ignores when README.md has non-universal topmatter', async () => {
-    expect.hasAssertions();
-    // TODO: monorepo and polyrepo
-  });
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownInvalidSyntaxLinkRef('link-blm')
+        )
+      );
 
-  it('warns when README.md is missing standard links', async () => {
-    expect.hasAssertions();
-    // TODO: monorepo and polyrepo
-  });
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.MarkdownInvalidSyntaxLinkRef('link-blm')
+        )
+      );
 
-  it('warns when README.md standard links are incorrectly configured', async () => {
-    expect.hasAssertions();
-    // TODO: monorepo and polyrepo
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownInvalidSyntaxLinkRef('(unlabeled)')
+        )
+      );
+    });
+
+    it('warns when README.md has unknown topmatter', async () => {
+      expect.hasAssertions();
+
+      mockedFromMarkdown.mockImplementation(() => mockMdastReadmeMonorepo);
+
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.root
+      });
+
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root
+      });
+
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownUnknownTopmatterItem('badge-projector')
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.MarkdownUnknownTopmatterItem('badge-projector')
+        )
+      );
+
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownUnknownTopmatterItem('badge-projector')
+        )
+      );
+    });
+
+    it('warns when README.md has a bad badge', async () => {
+      expect.hasAssertions();
+
+      mockedFromMarkdown.mockImplementation(() => ({
+        type: 'root',
+        children: [
+          {
+            type: 'html',
+            value: '<!-- badges-start -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          },
+          {
+            type: 'paragraph',
+            children: [
+              {
+                type: 'linkReference',
+                children: [
+                  {
+                    type: 'imageReference',
+                    alt: 'BLM!',
+                    position: {
+                      start: { line: 5, column: 2, offset: 56 },
+                      end: { line: 5, column: 35, offset: 89 }
+                    },
+                    label: 'badge-blm',
+                    identifier: 'badge-blm',
+                    referenceType: 'full'
+                  }
+                ],
+                position: {
+                  start: { line: 5, column: 1, offset: 55 },
+                  end: { line: 5, column: 46, offset: 100 }
+                },
+                label: 'blm-link',
+                identifier: 'blm-link',
+                referenceType: 'full'
+              }
+            ]
+          },
+          {
+            type: 'html',
+            value: '<!-- badges-end -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          }
+        ]
+      }));
+
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.root
+      });
+
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root
+      });
+
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterLinkRefLabel(
+            'blm-link',
+            Constants.markdownReadmeStandardTopmatter.badge.blm.link.label
+          )
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterLinkRefLabel(
+            'blm-link',
+            Constants.markdownReadmeStandardTopmatter.badge.blm.link.label
+          )
+        )
+      );
+
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterLinkRefLabel(
+            'blm-link',
+            Constants.markdownReadmeStandardTopmatter.badge.blm.link.label
+          )
+        )
+      );
+
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterImageRefAlt(
+            'badge-blm',
+            Constants.markdownReadmeStandardTopmatter.badge.blm.alt
+          )
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterImageRefAlt(
+            'badge-blm',
+            Constants.markdownReadmeStandardTopmatter.badge.blm.alt
+          )
+        )
+      );
+
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterImageRefAlt(
+            'badge-blm',
+            Constants.markdownReadmeStandardTopmatter.badge.blm.alt
+          )
+        )
+      );
+
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterMissingLinkRefDef('blm-link')
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterMissingLinkRefDef('blm-link')
+        )
+      );
+
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterMissingLinkRefDef('blm-link')
+        )
+      );
+    });
+
+    it('warns when README.md has a bad image reference', async () => {
+      expect.hasAssertions();
+
+      mockedFromMarkdown.mockImplementation(() => ({
+        type: 'root',
+        children: [
+          {
+            type: 'html',
+            value: '<!-- badges-start -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          },
+          {
+            type: 'paragraph',
+            children: [
+              {
+                type: 'linkReference',
+                children: [
+                  {
+                    type: 'imageReference',
+                    alt: 'BLM!',
+                    position: {
+                      start: { line: 5, column: 2, offset: 56 },
+                      end: { line: 5, column: 35, offset: 89 }
+                    },
+                    label: 'badge-blm',
+                    identifier: 'badge-blm',
+                    referenceType: 'full'
+                  }
+                ],
+                position: {
+                  start: { line: 5, column: 1, offset: 55 },
+                  end: { line: 5, column: 46, offset: 100 }
+                },
+                label: 'link-blm',
+                identifier: 'link-blm',
+                referenceType: 'full'
+              }
+            ]
+          },
+          {
+            type: 'html',
+            value: '<!-- badges-end -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          },
+          {
+            type: 'definition',
+            identifier: 'link-blm',
+            label: 'link-blm',
+            title: null,
+            url: 'https://xunn.at/donate-blm',
+            position: {
+              start: { line: 967, column: 1, offset: 32180 },
+              end: { line: 967, column: 39, offset: 32218 }
+            }
+          }
+        ]
+      }));
+
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.root
+      });
+
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root
+      });
+
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterMissingImageRefDef(
+            Constants.markdownReadmeStandardTopmatter.badge.blm.label
+          )
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterMissingImageRefDef(
+            Constants.markdownReadmeStandardTopmatter.badge.blm.label
+          )
+        )
+      );
+
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterMissingImageRefDef(
+            Constants.markdownReadmeStandardTopmatter.badge.blm.label
+          )
+        )
+      );
+    });
+
+    it('warns when missing repository url and/or name while checking README.md', async () => {
+      expect.hasAssertions();
+
+      const actual = Core.readPackageJson;
+      const jsonSpy = jest.spyOn(Core, 'readPackageJson');
+
+      jsonSpy.mockImplementation(({ root }) => {
+        const pkgData = actual({ root });
+
+        if (root == Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root) {
+          pkgData.repository = 'https://github.com/user/repo';
+        } else if (root == Fixtures.badPolyrepoEmptyMdFiles.root) {
+          pkgData.repository = { type: 'git', url: 'https://github.com/user/repo' };
+          pkgData.name = 'some-name';
+        }
+
+        return pkgData;
+      });
+
+      mockedFromMarkdown.mockImplementation(() => ({
+        type: 'root',
+        children: [
+          {
+            type: 'html',
+            value: '<!-- badges-start -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          },
+          {
+            type: 'paragraph',
+            children: [
+              {
+                type: 'linkReference',
+                children: [
+                  {
+                    type: 'imageReference',
+                    alt: 'BLM!',
+                    position: {
+                      start: { line: 5, column: 2, offset: 56 },
+                      end: { line: 5, column: 35, offset: 89 }
+                    },
+                    label: 'badge-blm',
+                    identifier: 'badge-blm',
+                    referenceType: 'full'
+                  }
+                ],
+                position: {
+                  start: { line: 5, column: 1, offset: 55 },
+                  end: { line: 5, column: 46, offset: 100 }
+                },
+                label: 'link-blm',
+                identifier: 'link-blm',
+                referenceType: 'full'
+              }
+            ]
+          },
+          {
+            type: 'html',
+            value: '<!-- badges-end -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          },
+          {
+            type: 'definition',
+            identifier: 'link-blm',
+            label: 'link-blm',
+            title: null,
+            url: 'https://xunn.at/donate-blm',
+            position: {
+              start: { line: 967, column: 1, offset: 32180 },
+              end: { line: 967, column: 39, offset: 32218 }
+            }
+          },
+          {
+            type: 'definition',
+            identifier: 'badge-blm',
+            label: 'badge-blm',
+            title: null,
+            url: 'https://xunn.at/donate-blm',
+            position: {
+              start: { line: 967, column: 1, offset: 32180 },
+              end: { line: 967, column: 39, offset: 32218 }
+            }
+          }
+        ]
+      }));
+
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.root
+      });
+
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root
+      });
+
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.PackageJsonMissingKeysCheckSkipped()
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.PackageJsonMissingKeysCheckSkipped()
+        )
+      );
+
+      expect(polyrepoRoot.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.PackageJsonMissingKeysCheckSkipped()
+        )
+      );
+    });
+
+    it('warns when README.md has a bad definition', async () => {
+      expect.hasAssertions();
+
+      const actual = Core.readPackageJson;
+      const jsonSpy = jest.spyOn(Core, 'readPackageJson');
+
+      jsonSpy.mockImplementation(({ root }) => {
+        const pkgData = actual({ root });
+
+        pkgData.repository = { type: 'git', url: 'https://github.com/user/repo' };
+        pkgData.name = pkgData.name || `pkg-${Math.random().toString(16).slice(10)}`;
+
+        return pkgData;
+      });
+
+      mockedFromMarkdown.mockImplementation(() => ({
+        type: 'root',
+        children: [
+          {
+            type: 'html',
+            value: '<!-- badges-start -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          },
+          {
+            type: 'paragraph',
+            children: [
+              {
+                type: 'linkReference',
+                children: [
+                  {
+                    type: 'imageReference',
+                    alt: 'LCT',
+                    position: {
+                      start: { line: 6, column: 2, offset: 102 },
+                      end: { line: 6, column: 45, offset: 145 }
+                    },
+                    label: 'badge-last-commit',
+                    identifier: 'badge-last-commit',
+                    referenceType: 'full'
+                  }
+                ],
+                position: {
+                  start: { line: 6, column: 1, offset: 101 },
+                  end: { line: 6, column: 57, offset: 157 }
+                },
+                label: 'link-last-commit',
+                identifier: 'link-last-commit',
+                referenceType: 'full'
+              }
+            ]
+          },
+          {
+            type: 'html',
+            value: '<!-- badges-end -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          },
+          {
+            type: 'definition',
+            identifier: 'link-last-commit',
+            label: 'link-last-commit',
+            title: null,
+            url: 'https://github.com/x/y',
+            position: {
+              start: { line: 968, column: 1, offset: 32219 },
+              end: { line: 968, column: 52, offset: 32270 }
+            }
+          },
+          {
+            type: 'definition',
+            identifier: 'badge-last-commit',
+            label: 'badge-last-commit',
+            title: 'LCT',
+            url: 'https://img.shields.io/github/last-commit/x/y',
+            position: {
+              start: { line: 969, column: 1, offset: 32271 },
+              end: { line: 971, column: 28, offset: 32383 }
+            }
+          }
+        ]
+      }));
+
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.root
+      });
+
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root
+      });
+
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterImageRefDefTitle(
+            'badge-last-commit',
+            Constants.markdownReadmeStandardTopmatter.badge.lastCommit.title
+          )
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterImageRefDefTitle(
+            'badge-last-commit',
+            Constants.markdownReadmeStandardTopmatter.badge.lastCommit.title
+          )
+        )
+      );
+
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterImageRefDefTitle(
+            'badge-last-commit',
+            Constants.markdownReadmeStandardTopmatter.badge.lastCommit.title
+          )
+        )
+      );
+
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterImageRefDefUrl(
+            'badge-last-commit',
+            Constants.markdownReadmeStandardTopmatter.badge.lastCommit.url({
+              user: 'user',
+              repo: 'repo',
+              pkgName: expect.any(String)
+            })
+          )
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterImageRefDefUrl(
+            'badge-last-commit',
+            Constants.markdownReadmeStandardTopmatter.badge.lastCommit.url({
+              user: 'user',
+              repo: 'repo',
+              pkgName: expect.any(String)
+            })
+          )
+        )
+      );
+
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterImageRefDefUrl(
+            'badge-last-commit',
+            Constants.markdownReadmeStandardTopmatter.badge.lastCommit.url({
+              user: 'user',
+              repo: 'repo',
+              pkgName: expect.any(String)
+            })
+          )
+        )
+      );
+
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterLinkRefDefUrl(
+            'link-last-commit',
+            Constants.markdownReadmeStandardTopmatter.badge.lastCommit.link.url({
+              user: 'user',
+              repo: 'repo',
+              pkgName: expect.any(String)
+            })
+          )
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterLinkRefDefUrl(
+            'link-last-commit',
+            Constants.markdownReadmeStandardTopmatter.badge.lastCommit.link.url({
+              user: 'user',
+              repo: 'repo',
+              pkgName: expect.any(String)
+            })
+          )
+        )
+      );
+
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownBadTopmatterLinkRefDefUrl(
+            'link-last-commit',
+            Constants.markdownReadmeStandardTopmatter.badge.lastCommit.link.url({
+              user: 'user',
+              repo: 'repo',
+              pkgName: expect.any(String)
+            })
+          )
+        )
+      );
+    });
+
+    it('warns when README.md is missing topmatter', async () => {
+      expect.hasAssertions();
+
+      mockedFromMarkdown.mockImplementation(() => ({
+        type: 'root',
+        children: [
+          {
+            type: 'html',
+            value: '<!-- badges-start -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          },
+          {
+            type: 'paragraph',
+            children: []
+          },
+          {
+            type: 'html',
+            value: '<!-- badges-end -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          }
+        ]
+      }));
+
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.root
+      });
+
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root
+      });
+
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownMissingTopmatter()
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.MarkdownMissingTopmatter()
+        )
+      );
+
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownMissingTopmatter()
+        )
+      );
+    });
+
+    it('warns when README.md topmatter is out of order', async () => {
+      expect.hasAssertions();
+
+      mockedFromMarkdown.mockImplementation(() => mockMdastReadmeMonorepoOOOrder);
+
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.root
+      });
+
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root
+      });
+
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownTopmatterOutOfOrder()
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.MarkdownTopmatterOutOfOrder()
+        )
+      );
+
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownTopmatterOutOfOrder()
+        )
+      );
+    });
+
+    it('warns when README.md is missing specific topmatter items', async () => {
+      expect.hasAssertions();
+
+      mockedFromMarkdown.mockImplementation(() => ({
+        type: 'root',
+        children: [
+          {
+            type: 'html',
+            value: '<!-- badges-start -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          },
+          {
+            type: 'paragraph',
+            children: [
+              {
+                type: 'linkReference',
+                children: [
+                  {
+                    type: 'imageReference',
+                    alt: 'LCT',
+                    position: {
+                      start: { line: 6, column: 2, offset: 102 },
+                      end: { line: 6, column: 45, offset: 145 }
+                    },
+                    label: 'badge-last-commit',
+                    identifier: 'badge-last-commit',
+                    referenceType: 'full'
+                  }
+                ],
+                position: {
+                  start: { line: 6, column: 1, offset: 101 },
+                  end: { line: 6, column: 57, offset: 157 }
+                },
+                label: 'link-last-commit',
+                identifier: 'link-last-commit',
+                referenceType: 'full'
+              }
+            ]
+          },
+          {
+            type: 'html',
+            value: '<!-- badges-end -->',
+            position: {
+              start: { line: 3, column: 1, offset: 32 },
+              end: { line: 3, column: 22, offset: 53 }
+            }
+          }
+        ]
+      }));
+
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.root
+      });
+
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root
+      });
+
+      Object.values(Constants.markdownReadmeStandardTopmatter.badge)
+        .filter(({ label }) => label != 'badge-last-commit')
+        .forEach(({ label, conditions }) => {
+          if (conditions.includes('monorepo')) {
+            expect(monorepoRoot.output).toStrictEqual(
+              stringContainingErrorMessage(
+                `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+                ErrorMessage.MarkdownMissingTopmatterItem(label)
+              )
+            );
+          }
+
+          if (conditions.includes('subroot')) {
+            expect(monorepoSubRoot.output).toStrictEqual(
+              stringContainingErrorMessage(
+                `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+                ErrorMessage.MarkdownMissingTopmatterItem(label)
+              )
+            );
+          }
+
+          if (conditions.includes('polyrepo')) {
+            expect(polyrepoRoot.output).toStrictEqual(
+              stringContainingErrorMessage(
+                `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+                ErrorMessage.MarkdownMissingTopmatterItem(label)
+              )
+            );
+          }
+        });
+    });
   });
 
   describe('(monorepo-specific checks)', () => {
