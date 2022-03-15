@@ -984,7 +984,7 @@ information.
   https://app.fossa.com/projects/custom+27276%2Fgit@github.com:Xunnamius%2Fprojector.git
 [badge-semantic-release]:
   https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
-  'This repo practices continuous integration and deployment!'
+  'This repo uses semantic-release!'
 [link-semantic-release]: https://github.com/semantic-release/semantic-release
 [badge-projector]:
   https://xunn.at/badge-projector
