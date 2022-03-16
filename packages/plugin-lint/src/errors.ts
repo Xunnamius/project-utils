@@ -123,7 +123,10 @@ export const ErrorMessage = {
     `The file has a misconfigured topmatter item: "${
       label || '(unlabeled)'
     }" link reference definition url should be "${url}"`,
-  MarkdownMissingLink: (link: string) =>
-    `The file is missing the "${link}" standard link`,
-  MarkdownBadLinkX: () => `The file has misconfigured standard link: X`
+  MarkdownMissingLink: (label: string) =>
+    `The file is missing the "${label}" standard link`,
+  MarkdownBadLink: (label: string | null | undefined, url: string) =>
+    `The file has a misconfigured standard link: "${
+      label || '(unlabeled)'
+    }" link reference definition url should be "${url}"`
 };

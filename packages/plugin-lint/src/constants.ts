@@ -212,7 +212,7 @@ export const markdownSecurityStandardTopmatter = {
  */
 export const markdownSupportStandardTopmatter = {
   issuesResolution: {
-    label: 'badge-issues-resolution',
+    label: 'badge-issue-resolution',
     alt: 'Average issue resolution time',
     url: ({ user, repo }: StandardUrlParams) =>
       `https://isitmaintained.com/badge/resolution/${user}/${repo}.svg`,
@@ -224,13 +224,13 @@ export const markdownSupportStandardTopmatter = {
     }
   },
   issuesPercentage: {
-    label: 'badge-issues-percentage',
+    label: 'badge-issue-percentage',
     alt: 'Open issues percentage',
     url: ({ user, repo }: StandardUrlParams) =>
       `https://isitmaintained.com/badge/open/${user}/${repo}.svg`,
     title: 'Open issues as a percentage of all issues',
     link: {
-      label: 'link-issues-percentage',
+      label: 'link-issue-percentage',
       url: ({ user, repo }: StandardUrlParams) =>
         `https://github.com/${user}/${repo}/issues?q=`
     }
@@ -274,7 +274,7 @@ export const markdownSecurityStandardLinks = {
       `https://github.com/${user}/${repo}/issues/new/choose`
   },
   securityMailTo: {
-    label: 'security-mail-to',
+    label: 'security-mailto',
     url: (_: StandardUrlParams) =>
       'mailto:security@ergodark.com?subject=ALERT%3A%20SECURITY%20INCIDENT%3A%20%28five%20word%20summary%29'
   }
@@ -289,24 +289,100 @@ export const markdownSupportStandardLinks = {
     url: ({ user, repo }: StandardUrlParams) =>
       `https://github.com/${user}/${repo}/issues?q=`
   },
+  githubBlog: {
+    label: 'github-blog',
+    url: (_: StandardUrlParams) =>
+      'https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments'
+  },
   chooseNewIssue: {
     label: 'choose-new-issue',
     url: ({ user, repo }: StandardUrlParams) =>
       `https://github.com/${user}/${repo}/issues/new/choose`
+  }
+};
+
+/**
+ * Standard Markdown reference links (i.e. links and references) for CONTRIBUTING.md
+ */
+export const markdownContributingStandardLinks = {
+  howToContribute: {
+    label: 'how-to-contribute',
+    url: (_: StandardUrlParams) => 'https://www.dataschool.io/how-to-contribute-on-github'
+  },
+  codeOfConduct: {
+    label: 'code-of-conduct',
+    url: (_: StandardUrlParams) => '/.github/CODE_OF_CONDUCT.md'
+  },
+  githubActions: {
+    label: 'github-actions',
+    url: (_: StandardUrlParams) => 'https://github.com/features/actions'
+  },
+  HuskyCl: {
+    label: 'husky-cl',
+    url: ({ user, repo }: StandardUrlParams) =>
+      `https://github.com/${user}/${repo}/tree/main/.husky`
+  },
+  ghaCi: {
+    label: 'gha-ci',
+    url: (_: StandardUrlParams) => '.github/workflows/build-test.yml'
+  },
+  projector: {
+    label: 'projector',
+    url: (_: StandardUrlParams) => 'https://github.com/Xunnamius/projector#readme'
+  },
+  pkgDebug: {
+    label: 'pkg-debug',
+    url: (_: StandardUrlParams) => 'https://www.npmjs.com/package/debug'
+  },
+  pkgDebugWildcards: {
+    label: 'pkg-debug-wildcards',
+    url: (_: StandardUrlParams) => 'https://www.npmjs.com/package/debug#wildcards'
+  },
+  fork: {
+    label: 'fork',
+    url: ({ user, repo }: StandardUrlParams) => `https://github.com/${user}/${repo}/fork`
+  },
+  howToClone: {
+    label: 'how-to-clone',
+    url: (_: StandardUrlParams) =>
+      'https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/cloning-a-repository'
+  },
+  npmCi: {
+    label: 'npm-ci',
+    url: (_: StandardUrlParams) => 'https://docs.npmjs.com/cli/v6/commands/npm-ci'
   },
   prCompare: {
     label: 'pr-compare',
     url: ({ user, repo }: StandardUrlParams) =>
       `https://github.com/${user}/${repo}/compare`
   },
-  husky: {
-    label: 'husky',
+  chooseNewIssue: {
+    label: 'choose-new-issue',
     url: ({ user, repo }: StandardUrlParams) =>
-      `https://github.com/${user}/${repo}/tree/main/.husky`
+      `https://github.com/${user}/${repo}/issues/new/choose`
   },
-  fork: {
-    label: 'fork',
-    url: ({ user, repo }: StandardUrlParams) => `https://github.com/${user}/${repo}/fork`
+  openIssues: {
+    label: 'open-issues',
+    url: ({ user, repo }: StandardUrlParams) =>
+      `https://github.com/${user}/${repo}/issues?q=`
+  },
+  atomicCommits: {
+    label: 'atomic-commits',
+    url: (_: StandardUrlParams) => 'https://www.codewithjason.com/atomic-commits-testing/'
+  },
+  codecov: {
+    label: 'codecov',
+    url: (_: StandardUrlParams) => 'https://about.codecov.io/'
+  },
+  conventionalCommits: {
+    label: 'conventional-commits',
+    url: (_: StandardUrlParams) =>
+      'https://www.conventionalcommits.org/en/v1.0.0/#summary'
+  },
+  cosmeticCommits: {
+    label: 'cosmetic-commits',
+    url: (_: StandardUrlParams) =>
+      'https://github.com/rails/rails/pull/13771#issuecomment-32746700'
   }
 };
 

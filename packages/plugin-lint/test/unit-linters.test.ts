@@ -51,6 +51,20 @@ beforeEach(() => {
   clearPackageJsonCache();
 });
 
+test('markdown blueprints end with a colon (and not a new line)', async () => {
+  expect.hasAssertions();
+
+  (
+    await Promise.all([
+      fs.readFile(`${__dirname}/../src/blueprint-contributing.md`, { encoding: 'utf-8' }),
+      fs.readFile(`${__dirname}/../src/blueprint-security.md`, { encoding: 'utf-8' }),
+      fs.readFile(`${__dirname}/../src/blueprint-support.md`, { encoding: 'utf-8' })
+    ])
+  ).forEach((blueprint) => {
+    expect(blueprint).toEndWith(':');
+  });
+});
+
 describe('::runProjectLinter', () => {
   it('errors when the project is not a git repository', async () => {
     expect.hasAssertions();
@@ -2055,6 +2069,149 @@ describe('::runProjectLinter', () => {
             );
           }
         });
+    });
+
+    it('warns when README.md is missing specific standard link references', async () => {
+      expect.hasAssertions();
+
+      const actual = Core.readPackageJson;
+      const jsonSpy = jest.spyOn(Core, 'readPackageJson');
+
+      jsonSpy.mockImplementation(({ root }) => {
+        const pkgData = actual({ root });
+
+        pkgData.repository = { type: 'git', url: 'https://github.com/user/repo' };
+        pkgData.name = pkgData.name || `pkg-${Math.random().toString(16).slice(10)}`;
+
+        return pkgData;
+      });
+
+      mockedFromMarkdown.mockImplementation(() => ({
+        type: 'root',
+        children: []
+      }));
+
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.root
+      });
+
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root
+      });
+
+      Object.values(Constants.markdownReadmeStandardLinks).forEach(({ label }) => {
+        expect(monorepoRoot.output).toStrictEqual(
+          stringContainingErrorMessage(
+            `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+            ErrorMessage.MarkdownMissingLink(label)
+          )
+        );
+
+        expect(monorepoSubRoot.output).toStrictEqual(
+          stringContainingErrorMessage(
+            `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+            ErrorMessage.MarkdownMissingLink(label)
+          )
+        );
+
+        expect(polyrepoRoot.output).toStrictEqual(
+          stringContainingErrorMessage(
+            `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+            ErrorMessage.MarkdownMissingLink(label)
+          )
+        );
+      });
+    });
+
+    it('warns when README.md has a bad standard link reference', async () => {
+      expect.hasAssertions();
+
+      const actual = Core.readPackageJson;
+      const jsonSpy = jest.spyOn(Core, 'readPackageJson');
+
+      jsonSpy.mockImplementation(({ root }) => {
+        const pkgData = actual({ root });
+
+        pkgData.repository = { type: 'git', url: 'https://github.com/user/repo' };
+        pkgData.name = pkgData.name || `pkg-${Math.random().toString(16).slice(10)}`;
+
+        return pkgData;
+      });
+
+      mockedFromMarkdown.mockImplementation(() => ({
+        type: 'root',
+        children: [
+          {
+            type: 'definition',
+            identifier: 'choose-new-issue',
+            label: 'choose-new-issue',
+            title: null,
+            url: 'https://fake.bad',
+            position: {
+              start: { line: 968, column: 1, offset: 32219 },
+              end: { line: 968, column: 52, offset: 32270 }
+            }
+          }
+        ]
+      }));
+
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.root
+      });
+
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root
+      });
+
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownBadLink(
+            'choose-new-issue',
+            Constants.markdownReadmeStandardLinks.chooseNewIssue.url({
+              user: 'user',
+              repo: 'repo',
+              pkgName: expect.any(String)
+            })
+          )
+        )
+      );
+
+      expect(monorepoSubRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.MarkdownBadLink(
+            'choose-new-issue',
+            Constants.markdownReadmeStandardLinks.chooseNewIssue.url({
+              user: 'user',
+              repo: 'repo',
+              pkgName: expect.any(String)
+            })
+          )
+        )
+      );
+
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownBadLink(
+            'choose-new-issue',
+            Constants.markdownReadmeStandardLinks.chooseNewIssue.url({
+              user: 'user',
+              repo: 'repo',
+              pkgName: expect.any(String)
+            })
+          )
+        )
+      );
     });
   });
 

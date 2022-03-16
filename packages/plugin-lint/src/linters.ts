@@ -20,6 +20,7 @@ import {
 
 import {
   globalPkgJsonRequiredFields,
+  markdownReadmeStandardLinks,
   markdownReadmeStandardTopmatter,
   monorepoRootTsconfigFiles,
   nonMonoRootPkgJsonRequiredFields,
@@ -132,6 +133,45 @@ const checkFilesExist = (
 };
 
 /**
+ * Accepts an absolute path to a markdown file along with a remark package
+ * instance and returns an mdast abstract syntax tree.
+ */
+const getAst = async (
+  path: string,
+  remark: typeof import('mdast-util-from-markdown')
+) => {
+  try {
+    return remark.fromMarkdown(await readFile(path));
+  } catch (e) {
+    if (!(e as Error).message.includes('ENOENT')) {
+      throw e;
+    }
+  }
+};
+
+/**
+ * Accepts a package.json object and returns a `StandardUrlParams` object or
+ * `null` if the package.json object is missing the `"name"` or `"repository"`
+ * fields.
+ */
+const getUrlParams = (json: PackageJson): StandardUrlParams | null => {
+  const match = /^https:\/\/github.com\/(?<user>[^/]+)\/(?<repo>[^/]+)/.exec(
+    typeof json.repository == 'string' ? json.repository : json.repository?.url || ''
+  );
+
+  if (!match?.groups?.repo || !match?.groups?.user || !json.name) {
+    return null;
+  }
+
+  return {
+    pkgName: json.name,
+    repo: match.groups.repo,
+    user: match.groups.user,
+    flag: (json.config?.codecov as Record<string, string>)?.flag
+  };
+};
+
+/**
  * Returns the expected value for `package.json` `node.engines` field
  */
 export const getExpectedNodeEngines = () => {
@@ -225,6 +265,7 @@ export async function runProjectLinter({
 
     // ? Some checks are performed regardless of context
     if (ctx !== undefined) {
+      const remark = await getRemark();
       const startedAtMonorepoRoot = ctx.context == 'monorepo' && !ctx.package;
 
       /**
@@ -488,28 +529,24 @@ export async function runProjectLinter({
         // ? README.md has standard well-configured topmatter and links
         const readmePath = `${root}/README.md`;
         const reportReadme = reporterFactory(readmePath);
-        const remark = await getRemark();
+        const readmeAst = await getAst(readmePath, remark);
 
-        const ast = await (async () => {
-          try {
-            return remark.fromMarkdown(await readFile(readmePath));
-          } catch (e) {
-            if (!(e as Error).message.includes('ENOENT')) {
-              throw e;
-            }
+        if (readmeAst) {
+          const urlParams = getUrlParams(json);
+
+          if (!urlParams) {
+            reportReadme('warn', ErrorMessage.PackageJsonMissingKeysCheckSkipped());
           }
-        })();
 
-        if (ast) {
-          const startIndex = ast.children.findIndex(
+          const startIndex = readmeAst.children.findIndex(
             (child) =>
               child.type == 'html' &&
               child.value == markdownReadmeStandardTopmatter.comment.start
           );
 
-          const startChild = ast.children[startIndex] || {};
-          const endChild = ast.children[startIndex + 2] || {};
-          const topmatter = ast.children[startIndex + 1] || {};
+          const startChild = readmeAst.children[startIndex] || {};
+          const endChild = readmeAst.children[startIndex + 2] || {};
+          const topmatter = readmeAst.children[startIndex + 1] || {};
 
           if (
             startChild.type != 'html' ||
@@ -524,7 +561,6 @@ export async function runProjectLinter({
           } else {
             let handled = false;
             let wellOrdered = true;
-            let missingKeysCheckSkipped = false;
             const seenBadgeKeys = [] as string[];
 
             const condition = isCheckingMonorepoRoot
@@ -568,13 +604,13 @@ export async function runProjectLinter({
 
                         seenBadgeKeys.push(badgeKey);
 
-                        const linkRefDef = ast.children.find(
+                        const linkRefDef = readmeAst.children.find(
                           (child): child is Definition =>
                             child.type == 'definition' &&
                             child.label == badgeLinkRef.label
                         );
 
-                        const imageRefDef = ast.children.find(
+                        const imageRefDef = readmeAst.children.find(
                           (child): child is Definition =>
                             child.type == 'definition' &&
                             child.label == badgeImageRef.label
@@ -615,21 +651,7 @@ export async function runProjectLinter({
                             )
                           );
                         } else {
-                          const match =
-                            /^https:\/\/github.com\/(?<user>[^/]+)\/(?<repo>[^/]+)/.exec(
-                              typeof json.repository == 'string'
-                                ? json.repository
-                                : json.repository?.url || ''
-                            );
-
-                          if (json.name && match?.groups?.user && match?.groups?.repo) {
-                            const urlParams: StandardUrlParams = {
-                              pkgName: json.name,
-                              repo: match.groups.repo,
-                              user: match.groups.user,
-                              flag: (json.config?.codecov as Record<string, string>)?.flag
-                            };
-
+                          if (urlParams) {
                             if (imageRefDef.title != badgeSpec.title) {
                               reportReadme(
                                 'warn',
@@ -659,12 +681,6 @@ export async function runProjectLinter({
                                 )
                               );
                             }
-                          } else if (!missingKeysCheckSkipped) {
-                            missingKeysCheckSkipped = true;
-                            reportReadme(
-                              'warn',
-                              ErrorMessage.PackageJsonMissingKeysCheckSkipped()
-                            );
                           }
                         }
                       }
@@ -697,6 +713,23 @@ export async function runProjectLinter({
                   reportReadme('warn', ErrorMessage.MarkdownMissingTopmatterItem(label));
                 });
             }
+          }
+
+          if (urlParams) {
+            Object.entries(markdownReadmeStandardLinks).forEach(([, linkSpec]) => {
+              const link = readmeAst.children.find((child): child is Definition => {
+                return child.type == 'definition' && child.label == linkSpec.label;
+              });
+
+              if (!link) {
+                reportReadme('warn', ErrorMessage.MarkdownMissingLink(linkSpec.label));
+              } else {
+                const url = linkSpec.url(urlParams);
+                if (link.url != url) {
+                  reportReadme('warn', ErrorMessage.MarkdownBadLink(linkSpec.label, url));
+                }
+              }
+            });
           }
         }
 
@@ -823,17 +856,202 @@ export async function runProjectLinter({
       if (!ctx.package) {
         const root = ctx.project.root;
         const reportPkg = reporterFactory(`${root}/package.json`);
+
         // ? Has standard files
         // TODO
+
         // ? Has standard directories
         // TODO
+
         // ? Has release.config.js if not "private" (`private` == `true`)
         // TODO
-        // ? SECURITY.md and SUPPORT.md has standard topmatter and links
-        // TODO
-        // ? CONTRIBUTING.md, SECURITY.md, and SUPPORT.md have well-configured
-        // ? topmatter and links
-        // TODO
+
+        // ? SECURITY.md, SUPPORT.md, CONTRIBUTING.md have standard well-configured topmatter and links
+        const securityPath = `${root}/SECURITY.md`;
+        const supportPath = `${root}/.github/SUPPORT.md`;
+        const contribPath = `${root}/CONTRIBUTING.md`;
+        const reportSecurity = reporterFactory(securityPath);
+        const reportSupport = reporterFactory(supportPath);
+        const reportContrib = reporterFactory(contribPath);
+
+        const securityAst = await getAst(securityPath, remark);
+        const supportAst = await getAst(supportPath, remark);
+        const contribAst = await getAst(contribPath, remark);
+
+        if (securityAst) {
+          let handled = false;
+          let wellOrdered = true;
+          let missingKeysCheckSkipped = false;
+          const seenBadgeKeys = [] as string[];
+
+          // TODO (all three)
+          // if (topmatter.type == 'paragraph') {
+          //   topmatter.children.forEach((badgeLinkRef) => {
+          //     if (badgeLinkRef.type == 'linkReference') {
+          //       if (
+          //         !badgeLinkRef.label ||
+          //         badgeLinkRef.children.length != 1 ||
+          //         badgeLinkRef.children[0].type != 'imageReference'
+          //       ) {
+          //         reportSecurity(
+          //           'warn',
+          //           ErrorMessage.MarkdownInvalidSyntaxLinkRef(badgeLinkRef.label)
+          //         );
+          //       } else {
+          //         let topmatterIndex = Infinity;
+          //         const badgeImageRef = badgeLinkRef.children[0];
+          //         const [badgeKey, badgeSpec] =
+          //           Object.entries(markdownReadmeStandardTopmatter.badge).find(
+          //             ([, spec], ndx) => {
+          //               topmatterIndex = ndx;
+          //               return spec.label == badgeImageRef.label;
+          //             }
+          //           ) || [];
+
+          //         handled = true;
+
+          //         if (badgeKey && badgeSpec) {
+          //           if (badgeSpec.conditions.includes(condition)) {
+          //             wellOrdered =
+          //               wellOrdered &&
+          //               Object.keys(markdownReadmeStandardTopmatter.badge).indexOf(
+          //                 seenBadgeKeys.at(-1) || ''
+          //               ) < topmatterIndex;
+
+          //             seenBadgeKeys.push(badgeKey);
+
+          //             const linkRefDef = securityAst.children.find(
+          //               (child): child is Definition =>
+          //                 child.type == 'definition' && child.label == badgeLinkRef.label
+          //             );
+
+          //             const imageRefDef = securityAst.children.find(
+          //               (child): child is Definition =>
+          //                 child.type == 'definition' && child.label == badgeImageRef.label
+          //             );
+
+          //             if (badgeLinkRef.label != badgeSpec.link.label) {
+          //               reportSecurity(
+          //                 'warn',
+          //                 ErrorMessage.MarkdownBadTopmatterLinkRefLabel(
+          //                   badgeLinkRef.label,
+          //                   badgeSpec.link.label
+          //                 )
+          //               );
+          //             }
+
+          //             if (badgeImageRef.alt != badgeSpec.alt) {
+          //               reportSecurity(
+          //                 'warn',
+          //                 ErrorMessage.MarkdownBadTopmatterImageRefAlt(
+          //                   badgeImageRef.label,
+          //                   badgeSpec.alt
+          //                 )
+          //               );
+          //             }
+
+          //             if (!linkRefDef) {
+          //               reportSecurity(
+          //                 'warn',
+          //                 ErrorMessage.MarkdownBadTopmatterMissingLinkRefDef(
+          //                   badgeLinkRef.label
+          //                 )
+          //               );
+          //             } else if (!imageRefDef) {
+          //               reportSecurity(
+          //                 'warn',
+          //                 ErrorMessage.MarkdownBadTopmatterMissingImageRefDef(
+          //                   badgeImageRef.label
+          //                 )
+          //               );
+          //             } else {
+          //               const match =
+          //                 /^https:\/\/github.com\/(?<user>[^/]+)\/(?<repo>[^/]+)/.exec(
+          //                   typeof json.repository == 'string'
+          //                     ? json.repository
+          //                     : json.repository?.url || ''
+          //                 );
+
+          //               if (json.name && match?.groups?.user && match?.groups?.repo) {
+          //                 const urlParams: StandardUrlParams = {
+          //                   pkgName: json.name,
+          //                   repo: match.groups.repo,
+          //                   user: match.groups.user,
+          //                   flag: (json.config?.codecov as Record<string, string>)?.flag
+          //                 };
+
+          //                 if (imageRefDef.title != badgeSpec.title) {
+          //                   reportSecurity(
+          //                     'warn',
+          //                     ErrorMessage.MarkdownBadTopmatterImageRefDefTitle(
+          //                       badgeImageRef.label,
+          //                       badgeSpec.title
+          //                     )
+          //                   );
+          //                 }
+
+          //                 if (imageRefDef.url != badgeSpec.url(urlParams)) {
+          //                   reportSecurity(
+          //                     'warn',
+          //                     ErrorMessage.MarkdownBadTopmatterImageRefDefUrl(
+          //                       badgeImageRef.label,
+          //                       badgeSpec.url(urlParams)
+          //                     )
+          //                   );
+          //                 }
+
+          //                 if (linkRefDef.url != badgeSpec.link.url(urlParams)) {
+          //                   reportSecurity(
+          //                     'warn',
+          //                     ErrorMessage.MarkdownBadTopmatterLinkRefDefUrl(
+          //                       linkRefDef.label,
+          //                       badgeSpec.link.url(urlParams)
+          //                     )
+          //                   );
+          //                 }
+          //               } else if (!missingKeysCheckSkipped) {
+          //                 missingKeysCheckSkipped = true;
+          //                 reportSecurity(
+          //                   'warn',
+          //                   ErrorMessage.PackageJsonMissingKeysCheckSkipped()
+          //                 );
+          //               }
+          //             }
+          //           }
+          //         } else {
+          //           reportSecurity(
+          //             'warn',
+          //             ErrorMessage.MarkdownUnknownTopmatterItem(
+          //               badgeImageRef.label || badgeLinkRef.label
+          //             )
+          //           );
+          //         }
+          //       }
+          //     }
+          //   });
+          // }
+
+          // if (!handled) {
+          //   reportSecurity('warn', ErrorMessage.MarkdownMissingTopmatter());
+          // } else {
+          //   if (!wellOrdered) {
+          //     reportSecurity('warn', ErrorMessage.MarkdownTopmatterOutOfOrder());
+          //   }
+
+          //   Object.entries(markdownReadmeStandardTopmatter.badge)
+          //     .filter(
+          //       ([k, v]) => !seenBadgeKeys.includes(k) && v.conditions.includes(condition)
+          //     )
+          //     .forEach(([, { label }]) => {
+          //       reportSecurity('warn', ErrorMessage.MarkdownMissingTopmatterItem(label));
+          //     });
+          // }
+          // TODO: also do standard links (all three)
+        }
+
+        // ? Using the latest SECURITY.md, SUPPORT.md, and CONTRIBUTING.md
+        // ? blueprints
+        // TODO (startsWith)
       }
     }
 

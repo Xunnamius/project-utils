@@ -1,0 +1,11 @@
+# Security ☠️ \[!\[Known Vulnerabilities]\[badge-security]]\[link-security]
+
+If the issue is related to a public alert from OWASP/GitHub/Dependabot/CVE/etc
+and \[does not already have an open issue]\[open-issues], feel free to \[open a
+new issue]\[choose-new-issue]. Otherwise, please report any security
+vulnerability, other security-related incident, or otherwise sensitive subject
+to us \[via email]\[security-mailto].
+
+Thank you for your contribution!
+
+\[badge-security]:
