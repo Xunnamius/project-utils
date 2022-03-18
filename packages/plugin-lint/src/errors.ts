@@ -41,6 +41,10 @@ export const ErrorMessage = {
   PackageJsonMissingKey: (key: string) => `The file is missing the "${key}" field`,
   PackageJsonMissingKeysCheckSkipped: () =>
     `Some checks were skipped because package.json is missing the "repository" and/or "name" fields, or the "repository" field does not contain a GitHub url`,
+  PackageJsonMissingExportCheckSkipped: (exportsObjectPath: string[]) =>
+    `Some checks were skipped because package.json is missing a "default" or "module" entry point at "${ObjectPath.stringify(
+      ['exports', ...exportsObjectPath]
+    )}"`,
   PackageJsonObsoleteKey: (key: string) =>
     `The file contains the obsolete "${key}" field`,
   PackageJsonDuplicateDependency: (dep: string) =>
@@ -53,11 +57,11 @@ export const ErrorMessage = {
     `The commit contains "fixup" or "mergeme" in its subject and should be squashed/merged`,
   PackageJsonExperimentalVersion: () =>
     `The file's "version" field has an experimental semver value (e.g. 0.x.y)`,
-  PackageJsonBadEntryPoint: (exportsPath: string[]) =>
+  PackageJsonBadEntryPoint: (exportsObjectPath: string[]) =>
     `The file's "${ObjectPath.stringify([
       'exports',
-      ...exportsPath
-    ])}" entry point references a non-existent file`,
+      ...exportsObjectPath
+    ])}" entry point references a non-existent file or is undefined`,
   PackageJsonBadTypesEntryPoint: (typesPath: string[]) =>
     `The file's "${ObjectPath.stringify([
       'typesVersions',

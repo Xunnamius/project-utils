@@ -1,12 +1,11 @@
 import { run } from 'multiverse/run';
 import { CliError, ErrorMessage } from './errors';
 import { getRunContext } from 'pkgverse/core/src/project-utils';
-import { access, readFile } from 'fs/promises';
+import { access } from 'fs/promises';
 import { glob } from 'glob';
 import { promisify } from 'util';
 import { toss } from 'toss-expression';
 import semver from 'semver';
-import browserslist from 'browserslist';
 import stripAnsi from 'strip-ansi';
 import chalk from 'chalk';
 
@@ -20,8 +19,6 @@ import {
 
 import {
   globalPkgJsonRequiredFields,
-  markdownReadmeStandardLinks,
-  markdownReadmeStandardTopmatter,
   monorepoRootTsconfigFiles,
   nonMonoRootPkgJsonRequiredFields,
   numLinesToConsider,
@@ -32,16 +29,30 @@ import {
   pkgVersionWhitelist,
   polyrepoTsconfigFiles,
   publicPkgJsonRequiredFields,
+  repoRootRequiredFiles,
+  repoRootRequiredDirectories,
   requiredFiles,
-  subRootTsconfigFiles
+  subRootTsconfigFiles,
+  markdownSecurityStandardLinks,
+  markdownSupportStandardLinks,
+  markdownContributingStandardLinks,
+  markdownSupportStandardTopmatter,
+  markdownSecurityStandardTopmatter
 } from './constants';
 
-import type { StandardUrlParams } from './constants';
+import {
+  checkPathsExist,
+  deepFlattenPkgExports,
+  getExpectedPkgNodeEngines,
+  ignoreEmptyAndDebugLines,
+  summarizeLinterOutput,
+  checkReadmeFile,
+  checkStandardMdFile,
+  checkCrossDependencies
+} from './utils';
+
+import type { ReporterFactory } from './utils';
 import type { PackageJson } from 'type-fest';
-
-type Definition = import('mdast-util-from-markdown/lib').Definition;
-
-const getRemark = () => import(/* webpackIgnore: true */ 'mdast-util-from-markdown');
 
 const globAsync = promisify(glob);
 
@@ -50,137 +61,6 @@ type UnifiedReturnType = Promise<{
   output: string | undefined;
   summary: string;
 }>;
-
-type ExportsPaths = { paths: string[]; fullPath: string[] };
-
-type ReporterFactory = (
-  currentFile: string
-) => (type: ReportType, message: string) => void;
-
-type ReportType = 'warn' | 'error';
-
-/**
- * Filters out empty and debug lines from linter output.
- *
- * Until something is done about https://github.com/nodejs/node/issues/34799, we
- * unfortunately have to remove the annoying debugging lines manually...
- */
-const ignoreEmptyAndDebugLines = (line: string) => {
-  return (
-    stripAnsi(line) &&
-    line != 'Debugger attached.' &&
-    line != 'Waiting for the debugger to disconnect...'
-  );
-};
-
-/**
- * Accepts the `lastLine` of linter output and the result of `RegExp.exec` where
- * the `errors` and `warning` capture groups have been defined and returns a
- * normalized summary of the number of errors and warnings that occurred.
- */
-const summarizeOutput = (
-  exitCode: number,
-  lastLine: string,
-  lastLineMeta: ReturnType<RegExp['exec']>
-) => {
-  const errors = parseInt(lastLineMeta?.groups?.errors || '0');
-  const warnings = parseInt(lastLineMeta?.groups?.warnings || '0');
-
-  return !lastLine
-    ? exitCode == 0
-      ? 'no issues'
-      : 'unknown issue'
-    : errors + warnings
-    ? `${errors} error${errors != 1 ? 's' : ''}, ${warnings} warning${
-        warnings != 1 ? 's' : ''
-      }`
-    : '1 error, 0 warnings';
-};
-
-/**
- * Flatten the package.json `"exports"` field into an array of entry points.
- */
-const deepFlat = (
-  o: NonNullable<PackageJson['exports']>,
-  fullPath: string[] = []
-): ExportsPaths[] => {
-  return typeof o == 'string'
-    ? [{ paths: [o], fullPath }]
-    : !o || Array.isArray(o)
-    ? [{ paths: o, fullPath }]
-    : Object.entries(o).flatMap(([k, v]) => deepFlat(v, [...fullPath, k]));
-};
-
-/**
- * Check if a list of `files` (paths relative to `root`) exist.
- */
-const checkFilesExist = (
-  files: readonly string[],
-  root: string,
-  reporterFactory: ReporterFactory,
-  type: ReportType = 'error'
-) => {
-  return Promise.all(
-    files.map(async (file) => {
-      const filePath = `${root}/${file}`;
-      try {
-        await access(filePath);
-      } catch {
-        reporterFactory(filePath)(type, ErrorMessage.MissingFile());
-      }
-    })
-  );
-};
-
-/**
- * Accepts an absolute path to a markdown file along with a remark package
- * instance and returns an mdast abstract syntax tree.
- */
-const getAst = async (
-  path: string,
-  remark: typeof import('mdast-util-from-markdown')
-) => {
-  try {
-    return remark.fromMarkdown(await readFile(path));
-  } catch (e) {
-    if (!(e as Error).message.includes('ENOENT')) {
-      throw e;
-    }
-  }
-};
-
-/**
- * Accepts a package.json object and returns a `StandardUrlParams` object or
- * `null` if the package.json object is missing the `"name"` or `"repository"`
- * fields.
- */
-const getUrlParams = (json: PackageJson): StandardUrlParams | null => {
-  const match = /^https:\/\/github.com\/(?<user>[^/]+)\/(?<repo>[^/]+)/.exec(
-    typeof json.repository == 'string' ? json.repository : json.repository?.url || ''
-  );
-
-  if (!match?.groups?.repo || !match?.groups?.user || !json.name) {
-    return null;
-  }
-
-  return {
-    pkgName: json.name,
-    repo: match.groups.repo,
-    user: match.groups.user,
-    flag: (json.config?.codecov as Record<string, string>)?.flag
-  };
-};
-
-/**
- * Returns the expected value for `package.json` `node.engines` field
- */
-export const getExpectedNodeEngines = () => {
-  return browserslist('maintained node versions')
-    .map((v) => v.split(' ').at(-1) as string)
-    .sort(semver.compareBuild)
-    .map((v, ndx, arr) => `${ndx == arr.length - 1 ? '>=' : '^'}${v}`)
-    .join(' || ');
-};
 
 /**
  * Checks a project or package for structural correctness, adherence to standard
@@ -265,7 +145,6 @@ export async function runProjectLinter({
 
     // ? Some checks are performed regardless of context
     if (ctx !== undefined) {
-      const remark = await getRemark();
       const startedAtMonorepoRoot = ctx.context == 'monorepo' && !ctx.package;
 
       /**
@@ -299,7 +178,7 @@ export async function runProjectLinter({
             }
           });
 
-          // ? package.json must also have required fields (if not "private")
+          // ? package.json must also have required fields (if not private)
           if (!json.private) {
             publicPkgJsonRequiredFields.forEach((field) => {
               if (json[field] === undefined) {
@@ -338,6 +217,7 @@ export async function runProjectLinter({
               : json.exports;
 
           const entryPoints = Object.keys(xports);
+          const distPaths = deepFlattenPkgExports(xports);
 
           pkgJsonRequiredExports.forEach((requiredEntryPoint) => {
             if (!entryPoints.includes(requiredEntryPoint)) {
@@ -348,16 +228,14 @@ export async function runProjectLinter({
             }
           });
 
-          const distPaths = entryPoints.flatMap((entryPoint) =>
-            deepFlat(xports[entryPoint], [entryPoint])
-          );
-
-          // ? package.json entry points exist
-          distPaths.forEach(({ paths, fullPath }) => {
+          // ? All package.json entry points either exist or are private (null)
+          distPaths.forEach(({ filesystemPaths, exportsObjectPath }) => {
             tasks.push(
               (async () => {
                 const results = await Promise.all(
-                  paths.map((path) => {
+                  filesystemPaths.map((path) => {
+                    if (path === null) return true;
+                    if (path === undefined) return false;
                     return globAsync(path, {
                       cwd: root,
                       ignore: ['**/node_modules/**']
@@ -366,7 +244,10 @@ export async function runProjectLinter({
                 );
 
                 if (!results.some(Boolean)) {
-                  reportPkg('error', ErrorMessage.PackageJsonBadEntryPoint(fullPath));
+                  reportPkg(
+                    'error',
+                    ErrorMessage.PackageJsonBadEntryPoint(exportsObjectPath)
+                  );
                 }
               })()
             );
@@ -419,7 +300,7 @@ export async function runProjectLinter({
         );
 
         // ? Has required files
-        tasks.push(checkFilesExist(requiredFiles, root, reporterFactory));
+        tasks.push(checkPathsExist(requiredFiles, root, reporterFactory, 'error'));
 
         // ? Has no unpublished fixup/mergeme commits
         tasks.push(
@@ -473,7 +354,7 @@ export async function runProjectLinter({
         // ? Has maintained node version engines.node entries
         if (json.engines) {
           if (json.engines.node) {
-            const expectedNodeEngines = getExpectedNodeEngines();
+            const expectedNodeEngines = getExpectedPkgNodeEngines();
             if (json.engines.node != expectedNodeEngines) {
               reportPkg('warn', ErrorMessage.PackageJsonBadEngine(expectedNodeEngines));
             }
@@ -527,217 +408,24 @@ export async function runProjectLinter({
         }
 
         // ? README.md has standard well-configured topmatter and links
-        const readmePath = `${root}/README.md`;
-        const reportReadme = reporterFactory(readmePath);
-        const readmeAst = await getAst(readmePath, remark);
-
-        if (readmeAst) {
-          const urlParams = getUrlParams(json);
-
-          if (!urlParams) {
-            reportReadme('warn', ErrorMessage.PackageJsonMissingKeysCheckSkipped());
-          }
-
-          const startIndex = readmeAst.children.findIndex(
-            (child) =>
-              child.type == 'html' &&
-              child.value == markdownReadmeStandardTopmatter.comment.start
-          );
-
-          const startChild = readmeAst.children[startIndex] || {};
-          const endChild = readmeAst.children[startIndex + 2] || {};
-          const topmatter = readmeAst.children[startIndex + 1] || {};
-
-          if (
-            startChild.type != 'html' ||
-            startChild.value != markdownReadmeStandardTopmatter.comment.start
-          ) {
-            reportReadme('warn', ErrorMessage.MarkdownInvalidSyntaxOpeningComment());
-          } else if (
-            endChild.type != 'html' ||
-            endChild.value != markdownReadmeStandardTopmatter.comment.end
-          ) {
-            reportReadme('warn', ErrorMessage.MarkdownInvalidSyntaxClosingComment());
-          } else {
-            let handled = false;
-            let wellOrdered = true;
-            const seenBadgeKeys = [] as string[];
-
-            const condition = isCheckingMonorepoRoot
+        tasks.push(
+          checkReadmeFile({
+            readmePath: `${root}/README.md`,
+            pkgJson: json,
+            reporterFactory,
+            condition: isCheckingMonorepoRoot
               ? 'monorepo'
               : isCheckingMonorepoSubRoot
               ? 'subroot'
-              : 'polyrepo';
-
-            if (topmatter.type == 'paragraph') {
-              topmatter.children.forEach((badgeLinkRef) => {
-                if (badgeLinkRef.type == 'linkReference') {
-                  if (
-                    !badgeLinkRef.label ||
-                    badgeLinkRef.children.length != 1 ||
-                    badgeLinkRef.children[0].type != 'imageReference'
-                  ) {
-                    reportReadme(
-                      'warn',
-                      ErrorMessage.MarkdownInvalidSyntaxLinkRef(badgeLinkRef.label)
-                    );
-                  } else {
-                    let topmatterIndex = Infinity;
-                    const badgeImageRef = badgeLinkRef.children[0];
-                    const [badgeKey, badgeSpec] =
-                      Object.entries(markdownReadmeStandardTopmatter.badge).find(
-                        ([, spec], ndx) => {
-                          topmatterIndex = ndx;
-                          return spec.label == badgeImageRef.label;
-                        }
-                      ) || [];
-
-                    handled = true;
-
-                    if (badgeKey && badgeSpec) {
-                      if (badgeSpec.conditions.includes(condition)) {
-                        wellOrdered =
-                          wellOrdered &&
-                          Object.keys(markdownReadmeStandardTopmatter.badge).indexOf(
-                            seenBadgeKeys.at(-1) || ''
-                          ) < topmatterIndex;
-
-                        seenBadgeKeys.push(badgeKey);
-
-                        const linkRefDef = readmeAst.children.find(
-                          (child): child is Definition =>
-                            child.type == 'definition' &&
-                            child.label == badgeLinkRef.label
-                        );
-
-                        const imageRefDef = readmeAst.children.find(
-                          (child): child is Definition =>
-                            child.type == 'definition' &&
-                            child.label == badgeImageRef.label
-                        );
-
-                        if (badgeLinkRef.label != badgeSpec.link.label) {
-                          reportReadme(
-                            'warn',
-                            ErrorMessage.MarkdownBadTopmatterLinkRefLabel(
-                              badgeLinkRef.label,
-                              badgeSpec.link.label
-                            )
-                          );
-                        }
-
-                        if (badgeImageRef.alt != badgeSpec.alt) {
-                          reportReadme(
-                            'warn',
-                            ErrorMessage.MarkdownBadTopmatterImageRefAlt(
-                              badgeImageRef.label,
-                              badgeSpec.alt
-                            )
-                          );
-                        }
-
-                        if (!linkRefDef) {
-                          reportReadme(
-                            'warn',
-                            ErrorMessage.MarkdownBadTopmatterMissingLinkRefDef(
-                              badgeLinkRef.label
-                            )
-                          );
-                        } else if (!imageRefDef) {
-                          reportReadme(
-                            'warn',
-                            ErrorMessage.MarkdownBadTopmatterMissingImageRefDef(
-                              badgeImageRef.label
-                            )
-                          );
-                        } else {
-                          if (urlParams) {
-                            if (imageRefDef.title != badgeSpec.title) {
-                              reportReadme(
-                                'warn',
-                                ErrorMessage.MarkdownBadTopmatterImageRefDefTitle(
-                                  badgeImageRef.label,
-                                  badgeSpec.title
-                                )
-                              );
-                            }
-
-                            if (imageRefDef.url != badgeSpec.url(urlParams)) {
-                              reportReadme(
-                                'warn',
-                                ErrorMessage.MarkdownBadTopmatterImageRefDefUrl(
-                                  badgeImageRef.label,
-                                  badgeSpec.url(urlParams)
-                                )
-                              );
-                            }
-
-                            if (linkRefDef.url != badgeSpec.link.url(urlParams)) {
-                              reportReadme(
-                                'warn',
-                                ErrorMessage.MarkdownBadTopmatterLinkRefDefUrl(
-                                  linkRefDef.label,
-                                  badgeSpec.link.url(urlParams)
-                                )
-                              );
-                            }
-                          }
-                        }
-                      }
-                    } else {
-                      reportReadme(
-                        'warn',
-                        ErrorMessage.MarkdownUnknownTopmatterItem(
-                          badgeImageRef.label || badgeLinkRef.label
-                        )
-                      );
-                    }
-                  }
-                }
-              });
-            }
-
-            if (!handled) {
-              reportReadme('warn', ErrorMessage.MarkdownMissingTopmatter());
-            } else {
-              if (!wellOrdered) {
-                reportReadme('warn', ErrorMessage.MarkdownTopmatterOutOfOrder());
-              }
-
-              Object.entries(markdownReadmeStandardTopmatter.badge)
-                .filter(
-                  ([k, v]) =>
-                    !seenBadgeKeys.includes(k) && v.conditions.includes(condition)
-                )
-                .forEach(([, { label }]) => {
-                  reportReadme('warn', ErrorMessage.MarkdownMissingTopmatterItem(label));
-                });
-            }
-          }
-
-          if (urlParams) {
-            Object.entries(markdownReadmeStandardLinks).forEach(([, linkSpec]) => {
-              const link = readmeAst.children.find((child): child is Definition => {
-                return child.type == 'definition' && child.label == linkSpec.label;
-              });
-
-              if (!link) {
-                reportReadme('warn', ErrorMessage.MarkdownMissingLink(linkSpec.label));
-              } else {
-                const url = linkSpec.url(urlParams);
-                if (link.url != url) {
-                  reportReadme('warn', ErrorMessage.MarkdownBadLink(linkSpec.label, url));
-                }
-              }
-            });
-          }
-        }
+              : 'polyrepo'
+          })
+        );
 
         // ? These checks are performed ONLY IF linting a sub-root
         if (isCheckingMonorepoSubRoot) {
           // ? Has certain tsconfig files
           tasks.push(
-            checkFilesExist(subRootTsconfigFiles, root, reporterFactory, 'warn')
+            checkPathsExist(subRootTsconfigFiles, root, reporterFactory, 'warn')
           );
 
           // ? Has codecov flag config
@@ -751,7 +439,7 @@ export async function runProjectLinter({
           }
 
           // ? Has no unlisted cross-dependencies
-          // TODO
+          tasks.push(checkCrossDependencies({ pkgJson: json, reporterFactory }));
         }
       };
 
@@ -766,7 +454,7 @@ export async function runProjectLinter({
       if (startedAtMonorepoRoot) {
         // ? Has certain tsconfig files
         tasks.push(
-          checkFilesExist(
+          checkPathsExist(
             monorepoRootTsconfigFiles,
             ctx.project.root,
             reporterFactory,
@@ -798,7 +486,7 @@ export async function runProjectLinter({
           reportPkg('warn', ErrorMessage.PackageJsonMissingKey('name'));
         }
 
-        // ? Is "private" (`private` == `true`)
+        // ? Is private
         if (ctx.project.json.private === undefined) {
           reportPkg('warn', ErrorMessage.PackageJsonMissingKey('private'));
         } else if (ctx.project.json.private !== true) {
@@ -843,7 +531,7 @@ export async function runProjectLinter({
       else if (!ctx.package) {
         // ? Has certain tsconfig files
         tasks.push(
-          checkFilesExist(
+          checkPathsExist(
             polyrepoTsconfigFiles,
             ctx.project.root,
             reporterFactory,
@@ -855,203 +543,69 @@ export async function runProjectLinter({
       // ? These additional checks are performed ONLY IF NOT linting a sub-root
       if (!ctx.package) {
         const root = ctx.project.root;
-        const reportPkg = reporterFactory(`${root}/package.json`);
 
-        // ? Has standard files
-        // TODO
+        // ? Has required files
+        tasks.push(checkPathsExist(repoRootRequiredFiles, root, reporterFactory, 'warn'));
 
         // ? Has standard directories
-        // TODO
+        tasks.push(
+          checkPathsExist(
+            repoRootRequiredDirectories,
+            root,
+            reporterFactory,
+            'warn',
+            'MissingDirectory'
+          )
+        );
 
-        // ? Has release.config.js if not "private" (`private` == `true`)
-        // TODO
-
-        // ? SECURITY.md, SUPPORT.md, CONTRIBUTING.md have standard well-configured topmatter and links
-        const securityPath = `${root}/SECURITY.md`;
-        const supportPath = `${root}/.github/SUPPORT.md`;
-        const contribPath = `${root}/CONTRIBUTING.md`;
-        const reportSecurity = reporterFactory(securityPath);
-        const reportSupport = reporterFactory(supportPath);
-        const reportContrib = reporterFactory(contribPath);
-
-        const securityAst = await getAst(securityPath, remark);
-        const supportAst = await getAst(supportPath, remark);
-        const contribAst = await getAst(contribPath, remark);
-
-        if (securityAst) {
-          let handled = false;
-          let wellOrdered = true;
-          let missingKeysCheckSkipped = false;
-          const seenBadgeKeys = [] as string[];
-
-          // TODO (all three)
-          // if (topmatter.type == 'paragraph') {
-          //   topmatter.children.forEach((badgeLinkRef) => {
-          //     if (badgeLinkRef.type == 'linkReference') {
-          //       if (
-          //         !badgeLinkRef.label ||
-          //         badgeLinkRef.children.length != 1 ||
-          //         badgeLinkRef.children[0].type != 'imageReference'
-          //       ) {
-          //         reportSecurity(
-          //           'warn',
-          //           ErrorMessage.MarkdownInvalidSyntaxLinkRef(badgeLinkRef.label)
-          //         );
-          //       } else {
-          //         let topmatterIndex = Infinity;
-          //         const badgeImageRef = badgeLinkRef.children[0];
-          //         const [badgeKey, badgeSpec] =
-          //           Object.entries(markdownReadmeStandardTopmatter.badge).find(
-          //             ([, spec], ndx) => {
-          //               topmatterIndex = ndx;
-          //               return spec.label == badgeImageRef.label;
-          //             }
-          //           ) || [];
-
-          //         handled = true;
-
-          //         if (badgeKey && badgeSpec) {
-          //           if (badgeSpec.conditions.includes(condition)) {
-          //             wellOrdered =
-          //               wellOrdered &&
-          //               Object.keys(markdownReadmeStandardTopmatter.badge).indexOf(
-          //                 seenBadgeKeys.at(-1) || ''
-          //               ) < topmatterIndex;
-
-          //             seenBadgeKeys.push(badgeKey);
-
-          //             const linkRefDef = securityAst.children.find(
-          //               (child): child is Definition =>
-          //                 child.type == 'definition' && child.label == badgeLinkRef.label
-          //             );
-
-          //             const imageRefDef = securityAst.children.find(
-          //               (child): child is Definition =>
-          //                 child.type == 'definition' && child.label == badgeImageRef.label
-          //             );
-
-          //             if (badgeLinkRef.label != badgeSpec.link.label) {
-          //               reportSecurity(
-          //                 'warn',
-          //                 ErrorMessage.MarkdownBadTopmatterLinkRefLabel(
-          //                   badgeLinkRef.label,
-          //                   badgeSpec.link.label
-          //                 )
-          //               );
-          //             }
-
-          //             if (badgeImageRef.alt != badgeSpec.alt) {
-          //               reportSecurity(
-          //                 'warn',
-          //                 ErrorMessage.MarkdownBadTopmatterImageRefAlt(
-          //                   badgeImageRef.label,
-          //                   badgeSpec.alt
-          //                 )
-          //               );
-          //             }
-
-          //             if (!linkRefDef) {
-          //               reportSecurity(
-          //                 'warn',
-          //                 ErrorMessage.MarkdownBadTopmatterMissingLinkRefDef(
-          //                   badgeLinkRef.label
-          //                 )
-          //               );
-          //             } else if (!imageRefDef) {
-          //               reportSecurity(
-          //                 'warn',
-          //                 ErrorMessage.MarkdownBadTopmatterMissingImageRefDef(
-          //                   badgeImageRef.label
-          //                 )
-          //               );
-          //             } else {
-          //               const match =
-          //                 /^https:\/\/github.com\/(?<user>[^/]+)\/(?<repo>[^/]+)/.exec(
-          //                   typeof json.repository == 'string'
-          //                     ? json.repository
-          //                     : json.repository?.url || ''
-          //                 );
-
-          //               if (json.name && match?.groups?.user && match?.groups?.repo) {
-          //                 const urlParams: StandardUrlParams = {
-          //                   pkgName: json.name,
-          //                   repo: match.groups.repo,
-          //                   user: match.groups.user,
-          //                   flag: (json.config?.codecov as Record<string, string>)?.flag
-          //                 };
-
-          //                 if (imageRefDef.title != badgeSpec.title) {
-          //                   reportSecurity(
-          //                     'warn',
-          //                     ErrorMessage.MarkdownBadTopmatterImageRefDefTitle(
-          //                       badgeImageRef.label,
-          //                       badgeSpec.title
-          //                     )
-          //                   );
-          //                 }
-
-          //                 if (imageRefDef.url != badgeSpec.url(urlParams)) {
-          //                   reportSecurity(
-          //                     'warn',
-          //                     ErrorMessage.MarkdownBadTopmatterImageRefDefUrl(
-          //                       badgeImageRef.label,
-          //                       badgeSpec.url(urlParams)
-          //                     )
-          //                   );
-          //                 }
-
-          //                 if (linkRefDef.url != badgeSpec.link.url(urlParams)) {
-          //                   reportSecurity(
-          //                     'warn',
-          //                     ErrorMessage.MarkdownBadTopmatterLinkRefDefUrl(
-          //                       linkRefDef.label,
-          //                       badgeSpec.link.url(urlParams)
-          //                     )
-          //                   );
-          //                 }
-          //               } else if (!missingKeysCheckSkipped) {
-          //                 missingKeysCheckSkipped = true;
-          //                 reportSecurity(
-          //                   'warn',
-          //                   ErrorMessage.PackageJsonMissingKeysCheckSkipped()
-          //                 );
-          //               }
-          //             }
-          //           }
-          //         } else {
-          //           reportSecurity(
-          //             'warn',
-          //             ErrorMessage.MarkdownUnknownTopmatterItem(
-          //               badgeImageRef.label || badgeLinkRef.label
-          //             )
-          //           );
-          //         }
-          //       }
-          //     }
-          //   });
-          // }
-
-          // if (!handled) {
-          //   reportSecurity('warn', ErrorMessage.MarkdownMissingTopmatter());
-          // } else {
-          //   if (!wellOrdered) {
-          //     reportSecurity('warn', ErrorMessage.MarkdownTopmatterOutOfOrder());
-          //   }
-
-          //   Object.entries(markdownReadmeStandardTopmatter.badge)
-          //     .filter(
-          //       ([k, v]) => !seenBadgeKeys.includes(k) && v.conditions.includes(condition)
-          //     )
-          //     .forEach(([, { label }]) => {
-          //       reportSecurity('warn', ErrorMessage.MarkdownMissingTopmatterItem(label));
-          //     });
-          // }
-          // TODO: also do standard links (all three)
+        // ? Has release.config.js if not private
+        if (!ctx.project.json.private) {
+          tasks.push(
+            checkPathsExist(
+              repoRootRequiredDirectories,
+              root,
+              reporterFactory,
+              'warn',
+              'MissingDirectory'
+            )
+          );
         }
 
-        // ? Using the latest SECURITY.md, SUPPORT.md, and CONTRIBUTING.md
-        // ? blueprints
-        // TODO (startsWith)
+        // ? SECURITY.md has standard well-configured topmatter and links and is
+        // ? consistent with blueprints
+        tasks.push(
+          checkStandardMdFile({
+            mdPath: `${root}/SECURITY.md`,
+            pkgJson: ctx.project.json,
+            standardTopmatter: markdownSecurityStandardTopmatter,
+            standardLinks: markdownSecurityStandardLinks,
+            reporterFactory
+          })
+        );
+
+        // ? SUPPORT.md has standard well-configured topmatter and links and is
+        // ? consistent with blueprints
+        tasks.push(
+          checkStandardMdFile({
+            mdPath: `${root}/.github/SUPPORT.md`,
+            pkgJson: ctx.project.json,
+            standardTopmatter: markdownSupportStandardTopmatter,
+            standardLinks: markdownSupportStandardLinks,
+            reporterFactory
+          })
+        );
+
+        // ? CONTRIBUTING.md has standard well-configured topmatter and links
+        // ? and is consistent with blueprints
+        tasks.push(
+          checkStandardMdFile({
+            mdPath: `${root}/CONTRIBUTING.md`,
+            pkgJson: ctx.project.json,
+            standardTopmatter: null,
+            standardLinks: markdownContributingStandardLinks,
+            reporterFactory
+          })
+        );
       }
     }
 
@@ -1121,7 +675,7 @@ export async function runTypescriptLinter({
   return {
     success: tscOutput.code == 0,
     output: tscOutput.all || tscOutput.shortMessage,
-    summary: summarizeOutput(tscOutput.code, lastLine, lastLineMeta)
+    summary: summarizeLinterOutput(tscOutput.code, lastLine, lastLineMeta)
   };
 }
 
@@ -1209,7 +763,7 @@ export async function runEslintLinter({
   return {
     success: eslintOutput.code == 0,
     output: output || eslintOutput.shortMessage,
-    summary: summarizeOutput(eslintOutput.code, lastLine, lastLineMeta)
+    summary: summarizeLinterOutput(eslintOutput.code, lastLine, lastLineMeta)
   };
 }
 
@@ -1286,7 +840,7 @@ export async function runRemarkLinter({
   return {
     success: remarkOutput.code == 0,
     output: remarkOutput.all || remarkOutput.shortMessage,
-    summary: summarizeOutput(remarkOutput.code, lastLine, {
+    summary: summarizeLinterOutput(remarkOutput.code, lastLine, {
       groups: {
         errors: lastLineMeta?.groups?.errors1 || lastLineMeta?.groups?.errors2,
         warnings: lastLineMeta?.groups?.warnings1 || lastLineMeta?.groups?.warnings2

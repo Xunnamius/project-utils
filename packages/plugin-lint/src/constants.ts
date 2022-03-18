@@ -14,6 +14,48 @@ export const pkgJsonLicense = 'MIT' as const;
 export const requiredFiles = ['LICENSE', 'README.md'] as const;
 
 /**
+ * Files that must exist in non sub-roots (relative paths)
+ */
+export const repoRootRequiredFiles = [
+  '.codecov.yml',
+  '.editorconfig',
+  '.eslintrc.js',
+  '.gitattributes',
+  '.gitignore',
+  '.prettierignore',
+  '.spellcheckignore',
+  'babel.config.js',
+  'commitlint.config.js',
+  'conventional.config.js',
+  'jest.config.js',
+  'lint-staged.config.js',
+  'webpack.config.js',
+  'prettier.config.js',
+  'CONTRIBUTING.md',
+  'SECURITY.md',
+  '.github/ISSUE_TEMPLATE/BUG_REPORT.md',
+  '.github/ISSUE_TEMPLATE/config.yml',
+  '.github/ISSUE_TEMPLATE/FEATURE_REQUEST.md',
+  '.github/workflows/README.md',
+  '.github/CODE_OF_CONDUCT.md',
+  '.github/CODEOWNERS',
+  '.github/dependabot.yml',
+  '.github/pipeline.config.js',
+  '.github/PULL_REQUEST_TEMPLATE.md',
+  '.github/SUPPORT.md'
+] as const;
+/**
+ * Directories that must exist in non sub-roots (relative paths)
+ */
+export const repoRootRequiredDirectories = [
+  '.github',
+  '.github/ISSUE_TEMPLATE',
+  '.github/workflows',
+  '.husky',
+  'types'
+] as const;
+
+/**
  * Allowed experimental versions
  */
 export const pkgVersionWhitelist = ['0.0.0-monorepo'] as const;
@@ -24,7 +66,7 @@ export const pkgVersionWhitelist = ['0.0.0-monorepo'] as const;
 export const pkgJsonObsoleteEntryKeys = ['main', 'module', 'types'] as const;
 
 /**
- * Parameters for configuring standard Markdown urls
+ * The parameters used to resolve Markdown urls.
  */
 export type StandardUrlParams = {
   user: string;
@@ -33,11 +75,38 @@ export type StandardUrlParams = {
   flag?: string;
 };
 
+/**
+ * The shape of a standard Markdown topmatter specification.
+ */
+export type StandardTopmatter = {
+  [badgeName: string]: {
+    label: string;
+    alt: string;
+    url: (params: StandardUrlParams) => string;
+    title: string;
+    link: { label: string; url: (params: StandardUrlParams) => string };
+  };
+};
+
+/**
+ * The shape of a standard Markdown link specification.
+ */
+export type StandardLinks = {
+  [linkName: string]: {
+    label: string;
+    url: (params: StandardUrlParams) => string;
+  };
+};
+
 export type Condition = 'monorepo' | 'polyrepo' | 'subroot';
 
 /**
  * Standard Markdown topmatter (i.e. badges, surrounding comments, references)
  * for topmatter badges that appear in `README.md`. Note that order matters!
+ *
+ * Also note that, unlike an actual StandardTopmatter object, this has the
+ * special `badge` and `comment` keys under which the appropriate topmatter is
+ * described.
  */
 export const markdownReadmeStandardTopmatter = {
   comment: {
@@ -131,31 +200,6 @@ export const markdownReadmeStandardTopmatter = {
         label: 'link-license',
         url: ({ user, repo }: StandardUrlParams) =>
           `https://github.com/${user}/${repo}/blob/main/LICENSE`
-      }
-    },
-    treeShaking: {
-      conditions: ['polyrepo', 'subroot'] as Condition[],
-      label: 'badge-tree-shaking',
-      alt: 'Tree shaking support',
-      url: (_: StandardUrlParams) => 'https://xunn.at/badge-tree-shaking',
-      title: 'Is this package optimized for Webpack?',
-      link: {
-        label: 'link-tree-shaking',
-        url: ({ pkgName }: StandardUrlParams) =>
-          `https://npm.anvaka.com/#/view/2d/${pkgName}`
-      }
-    },
-    size: {
-      conditions: ['polyrepo', 'subroot'] as Condition[],
-      label: 'badge-size',
-      alt: 'Compressed package size',
-      url: ({ pkgName }: StandardUrlParams) =>
-        `https://packagephobia.com/badge?p=${pkgName}`,
-      title: 'Is this package optimized for Webpack?',
-      link: {
-        label: 'link-size',
-        url: ({ pkgName }: StandardUrlParams) =>
-          `https://packagephobia.com/result?p=${pkgName}`
       }
     },
     npm: {
@@ -460,6 +504,6 @@ export const pkgJsonRequiredFiles = [
 ] as const;
 
 /**
- * Required "exports" field keys
+ * Required "exports" field keys.
  */
 export const pkgJsonRequiredExports = ['./package', './package.json'] as const;
