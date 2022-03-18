@@ -1,14 +1,14 @@
-# Support \[!\[Average time to resolve an issue]\[badge-issue-resolution]]\[link-issue-resolution] \[!\[Percentage of issues still open]\[badge-issue-percentage]]\[link-issue-percentage]
+# Support [![Average time to resolve an issue][badge-issue-resolution]][link-issue-resolution] [![Percentage of issues still open][badge-issue-percentage]][link-issue-percentage]
 
 Need help? Want to help this project? See below!
 
 ## Reporting an Issue
 
-Before you begin, please \[search open and past issues]\[open-issues] to see if
+Before you begin, please [search open and past issues][open-issues] to see if
 your issue or feature request is already being talked about.
 
-If you find your issue already exists, make sure to \[bump the issue by adding a
-reaction]\[github-blog]. **If you're serious about wanting an issue to get
+If you find your issue already exists, make sure to [bump the issue by adding a
+reaction][github-blog]. **If you're serious about wanting an issue to get
 attention, use a reaction in place of a "+1" or other similar comment.**
 
 If you cannot find an existing issue that describes your bug or feature, then
@@ -26,7 +26,7 @@ reaction emojis being present on issues, PRs, and replies:
 ### Bug Reports and Feature Requests
 
 For the timeliest resolution to bug reports specifically, please make a good
-faith effort to \[follow the template]\[choose-new-issue]. The more quality
+faith effort to [follow the template][choose-new-issue]. The more quality
 information you can provide, the quicker a fix will be found. Additionally:
 
 - Ensure you file one issue per problem or feature request.
@@ -35,7 +35,7 @@ information you can provide, the quicker a fix will be found. Additionally:
   experiencing identical behavior or behavior that stems from the exact same
   problem.
 
-That's it! You are now ready to \[submit a new issue]\[choose-new-issue]! Thank
+That's it! You are now ready to [submit a new issue][choose-new-issue]! Thank
 you for contribution 🎉, your efforts are greatly appreciated! 🙌🏿
 
 #### Closure Policy
@@ -45,4 +45,4 @@ you for contribution 🎉, your efforts are greatly appreciated! 🙌🏿
   guidelines
 - Issues that go for an extended period without activity are subject to closure
 
-\[badge-issue-resolution]:
+[badge-issue-resolution]:
