@@ -26,7 +26,7 @@ reproduce the problem on our side, how can we ever hope to fix it for you ðŸ¤·ðŸ
 If your issue is simple enough that it doesn't warrant a demo repo, include
 instead the simplest most basic possible steps to reproduce your problem; e.g.:
 
-1. Clone the dummy repo I made based on the docs example: https://github.com/...
+1. Clone the dummy repo I made: https://github.com/...
 2. Run `npm install`
 3. Run `npx jest`
 4. See error "xyz" at test 2, which shouldn't be happening
