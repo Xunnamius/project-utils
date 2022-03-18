@@ -9,8 +9,6 @@
 [![Pull requests][badge-pulls]][link-pulls]
 [![Codecov][badge-codecov]][link-codecov]
 [![Source license][badge-license]][link-license]
-[![Tree shaking support][badge-tree-shaking]][link-bundlephobia]
-[![Compressed package size][badge-size]][link-bundlephobia]
 [![NPM version][badge-npm]][link-npm]
 [![Uses Semantic Release!][badge-semantic-release]][link-semantic-release]
 
@@ -112,7 +110,6 @@ These additional checks are performed _except_ when linting a [sub-root][12]:
   - `.codecov.yml`
   - `.editorconfig`
   - `.eslintrc.js`
-  - `.fossa.yml`
   - `.gitattributes`
   - `.gitignore`
   - `.prettierignore`
@@ -167,7 +164,8 @@ These additional checks are performed only if linting a [monorepo root][12]:
 These additional checks are performed only if linting a [sub-root][12]:
 
 - ⛔ † Errors when this package's source imports another package from the same
-  monorepo but does not list said package in `package.json` `dependencies` field
+  monorepo (i.e. a cross-dependency) but does not list said package in
+  `package.json` `dependencies` field
   - [Self-referential imports][13] are excluded from this check
 - ⚠️ Warns when `package.json` is missing the `config.codecov.flag` field
 - ⚠️ Warns when `package.json` contains `devDependencies`
@@ -226,10 +224,6 @@ Help text (use `--help` to get the most up-to-date version):
 
 Further documentation can be found under [`docs/`][docs].
 
-### License
-
-[![FOSSA analysis][badge-fossa]][link-fossa]
-
 ## Contributing and Support
 
 **[New issues][choose-new-issue] and [pull requests][pr-compare] are always
@@ -264,11 +258,6 @@ information.
   https://img.shields.io/npm/l/@projector-js/plugin-lint
   "This package's source license"
 [link-license]: https://github.com/Xunnamius/projector/blob/main/LICENSE
-[badge-fossa]:
-  https://app.fossa.com/api/projects/custom%2B27276%2Fgit%40github.com%3AXunnamius%2Fprojector.git.svg?type=large
-  "Analysis of this package's license obligations"
-[link-fossa]:
-  https://app.fossa.com/projects/custom+27276%2Fgit@github.com:Xunnamius%2Fprojector.git
 [badge-npm]:
   https://api.ergodark.com/badges/npm-pkg-version/@projector-js/plugin-lint
   'Install this package using npm or yarn!'
@@ -277,13 +266,6 @@ information.
   https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
   'This repo practices continuous integration and deployment!'
 [link-semantic-release]: https://github.com/semantic-release/semantic-release
-[badge-size]: https://badgen.net/bundlephobia/minzip/@projector-js/plugin-lint
-[badge-tree-shaking]:
-  https://badgen.net/bundlephobia/tree-shaking/@projector-js/plugin-lint
-  'Is this package optimized for Webpack?'
-[link-bundlephobia]:
-  https://bundlephobia.com/result?p=@projector-js/plugin-lint
-  'Package size (minified and gzipped)'
 [docs]: docs
 [choose-new-issue]: https://github.com/xunnamius/projector/issues/new/choose
 [pr-compare]: https://github.com/xunnamius/projector/compare
