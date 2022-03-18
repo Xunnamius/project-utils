@@ -950,10 +950,6 @@ and other specifics.
 Projector is a tool I made for my own personal use. It was inspired by the pure
 awesomeness that is [Lerna][11], [Rush][84], and [Nx][85].
 
-### License
-
-[![FOSSA analysis][badge-fossa]][link-fossa]
-
 ## Contributing and Support
 
 **[New issues][choose-new-issue] and [pull requests][pr-compare] are always
@@ -977,11 +973,6 @@ information.
   https://img.shields.io/github/issues-pr/xunnamius/projector
   'Open pull requests'
 [link-pulls]: https://github.com/xunnamius/projector/pulls
-[badge-fossa]:
-  https://app.fossa.com/api/projects/custom%2B27276%2Fgit%40github.com%3AXunnamius%2Fprojector.git.svg?type=large
-  "Analysis of this package's license obligations"
-[link-fossa]:
-  https://app.fossa.com/projects/custom+27276%2Fgit@github.com:Xunnamius%2Fprojector.git
 [badge-semantic-release]:
   https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
   'This repo uses semantic-release!'
