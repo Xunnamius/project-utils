@@ -1074,7 +1074,7 @@ describe('::runProjectLinter', () => {
     );
   });
 
-  it('warns when package.json "config.docs.entry" is points to a non-existent path', async () => {
+  it('warns when package.json "config.docs.entry" points to a non-existent path', async () => {
     expect.hasAssertions();
 
     const monorepoRoot = await Linters.runProjectLinter({
@@ -1082,11 +1082,11 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root
+      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[15][1].root
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root
+      rootDir: Fixtures.badPolyrepoDocsEntry.root
     });
 
     expect(monorepoRoot.output).not.toStrictEqual(
@@ -1100,7 +1100,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${Fixtures.badMonorepo.unnamedPkgMapData[15][1].root}/package.json`,
         ErrorMessage.PackageJsonBadConfigDocsEntry()
       )
     );
@@ -1108,7 +1108,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${Fixtures.badPolyrepoDocsEntry.root}/package.json`,
         ErrorMessage.PackageJsonBadConfigDocsEntry()
       )
     );
