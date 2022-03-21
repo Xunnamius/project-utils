@@ -478,8 +478,6 @@ export const nonMonoRootPkgJsonRequiredFields = ['description'] as const;
 
 /**
  * Additionally required fields in monorepo sub-roots and polyrepo roots when
- */
-/**
  * "private" != `true`
  */
 export const publicPkgJsonRequiredFields = [

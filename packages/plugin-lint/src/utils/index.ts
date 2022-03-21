@@ -78,7 +78,8 @@ export function deepFlattenPkgExports(
 }
 
 /**
- * Check if a list of `paths` (relative to `root`) exist.
+ * Check if a list of `paths` (relative to `root`) exist. By default, `type` is
+ * `"error"` and `errorMessage` is `"MissingFile"`.
  */
 export function checkPathsExist(
   paths: readonly string[],

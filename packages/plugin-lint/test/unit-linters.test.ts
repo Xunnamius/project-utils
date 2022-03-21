@@ -179,8 +179,8 @@ describe('::runProjectLinter', () => {
       rootDir: Fixtures.badPolyrepo.root
     });
 
-    // ? Works when linting a monorepo root
     Constants.globalPkgJsonRequiredFields.forEach((field) => {
+      // ? Works when linting a monorepo root
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
@@ -188,10 +188,8 @@ describe('::runProjectLinter', () => {
           ErrorMessage.PackageJsonMissingKey(field)
         )
       );
-    });
 
-    // ? Works when linting a sub-root explicitly
-    Constants.globalPkgJsonRequiredFields.forEach((field) => {
+      // ? Works when linting a sub-root explicitly
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
@@ -199,10 +197,8 @@ describe('::runProjectLinter', () => {
           ErrorMessage.PackageJsonMissingKey(field)
         )
       );
-    });
 
-    // ? Works when linting a polyrepo root
-    Constants.globalPkgJsonRequiredFields.forEach((field) => {
+      // ? Works when linting a polyrepo root
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
@@ -2456,18 +2452,221 @@ describe('::runProjectLinter', () => {
   describe('(non-sub-root-specific checks)', () => {
     it('warns when missing certain tooling/configuration files', async () => {
       expect.hasAssertions();
-      // TODO: monorepo root and polyrepo but does NOT fail on sub-roots
+
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepo.root
+      });
+
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepo.root
+      });
+
+      Constants.repoRootRequiredFiles.forEach((file) => {
+        // ? Works when linting a monorepo root
+        expect(monorepoRoot.output).toStrictEqual(
+          stringContainingErrorMessage(
+            'warn',
+            `${Fixtures.badMonorepo.root}/${file}`,
+            ErrorMessage.MissingFile()
+          )
+        );
+
+        // ? Does not error when linting a sub-root implicitly
+        expect(monorepoRoot.output).not.toStrictEqual(
+          stringContainingErrorMessage(
+            'warn',
+            `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/${file}`,
+            ErrorMessage.MissingFile()
+          )
+        );
+
+        // ? Does not error when linting a sub-root explicitly
+        expect(monorepoSubRoot.output).not.toStrictEqual(
+          stringContainingErrorMessage(
+            'warn',
+            `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/${file}`,
+            ErrorMessage.MissingFile()
+          )
+        );
+
+        // ? Works when linting a polyrepo root
+        expect(polyrepoRoot.output).toStrictEqual(
+          stringContainingErrorMessage(
+            'warn',
+            `${Fixtures.badPolyrepo.root}/${file}`,
+            ErrorMessage.MissingFile()
+          )
+        );
+      });
     });
 
     it('warns when missing GitHub tooling/configuration directories', async () => {
       expect.hasAssertions();
-      // TODO: monorepo root and polyrepo but does NOT fail on sub-roots
-      // TODO: check for MissingDirectory
+
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepo.root
+      });
+
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepo.root
+      });
+
+      Constants.repoRootRequiredDirectories.forEach((dir) => {
+        // ? Works when linting a monorepo root
+        expect(monorepoRoot.output).toStrictEqual(
+          stringContainingErrorMessage(
+            'warn',
+            `${Fixtures.badMonorepo.root}/${dir}`,
+            ErrorMessage.MissingDirectory()
+          )
+        );
+
+        // ? Does not error when linting a sub-root implicitly
+        expect(monorepoRoot.output).not.toStrictEqual(
+          stringContainingErrorMessage(
+            'warn',
+            `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/${dir}`,
+            ErrorMessage.MissingDirectory()
+          )
+        );
+
+        // ? Does not error when linting a sub-root explicitly
+        expect(monorepoSubRoot.output).not.toStrictEqual(
+          stringContainingErrorMessage(
+            'warn',
+            `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/${dir}`,
+            ErrorMessage.MissingDirectory()
+          )
+        );
+
+        // ? Works when linting a polyrepo root
+        expect(polyrepoRoot.output).toStrictEqual(
+          stringContainingErrorMessage(
+            'warn',
+            `${Fixtures.badPolyrepo.root}/${dir}`,
+            ErrorMessage.MissingDirectory()
+          )
+        );
+      });
     });
 
     it('warns when missing release.config.js unless "private" field is set to "true"', async () => {
       expect.hasAssertions();
-      // TODO: monorepo root and polyrepo but does NOT fail on sub-roots
+
+      const monorepoRoot1 = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepo.root
+      });
+
+      const monorepoSubRoot1 = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot1 = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepo.root
+      });
+
+      const actual = Core.readPackageJson;
+      const jsonSpy = jest.spyOn(Core, 'readPackageJson');
+
+      jsonSpy.mockImplementation(({ root }) => {
+        const pkgData = actual({ root });
+
+        pkgData.private = true;
+
+        return pkgData;
+      });
+
+      const monorepoRoot2 = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepo.root
+      });
+
+      const monorepoSubRoot2 = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot2 = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepo.root
+      });
+
+      // ? Works when linting a monorepo root
+      expect(monorepoRoot1.output).toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.badMonorepo.root}/release.config.js`,
+          ErrorMessage.MissingFile()
+        )
+      );
+
+      // ? Does not error when linting a sub-root implicitly
+      expect(monorepoRoot1.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/release.config.js`,
+          ErrorMessage.MissingFile()
+        )
+      );
+
+      // ? Does not error when linting a sub-root explicitly
+      expect(monorepoSubRoot1.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/release.config.js`,
+          ErrorMessage.MissingFile()
+        )
+      );
+
+      // ? Works when linting a polyrepo root
+      expect(polyrepoRoot1.output).toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.badPolyrepo.root}/release.config.js`,
+          ErrorMessage.MissingFile()
+        )
+      );
+
+      // ? Works when linting a monorepo root
+      expect(monorepoRoot2.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.badMonorepo.root}/release.config.js`,
+          ErrorMessage.MissingFile()
+        )
+      );
+
+      // ? Does not error when linting a sub-root implicitly
+      expect(monorepoRoot2.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/release.config.js`,
+          ErrorMessage.MissingFile()
+        )
+      );
+
+      // ? Does not error when linting a sub-root explicitly
+      expect(monorepoSubRoot2.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/release.config.js`,
+          ErrorMessage.MissingFile()
+        )
+      );
+
+      // ? Works when linting a polyrepo root
+      expect(polyrepoRoot2.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.badPolyrepo.root}/release.config.js`,
+          ErrorMessage.MissingFile()
+        )
+      );
     });
 
     it('warns when SECURITY.md or .github/SUPPORT.md are missing topmatter', async () => {
@@ -2492,16 +2691,130 @@ describe('::runProjectLinter', () => {
   });
 
   describe('(monorepo-root-specific checks)', () => {
-    it('warns when package.json "name" field is missing', async () => {
+    it('warns when package.json "name" field is missing even when private', async () => {
       expect.hasAssertions();
+
+      const actual = Core.readPackageJson;
+      const jsonSpy = jest.spyOn(Core, 'readPackageJson');
+
+      jsonSpy.mockImplementation(({ root }) => {
+        const pkgData = actual({ root });
+        pkgData.private = true;
+        return pkgData;
+      });
+
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepo.root
+      });
+
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root
+      });
+
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepo.root
+      });
+
+      // ? Works when linting a monorepo root
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.badMonorepo.root}/package.json`,
+          ErrorMessage.PackageJsonMissingKey('name')
+        )
+      );
+
+      // ? Does not error when linting a sub-root implicitly
+      expect(monorepoRoot.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          ErrorMessage.PackageJsonMissingKey('name')
+        )
+      );
+
+      // ? Does not error when linting a sub-root explicitly
+      expect(monorepoSubRoot.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          ErrorMessage.PackageJsonMissingKey('name')
+        )
+      );
+
+      // ? Does not when linting a polyrepo root
+      expect(polyrepoRoot.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.badPolyrepo.root}/package.json`,
+          ErrorMessage.PackageJsonMissingKey('name')
+        )
+      );
     });
 
     it('warns when package.json is missing "private" field or when "private" is not "true"', async () => {
       expect.hasAssertions();
+
+      const monorepoRoot1 = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepo.root
+      });
+
+      const actual = Core.readPackageJson;
+      const jsonSpy = jest.spyOn(Core, 'readPackageJson');
+
+      jsonSpy.mockImplementation(({ root }) => {
+        const pkgData = actual({ root });
+        pkgData.private = false;
+        return pkgData;
+      });
+
+      const monorepoRoot2 = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepo.root
+      });
+
+      expect(monorepoRoot1.output).toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.badMonorepo.root}/package.json`,
+          ErrorMessage.PackageJsonMissingKey('private')
+        )
+      );
+
+      expect(monorepoRoot2.output).toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.badMonorepo.root}/package.json`,
+          ErrorMessage.PackageJsonMissingValue('private', 'true')
+        )
+      );
     });
 
     it('warns when package.json contains "dependencies" field unless a next.config.js file exists', async () => {
       expect.hasAssertions();
+
+      const badMonorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepo.root
+      });
+
+      const goodMonorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.goodMonorepo.root
+      });
+
+      expect(badMonorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.badMonorepo.root}/package.json`,
+          ErrorMessage.PackageJsonIllegalKey('dependencies')
+        )
+      );
+
+      expect(goodMonorepoRoot.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.goodMonorepo.root}/package.json`,
+          ErrorMessage.PackageJsonIllegalKey('dependencies')
+        )
+      );
     });
 
     it('warns when package.json contains non-whitelisted "version" fields unless a next.config.js file exists', async () => {
@@ -2535,7 +2848,7 @@ describe('::runProjectLinter', () => {
         )
       );
 
-      expect(monorepoRoot2.output).toStrictEqual(
+      expect(monorepoRoot2.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
           `${Fixtures.goodMonorepo.root}/package.json`,

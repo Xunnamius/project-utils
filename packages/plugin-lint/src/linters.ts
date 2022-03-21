@@ -475,7 +475,7 @@ export async function runProjectLinter({
         const reportPkg = reporterFactory(`${ctx.project.root}/package.json`);
         const isNextJsProject = await (async () => {
           try {
-            await access(`${ctx.project.root}/next.config.json`);
+            await access(`${ctx.project.root}/next.config.js`);
             return true;
           } catch {}
           return false;
@@ -561,13 +561,7 @@ export async function runProjectLinter({
         // ? Has release.config.js if not private
         if (!ctx.project.json.private) {
           tasks.push(
-            checkPathsExist(
-              repoRootRequiredDirectories,
-              root,
-              reporterFactory,
-              'warn',
-              'MissingDirectory'
-            )
+            checkPathsExist(['release.config.js'], root, reporterFactory, 'warn')
           );
         }
 
