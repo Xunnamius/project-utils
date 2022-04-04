@@ -61,9 +61,26 @@ export const repoRootRequiredDirectories = [
 export const pkgVersionWhitelist = ['0.0.0-monorepo'] as const;
 
 /**
- * Allowed experimental versions
+ * Outdated "exports" field keys that should not be encountered in any context
  */
 export const pkgJsonObsoleteEntryKeys = ['main', 'module', 'types'] as const;
+
+/**
+ * Outdated "scripts" field keys that should not be encountered in any context.
+ * **Can be regular expressions or stings.**
+ */
+export const pkgJsonObsoleteScripts = [
+  /^test-integration-webpack/,
+  /^test-integration-browser/,
+  'prepublishOnly',
+  'postpublish',
+  'repl',
+  'preinstall',
+  'postinstall',
+  'fixup',
+  'check-types',
+  'publishGuard'
+] as const;
 
 /**
  * The parameters used to resolve Markdown urls.
@@ -460,6 +477,75 @@ export const subRootTsconfigFiles = [
 ] as const;
 
 /**
+ * Script names that must exist in polyrepo roots
+ */
+export const polyrepoScripts = [
+  'build-changelog',
+  'build-dist',
+  'build-docs',
+  'build-stats',
+  'build',
+  'clean',
+  'format',
+  'lint-all',
+  'lint',
+  'list-tasks',
+  'prepare',
+  'test-all',
+  'test-integration',
+  'test-repeat-all',
+  'test-repeat-unit',
+  'test-unit',
+  'test'
+] as const;
+
+/**
+ * Script names that must exist in monorepo roots
+ */
+export const monorepoRootScripts = [
+  'clean',
+  'format',
+  'lint-all',
+  'lint',
+  'list-tasks',
+  'prepare',
+  'test-all',
+  'test-integration',
+  'test-repeat-all',
+  'test-repeat-unit',
+  'test-unit',
+  'test'
+] as const;
+
+/**
+ * Script names that must exist in sub-roots
+ */
+export const subRootScripts = [
+  'build-changelog',
+  'build-dist',
+  'build-docs',
+  'build-stats',
+  'build',
+  'clean',
+  'format',
+  'lint-all',
+  'lint',
+  'list-tasks',
+  'test-all',
+  'test-integration',
+  'test-repeat-all',
+  'test-repeat-unit',
+  'test-unit',
+  'test'
+] as const;
+
+/**
+ * Additional script names that must exist in Next.js project roots (i.e.
+ * projects containing a `next.config.js` script)
+ */
+export const nextjsProjectRootAdditionalScripts = ['dev', 'test-e2e', 'start'] as const;
+
+/**
  * Required fields in all roots and sub-roots
  */
 export const globalPkgJsonRequiredFields = [
@@ -468,7 +554,8 @@ export const globalPkgJsonRequiredFields = [
   'license',
   'author',
   'engines',
-  'type'
+  'type',
+  'scripts'
 ] as const;
 
 /**
