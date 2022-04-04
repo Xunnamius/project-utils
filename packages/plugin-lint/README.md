@@ -89,7 +89,7 @@ ESLint, the following checks are performed:
   script names: `build`, `build-changelog`, `build-dist`, `build-docs`,
   `build-stats`, `clean`, `format`, `lint`, `lint-all`, `list-tasks`, `prepare`,
   `test`, `test-all`, `test-integration`, `test-repeat-all`, `test-repeat-unit`,
-  and `test-unit`
+  or `test-unit`
   - When linting a [monorepo root][12], existence checks for the `build`,
     `build-changelog`, `build-dist`, `build-docs`, and `build-stats` script
     names are skipped
