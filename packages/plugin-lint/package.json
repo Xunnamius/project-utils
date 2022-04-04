@@ -26,6 +26,12 @@
       "node": "./dist/cjs-static/index.js",
       "default": "./dist/esm-shakable/index.mjs"
     },
+    "./utils": {
+      "types": "./dist/types/packages/plugin-lint/src/utils/index.d.ts",
+      "module": "./dist/esm-shakable/utils/index.mjs",
+      "node": "./dist/cjs-static/utils.js",
+      "default": "./dist/esm-shakable/utils/index.mjs"
+    },
     "./package": "./package.json",
     "./package.json": "./package.json"
   },

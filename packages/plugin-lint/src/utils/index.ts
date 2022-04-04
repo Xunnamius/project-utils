@@ -20,6 +20,7 @@ export type ReportType = 'warn' | 'error';
 
 export * from './mdast';
 export * from './babel';
+export * from './link-protection';
 
 /**
  * Filters out empty and debug lines from linter output.
