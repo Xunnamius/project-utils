@@ -84,7 +84,7 @@ ESLint, the following checks are performed:
 - ⚠️ Warns when `package.json` `scripts` field contains a script name equal to
   or starting with any of the following: `test-integration-webpack`,
   `test-integration-browser`, `prepublishOnly`, `postpublish`, `repl`,
-  `preinstall`, `postinstall`, `fixup`, `check-types`, `publishGuard`
+  `preinstall`, `postinstall`, `fixup`, `check-types`, or `publishGuard`
 - ⚠️ Warns when `package.json` `scripts` field is missing one of the following
   script names: `build`, `build-changelog`, `build-dist`, `build-docs`,
   `build-stats`, `clean`, `format`, `lint`, `lint-all`, `list-tasks`, `prepare`,
