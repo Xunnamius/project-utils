@@ -91,12 +91,14 @@ ESLint, the following checks are performed:
   `test`, `test-all`, `test-integration`, `test-repeat-all`, `test-repeat-unit`,
   and `test-unit`
   - When linting a [monorepo root][12], existence checks for the `build`,
-    `build-changelog`, `build-dist`, `build-docs`, and `build-stats` scripts are
-    skipped
-    - Exceptions for the `build*` scripts will most likely be removed in [later
-      versions of Projector][19]
+    `build-changelog`, `build-dist`, `build-docs`, and `build-stats` script
+    names are skipped
+    - Exceptions for the `build*` script names will most likely be removed in
+      [later versions of Projector][19]
   - When linting a [monorepo sub-root][12], existence checks for the `prepare`
-    script is skipped
+    script name is skipped
+  - If a `next.config.js` file exists, existence checks for the following script
+    names are additionally performed: `dev`, `start`, `test-e2e`
 - ⚠️ Warns when depending on a [pinned][8] package version (like `"x.y.z"`
   instead of `"^x.y.z"`)
   - Use [`package-lock.json`][9] + [`npm ci`][10] if you want to guarantee the
