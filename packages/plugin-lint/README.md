@@ -56,6 +56,9 @@ ESLint, the following checks are performed:
     are merged upstream!
 - ⛔ Errors when any `exports` or `typesVersions` entry points in `package.json`
   point to files that do not exist
+- ⛔ ⹋⹋ Errors when any Markdown files contain disabled links
+  - This check can be skipped by setting the environment variable
+    `ALLOW_DISABLED_LINKS=1`
 - ⚠️ Warns when missing `tsconfig.json`, `tsconfig.docs.json`,
   `tsconfig.eslint.json`, `tsconfig.lint.json`, or `tsconfig.types.json` files
   - When linting a [monorepo root][12], only `tsconfig.json`,
@@ -77,6 +80,23 @@ ESLint, the following checks are performed:
   - For example:
     `{ "engines": { "node": "^12.22.0 || ^14.19.0 || ^16.13.0 || >=17.4.0" }}`
     (as of Feb 2022)
+- ⚠️ Warns when `package.json` is missing the `scripts` field
+- ⚠️ Warns when `package.json` `scripts` field contains a script name equal to
+  or starting with any of the following: `test-integration-webpack`,
+  `test-integration-browser`, `prepublishOnly`, `postpublish`, `repl`,
+  `preinstall`, `postinstall`, `fixup`, `check-types`, `publishGuard`
+- ⚠️ Warns when `package.json` `scripts` field is missing one of the following
+  script names: `build`, `build-changelog`, `build-dist`, `build-docs`,
+  `build-stats`, `clean`, `format`, `lint`, `lint-all`, `list-tasks`, `prepare`,
+  `test`, `test-all`, `test-integration`, `test-repeat-all`, `test-repeat-unit`,
+  and `test-unit`
+  - When linting a [monorepo root][12], existence checks for the `build`,
+    `build-changelog`, `build-dist`, `build-docs`, and `build-stats` scripts are
+    skipped
+    - Exceptions for the `build*` scripts will most likely be removed in [later
+      versions of Projector][19]
+  - When linting a [monorepo sub-root][12], existence checks for the `prepare`
+    script is skipped
 - ⚠️ Warns when depending on a [pinned][8] package version (like `"x.y.z"`
   instead of `"^x.y.z"`)
   - Use [`package-lock.json`][9] + [`npm ci`][10] if you want to guarantee the
@@ -175,7 +195,9 @@ These additional checks are performed only if linting a [sub-root][12]:
 > imports are not checked.\
 > ‡ This check is performed using [mdast-util-from-markdown][17] AST static analysis.\
 > ⹋ When in pre-push mode (`--pre-push-only`), only these checks are performed.
-> All others are skipped.
+> All others are skipped.\
+> ⹋⹋ When in link protection mode (`--link-protection-only`), only these checks are
+> performed. All others are skipped.
 
 ## Install
 
@@ -204,21 +226,55 @@ Help text (use `--help` to get the most up-to-date version):
     Check a project for correctness.
 
     Options:
-      --help      Show help                                                [boolean]
-      --version   Show version number                                      [boolean]
-      --silent    Nothing will be printed to stdout or stderr
+      --help                  Show help                                    [boolean]
+      --version               Show version number                          [boolean]
+      --silent                Nothing will be printed to stdout or stderr
                                                           [boolean] [default: false]
-      --rootDir   The project root directory containing ESLint and TypeScript
-                  configuration files, and that relative paths and globs are
-                  resolved against.                [string] [default: process.cwd()]
-      --srcPath   Absolute or relative paths that resolve to one or more directories
-                  containing source files, or to one or more source files
-                  themselves.                           [array] [default: ["./src"]]
-      --mdPath    Absolute paths, relative paths, and/or globs that resolve to one
-                  or more markdown files.
-                  [array] [default: all files ending in .md not under node_modules]
-      --project   An absolute or relative path to a TypeScript tsconfig.json
-                  configuration file.       [string] [default: "tsconfig.lint.json"]
+      --root-dir              The project root directory containing ESLint and
+                              TypeScript configuration files, and that relative
+                              paths and globs are resolved against. This must be an
+                              absolute path.       [string] [default: process.cwd()]
+      --src-path              Absolute or relative paths that resolve to one or more
+                              directories containing source files, or to one or more
+                              source files themselves.  [array] [default: ["./src"]]
+      --md-path               Absolute paths, relative paths, and/or globs that
+                              resolve to one or more markdown files. If a single
+                              argument ending in "/" is given, the default glob
+                              pattern will be appended to this argument instead.
+                                 [array] [default: .md files not under node_modules]
+      --project               An absolute or relative path to, or file name of a
+                              TypeScript tsconfig.json configuration file.
+                                            [string] [default: "tsconfig.lint.json"]
+      --pre-push-only         In pre-push mode, a limited subset of checks are
+                              performed. Pre-push linting mode is meant to be
+                              invoked by the "pre-push" Git hook.
+                                                          [boolean] [default: false]
+      --link-protection-only  In link protection mode, a limited subset of checks
+                              are performed. Link protection linting mode is meant
+                              to be invoked after potentially-destructive operations
+                              on Markdown files (e.g. via Remark) to check for links
+                              that have been accidentally disabled.
+                                                          [boolean] [default: false]
+
+### Importing as a Module
+
+This package can be imported and run directly in source without spawning a child
+process or calling a CLI. This is useful for, for instance, composing multiple
+[yargs][1]-based CLI tools together or invoking the "link protection"
+stand-alone checks.
+
+```typescript
+import { configureProgram } from '@projector/plugin-lint';
+import { checkForPotentiallyDisabledLinks } from '@projector/plugin-lint/utils';
+
+const { program, parse } = configureProgram();
+// `program` is a yargs instance
+// `parse` is an async function that will (eventually) call program.parse(...)
+await parse(['--help']);
+
+// This package also exposes some of its internal utils for external use
+await checkForPotentiallyDisabledLinks();
+```
 
 ## Documentation
 
@@ -293,3 +349,5 @@ information.
 [16]: https://babeljs.io/docs/en/babel-core
 [17]: https://github.com/syntax-tree/mdast-util-from-markdown
 [18]: /packages/plugin-build
+[19]:
+  https://github.com/Xunnamius/projector#dependency-topology-and-script-concurrency
