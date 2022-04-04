@@ -97,8 +97,9 @@ ESLint, the following checks are performed:
       [later versions of Projector][19]
   - When linting a [monorepo sub-root][12], existence checks for the `prepare`
     script name is skipped
-  - If a `next.config.js` file exists, existence checks for the following script
-    names are additionally performed: `dev`, `start`, `test-e2e`
+  - If a `next.config.js` file exists at the [project root][12], existence
+    checks for the following script names are additionally performed: `dev`,
+    `start`, `test-e2e`
 - ⚠️ Warns when depending on a [pinned][8] package version (like `"x.y.z"`
   instead of `"^x.y.z"`)
   - Use [`package-lock.json`][9] + [`npm ci`][10] if you want to guarantee the
@@ -175,7 +176,8 @@ These additional checks are performed only if linting a [monorepo root][12]:
   (`0.0.0-monorepo` is allowed)
   - Since the typical [root package of a monorepo][12] is only encountered in
     development, any dependencies should always be `devDependencies`
-  - If a `next.config.js` file exists, this check is skipped
+  - If a `next.config.js` file exists at the [project root][12], this check is
+    skipped
 - ⚠️ Warns when `package.json` is missing the `private` field or if it is not
   set to `true`
   - Typically, a [monorepo's root package][12] is never published
