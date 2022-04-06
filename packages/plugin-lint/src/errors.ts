@@ -47,6 +47,10 @@ export const ErrorMessage = {
     )}"`,
   PackageJsonObsoleteKey: (key: string) =>
     `The file contains the obsolete "${key}" field`,
+  PackageJsonObsoleteScript: (key: string | RegExp) =>
+    `The file contains an obsolete "script" field key ${
+      key instanceof RegExp ? `matching ${key}` : `"${key}"`
+    }`,
   PackageJsonDuplicateDependency: (dep: string) =>
     `The file includes the "${dep}" dependency in both "dependencies" and "devDependencies"`,
   PackageJsonMissingValue: (key: string, value: string) =>
