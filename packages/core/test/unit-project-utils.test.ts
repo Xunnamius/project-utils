@@ -1,6 +1,6 @@
 import * as Utils from 'pkgverse/core/src/project-utils';
 import * as Errors from 'pkgverse/core/src/errors';
-import { FixtureName, Fixtures } from 'testverse/fixtures';
+import { FixtureName, Fixtures, patchReadPackageJsonData } from 'testverse/fixtures';
 import { toss } from 'toss-expression';
 
 const spies = {} as Record<string, jest.SpyInstance>;
@@ -368,13 +368,26 @@ describe('::getRunContext', () => {
   test('project.root and project.json are correct regardless of cwd', async () => {
     expect.hasAssertions();
 
+    const expectedJsonSpec = patchReadPackageJsonData(
+      {
+        [Fixtures.goodMonorepo.root]: {
+          name: 'good-monorepo-package-json-name',
+          workspaces: ['packages/*']
+        },
+        [Fixtures.goodPolyrepo.root]: {
+          name: 'good-polyrepo-package-json-name'
+        }
+      },
+      { replace: true }
+    );
+
     expect(
       Utils.getRunContext({
         cwd: Fixtures.goodMonorepo.namedPkgMapData[0][1].root
       }).project
     ).toStrictEqual({
       root: Fixtures.goodMonorepo.root,
-      json: Fixtures.goodMonorepo.json,
+      json: expectedJsonSpec[Fixtures.goodMonorepo.root],
       packages: expect.any(Map)
     });
 
@@ -384,7 +397,7 @@ describe('::getRunContext', () => {
       }).project
     ).toStrictEqual({
       root: Fixtures.goodMonorepo.root,
-      json: Fixtures.goodMonorepo.json,
+      json: expectedJsonSpec[Fixtures.goodMonorepo.root],
       packages: expect.any(Map)
     });
 
@@ -394,7 +407,7 @@ describe('::getRunContext', () => {
       }).project
     ).toStrictEqual({
       root: Fixtures.goodMonorepo.root,
-      json: Fixtures.goodMonorepo.json,
+      json: expectedJsonSpec[Fixtures.goodMonorepo.root],
       packages: expect.any(Map)
     });
 
@@ -404,7 +417,7 @@ describe('::getRunContext', () => {
       }).project
     ).toStrictEqual({
       root: Fixtures.goodPolyrepo.root,
-      json: Fixtures.goodPolyrepo.json,
+      json: expectedJsonSpec[Fixtures.goodPolyrepo.root],
       packages: null
     });
 
@@ -414,7 +427,7 @@ describe('::getRunContext', () => {
       }).project
     ).toStrictEqual({
       root: Fixtures.goodPolyrepo.root,
-      json: Fixtures.goodPolyrepo.json,
+      json: expectedJsonSpec[Fixtures.goodPolyrepo.root],
       packages: null
     });
   });
