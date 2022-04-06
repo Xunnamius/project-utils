@@ -165,6 +165,18 @@ describe('::getWorkspacePackages', () => {
     checkForExpectedPackages(result.packages, 'goodMonorepo');
   });
 
+  test('returns expected packages, packages.unnamed, cwdPackage when cwd is monorepo root with the same name as a sub-root', async () => {
+    expect.hasAssertions();
+
+    const result = Utils.getWorkspacePackages({
+      projectRoot: Fixtures.goodMonorepoWeirdSameNames.root,
+      cwd: Fixtures.goodMonorepoWeirdSameNames.root
+    });
+
+    expect(result.cwdPackage).toBeNull();
+    checkForExpectedPackages(result.packages, 'goodMonorepoWeirdSameNames');
+  });
+
   test('returns expected packages, packages.unnamed, cwdPackage when cwd is a sub-root', async () => {
     expect.hasAssertions();
 

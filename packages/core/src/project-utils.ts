@@ -316,8 +316,9 @@ export function getWorkspacePackages(options: {
   const cwdPackageName = readPackageJson({ root: cwdPackageRoot }).name;
 
   const cwdPackage =
-    (cwdPackageName && packages.get(cwdPackageName)) ||
-    packages.unnamed.get(packageRootToId({ root: cwdPackageRoot })) ||
+    (cwdPackageRoot != projectRoot &&
+      ((cwdPackageName && packages.get(cwdPackageName)) ||
+        packages.unnamed.get(packageRootToId({ root: cwdPackageRoot })))) ||
     null;
 
   return { packages, cwdPackage };
