@@ -66,23 +66,26 @@ describe('::readPackageJson', () => {
   test('accepts a package directory and returns parsed package.json contents', async () => {
     expect.hasAssertions();
 
-    expect(Utils.readPackageJson({ root: Fixtures.goodPackageJson.root })).toStrictEqual(
-      Fixtures.goodPackageJson.json
+    const expectedJson = { name: 'good-package-json-name' };
+    jest.spyOn(JSON, 'parse').mockImplementation(() => expectedJson);
+
+    expect(Utils.readPackageJson({ root: Fixtures.goodPolyrepo.root })).toStrictEqual(
+      expectedJson
     );
   });
 
   test('returns cached result on subsequent calls', async () => {
     expect.hasAssertions();
 
-    const expectedJson = Fixtures.goodPackageJson.json;
+    const expectedJson = { name: 'good-package-json-name' };
+    jest.spyOn(JSON, 'parse').mockImplementation(() => expectedJson);
+
     const actualJson = Utils.readPackageJson({
-      root: Fixtures.goodPackageJson.root
+      root: Fixtures.goodPolyrepo.root
     });
 
     expect(actualJson).toStrictEqual(expectedJson);
-    expect(Utils.readPackageJson({ root: Fixtures.goodPackageJson.root })).toBe(
-      actualJson
-    );
+    expect(Utils.readPackageJson({ root: Fixtures.goodPolyrepo.root })).toBe(actualJson);
   });
 
   test('throws a PathIsNotAbsoluteError error if path is not absolute', async () => {
@@ -109,7 +112,7 @@ describe('::readPackageJson', () => {
       .mockImplementation(() => toss(new Error('fake JSON error')));
 
     expect(() =>
-      Utils.readPackageJson({ root: Fixtures.goodPackageJson.root })
+      Utils.readPackageJson({ root: Fixtures.goodPolyrepo.root })
     ).toThrowError(Errors.BadPackageJsonError);
   });
 });
