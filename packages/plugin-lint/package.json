@@ -71,7 +71,7 @@
     }
   },
   "dependencies": {
-    "@babel/core": "^7.17.8",
+    "@babel/core": "^7.17.9",
     "@projector-js/core": "^1.2.0",
     "chalk": "^4.1.2",
     "mdast-util-from-markdown": "^1.2.0",
