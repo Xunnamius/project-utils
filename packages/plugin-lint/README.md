@@ -64,8 +64,8 @@ ESLint, the following checks are performed:
   - This is dangerous enough to warrant an error instead of a warning since
     pre-release versions can differ _radically_ from version to version and
     should therefore be pinned
-  - Pinned pre-release package versions will still trigger a "pinned release"
-    warning, as they should
+  - Pinned pre-release package versions will still trigger a "pinned package
+    version" warning (below), as they should
 - ⚠️ Warns when missing `tsconfig.json`, `tsconfig.docs.json`,
   `tsconfig.eslint.json`, `tsconfig.lint.json`, or `tsconfig.types.json` files
   - When linting a [monorepo root][12], only `tsconfig.json`,
