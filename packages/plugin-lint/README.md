@@ -198,6 +198,10 @@ These additional checks are performed only if linting a [sub-root][12]:
   monorepo (i.e. a cross-dependency) but does not list said package in
   `package.json` `dependencies` field
   - [Self-referential imports][13] are excluded from this check
+- ⛔ † Errors when this package's source imports another package from the same
+  monorepo without using the [`pkgverse` alias][21]
+  - Using this alias, which is transformed into a non-alias import allows jest
+    tests to run using the direct source code rather than the build artifacts
 - ⚠️ Warns when `package.json` is missing the `config.codecov.flag` field
 - ⚠️ Warns when `package.json` contains `devDependencies`
   - These should be located in the project root's `package.json` file instead
@@ -363,3 +367,4 @@ information.
 [19]:
   https://github.com/Xunnamius/projector#dependency-topology-and-script-concurrency
 [20]: https://semver.org/#spec-item-9
+[21]: /packages/core/src/import-aliases.ts
