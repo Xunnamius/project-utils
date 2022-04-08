@@ -1,0 +1,11 @@
+{
+  "name": "good-monorepo-weird-same-names",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "test": "echo 'it works!'"
+  }
+}

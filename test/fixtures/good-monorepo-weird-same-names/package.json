@@ -1,14 +1,11 @@
 {
-  "name": "good-monorepo",
-  "version": "0.0.0-monorepo",
+  "name": "good-monorepo-weird-same-names",
+  "version": "1.0.0",
   "type": "commonjs",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
     "test": "echo 'it works!'"
-  },
-  "dependencies": {
-    "async": "^3.2.3"
   }
 }

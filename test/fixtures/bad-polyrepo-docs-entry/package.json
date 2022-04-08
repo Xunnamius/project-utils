@@ -1,7 +1,0 @@
-{
-  "config": {
-    "docs": {
-      "entry": "./does/not/exist.js"
-    }
-  }
-}

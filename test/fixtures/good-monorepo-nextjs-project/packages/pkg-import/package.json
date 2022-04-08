@@ -1,0 +1,14 @@
+{
+  "name": "@namespaced/importer",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "exports": {
+    ".": "./dist/index.mjs"
+  },
+  "scripts": {
+    "test": "echo 'it works!'"
+  },
+  "dependencies": {
+    "@namespaced/pkg": "^1.0.0"
+  }
+}
