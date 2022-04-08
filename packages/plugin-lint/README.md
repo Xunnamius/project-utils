@@ -168,12 +168,12 @@ These additional checks are performed _except_ when linting a [sub-root][12]:
     check is skipped
 - ⚠️ Warns when missing the `.github`, `.github/ISSUE_TEMPLATE`,
   `.github/workflows`, `.husky`, or `types` directories
-- ⚠️ ‡ Warns when `SECURITY.md` or `.github/SUPPORT.md` do not contain the
-  standard badge topmatter, or when said topmatter is pointing to the wrong
-  package name and/or repo uri
+- ⚠️ ‡ Warns when the contents of `CONTRIBUTING.md`, `SECURITY.md`, or
+  `.github/SUPPORT.md` differ from their latest blueprints
+- ⚠️ ‡ Warns when `SECURITY.md` or `.github/SUPPORT.md` topmatter is pointing to
+  the wrong package name and/or repo uri
 - ⚠️ ‡ Warns when standard links in `CONTRIBUTING.md`, `SECURITY.md`, or
-  `.github/SUPPORT.md` are missing, or are pointing to the wrong package name
-  and/or repo uri
+  `.github/SUPPORT.md` are pointing to the wrong package name and/or repo uri
 
 These additional checks are performed only if linting a [monorepo root][12]:
 
