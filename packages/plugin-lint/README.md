@@ -47,7 +47,7 @@ ESLint, the following checks are performed:
 - ⛔ Errors when `package.json` contains the `files` field but its array is
   missing `"/dist"`, `"/LICENSE"`, `"/package.json"`, or `"/README.md"` elements
 - ⛔ Errors when `package.json` is missing the `exports["./package"]` or
-  `exports["./package.json"]` field paths, or if they point to files that do not
+  `exports["./package.json"]` fields, or if they point to files that do not
   exist
 - ⛔ Errors when missing `LICENSE` or `README.md` files
 - ⛔ ⹋ Errors when an unpublished git commit has "fixup" or "mergeme" in its
@@ -82,8 +82,8 @@ ESLint, the following checks are performed:
   - Once TypeScript [ships support for the `types` export condition][6],
     `typesVersions` will be considered "outdated" as well
 - ⚠️ Warns when `package.json` contains the `engines` field but is missing the
-  `engines.node` field path, or if it is not set to [the maintained and LTS
-  versions of Node.js][7]
+  `engines.node` field, or if it is not set to [the maintained and LTS versions
+  of Node.js][7]
   - For example:
     `{ "engines": { "node": "^12.22.0 || ^14.19.0 || ^16.13.0 || >=17.4.0" }}`
     (as of Feb 2022)
@@ -113,8 +113,9 @@ ESLint, the following checks are performed:
     same dependencies are consistently installed
 - ⚠️ Warns when depending on a [dist-tag package version][11] (like `"next"` or
   `"latest"`) instead of a proper semver (like `"~x.y.z"`)
-- ⚠️ Warns when `package.json` is missing the `config.docs.entry` field path, or
-  if it points to a file that does not exist
+- ⚠️ Warns when `package.json` is missing the
+  `config['plugin-build'].docs.entry` field, or if it points to a file that does
+  not exist
 - ⚠️ ‡ Warns when `README.md` does not contain the standard badge topmatter, or
   when said topmatter is pointing to the wrong package name and/or repo uri
   - When linting a monorepo, what is considered "standard topmatter" changes
