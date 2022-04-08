@@ -80,7 +80,7 @@ export const ErrorMessage = {
   PackageJsonNonPinnedPreReleaseDependency: (dep: string) =>
     `The file dangerously references a non-pinned pre-release version of the "${dep}" dependency`,
   PackageJsonBadConfigDocsEntry: () =>
-    `The file's "config.docs.entry" field references a non-existent file`,
+    `The file's "config['plugin-build'].docs.entry" field references a non-existent file`,
   MarkdownMissingTopmatter: () => `The file has none of the standard link references`,
   MarkdownMissingTopmatterItem: (item: string) =>
     `The file is missing the "${item}" topmatter item`,
