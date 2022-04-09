@@ -1,4 +1,5 @@
 import ObjectPath from 'objectpath';
+import chalk from 'chalk';
 import { makeNamedError } from 'named-app-errors';
 import { markdownReadmeStandardTopmatter } from './constants';
 
@@ -138,5 +139,9 @@ export const ErrorMessage = {
   MarkdownBadLink: (label: string | null | undefined, url: string) =>
     `The file has a misconfigured standard link: "${
       label || '(unlabeled)'
-    }" link reference definition url should be "${url}"`
+    }" link reference definition url should be "${url}"`,
+  MarkdownDisabledLink: (badLine: string) =>
+    `One or more links in the following line may be erroneously disabled: ${chalk.bgBlack(
+      badLine.trim().replace(/(\\\[[^\\]*\]\\)/gi, chalk.red('$1'))
+    )}`
 };
