@@ -462,9 +462,7 @@ export async function runProjectLinter({
           if (!json.config?.['plugin-build']?.codecov?.flag) {
             reportPkg(
               'warn',
-              ErrorMessage.PackageJsonMissingKey(
-                "json.config['plugin-build'].codecov.flag"
-              )
+              ErrorMessage.PackageJsonMissingKey("config['plugin-build'].codecov.flag")
             );
           }
 
@@ -553,7 +551,9 @@ export async function runProjectLinter({
               }
             });
           }
-        } else {
+        }
+
+        if (!isNextJsProject) {
           // ? Has no "dependencies" field
           if (ctx.project.json.dependencies) {
             reportPkg('warn', ErrorMessage.PackageJsonIllegalKey('dependencies'));
