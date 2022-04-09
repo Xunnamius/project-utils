@@ -2,6 +2,7 @@ import ObjectPath from 'objectpath';
 import chalk from 'chalk';
 import { makeNamedError } from 'named-app-errors';
 import { markdownReadmeStandardTopmatter } from './constants';
+import { version as pkgVersion } from 'pkgverse/plugin-lint/package.json';
 
 /**
  * Represents an exception during the CLI runtime.
@@ -143,5 +144,8 @@ export const ErrorMessage = {
   MarkdownDisabledLink: (badLine: string) =>
     `One or more links in the following line may be erroneously disabled: ${chalk.bgBlack(
       badLine.trim().replace(/(\\\[[^\\]*\]\\)/gi, chalk.red('$1'))
-    )}`
+    )}`,
+  MarkdownBlueprintMismatch: (blueprintBasename: string) => {
+    return `The file's contents are not up to date. For reference, see the blueprint at https://raw.githubusercontent.com/Xunnamius/projector/plugin-lint@${pkgVersion}/packages/plugin-lint/src/blueprints/${blueprintBasename}`;
+  }
 };
