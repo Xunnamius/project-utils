@@ -1,3 +1,4 @@
+import { basename } from 'path';
 import { readFile } from 'fs/promises';
 import { ErrorMessage } from '../errors';
 
@@ -74,11 +75,34 @@ export async function checkStandardMdFile({
   standardLinks: StandardLinks;
   reporterFactory: ReporterFactory;
 }) {
-  void mdPath, pkgJson, standardTopmatter, standardLinks, reporterFactory;
-  // TODO: more generic version of the checkReadmeFile function
+  let mdFile: string | undefined;
 
-  // TODO: also check startsWith blueprint file contents; throw an error if
-  // TODO: blueprint doesn't exist
+  try {
+    mdFile = await readFile(mdPath, {
+      encoding: 'utf-8'
+    });
+  } catch (e) {
+    if (!(e as Error).message.includes('ENOENT')) {
+      throw e;
+    }
+  }
+
+  if (mdFile) {
+    const reportMdFile = reporterFactory(mdPath);
+    const blueprintBasename = `${basename(mdPath).toLowerCase()}.txt`;
+    const blueprint = await readFile(`../blueprints/${blueprintBasename}`, {
+      encoding: 'utf-8'
+    });
+
+    if (!mdFile.startsWith(blueprint)) {
+      reportMdFile('warn', ErrorMessage.MarkdownBlueprintMismatch(blueprintBasename));
+
+      const readmeAst = await getAst(mdPath);
+
+      if (readmeAst) {
+      }
+    }
+  }
 }
 
 /**
