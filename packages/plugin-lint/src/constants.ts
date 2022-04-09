@@ -1,7 +1,19 @@
 /**
- * Speedup: only consider the last N lines of output
+ * Glob pattern used by default to select Markdown files.
  */
-export const numLinesToConsider = 5 as const;
+export const defaultMarkdownGlob =
+  '{{,.}*.md,!(node_modules)/**/{,.}*.md,.*/**/{,.}*.md}' as const;
+
+/**
+ * Globs that should always be passed to the `glob` function's `ignore` option.
+ */
+export const globIgnorePatterns = ['**/node_modules/**', '**/.git/**'] as const;
+
+/**
+ * Regular expression that matches lines containing links that may have been
+ * erroneously disabled.
+ */
+export const disabledLinkRegex = /^.*\\\[[^\\]*\]\\.*/gim;
 
 /**
  * Required value of the `license` field in package.json

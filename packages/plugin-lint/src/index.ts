@@ -2,6 +2,7 @@
 import yargs from 'yargs/yargs';
 import { debugFactory } from 'multiverse/debug-extended';
 import { LinterError } from './errors';
+import { defaultMarkdownGlob } from './constants';
 
 import {
   runEslintLinter,
@@ -22,7 +23,6 @@ export type Context = {
 };
 
 const debug = debugFactory(`plugin-lint:parse`);
-const defaultMarkdownGlob = '{{,.}*.md,!(node_modules)/**/{,.}*.md,.*/**/{,.}*.md}';
 
 export * from './errors';
 
