@@ -13,12 +13,13 @@ import {
   PathIsNotAbsoluteError
 } from './errors';
 
-import type { PackageJson } from 'type-fest';
+import type { PackageJsonWithConfig } from 'types/global';
 import type { IOptions as GlobOptions } from 'glob';
 
-const _packageJsonReadCache = new Map<string, PackageJson>();
+const _packageJsonReadCache = new Map<string, PackageJsonWithConfig>();
 
 export type WorkspacePackageName = string;
+export type WorkspacePackageId = string;
 export type AbsolutePath = string;
 
 /**
@@ -33,7 +34,7 @@ export type RootPackage = {
   /**
    * The contents of the root package.json file.
    */
-  json: PackageJson;
+  json: PackageJsonWithConfig;
   /**
    * A mapping of sub-root package names to WorkspacePackage objects in a
    * monorepo or `null` in a polyrepo.
@@ -44,12 +45,22 @@ export type RootPackage = {
          * A mapping of sub-root packages missing the `"name"` field in their
          * respective package.json files to WorkspacePackage objects.
          */
-        unnamed: Map<WorkspacePackageName, WorkspacePackage>;
+        unnamed: Map<WorkspacePackageId, WorkspacePackage>;
         /**
          * An array of "broken" pseudo-sub-root pseudo-package directories that
          * are matching workspace paths but are missing a package.json file.
          */
         broken: AbsolutePath[];
+        /**
+         * An array of *all* non-broken sub-root packages both named and
+         * unnamed. Sugar for the following:
+         *
+         * ```TypeScript
+         * Array.from(packages.values())
+         *      .concat(Array.from(packages.unnamed.values()))
+         * ```
+         */
+        all: WorkspacePackage[];
       })
     | null;
 };
@@ -69,7 +80,7 @@ export type WorkspacePackage = {
   /**
    * The contents of the package's package.json file.
    */
-  json: PackageJson;
+  json: PackageJsonWithConfig;
 };
 
 /**
@@ -158,7 +169,7 @@ export function readPackageJson({
   ensurePathIsAbsolute({ path: root });
 
   if (_packageJsonReadCache.has(root)) {
-    return _packageJsonReadCache.get(root) as PackageJson;
+    return _packageJsonReadCache.get(root) as PackageJsonWithConfig;
   }
 
   const packageJsonPath = `${root}/package.json`;
@@ -171,7 +182,7 @@ export function readPackageJson({
   })();
 
   try {
-    const json = JSON.parse(rawJson) as PackageJson;
+    const json = JSON.parse(rawJson) as PackageJsonWithConfig;
     _packageJsonReadCache.set(root, json);
     return json;
   } catch (e) {
@@ -311,6 +322,15 @@ export function getWorkspacePackages(options: {
       }
     }
   }
+
+  // ? Sugar property for getting *all* of a project's packages
+  Object.defineProperty(packages, 'all', {
+    configurable: false,
+    enumerable: false,
+    get: () => {
+      return Array.from(packages.values()).concat(Array.from(packages.unnamed.values()));
+    }
+  });
 
   const cwdPackageRoot = dirname(findUp('package.json', { cwd }) as string);
   const cwdPackageName = readPackageJson({ root: cwdPackageRoot }).name;

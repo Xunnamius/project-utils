@@ -21,7 +21,12 @@ const checkForExpectedPackages = (
     [string, Utils.WorkspacePackage][]
   >(Fixtures[fixtureName].unnamedPkgMapData);
 
-  expect(res.broken).toStrictEqual(Fixtures[fixtureName].brokenPkgRoots);
+  expect(res.broken).toStrictEqual<string[]>(Fixtures[fixtureName].brokenPkgRoots);
+
+  expect(res.all).toStrictEqual<Utils.WorkspacePackage[]>([
+    ...Fixtures[fixtureName].namedPkgMapData.map((data) => data[1]),
+    ...Fixtures[fixtureName].unnamedPkgMapData.map((data) => data[1])
+  ]);
 };
 
 beforeEach(() => {
