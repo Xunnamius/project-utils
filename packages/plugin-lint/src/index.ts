@@ -98,7 +98,7 @@ export function configureProgram(program?: Program): Context {
 
   return {
     program: finalProgram,
-    parse: async (argv?: string[]) => {
+    parse: async (argv?: readonly string[]) => {
       argv = argv?.length ? argv : process.argv.slice(2);
       debug('saw argv: %O', argv);
 
@@ -121,7 +121,7 @@ export function configureProgram(program?: Program): Context {
       debug('finalArgv.markdownPaths: %O', markdownPaths);
 
       const results = await Promise.all([
-        runProjectLinter({ rootDir }),
+        runProjectLinter({ rootDir, markdownPaths }),
         runTypescriptLinter({ rootDir, tsconfig }),
         runEslintLinter({ rootDir, sourcePaths, tsconfig }),
         runRemarkLinter({ rootDir, markdownPaths })

@@ -1,3 +1,5 @@
+import * as Constants from './constants';
+import * as Utils from './utils';
 import { run } from 'multiverse/run';
 import { CliError, ErrorMessage } from './errors';
 import { getRunContext } from 'pkgverse/core/src/project-utils';
@@ -17,42 +19,7 @@ import {
   DuplicatePackageNameError
 } from 'pkgverse/core/src/errors';
 
-import {
-  globalPkgJsonRequiredFields,
-  monorepoRootTsconfigFiles,
-  nonMonoRootPkgJsonRequiredFields,
-  numLinesToConsider,
-  pkgJsonLicense,
-  pkgJsonObsoleteEntryKeys,
-  pkgJsonRequiredExports,
-  pkgJsonRequiredFiles,
-  pkgVersionWhitelist,
-  polyrepoTsconfigFiles,
-  publicPkgJsonRequiredFields,
-  repoRootRequiredFiles,
-  repoRootRequiredDirectories,
-  requiredFiles,
-  subRootTsconfigFiles,
-  markdownSecurityStandardLinks,
-  markdownSupportStandardLinks,
-  markdownContributingStandardLinks,
-  markdownSupportStandardTopmatter,
-  markdownSecurityStandardTopmatter
-} from './constants';
-
-import {
-  checkPathsExist,
-  deepFlattenPkgExports,
-  getExpectedPkgNodeEngines,
-  ignoreEmptyAndDebugLines,
-  summarizeLinterOutput,
-  checkReadmeFile,
-  checkStandardMdFile,
-  checkCrossDependencies
-} from './utils';
-
-import type { ReporterFactory } from './utils';
-import type { PackageJson } from 'type-fest';
+import type { PackageJsonWithConfig } from 'types/global';
 
 const globAsync = promisify(glob);
 
@@ -68,12 +35,28 @@ type UnifiedReturnType = Promise<{
  * file will also be validated.
  */
 export async function runProjectLinter({
-  rootDir
+  rootDir,
+  markdownPaths,
+  mode = 'complete'
 }: {
   /**
-   * The project or a package root directory. Must contain a package.json file.
+   * The project or package root directory that relative paths and node globs
+   * are resolved against. Must contain a package.json file.
    */
   rootDir: string;
+  /**
+   * Absolute paths, relative paths, and/or globs that resolve to one or more
+   * markdown files. These Markdown files will be checked for
+   */
+  markdownPaths: readonly string[];
+  /**
+   * Determines how the project is linted. By default, the `"complete"` suite of
+   * checks are performed. Alternatively, `runProjectLinter` can be made to run
+   * only `"link-protection"` or `"pre-push"` checks.
+   *
+   * @default "complete"
+   */
+  mode?: 'complete' | 'link-protection' | 'pre-push';
 }): UnifiedReturnType {
   try {
     const outputTree: { [filename: string]: string[] } = {};
@@ -84,7 +67,7 @@ export async function runProjectLinter({
     /**
      * Log an error or a warning
      */
-    const reporterFactory: ReporterFactory = (currentFile) => (type, message) => {
+    const reporterFactory: Utils.ReporterFactory = (currentFile) => (type, message) => {
       type == 'warn' ? warnCount++ : errorCount++;
       if (!outputTree[currentFile]) outputTree[currentFile] = [];
       outputTree[currentFile].push(
@@ -150,29 +133,29 @@ export async function runProjectLinter({
       /**
        * Shared checks across monorepo/polyrepo roots and sub-roots
        */
-      const rootAndSubRootChecks = async ({
+      const rootAndSubRootChecks = ({
         root,
         json,
         isCheckingMonorepoRoot,
         isCheckingMonorepoSubRoot
       }: {
         root: string;
-        json: PackageJson;
+        json: PackageJsonWithConfig;
         isCheckingMonorepoRoot: boolean;
         isCheckingMonorepoSubRoot: boolean;
       }) => {
         const reportPkg = reporterFactory(`${root}/package.json`);
 
         // ? package.json must have required fields
-        globalPkgJsonRequiredFields.forEach((field) => {
+        Constants.globalPkgJsonRequiredFields.forEach((field) => {
           if (json[field] === undefined) {
             reportPkg('error', ErrorMessage.PackageJsonMissingKey(field));
           }
         });
 
-        // ? package.json must have required fields (if not a monorepo root)
         if (!isCheckingMonorepoRoot) {
-          nonMonoRootPkgJsonRequiredFields.forEach((field) => {
+          // ? package.json must have required fields (if not a monorepo root)
+          Constants.nonMonoRootPkgJsonRequiredFields.forEach((field) => {
             if (json[field] === undefined) {
               reportPkg('error', ErrorMessage.PackageJsonMissingKey(field));
             }
@@ -180,7 +163,7 @@ export async function runProjectLinter({
 
           // ? package.json must also have required fields (if not private)
           if (!json.private) {
-            publicPkgJsonRequiredFields.forEach((field) => {
+            Constants.publicPkgJsonRequiredFields.forEach((field) => {
               if (json[field] === undefined) {
                 reportPkg('error', ErrorMessage.PackageJsonMissingKey(field));
               }
@@ -200,7 +183,7 @@ export async function runProjectLinter({
 
         // ? package.json has baseline distributable contents whitelist
         if (json.files) {
-          pkgJsonRequiredFiles.forEach((file) => {
+          Constants.pkgJsonRequiredFiles.forEach((file) => {
             if (!json.files?.includes(file)) {
               reportPkg('error', ErrorMessage.PackageJsonMissingValue('files', file));
             }
@@ -217,9 +200,9 @@ export async function runProjectLinter({
               : json.exports;
 
           const entryPoints = Object.keys(xports);
-          const distPaths = deepFlattenPkgExports(xports);
+          const distPaths = Utils.deepFlattenPkgExports(xports);
 
-          pkgJsonRequiredExports.forEach((requiredEntryPoint) => {
+          Constants.pkgJsonRequiredExports.forEach((requiredEntryPoint) => {
             if (!entryPoints.includes(requiredEntryPoint)) {
               reportPkg(
                 'error',
@@ -238,7 +221,7 @@ export async function runProjectLinter({
                     if (path === undefined) return false;
                     return globAsync(path, {
                       cwd: root,
-                      ignore: ['**/node_modules/**']
+                      ignore: Constants.globIgnorePatterns
                     }).then((files) => !!files.length);
                   })
                 );
@@ -264,7 +247,7 @@ export async function runProjectLinter({
                     paths.map((path) => {
                       return globAsync(path, {
                         cwd: root,
-                        ignore: ['**/node_modules/**']
+                        ignore: Constants.globIgnorePatterns
                       }).then((files) => !!files.length);
                     })
                   );
@@ -287,7 +270,7 @@ export async function runProjectLinter({
             const files = await globAsync('dist/**/*.tsbuildinfo', {
               cwd: root,
               absolute: true,
-              ignore: ['**/node_modules/**']
+              ignore: Constants.globIgnorePatterns
             });
 
             for (const filePath of files) {
@@ -300,7 +283,9 @@ export async function runProjectLinter({
         );
 
         // ? Has required files
-        tasks.push(checkPathsExist(requiredFiles, root, reporterFactory, 'error'));
+        tasks.push(
+          Utils.checkPathsExist(Constants.requiredFiles, root, reporterFactory, 'error')
+        );
 
         // ? Has no unpublished fixup/mergeme commits
         tasks.push(
@@ -332,10 +317,10 @@ export async function runProjectLinter({
         );
 
         // ? Has correct license
-        if (json.license != pkgJsonLicense) {
+        if (json.license != Constants.pkgJsonLicense) {
           reportPkg(
             'warn',
-            ErrorMessage.PackageJsonMissingValue('license', pkgJsonLicense)
+            ErrorMessage.PackageJsonMissingValue('license', Constants.pkgJsonLicense)
           );
         }
 
@@ -345,16 +330,44 @@ export async function runProjectLinter({
         }
 
         // ? Does not use outdated entry fields
-        pkgJsonObsoleteEntryKeys.forEach((outdatedKey) => {
+        Constants.pkgJsonObsoleteEntryKeys.forEach((outdatedKey) => {
           if (json[outdatedKey]) {
             reportPkg('warn', ErrorMessage.PackageJsonObsoleteKey(outdatedKey));
           }
         });
 
+        if (json.scripts) {
+          const scriptKeys = Object.keys(json.scripts);
+
+          // ? Does not use outdated script fields
+          Constants.pkgJsonObsoleteScripts.forEach((outdatedKey) => {
+            const isRegExp = outdatedKey instanceof RegExp;
+            if (
+              scriptKeys.find((key) =>
+                isRegExp ? outdatedKey.test(key) : key == outdatedKey
+              )
+            ) {
+              reportPkg('warn', ErrorMessage.PackageJsonObsoleteScript(outdatedKey));
+            }
+          });
+
+          if (isCheckingMonorepoSubRoot) {
+            // ? package.json in sub-root has expected script fields
+            Constants.subRootScripts.forEach((script) => {
+              if (!scriptKeys.includes(script)) {
+                reportPkg(
+                  'warn',
+                  ErrorMessage.PackageJsonMissingKey(`scripts['${script}']`)
+                );
+              }
+            });
+          }
+        }
+
         // ? Has maintained node version engines.node entries
         if (json.engines) {
           if (json.engines.node) {
-            const expectedNodeEngines = getExpectedPkgNodeEngines();
+            const expectedNodeEngines = Utils.getExpectedPkgNodeEngines();
             if (json.engines.node != expectedNodeEngines) {
               reportPkg('warn', ErrorMessage.PackageJsonBadEngine(expectedNodeEngines));
             }
@@ -363,7 +376,7 @@ export async function runProjectLinter({
           }
         }
 
-        // ? Has no pinned or dist-tag dependencies
+        // ? Has no pinned, dist-tag, or non-pinned pre-release dependencies
         [
           json.dependencies,
           json.devDependencies,
@@ -372,13 +385,21 @@ export async function runProjectLinter({
           json.optionalDependencies
         ].forEach((depsObj) => {
           if (depsObj) {
-            Object.entries(depsObj).forEach(([dep, semvr]) => {
-              if (!Number.isNaN(parseInt(semvr[0]))) {
+            Object.entries(depsObj).forEach(([dep, version]) => {
+              // ? Since dist-tags shouldn't start with numbers anyway...
+              // ? See: https://docs.npmjs.com/adding-dist-tags-to-packages
+              if (!Number.isNaN(parseInt(version[0]))) {
                 reportPkg('warn', ErrorMessage.PackageJsonPinnedDependency(dep));
+              } else if (semver.validRange(version)) {
+                if (semver.prerelease(version.replace(/^\D+/i, ''))) {
+                  reportPkg(
+                    'error',
+                    ErrorMessage.PackageJsonNonPinnedPreReleaseDependency(dep)
+                  );
+                }
               } else if (
-                !semver.valid(semvr) &&
-                !semver.validRange(semvr) &&
-                !semvr.startsWith('https://xunn.at')
+                !semver.valid(version) &&
+                !version.startsWith('https://xunn.at')
               ) {
                 reportPkg('warn', ErrorMessage.PackageJsonNonSemverDependency(dep));
               }
@@ -389,15 +410,19 @@ export async function runProjectLinter({
         // ? Has a docs entry point pointing to an existing file (if not a
         // ? monorepo root)
         if (!isCheckingMonorepoRoot) {
-          const docsEntry = (json?.config?.docs as Record<string, string>)?.entry;
+          const docsEntry = json?.config?.['plugin-build']?.docs?.entry;
+
           if (!docsEntry) {
-            reportPkg('warn', ErrorMessage.PackageJsonMissingKey('config.docs.entry'));
+            reportPkg(
+              'warn',
+              ErrorMessage.PackageJsonMissingKey("config['plugin-build'].docs.entry")
+            );
           } else {
             tasks.push(
               (async () => {
                 const doesExist = await globAsync(docsEntry, {
                   cwd: root,
-                  ignore: ['**/node_modules/**']
+                  ignore: Constants.globIgnorePatterns
                 }).then((files) => !!files.length);
                 if (!doesExist) {
                   reportPkg('warn', ErrorMessage.PackageJsonBadConfigDocsEntry());
@@ -409,7 +434,7 @@ export async function runProjectLinter({
 
         // ? README.md has standard well-configured topmatter and links
         tasks.push(
-          checkReadmeFile({
+          Utils.checkReadmeFile({
             readmePath: `${root}/README.md`,
             pkgJson: json,
             reporterFactory,
@@ -425,12 +450,22 @@ export async function runProjectLinter({
         if (isCheckingMonorepoSubRoot) {
           // ? Has certain tsconfig files
           tasks.push(
-            checkPathsExist(subRootTsconfigFiles, root, reporterFactory, 'warn')
+            Utils.checkPathsExist(
+              Constants.subRootTsconfigFiles,
+              root,
+              reporterFactory,
+              'warn'
+            )
           );
 
           // ? Has codecov flag config
-          if (!(json.config?.codecov as Record<string, string>)?.flag) {
-            reportPkg('warn', ErrorMessage.PackageJsonMissingKey('config.codecov.flag'));
+          if (!json.config?.['plugin-build']?.codecov?.flag) {
+            reportPkg(
+              'warn',
+              ErrorMessage.PackageJsonMissingKey(
+                "json.config['plugin-build'].codecov.flag"
+              )
+            );
           }
 
           // ? Has no "devDependencies"
@@ -439,23 +474,33 @@ export async function runProjectLinter({
           }
 
           // ? Has no unlisted cross-dependencies
-          tasks.push(checkCrossDependencies({ pkgJson: json, reporterFactory }));
+          tasks.push(Utils.checkCrossDependencies({ pkgJson: json, reporterFactory }));
         }
       };
 
-      await rootAndSubRootChecks({
+      rootAndSubRootChecks({
         root: ctx.package?.root || ctx.project.root,
         json: ctx.package?.json || ctx.project.json,
         isCheckingMonorepoRoot: startedAtMonorepoRoot,
         isCheckingMonorepoSubRoot: !!ctx.package
       });
 
+      const isNextJsProject = await (async () => {
+        try {
+          await access(`${ctx.project.root}/next.config.js`);
+          return true;
+        } catch {}
+        return false;
+      })();
+
+      const reportPkg = reporterFactory(`${ctx.project.root}/package.json`);
+
       // ? These additional checks are performed ONLY IF linting a monorepo root
       if (startedAtMonorepoRoot) {
         // ? Has certain tsconfig files
         tasks.push(
-          checkPathsExist(
-            monorepoRootTsconfigFiles,
+          Utils.checkPathsExist(
+            Constants.monorepoRootTsconfigFiles,
             ctx.project.root,
             reporterFactory,
             'warn'
@@ -472,15 +517,6 @@ export async function runProjectLinter({
           );
         }
 
-        const reportPkg = reporterFactory(`${ctx.project.root}/package.json`);
-        const isNextJsProject = await (async () => {
-          try {
-            await access(`${ctx.project.root}/next.config.js`);
-            return true;
-          } catch {}
-          return false;
-        })();
-
         // ? Has a "name" field (the case where !private is already covered)
         if (ctx.project.json.private && !ctx.project.json.name) {
           reportPkg('warn', ErrorMessage.PackageJsonMissingKey('name'));
@@ -493,8 +529,31 @@ export async function runProjectLinter({
           reportPkg('warn', ErrorMessage.PackageJsonMissingValue('private', 'true'));
         }
 
-        // ? ... unless next.config.js exists
-        if (!isNextJsProject) {
+        if (ctx.project.json.scripts) {
+          const scriptKeys = Object.keys(ctx.project.json.scripts);
+
+          // ? package.json has expected script fields
+          Constants.monorepoRootScripts.forEach((script) => {
+            if (!scriptKeys.includes(script)) {
+              reportPkg(
+                'warn',
+                ErrorMessage.PackageJsonMissingKey(`scripts['${script}']`)
+              );
+            }
+          });
+
+          if (isNextJsProject) {
+            // ? package.json has expected script fields
+            Constants.nextjsProjectRootAdditionalScripts.forEach((script) => {
+              if (!scriptKeys.includes(script)) {
+                reportPkg(
+                  'warn',
+                  ErrorMessage.PackageJsonMissingKey(`scripts['${script}']`)
+                );
+              }
+            });
+          }
+        } else {
           // ? Has no "dependencies" field
           if (ctx.project.json.dependencies) {
             reportPkg('warn', ErrorMessage.PackageJsonIllegalKey('dependencies'));
@@ -503,8 +562,8 @@ export async function runProjectLinter({
           // ? Has no non-whitelisted "version" field
           if (
             ctx.project.json.version &&
-            !pkgVersionWhitelist.includes(
-              ctx.project.json.version as typeof pkgVersionWhitelist[number]
+            !Constants.pkgVersionWhitelist.includes(
+              ctx.project.json.version as typeof Constants.pkgVersionWhitelist[number]
             )
           ) {
             reportPkg('warn', ErrorMessage.PackageJsonIllegalKey('version'));
@@ -512,32 +571,52 @@ export async function runProjectLinter({
         }
 
         // ? Recursively lint all sub-roots
-        tasks.push(
-          Promise.all(
-            Array.from(ctx.project.packages.values())
-              .concat(Array.from(ctx.project.packages.unnamed.values()))
-              .map(({ root, json }) => {
-                return rootAndSubRootChecks({
-                  root,
-                  json,
-                  isCheckingMonorepoRoot: false,
-                  isCheckingMonorepoSubRoot: true
-                });
-              })
-          )
-        );
+        ctx.project.packages.all.forEach(({ root, json }) => {
+          rootAndSubRootChecks({
+            root,
+            json,
+            isCheckingMonorepoRoot: false,
+            isCheckingMonorepoSubRoot: true
+          });
+        });
       }
       // ? These additional checks are performed ONLY IF linting a polyrepo root
       else if (!ctx.package) {
         // ? Has certain tsconfig files
         tasks.push(
-          checkPathsExist(
-            polyrepoTsconfigFiles,
+          Utils.checkPathsExist(
+            Constants.polyrepoTsconfigFiles,
             ctx.project.root,
             reporterFactory,
             'warn'
           )
         );
+
+        if (ctx.project.json.scripts) {
+          const scriptKeys = Object.keys(ctx.project.json.scripts);
+
+          // ? package.json has expected script fields
+          Constants.polyrepoScripts.forEach((script) => {
+            if (!scriptKeys.includes(script)) {
+              reportPkg(
+                'warn',
+                ErrorMessage.PackageJsonMissingKey(`scripts['${script}']`)
+              );
+            }
+          });
+
+          if (isNextJsProject) {
+            // ? package.json has expected script fields
+            Constants.nextjsProjectRootAdditionalScripts.forEach((script) => {
+              if (!scriptKeys.includes(script)) {
+                reportPkg(
+                  'warn',
+                  ErrorMessage.PackageJsonMissingKey(`scripts['${script}']`)
+                );
+              }
+            });
+          }
+        }
       }
 
       // ? These additional checks are performed ONLY IF NOT linting a sub-root
@@ -545,12 +624,19 @@ export async function runProjectLinter({
         const root = ctx.project.root;
 
         // ? Has required files
-        tasks.push(checkPathsExist(repoRootRequiredFiles, root, reporterFactory, 'warn'));
+        tasks.push(
+          Utils.checkPathsExist(
+            Constants.repoRootRequiredFiles,
+            root,
+            reporterFactory,
+            'warn'
+          )
+        );
 
         // ? Has standard directories
         tasks.push(
-          checkPathsExist(
-            repoRootRequiredDirectories,
+          Utils.checkPathsExist(
+            Constants.repoRootRequiredDirectories,
             root,
             reporterFactory,
             'warn',
@@ -561,18 +647,18 @@ export async function runProjectLinter({
         // ? Has release.config.js if not private
         if (!ctx.project.json.private) {
           tasks.push(
-            checkPathsExist(['release.config.js'], root, reporterFactory, 'warn')
+            Utils.checkPathsExist(['release.config.js'], root, reporterFactory, 'warn')
           );
         }
 
         // ? SECURITY.md has standard well-configured topmatter and links and is
         // ? consistent with blueprints
         tasks.push(
-          checkStandardMdFile({
+          Utils.checkStandardMdFile({
             mdPath: `${root}/SECURITY.md`,
             pkgJson: ctx.project.json,
-            standardTopmatter: markdownSecurityStandardTopmatter,
-            standardLinks: markdownSecurityStandardLinks,
+            standardTopmatter: Constants.markdownSecurityStandardTopmatter,
+            standardLinks: Constants.markdownSecurityStandardLinks,
             reporterFactory
           })
         );
@@ -580,11 +666,11 @@ export async function runProjectLinter({
         // ? SUPPORT.md has standard well-configured topmatter and links and is
         // ? consistent with blueprints
         tasks.push(
-          checkStandardMdFile({
+          Utils.checkStandardMdFile({
             mdPath: `${root}/.github/SUPPORT.md`,
             pkgJson: ctx.project.json,
-            standardTopmatter: markdownSupportStandardTopmatter,
-            standardLinks: markdownSupportStandardLinks,
+            standardTopmatter: Constants.markdownSupportStandardTopmatter,
+            standardLinks: Constants.markdownSupportStandardLinks,
             reporterFactory
           })
         );
@@ -592,11 +678,23 @@ export async function runProjectLinter({
         // ? CONTRIBUTING.md has standard well-configured topmatter and links
         // ? and is consistent with blueprints
         tasks.push(
-          checkStandardMdFile({
+          Utils.checkStandardMdFile({
             mdPath: `${root}/CONTRIBUTING.md`,
             pkgJson: ctx.project.json,
             standardTopmatter: null,
-            standardLinks: markdownContributingStandardLinks,
+            standardLinks: Constants.markdownContributingStandardLinks,
+            reporterFactory
+          })
+        );
+      }
+
+      // ? Check for potentially disabled links in Markdown files
+      if (markdownPaths) {
+        tasks.push(
+          Utils.checkForPotentiallyDisabledLinks({
+            rootDir,
+            markdownPaths,
+            projectCtx: ctx,
             reporterFactory
           })
         );
@@ -659,8 +757,8 @@ export async function runTypescriptLinter({
     tscOutput.all
       ?.trimEnd()
       .split('\n')
-      .slice(-numLinesToConsider)
-      .filter(ignoreEmptyAndDebugLines)
+      // TODO: filter smarter (fix TypeScript output bug)
+      .filter(Utils.ignoreEmptyAndDebugLines)
       .at(-1) || '';
 
   const lastLineMeta =
@@ -669,7 +767,7 @@ export async function runTypescriptLinter({
   return {
     success: tscOutput.code == 0,
     output: tscOutput.all || tscOutput.shortMessage,
-    summary: summarizeLinterOutput(tscOutput.code, lastLine, lastLineMeta)
+    summary: Utils.summarizeLinterOutput(tscOutput.code, lastLine, lastLineMeta)
   };
 }
 
@@ -712,11 +810,11 @@ export async function runEslintLinter({
 
   let output = eslintOutput.all?.trimEnd() || '';
 
+  // TODO: redo this... does this even work?
   // ? Split this into two so we can save the knowledge from this step for later
   const lastLinesWithContent = stripAnsi(output)
     .split('\n')
-    .slice(-numLinesToConsider)
-    .filter(ignoreEmptyAndDebugLines);
+    .filter(Utils.ignoreEmptyAndDebugLines);
 
   const lastLine =
     lastLinesWithContent.filter((line) => !line.includes('--fix')).at(-1) || '';
@@ -728,14 +826,14 @@ export async function runEslintLinter({
 
   // ? Use slice to get rid of empty newlines surrounded by ansi codes and
   // ? other undesirable lines that should not appear at the start of output
-  for (
-    let numLinesConsidered = 0;
-    numLinesConsidered < numLinesToConsider;
-    numLinesConsidered++
-  ) {
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
     const indexOfNewLine = output.indexOf('\n');
     // ? Stop deleting on the first line that isn't empty or ignorable
-    if (indexOfNewLine < 0 || ignoreEmptyAndDebugLines(output.slice(0, indexOfNewLine))) {
+    if (
+      indexOfNewLine < 0 ||
+      Utils.ignoreEmptyAndDebugLines(output.slice(0, indexOfNewLine))
+    ) {
       break;
     } else {
       // ? DELETE!
@@ -745,19 +843,25 @@ export async function runEslintLinter({
 
   // ? Use slice to get rid of empty newlines surrounded by ansi codes and
   // ? other undesirable lines that should not appear at the end of output
-  for (
-    let numLinesToRemove = -numLinesToConsider + lastLinesWithContent.length;
-    output && numLinesToRemove < 0;
-    numLinesToRemove++
-  ) {
-    // ? DELETE!
-    output = output.slice(0, output.lastIndexOf('\n') + 1);
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const lastIndexOfNewLine = output.lastIndexOf('\n');
+    // ? Stop deleting on the first line that isn't empty or ignorable
+    if (
+      lastIndexOfNewLine < 0 ||
+      Utils.ignoreEmptyAndDebugLines(output.slice(0, lastIndexOfNewLine))
+    ) {
+      break;
+    } else {
+      // ? DELETE!
+      output = output.slice(0, lastIndexOfNewLine + 1);
+    }
   }
 
   return {
     success: eslintOutput.code == 0,
     output: output || eslintOutput.shortMessage,
-    summary: summarizeLinterOutput(eslintOutput.code, lastLine, lastLineMeta)
+    summary: Utils.summarizeLinterOutput(eslintOutput.code, lastLine, lastLineMeta)
   };
 }
 
@@ -822,8 +926,7 @@ export async function runRemarkLinter({
   const lastLine =
     stripAnsi(remarkOutput.all?.trimEnd() || '')
       .split('\n')
-      .slice(-numLinesToConsider)
-      .filter(ignoreEmptyAndDebugLines)
+      .filter(Utils.ignoreEmptyAndDebugLines)
       .at(-1) || '';
 
   const lastLineMeta =
@@ -834,7 +937,7 @@ export async function runRemarkLinter({
   return {
     success: remarkOutput.code == 0,
     output: remarkOutput.all || remarkOutput.shortMessage,
-    summary: summarizeLinterOutput(remarkOutput.code, lastLine, {
+    summary: Utils.summarizeLinterOutput(remarkOutput.code, lastLine, {
       groups: {
         errors: lastLineMeta?.groups?.errors1 || lastLineMeta?.groups?.errors2,
         warnings: lastLineMeta?.groups?.warnings1 || lastLineMeta?.groups?.warnings2
