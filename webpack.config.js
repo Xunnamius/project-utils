@@ -96,77 +96,78 @@ const externals = (options) => [
       // TODO: document: pkgConfigName is the name of the config that is used to
       // TODO: build the pkgverse packages. Also document any transient
       // TODO: expectations/requirements, if any.
-      const { pkgImport, error } = (() => {
-        try {
-          if (!options?.pkgverseConfigName) {
-            throw new PkgverseResolverError(
-              'must call externals function with required option "pkgverseConfigName"'
-            );
-          }
+      let pkgImport = undefined;
+      let error = undefined;
 
-          const config = availableConfigs.find(
-            ({ name }) => name == options.pkgverseConfigName
+      try {
+        if (!options?.pkgverseConfigName) {
+          throw new PkgverseResolverError(
+            'must call externals function with required option "pkgverseConfigName"'
           );
-
-          if (!config?.output?.path || !config?.output?.filename) {
-            throw new PkgverseResolverError(
-              `webpack configuration "${options.pkgverseConfigName}" must define "output.path" and "output.filename" fields`
-            );
-          } else if (!config.output.path.startsWith(`${cwd}/`)) {
-            throw new PkgverseResolverError(
-              `webpack configuration "${options.pkgverseConfigName}" must define a "output.path" field that starts with "${cwd}/"`
-            );
-          }
-
-          const match = request.match(/pkgverse\/([^/]+)(?:\/.+)?\/(.+?)$/);
-          const pkgJsonPath = `${IMPORT_ALIASES.pkgverse}${match[1]}/package.json`;
-          const pkg = require(pkgJsonPath);
-
-          if (!pkg.name || !pkg.exports) {
-            throw new PkgverseResolverError(
-              `${pkgJsonPath} must have "name" and "exports" fields`
-            );
-          } else if (typeof pkg.exports == 'string' || Array.isArray(pkg.exports)) {
-            throw new PkgverseResolverError(
-              `${pkgJsonPath} must have a "exports" field with an object value (saw a string instead)`
-            );
-          }
-
-          const exportPath = `${config.output.path.replace(
-            cwd,
-            '.'
-          )}/${config.output.filename.replace('[name]', match[2])}`;
-
-          const entry = Object.entries(pkg.exports).find(([, exportedPathSpec]) => {
-            const check = (pathSpec) => {
-              if (!pathSpec) {
-                return false;
-              } else if (typeof pathSpec == 'string') {
-                return pathSpec == exportPath;
-              } else {
-                return (
-                  check(pathSpec.node) ||
-                  check(pathSpec.import) ||
-                  check(pathSpec.require) ||
-                  check(pathSpec.default)
-                );
-              }
-            };
-
-            return check(exportedPathSpec);
-          });
-
-          if (!entry) {
-            throw new PkgverseResolverError(
-              `unable to find an entry point mapped to "${exportPath}" under the "exports" field in ${pkgJsonPath}`
-            );
-          }
-
-          return { pkgImport: `${pkg.name}${entry[0].slice(1)}` };
-        } catch (error) {
-          return { error };
         }
-      })();
+
+        const config = availableConfigs.find(
+          ({ name }) => name == options.pkgverseConfigName
+        );
+
+        if (!config?.output?.path || !config?.output?.filename) {
+          throw new PkgverseResolverError(
+            `webpack configuration "${options.pkgverseConfigName}" must define "output.path" and "output.filename" fields`
+          );
+        } else if (!config.output.path.startsWith(`${cwd}/`)) {
+          throw new PkgverseResolverError(
+            `webpack configuration "${options.pkgverseConfigName}" must define a "output.path" field that starts with "${cwd}/"`
+          );
+        }
+
+        const match = request.match(/pkgverse\/([^/]+)(?:\/.+)?\/(.+?)$/);
+        const pkgJsonPath = `${IMPORT_ALIASES.pkgverse}${match[1]}/package.json`;
+        const pkg = require(pkgJsonPath);
+
+        if (!pkg.name || !pkg.exports) {
+          throw new PkgverseResolverError(
+            `${pkgJsonPath} must have "name" and "exports" fields`
+          );
+        } else if (typeof pkg.exports == 'string' || Array.isArray(pkg.exports)) {
+          throw new PkgverseResolverError(
+            `${pkgJsonPath} must have a "exports" field with an object value (saw a string instead)`
+          );
+        }
+
+        const exportPath = `${config.output.path.replace(
+          cwd,
+          '.'
+        )}/${config.output.filename.replace('[name]', match[2])}`;
+
+        const entry = Object.entries(pkg.exports).find(([, exportedPathSpec]) => {
+          const check = (pathSpec) => {
+            if (!pathSpec) {
+              return false;
+            } else if (typeof pathSpec == 'string') {
+              return pathSpec == exportPath;
+            } else {
+              return (
+                check(pathSpec.node) ||
+                check(pathSpec.import) ||
+                check(pathSpec.require) ||
+                check(pathSpec.default)
+              );
+            }
+          };
+
+          return check(exportedPathSpec);
+        });
+
+        if (!entry) {
+          throw new PkgverseResolverError(
+            `unable to find an entry point mapped to "${exportPath}" under the "exports" field in ${pkgJsonPath}`
+          );
+        }
+
+        pkgImport = `${pkg.name}${entry[0].slice(1)}`;
+      } catch (e) {
+        error = e;
+      }
 
       error ? cb(error) : cb(null, `commonjs ${pkgImport}`);
     } else if (options?.externalizeJson !== false && request.endsWith('.json')) {
