@@ -14,7 +14,7 @@ import type {
 } from '../constants';
 
 import type { ReporterFactory } from './index';
-import type { PackageJson } from 'type-fest';
+import type { PackageJsonWithConfig } from 'types/global';
 
 export type Definition = import('mdast-util-from-markdown/lib').Definition;
 
@@ -38,7 +38,7 @@ export async function getAst(path: string) {
  * `null` if the package.json object is missing the `"name"` or `"repository"`
  * fields.
  */
-export function getUrlParams(json: PackageJson): StandardUrlParams | null {
+export function getUrlParams(json: PackageJsonWithConfig): StandardUrlParams | null {
   const match = /^https:\/\/github.com\/(?<user>[^/]+)\/(?<repo>[^/]+)/.exec(
     typeof json.repository == 'string' ? json.repository : json.repository?.url || ''
   );
@@ -51,7 +51,7 @@ export function getUrlParams(json: PackageJson): StandardUrlParams | null {
     pkgName: json.name,
     repo: match.groups.repo,
     user: match.groups.user,
-    flag: (json.config?.codecov as Record<string, string>)?.flag
+    flag: json.config?.['plugin-build']?.codecov?.flag
   };
 }
 
@@ -69,7 +69,7 @@ export async function checkStandardMdFile({
   reporterFactory
 }: {
   mdPath: string;
-  pkgJson: PackageJson;
+  pkgJson: PackageJsonWithConfig;
   standardTopmatter: StandardTopmatter | null;
   standardLinks: StandardLinks;
   reporterFactory: ReporterFactory;
@@ -93,7 +93,7 @@ export async function checkReadmeFile({
   condition
 }: {
   readmePath: string;
-  pkgJson: PackageJson;
+  pkgJson: PackageJsonWithConfig;
   reporterFactory: ReporterFactory;
   condition: Condition;
 }) {

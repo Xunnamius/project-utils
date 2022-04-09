@@ -4,7 +4,7 @@ import semver from 'semver';
 import browserslist from 'browserslist';
 import stripAnsi from 'strip-ansi';
 
-import type { PackageJson } from 'type-fest';
+import type { PackageJsonWithConfig } from 'types/global';
 
 export type ExportsPaths = {
   filesystemPaths: (string | null | undefined)[];
@@ -65,7 +65,7 @@ export function summarizeLinterOutput(
  * Flatten the package.json `"exports"` field into an array of entry points.
  */
 export function deepFlattenPkgExports(
-  pkgExports: PackageJson['exports'],
+  pkgExports: PackageJsonWithConfig['exports'],
   exportsObjectPath: string[] = []
 ): ExportsPaths[] {
   const partial = { exportsObjectPath, isImplicitDefault: !exportsObjectPath.length };

@@ -1,4 +1,4 @@
-import type { PackageJson } from 'type-fest';
+import type { PackageJsonWithConfig } from 'types/global';
 import type { ReporterFactory } from './index';
 
 /**
@@ -11,7 +11,7 @@ export async function checkCrossDependencies({
   pkgJson,
   reporterFactory
 }: {
-  pkgJson: PackageJson;
+  pkgJson: PackageJsonWithConfig;
   reporterFactory: ReporterFactory;
 }) {
   void pkgJson, reporterFactory;

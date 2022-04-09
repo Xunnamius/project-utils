@@ -1,7 +1,7 @@
 import { basename } from 'path';
 import * as Core from 'pkgverse/core/src/project-utils';
 
-import type { PackageJson } from 'type-fest';
+import type { PackageJsonWithConfig } from 'types/global';
 import type { WorkspacePackage } from 'pkgverse/core/src/project-utils';
 
 const actualReadPkgJson = jest.requireActual<
@@ -18,7 +18,7 @@ export function patchReadPackageJsonData(
    * `"*"`, it will be used to patch all `package.json` imports but can be
    * overwritten by a more specific `root` string.
    */
-  spec: { [root: string]: PackageJson },
+  spec: { [root: string]: PackageJsonWithConfig },
   /**
    * Options that influence the patching process.
    */
@@ -54,7 +54,7 @@ export function patchReadPackageJsonData(
  */
 export type Fixture = {
   root: string;
-  json: PackageJson;
+  json: PackageJsonWithConfig;
   namedPkgMapData: PkgMapEntry[];
   unnamedPkgMapData: PkgMapEntry[];
   brokenPkgRoots: string[];
