@@ -169,7 +169,7 @@ These additional checks are performed _except_ when linting a [sub-root][12]:
     check is skipped
 - ⚠️ Warns when missing the `.github`, `.github/ISSUE_TEMPLATE`,
   `.github/workflows`, `.husky`, or `types` directories
-- ⚠️ ‡ Warns when the contents of `CONTRIBUTING.md`, `SECURITY.md`, or
+- ⚠️ Warns when the contents of `CONTRIBUTING.md`, `SECURITY.md`, or
   `.github/SUPPORT.md` differ from their latest blueprints
 - ⚠️ ‡ Warns when `SECURITY.md` or `.github/SUPPORT.md` topmatter is pointing to
   the wrong package name and/or repo uri
