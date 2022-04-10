@@ -47,11 +47,11 @@ you for contribution 🎉, your efforts are greatly appreciated! 🙌🏿
 
 [badge-issue-resolution]:
   https://isitmaintained.com/badge/resolution/Xunnamius/projector.svg
-[link-issue-resolution]:
-  https://isitmaintained.com/project/Xunnamius/projector
   'Average time to resolve an issue'
+[link-issue-resolution]: https://isitmaintained.com/project/Xunnamius/projector
 [badge-issue-percentage]:
   https://isitmaintained.com/badge/open/Xunnamius/projector.svg
+  'Open issues as a percentage of all issues'
 [link-issue-percentage]: https://github.com/Xunnamius/projector/issues?q=
 [open-issues]: https://github.com/Xunnamius/projector/issues?q=
 [github-blog]:

@@ -1,4 +1,4 @@
-# Security ☠️ [![Known Vulnerabilities][badge-security]][link-security]
+# Security ☠️ [![Snyk vulnerability count][badge-security]][link-security]
 
 If the issue is related to a public alert from OWASP/GitHub/Dependabot/CVE/etc
 and [does not already have an open issue][open-issues], feel free to [open a new
@@ -8,7 +8,9 @@ email][security-mailto].
 
 Thank you for your contribution!
 
-[badge-security]: https://snyk.io/test/github/Xunnamius/projector/badge.svg
+[badge-security]:
+  https://snyk.io/test/github/Xunnamius/projector/badge.svg
+  'Number of vulnerabilities (scanned by Snyk)'
 [link-security]: https://snyk.io/test/github/Xunnamius/projector
 [open-issues]: https://github.com/Xunnamius/projector/issues?q=
 [choose-new-issue]: https://github.com/Xunnamius/projector/issues/new/choose
