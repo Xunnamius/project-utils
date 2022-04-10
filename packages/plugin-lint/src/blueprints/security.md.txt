@@ -1,4 +1,4 @@
-# Security ☠️ [![Known Vulnerabilities][badge-security]][link-security]
+# Security ☠️ [![Snyk vulnerability count][badge-security]][link-security]
 
 If the issue is related to a public alert from OWASP/GitHub/Dependabot/CVE/etc
 and [does not already have an open issue][open-issues], feel free to [open a new

@@ -22,6 +22,8 @@ view all possible debugging output, [export
 The ideal contributor flow is as follows:
 
 1.  [Fork][fork] this repository and [clone it locally][how-to-clone].
+    - If there is a custom Docker image available for this project and you're
+      comfortable with Docker, consider using it instead.
 2.  Configure and install dependencies with `npm ci`.
     - You use `npm ci` here instead of `npm install` to [prevent unnecessary
       updates to `package.json` and `package-lock.json`][npm-ci], but if it

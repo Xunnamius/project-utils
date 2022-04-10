@@ -121,7 +121,7 @@ export function configureProgram(program?: Program): Context {
       debug('finalArgv.markdownPaths: %O', markdownPaths);
 
       const results = await Promise.all([
-        runProjectLinter({ rootDir, markdownPaths }),
+        runProjectLinter({ rootDir, linkProtectionMarkdownPaths: markdownPaths }),
         runTypescriptLinter({ rootDir, tsconfig }),
         runEslintLinter({ rootDir, sourcePaths, tsconfig }),
         runRemarkLinter({ rootDir, markdownPaths })

@@ -36,7 +36,7 @@ type UnifiedReturnType = Promise<{
  */
 export async function runProjectLinter({
   rootDir,
-  markdownPaths,
+  linkProtectionMarkdownPaths,
   mode = 'complete'
 }: {
   /**
@@ -46,9 +46,9 @@ export async function runProjectLinter({
   rootDir: string;
   /**
    * Absolute paths, relative paths, and/or globs that resolve to one or more
-   * markdown files. These Markdown files will be checked for
+   * markdown files to check for potentially erroneously disabled links.
    */
-  markdownPaths: readonly string[];
+  linkProtectionMarkdownPaths: readonly string[];
   /**
    * Determines how the project is linted. By default, the `"complete"` suite of
    * checks are performed. Alternatively, `runProjectLinter` can be made to run
@@ -689,11 +689,11 @@ export async function runProjectLinter({
       }
 
       // ? Check for potentially disabled links in Markdown files
-      if (markdownPaths) {
+      if (linkProtectionMarkdownPaths) {
         tasks.push(
           Utils.checkForPotentiallyDisabledLinks({
             rootDir,
-            markdownPaths,
+            markdownPaths: linkProtectionMarkdownPaths,
             projectCtx: ctx,
             reporterFactory
           })

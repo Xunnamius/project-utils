@@ -17,6 +17,7 @@ import type {
 import type { ReporterFactory } from './index';
 import type { PackageJsonWithConfig } from 'types/global';
 
+export type Root = import('mdast-util-from-markdown/lib').Root;
 export type Definition = import('mdast-util-from-markdown/lib').Definition;
 
 /**
@@ -57,6 +58,37 @@ export function getUrlParams(json: PackageJsonWithConfig): StandardUrlParams | n
 }
 
 /**
+ * A helper function that checks a Markdown AST for the existence of a set of
+ * "standard" link references.
+ */
+export function checkStandardLinks({
+  mdAst,
+  urlParams,
+  standardLinks,
+  reporter
+}: {
+  mdAst: Root;
+  urlParams: StandardUrlParams;
+  standardLinks: StandardLinks;
+  reporter: ReturnType<ReporterFactory>;
+}) {
+  Object.entries(standardLinks).forEach(([, linkSpec]) => {
+    const link = mdAst.children.find((child): child is Definition => {
+      return child.type == 'definition' && child.label == linkSpec.label;
+    });
+
+    if (!link) {
+      reporter('warn', ErrorMessage.MarkdownMissingLink(linkSpec.label));
+    } else {
+      const url = linkSpec.url(urlParams);
+      if (link.url != url) {
+        reporter('warn', ErrorMessage.MarkdownBadLink(linkSpec.label, url));
+      }
+    }
+  });
+}
+
+/**
  * Checks a standard markdown file (i.e. SECURITY.md, CONTRIBUTING.md,
  * .github/SUPPORT.md) at `mdPath` for correctness given the current
  * package.json data (`pkgJson`), reporting any issues via the `reporterFactory`
@@ -87,19 +119,84 @@ export async function checkStandardMdFile({
     }
   }
 
-  if (mdFile) {
+  if (mdFile !== undefined) {
     const reportMdFile = reporterFactory(mdPath);
     const blueprintBasename = `${basename(mdPath).toLowerCase()}.txt`;
-    const blueprint = await readFile(`../blueprints/${blueprintBasename}`, {
+    const blueprint = await readFile(`${__dirname}/../blueprints/${blueprintBasename}`, {
       encoding: 'utf-8'
     });
 
     if (!mdFile.startsWith(blueprint)) {
       reportMdFile('warn', ErrorMessage.MarkdownBlueprintMismatch(blueprintBasename));
+    }
 
-      const readmeAst = await getAst(mdPath);
+    const mdAst = await getAst(mdPath);
 
-      if (readmeAst) {
+    if (mdAst) {
+      const urlParams = getUrlParams(pkgJson);
+
+      if (!urlParams) {
+        reportMdFile('warn', ErrorMessage.PackageJsonMissingKeysCheckSkipped());
+      } else {
+        if (standardTopmatter) {
+          Object.entries(standardTopmatter).forEach(([, badgeSpec]) => {
+            const badge = mdAst.children.find((child): child is Definition => {
+              return child.type == 'definition' && child.label == badgeSpec.label;
+            });
+
+            if (!badge) {
+              reportMdFile(
+                'warn',
+                ErrorMessage.MarkdownBadTopmatterMissingImageRefDef(badgeSpec.label)
+              );
+            } else {
+              const badgeUrl = badgeSpec.url(urlParams);
+
+              if (badge.url != badgeUrl) {
+                reportMdFile(
+                  'warn',
+                  ErrorMessage.MarkdownBadTopmatterImageRefDefUrl(badge.label, badgeUrl)
+                );
+              }
+
+              if (badge.title != badgeSpec.title) {
+                reportMdFile(
+                  'warn',
+                  ErrorMessage.MarkdownBadTopmatterImageRefDefTitle(
+                    badge.label,
+                    badgeSpec.title
+                  )
+                );
+              }
+            }
+
+            const link = mdAst.children.find((child): child is Definition => {
+              return child.type == 'definition' && child.label == badgeSpec.link.label;
+            });
+
+            if (!link) {
+              reportMdFile(
+                'warn',
+                ErrorMessage.MarkdownBadTopmatterMissingLinkRefDef(badgeSpec.link.label)
+              );
+            } else {
+              const linkUrl = badgeSpec.link.url(urlParams);
+              if (link.url != linkUrl) {
+                reportMdFile(
+                  'warn',
+                  ErrorMessage.MarkdownBadTopmatterLinkRefDefUrl(link.label, linkUrl)
+                );
+              }
+            }
+          });
+        }
+
+        checkStandardLinks({
+          mdAst,
+          urlParams,
+          standardLinks,
+          reporter: reportMdFile
+        });
       }
     }
   }
@@ -300,19 +397,11 @@ export async function checkReadmeFile({
     }
 
     if (urlParams) {
-      Object.entries(markdownReadmeStandardLinks).forEach(([, linkSpec]) => {
-        const link = readmeAst.children.find((child): child is Definition => {
-          return child.type == 'definition' && child.label == linkSpec.label;
-        });
-
-        if (!link) {
-          reportReadme('warn', ErrorMessage.MarkdownMissingLink(linkSpec.label));
-        } else {
-          const url = linkSpec.url(urlParams);
-          if (link.url != url) {
-            reportReadme('warn', ErrorMessage.MarkdownBadLink(linkSpec.label, url));
-          }
-        }
+      checkStandardLinks({
+        mdAst: readmeAst,
+        urlParams,
+        standardLinks: markdownReadmeStandardLinks,
+        reporter: reportReadme
       });
     }
   }

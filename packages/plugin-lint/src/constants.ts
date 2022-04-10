@@ -110,7 +110,6 @@ export type StandardUrlParams = {
 export type StandardTopmatter = {
   [badgeName: string]: {
     label: string;
-    alt: string;
     url: (params: StandardUrlParams) => string;
     title: string;
     link: { label: string; url: (params: StandardUrlParams) => string };
@@ -133,9 +132,9 @@ export type Condition = 'monorepo' | 'polyrepo' | 'subroot';
  * Standard Markdown topmatter (i.e. badges, surrounding comments, references)
  * for topmatter badges that appear in `README.md`. Note that order matters!
  *
- * Also note that, unlike an actual StandardTopmatter object, this has the
+ * Also note that, unlike an actual `StandardTopmatter` object, this has the
  * special `badge` and `comment` keys under which the appropriate topmatter is
- * described.
+ * described (each of which include the special `alt` and `condition` keys).
  */
 export const markdownReadmeStandardTopmatter = {
   comment: {
@@ -266,18 +265,17 @@ export const markdownReadmeStandardTopmatter = {
  */
 export const markdownSecurityStandardTopmatter = {
   vulnerabilities: {
-    label: 'badge-vulnerabilities',
-    alt: 'Snyk vulnerability check',
+    label: 'badge-security',
     url: ({ user, repo }: StandardUrlParams) =>
       `https://snyk.io/test/github/${user}/${repo}/badge.svg`,
     title: 'Number of vulnerabilities (scanned by Snyk)',
     link: {
-      label: 'link-vulnerabilities',
+      label: 'link-security',
       url: ({ user, repo }: StandardUrlParams) =>
         `https://snyk.io/test/github/${user}/${repo}`
     }
   }
-};
+} as const;
 
 /**
  * Standard Markdown topmatter (i.e. badges, surrounding comments, references)
@@ -286,7 +284,6 @@ export const markdownSecurityStandardTopmatter = {
 export const markdownSupportStandardTopmatter = {
   issuesResolution: {
     label: 'badge-issue-resolution',
-    alt: 'Average issue resolution time',
     url: ({ user, repo }: StandardUrlParams) =>
       `https://isitmaintained.com/badge/resolution/${user}/${repo}.svg`,
     title: 'Average time to resolve an issue',
@@ -298,7 +295,6 @@ export const markdownSupportStandardTopmatter = {
   },
   issuesPercentage: {
     label: 'badge-issue-percentage',
-    alt: 'Open issues percentage',
     url: ({ user, repo }: StandardUrlParams) =>
       `https://isitmaintained.com/badge/open/${user}/${repo}.svg`,
     title: 'Open issues as a percentage of all issues',
@@ -308,7 +304,7 @@ export const markdownSupportStandardTopmatter = {
         `https://github.com/${user}/${repo}/issues?q=`
     }
   }
-};
+} as const;
 
 /**
  * Standard Markdown reference links (i.e. links and references) for README.md
@@ -330,7 +326,7 @@ export const markdownReadmeStandardLinks = {
     url: (_: StandardUrlParams) => 'CONTRIBUTING.md'
   },
   support: { label: 'support', url: (_: StandardUrlParams) => '.github/SUPPORT.md' }
-};
+} as const;
 
 /**
  * Standard Markdown reference links (i.e. links and references) for SECURITY.md
@@ -351,7 +347,7 @@ export const markdownSecurityStandardLinks = {
     url: (_: StandardUrlParams) =>
       'mailto:security@ergodark.com?subject=ALERT%3A%20SECURITY%20INCIDENT%3A%20%28five%20word%20summary%29'
   }
-};
+} as const;
 
 /**
  * Standard Markdown reference links (i.e. links and references) for SUPPORT.md
@@ -372,7 +368,7 @@ export const markdownSupportStandardLinks = {
     url: ({ user, repo }: StandardUrlParams) =>
       `https://github.com/${user}/${repo}/issues/new/choose`
   }
-};
+} as const;
 
 /**
  * Standard Markdown reference links (i.e. links and references) for CONTRIBUTING.md
@@ -457,7 +453,7 @@ export const markdownContributingStandardLinks = {
     url: (_: StandardUrlParams) =>
       'https://github.com/rails/rails/pull/13771#issuecomment-32746700'
   }
-};
+} as const;
 
 /**
  * TSConfig files that must exist in polyrepo roots (relative paths)
