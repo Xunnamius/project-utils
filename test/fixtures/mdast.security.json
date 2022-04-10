@@ -9,16 +9,8 @@
           "type": "text",
           "value": "Security ☠️ ",
           "position": {
-            "start": {
-              "line": 1,
-              "column": 3,
-              "offset": 2
-            },
-            "end": {
-              "line": 1,
-              "column": 15,
-              "offset": 14
-            }
+            "start": { "line": 1, "column": 3, "offset": 2 },
+            "end": { "line": 1, "column": 15, "offset": 14 }
           }
         },
         {
@@ -26,52 +18,28 @@
           "children": [
             {
               "type": "imageReference",
-              "alt": "Known Vulnerabilities",
+              "alt": "Snyk vulnerability count",
               "position": {
-                "start": {
-                  "line": 1,
-                  "column": 16,
-                  "offset": 15
-                },
-                "end": {
-                  "line": 1,
-                  "column": 43,
-                  "offset": 42
-                }
+                "start": { "line": 1, "column": 16, "offset": 15 },
+                "end": { "line": 1, "column": 59, "offset": 58 }
               },
-              "label": "2",
-              "identifier": "2",
+              "label": "badge-security",
+              "identifier": "badge-security",
               "referenceType": "full"
             }
           ],
           "position": {
-            "start": {
-              "line": 1,
-              "column": 15,
-              "offset": 14
-            },
-            "end": {
-              "line": 1,
-              "column": 47,
-              "offset": 46
-            }
+            "start": { "line": 1, "column": 15, "offset": 14 },
+            "end": { "line": 1, "column": 75, "offset": 74 }
           },
-          "label": "1",
-          "identifier": "1",
+          "label": "link-security",
+          "identifier": "link-security",
           "referenceType": "full"
         }
       ],
       "position": {
-        "start": {
-          "line": 1,
-          "column": 1,
-          "offset": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 47,
-          "offset": 46
-        }
+        "start": { "line": 1, "column": 1, "offset": 0 },
+        "end": { "line": 1, "column": 75, "offset": 74 }
       }
     },
     {
@@ -81,16 +49,8 @@
           "type": "text",
           "value": "If the issue is related to a public alert from OWASP/GitHub/Dependabot/CVE/etc\nand ",
           "position": {
-            "start": {
-              "line": 3,
-              "column": 1,
-              "offset": 48
-            },
-            "end": {
-              "line": 4,
-              "column": 5,
-              "offset": 131
-            }
+            "start": { "line": 3, "column": 1, "offset": 76 },
+            "end": { "line": 4, "column": 5, "offset": 159 }
           }
         },
         {
@@ -100,49 +60,25 @@
               "type": "text",
               "value": "does not already have an open issue",
               "position": {
-                "start": {
-                  "line": 4,
-                  "column": 6,
-                  "offset": 132
-                },
-                "end": {
-                  "line": 4,
-                  "column": 41,
-                  "offset": 167
-                }
+                "start": { "line": 4, "column": 6, "offset": 160 },
+                "end": { "line": 4, "column": 41, "offset": 195 }
               }
             }
           ],
           "position": {
-            "start": {
-              "line": 4,
-              "column": 5,
-              "offset": 131
-            },
-            "end": {
-              "line": 4,
-              "column": 45,
-              "offset": 171
-            }
+            "start": { "line": 4, "column": 5, "offset": 159 },
+            "end": { "line": 4, "column": 55, "offset": 209 }
           },
-          "label": "3",
-          "identifier": "3",
+          "label": "open-issues",
+          "identifier": "open-issues",
           "referenceType": "full"
         },
         {
           "type": "text",
           "value": ", feel free to ",
           "position": {
-            "start": {
-              "line": 4,
-              "column": 45,
-              "offset": 171
-            },
-            "end": {
-              "line": 4,
-              "column": 60,
-              "offset": 186
-            }
+            "start": { "line": 4, "column": 55, "offset": 209 },
+            "end": { "line": 4, "column": 70, "offset": 224 }
           }
         },
         {
@@ -152,49 +88,25 @@
               "type": "text",
               "value": "open a new\nissue",
               "position": {
-                "start": {
-                  "line": 4,
-                  "column": 61,
-                  "offset": 187
-                },
-                "end": {
-                  "line": 5,
-                  "column": 6,
-                  "offset": 203
-                }
+                "start": { "line": 4, "column": 71, "offset": 225 },
+                "end": { "line": 5, "column": 6, "offset": 241 }
               }
             }
           ],
           "position": {
-            "start": {
-              "line": 4,
-              "column": 60,
-              "offset": 186
-            },
-            "end": {
-              "line": 5,
-              "column": 10,
-              "offset": 207
-            }
+            "start": { "line": 4, "column": 70, "offset": 224 },
+            "end": { "line": 5, "column": 25, "offset": 260 }
           },
-          "label": "4",
-          "identifier": "4",
+          "label": "choose-new-issue",
+          "identifier": "choose-new-issue",
           "referenceType": "full"
         },
         {
           "type": "text",
-          "value": ". Otherwise, please report any security vulnerability, other\nsecurity-related incident, or otherwise sensitive subject to us ",
+          "value": ". Otherwise, please report any security vulnerability,\nother security-related incident, or otherwise sensitive subject to us ",
           "position": {
-            "start": {
-              "line": 5,
-              "column": 10,
-              "offset": 207
-            },
-            "end": {
-              "line": 6,
-              "column": 65,
-              "offset": 332
-            }
+            "start": { "line": 5, "column": 25, "offset": 260 },
+            "end": { "line": 6, "column": 71, "offset": 385 }
           }
         },
         {
@@ -202,65 +114,33 @@
           "children": [
             {
               "type": "text",
-              "value": "via email",
+              "value": "via\nemail",
               "position": {
-                "start": {
-                  "line": 6,
-                  "column": 66,
-                  "offset": 333
-                },
-                "end": {
-                  "line": 6,
-                  "column": 75,
-                  "offset": 342
-                }
+                "start": { "line": 6, "column": 72, "offset": 386 },
+                "end": { "line": 7, "column": 6, "offset": 395 }
               }
             }
           ],
           "position": {
-            "start": {
-              "line": 6,
-              "column": 65,
-              "offset": 332
-            },
-            "end": {
-              "line": 6,
-              "column": 79,
-              "offset": 346
-            }
+            "start": { "line": 6, "column": 71, "offset": 385 },
+            "end": { "line": 7, "column": 24, "offset": 413 }
           },
-          "label": "5",
-          "identifier": "5",
+          "label": "security-mailto",
+          "identifier": "security-mailto",
           "referenceType": "full"
         },
         {
           "type": "text",
           "value": ".",
           "position": {
-            "start": {
-              "line": 6,
-              "column": 79,
-              "offset": 346
-            },
-            "end": {
-              "line": 6,
-              "column": 80,
-              "offset": 347
-            }
+            "start": { "line": 7, "column": 24, "offset": 413 },
+            "end": { "line": 7, "column": 25, "offset": 414 }
           }
         }
       ],
       "position": {
-        "start": {
-          "line": 3,
-          "column": 1,
-          "offset": 48
-        },
-        "end": {
-          "line": 6,
-          "column": 80,
-          "offset": 347
-        }
+        "start": { "line": 3, "column": 1, "offset": 76 },
+        "end": { "line": 7, "column": 25, "offset": 414 }
       }
     },
     {
@@ -270,138 +150,74 @@
           "type": "text",
           "value": "Thank you for your contribution!",
           "position": {
-            "start": {
-              "line": 8,
-              "column": 1,
-              "offset": 349
-            },
-            "end": {
-              "line": 8,
-              "column": 33,
-              "offset": 381
-            }
+            "start": { "line": 9, "column": 1, "offset": 416 },
+            "end": { "line": 9, "column": 33, "offset": 448 }
           }
         }
       ],
       "position": {
-        "start": {
-          "line": 8,
-          "column": 1,
-          "offset": 349
-        },
-        "end": {
-          "line": 8,
-          "column": 33,
-          "offset": 381
-        }
+        "start": { "line": 9, "column": 1, "offset": 416 },
+        "end": { "line": 9, "column": 33, "offset": 448 }
       }
     },
     {
       "type": "definition",
-      "identifier": "1",
-      "label": "1",
+      "identifier": "badge-security",
+      "label": "badge-security",
+      "title": "Bad title",
+      "url": "https://snyk.io/test/github/Xunnamius/projector/badge.svg",
+      "position": {
+        "start": { "line": 11, "column": 1, "offset": 450 },
+        "end": { "line": 13, "column": 48, "offset": 575 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "link-security",
+      "label": "link-security",
       "title": null,
       "url": "https://snyk.io/test/github/Xunnamius/projector",
       "position": {
-        "start": {
-          "line": 10,
-          "column": 1,
-          "offset": 383
-        },
-        "end": {
-          "line": 10,
-          "column": 53,
-          "offset": 435
-        }
+        "start": { "line": 14, "column": 1, "offset": 576 },
+        "end": { "line": 14, "column": 65, "offset": 640 }
       }
     },
     {
       "type": "definition",
-      "identifier": "2",
-      "label": "2",
-      "title": null,
-      "url": "https://snyk.io/test/github/Xunnamius/projector/badge.svg",
-      "position": {
-        "start": {
-          "line": 11,
-          "column": 1,
-          "offset": 436
-        },
-        "end": {
-          "line": 11,
-          "column": 63,
-          "offset": 498
-        }
-      }
-    },
-    {
-      "type": "definition",
-      "identifier": "3",
-      "label": "3",
+      "identifier": "open-issues",
+      "label": "open-issues",
       "title": null,
       "url": "https://github.com/Xunnamius/projector/issues?q=",
       "position": {
-        "start": {
-          "line": 12,
-          "column": 1,
-          "offset": 499
-        },
-        "end": {
-          "line": 12,
-          "column": 54,
-          "offset": 552
-        }
+        "start": { "line": 15, "column": 1, "offset": 641 },
+        "end": { "line": 15, "column": 64, "offset": 704 }
       }
     },
     {
       "type": "definition",
-      "identifier": "4",
-      "label": "4",
+      "identifier": "choose-new-issue",
+      "label": "choose-new-issue",
       "title": null,
       "url": "https://github.com/Xunnamius/projector/issues/new/choose",
       "position": {
-        "start": {
-          "line": 13,
-          "column": 1,
-          "offset": 553
-        },
-        "end": {
-          "line": 13,
-          "column": 62,
-          "offset": 614
-        }
+        "start": { "line": 16, "column": 1, "offset": 705 },
+        "end": { "line": 16, "column": 77, "offset": 781 }
       }
     },
     {
       "type": "definition",
-      "identifier": "5",
-      "label": "5",
+      "identifier": "security-mailto",
+      "label": "security-mailto",
       "title": null,
-      "url": "mailto:security@ergodark.com?subject=ALERT%3A%20SECURITY%20INCIDENT%3A%20%28five%20word%20summary%29",
+      "url": "mailto:old-email@ergodark.com?subject=ALERT%3A%20SECURITY%20INCIDENT%3A%20%28five%20word%20summary%29",
       "position": {
-        "start": {
-          "line": 14,
-          "column": 1,
-          "offset": 615
-        },
-        "end": {
-          "line": 15,
-          "column": 103,
-          "offset": 722
-        }
+        "start": { "line": 17, "column": 1, "offset": 782 },
+        "end": { "line": 18, "column": 103, "offset": 903 }
       }
     }
   ],
   "position": {
-    "start": {
-      "line": 1,
-      "column": 1,
-      "offset": 0
-    },
-    "end": {
-      "line": 16,
-      "column": 1,
-      "offset": 723
-    }
+    "start": { "line": 1, "column": 1, "offset": 0 },
+    "end": { "line": 19, "column": 1, "offset": 904 }
   }
 }

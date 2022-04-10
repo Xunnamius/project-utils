@@ -9,16 +9,8 @@
           "type": "text",
           "value": "Support ",
           "position": {
-            "start": {
-              "line": 1,
-              "column": 3,
-              "offset": 2
-            },
-            "end": {
-              "line": 1,
-              "column": 11,
-              "offset": 10
-            }
+            "start": { "line": 1, "column": 3, "offset": 2 },
+            "end": { "line": 1, "column": 11, "offset": 10 }
           }
         },
         {
@@ -28,52 +20,28 @@
               "type": "imageReference",
               "alt": "Average time to resolve an issue",
               "position": {
-                "start": {
-                  "line": 1,
-                  "column": 12,
-                  "offset": 11
-                },
-                "end": {
-                  "line": 1,
-                  "column": 50,
-                  "offset": 49
-                }
+                "start": { "line": 1, "column": 12, "offset": 11 },
+                "end": { "line": 1, "column": 71, "offset": 70 }
               },
-              "label": "1",
-              "identifier": "1",
+              "label": "badge-issue-resolution",
+              "identifier": "badge-issue-resolution",
               "referenceType": "full"
             }
           ],
           "position": {
-            "start": {
-              "line": 1,
-              "column": 11,
-              "offset": 10
-            },
-            "end": {
-              "line": 1,
-              "column": 54,
-              "offset": 53
-            }
+            "start": { "line": 1, "column": 11, "offset": 10 },
+            "end": { "line": 1, "column": 95, "offset": 94 }
           },
-          "label": "2",
-          "identifier": "2",
+          "label": "link-issue-resolution",
+          "identifier": "link-issue-resolution",
           "referenceType": "full"
         },
         {
           "type": "text",
           "value": " ",
           "position": {
-            "start": {
-              "line": 1,
-              "column": 54,
-              "offset": 53
-            },
-            "end": {
-              "line": 1,
-              "column": 55,
-              "offset": 54
-            }
+            "start": { "line": 1, "column": 95, "offset": 94 },
+            "end": { "line": 1, "column": 96, "offset": 95 }
           }
         },
         {
@@ -83,50 +51,26 @@
               "type": "imageReference",
               "alt": "Percentage of issues still open",
               "position": {
-                "start": {
-                  "line": 1,
-                  "column": 56,
-                  "offset": 55
-                },
-                "end": {
-                  "line": 1,
-                  "column": 93,
-                  "offset": 92
-                }
+                "start": { "line": 1, "column": 97, "offset": 96 },
+                "end": { "line": 1, "column": 155, "offset": 154 }
               },
-              "label": "3",
-              "identifier": "3",
+              "label": "badge-issue-percentage",
+              "identifier": "badge-issue-percentage",
               "referenceType": "full"
             }
           ],
           "position": {
-            "start": {
-              "line": 1,
-              "column": 55,
-              "offset": 54
-            },
-            "end": {
-              "line": 1,
-              "column": 97,
-              "offset": 96
-            }
+            "start": { "line": 1, "column": 96, "offset": 95 },
+            "end": { "line": 1, "column": 179, "offset": 178 }
           },
-          "label": "2",
-          "identifier": "2",
+          "label": "link-issue-percentage",
+          "identifier": "link-issue-percentage",
           "referenceType": "full"
         }
       ],
       "position": {
-        "start": {
-          "line": 1,
-          "column": 1,
-          "offset": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 97,
-          "offset": 96
-        }
+        "start": { "line": 1, "column": 1, "offset": 0 },
+        "end": { "line": 1, "column": 179, "offset": 178 }
       }
     },
     {
@@ -136,157 +80,763 @@
           "type": "text",
           "value": "Need help? Want to help this project? See below!",
           "position": {
-            "start": {
-              "line": 3,
-              "column": 1,
-              "offset": 98
-            },
-            "end": {
-              "line": 3,
-              "column": 49,
-              "offset": 146
-            }
+            "start": { "line": 3, "column": 1, "offset": 180 },
+            "end": { "line": 3, "column": 49, "offset": 228 }
           }
         }
       ],
       "position": {
-        "start": {
-          "line": 3,
-          "column": 1,
-          "offset": 98
-        },
-        "end": {
-          "line": 3,
-          "column": 49,
-          "offset": 146
+        "start": { "line": 3, "column": 1, "offset": 180 },
+        "end": { "line": 3, "column": 49, "offset": 228 }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 2,
+      "children": [
+        {
+          "type": "text",
+          "value": "Reporting an Issue",
+          "position": {
+            "start": { "line": 5, "column": 4, "offset": 233 },
+            "end": { "line": 5, "column": 22, "offset": 251 }
+          }
         }
+      ],
+      "position": {
+        "start": { "line": 5, "column": 1, "offset": 230 },
+        "end": { "line": 5, "column": 22, "offset": 251 }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Before you begin, please ",
+          "position": {
+            "start": { "line": 7, "column": 1, "offset": 253 },
+            "end": { "line": 7, "column": 26, "offset": 278 }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "text",
+              "value": "search open and past issues",
+              "position": {
+                "start": { "line": 7, "column": 27, "offset": 279 },
+                "end": { "line": 7, "column": 54, "offset": 306 }
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 7, "column": 26, "offset": 278 },
+            "end": { "line": 7, "column": 68, "offset": 320 }
+          },
+          "label": "open-issues",
+          "identifier": "open-issues",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": " to see if\nyour issue or feature request is already being talked about.",
+          "position": {
+            "start": { "line": 7, "column": 68, "offset": 320 },
+            "end": { "line": 8, "column": 61, "offset": 391 }
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 7, "column": 1, "offset": 253 },
+        "end": { "line": 8, "column": 61, "offset": 391 }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "If you find your issue already exists, make sure to ",
+          "position": {
+            "start": { "line": 10, "column": 1, "offset": 393 },
+            "end": { "line": 10, "column": 53, "offset": 445 }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "text",
+              "value": "bump the issue by adding a\nreaction",
+              "position": {
+                "start": { "line": 10, "column": 54, "offset": 446 },
+                "end": { "line": 11, "column": 9, "offset": 481 }
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 10, "column": 53, "offset": 445 },
+            "end": { "line": 11, "column": 23, "offset": 495 }
+          },
+          "label": "github-blog",
+          "identifier": "github-blog",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": ". ",
+          "position": {
+            "start": { "line": 11, "column": 23, "offset": 495 },
+            "end": { "line": 11, "column": 25, "offset": 497 }
+          }
+        },
+        {
+          "type": "strong",
+          "children": [
+            {
+              "type": "text",
+              "value": "If you're serious about wanting an issue to get\nattention, use a reaction in place of a \"+1\" or other similar comment.",
+              "position": {
+                "start": { "line": 11, "column": 27, "offset": 499 },
+                "end": { "line": 12, "column": 71, "offset": 617 }
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 11, "column": 25, "offset": 497 },
+            "end": { "line": 12, "column": 73, "offset": 619 }
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 10, "column": 1, "offset": 393 },
+        "end": { "line": 12, "column": 73, "offset": 619 }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "If you cannot find an existing issue that describes your bug or feature, then\nyou're clear to create your issue using the guidelines below.",
+          "position": {
+            "start": { "line": 14, "column": 1, "offset": 621 },
+            "end": { "line": 15, "column": 62, "offset": 760 }
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 14, "column": 1, "offset": 621 },
+        "end": { "line": 15, "column": 62, "offset": 760 }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Standard Reactions",
+          "position": {
+            "start": { "line": 17, "column": 5, "offset": 766 },
+            "end": { "line": 17, "column": 23, "offset": 784 }
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 17, "column": 1, "offset": 762 },
+        "end": { "line": 17, "column": 23, "offset": 784 }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Analysis of issue popularity (by tooling or otherwise) relies on the following\nreaction emojis being present on issues, PRs, and replies:",
+          "position": {
+            "start": { "line": 19, "column": 1, "offset": 786 },
+            "end": { "line": 20, "column": 59, "offset": 923 }
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 19, "column": 1, "offset": 786 },
+        "end": { "line": 20, "column": 59, "offset": 923 }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "inlineCode",
+          "value": ":+1:",
+          "position": {
+            "start": { "line": 22, "column": 1, "offset": 925 },
+            "end": { "line": 22, "column": 7, "offset": 931 }
+          }
+        },
+        {
+          "type": "text",
+          "value": " 👍🏿👍🏾👍🏽👍🏼👍🏻👍 — up vote (AKA: ",
+          "position": {
+            "start": { "line": 22, "column": 7, "offset": 931 },
+            "end": { "line": 22, "column": 47, "offset": 971 }
+          }
+        },
+        {
+          "type": "emphasis",
+          "children": [
+            {
+              "type": "text",
+              "value": "approve",
+              "position": {
+                "start": { "line": 22, "column": 48, "offset": 972 },
+                "end": { "line": 22, "column": 55, "offset": 979 }
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 22, "column": 47, "offset": 971 },
+            "end": { "line": 22, "column": 56, "offset": 980 }
+          }
+        },
+        {
+          "type": "text",
+          "value": ", ",
+          "position": {
+            "start": { "line": 22, "column": 56, "offset": 980 },
+            "end": { "line": 22, "column": 58, "offset": 982 }
+          }
+        },
+        {
+          "type": "emphasis",
+          "children": [
+            {
+              "type": "text",
+              "value": "like",
+              "position": {
+                "start": { "line": 22, "column": 59, "offset": 983 },
+                "end": { "line": 22, "column": 63, "offset": 987 }
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 22, "column": 58, "offset": 982 },
+            "end": { "line": 22, "column": 64, "offset": 988 }
+          }
+        },
+        {
+          "type": "text",
+          "value": ", ",
+          "position": {
+            "start": { "line": 22, "column": 64, "offset": 988 },
+            "end": { "line": 22, "column": 66, "offset": 990 }
+          }
+        },
+        {
+          "type": "emphasis",
+          "children": [
+            {
+              "type": "text",
+              "value": "+1",
+              "position": {
+                "start": { "line": 22, "column": 67, "offset": 991 },
+                "end": { "line": 22, "column": 69, "offset": 993 }
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 22, "column": 66, "offset": 990 },
+            "end": { "line": 22, "column": 70, "offset": 994 }
+          }
+        },
+        {
+          "type": "text",
+          "value": ")",
+          "position": {
+            "start": { "line": 22, "column": 70, "offset": 994 },
+            "end": { "line": 22, "column": 71, "offset": 995 }
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 22, "column": 1, "offset": 925 },
+        "end": { "line": 22, "column": 71, "offset": 995 }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "inlineCode",
+          "value": ":-1:",
+          "position": {
+            "start": { "line": 24, "column": 1, "offset": 997 },
+            "end": { "line": 24, "column": 7, "offset": 1003 }
+          }
+        },
+        {
+          "type": "text",
+          "value": " 👎🏿👎🏾👎🏽👎🏼👎🏻👎 — down vote (AKA: ",
+          "position": {
+            "start": { "line": 24, "column": 7, "offset": 1003 },
+            "end": { "line": 24, "column": 49, "offset": 1045 }
+          }
+        },
+        {
+          "type": "emphasis",
+          "children": [
+            {
+              "type": "text",
+              "value": "disapprove",
+              "position": {
+                "start": { "line": 24, "column": 50, "offset": 1046 },
+                "end": { "line": 24, "column": 60, "offset": 1056 }
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 24, "column": 49, "offset": 1045 },
+            "end": { "line": 24, "column": 61, "offset": 1057 }
+          }
+        },
+        {
+          "type": "text",
+          "value": ", ",
+          "position": {
+            "start": { "line": 24, "column": 61, "offset": 1057 },
+            "end": { "line": 24, "column": 63, "offset": 1059 }
+          }
+        },
+        {
+          "type": "emphasis",
+          "children": [
+            {
+              "type": "text",
+              "value": "dislike",
+              "position": {
+                "start": { "line": 24, "column": 64, "offset": 1060 },
+                "end": { "line": 24, "column": 71, "offset": 1067 }
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 24, "column": 63, "offset": 1059 },
+            "end": { "line": 24, "column": 72, "offset": 1068 }
+          }
+        },
+        {
+          "type": "text",
+          "value": ", ",
+          "position": {
+            "start": { "line": 24, "column": 72, "offset": 1068 },
+            "end": { "line": 24, "column": 74, "offset": 1070 }
+          }
+        },
+        {
+          "type": "emphasis",
+          "children": [
+            {
+              "type": "text",
+              "value": "-1",
+              "position": {
+                "start": { "line": 24, "column": 75, "offset": 1071 },
+                "end": { "line": 24, "column": 77, "offset": 1073 }
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 24, "column": 74, "offset": 1070 },
+            "end": { "line": 24, "column": 78, "offset": 1074 }
+          }
+        },
+        {
+          "type": "text",
+          "value": ")",
+          "position": {
+            "start": { "line": 24, "column": 78, "offset": 1074 },
+            "end": { "line": 24, "column": 79, "offset": 1075 }
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 24, "column": 1, "offset": 997 },
+        "end": { "line": 24, "column": 79, "offset": 1075 }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Bug Reports and Feature Requests",
+          "position": {
+            "start": { "line": 26, "column": 5, "offset": 1081 },
+            "end": { "line": 26, "column": 37, "offset": 1113 }
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 26, "column": 1, "offset": 1077 },
+        "end": { "line": 26, "column": 37, "offset": 1113 }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "For the timeliest resolution to bug reports specifically, please make a good\nfaith effort to ",
+          "position": {
+            "start": { "line": 28, "column": 1, "offset": 1115 },
+            "end": { "line": 29, "column": 17, "offset": 1208 }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "text",
+              "value": "follow the template",
+              "position": {
+                "start": { "line": 29, "column": 18, "offset": 1209 },
+                "end": { "line": 29, "column": 37, "offset": 1228 }
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 29, "column": 17, "offset": 1208 },
+            "end": { "line": 29, "column": 56, "offset": 1247 }
+          },
+          "label": "choose-new-issue",
+          "identifier": "choose-new-issue",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": ". The more quality\ninformation you can provide, the quicker a fix will be found. Additionally:",
+          "position": {
+            "start": { "line": 29, "column": 56, "offset": 1247 },
+            "end": { "line": 30, "column": 76, "offset": 1341 }
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 28, "column": 1, "offset": 1115 },
+        "end": { "line": 30, "column": 76, "offset": 1341 }
+      }
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "start": null,
+      "spread": false,
+      "children": [
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Ensure you file one issue per problem or feature request.",
+                  "position": {
+                    "start": { "line": 32, "column": 3, "offset": 1345 },
+                    "end": { "line": 32, "column": 60, "offset": 1402 }
+                  }
+                }
+              ],
+              "position": {
+                "start": { "line": 32, "column": 3, "offset": 1345 },
+                "end": { "line": 32, "column": 60, "offset": 1402 }
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 32, "column": 1, "offset": 1343 },
+            "end": { "line": 32, "column": 60, "offset": 1402 }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Do not enumerate multiple bugs or feature requests in the same issue.",
+                  "position": {
+                    "start": { "line": 33, "column": 3, "offset": 1405 },
+                    "end": { "line": 33, "column": 72, "offset": 1474 }
+                  }
+                }
+              ],
+              "position": {
+                "start": { "line": 33, "column": 3, "offset": 1405 },
+                "end": { "line": 33, "column": 72, "offset": 1474 }
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 33, "column": 1, "offset": 1403 },
+            "end": { "line": 33, "column": 72, "offset": 1474 }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Do not add your issue as a comment to an existing issue unless you're\nexperiencing identical behavior or behavior that stems from the exact same\nproblem.",
+                  "position": {
+                    "start": { "line": 34, "column": 3, "offset": 1477 },
+                    "end": { "line": 36, "column": 11, "offset": 1634 }
+                  }
+                }
+              ],
+              "position": {
+                "start": { "line": 34, "column": 3, "offset": 1477 },
+                "end": { "line": 36, "column": 11, "offset": 1634 }
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 34, "column": 1, "offset": 1475 },
+            "end": { "line": 36, "column": 11, "offset": 1634 }
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 32, "column": 1, "offset": 1343 },
+        "end": { "line": 36, "column": 11, "offset": 1634 }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "That's it! You are now ready to ",
+          "position": {
+            "start": { "line": 38, "column": 1, "offset": 1636 },
+            "end": { "line": 38, "column": 33, "offset": 1668 }
+          }
+        },
+        {
+          "type": "linkReference",
+          "children": [
+            {
+              "type": "text",
+              "value": "submit a new issue",
+              "position": {
+                "start": { "line": 38, "column": 34, "offset": 1669 },
+                "end": { "line": 38, "column": 52, "offset": 1687 }
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 38, "column": 33, "offset": 1668 },
+            "end": { "line": 38, "column": 71, "offset": 1706 }
+          },
+          "label": "choose-new-issue",
+          "identifier": "choose-new-issue",
+          "referenceType": "full"
+        },
+        {
+          "type": "text",
+          "value": "! Thank\nyou for contribution 🎉, your efforts are greatly appreciated! 🙌🏿",
+          "position": {
+            "start": { "line": 38, "column": 71, "offset": 1706 },
+            "end": { "line": 39, "column": 68, "offset": 1781 }
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 38, "column": 1, "offset": 1636 },
+        "end": { "line": 39, "column": 68, "offset": 1781 }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 4,
+      "children": [
+        {
+          "type": "text",
+          "value": "Closure Policy",
+          "position": {
+            "start": { "line": 41, "column": 6, "offset": 1788 },
+            "end": { "line": 41, "column": 20, "offset": 1802 }
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 41, "column": 1, "offset": 1783 },
+        "end": { "line": 41, "column": 20, "offset": 1802 }
+      }
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "start": null,
+      "spread": false,
+      "children": [
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Issues that do not follow the appropriate template or contain necessary\ninformation may be closed immediately and the poster directed to these\nguidelines",
+                  "position": {
+                    "start": { "line": 43, "column": 3, "offset": 1806 },
+                    "end": { "line": 45, "column": 13, "offset": 1963 }
+                  }
+                }
+              ],
+              "position": {
+                "start": { "line": 43, "column": 3, "offset": 1806 },
+                "end": { "line": 45, "column": 13, "offset": 1963 }
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 43, "column": 1, "offset": 1804 },
+            "end": { "line": 45, "column": 13, "offset": 1963 }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Issues that go for an extended period without activity are subject to closure",
+                  "position": {
+                    "start": { "line": 46, "column": 3, "offset": 1966 },
+                    "end": { "line": 46, "column": 80, "offset": 2043 }
+                  }
+                }
+              ],
+              "position": {
+                "start": { "line": 46, "column": 3, "offset": 1966 },
+                "end": { "line": 46, "column": 80, "offset": 2043 }
+              }
+            }
+          ],
+          "position": {
+            "start": { "line": 46, "column": 1, "offset": 1964 },
+            "end": { "line": 46, "column": 80, "offset": 2043 }
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 43, "column": 1, "offset": 1804 },
+        "end": { "line": 46, "column": 80, "offset": 2043 }
       }
     },
     {
       "type": "definition",
-      "identifier": "1",
-      "label": "1",
-      "title": null,
+      "identifier": "badge-issue-resolution",
+      "label": "badge-issue-resolution",
+      "title": "Bad title 1",
       "url": "https://isitmaintained.com/badge/resolution/Xunnamius/projector.svg",
       "position": {
-        "start": {
-          "line": 48,
-          "column": 1,
-          "offset": 1901
-        },
-        "end": {
-          "line": 48,
-          "column": 73,
-          "offset": 1973
-        }
+        "start": { "line": 48, "column": 1, "offset": 2045 },
+        "end": { "line": 50, "column": 37, "offset": 2177 }
       }
     },
     {
       "type": "definition",
-      "identifier": "2",
-      "label": "2",
-      "title": "Average time to resolve an issue",
+      "identifier": "link-issue-resolution",
+      "label": "link-issue-resolution",
+      "title": null,
       "url": "https://isitmaintained.com/project/Xunnamius/projector",
       "position": {
-        "start": {
-          "line": 49,
-          "column": 1,
-          "offset": 1974
-        },
-        "end": {
-          "line": 51,
-          "column": 37,
-          "offset": 2072
-        }
+        "start": { "line": 51, "column": 1, "offset": 2178 },
+        "end": { "line": 51, "column": 80, "offset": 2257 }
       }
     },
     {
       "type": "definition",
-      "identifier": "3",
-      "label": "3",
-      "title": null,
+      "identifier": "badge-issue-percentage",
+      "label": "badge-issue-percentage",
+      "title": "Bad title 2",
       "url": "https://isitmaintained.com/badge/open/Xunnamius/projector.svg",
       "position": {
-        "start": {
-          "line": 52,
-          "column": 1,
-          "offset": 2073
-        },
-        "end": {
-          "line": 52,
-          "column": 67,
-          "offset": 2139
-        }
+        "start": { "line": 52, "column": 1, "offset": 2258 },
+        "end": { "line": 54, "column": 46, "offset": 2393 }
       }
     },
     {
       "type": "definition",
-      "identifier": "4",
-      "label": "4",
+      "identifier": "link-issue-percentage",
+      "label": "link-issue-percentage",
       "title": null,
       "url": "https://github.com/Xunnamius/projector/issues?q=",
       "position": {
-        "start": {
-          "line": 53,
-          "column": 1,
-          "offset": 2140
-        },
-        "end": {
-          "line": 53,
-          "column": 54,
-          "offset": 2193
-        }
+        "start": { "line": 55, "column": 1, "offset": 2394 },
+        "end": { "line": 55, "column": 74, "offset": 2467 }
       }
     },
     {
       "type": "definition",
-      "identifier": "5",
-      "label": "5",
+      "identifier": "open-issues",
+      "label": "open-issues",
       "title": null,
-      "url": "https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments",
+      "url": "https://github.com/Xunnamius/projector/issues?q=",
       "position": {
-        "start": {
-          "line": 54,
-          "column": 1,
-          "offset": 2194
-        },
-        "end": {
-          "line": 55,
-          "column": 82,
-          "offset": 2280
-        }
+        "start": { "line": 56, "column": 1, "offset": 2468 },
+        "end": { "line": 56, "column": 64, "offset": 2531 }
       }
     },
     {
       "type": "definition",
-      "identifier": "6",
-      "label": "6",
+      "identifier": "github-blog",
+      "label": "github-blog",
+      "title": null,
+      "url": "https://github.com/blog/dead-link",
+      "position": {
+        "start": { "line": 57, "column": 1, "offset": 2532 },
+        "end": { "line": 58, "column": 82, "offset": 2628 }
+      }
+    },
+    {
+      "type": "definition",
+      "identifier": "choose-new-issue",
+      "label": "choose-new-issue",
       "title": null,
       "url": "https://github.com/Xunnamius/projector/issues/new/choose",
       "position": {
-        "start": {
-          "line": 56,
-          "column": 1,
-          "offset": 2281
-        },
-        "end": {
-          "line": 56,
-          "column": 62,
-          "offset": 2342
-        }
+        "start": { "line": 59, "column": 1, "offset": 2629 },
+        "end": { "line": 59, "column": 77, "offset": 2705 }
       }
     }
   ],
   "position": {
-    "start": {
-      "line": 1,
-      "column": 1,
-      "offset": 0
-    },
-    "end": {
-      "line": 57,
-      "column": 1,
-      "offset": 2343
-    }
+    "start": { "line": 1, "column": 1, "offset": 0 },
+    "end": { "line": 60, "column": 1, "offset": 2706 }
   }
 }
