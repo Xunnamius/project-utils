@@ -72,7 +72,6 @@ export type FixtureName =
   | 'badMonorepoNonPackageDir'
   | 'badPolyrepo'
   | 'badPolyrepoEmptyMdFiles'
-  | 'badPolyrepoImporter'
   | 'badPolyrepoNextjsProject'
   | 'badPolyrepoNonPackageDir'
   | 'badPolyrepoTsbuildinfo'
@@ -206,11 +205,6 @@ createFixture({
 createFixture({
   fixtureName: 'badPolyrepoEmptyMdFiles',
   prototypeRoot: 'bad-polyrepo-empty-md-files'
-});
-
-createFixture({
-  fixtureName: 'badPolyrepoImporter',
-  prototypeRoot: 'bad-polyrepo-importer'
 });
 
 createFixture({
