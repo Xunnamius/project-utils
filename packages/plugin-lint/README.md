@@ -57,8 +57,9 @@ ESLint, the following checks are performed:
 - ⛔ Errors when any `exports` or `typesVersions` entry points in `package.json`
   point to files that do not exist
 - ⛔ ⹋⹋ Errors when any Markdown files contain disabled links
-  - This check can be skipped by setting the environment variable
-    `ALLOW_DISABLED_LINKS=1`
+  - This check can be skipped for specific files by setting
+    `config['plugin-lint']['link-protection'].ignore = ['relative/path/to/file']`
+    in `package.json`
 - ⛔ Errors when depending on a [non-pinned][8] [pre-release][20] package
   version (like `"^x.y.z-alpha.1"`, which should instead be `"x.y.z-alpha.1"`)
   - This is dangerous enough to warrant an error instead of a warning since
@@ -203,7 +204,8 @@ These additional checks are performed only if linting a [sub-root][12]:
   monorepo without using the [`pkgverse` alias][21]
   - Using this alias, which is transformed into a non-alias import allows jest
     tests to run using the direct source code rather than the build artifacts
-- ⚠️ Warns when `package.json` is missing the `config.codecov.flag` field
+- ⚠️ Warns when `package.json` is missing the
+  `config['plugin-build'].codecov.flag` field
 - ⚠️ Warns when `package.json` contains `devDependencies`
   - These should be located in the project root's `package.json` file instead
 
