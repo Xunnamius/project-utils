@@ -1141,7 +1141,9 @@ describe('::runProjectLinter', () => {
       ['*']: {
         main: './dist/index.js',
         module: './dist/index.js',
-        types: './dist/types/index.d.ts'
+        types: './dist/types/index.d.ts',
+        // TODO: why does this being malformed trigger a strange error?
+        typesVersions: { '*': { '*': ['./dist/types/index.d.ts'] } }
       }
     });
 

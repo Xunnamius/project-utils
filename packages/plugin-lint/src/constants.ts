@@ -75,7 +75,12 @@ export const pkgVersionWhitelist = ['0.0.0-monorepo'] as const;
 /**
  * Outdated "exports" field keys that should not be encountered in any context
  */
-export const pkgJsonObsoleteEntryKeys = ['main', 'module', 'types'] as const;
+export const pkgJsonObsoleteEntryKeys = [
+  'main',
+  'module',
+  'types',
+  'typesVersions'
+] as const;
 
 /**
  * Outdated "scripts" field keys that should not be encountered in any context.
@@ -581,7 +586,6 @@ export const publicPkgJsonRequiredFields = [
   'keywords',
   'sideEffects',
   'exports',
-  'typesVersions',
   'files',
   'publishConfig'
 ] as const;

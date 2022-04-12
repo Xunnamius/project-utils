@@ -39,7 +39,7 @@ ESLint, the following checks are performed:
   `repository`, `license`, `author`, `engines`, or `type` fields
   - When linting a [monorepo root][12], the check for `description` is skipped
 - ⛔ Errors when `package.json` does not contain `name`, `version`, `keywords`,
-  `sideEffects`, `exports`, `typesVersions`, `files`, or `publishConfig` fields
+  `sideEffects`, `exports`, `files`, or `publishConfig` fields
   - When linting a [monorepo root][12], or if the `private` field exists and is
     set to `true`, this check is skipped
 - ⛔ Errors when the same dependency appears under both `dependencies` and
@@ -78,11 +78,9 @@ ESLint, the following checks are performed:
 - ⚠️ Warns when `package.json` contains an [experimental][5] `version` (i.e.
   `<1.0.0`)
   - This INCLUDES the obsoleted "placeholder" version `0.0.0-development`
-- ⚠️ Warns when `package.json` contains the outdated `main`, `module`, or
-  `types` fields
+- ⚠️ Warns when `package.json` contains the outdated `main`, `module`, `types`,
+  or `typesVersions` fields
   - Use `exports` instead
-  - Once TypeScript [ships support for the `types` export condition][6],
-    `typesVersions` will be considered "outdated" as well
 - ⚠️ Warns when `package.json` contains the `engines` field but is missing the
   `engines.node` field, or if it is not set to [the maintained and LTS versions
   of Node.js][7]
