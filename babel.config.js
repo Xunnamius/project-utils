@@ -12,6 +12,20 @@ const debug = require('debug')(`${pkgName}:babel-config`);
 debug('NODE_ENV: %O', process.env.NODE_ENV);
 debug('PKGROOT: %O', process.env.PKGROOT);
 
+const development = {
+  sourceMaps: 'both',
+  presets: [
+    ['@babel/preset-env', { targets: { node: true } }],
+    ['@babel/preset-typescript', { allowDeclareFields: true }]
+    // ? We don't care about minification
+  ],
+  plugins: [
+    // ? Only active when testing, the plugin solves the following problem:
+    // ? https://stackoverflow.com/q/40771520/1367414
+    'explicit-exports-references'
+  ]
+};
+
 // ? !PKGROOT means we're in package subdirectory under root; monorepo === true
 let monorepo = process.env.PKGROOT
   ? `./${absToRelPath('.', process.env.PKGROOT + '/node_modules')}`
@@ -47,20 +61,10 @@ module.exports = {
   // ? configuration depending on the value of NODE_ENV and friends. Default
   // ? is: development
   env: {
+    // * Used by vscode (debugger), `npx jest`, and by default
+    development,
     // * Used by Jest and `npm test`
-    test: {
-      sourceMaps: 'both',
-      presets: [
-        ['@babel/preset-env', { targets: { node: true } }],
-        ['@babel/preset-typescript', { allowDeclareFields: true }]
-        // ? We don't care about minification
-      ],
-      plugins: [
-        // ? Only active when testing, the plugin solves the following problem:
-        // ? https://stackoverflow.com/q/40771520/1367414
-        'explicit-exports-references'
-      ]
-    },
+    test: development,
     // * Used by `npm run build`
     production: {
       presets: [
