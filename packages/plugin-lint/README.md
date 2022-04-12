@@ -56,7 +56,8 @@ ESLint, the following checks are performed:
     are merged upstream!
 - ⛔ Errors when any `exports` or `typesVersions` entry points in `package.json`
   point to files that do not exist
-- ⛔ ⹋⹋ Errors when any Markdown files contain disabled links
+- ⛔ ⹋⹋ Errors when any Markdown file matching the provided `--md-path` glob(s)
+  contain disabled links
   - This check can be skipped for specific files by setting
     `config['plugin-lint']['link-protection'].ignore = ['relative/path/to/file']`
     in `package.json`
