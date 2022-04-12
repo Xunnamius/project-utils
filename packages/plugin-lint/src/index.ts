@@ -108,6 +108,12 @@ export function configureProgram(program?: Program): Context {
       const rootDir = finalArgv.rootDir as string;
       const sourcePaths = finalArgv.srcPath as string[];
       const markdownPaths = finalArgv.mdPath as string[];
+      const mode: NonNullable<Parameters<typeof runProjectLinter>[0]['mode']> =
+        finalArgv.prePushOnly
+          ? 'pre-push'
+          : finalArgv.linkProtectionOnly
+          ? 'link-protection'
+          : 'complete';
 
       debug('finalArgv.silent: %O', silent);
       debug('finalArgv.tsconfig: %O', tsconfig);
@@ -119,9 +125,10 @@ export function configureProgram(program?: Program): Context {
       }
 
       debug('finalArgv.markdownPaths: %O', markdownPaths);
+      debug('finalArgv.mode: %O', mode);
 
       const results = await Promise.all([
-        runProjectLinter({ rootDir, linkProtectionMarkdownPaths: markdownPaths }),
+        runProjectLinter({ rootDir, linkProtectionMarkdownPaths: markdownPaths, mode }),
         runTypescriptLinter({ rootDir, tsconfig }),
         runEslintLinter({ rootDir, sourcePaths, tsconfig }),
         runRemarkLinter({ rootDir, markdownPaths })

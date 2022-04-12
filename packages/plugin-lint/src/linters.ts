@@ -131,6 +131,42 @@ export async function runProjectLinter({
       const startedAtMonorepoRoot = ctx.context == 'monorepo' && !ctx.package;
 
       /**
+       * Ensure the current repository has no unpublished fixup/mergeme commits.
+       */
+      const checkForUnpublishedFixupCommits = () => {
+        tasks.push(
+          (async () => {
+            const status = await run('git', ['status', '-sb'], {
+              reject: true,
+              cwd: ctx.project.root
+            });
+            const rawRefs = status.stdout.split('\n')[0];
+
+            // ? Repos not tracking upstream won't return "..."
+            if (rawRefs.includes('...')) {
+              const refs = rawRefs.split(' ').at(-1) || toss(new CliError(2));
+              const commits = await run(
+                'git',
+                ['log', '--oneline', refs, '--grep', 'fixup', '--grep', 'mergeme'],
+                { reject: true, cwd: ctx.project.root }
+              );
+
+              commits.stdout
+                .split('\n')
+                .filter(Boolean)
+                .forEach((commit) => {
+                  const sha = commit.split(' ')[0];
+                  reporterFactory(`git commit ${sha}`)(
+                    'error',
+                    ErrorMessage.CommitNeedsFixup()
+                  );
+                });
+            }
+          })()
+        );
+      };
+
+      /**
        * Shared checks across monorepo/polyrepo roots and sub-roots
        */
       const rootAndSubRootChecks = ({
@@ -285,35 +321,6 @@ export async function runProjectLinter({
         // ? Has required files
         tasks.push(
           Utils.checkPathsExist(Constants.requiredFiles, root, reporterFactory, 'error')
-        );
-
-        // ? Has no unpublished fixup/mergeme commits
-        tasks.push(
-          (async () => {
-            const status = await run('git', ['status', '-sb'], { reject: true });
-            const rawRefs = status.stdout.split('\n')[0];
-
-            // ? Repos not tracking upstream won't return "..."
-            if (rawRefs.includes('...')) {
-              const refs = rawRefs.split(' ').at(-1) || toss(new CliError(2));
-              const commits = await run(
-                'git',
-                ['log', '--oneline', refs, '--grep', 'fixup', '--grep', 'mergeme'],
-                { reject: true }
-              );
-
-              commits.stdout
-                .split('\n')
-                .filter(Boolean)
-                .forEach((commit) => {
-                  const sha = commit.split(' ')[0];
-                  reporterFactory(`git commit ${sha}`)(
-                    'error',
-                    ErrorMessage.CommitNeedsFixup()
-                  );
-                });
-            }
-          })()
         );
 
         // ? Has correct license
@@ -476,228 +483,248 @@ export async function runProjectLinter({
         }
       };
 
-      rootAndSubRootChecks({
-        root: ctx.package?.root || ctx.project.root,
-        json: ctx.package?.json || ctx.project.json,
-        isCheckingMonorepoRoot: startedAtMonorepoRoot,
-        isCheckingMonorepoSubRoot: !!ctx.package
-      });
-
-      const isNextJsProject = await (async () => {
-        try {
-          await access(`${ctx.project.root}/next.config.js`);
-          return true;
-        } catch {}
-        return false;
-      })();
-
-      const reportPkg = reporterFactory(`${ctx.project.root}/package.json`);
-
-      // ? These additional checks are performed ONLY IF linting a monorepo root
-      if (startedAtMonorepoRoot) {
-        // ? Has certain tsconfig files
-        tasks.push(
-          Utils.checkPathsExist(
-            Constants.monorepoRootTsconfigFiles,
-            ctx.project.root,
-            reporterFactory,
-            'warn'
-          )
-        );
-
-        // ? Has no "broken" packages (workspaces missing a package.json file)
-        if (ctx.project.packages.broken.length) {
-          ctx.project.packages.broken.forEach((pkgRoot) =>
-            reporterFactory(`${pkgRoot}/package.json`)(
-              'error',
-              ErrorMessage.MissingFile()
-            )
-          );
-        }
-
-        // ? Has a "name" field (the case where !private is already covered)
-        if (ctx.project.json.private && !ctx.project.json.name) {
-          reportPkg('warn', ErrorMessage.PackageJsonMissingKey('name'));
-        }
-
-        // ? Is private
-        if (ctx.project.json.private === undefined) {
-          reportPkg('warn', ErrorMessage.PackageJsonMissingKey('private'));
-        } else if (ctx.project.json.private !== true) {
-          reportPkg('warn', ErrorMessage.PackageJsonMissingValue('private', 'true'));
-        }
-
-        if (ctx.project.json.scripts) {
-          const scriptKeys = Object.keys(ctx.project.json.scripts);
-
-          // ? package.json has expected script fields
-          Constants.monorepoRootScripts.forEach((script) => {
-            if (!scriptKeys.includes(script)) {
-              reportPkg(
-                'warn',
-                ErrorMessage.PackageJsonMissingKey(`scripts['${script}']`)
-              );
-            }
-          });
-
-          if (isNextJsProject) {
-            // ? package.json has expected script fields
-            Constants.nextjsProjectRootAdditionalScripts.forEach((script) => {
-              if (!scriptKeys.includes(script)) {
-                reportPkg(
-                  'warn',
-                  ErrorMessage.PackageJsonMissingKey(`scripts['${script}']`)
-                );
-              }
-            });
-          }
-        }
-
-        if (!isNextJsProject) {
-          // ? Has no "dependencies" field
-          if (ctx.project.json.dependencies) {
-            reportPkg('warn', ErrorMessage.PackageJsonIllegalKey('dependencies'));
-          }
-
-          // ? Has no non-whitelisted "version" field
-          if (
-            ctx.project.json.version &&
-            !Constants.pkgVersionWhitelist.includes(
-              ctx.project.json.version as typeof Constants.pkgVersionWhitelist[number]
-            )
-          ) {
-            reportPkg('warn', ErrorMessage.PackageJsonIllegalKey('version'));
-          }
-        }
-
-        // ? Recursively lint all sub-roots
-        ctx.project.packages.all.forEach(({ root, json }) => {
-          rootAndSubRootChecks({
-            root,
-            json,
-            isCheckingMonorepoRoot: false,
-            isCheckingMonorepoSubRoot: true
-          });
-        });
-      }
-      // ? These additional checks are performed ONLY IF linting a polyrepo root
-      else if (!ctx.package) {
-        // ? Has certain tsconfig files
-        tasks.push(
-          Utils.checkPathsExist(
-            Constants.polyrepoTsconfigFiles,
-            ctx.project.root,
-            reporterFactory,
-            'warn'
-          )
-        );
-
-        if (ctx.project.json.scripts) {
-          const scriptKeys = Object.keys(ctx.project.json.scripts);
-
-          // ? package.json has expected script fields
-          Constants.polyrepoScripts.forEach((script) => {
-            if (!scriptKeys.includes(script)) {
-              reportPkg(
-                'warn',
-                ErrorMessage.PackageJsonMissingKey(`scripts['${script}']`)
-              );
-            }
-          });
-
-          if (isNextJsProject) {
-            // ? package.json has expected script fields
-            Constants.nextjsProjectRootAdditionalScripts.forEach((script) => {
-              if (!scriptKeys.includes(script)) {
-                reportPkg(
-                  'warn',
-                  ErrorMessage.PackageJsonMissingKey(`scripts['${script}']`)
-                );
-              }
-            });
-          }
-        }
-      }
-
-      // ? These additional checks are performed ONLY IF NOT linting a sub-root
-      if (!ctx.package) {
-        const root = ctx.project.root;
-
-        // ? Has required files
-        tasks.push(
-          Utils.checkPathsExist(
-            Constants.repoRootRequiredFiles,
-            root,
-            reporterFactory,
-            'warn'
-          )
-        );
-
-        // ? Has standard directories
-        tasks.push(
-          Utils.checkPathsExist(
-            Constants.repoRootRequiredDirectories,
-            root,
-            reporterFactory,
-            'warn',
-            'MissingDirectory'
-          )
-        );
-
-        // ? Has release.config.js if not private
-        if (!ctx.project.json.private) {
+      if (mode == 'link-protection') {
+        // ? Check for potentially disabled links in Markdown files
+        if (linkProtectionMarkdownPaths) {
           tasks.push(
-            Utils.checkPathsExist(['release.config.js'], root, reporterFactory, 'warn')
+            Utils.checkForPotentiallyDisabledLinks({
+              rootDir,
+              markdownPaths: linkProtectionMarkdownPaths,
+              projectCtx: ctx,
+              reporterFactory
+            })
+          );
+        }
+      } else if (mode == 'pre-push') {
+        // ? Has no unpublished fixup/mergeme commits
+        checkForUnpublishedFixupCommits();
+      } else {
+        rootAndSubRootChecks({
+          root: ctx.package?.root || ctx.project.root,
+          json: ctx.package?.json || ctx.project.json,
+          isCheckingMonorepoRoot: startedAtMonorepoRoot,
+          isCheckingMonorepoSubRoot: !!ctx.package
+        });
+
+        const isNextJsProject = await (async () => {
+          try {
+            await access(`${ctx.project.root}/next.config.js`);
+            return true;
+          } catch {}
+          return false;
+        })();
+
+        const reportPkg = reporterFactory(`${ctx.project.root}/package.json`);
+
+        // ? These additional checks are performed ONLY IF linting a monorepo root
+        if (startedAtMonorepoRoot) {
+          // ? Has certain tsconfig files
+          tasks.push(
+            Utils.checkPathsExist(
+              Constants.monorepoRootTsconfigFiles,
+              ctx.project.root,
+              reporterFactory,
+              'warn'
+            )
+          );
+
+          // ? Has no "broken" packages (workspaces missing a package.json file)
+          if (ctx.project.packages.broken.length) {
+            ctx.project.packages.broken.forEach((pkgRoot) =>
+              reporterFactory(`${pkgRoot}/package.json`)(
+                'error',
+                ErrorMessage.MissingFile()
+              )
+            );
+          }
+
+          // ? Has a "name" field (the case where !private is already covered)
+          if (ctx.project.json.private && !ctx.project.json.name) {
+            reportPkg('warn', ErrorMessage.PackageJsonMissingKey('name'));
+          }
+
+          // ? Is private
+          if (ctx.project.json.private === undefined) {
+            reportPkg('warn', ErrorMessage.PackageJsonMissingKey('private'));
+          } else if (ctx.project.json.private !== true) {
+            reportPkg('warn', ErrorMessage.PackageJsonMissingValue('private', 'true'));
+          }
+
+          if (ctx.project.json.scripts) {
+            const scriptKeys = Object.keys(ctx.project.json.scripts);
+
+            // ? package.json has expected script fields
+            Constants.monorepoRootScripts.forEach((script) => {
+              if (!scriptKeys.includes(script)) {
+                reportPkg(
+                  'warn',
+                  ErrorMessage.PackageJsonMissingKey(`scripts['${script}']`)
+                );
+              }
+            });
+
+            if (isNextJsProject) {
+              // ? package.json has expected script fields
+              Constants.nextjsProjectRootAdditionalScripts.forEach((script) => {
+                if (!scriptKeys.includes(script)) {
+                  reportPkg(
+                    'warn',
+                    ErrorMessage.PackageJsonMissingKey(`scripts['${script}']`)
+                  );
+                }
+              });
+            }
+          }
+
+          if (!isNextJsProject) {
+            // ? Has no "dependencies" field
+            if (ctx.project.json.dependencies) {
+              reportPkg('warn', ErrorMessage.PackageJsonIllegalKey('dependencies'));
+            }
+
+            // ? Has no non-whitelisted "version" field
+            if (
+              ctx.project.json.version &&
+              !Constants.pkgVersionWhitelist.includes(
+                ctx.project.json.version as typeof Constants.pkgVersionWhitelist[number]
+              )
+            ) {
+              reportPkg('warn', ErrorMessage.PackageJsonIllegalKey('version'));
+            }
+          }
+
+          // ? Recursively lint all sub-roots
+          ctx.project.packages.all.forEach(({ root, json }) => {
+            rootAndSubRootChecks({
+              root,
+              json,
+              isCheckingMonorepoRoot: false,
+              isCheckingMonorepoSubRoot: true
+            });
+          });
+        }
+        // ? These additional checks are performed ONLY IF linting a polyrepo root
+        else if (!ctx.package) {
+          // ? Has certain tsconfig files
+          tasks.push(
+            Utils.checkPathsExist(
+              Constants.polyrepoTsconfigFiles,
+              ctx.project.root,
+              reporterFactory,
+              'warn'
+            )
+          );
+
+          if (ctx.project.json.scripts) {
+            const scriptKeys = Object.keys(ctx.project.json.scripts);
+
+            // ? package.json has expected script fields
+            Constants.polyrepoScripts.forEach((script) => {
+              if (!scriptKeys.includes(script)) {
+                reportPkg(
+                  'warn',
+                  ErrorMessage.PackageJsonMissingKey(`scripts['${script}']`)
+                );
+              }
+            });
+
+            if (isNextJsProject) {
+              // ? package.json has expected script fields
+              Constants.nextjsProjectRootAdditionalScripts.forEach((script) => {
+                if (!scriptKeys.includes(script)) {
+                  reportPkg(
+                    'warn',
+                    ErrorMessage.PackageJsonMissingKey(`scripts['${script}']`)
+                  );
+                }
+              });
+            }
+          }
+        }
+
+        // ? These additional checks are performed ONLY IF NOT linting a sub-root
+        if (!ctx.package) {
+          const root = ctx.project.root;
+
+          // ? Has required files
+          tasks.push(
+            Utils.checkPathsExist(
+              Constants.repoRootRequiredFiles,
+              root,
+              reporterFactory,
+              'warn'
+            )
+          );
+
+          // ? Has standard directories
+          tasks.push(
+            Utils.checkPathsExist(
+              Constants.repoRootRequiredDirectories,
+              root,
+              reporterFactory,
+              'warn',
+              'MissingDirectory'
+            )
+          );
+
+          // ? Has release.config.js if not private
+          if (!ctx.project.json.private) {
+            tasks.push(
+              Utils.checkPathsExist(['release.config.js'], root, reporterFactory, 'warn')
+            );
+          }
+
+          // ? SECURITY.md has standard well-configured topmatter and links and is
+          // ? consistent with blueprints
+          tasks.push(
+            Utils.checkStandardMdFile({
+              mdPath: `${root}/SECURITY.md`,
+              pkgJson: ctx.project.json,
+              standardTopmatter: Constants.markdownSecurityStandardTopmatter,
+              standardLinks: Constants.markdownSecurityStandardLinks,
+              reporterFactory
+            })
+          );
+
+          // ? SUPPORT.md has standard well-configured topmatter and links and is
+          // ? consistent with blueprints
+          tasks.push(
+            Utils.checkStandardMdFile({
+              mdPath: `${root}/.github/SUPPORT.md`,
+              pkgJson: ctx.project.json,
+              standardTopmatter: Constants.markdownSupportStandardTopmatter,
+              standardLinks: Constants.markdownSupportStandardLinks,
+              reporterFactory
+            })
+          );
+
+          // ? CONTRIBUTING.md has standard well-configured topmatter and links
+          // ? and is consistent with blueprints
+          tasks.push(
+            Utils.checkStandardMdFile({
+              mdPath: `${root}/CONTRIBUTING.md`,
+              pkgJson: ctx.project.json,
+              standardTopmatter: null,
+              standardLinks: Constants.markdownContributingStandardLinks,
+              reporterFactory
+            })
           );
         }
 
-        // ? SECURITY.md has standard well-configured topmatter and links and is
-        // ? consistent with blueprints
-        tasks.push(
-          Utils.checkStandardMdFile({
-            mdPath: `${root}/SECURITY.md`,
-            pkgJson: ctx.project.json,
-            standardTopmatter: Constants.markdownSecurityStandardTopmatter,
-            standardLinks: Constants.markdownSecurityStandardLinks,
-            reporterFactory
-          })
-        );
+        // ? Check for potentially disabled links in Markdown files
+        if (linkProtectionMarkdownPaths) {
+          tasks.push(
+            Utils.checkForPotentiallyDisabledLinks({
+              rootDir,
+              markdownPaths: linkProtectionMarkdownPaths,
+              projectCtx: ctx,
+              reporterFactory
+            })
+          );
+        }
 
-        // ? SUPPORT.md has standard well-configured topmatter and links and is
-        // ? consistent with blueprints
-        tasks.push(
-          Utils.checkStandardMdFile({
-            mdPath: `${root}/.github/SUPPORT.md`,
-            pkgJson: ctx.project.json,
-            standardTopmatter: Constants.markdownSupportStandardTopmatter,
-            standardLinks: Constants.markdownSupportStandardLinks,
-            reporterFactory
-          })
-        );
-
-        // ? CONTRIBUTING.md has standard well-configured topmatter and links
-        // ? and is consistent with blueprints
-        tasks.push(
-          Utils.checkStandardMdFile({
-            mdPath: `${root}/CONTRIBUTING.md`,
-            pkgJson: ctx.project.json,
-            standardTopmatter: null,
-            standardLinks: Constants.markdownContributingStandardLinks,
-            reporterFactory
-          })
-        );
-      }
-
-      // ? Check for potentially disabled links in Markdown files
-      if (linkProtectionMarkdownPaths) {
-        tasks.push(
-          Utils.checkForPotentiallyDisabledLinks({
-            rootDir,
-            markdownPaths: linkProtectionMarkdownPaths,
-            projectCtx: ctx,
-            reporterFactory
-          })
-        );
+        // ? Has no unpublished fixup/mergeme commits
+        checkForUnpublishedFixupCommits();
       }
     }
 

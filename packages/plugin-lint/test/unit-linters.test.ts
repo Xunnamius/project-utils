@@ -49,6 +49,55 @@ const stringContainingErrorMessage = (
   );
 };
 
+/**
+ * Returns a function used to mock calls to `git commit`
+ */
+const makeMockGitCommit =
+  (commits: string[]): typeof run =>
+  (_, args) => {
+    if (args?.includes('A...B')) {
+      commits.push(Math.random().toString(16).slice(2, 8));
+      commits.push(Math.random().toString(16).slice(2, 8));
+      return {
+        stdout: `${commits.at(-2)} X Y Z\n${commits.at(-1)} A B C`
+      } as unknown as ReturnType<typeof run>;
+    } else {
+      return {
+        stdout: '## A...B\none two-three\nfour five-six'
+      } as unknown as ReturnType<typeof run>;
+    }
+  };
+
+/**
+ * Disabled links from `getBadMarkdown`.
+ */
+const getBadLines = () =>
+  [
+    'Test link badness: \\[bad link]\\[bad-link] and \\[another bad link]\\[bad-link-2].',
+    'JavaScript/TypeScript build output, and \\[Remark]\\[3] and [mdast][17] for'
+  ] as const;
+
+/**
+ * Sample Markdown paragraph containing disabled links.
+ */
+const getBadMarkdown = () =>
+  Promise.resolve(
+    `
+# @projector-js/plugin-lint
+
+> See the [usage section][4] for more information.
+
+Test link badness: \\[bad link]\\[bad-link] and \\[another bad link]\\[bad-link-2].
+
+This opinionated CLI tool checks a Node.js project for correctness. It should be
+run [after the project has been built][18]. TypeScript ([tsc][1]) is used for
+type checking, [ESLint][2] and [Babel][16] for static analysis of
+JavaScript/TypeScript build output, and \\[Remark]\\[3] and [mdast][17] for
+analysis of Markdown source. Further checks are performed to ensure the project
+is optimally structured and conforms to best practices, including detecting when
+running in a monorepo root vs a polyrepo root vs a sub-root.` as const
+  );
+
 const actualRun = jest.requireActual('multiverse/run').run;
 const mockedRun = asMockedFunction(run);
 const mockedFromMarkdown = asMockedFunction(fromMarkdown);
@@ -693,19 +742,7 @@ describe('::runProjectLinter', () => {
     expect.hasAssertions();
     const commits: string[] = [];
 
-    mockedRun.mockImplementation((_, args) => {
-      if (args?.includes('A...B')) {
-        commits.push(Math.random().toString(16).slice(2, 8));
-        commits.push(Math.random().toString(16).slice(2, 8));
-        return {
-          stdout: `${commits.at(-2)} X Y Z\n${commits.at(-1)} A B C`
-        } as unknown as ReturnType<typeof run>;
-      } else {
-        return {
-          stdout: '## A...B\none two-three\nfour five-six'
-        } as unknown as ReturnType<typeof run>;
-      }
-    });
+    mockedRun.mockImplementation(makeMockGitCommit(commits));
 
     const monorepoRoot = await Linters.runProjectLinter({
       rootDir: Fixtures.badMonorepo.root,
@@ -714,6 +751,23 @@ describe('::runProjectLinter', () => {
 
     commits.forEach((commit) => {
       expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          'error',
+          `git commit ${commit}`,
+          ErrorMessage.CommitNeedsFixup()
+        )
+      );
+    });
+
+    commits.splice(0, commits.length);
+
+    const polyrepoRoot = await Linters.runProjectLinter({
+      rootDir: Fixtures.badPolyrepo.root,
+      linkProtectionMarkdownPaths: []
+    });
+
+    commits.forEach((commit) => {
+      expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
           `git commit ${commit}`,
@@ -1787,27 +1841,7 @@ describe('::runProjectLinter', () => {
   it('errors when any Markdown files contain disabled links unless ignored via config', async () => {
     expect.hasAssertions();
 
-    const badLines = [
-      'Test link badness: \\[bad link]\\[bad-link] and \\[another bad link]\\[bad-link-2].',
-      'JavaScript/TypeScript build output, and \\[Remark]\\[3] and [mdast][17] for'
-    ];
-
-    const badMarkdown = Promise.resolve(`
-    # @projector-js/plugin-lint
-
-    > See the [usage section][4] for more information.
-
-    Test link badness: \\[bad link]\\[bad-link] and \\[another bad link]\\[bad-link-2].
-
-    This opinionated CLI tool checks a Node.js project for correctness. It should be
-    run [after the project has been built][18]. TypeScript ([tsc][1]) is used for
-    type checking, [ESLint][2] and [Babel][16] for static analysis of
-    JavaScript/TypeScript build output, and \\[Remark]\\[3] and [mdast][17] for
-    analysis of Markdown source. Further checks are performed to ensure the project
-    is optimally structured and conforms to best practices, including detecting when
-    running in a monorepo root vs a polyrepo root vs a sub-root.`);
-
-    jest.spyOn(fs, 'readFile').mockImplementation(() => badMarkdown);
+    jest.spyOn(fs, 'readFile').mockImplementation(() => getBadMarkdown());
 
     const monorepoRoot1 = await Linters.runProjectLinter({
       rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
@@ -1860,7 +1894,7 @@ describe('::runProjectLinter', () => {
       linkProtectionMarkdownPaths: [Constants.defaultMarkdownGlob]
     });
 
-    badLines.forEach((badLine) => {
+    getBadLines().forEach((badLine) => {
       expect(monorepoRoot1.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
@@ -4494,12 +4528,168 @@ describe('::runProjectLinter', () => {
 
   it('only executes certain checks when in pre-push mode', async () => {
     expect.hasAssertions();
-    // TODO: monorepo and polyrepo (both amalgum)
+
+    const actualReadFile = fs.readFile;
+    const commits: string[] = [];
+
+    mockedRun.mockImplementation(makeMockGitCommit(commits));
+
+    jest
+      .spyOn(fs, 'readFile')
+      .mockImplementation((path, opts) =>
+        path.toString().endsWith('.md') ? getBadMarkdown() : actualReadFile(path, opts)
+      );
+
+    const monorepoRoot = await Linters.runProjectLinter({
+      rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+      linkProtectionMarkdownPaths: [Constants.defaultMarkdownGlob],
+      mode: 'pre-push'
+    });
+
+    commits.forEach((commit) => {
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          'error',
+          `git commit ${commit}`,
+          ErrorMessage.CommitNeedsFixup()
+        )
+      );
+    });
+
+    commits.splice(0, commits.length);
+
+    const polyrepoRoot = await Linters.runProjectLinter({
+      rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+      linkProtectionMarkdownPaths: [Constants.defaultMarkdownGlob],
+      mode: 'pre-push'
+    });
+
+    commits.forEach((commit) => {
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          'error',
+          `git commit ${commit}`,
+          ErrorMessage.CommitNeedsFixup()
+        )
+      );
+    });
+
+    getBadLines().forEach((badLine) => {
+      expect(monorepoRoot.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'error',
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/CONTRIBUTING.md`,
+          ErrorMessage.MarkdownDisabledLink(badLine)
+        )
+      );
+
+      expect(monorepoRoot.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'error',
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.MarkdownDisabledLink(badLine)
+        )
+      );
+
+      expect(monorepoRoot.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'error',
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/RANDOM.md`,
+          ErrorMessage.MarkdownDisabledLink(badLine)
+        )
+      );
+
+      expect(polyrepoRoot.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'error',
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownDisabledLink(badLine)
+        )
+      );
+    });
   });
 
   it('only executes certain checks when in link protection mode', async () => {
     expect.hasAssertions();
-    // TODO: monorepo and polyrepo (both amalgum)
+
+    const actualReadFile = fs.readFile;
+    const commits: string[] = [];
+
+    mockedRun.mockImplementation(makeMockGitCommit(commits));
+
+    jest
+      .spyOn(fs, 'readFile')
+      .mockImplementation((path, opts) =>
+        path.toString().endsWith('.md') ? getBadMarkdown() : actualReadFile(path, opts)
+      );
+
+    const monorepoRoot = await Linters.runProjectLinter({
+      rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+      linkProtectionMarkdownPaths: [Constants.defaultMarkdownGlob],
+      mode: 'link-protection'
+    });
+
+    commits.forEach((commit) => {
+      expect(monorepoRoot.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'error',
+          `git commit ${commit}`,
+          ErrorMessage.CommitNeedsFixup()
+        )
+      );
+    });
+
+    commits.splice(0, commits.length);
+
+    const polyrepoRoot = await Linters.runProjectLinter({
+      rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+      linkProtectionMarkdownPaths: [Constants.defaultMarkdownGlob],
+      mode: 'link-protection'
+    });
+
+    commits.forEach((commit) => {
+      expect(polyrepoRoot.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'error',
+          `git commit ${commit}`,
+          ErrorMessage.CommitNeedsFixup()
+        )
+      );
+    });
+
+    getBadLines().forEach((badLine) => {
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          'error',
+          `${Fixtures.badMonorepoEmptyMdFiles.root}/CONTRIBUTING.md`,
+          ErrorMessage.MarkdownDisabledLink(badLine)
+        )
+      );
+
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          'error',
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          ErrorMessage.MarkdownDisabledLink(badLine)
+        )
+      );
+
+      expect(monorepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          'error',
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/RANDOM.md`,
+          ErrorMessage.MarkdownDisabledLink(badLine)
+        )
+      );
+
+      expect(polyrepoRoot.output).toStrictEqual(
+        stringContainingErrorMessage(
+          'error',
+          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          ErrorMessage.MarkdownDisabledLink(badLine)
+        )
+      );
+    });
   });
 
   it('correctly detects, collates, and counts warnings and errors in polyrepo', async () => {
