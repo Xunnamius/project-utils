@@ -417,7 +417,7 @@ export async function runProjectLinter({
         // ? Has a docs entry point pointing to an existing file (if not a
         // ? monorepo root)
         if (!isCheckingMonorepoRoot) {
-          const docsEntry = json?.config?.['plugin-build']?.docs?.entry;
+          const docsEntry = json.config?.['plugin-build']?.docs?.entry;
 
           if (!docsEntry) {
             reportPkg(
