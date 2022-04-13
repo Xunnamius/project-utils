@@ -1,7 +1,5 @@
 'use strict';
 
-const pkgName = require('./package.json').name;
-
 module.exports = {
   cli: true,
   'cjs-static': (config) => {
@@ -14,12 +12,12 @@ module.exports = {
       ...config.externals,
       // ? Externalize shared local imports
       ({ request }, cb) => {
-        if (request == './utils' || request == '../utils') {
-          cb(null, `commonjs ${pkgName}/utils`);
-        } else if (request == './constants' || request == '../constants') {
-          cb(null, `commonjs ${pkgName}/constants`);
-        } else if (request == './errors' || request == '../errors') {
-          cb(null, `commonjs ${pkgName}/errors`);
+        if (request.endsWith('./utils')) {
+          cb(null, `commonjs ./utils`);
+        } else if (request.endsWith('./constants')) {
+          cb(null, `commonjs ./constants`);
+        } else if (request.endsWith('./errors')) {
+          cb(null, `commonjs ./errors`);
         } else cb();
       }
     ];
