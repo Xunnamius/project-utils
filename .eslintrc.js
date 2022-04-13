@@ -134,7 +134,15 @@ module.exports = {
       '.*/bin/.*'
     ]
   },
-  ignorePatterns: ['coverage', 'dist', 'bin', 'build', '/next.config.js'],
+  ignorePatterns: [
+    '**/node_modules',
+    '**/coverage',
+    '**/dist',
+    '**/bin',
+    '**/build',
+    '**/test/fixtures',
+    '!**/test/fixtures/index.*'
+  ],
   globals: {
     page: true,
     browser: true,
