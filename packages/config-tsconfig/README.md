@@ -20,6 +20,10 @@
 
 <!-- TODO -->
 
+`"allowJs": true` and `"module": "nodenext"` should be set. Document that
+changing these will require changes in several other packages, including
+`plugin-lint`.
+
 ## Install
 
 ```bash
