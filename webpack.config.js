@@ -120,8 +120,10 @@ const externals = (options) => [
           );
         }
 
-        const match = request.match(/pkgverse\/([^/]+)(?:\/.+)?\/(.+?)$/);
-        const pkgJsonPath = `${IMPORT_ALIASES.pkgverse}${match[1]}/package.json`;
+        const match = request.match(
+          /pkgverse\/(?<pkgName>[^/]+)(\/(?<targetPath>.+))?\/(?<targetFile>.+?)$/
+        );
+        const pkgJsonPath = `${IMPORT_ALIASES.pkgverse}${match.groups.pkgName}/package.json`;
         const pkg = require(pkgJsonPath);
 
         if (!pkg.name || !pkg.exports) {
@@ -134,17 +136,29 @@ const externals = (options) => [
           );
         }
 
-        const exportPath = `${config.output.path.replace(
-          cwd,
-          '.'
-        )}/${config.output.filename.replace('[name]', match[2])}`;
+        const exportPaths = [
+          // ? First check for the file exactly as requested
+          `./${match.groups.targetPath ? `${match.groups.targetPath}/` : ''}${
+            match.groups.targetFile
+          }`,
+          // ? Next, try looking for the compiled version of its output
+          `${config.output.path.replace(cwd, '.')}/${config.output.filename.replace(
+            '[name]',
+            match.groups.targetFile
+          )}`
+        ];
+
+        // ? If the config ends in an extension, also try an extensionless path
+        if (config.output.filename.includes('.')) {
+          exportPaths.push(exportPaths.at(-1).split('.').slice(0, -1).join('.'));
+        }
 
         const entry = Object.entries(pkg.exports).find(([, exportedPathSpec]) => {
           const check = (pathSpec) => {
             if (!pathSpec) {
               return false;
             } else if (typeof pathSpec == 'string') {
-              return pathSpec == exportPath;
+              return exportPaths.includes(pathSpec);
             } else {
               return (
                 check(pathSpec.node) ||
@@ -160,7 +174,9 @@ const externals = (options) => [
 
         if (!entry) {
           throw new PkgverseResolverError(
-            `unable to find an entry point mapped to "${exportPath}" under the "exports" field in ${pkgJsonPath}`
+            `unable to find an "exports" field entry point in ${pkgJsonPath} that maps to one of the following: \n  -> ${exportPaths.join(
+              '\n  -> '
+            )}`
           );
         }
 
