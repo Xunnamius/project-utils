@@ -388,7 +388,6 @@ export async function runProjectLinter({
           json.dependencies,
           json.devDependencies,
           json.peerDependencies,
-          json.bundleDependencies,
           json.optionalDependencies
         ].forEach((depsObj) => {
           if (depsObj) {
