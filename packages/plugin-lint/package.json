@@ -79,7 +79,7 @@
     "get-tsconfig": "^3.0.1",
     "mdast-util-from-markdown": "^1.2.0",
     "objectpath": "^2.0.0",
-    "semver": "^7.3.5",
+    "semver": "^7.3.7",
     "strip-ansi": "^6.0.1"
   },
   "engines": {
