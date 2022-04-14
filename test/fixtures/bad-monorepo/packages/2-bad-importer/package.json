@@ -1,1 +1,10 @@
-{}
+{
+  "name": "@bad-monorepo/2-bad-importer",
+  "version": "1.0.0",
+  "dependencies": {
+    "@bad-monorepo/0-empty": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.9"
+  }
+}
