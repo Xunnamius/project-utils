@@ -5,7 +5,7 @@ import * as Linters from '../src/linters';
 import * as Constants from '../src/constants';
 import * as Utils from '../src/utils';
 import * as UtilsMdast from '../src/utils/mdast';
-import { glob } from 'glob';
+import { glob, sync as globSync } from 'glob';
 import { promisify } from 'util';
 import { Fixtures, patchReadPackageJsonData } from 'testverse/fixtures';
 import { toss } from 'toss-expression';
@@ -13,6 +13,8 @@ import { ErrorMessage } from '../src/errors';
 import { clearPackageJsonCache } from 'pkgverse/core/src/project-utils';
 import { asMockedFunction } from '@xunnamius/jest-types';
 import { run, RunReturnType } from 'multiverse/run';
+import { TrialError } from 'named-app-errors';
+import { basename } from 'path';
 import escapeRegexp from 'escape-string-regexp';
 // ? Secretly an ES module, but mocked as a CJS module
 import { fromMarkdown } from 'mdast-util-from-markdown';
@@ -108,17 +110,20 @@ const mockMdastSecurity = require('testverse/fixtures/mdast.security');
 const mockMdastContributing = require('testverse/fixtures/mdast.contributing');
 const mockMdastSupport = require('testverse/fixtures/mdast.support');
 
-const blueprintSecurity = readFileSync(`${__dirname}/../src/blueprints/security.md.txt`, {
-  encoding: 'utf-8'
-});
+const blueprints: Record<string, string> = {};
 
-const blueprintContributing = readFileSync(
-  `${__dirname}/../src/blueprints/contributing.md.txt`,
-  { encoding: 'utf-8' }
-);
+beforeAll(() => {
+  globSync(`${__dirname}/../src/blueprints/*`, { absolute: true }).forEach(
+    (blueprintPath) => {
+      const blueprintName = basename(blueprintPath).split('.')[0];
 
-const blueprintSupport = readFileSync(`${__dirname}/../src/blueprints/support.md.txt`, {
-  encoding: 'utf-8'
+      if (blueprints[blueprintName]) {
+        throw new TrialError(`blueprint name collision: ${blueprintName}`);
+      }
+
+      blueprints[blueprintName] = readFileSync(blueprintPath, { encoding: 'utf-8' });
+    }
+  );
 });
 
 beforeEach(() => {
@@ -129,22 +134,23 @@ beforeEach(() => {
   clearPackageJsonCache();
 });
 
-test('markdown blueprints end with a colon (and not a new line)', async () => {
+test('certain markdown blueprints end with a colon and not a new line', async () => {
   expect.assertions(3);
 
-  await globAsync(`${__dirname}/../src/blueprints/*`, { absolute: true }).then(
-    (files) => {
-      return Promise.all(
-        files.map((file) => {
-          return fs
-            .readFile(file, {
-              encoding: 'utf-8'
-            })
-            .then((blueprint) => expect(blueprint).toEndWith(':'));
-        })
-      );
-    }
-  );
+  await globAsync(
+    `${__dirname}/../src/blueprints/{contributing,security,support}.md.txt`,
+    { absolute: true }
+  ).then((files) => {
+    return Promise.all(
+      files.map((file) => {
+        return fs
+          .readFile(file, {
+            encoding: 'utf-8'
+          })
+          .then((blueprint) => expect(blueprint).toEndWith(':'));
+      })
+    );
+  });
 });
 
 describe('::runProjectLinter', () => {
@@ -1142,7 +1148,6 @@ describe('::runProjectLinter', () => {
         main: './dist/index.js',
         module: './dist/index.js',
         types: './dist/types/index.d.ts',
-        // TODO: why does this being malformed trigger a strange error?
         typesVersions: { '*': { '*': ['./dist/types/index.d.ts'] } }
       }
     });
@@ -3647,7 +3652,66 @@ describe('::runProjectLinter', () => {
       );
     });
 
-    it('warns when CONTRIBUTING.md, SECURITY.md, or .github/SUPPORT.md do not match their blueprints', async () => {
+    it('warns when any of several standard Markdown files do not match their blueprints', async () => {
+      expect.hasAssertions();
+      expect(true).toBeFalse();
+
+      // TODO: test that we're checking for total match, not just startsWith
+
+      const monorepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        linkProtectionMarkdownPaths: []
+      });
+
+      const monorepoSubRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        linkProtectionMarkdownPaths: []
+      });
+
+      const polyrepoRoot = await Linters.runProjectLinter({
+        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        linkProtectionMarkdownPaths: []
+      });
+
+      ['SECURITY.md', 'CONTRIBUTING.md', '.github/SUPPORT.md'].forEach((mdFile) => {
+        const blueprint = mdFile.split('/').at(-1)?.toLowerCase();
+
+        expect(monorepoRoot.output).toStrictEqual(
+          stringContainingErrorMessage(
+            'warn',
+            `${Fixtures.badMonorepoEmptyMdFiles.root}/${mdFile}`,
+            ErrorMessage.MarkdownBlueprintMismatch(`${blueprint}.txt`)
+          )
+        );
+
+        expect(monorepoSubRoot.output).not.toStrictEqual(
+          stringContainingErrorMessage(
+            'warn',
+            `${Fixtures.badMonorepoEmptyMdFiles.root}/${mdFile}`,
+            ErrorMessage.MarkdownBlueprintMismatch(`${blueprint}.txt`)
+          )
+        );
+
+        expect(polyrepoRoot.output).toStrictEqual(
+          stringContainingErrorMessage(
+            'warn',
+            `${Fixtures.badPolyrepoEmptyMdFiles.root}/${mdFile}`,
+            ErrorMessage.MarkdownBlueprintMismatch(`${blueprint}.txt`)
+          )
+        );
+      });
+
+      // ? Make sure pathing is working as expected
+      expect(monorepoSubRoot.output).not.toStrictEqual(
+        stringContainingErrorMessage(
+          'warn',
+          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/SECURITY.md`,
+          ErrorMessage.MarkdownBlueprintMismatch('security.md.txt')
+        )
+      );
+    });
+
+    it('warns when CONTRIBUTING.md, SECURITY.md, or .github/SUPPORT.md do not start with their blueprints', async () => {
       expect.hasAssertions();
 
       const monorepoRoot = await Linters.runProjectLinter({
@@ -3713,11 +3777,11 @@ describe('::runProjectLinter', () => {
           const pathString = path.toString();
           return Promise.resolve(
             pathString.endsWith('/SECURITY.md')
-              ? blueprintSecurity
+              ? blueprints.security
               : pathString.endsWith('/CONTRIBUTING.md')
-              ? blueprintContributing
+              ? blueprints.contributing
               : pathString.endsWith('/SUPPORT.md')
-              ? blueprintSupport
+              ? blueprints.support
               : readFileActual(path, options)
           );
         });

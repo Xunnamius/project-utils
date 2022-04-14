@@ -476,10 +476,10 @@ export async function runProjectLinter({
           if (ctx.project.json.devDependencies) {
             reportPkg('warn', ErrorMessage.PackageJsonIllegalKey('devDependencies'));
           }
-
-          // ? Has no unlisted cross-dependencies
-          tasks.push(Utils.checkCrossDependencies({ pkgJson: json, reporterFactory }));
         }
+
+        // ? Source files have well-formed imports
+        tasks.push(Utils.checkForWellFormedImports({ pkgJson: json, reporterFactory }));
       };
 
       if (mode == 'link-protection') {
@@ -709,6 +709,8 @@ export async function runProjectLinter({
             })
           );
         }
+
+        // TODO: add other standard Markdown file blueprint tests
 
         // ? Check for potentially disabled links in Markdown files
         if (linkProtectionMarkdownPaths) {

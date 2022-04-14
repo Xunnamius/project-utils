@@ -3,6 +3,7 @@ import yargs from 'yargs/yargs';
 import { debugFactory } from 'multiverse/debug-extended';
 import { LinterError } from './errors';
 import { defaultMarkdownGlob } from './constants';
+import { ensurePathIsAbsolute } from 'pkgverse/core/src/project-utils';
 
 import {
   runEslintLinter,
@@ -59,13 +60,6 @@ export function configureProgram(program?: Program): Context {
         default: process.cwd(),
         defaultDescription: 'process.cwd()'
       },
-      'src-path': {
-        describe:
-          'Absolute or relative paths that resolve to one or more directories ' +
-          'containing source files, or to one or more source files themselves.',
-        type: 'array',
-        default: ['./src']
-      },
       'md-path': {
         describe:
           'Absolute paths, relative paths, and/or globs that resolve to one ' +
@@ -76,7 +70,7 @@ export function configureProgram(program?: Program): Context {
       },
       project: {
         describe:
-          'An absolute or relative path to, or file name of a TypeScript tsconfig.json configuration file.',
+          'An absolute or relative path to, or file name of, a TypeScript tsconfig.json configuration file. Source paths are determined using this file\'s "files," "include," and "exclude" fields with all file extensions recognized by the TypeScript compiler considered.',
         type: 'string',
         default: 'tsconfig.lint.json'
       },
@@ -106,7 +100,6 @@ export function configureProgram(program?: Program): Context {
       const silent = finalArgv.silent as boolean;
       const tsconfig = finalArgv.project as string;
       const rootDir = finalArgv.rootDir as string;
-      const sourcePaths = finalArgv.srcPath as string[];
       const markdownPaths = finalArgv.mdPath as string[];
       const mode: NonNullable<Parameters<typeof runProjectLinter>[0]['mode']> =
         finalArgv.prePushOnly
@@ -118,7 +111,6 @@ export function configureProgram(program?: Program): Context {
       debug('finalArgv.silent: %O', silent);
       debug('finalArgv.tsconfig: %O', tsconfig);
       debug('finalArgv.rootDir: %O', rootDir);
-      debug('finalArgv.sourcePaths: %O', sourcePaths);
 
       if (markdownPaths.length == 1 && markdownPaths[0].endsWith('/')) {
         markdownPaths[0] += defaultMarkdownGlob;
@@ -126,6 +118,16 @@ export function configureProgram(program?: Program): Context {
 
       debug('finalArgv.markdownPaths: %O', markdownPaths);
       debug('finalArgv.mode: %O', mode);
+
+      ensurePathIsAbsolute({ path: rootDir });
+      // TODO: error if tsconfig is not readable by get-tsconfig
+
+      // TODO: Resolve these using glob
+      // TODO: Ignore files that don't have extensions in
+      // TODO: typescriptDefaultSourceExtensions
+      const sourcePaths: string[] = [];
+
+      debug('final source paths: %O', sourcePaths);
 
       const results = await Promise.all([
         runProjectLinter({ rootDir, linkProtectionMarkdownPaths: markdownPaths, mode }),

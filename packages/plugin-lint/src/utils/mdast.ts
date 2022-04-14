@@ -89,8 +89,7 @@ export function checkStandardLinks({
 }
 
 /**
- * Checks a standard markdown file (i.e. SECURITY.md, CONTRIBUTING.md,
- * .github/SUPPORT.md) at `mdPath` for correctness given the current
+ * Checks a standard markdown file at `mdPath` for correctness given the current
  * package.json data (`pkgJson`), reporting any issues via the `reporterFactory`
  * instance.
  */
@@ -104,9 +103,10 @@ export async function checkStandardMdFile({
   mdPath: string;
   pkgJson: PackageJsonWithConfig;
   standardTopmatter: StandardTopmatter | null;
-  standardLinks: StandardLinks;
+  standardLinks: StandardLinks | null;
   reporterFactory: ReporterFactory;
 }) {
+  const isAdvancedCheck = standardTopmatter || standardLinks;
   let mdFile: string | undefined;
 
   try {
@@ -126,77 +126,81 @@ export async function checkStandardMdFile({
       encoding: 'utf-8'
     });
 
-    if (!mdFile.startsWith(blueprint)) {
+    if (!(isAdvancedCheck ? mdFile.startsWith(blueprint) : mdFile == blueprint)) {
       reportMdFile('warn', ErrorMessage.MarkdownBlueprintMismatch(blueprintBasename));
     }
 
-    const mdAst = await getAst(mdPath);
+    if (isAdvancedCheck) {
+      const mdAst = await getAst(mdPath);
 
-    if (mdAst) {
-      const urlParams = getUrlParams(pkgJson);
+      if (mdAst) {
+        const urlParams = getUrlParams(pkgJson);
 
-      if (!urlParams) {
-        reportMdFile('warn', ErrorMessage.PackageJsonMissingKeysCheckSkipped());
-      } else {
-        if (standardTopmatter) {
-          Object.entries(standardTopmatter).forEach(([, badgeSpec]) => {
-            const badge = mdAst.children.find((child): child is Definition => {
-              return child.type == 'definition' && child.label == badgeSpec.label;
+        if (!urlParams) {
+          reportMdFile('warn', ErrorMessage.PackageJsonMissingKeysCheckSkipped());
+        } else {
+          if (standardTopmatter) {
+            Object.entries(standardTopmatter).forEach(([, badgeSpec]) => {
+              const badge = mdAst.children.find((child): child is Definition => {
+                return child.type == 'definition' && child.label == badgeSpec.label;
+              });
+
+              if (!badge) {
+                reportMdFile(
+                  'warn',
+                  ErrorMessage.MarkdownBadTopmatterMissingImageRefDef(badgeSpec.label)
+                );
+              } else {
+                const badgeUrl = badgeSpec.url(urlParams);
+
+                if (badge.url != badgeUrl) {
+                  reportMdFile(
+                    'warn',
+                    ErrorMessage.MarkdownBadTopmatterImageRefDefUrl(badge.label, badgeUrl)
+                  );
+                }
+
+                if (badge.title != badgeSpec.title) {
+                  reportMdFile(
+                    'warn',
+                    ErrorMessage.MarkdownBadTopmatterImageRefDefTitle(
+                      badge.label,
+                      badgeSpec.title
+                    )
+                  );
+                }
+              }
+
+              const link = mdAst.children.find((child): child is Definition => {
+                return child.type == 'definition' && child.label == badgeSpec.link.label;
+              });
+
+              if (!link) {
+                reportMdFile(
+                  'warn',
+                  ErrorMessage.MarkdownBadTopmatterMissingLinkRefDef(badgeSpec.link.label)
+                );
+              } else {
+                const linkUrl = badgeSpec.link.url(urlParams);
+                if (link.url != linkUrl) {
+                  reportMdFile(
+                    'warn',
+                    ErrorMessage.MarkdownBadTopmatterLinkRefDefUrl(link.label, linkUrl)
+                  );
+                }
+              }
             });
+          }
 
-            if (!badge) {
-              reportMdFile(
-                'warn',
-                ErrorMessage.MarkdownBadTopmatterMissingImageRefDef(badgeSpec.label)
-              );
-            } else {
-              const badgeUrl = badgeSpec.url(urlParams);
-
-              if (badge.url != badgeUrl) {
-                reportMdFile(
-                  'warn',
-                  ErrorMessage.MarkdownBadTopmatterImageRefDefUrl(badge.label, badgeUrl)
-                );
-              }
-
-              if (badge.title != badgeSpec.title) {
-                reportMdFile(
-                  'warn',
-                  ErrorMessage.MarkdownBadTopmatterImageRefDefTitle(
-                    badge.label,
-                    badgeSpec.title
-                  )
-                );
-              }
-            }
-
-            const link = mdAst.children.find((child): child is Definition => {
-              return child.type == 'definition' && child.label == badgeSpec.link.label;
+          if (standardLinks) {
+            checkStandardLinks({
+              mdAst,
+              urlParams,
+              standardLinks,
+              reporter: reportMdFile
             });
-
-            if (!link) {
-              reportMdFile(
-                'warn',
-                ErrorMessage.MarkdownBadTopmatterMissingLinkRefDef(badgeSpec.link.label)
-              );
-            } else {
-              const linkUrl = badgeSpec.link.url(urlParams);
-              if (link.url != linkUrl) {
-                reportMdFile(
-                  'warn',
-                  ErrorMessage.MarkdownBadTopmatterLinkRefDefUrl(link.label, linkUrl)
-                );
-              }
-            }
-          });
+          }
         }
-
-        checkStandardLinks({
-          mdAst,
-          urlParams,
-          standardLinks,
-          reporter: reportMdFile
-        });
       }
     }
   }

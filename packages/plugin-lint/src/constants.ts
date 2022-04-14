@@ -1,4 +1,27 @@
 /**
+ * File extensions whose imports will be scrutinized by plugin-lint. Taken from
+ * the TypeScript documentation. **Expects tsconfig with compiler options
+ * `"allowJs": true` and `"module": "nodenext"` set.**
+ */
+export const sourceExtensionsThatSupportImports = ['ts', 'tsx', 'mjs', 'mts'];
+
+/**
+ * The default file extensions used by TypeScript, ESLint, and others. Taken
+ * from the TypeScript documentation. **Expects tsconfig with compiler options
+ * `"allowJs": true` and `"module": "nodenext"` set.**
+ */
+export const typescriptDefaultSourceExtensions = [
+  ...sourceExtensionsThatSupportImports,
+  'js',
+  'jsx',
+  'cjs',
+  'cts',
+  'd.ts',
+  'd.mts',
+  'd.cts'
+];
+
+/**
  * Glob pattern used by default to select Markdown files.
  */
 export const defaultMarkdownGlob =
@@ -48,7 +71,6 @@ export const repoRootRequiredFiles = [
   '.github/ISSUE_TEMPLATE/BUG_REPORT.md',
   '.github/ISSUE_TEMPLATE/config.yml',
   '.github/ISSUE_TEMPLATE/FEATURE_REQUEST.md',
-  '.github/workflows/README.md',
   '.github/CODE_OF_CONDUCT.md',
   '.github/CODEOWNERS',
   '.github/dependabot.yml',
