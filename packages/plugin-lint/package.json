@@ -76,6 +76,7 @@
     "@babel/core": "^7.17.8",
     "@projector-js/core": "^1.2.0",
     "chalk": "^4.1.2",
+    "get-tsconfig": "^3.0.1",
     "mdast-util-from-markdown": "^1.2.0",
     "objectpath": "^2.0.0",
     "semver": "^7.3.5",
