@@ -708,9 +708,73 @@ export async function runProjectLinter({
               reporterFactory
             })
           );
-        }
 
-        // TODO: add other standard Markdown file blueprint tests
+          // ? CODE_OF_CONDUCT.md is consistent with blueprints
+          tasks.push(
+            Utils.checkStandardMdFile({
+              mdPath: `${root}/.github/CODE_OF_CONDUCT.md`,
+              pkgJson: ctx.project.json,
+              standardTopmatter: null,
+              standardLinks: null,
+              reporterFactory
+            })
+          );
+
+          // ? PULL_REQUEST_TEMPLATE.md is consistent with blueprints
+          tasks.push(
+            Utils.checkStandardMdFile({
+              mdPath: `${root}/.github/PULL_REQUEST_TEMPLATE.md`,
+              pkgJson: ctx.project.json,
+              standardTopmatter: null,
+              standardLinks: null,
+              reporterFactory
+            })
+          );
+
+          // ? BUG_REPORT.md is consistent with blueprints
+          tasks.push(
+            Utils.checkStandardMdFile({
+              mdPath: `${root}/.github/ISSUE_TEMPLATE/BUG_REPORT.md`,
+              pkgJson: ctx.project.json,
+              standardTopmatter: null,
+              standardLinks: null,
+              reporterFactory
+            })
+          );
+
+          // ? FEATURE_REQUEST.md is consistent with blueprints
+          tasks.push(
+            Utils.checkStandardMdFile({
+              mdPath: `${root}/.github/ISSUE_TEMPLATE/FEATURE_REQUEST.md`,
+              pkgJson: ctx.project.json,
+              standardTopmatter: null,
+              standardLinks: null,
+              reporterFactory
+            })
+          );
+
+          // ? config.yml is consistent with blueprints
+          tasks.push(
+            Utils.checkStandardMdFile({
+              mdPath: `${root}/.github/ISSUE_TEMPLATE/config.yml`,
+              pkgJson: ctx.project.json,
+              standardTopmatter: null,
+              standardLinks: null,
+              reporterFactory
+            })
+          );
+
+          // ? dependabot.yml is consistent with blueprints
+          tasks.push(
+            Utils.checkStandardMdFile({
+              mdPath: `${root}/.github/dependabot.yml`,
+              pkgJson: ctx.project.json,
+              standardTopmatter: null,
+              standardLinks: null,
+              reporterFactory
+            })
+          );
+        }
 
         // ? Check for potentially disabled links in Markdown files
         if (linkProtectionMarkdownPaths) {

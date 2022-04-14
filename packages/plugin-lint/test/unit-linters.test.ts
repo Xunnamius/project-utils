@@ -3654,9 +3654,20 @@ describe('::runProjectLinter', () => {
 
     it('warns when any of several standard Markdown files do not match their blueprints', async () => {
       expect.hasAssertions();
-      expect(true).toBeFalse();
 
-      // TODO: test that we're checking for total match, not just startsWith
+      const readFileActual = fs.readFile;
+
+      // ? Use one file to check that we're not using startsWith
+      jest.spyOn(fs, 'readFile').mockImplementation((path, options) => {
+        const pathString = path.toString();
+        return Promise.resolve(
+          pathString.endsWith('/CODE_OF_CONDUCT.md')
+            ? blueprints.code_of_conduct + 'additional content'
+            : pathString.endsWith('.md') || pathString.endsWith('.yml')
+            ? 'fake content'
+            : readFileActual(path, options)
+        );
+      });
 
       const monorepoRoot = await Linters.runProjectLinter({
         rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
@@ -3673,7 +3684,14 @@ describe('::runProjectLinter', () => {
         linkProtectionMarkdownPaths: []
       });
 
-      ['SECURITY.md', 'CONTRIBUTING.md', '.github/SUPPORT.md'].forEach((mdFile) => {
+      [
+        '.github/CODE_OF_CONDUCT.md',
+        '.github/PULL_REQUEST_TEMPLATE.md',
+        '.github/ISSUE_TEMPLATE/BUG_REPORT.md',
+        '.github/ISSUE_TEMPLATE/FEATURE_REQUEST.md',
+        '.github/ISSUE_TEMPLATE/config.yml',
+        '.github/dependabot.yml'
+      ].forEach((mdFile) => {
         const blueprint = mdFile.split('/').at(-1)?.toLowerCase();
 
         expect(monorepoRoot.output).toStrictEqual(
@@ -3700,15 +3718,6 @@ describe('::runProjectLinter', () => {
           )
         );
       });
-
-      // ? Make sure pathing is working as expected
-      expect(monorepoSubRoot.output).not.toStrictEqual(
-        stringContainingErrorMessage(
-          'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/SECURITY.md`,
-          ErrorMessage.MarkdownBlueprintMismatch('security.md.txt')
-        )
-      );
     });
 
     it('warns when CONTRIBUTING.md, SECURITY.md, or .github/SUPPORT.md do not start with their blueprints', async () => {

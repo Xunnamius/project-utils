@@ -106,7 +106,7 @@ export async function checkStandardMdFile({
   standardLinks: StandardLinks | null;
   reporterFactory: ReporterFactory;
 }) {
-  const isAdvancedCheck = standardTopmatter || standardLinks;
+  const isAdvancedCheck = !!(standardTopmatter || standardLinks);
   let mdFile: string | undefined;
 
   try {
