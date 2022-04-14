@@ -59,7 +59,7 @@ ESLint, the following checks are performed:
 - ⛔ ⹋⹋ Errors when any Markdown file matching the provided `--md-path` glob(s)
   contain disabled links
   - This check can be skipped for specific files by setting
-    `config['plugin-lint']['link-protection'].ignore = ['relative/path/to/file']`
+    `config['plugin-lint']['link-protection'].ignore = ['relative/path/or/glob']`
     in `package.json`
 - ⛔ Errors when depending on a [non-pinned][8] [pre-release][20] package
   version (like `"^x.y.z-alpha.1"`, which should instead be `"x.y.z-alpha.1"`)
@@ -68,6 +68,26 @@ ESLint, the following checks are performed:
     should therefore be pinned
   - Pinned pre-release package versions will still trigger a "pinned package
     version" warning (below), as they should
+- ⛔ † Errors when a source file contains an import but does not list the
+  imported package in the `package.json` `dependencies`, `peerDependencies`, or
+  `optionalDependencies` fields
+  - Also checks for unlisted cross-dependencies when linting a monorepo
+  - [Self-referential imports][13] are excluded from this check
+  - Checks of [type imports][22] additionally consider the `package.json`
+    `devDependencies` field
+  - Checks of source files ending in `.test.ts` (or any other supported
+    extension), source files with `/test/` or `/__test__/` in their path, or
+    source files located at a package root additionally consider the
+    `package.json` `devDependencies` field. These rules can be _overwritten_ by
+    setting
+    `config['plugin-lint']['imports'].considerDevDeps = ['relative/path/or/glob']`
+    in `package.json`
+- ⚠️ Warns when one or more `package.json` files exist at a location that is not
+  at the project root or, when linting a monorepo, at a sub-root
+  - Non-root `package.json` files can be used to [specify the `type` of `.js`
+    files that exist under it in the filesystem tree][23]. Unfortunately, these
+    arbitrary `package.json` files are not well-supported by Projector tooling
+    yet
 - ⚠️ Warns when missing `tsconfig.json`, `tsconfig.docs.json`,
   `tsconfig.eslint.json`, `tsconfig.lint.json`, or `tsconfig.types.json` files
   - When linting a [monorepo root][12], only `tsconfig.json`,
@@ -157,7 +177,6 @@ These additional checks are performed _except_ when linting a [sub-root][12]:
   - `.github/ISSUE_TEMPLATE/BUG_REPORT.md`
   - `.github/ISSUE_TEMPLATE/config.yml`
   - `.github/ISSUE_TEMPLATE/FEATURE_REQUEST.md`
-  - `.github/workflows/README.md`
   - `.github/CODE_OF_CONDUCT.md`
   - `.github/CODEOWNERS`
   - `.github/dependabot.yml`
@@ -169,8 +188,12 @@ These additional checks are performed _except_ when linting a [sub-root][12]:
     check is skipped
 - ⚠️ Warns when missing the `.github`, `.github/ISSUE_TEMPLATE`,
   `.github/workflows`, `.husky`, or `types` directories
-- ⚠️ Warns when the contents of `CONTRIBUTING.md`, `SECURITY.md`, or
-  `.github/SUPPORT.md` differ from their latest blueprints
+- ⚠️ Warns when the contents of `CONTRIBUTING.md`, `SECURITY.md`,
+  `.github/SUPPORT.md`, `.github/CODE_OF_CONDUCT.md`,
+  `.github/PULL_REQUEST_TEMPLATE.md`, `.github/ISSUE_TEMPLATE/BUG_REPORT.md`,
+  `.github/ISSUE_TEMPLATE/FEATURE_REQUEST.md`,
+  `.github/ISSUE_TEMPLATE/config.yml`, or `.github/dependabot.yml` differ from
+  their latest blueprints
 - ⚠️ ‡ Warns when `SECURITY.md` or `.github/SUPPORT.md` topmatter is pointing to
   the wrong package name and/or repo uri
 - ⚠️ ‡ Warns when standard links in `CONTRIBUTING.md`, `SECURITY.md`, or
@@ -195,21 +218,22 @@ These additional checks are performed only if linting a [monorepo root][12]:
 
 These additional checks are performed only if linting a [sub-root][12]:
 
-- ⛔ † Errors when this package's source imports another package from the same
-  monorepo (i.e. a cross-dependency) but does not list said package in
-  `package.json` `dependencies` field
-  - [Self-referential imports][13] are excluded from this check
-- ⛔ † Errors when this package's source imports another package from the same
+- ⛔ † Errors when a source file contains an import of a package from the same
   monorepo without using the [`pkgverse` alias][21]
-  - Using this alias, which is transformed into a non-alias import allows jest
-    tests to run using the direct source code rather than the build artifacts
+  - Using a [`pkgverse` alias][21], which is transformed into a cross-dependency
+    import when built for production, allows Jest tests to run using the direct
+    source code rather than the build artifacts when working in monorepos
+- ⛔ † Errors when a [`pkgverse` alias][21] does not have a matching entry point
+  in the `package.json` `exports` field
 - ⚠️ Warns when `package.json` is missing the
   `config['plugin-build'].codecov.flag` field
 - ⚠️ Warns when `package.json` contains `devDependencies`
   - These should be located in the project root's `package.json` file instead
 
 > † This check is performed using [Babel][16] AST static analysis. Dynamic
-> imports are not checked.\
+> imports and requires are not checked. Files ending in `.js` (when the
+> package's `package.json` `type` field equals `"commonjs"`), `.jsx`, `.cjs`,
+> `.cts`, and `.d.*` are excluded from these checks.\
 > ‡ This check is performed using [mdast-util-from-markdown][17] AST static analysis.\
 > ⹋ When in pre-push mode (`--pre-push-only`), only these checks are performed.
 > All others are skipped.\
@@ -251,17 +275,17 @@ Help text (use `--help` to get the most up-to-date version):
                               TypeScript configuration files, and that relative
                               paths and globs are resolved against. This must be an
                               absolute path.       [string] [default: process.cwd()]
-      --src-path              Absolute or relative paths that resolve to one or more
-                              directories containing source files, or to one or more
-                              source files themselves.  [array] [default: ["./src"]]
       --md-path               Absolute paths, relative paths, and/or globs that
                               resolve to one or more markdown files. If a single
                               argument ending in "/" is given, the default glob
                               pattern will be appended to this argument instead.
                                  [array] [default: .md files not under node_modules]
-      --project               An absolute or relative path to, or file name of a
-                              TypeScript tsconfig.json configuration file.
-                                            [string] [default: "tsconfig.lint.json"]
+      --project               An absolute or relative path to, or file name of, a
+                              TypeScript tsconfig.json configuration file. Source
+                              paths are determined using this file's "files,"
+                              "include," and "exclude" fields with all file
+                              extensions recognized by the TypeScript compiler
+                              considered.   [string] [default: "tsconfig.lint.json"]
       --pre-push-only         In pre-push mode, a limited subset of checks are
                               performed. Pre-push linting mode is meant to be
                               invoked by the "pre-push" Git hook.
@@ -370,3 +394,6 @@ information.
   https://github.com/Xunnamius/projector#dependency-topology-and-script-concurrency
 [20]: https://semver.org/#spec-item-9
 [21]: /packages/core/src/import-aliases.ts
+[22]:
+  https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html#type-only-imports-and-export
+[23]: https://nodejs.org/api/packages.html#determining-module-system
