@@ -24,6 +24,13 @@ list minimum requirements to be met for monorepo functionality
 
 lernaPackage => workspace setting
 
+need to add another step to release.config.js that replaces all monorepo package
+dependencies (dep, dev, peer, etc) in all package.json files with the version
+that is about to be published, commits that, and then commits a revert that
+changes these back to their file://... urls. Does this need coordination with
+semantic-release-plugin? Add a "why do it this way?" section that talks about a
+package.json at the publish tag that matches what has been published to npm.
+
 ## Install
 
 ```bash
@@ -50,7 +57,7 @@ information.
 [badge-blm]: https://xunn.at/badge-blm 'Join the movement!'
 [link-blm]: https://xunn.at/donate-blm
 [badge-maintenance]:
-  https://img.shields.io/maintenance/active/2022
+  https://img.shields.io/maintenance/active/2023
   'Is this package maintained?'
 [link-repo]: https://github.com/xunnamius/projector
 [badge-last-commit]:

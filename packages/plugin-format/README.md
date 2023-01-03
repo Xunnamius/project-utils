@@ -22,6 +22,18 @@
 
 remark-sort-references
 
+doctoc and remark should ignore whichever files prettier is ignoring (does
+prettier have an API to get ignored files? Or do we have to look at
+.prettierignore directly). That is: use fast-glob to interpret a shared glob and
+then pass the same files to each program.
+
+Needs a special mode where it can run its constituent parts individually based
+on the extension of the file passed in. Essentially, it can accept and/or has
+internally a lint-staged.config.js style configuration capable of running on
+certain formatters
+
+Also the ability to run the individual formatters manually
+
 ## Install
 
 ```bash
@@ -48,7 +60,7 @@ information.
 [badge-blm]: https://xunn.at/badge-blm 'Join the movement!'
 [link-blm]: https://xunn.at/donate-blm
 [badge-maintenance]:
-  https://img.shields.io/maintenance/active/2022
+  https://img.shields.io/maintenance/active/2023
   'Is this package maintained?'
 [link-repo]: https://github.com/xunnamius/projector
 [badge-last-commit]:

@@ -23,6 +23,12 @@
 build-docs config\['plugin-build'].docs.entry can be a simple path, an array of
 paths, a glob path, or an array of glob paths
 
+actually, use cosmiconfig for config
+
+all plugin-X CLI tools need to have the ability to do project-wide stuff or just
+package-scoped stuff, and monorepo package's package.json must be configured to
+reach back to the root package.json but pass the appropriate info/flags
+
 ## Install
 
 ```bash
@@ -49,7 +55,7 @@ information.
 [badge-blm]: https://xunn.at/badge-blm 'Join the movement!'
 [link-blm]: https://xunn.at/donate-blm
 [badge-maintenance]:
-  https://img.shields.io/maintenance/active/2022
+  https://img.shields.io/maintenance/active/2023
   'Is this package maintained?'
 [link-repo]: https://github.com/xunnamius/projector
 [badge-last-commit]:
