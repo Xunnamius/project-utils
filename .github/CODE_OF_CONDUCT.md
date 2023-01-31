@@ -57,9 +57,9 @@ further defined and clarified by project maintainers.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported by contacting the project team at
-[Xunnamius@users.noreply.github.com][1]. All complaints will be reviewed and
-investigated and will result in a response that is deemed necessary and
-appropriate to the circumstances. The project team is obligated to maintain
+[Xunnamius@users.noreply.github.com][x-mailto-xunn]. All complaints will be
+reviewed and investigated and will result in a response that is deemed necessary
+and appropriate to the circumstances. The project team is obligated to maintain
 confidentiality with regard to the reporter of an incident. Further details of
 specific enforcement policies may be posted separately.
 
@@ -69,14 +69,15 @@ members of the project's leadership.
 
 ## Attribution
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage],
-version 1.4, available at
-[https://www.contributor-covenant.org/version/1/4/code-of-conduct.html][2]
+This Code of Conduct is adapted from the [Contributor
+Covenant][x-external-contribcoven], version 1.4, available at
+[https://www.contributor-covenant.org/version/1/4/code-of-conduct.html][x-external-contribcoven-coc]
 
 For answers to common questions about this code of conduct, see
-[https://www.contributor-covenant.org/faq][3]
+[https://www.contributor-covenant.org/faq][x-external-contribcoven-faq]
 
-[homepage]: https://www.contributor-covenant.org
-[1]: mailto:Xunnamius@users.noreply.github.com
-[2]: https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
-[3]: https://www.contributor-covenant.org/faq
+[x-external-contribcoven]: https://www.contributor-covenant.org
+[x-external-contribcoven-coc]:
+  https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
+[x-external-contribcoven-faq]: https://www.contributor-covenant.org/faq
+[x-mailto-xunn]: mailto:Xunnamius@users.noreply.github.com

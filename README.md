@@ -1,31 +1,27 @@
-<!-- prettier-ignore-start -->
-
 <!-- badges-start -->
 
-[![Black Lives Matter!][badge-blm]][link-blm]
-[![Last commit timestamp][badge-last-commit]][link-repo]
-[![Open issues][badge-issues]][link-issues]
-[![Pull requests][badge-pulls]][link-pulls]
-[![Maintained with Projector][badge-projector]][link-projector]
-[![Uses semantic-release][badge-semantic-release]][link-semantic-release]
+[![Black Lives Matter!][x-badge-blm-image]][x-badge-blm-link]
+[![Last commit timestamp][x-badge-lastcommit-image]][x-badge-repo-link]
+[![Open issues][x-badge-issues-image]][x-badge-issues-link]
+[![Pull requests][x-badge-pulls-image]][x-badge-pulls-link]
+[![Maintained with Projector][x-badge-projector-image]][x-badge-projector-link]
+[![Uses semantic-release][x-badge-semanticrelease-image]][x-badge-semanticrelease-link]
 
 <!-- badges-end -->
-
-<!-- prettier-ignore-end -->
 
 # 📽️ Projector
 
 > 🚧 **EXPERIMENTAL** 🚧 Though I use it as a Lerna replacement, **Projector is
-> still very much in its infancy**! Check out the [public roadmap][72] to see
-> the lay of things. What follows is [RDD][79] 🙂
+> still very much in its infancy**! Check out the [public roadmap][1] to see the
+> lay of things. What follows is [RDD][2] 🙂
 
 Projector is a lightweight monorepo _and_ polyrepo management toolkit with a
 focus on simplicity, flexibility, and performance. It's built around
-[semantic-release][2], [conventional-changelog][3], and
-[conventional-commits][4] for commit-based automated release flows and
-(optionally) [GitHub Actions][5] and [Dependabot][6] for [CI][7]/[CD][8]. It
-supports task concurrency and, for monorepos, [topologically ordered][42]
-execution and [cross-dependency version coherence][38] during release.
+[semantic-release][3], [conventional-changelog][4], and
+[conventional-commits][5] for commit-based automated release flows and
+(optionally) [GitHub Actions][6] and [Dependabot][7] for [CI][8]/[CD][9]. It
+supports task concurrency and, for monorepos, [topologically ordered][10]
+execution and [cross-dependency version coherence][11] during release.
 
 Projector leans on as much native npm functionality and popular tooling as
 possible. This means **your project is never locked-in to using Projector**;
@@ -36,39 +32,43 @@ tooling already provide.
 
 In this way, **Projector tries to avoid being Yet Another Thing you have to
 learn.** If you know how to use git, npm, and semantic-release, you're already
-90% there. Combined with [life cycle plugins][40], Projector is flexible enough
+90% there. Combined with [life cycle plugins][12], Projector is flexible enough
 to integrate with most JS projects—be it authoring a library, building a
 serverless or JAMstack app, bundling a CLI tool, etc.
 
-[See what Projector can do for you][41], or just [jump right in!][74]
+[See what Projector can do for you][13], or just [jump right in!][14]
 
 ---
 
-- [Feature Overview][83]
-  - [CLI Examples][41]
-- [System Requirements][46]
-- [Installation][47]
-  - [CLI][48]
-  - [Shared Configurations][49]
-  - [GitHub Action][50]
-  - [semantic-release Plugin][51]
-  - [Library][52]
-- [Terminology][42]
-- [Usage][45]
-  - [Getting Started][74]
-    - [Cross-Dependency Version Coherence][38]
-  - [CLI Command Glossary][70]
-  - [Projector Project Structure][90]
-    - [Monorepo Structure][44]
-  - [Dependency Topology and Script Concurrency][75]
-  - [Template Repositories][69]
-    - [Pre-made Templates (Lenses)][13]
-  - [Life Cycle Scripts (Plugins)][40]
-  - [Badge Swag][71]
-- [Documentation][53]
-  - [Credits][99]
-  - [License][54]
-- [Contributing and Support][55]
+<!-- remark-ignore-start -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Feature Overview](#feature-overview)
+  - [CLI Examples](#cli-examples)
+- [System Requirements](#system-requirements)
+- [Installation](#installation)
+  - [CLI](#cli)
+  - [Shared Configurations](#shared-configurations)
+  - [GitHub Action](#github-action)
+  - [Semantic-Release Plugin](#semantic-release-plugin)
+  - [Library](#library)
+- [Terminology](#terminology)
+- [Usage](#usage)
+  - [Getting Started](#getting-started)
+  - [CLI Command Glossary](#cli-command-glossary)
+  - [Projector Project Structure](#projector-project-structure)
+  - [Dependency Topology and Script Concurrency](#dependency-topology-and-script-concurrency)
+  - [Template Repositories](#template-repositories)
+  - [Life Cycle Scripts (Plugins)](#life-cycle-scripts-plugins)
+  - [Badge Swag](#badge-swag)
+- [Appendix](#appendix)
+  - [Inspiration](#inspiration)
+- [Contributing and Support](#contributing-and-support)
+  - [Contributors](#contributors)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- remark-ignore-end -->
 
 ## Feature Overview
 
@@ -78,47 +78,47 @@ serverless or JAMstack app, bundling a CLI tool, etc.
 - Built on popular open source tooling.
   - Projector's core feature set relies on git, npm, and semantic-release.
   - Projector provides several [opinionated pre-made configurations and
-    plugins][49] for TypeScript, webpack, Babel, Jest, and other tools, but you
+    plugins][15] for TypeScript, webpack, Babel, Jest, and other tools, but you
     can (and should) easily substitute your own.
-  - Projector uses [lage][76], [backfill][77], and [Threads.js][86] for
+  - Projector uses [lage][16], [backfill][17], and [Threads.js][18] for
     topologically-ordered concurrent script/task execution and output caching.
-    See the [Dependency Topology and Script Concurrency][75] section for
+    See the [Dependency Topology and Script Concurrency][19] section for
     details.
-  - Projector uses [glob][80] for easy workspace selection, [debug][15] for
-    debugging support, [npm-check-updates][12] to selectively update
-    dependencies, and [Inquirer.js][87] to gather input.
+  - Projector uses [glob][20] for easy workspace selection, [debug][21] for
+    debugging support, [npm-check-updates][22] to selectively update
+    dependencies, and [Inquirer.js][23] to gather input.
 - Turnkey support for Continuous Integration and Deployment with
-  [`projector-pipeline`][14].
+  [`projector-pipeline`][24].
 - Supports deep customizations through simple npm-esque [life cycle
-  plugins][40].
-  - Projector will call an [npm script][39] (à la `npm run an-npm-script`) with
-    a [well-defined name][62], if it exists, whenever an interesting event
+  plugins][12].
+  - Projector will call an [npm script][25] (à la `npm run an-npm-script`) with
+    a [well-defined name][26], if it exists, whenever an interesting event
     occurs.
-- Robust [debugging output][15] available on demand.
+- Robust [debugging output][21] available on demand.
   - Set `DEBUG=projector` to enable debug output when running Projector.
   - Set `DEBUG=projector:<projector-package-id>` to view debug output from a
     single Projector package.
     - `<projector-package-id>` must be the name of a directory [listed
-      here][20]. For example: `DEBUG=projector:config-babel`.
+      here][27]. For example: `DEBUG=projector:config-babel`.
   - Set `DEBUG=projector:all` (or `DEBUG=projector:<projector-package-id>:all`)
     to view all possible debug output Projector generates, including extra
     information that is normally hidden (potentially _very_ verbose).
 
 ### CLI Examples
 
-> See [`@projector-js/cli`][22] for all available CLI commands and their
+> See [`@projector-js/cli`][28] for all available CLI commands and their
 > options.
 
-> [Like npm][88], the `-w` option, short for "workspace," matches against 1) an
-> exact path or parent path in the [`workspaces` config][56] or 2) an exact
-> workspace [`name`][89]. _Unlike_ npm, `-w` also supports [glob][80] matching
+> [Like npm][29], the `-w` option, short for "workspace," matches against 1) an
+> exact path or parent path in the [`workspaces` config][30] or 2) an exact
+> workspace [`name`][31]. _Unlike_ npm, `-w` also supports [glob][20] matching
 > against the aforesaid paths and `name`s. For example, `-w '*pkg*'` will match
 > workspaces with `name` "some-pkg-1" and "another-pkg-2" in their
 > `package.json` files. The `-ws` option is supported as well.
 
 > Commands executed _concurrently_ can be run in topological order, in simple
 > parallel, or sequentially (no concurrency) depending on CLI arguments. See the
-> [Dependency Topology and Script Concurrency][75] section for details.
+> [Dependency Topology and Script Concurrency][19] section for details.
 
 - Build one, some, or all workspaces concurrently.
   > `projector build -w pkg-1`\
@@ -131,7 +131,7 @@ serverless or JAMstack app, bundling a CLI tool, etc.
   > `projector test --coverage --collectCoverageFrom 'src/**/*.ts' some-test`\
   > `projector test`
 - Release from one, some, or all workspaces concurrently (including
-  [cross-dependency version coherence][38] for monorepos).
+  [cross-dependency version coherence][11] for monorepos).
   > `projector publish -w pkg-1`\
   > `projector publish -w pkg-1 -w pkg-2 -w pkg-3`\
   > `projector publish -ws`\
@@ -154,7 +154,7 @@ serverless or JAMstack app, bundling a CLI tool, etc.
   > `projector install --save-dev install-to-root`\
   > `projector uninstall -w pkg-1 installed-2`\
   > `projector uninstall -ws uninstall-from-every-workspace`
-- [Update the dependencies of][12] one, some, or all workspaces, optionally
+- [Update the dependencies of][22] one, some, or all workspaces, optionally
   committing the updates by type (e.g. `devDependencies`, `peerDependencies`,
   etc).
   > `projector update -w packages/pkg-1`\
@@ -162,7 +162,7 @@ serverless or JAMstack app, bundling a CLI tool, etc.
   > `projector update --no-commits -w pkg-1 -w pkg-3`\
   > `projector update --doctor -ws`\
   > `projector update`
-- Create new projects from scratch, or from a [custom template][13].
+- Create new projects from scratch, or from a [custom template][32].
   > `projector create new-project-name`\
   > `projector create --monorepo`\
   > `projector create new-proj-name --using /some/path/to/template`\
@@ -184,14 +184,16 @@ serverless or JAMstack app, bundling a CLI tool, etc.
 
 - At the moment, Projector is only guaranteed to work on Linux (Ubuntu) systems.
   It likely works on any unix-based OS. Projector has not been tested on Windows
-  or [WSL][16], though it should work with the latter. Full Windows support may
+  or [WSL][33], though it should work with the latter. Full Windows support may
   be considered in the future.
 - At the moment, Projector only works with npm. It is likely a short jump to
   enabling Yarn and/or pnpm support and this may be considered in the future.
-- Projector requires an [actively maintained][17] version of [Node.js and
-  npm][18] be installed.
-- Projector requires [Git][19] be installed.
-- See [each individual package][20]'s documentation for further requirements.
+- Projector requires an [actively maintained][34] version of [Node.js and
+  npm][35] be installed.
+- Projector requires [Git][36] be installed.
+- See [each individual package][27]'s documentation for further requirements.
+
+<!-- TODO: rename -->
 
 ## Installation
 
@@ -199,19 +201,19 @@ There are several ways to utilize Projector: as a _CLI tool or npm script_, as a
 source of _shared configuration_, as a _GitHub Action_, as a _semantic-release
 plugin_, and as an _imported library_.
 
-See [Getting Started][74] for details on how to use the various components that
+See [Getting Started][14] for details on how to use the various components that
 make up Projector.
 
 ### CLI
 
-Install the [omnibus Projector package][21] locally:
+Install the [omnibus Projector package][37] locally:
 
 ```shell
 npm install --save-dev projector-js
 ```
 
 To avoid prefixing every command with `npx projector`, you can install
-[Projector's CLI package][22] globally:
+[Projector's CLI package][28] globally:
 
 ```shell
 npm install -g @projector-js/cli
@@ -224,46 +226,47 @@ This makes the `p` and `projector` commands available in your system's PATH.
 The following tweakable (but opinionated) tooling configurations are available
 for Projector projects. See each individual package's documentation for details.
 
-- Babel ([`@projector-js/config-babel`][23])
-- commitlint ([`@projector-js/config-commitlint`][24])
-- conventional-changelog ([`@projector-js/config-conventional-changelog`][25])
-- ESLint ([`@projector-js/config-eslint`][26])
-- Husky ([`@projector-js/config-husky`][65])
-- Jest ([`@projector-js/config-jest`][27])
-- lint-staged ([`@projector-js/config-lint-staged`][28])
-- Next.js ([`@projector-js/config-next`][29])
-- Prettier ([`@projector-js/config-prettier`][30])
-- semantic-release-atam ([`@projector-js/config-semantic-release-atam`][31])
-- TSConfig ([`@projector-js/config-tsconfig`][32])
-- webpack ([`@projector-js/config-webpack`][33])
+- Babel ([`@projector-js/config-babel`][38])
+- commitlint
+  ([`@projector-js/config-commitlint`][x-repo-all-contributors-emojis])
+- conventional-changelog ([`@projector-js/config-conventional-changelog`][39])
+- ESLint ([`@projector-js/config-eslint`][40])
+- Husky ([`@projector-js/config-husky`][41])
+- Jest ([`@projector-js/config-jest`][42])
+- lint-staged ([`@projector-js/config-lint-staged`][43])
+- Next.js ([`@projector-js/config-next`][44])
+- Prettier ([`@projector-js/config-prettier`][45])
+- semantic-release-atam ([`@projector-js/config-semantic-release-atam`][46])
+- TSConfig ([`@projector-js/config-tsconfig`][47])
+- webpack ([`@projector-js/config-webpack`][48])
 
-[Unless you're using a monorepo][44], these configurations are entirely optional
+[Unless you're using a monorepo][49], these configurations are entirely optional
 and should only be used if you don't already have your own tooling stack
-configured. See [Projector Project Structure][90] for more details.
+configured. See [Projector Project Structure][50] for more details.
 
-Additionally, several opinionated [life cycle plugins][40] are available. Since
+Additionally, several opinionated [life cycle plugins][12] are available. Since
 plugins are low overhead and _extremely_ easy to create (you don't even have to
-make a new file), you'll likely want to [write your own][40] instead.
+make a new file), you'll likely want to [write your own][12] instead.
 
-- [`@projector-js/plugin-build`][91]
-- [`@projector-js/plugin-clean`][92]
-- [`@projector-js/plugin-dev`][93]
-- [`@projector-js/plugin-format`][94]
-- [`@projector-js/plugin-github`][95]
-- [`@projector-js/plugin-lint`][61]
-- [`@projector-js/plugin-list`][96]
-- [`@projector-js/plugin-list-types`][63]
-- [`@projector-js/plugin-metrics`][64]
-- [`@projector-js/plugin-prepare`][97]
-- [`@projector-js/plugin-sync-files`][66]
-- [`@projector-js/plugin-sync-vercel`][67]
-- [`@projector-js/plugin-test`][98]
+- [`@projector-js/plugin-build`][51]
+- [`@projector-js/plugin-clean`][52]
+- [`@projector-js/plugin-dev`][53]
+- [`@projector-js/plugin-format`][54]
+- [`@projector-js/plugin-github`][55]
+- [`@projector-js/plugin-lint`][56]
+- [`@projector-js/plugin-list`][57]
+- [`@projector-js/plugin-list-types`][58]
+- [`@projector-js/plugin-metrics`][59]
+- [`@projector-js/plugin-prepare`][60]
+- [`@projector-js/plugin-sync-files`][61]
+- [`@projector-js/plugin-sync-vercel`][62]
+- [`@projector-js/plugin-test`][63]
 
 ### GitHub Action
 
-See [`projector-pipeline`][14].
+See [`projector-pipeline`][24].
 
-### semantic-release Plugin
+### Semantic-Release Plugin
 
 For monorepos, the semantic-release plugin enforces cross-dependency version
 coherence and topological ordering during the release cycle. **Installing this
@@ -275,7 +278,7 @@ First, install the plugin:
 npm install --save-dev @projector-js/semantic-release-plugin
 ```
 
-Then, add the plugin to your [`release.config.js`][73] configuration file:
+Then, add the plugin to your [`release.config.js`][64] configuration file:
 
 ```javascript
 {
@@ -289,7 +292,7 @@ Then, add the plugin to your [`release.config.js`][73] configuration file:
 }
 ```
 
-See [`@projector-js/semantic-release-plugin`][34] for more details.
+See [`@projector-js/semantic-release-plugin`][65] for more details.
 
 ### Library
 
@@ -309,41 +312,41 @@ import { getEslintAliases() } from '@projector-js/core/import-aliases';
 console.log(getEslintAliases());
 ```
 
-See [`@projector-js/core`][35] for details.
+See [`@projector-js/core`][66] for details.
 
 ## Terminology
 
 - **polyrepo**: a git repository containing a root `package.json` file with no
-  [`workspaces`][56] field. A polyrepo is the opposite of a _monorepo_.
+  [`workspaces`][30] field. A polyrepo is the opposite of a _monorepo_.
 - **monorepo**: a git repository containing multiple packages/workspaces, each
-  listed under the [`workspaces`][56] field in the root `package.json`. A
+  listed under the [`workspaces`][30] field in the root `package.json`. A
   monorepo is the opposite of a _polyrepo_.
 - **project root**: the top-level directory of a git repository and Projector
   project; it contains the root `package.json` file. This directory is also
   referred to as: "repository root," `rootDir` (always as an absolute path),
-  "root package" (in [npm documentation][56]), "monorepo/polyrepo/repo root," or
+  "root package" (in [npm documentation][30]), "monorepo/polyrepo/repo root," or
   simply "root" (.e.g. "root `package.json`").
-- **package root**: synonymous with a [workspace][56] in a monorepo. It contains
+- **package root**: synonymous with a [workspace][30] in a monorepo. It contains
   a package/workspace's `package.json` file. The basename of this directory
   (e.g. `c` in `/a/b/c/`) is also referred to as the `package-id`, which may or
   may not match the `name` field in the package's `package.json` file. These
   directories are also referred to as a "monorepo package" or simply "sub-root"
   (.e.g. "sub-root `package.json`").
-- [**topological order**][81]: a sequence of packages where dependent packages
+- [**topological order**][67]: a sequence of packages where dependent packages
   always come before their dependencies—a so-called "package dependency order".
   Topological ordering ensures otherwise-concurrent tasks are performed at the
   right time and order (e.g. regenerate types in a core package before linting
-  its dependent packages). [Here's an illustrated example][82].
+  its dependent packages). [Here's an illustrated example][68].
 
 ## Usage
 
-To use Projector, you must first [install the CLI][48].
+To use Projector, you must first [install the CLI][69].
 
-From there, you can use [`projector create`][100] to create a new monorepo or
-polyrepo if you want. See [Getting Started][74] to walk through inspecting,
+From there, you can use [`projector create`][70] to create a new monorepo or
+polyrepo if you want. See [Getting Started][14] to walk through inspecting,
 testing, and publishing an existing monorepo instead.
 
-If you don't already have your own tooling setup, [pre-made configurations][49]
+If you don't already have your own tooling setup, [pre-made configurations][15]
 can be used to configure their respective tools, and are easily tweaked. For
 example, `@projector-js/config-eslint` can be used in `.eslintrc.js` like so:
 
@@ -366,16 +369,16 @@ module.exports = require('@projector-js/config-eslint')((config) => {
 });
 ```
 
-If your project is a monorepo, you'll have to use [semantic-release-atam][2]
-(PRs pending) and the [semantic-release plugin][51] **instead of** the normal
+If your project is a monorepo, you'll have to use [semantic-release-atam][3]
+(PRs pending) and the [semantic-release plugin][71] **instead of** the normal
 semantic-release. semantic-release-atam is a drop-in replacement for
 semantic-release. Additionally, if you're using conventional-changelog, consider
-using [the version patched to work better with monorepos][25] (PRs pending)
+using [the version patched to work better with monorepos][39] (PRs pending)
 instead.
 
 Projector's primary job is to run npm scripts at the right time; [Projector
-plugins][49] are portable plug and play npm scripts. See [Life Cycle Scripts
-(plugins)][40] for details on Projector's plugin system. And since they're just
+plugins][15] are portable plug and play npm scripts. See [Life Cycle Scripts
+(plugins)][12] for details on Projector's plugin system. And since they're just
 npm scripts with a fancy name, plugins are easy to author yourself, even
 directly in the relevant `package.json` file (no new file needed).
 
@@ -400,36 +403,38 @@ plugins can be added to package via `package.json`:
 ```
 
 If you're pushing to GitHub and using GitHub Actions, you can optionally set up
-CI/CD for your project using Projector's [GitHub Action][50].
+CI/CD for your project using Projector's [GitHub Action][72].
 
 Finally, you can optionally setup [advanced concurrent task pipelines and
-caching][75], if desired.
+caching][19], if desired.
 
 ### Getting Started
 
-You can use [`projector create`][22] to initialize a new project, but suppose we
+You can use [`projector create`][28] to initialize a new project, but suppose we
 already have a monorepo we've been working on at `/repos/my-project`. It has the
 following structure:
 
 <details><summary>Expand Example</summary>
 <p>
 
-    .
-    ├── .git
-    ├── package.json
-    ├── package-lock.json
-    ├── packages/
-    │   ├── pkg-1/
-    │   │   ├── package.json
-    │   │   ├── README.md
-    │   │   └── src/
-    │   └── pkg-2/
-    │       ├── package.json
-    │       ├── README.md
-    │       └── src/
-    ├── test/
-    ├── README.md
-    └── release.config.js
+```
+.
+├── .git
+├── package.json
+├── package-lock.json
+├── packages/
+│   ├── pkg-1/
+│   │   ├── package.json
+│   │   ├── README.md
+│   │   └── src/
+│   └── pkg-2/
+│       ├── package.json
+│       ├── README.md
+│       └── src/
+├── test/
+├── README.md
+└── release.config.js
+```
 
 `package.json`:
 
@@ -484,13 +489,13 @@ pkg-1@1.1.2
 pkg-2@3.0.1
 ```
 
-> Note how tag structure is based on [`package-id`][42] rather than the name of
-> the package. This is [configurable][25].
+> Note how tag structure is based on [`package-id`][10] rather than the name of
+> the package. This is [configurable][39].
 
 </p>
 </details>
 
-After [installing Projector's CLI][47], we can list information about the
+After [installing Projector's CLI][73], we can list information about the
 project.
 
 <details><summary>Expand Example</summary>
@@ -511,22 +516,22 @@ This tells us that:
 - The project is named "my-cool-monorepo"
 - The project's root (`rootDir`) is at `/repos/my-project`
 - The root `package.json` does not list a version
-- [git status][36] reports the project is ahead of the current remote branch
+- [git status][74] reports the project is ahead of the current remote branch
   (`⇡`), has renamed files (`»`), has deleted files (`✘`), has unstaged changes
   (`!`), and has untracked changes (`?`). See [the full list of status
-  symbols][37].\
+  symbols][75].\
   ㅤ
 - The latest release of `pkg-1` is `1.1.2` (taken from `version` field).
 - If `projector publish` is run, the next released version of `pkg-1` will be
   `1.2.0`
-- [git status][36] reports the `packages/pkg-1` directory has deleted files
+- [git status][74] reports the `packages/pkg-1` directory has deleted files
   (`✘`) and unstaged changes (`!`).\
   ㅤ
 - The latest release of `@my-namespace/pkg` is `3.0.1` (taken from `version`
   field).
 - If `projector publish` is run, no new release of `@my-namespace/pkg` will be
   made.
-- [git status][36] reports the `packages/pkg-2` directory has untracked changes
+- [git status][74] reports the `packages/pkg-2` directory has untracked changes
   (`?`).
 
 </p>
@@ -557,7 +562,7 @@ found 0 vulnerabilities
 [12:03:03.222 PM] [projector] › ✔ Rename successful
 ```
 
-> If you've used [semantic-release][2] before, the output style should look very
+> If you've used [semantic-release][3] before, the output style should look very
 > familiar.
 
 `packages/pkg-1/package.json`:
@@ -592,7 +597,7 @@ M my-cool-monorepo@ /repos/my-project [⇡»✘?]
 
 While `@my-namespace/core` is technically a new package, the next release
 version will be `1.2.0` since its `package-id` has not changed. If we'd updated
-`@my-namespace/core`'s path too ([or used a different `tagFormat` setting][25]),
+`@my-namespace/core`'s path too ([or used a different `tagFormat` setting][39]),
 the `package-id` would be different and the next release version would be
 `1.0.0` regardless of what version is listed in `package.json`.
 
@@ -763,7 +768,7 @@ Calling `projector list` with `--with-cross-deps` reveals _cross-dependencies_
 (🔗), which are packages depended upon by other packages in the same monorepo.
 
 Since `projector publish` 1) publishes packages [concurrently where possible,
-but ultimately in topological order][75] and 2) synchronizes cross-dependency
+but ultimately in topological order][19] and 2) synchronizes cross-dependency
 versions at publish time: as Projector published `@my-namespace/core` at version
 `1.2.0`, it automatically updated the `dependencies['@my-namespace/core']` field
 at `packages/pkg-2/package.json` from `"1.1.2"` to `"1.2.0"` and committed the
@@ -793,7 +798,7 @@ version coherence".
 
 ### CLI Command Glossary
 
-See [`@projector-js/cli`][22].
+See [`@projector-js/cli`][28].
 
 ### Projector Project Structure
 
@@ -801,16 +806,16 @@ All Projector projects require at least the following:
 
 - A `package.json` file at the root of the repository.
   - Projector assumes a project is a polyrepo if the root `package.json` file
-    does not contains a [`workspaces`][56] field.
+    does not contains a [`workspaces`][30] field.
 
 That's it. TypeScript, Babel, semantic-release, etc are all yours to setup as
-you please, or you can use a [tweakable pre-made configuration][49].
+you please, or you can use a [tweakable pre-made configuration][15].
 
 <!-- prettier-ignore-start -->
 
 If your repository is using annotated tags, consider using
-[semantic-release-atam][2], which is a semantic-release fork with
-***a***nnotated ***t***ag ***a***nd ***m***onorepo support (PRs pending). **Do
+[semantic-release-atam][3], which is a semantic-release fork with
+\_**a**\_nnotated \_**t**\_ag \_**a**\_nd \_**m**\_onorepo support (PRs pending). **Do
 not install semantic-release and semantic-release-atam at the same time!**
 
 <!-- prettier-ignore-end -->
@@ -820,12 +825,14 @@ not install semantic-release and semantic-release-atam at the same time!**
 <details><summary>Expand Example</summary>
 <p>
 
-    .
-    ├── .git
-    ├── package.json         <==
-    ├── package-lock.json
-    ├── src/
-    └── README.md
+```
+.
+├── .git
+├── package.json         <==
+├── package-lock.json
+├── src/
+└── README.md
+```
 
 `package.json`:
 
@@ -844,19 +851,19 @@ not install semantic-release and semantic-release-atam at the same time!**
 
 Monorepos additionally require the following:
 
-- A [`workspaces`][56] field in the root `package.json` file.
+- A [`workspaces`][30] field in the root `package.json` file.
   - A `package.json` file with at least a `name` field must exist at each
     package root.
-- [semantic-release-atam][2] installed (**and the original semantic-release not
+- [semantic-release-atam][3] installed (**and the original semantic-release not
   installed**).
   - semantic-release-atam is a drop-in replacement for semantic-release with
     added support for annotated tag and monorepo (ATAM).
   - semantic-release-atam installation and configuration must meet the minimum
-    requirements listed in [`@projector-js/config-semantic-release-atam`][31].
-  - [`@projector-js/semantic-release-plugin`][51] must also be installed and
+    requirements listed in [`@projector-js/config-semantic-release-atam`][46].
+  - [`@projector-js/semantic-release-plugin`][71] must also be installed and
     configured.
 
-Note that ["fixed," "locked," or "synchronized"][102] package versions, where
+Note that ["fixed," "locked," or "synchronized"][76] package versions, where
 every package maintains the same version number on every release, goes against
 the purpose of semantic-release and so is not currently supported.
 
@@ -865,21 +872,23 @@ the purpose of semantic-release and so is not currently supported.
 <details><summary>Expand Example</summary>
 <p>
 
-    .
-    ├── .git
-    ├── package.json         <==
-    ├── package-lock.json
-    ├── packages/
-    │   ├── pkg-1/
-    │   │   ├── package.json <==
-    │   │   ├── README.md
-    │   │   └── src/
-    │   └── pkg-2/
-    │       ├── package.json <==
-    │       ├── README.md
-    │       └── src/
-    ├── release.config.js    <==
-    └── README.md
+```
+.
+├── .git
+├── package.json         <==
+├── package-lock.json
+├── packages/
+│   ├── pkg-1/
+│   │   ├── package.json <==
+│   │   ├── README.md
+│   │   └── src/
+│   └── pkg-2/
+│       ├── package.json <==
+│       ├── README.md
+│       └── src/
+├── release.config.js    <==
+└── README.md
+```
 
 `package.json`:
 
@@ -922,7 +931,7 @@ the purpose of semantic-release and so is not currently supported.
 
 <!-- TODO -->
 
-#### Pre-made Templates (Lenses)
+#### Pre-Made Templates (Lenses)
 
 <!-- TODO -->
 
@@ -934,158 +943,183 @@ the purpose of semantic-release and so is not currently supported.
 
 Like Lerna and semantic-release, Projector too has a badge!
 
-[![Maintained with Projector][60]][link-projector]
+[![Maintained with Projector][x-badge-projector-image]][x-badge-projector-link]
 
 ```markdown
-[![Maintained with Projector](https://xunn.at/badge-projector)](https://github.com/Xunnamius/projector)
+[![Maintained with Projector](https://xunn.at/badge-projector)](https://xunn.at/link-projector)
 ```
 
-## Documentation
+## Appendix
 
-See [each package][1] for further information on the types they make available
+See [each package][27] for further information on the types they make available
 and other specifics.
 
-### Credits
+### Inspiration
 
 Projector is a tool I made for my own personal use. It was inspired by the pure
-awesomeness that is [Lerna][11], [Rush][84], and [Nx][85].
+awesomeness that is [Lerna][77], [Rush][78], and [Nx][79].
 
 ## Contributing and Support
 
-**[New issues][choose-new-issue] and [pull requests][pr-compare] are always
-welcome and greatly appreciated! 🤩** Just as well, you can [star 🌟 this
-project][link-repo] to let me know you found it useful! ✊🏿 Thank you!
+**[New issues][x-repo-choose-new-issue] and [pull requests][x-repo-pr-compare]
+are always welcome and greatly appreciated! 🤩** Just as well, you can [star 🌟
+this project][x-badge-repo-link] to let me know you found it useful! ✊🏿 Thank
+you!
 
-See [CONTRIBUTING.md][contributing] and [SUPPORT.md][support] for more
-information.
+See [CONTRIBUTING.md][x-repo-contributing] and [SUPPORT.md][x-repo-support] for
+more information.
 
-[badge-blm]: https://xunn.at/badge-blm 'Join the movement!'
-[link-blm]: https://xunn.at/donate-blm
-[link-repo]: https://github.com/xunnamius/projector
-[badge-last-commit]:
-  https://img.shields.io/github/last-commit/xunnamius/projector
-  'Latest commit timestamp'
-[badge-issues]:
-  https://img.shields.io/github/issues/Xunnamius/projector
+### Contributors
+
+<!-- remark-ignore-start -->
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+<!-- remark-ignore-end -->
+
+Thanks goes to these wonderful people ([emoji
+key][x-repo-all-contributors-emojis]):
+
+<!-- remark-ignore-start -->
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://xunn.io/"><img src="https://avatars.githubusercontent.com/u/656017?v=4?s=100" width="100px;" alt="Bernard"/><br /><sub><b>Bernard</b></sub></a><br /><a href="#infra-Xunnamius" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/Xunnamius/babel-plugin-transform-rewrite-imports/commits?author=Xunnamius" title="Code">💻</a> <a href="https://github.com/Xunnamius/babel-plugin-transform-rewrite-imports/commits?author=Xunnamius" title="Documentation">📖</a> <a href="#maintenance-Xunnamius" title="Maintenance">🚧</a> <a href="https://github.com/Xunnamius/babel-plugin-transform-rewrite-imports/commits?author=Xunnamius" title="Tests">⚠️</a> <a href="https://github.com/Xunnamius/babel-plugin-transform-rewrite-imports/pulls?q=is%3Apr+reviewed-by%3AXunnamius" title="Reviewed Pull Requests">👀</a></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td align="center" size="13px" colspan="7">
+        <img src="https://raw.githubusercontent.com/all-contributors/all-contributors-cli/1b8533af435da9854653492b1327a23a4dbd0a10/assets/logo-small.svg">
+          <a href="https://all-contributors.js.org/docs/en/bot/usage">Add your contributions</a>
+        </img>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+<!-- remark-ignore-end -->
+
+This project follows the [all-contributors][x-repo-all-contributors]
+specification. Contributions of any kind welcome!
+
+[x-badge-blm-image]: https://xunn.at/badge-blm 'Join the movement!'
+[x-badge-blm-link]: https://xunn.at/donate-blm
+[x-badge-issues-image]:
+  https://img.shields.io/github/issues/Xunnamius/unified-utils?style=flat-square
   'Open issues'
-[link-issues]: https://github.com/Xunnamius/projector/issues?q=
-[badge-pulls]:
-  https://img.shields.io/github/issues-pr/xunnamius/projector
-  'Open pull requests'
-[link-pulls]: https://github.com/xunnamius/projector/pulls
-[badge-semantic-release]:
-  https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
-  'This repo uses semantic-release!'
-[link-semantic-release]: https://github.com/semantic-release/semantic-release
-[badge-projector]:
+[x-badge-issues-link]: https://github.com/Xunnamius/unified-utils/issues?q=
+[x-badge-lastcommit-image]:
+  https://img.shields.io/github/last-commit/xunnamius/unified-utils?style=flat-square
+  'Latest commit timestamp'
+[x-badge-projector-image]:
   https://xunn.at/badge-projector
   'This repo is managed with Projector'
-[link-projector]: https://github.com/Xunnamius/projector
-[choose-new-issue]: https://github.com/xunnamius/projector/issues/new/choose
-[pr-compare]: https://github.com/xunnamius/projector/compare
-[contributing]: CONTRIBUTING.md
-[support]: .github/SUPPORT.md
-[1]: /packages
-[2]: https://github.com/Xunnamius/semantic-release-atam
-[3]: https://github.com/Xunnamius/conventional-changelog
-[4]: https://www.conventionalcommits.org/en/v1.0.0
-[5]: https://github.com/features/actions
-[6]:
-  https://github.blog/2020-06-01-keep-all-your-packages-up-to-date-with-dependabot/
-[7]: https://en.wikipedia.org/wiki/Continuous_integration
-[8]: https://en.wikipedia.org/wiki/Continuous_deployment
-[9]: https://docs.npmjs.com/cli/v7/commands/npx
-[10]: https://jestjs.io
-[12]: https://www.npmjs.com/package/npm-check-updates
-[13]: #pre-made-templates-lenses
-[14]: https://github.com/marketplace/actions/projector-pipeline
-[15]: https://www.npmjs.com/package/debug
-[16]: https://docs.microsoft.com/en-us/windows/wsl/install
-[17]: https://nodejs.org/en/about/releases
-[18]: https://nodejs.org/en
-[19]: https://git-scm.com
-[20]: packages
-[21]: packages/projector
-[22]: packages/cli
-[23]: packages/config-babel
-[24]: packages/config-commitlint
-[25]: packages/config-conventional-changelog
-[26]: packages/config-eslint
-[27]: packages/config-jest
-[28]: packages/config-lint-staged
-[29]: packages/config-next
-[30]: packages/config-prettier
-[31]: packages/config-semantic-release-atam
-[32]: packages/config-tsconfig
-[33]: packages/config-webpack
-[34]: packages/semantic-release-plugin
-[35]: packages/core
-[39]: https://docs.npmjs.com/cli/v8/using-npm/scripts
-[40]: #life-cycle-scripts-plugins
-[11]: https://github.com/lerna/lerna
-[41]: #cli-examples
-[42]: #terminology
-[43]: #project-structure
-[44]: #monorepo-structure
-[45]: #usage
-[46]: #system-requirements
-[47]: #installation
-[48]: #cli
-[49]: #shared-configurations
-[50]: #github-action
-[51]: #semantic-release-plugin
-[52]: #library
-[53]: #documentation
-[54]: #license
-[55]: #contributing-and-support
-[56]: https://docs.npmjs.com/cli/v8/using-npm/workspaces#defining-workspaces
-[57]: https://webpack.js.org
-[58]: https://docs.npmjs.com/cli/v8/configuring-npm/package-json#workspaces
-[59]: https://www.npmjs.com/package/glob#glob-primer
-[60]: https://xunn.at/badge-projector
-[61]: packages/plugin-lint
-[63]: packages/plugin-list-types
-[64]: packages/plugin-metrics
-[66]: packages/plugin-sync-files
-[67]: packages/plugin-sync-vercel
-[68]: #quick-start
-[69]: #template-repositories
-[70]: #cli-command-glossary
-[71]: #badge-swag
-[72]: https://github.com/Xunnamius/projector/projects/1
-[73]:
+[x-badge-projector-link]: https://xunn.at/link-projector
+[x-badge-pulls-image]:
+  https://img.shields.io/github/issues-pr/xunnamius/unified-utils?style=flat-square
+  'Open pull requests'
+[x-badge-pulls-link]: https://github.com/xunnamius/unified-utils/pulls
+[x-badge-repo-link]: https://github.com/xunnamius/unified-utils
+[x-badge-semanticrelease-image]:
+  https://xunn.at/badge-semantic-release?style=flat-square
+  'This repo uses semantic-release!'
+[x-badge-semanticrelease-link]:
+  https://github.com/semantic-release/semantic-release
+[x-repo-all-contributors]: https://github.com/all-contributors/all-contributors
+[x-repo-all-contributors-emojis]: packages/config-commitlint
+[x-repo-choose-new-issue]: https://github.com/xunnamius/projector/compare
+[x-repo-contributing]: CONTRIBUTING.md
+[x-repo-pr-compare]: https://github.com/xunnamius/unified-utils/compare
+[x-repo-support]: .github/SUPPORT.md
+[1]: https://github.com/Xunnamius/projector/projects/1
+[2]: https://tom.preston-werner.com/2010/08/23/readme-driven-development.html
+[3]: https://github.com/Xunnamius/semantic-release-atam
+[4]: https://github.com/Xunnamius/conventional-changelog
+[5]: https://www.conventionalcommits.org/en/v1.0.0
+[6]: https://github.com/features/actions
+[7]:
+  https://github.blog/2020-06-01-keep-all-your-packages-up-to-date-with-dependabot
+[8]: https://en.wikipedia.org/wiki/Continuous_integration
+[9]: https://en.wikipedia.org/wiki/Continuous_deployment
+[10]: #terminology
+[11]: #cross-dependency-version-coherence
+[12]: #life-cycle-scripts-plugins
+[13]: #cli-examples
+[14]: #getting-started
+[15]: #shared-configurations
+[16]: https://github.com/microsoft/lage
+[17]: https://github.com/microsoft/backfill
+[18]: https://www.npmjs.com/package/threads
+[19]: #dependency-topology-and-script-concurrency
+[20]: https://www.npmjs.com/package/glob
+[21]: https://www.npmjs.com/package/debug
+[22]: https://www.npmjs.com/package/npm-check-updates
+[23]: https://www.npmjs.com/package/inquirer
+[24]: https://github.com/marketplace/actions/projector-pipeline
+[25]: https://docs.npmjs.com/cli/v8/using-npm/scripts
+[26]: #life-cycle-operation-order
+[27]: /packages
+[28]: packages/cli
+[29]: https://docs.npmjs.com/cli/v7/using-npm/config#workspace
+[30]: https://docs.npmjs.com/cli/v8/using-npm/workspaces#defining-workspaces
+[31]: https://docs.npmjs.com/cli/v8/configuring-npm/package-json#name
+[32]: #pre-made-templates-lenses
+[33]: https://docs.microsoft.com/en-us/windows/wsl/install
+[34]: https://nodejs.org/en/about/releases
+[35]: https://nodejs.org/en
+[36]: https://git-scm.com
+[37]: packages/projector
+[38]: packages/config-babel
+[39]: packages/config-conventional-changelog
+[40]: packages/config-eslint
+[41]: packages/config-husky
+[42]: packages/config-jest
+[43]: packages/config-lint-staged
+[44]: packages/config-next
+[45]: packages/config-prettier
+[46]: packages/config-semantic-release-atam
+[47]: packages/config-tsconfig
+[48]: packages/config-webpack
+[49]: #monorepo-structure
+[50]: #projector-project-structure
+[51]: packages/plugin-build
+[52]: packages/plugin-clean
+[53]: packages/plugin-dev
+[54]: packages/plugin-format
+[55]: packages/plugin-github
+[56]: packages/plugin-lint
+[57]: packages/plugin-list
+[58]: packages/plugin-list-types
+[59]: packages/plugin-metrics
+[60]: packages/plugin-prepare
+[61]: packages/plugin-sync-files
+[62]: packages/plugin-sync-vercel
+[63]: packages/plugin-test
+[64]:
   https://semantic-release.gitbook.io/semantic-release/usage/configuration#configuration-file
-[74]: #getting-started
-[75]: #dependency-topology-and-script-concurrency
-[76]: https://github.com/microsoft/lage
-[77]: https://github.com/microsoft/backfill
-[78]: https://microsoft.github.io/lage/guide/pipeline.html#defining-a-pipeline
-[79]: https://tom.preston-werner.com/2010/08/23/readme-driven-development.html
-[80]: https://www.npmjs.com/package/glob
-[81]: https://en.wikipedia.org/wiki/Topological_sorting
-[82]: https://microsoft.github.io/lage/guide/levels.html
-[83]: #feature-overview
-[84]: https://rushjs.io
-[85]: https://nx.dev
-[86]: https://www.npmjs.com/package/threads
-[87]: https://www.npmjs.com/package/inquirer
-[88]: https://docs.npmjs.com/cli/v7/using-npm/config#workspace
-[89]: https://docs.npmjs.com/cli/v8/configuring-npm/package-json#name
-[36]: https://git-scm.com/docs/git-status
-[62]: #life-cycle-operation-order
-[65]: packages/config-husky
-[90]: #projector-project-structure
-[91]: packages/plugin-build
-[92]: packages/plugin-clean
-[93]: packages/plugin-dev
-[94]: packages/plugin-format
-[95]: packages/plugin-github
-[96]: packages/plugin-list
-[97]: packages/plugin-prepare
-[98]: packages/plugin-test
-[37]: packages/cli#status-symbols
-[38]: #cross-dependency-version-coherence
-[99]: #credits
-[100]: packages/cli#projector-create
-[101]: https://microsoft.github.io/lage/guide/config.html
-[102]: https://github.com/lerna/lerna#fixedlocked-mode-default
+[65]: packages/semantic-release-plugin
+[66]: packages/core
+[67]: https://en.wikipedia.org/wiki/Topological_sorting
+[68]: https://microsoft.github.io/lage/guide/levels.html
+[69]: #cli
+[70]: packages/cli#projector-create
+[71]: #semantic-release-plugin
+[72]: #github-action
+[73]: #installation
+[74]: https://git-scm.com/docs/git-status
+[75]: packages/cli#status-symbols
+[76]: https://github.com/lerna/lerna#fixedlocked-mode-default
+[77]: https://github.com/lerna/lerna
+[78]: https://rushjs.io
+[79]: https://nx.dev

@@ -1,15 +1,15 @@
-# Support [![Average time to resolve an issue][badge-issue-resolution]][link-issue-resolution] [![Percentage of issues still open][badge-issue-percentage]][link-issue-percentage]
+# Support [![Average time to resolve an issue][x-badge-resolution-image]][x-badge-resolution-link] [![Percentage of issues still open][x-badge-percentage-image]][x-badge-percentage-link]
 
 Need help? Want to help this project? See below!
 
 ## Reporting an Issue
 
-Before you begin, please [search open and past issues][open-issues] to see if
-your issue or feature request is already being talked about.
+Before you begin, please [search open and past issues][x-repo-open-issues] to
+see if your issue or feature request is already being talked about.
 
 If you find your issue already exists, make sure to [bump the issue by adding a
-reaction][github-blog]. **If you're serious about wanting an issue to get
-attention, use a reaction in place of a "+1" or other similar comment.**
+reaction][x-external-github-blog]. **If you're serious about wanting an issue to
+get attention, use a reaction in place of a "+1" or other similar comment.**
 
 If you cannot find an existing issue that describes your bug or feature, then
 you're clear to create your issue using the guidelines below.
@@ -45,16 +45,17 @@ Thank you for contribution 🎉, your efforts are greatly appreciated! 🙌🏿
   guidelines.
 - Issues that go for an extended period without activity are subject to closure.
 
-[badge-issue-percentage]:
+[x-badge-percentage-image]:
   https://isitmaintained.com/badge/open/Xunnamius/projector.svg
   'Open issues as a percentage of all issues'
-[badge-issue-resolution]:
+[x-badge-percentage-link]: https://github.com/Xunnamius/projector/issues?q=
+[x-badge-resolution-image]:
   https://isitmaintained.com/badge/resolution/Xunnamius/projector.svg
   'Average time to resolve an issue'
-[github-blog]:
+[x-badge-resolution-link]:
+  https://isitmaintained.com/project/Xunnamius/projector
+[x-external-github-blog]:
   https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments
-[link-issue-percentage]: https://github.com/Xunnamius/projector/issues?q=
-[link-issue-resolution]: https://isitmaintained.com/project/Xunnamius/projector
-[open-issues]: https://github.com/Xunnamius/projector/issues?q=
 [x-repo-choose-new-issue]:
   https://github.com/Xunnamius/projector/issues/new/choose
+[x-repo-open-issues]: https://github.com/Xunnamius/projector/issues?q=
