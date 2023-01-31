@@ -1,6 +1,0 @@
-version: 3
-project:
-  name: '@projector-js/config-husky'
-targets:
-  only:
-    - type: npm

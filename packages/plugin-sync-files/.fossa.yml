@@ -1,6 +1,0 @@
-version: 3
-project:
-  name: '@projector-js/plugin-sync-files'
-targets:
-  only:
-    - type: npm
