@@ -1,6 +1,0 @@
-version: 3
-project:
-  name: '@projector-js/config-remark'
-targets:
-  only:
-    - type: npm
