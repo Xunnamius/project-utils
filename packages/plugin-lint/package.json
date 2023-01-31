@@ -73,13 +73,13 @@
     }
   },
   "dependencies": {
-    "@babel/core": "^7.17.9",
+    "@babel/core": "^7.20.12",
     "@projector-js/core": "^1.2.0",
     "chalk": "^4.1.2",
-    "get-tsconfig": "^3.0.1",
-    "mdast-util-from-markdown": "^1.2.0",
+    "get-tsconfig": "^4.3.0",
+    "mdast-util-from-markdown": "^1.3.0",
     "objectpath": "^2.0.0",
-    "semver": "^7.3.7",
+    "semver": "^7.3.8",
     "strip-ansi": "^6.0.1"
   },
   "engines": {

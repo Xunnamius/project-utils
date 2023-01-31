@@ -62,7 +62,7 @@
     }
   },
   "dependencies": {
-    "@projector-js/core": "^1.0.0",
+    "@projector-js/core": "^1.2.0",
     "debug": "^4.3.4",
     "webpack-node-externals": "^3.0.0"
   },

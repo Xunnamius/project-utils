@@ -74,12 +74,12 @@
   },
   "dependencies": {
     "find-up": "^5.0.0",
-    "glob": "^8.0.1",
+    "glob": "^8.1.0",
     "is-valid-path": "^0.1.1",
-    "named-app-errors": "^3.0.3"
+    "named-app-errors": "^4.0.0"
   },
   "engines": {
-    "node": "^14.19.0 || ^16.13.0 || >=17.4.0"
+    "node": "^14.21.0 || ^16.19.0 || ^18.12.0 || >=19.3.0"
   },
   "publishConfig": {
     "access": "public"
