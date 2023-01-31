@@ -26,7 +26,7 @@ reaction emojis being present on issues, PRs, and replies:
 ### Bug Reports and Feature Requests
 
 For the timeliest resolution to bug reports specifically, please make a good
-faith effort to [follow the template][choose-new-issue]. The more quality
+faith effort to [follow the template][x-repo-choose-new-issue]. The more quality
 information you can provide, the quicker a fix will be found. Additionally:
 
 - Ensure you file one issue per problem or feature request.
@@ -35,7 +35,7 @@ information you can provide, the quicker a fix will be found. Additionally:
   experiencing identical behavior or behavior that stems from the exact same
   problem.
 
-That's it! You are now ready to [submit a new issue][choose-new-issue]! Thank
+That's it! You are now ready to [submit a new issue][x-repo-choose-new-issue]! Thank
 you for contribution 🎉, your efforts are greatly appreciated! 🙌🏿
 
 #### Closure Policy

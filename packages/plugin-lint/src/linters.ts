@@ -585,7 +585,7 @@ export async function runProjectLinter({
             if (
               ctx.project.json.version &&
               !Constants.pkgVersionWhitelist.includes(
-                ctx.project.json.version as typeof Constants.pkgVersionWhitelist[number]
+                ctx.project.json.version as (typeof Constants.pkgVersionWhitelist)[number]
               )
             ) {
               reportPkg('warn', ErrorMessage.PackageJsonIllegalKey('version'));

@@ -79,14 +79,16 @@ export function configureProgram(program?: Program): Context {
           'In pre-push mode, a limited subset of checks are performed. Pre-push linting mode is meant to be invoked by the "pre-push" Git hook.',
         type: 'boolean',
         default: false,
-        conflicts: 'link-protection-only'
+        conflicts: 'link-protection-only',
+        coerce: (v) => v || undefined
       },
       'link-protection-only': {
         describe:
           'In link protection mode, a limited subset of checks are performed. Link protection linting mode is meant to be invoked after potentially-destructive operations on Markdown files (e.g. via Remark) to check for links that have been accidentally disabled.',
         type: 'boolean',
         default: false,
-        conflicts: 'pre-push-only'
+        conflicts: 'pre-push-only',
+        coerce: (v) => v || undefined
       }
     });
 

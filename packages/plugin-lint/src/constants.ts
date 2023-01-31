@@ -274,8 +274,7 @@ export const markdownReadmeStandardTopmatter = {
       conditions: ['monorepo', 'polyrepo', 'subroot'] as Condition[],
       label: 'badge-semantic-release',
       alt: 'This repo uses semantic-release!',
-      url: (_: StandardUrlParams) =>
-        'https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg',
+      url: (_: StandardUrlParams) => 'https://xunn.at/badge-semantic-release',
       title: 'This repo practices continuous integration and deployment!',
       link: {
         label: 'link-semantic-release',
