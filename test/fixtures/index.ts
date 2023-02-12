@@ -1,4 +1,4 @@
-import { basename } from 'path';
+import { basename } from 'node:path';
 import * as Core from 'pkgverse/core/src/project-utils';
 
 import type { PackageJsonWithConfig } from 'types/global';
@@ -105,9 +105,9 @@ export type PkgMapEntry = [name: string, workspacePackage: WorkspacePackage];
  * A collection of fixtures representing dummy monorepo and polyrepo projects.
  * Useful for testing purposes.
  */
-export const Fixtures = {} as Record<FixtureName, Fixture>;
+export const fixtures = {} as Record<FixtureName, Fixture>;
 
-Fixtures['repoThatDoesNotExist'] = {
+fixtures['repoThatDoesNotExist'] = {
   root: '/does/not/exist',
   json: {},
   namedPkgMapData: [],
@@ -132,7 +132,7 @@ const createFixture = ({
   unnamedPkgMapData?: PkgMapDatum[];
   brokenPkgRoots?: Fixture['brokenPkgRoots'];
 }) => {
-  prototypeRoot = `${__dirname}/${prototypeRoot}`;
+  prototypeRoot = `${__dirname}/dummy-repos/${prototypeRoot}`;
 
   const expandDatumToEntry = ({ name, root: subRoot }: PkgMapDatum): PkgMapEntry => {
     return [
@@ -145,7 +145,7 @@ const createFixture = ({
     ];
   };
 
-  Fixtures[fixtureName] = {
+  fixtures[fixtureName] = {
     root: prototypeRoot,
     json:
       (() => {
@@ -153,8 +153,8 @@ const createFixture = ({
           return require(`${prototypeRoot}/package.json`);
         } catch {}
       })() || {},
-    namedPkgMapData: namedPkgMapData.map(expandDatumToEntry),
-    unnamedPkgMapData: unnamedPkgMapData.map(expandDatumToEntry),
+    namedPkgMapData: namedPkgMapData.map((datum) => expandDatumToEntry(datum)),
+    unnamedPkgMapData: unnamedPkgMapData.map((datum) => expandDatumToEntry(datum)),
     brokenPkgRoots: brokenPkgRoots.map((path) => `${prototypeRoot}/${path}`)
   };
 };
