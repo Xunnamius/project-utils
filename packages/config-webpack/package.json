@@ -67,7 +67,7 @@
     "@projector-js/core": "^1.2.0",
     "core-js": "^3.27.2",
     "debug": "^4.3.4",
-    "type-fest": "^3.5.5",
+    "type-fest": "^3.5.7",
     "webpack-node-externals": "^3.0.0"
   },
   "devDependencies": {
