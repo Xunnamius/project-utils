@@ -314,35 +314,11 @@ console.log(getEslintAliases());
 
 See [`@projector-js/core`][66] for details.
 
-## Terminology
-
-- **polyrepo**: a git repository containing a root `package.json` file with no
-  [`workspaces`][30] field. A polyrepo is the opposite of a _monorepo_.
-- **monorepo**: a git repository containing multiple packages/workspaces, each
-  listed under the [`workspaces`][30] field in the root `package.json`. A
-  monorepo is the opposite of a _polyrepo_.
-- **project root**: the top-level directory of a git repository and Projector
-  project; it contains the root `package.json` file. This directory is also
-  referred to as: "repository root," `rootDir` (always as an absolute path),
-  "root package" (in [npm documentation][30]), "monorepo/polyrepo/repo root," or
-  simply "root" (.e.g. "root `package.json`").
-- **package root**: synonymous with a [workspace][30] in a monorepo. It contains
-  a package/workspace's `package.json` file. The basename of this directory
-  (e.g. `c` in `/a/b/c/`) is also referred to as the `package-id`, which may or
-  may not match the `name` field in the package's `package.json` file. These
-  directories are also referred to as a "monorepo package" or simply "sub-root"
-  (.e.g. "sub-root `package.json`").
-- [**topological order**][67]: a sequence of packages where dependent packages
-  always come before their dependencies—a so-called "package dependency order".
-  Topological ordering ensures otherwise-concurrent tasks are performed at the
-  right time and order (e.g. regenerate types in a core package before linting
-  its dependent packages). [Here's an illustrated example][68].
-
 ## Usage
 
-To use Projector, you must first [install the CLI][69].
+To use Projector, you must first [install the CLI][67].
 
-From there, you can use [`projector create`][70] to create a new monorepo or
+From there, you can use [`projector create`][68] to create a new monorepo or
 polyrepo if you want. See [Getting Started][14] to walk through inspecting,
 testing, and publishing an existing monorepo instead.
 
@@ -370,7 +346,7 @@ module.exports = require('@projector-js/config-eslint')((config) => {
 ```
 
 If your project is a monorepo, you'll have to use [semantic-release-atam][3]
-(PRs pending) and the [semantic-release plugin][71] **instead of** the normal
+(PRs pending) and the [semantic-release plugin][69] **instead of** the normal
 semantic-release. semantic-release-atam is a drop-in replacement for
 semantic-release. Additionally, if you're using conventional-changelog, consider
 using [the version patched to work better with monorepos][39] (PRs pending)
@@ -403,7 +379,7 @@ plugins can be added to package via `package.json`:
 ```
 
 If you're pushing to GitHub and using GitHub Actions, you can optionally set up
-CI/CD for your project using Projector's [GitHub Action][72].
+CI/CD for your project using Projector's [GitHub Action][70].
 
 Finally, you can optionally setup [advanced concurrent task pipelines and
 caching][19], if desired.
@@ -495,7 +471,7 @@ pkg-2@3.0.1
 </p>
 </details>
 
-After [installing Projector's CLI][73], we can list information about the
+After [installing Projector's CLI][71], we can list information about the
 project.
 
 <details><summary>Expand Example</summary>
@@ -516,22 +492,22 @@ This tells us that:
 - The project is named "my-cool-monorepo"
 - The project's root (`rootDir`) is at `/repos/my-project`
 - The root `package.json` does not list a version
-- [git status][74] reports the project is ahead of the current remote branch
+- [git status][72] reports the project is ahead of the current remote branch
   (`⇡`), has renamed files (`»`), has deleted files (`✘`), has unstaged changes
   (`!`), and has untracked changes (`?`). See [the full list of status
-  symbols][75].\
+  symbols][73].\
   ㅤ
 - The latest release of `pkg-1` is `1.1.2` (taken from `version` field).
 - If `projector publish` is run, the next released version of `pkg-1` will be
   `1.2.0`
-- [git status][74] reports the `packages/pkg-1` directory has deleted files
+- [git status][72] reports the `packages/pkg-1` directory has deleted files
   (`✘`) and unstaged changes (`!`).\
   ㅤ
 - The latest release of `@my-namespace/pkg` is `3.0.1` (taken from `version`
   field).
 - If `projector publish` is run, no new release of `@my-namespace/pkg` will be
   made.
-- [git status][74] reports the `packages/pkg-2` directory has untracked changes
+- [git status][72] reports the `packages/pkg-2` directory has untracked changes
   (`?`).
 
 </p>
@@ -860,10 +836,10 @@ Monorepos additionally require the following:
     added support for annotated tag and monorepo (ATAM).
   - semantic-release-atam installation and configuration must meet the minimum
     requirements listed in [`@projector-js/config-semantic-release-atam`][46].
-  - [`@projector-js/semantic-release-plugin`][71] must also be installed and
+  - [`@projector-js/semantic-release-plugin`][69] must also be installed and
     configured.
 
-Note that ["fixed," "locked," or "synchronized"][76] package versions, where
+Note that ["fixed," "locked," or "synchronized"][74] package versions, where
 every package maintains the same version number on every release, goes against
 the purpose of semantic-release and so is not currently supported.
 
@@ -954,6 +930,30 @@ Like Lerna and semantic-release, Projector too has a badge!
 See [each package][27] for further information on the types they make available
 and other specifics.
 
+## Terminology
+
+- **polyrepo**: a git repository containing a root `package.json` file with no
+  [`workspaces`][30] field. A polyrepo is the opposite of a _monorepo_.
+- **monorepo**: a git repository containing multiple packages/workspaces, each
+  listed under the [`workspaces`][30] field in the root `package.json`. A
+  monorepo is the opposite of a _polyrepo_.
+- **project root**: the top-level directory of a git repository and Projector
+  project; it contains the root `package.json` file. This directory is also
+  referred to as: "repository root," `rootDir` (always as an absolute path),
+  "root package" (in [npm documentation][30]), "monorepo/polyrepo/repo root," or
+  simply "root" (.e.g. "root `package.json`").
+- **package root**: synonymous with a [workspace][30] in a monorepo. It contains
+  a package/workspace's `package.json` file. The basename of this directory
+  (e.g. `c` in `/a/b/c/`) is also referred to as the `package-id`, which may or
+  may not match the `name` field in the package's `package.json` file. These
+  directories are also referred to as a "monorepo package" or simply "sub-root"
+  (.e.g. "sub-root `package.json`").
+- [**topological order**][75]: a sequence of packages where dependent packages
+  always come before their dependencies—a so-called "package dependency order".
+  Topological ordering ensures otherwise-concurrent tasks are performed at the
+  right time and order (e.g. regenerate types in a core package before linting
+  its dependent packages). [Here's an illustrated example][76].
+
 ### Inspiration
 
 Projector is a tool I made for my own personal use. It was inspired by the pure
@@ -1037,7 +1037,7 @@ specification. Contributions of any kind welcome!
 [x-badge-semanticrelease-link]:
   https://github.com/semantic-release/semantic-release
 [x-repo-all-contributors]: https://github.com/all-contributors/all-contributors
-[x-repo-all-contributors-emojis]: packages/config-commitlint
+[x-repo-all-contributors-emojis]: https://allcontributors.org/docs/en/emoji-key
 [x-repo-choose-new-issue]: https://github.com/xunnamius/projector/compare
 [x-repo-contributing]: CONTRIBUTING.md
 [x-repo-pr-compare]: https://github.com/xunnamius/unified-utils/compare
@@ -1110,16 +1110,16 @@ specification. Contributions of any kind welcome!
   https://semantic-release.gitbook.io/semantic-release/usage/configuration#configuration-file
 [65]: packages/semantic-release-plugin
 [66]: packages/core
-[67]: https://en.wikipedia.org/wiki/Topological_sorting
-[68]: https://microsoft.github.io/lage/guide/levels.html
-[69]: #cli
-[70]: packages/cli#projector-create
-[71]: #semantic-release-plugin
-[72]: #github-action
-[73]: #installation
-[74]: https://git-scm.com/docs/git-status
-[75]: packages/cli#status-symbols
-[76]: https://github.com/lerna/lerna#fixedlocked-mode-default
+[67]: #cli
+[68]: packages/cli#projector-create
+[69]: #semantic-release-plugin
+[70]: #github-action
+[71]: #installation
+[72]: https://git-scm.com/docs/git-status
+[73]: packages/cli#status-symbols
+[74]: https://github.com/lerna/lerna#fixedlocked-mode-default
+[75]: https://en.wikipedia.org/wiki/Topological_sorting
+[76]: https://microsoft.github.io/lage/guide/levels.html
 [77]: https://github.com/lerna/lerna
 [78]: https://rushjs.io
 [79]: https://nx.dev
