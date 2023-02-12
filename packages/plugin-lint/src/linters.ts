@@ -276,11 +276,11 @@ export async function runProjectLinter({
         // ? Types entry points exist
         if (json.typesVersions) {
           Object.entries(json.typesVersions).forEach(([version, spec]) => {
-            Object.entries(spec).forEach(([alias, paths]) => {
+            Object.entries(spec || {}).forEach(([alias, paths]) => {
               tasks.push(
                 (async () => {
                   const results = await Promise.all(
-                    paths.map((path) => {
+                    (paths || []).map((path) => {
                       return globAsync(path, {
                         cwd: root,
                         ignore: Constants.globIgnorePatterns
@@ -374,7 +374,7 @@ export async function runProjectLinter({
         // ? Has maintained node version engines.node entries
         if (json.engines) {
           if (json.engines.node) {
-            const expectedNodeEngines = Utils.getExpectedPkgNodeEngines();
+            const expectedNodeEngines = Utils.getMaintainedPkgNodeEngines();
             if (json.engines.node != expectedNodeEngines) {
               reportPkg('warn', ErrorMessage.PackageJsonBadEngine(expectedNodeEngines));
             }
@@ -394,9 +394,9 @@ export async function runProjectLinter({
             Object.entries(depsObj).forEach(([dep, version]) => {
               // ? Since dist-tags shouldn't start with numbers anyway...
               // ? See: https://docs.npmjs.com/adding-dist-tags-to-packages
-              if (!Number.isNaN(parseInt(version[0]))) {
+              if (version && !Number.isNaN(parseInt(version[0]))) {
                 reportPkg('warn', ErrorMessage.PackageJsonPinnedDependency(dep));
-              } else if (semver.validRange(version)) {
+              } else if (version && semver.validRange(version)) {
                 if (semver.prerelease(version.replace(/^\D+/i, ''))) {
                   reportPkg(
                     'error',
@@ -405,7 +405,7 @@ export async function runProjectLinter({
                 }
               } else if (
                 !semver.valid(version) &&
-                !version.startsWith('https://xunn.at')
+                (!version || !version.startsWith('https://xunn.at'))
               ) {
                 reportPkg('warn', ErrorMessage.PackageJsonNonSemverDependency(dep));
               }
@@ -416,7 +416,7 @@ export async function runProjectLinter({
         // ? Has a docs entry point pointing to an existing file (if not a
         // ? monorepo root)
         if (!isCheckingMonorepoRoot) {
-          const docsEntry = json.config?.['plugin-build']?.docs?.entry;
+          const docsEntry = json.project?.documentation?.entry;
 
           if (!docsEntry) {
             reportPkg(
@@ -465,7 +465,7 @@ export async function runProjectLinter({
           );
 
           // ? Has codecov flag config
-          if (!json.config?.['plugin-build']?.codecov?.flag) {
+          if (!json.project?.codecov?.flag) {
             reportPkg(
               'warn',
               ErrorMessage.PackageJsonMissingKey("config['plugin-build'].codecov.flag")
@@ -1007,8 +1007,8 @@ export async function runRemarkLinter({
       'lint-no-unused-definitions',
       '--use',
       'validate-links',
-      // ? We specify the paths twice here because, without more than one .md ?
-      // file specified, remark will shit all over stdout for whatever reason.
+      // ? We specify the paths twice here because, without more than one .md
+      // ? file specified, remark will shit all over stdout for whatever reason.
       ...markdownPaths,
       ...markdownPaths
     ],

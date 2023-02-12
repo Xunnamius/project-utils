@@ -1,16 +1,7 @@
-import { ErrorMessage } from '../errors';
 import { access } from 'fs/promises';
-import semver from 'semver';
-import browserslist from 'browserslist';
 import stripAnsi from 'strip-ansi';
 
-import type { PackageJsonWithConfig } from 'types/global';
-
-export type ExportsPaths = {
-  filesystemPaths: (string | null | undefined)[];
-  exportsObjectPath: string[];
-  isImplicitDefault: boolean;
-};
+import { ErrorMessage } from 'pkgverse/plugin-lint/src/errors';
 
 export type ReporterFactory = (
   currentFile: string
@@ -62,23 +53,6 @@ export function summarizeLinterOutput(
 }
 
 /**
- * Flatten the package.json `"exports"` field into an array of entry points.
- */
-export function deepFlattenPkgExports(
-  pkgExports: PackageJsonWithConfig['exports'],
-  exportsObjectPath: string[] = []
-): ExportsPaths[] {
-  const partial = { exportsObjectPath, isImplicitDefault: !exportsObjectPath.length };
-  return !pkgExports || typeof pkgExports == 'string'
-    ? [{ filesystemPaths: [pkgExports], ...partial }]
-    : Array.isArray(pkgExports)
-    ? [{ filesystemPaths: pkgExports, ...partial }]
-    : Object.entries(pkgExports).flatMap(([k, v]) =>
-        deepFlattenPkgExports(v, [...exportsObjectPath, k])
-      );
-}
-
-/**
  * Check if a list of `paths` (relative to `root`) exist. By default, `type` is
  * `"error"` and `errorMessage` is `"MissingFile"`.
  */
@@ -99,15 +73,4 @@ export function checkPathsExist(
       }
     })
   );
-}
-
-/**
- * Returns the expected value for `package.json` `node.engines` field
- */
-export function getExpectedPkgNodeEngines() {
-  return browserslist('maintained node versions')
-    .map((v) => v.split(' ').at(-1) as string)
-    .sort(semver.compareBuild)
-    .map((v, ndx, arr) => `${ndx == arr.length - 1 ? '>=' : '^'}${v}`)
-    .join(' || ');
 }

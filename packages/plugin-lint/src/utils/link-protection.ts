@@ -30,7 +30,7 @@ export async function checkForPotentiallyDisabledLinks({
   reporterFactory: ReporterFactory;
 }) {
   const configIgnorePatterns: string[] = [
-    ...(ctx.project.json.config?.['plugin-lint']?.['link-protection']?.ignore || [])
+    ...(ctx.project.json.project?.lint?.linkProtection?.ignore || [])
   ];
 
   for (const pkg of ctx.project.packages?.all || []) {
@@ -38,8 +38,8 @@ export async function checkForPotentiallyDisabledLinks({
     configIgnorePatterns.splice(
       -1,
       0,
-      ...(pkg.json.config?.['plugin-lint']?.['link-protection']?.ignore || []).map(
-        (path) => resolve(pkg.root, path)
+      ...(pkg.json.project?.lint?.linkProtection?.ignore || []).map((path) =>
+        resolve(pkg.root, path)
       )
     );
   }

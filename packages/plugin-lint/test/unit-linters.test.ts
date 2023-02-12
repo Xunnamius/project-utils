@@ -7,7 +7,7 @@ import * as Utils from '../src/utils';
 import * as UtilsMdast from '../src/utils/mdast';
 import { glob, sync as globSync } from 'glob';
 import { promisify } from 'util';
-import { Fixtures, patchReadPackageJsonData } from 'testverse/fixtures';
+import { fixtures, patchReadPackageJsonData } from 'testverse/fixtures';
 import { toss } from 'toss-expression';
 import { ErrorMessage } from '../src/errors';
 import { clearPackageJsonCache } from 'pkgverse/core/src/project-utils';
@@ -159,7 +159,7 @@ describe('::runProjectLinter', () => {
 
     await expect(
       Linters.runProjectLinter({
-        rootDir: Fixtures.repoThatDoesNotExist.root,
+        rootDir: fixtures.repoThatDoesNotExist.root,
         linkProtectionMarkdownPaths: []
       })
     ).resolves.toStrictEqual({
@@ -167,7 +167,7 @@ describe('::runProjectLinter', () => {
       summary: expect.stringContaining('1 error, 0 warnings'),
       output: stringContainingErrorMessage(
         'error',
-        Fixtures.repoThatDoesNotExist.root,
+        fixtures.repoThatDoesNotExist.root,
         ErrorMessage.NotAGitRepository()
       )
     });
@@ -178,7 +178,7 @@ describe('::runProjectLinter', () => {
 
     await expect(
       Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoNonPackageDir.root,
+        rootDir: fixtures.badPolyrepoNonPackageDir.root,
         linkProtectionMarkdownPaths: []
       })
     ).resolves.toStrictEqual({
@@ -186,7 +186,7 @@ describe('::runProjectLinter', () => {
       summary: expect.stringContaining('1 error, 0 warnings'),
       output: stringContainingErrorMessage(
         'error',
-        `${Fixtures.badPolyrepoNonPackageDir.root}/package.json`,
+        `${fixtures.badPolyrepoNonPackageDir.root}/package.json`,
         ErrorMessage.FatalMissingFile()
       )
     });
@@ -199,7 +199,7 @@ describe('::runProjectLinter', () => {
 
     await expect(
       Linters.runProjectLinter({
-        rootDir: Fixtures.goodMonorepo.root,
+        rootDir: fixtures.goodMonorepo.root,
         linkProtectionMarkdownPaths: []
       })
     ).resolves.toStrictEqual({
@@ -207,7 +207,7 @@ describe('::runProjectLinter', () => {
       summary: expect.stringContaining('1 error, 0 warnings'),
       output: stringContainingErrorMessage(
         'error',
-        `${Fixtures.goodMonorepo.root}/package.json`,
+        `${fixtures.goodMonorepo.root}/package.json`,
         ErrorMessage.PackageJsonUnparsable()
       )
     });
@@ -217,7 +217,7 @@ describe('::runProjectLinter', () => {
     expect.hasAssertions();
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -226,7 +226,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(field)
         )
       );
@@ -237,7 +237,7 @@ describe('::runProjectLinter', () => {
     expect.hasAssertions();
 
     const monorepoOtherSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[1][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[1][1].root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -246,7 +246,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoOtherSubRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(field)
         )
       );
@@ -257,21 +257,21 @@ describe('::runProjectLinter', () => {
     expect.hasAssertions();
 
     const monorepo = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepo = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepoTsbuildinfo.root,
+      rootDir: fixtures.badPolyrepoTsbuildinfo.root,
       linkProtectionMarkdownPaths: []
     });
 
     expect(monorepo.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[1][1].root}/dist/tsconfig.fake.tsbuildinfo`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[1][1].root}/dist/tsconfig.fake.tsbuildinfo`,
         ErrorMessage.IllegalItemInDirectory(
-          `${Fixtures.badMonorepo.unnamedPkgMapData[1][1].root}/dist`
+          `${fixtures.badMonorepo.unnamedPkgMapData[1][1].root}/dist`
         )
       )
     );
@@ -279,9 +279,9 @@ describe('::runProjectLinter', () => {
     expect(monorepo.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[1][1].root}/dist/sub-dir/tsconfig.fake2.tsbuildinfo`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[1][1].root}/dist/sub-dir/tsconfig.fake2.tsbuildinfo`,
         ErrorMessage.IllegalItemInDirectory(
-          `${Fixtures.badMonorepo.unnamedPkgMapData[1][1].root}/dist`
+          `${fixtures.badMonorepo.unnamedPkgMapData[1][1].root}/dist`
         )
       )
     );
@@ -289,9 +289,9 @@ describe('::runProjectLinter', () => {
     expect(polyrepo.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badPolyrepoTsbuildinfo.root}/dist/tsconfig.fake.tsbuildinfo`,
+        `${fixtures.badPolyrepoTsbuildinfo.root}/dist/tsconfig.fake.tsbuildinfo`,
         ErrorMessage.IllegalItemInDirectory(
-          `${Fixtures.badPolyrepoTsbuildinfo.root}/dist`
+          `${fixtures.badPolyrepoTsbuildinfo.root}/dist`
         )
       )
     );
@@ -301,17 +301,17 @@ describe('::runProjectLinter', () => {
     expect.hasAssertions();
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -320,7 +320,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepo.root}/package.json`,
+          `${fixtures.badMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(field)
         )
       );
@@ -329,7 +329,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(field)
         )
       );
@@ -338,7 +338,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badPolyrepo.root}/package.json`,
+          `${fixtures.badPolyrepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(field)
         )
       );
@@ -349,17 +349,17 @@ describe('::runProjectLinter', () => {
     expect.hasAssertions();
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -367,7 +367,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepo.root}/package.json`,
+          `${fixtures.badMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(field)
         )
       );
@@ -377,7 +377,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(field)
         )
       );
@@ -387,7 +387,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badPolyrepo.root}/package.json`,
+          `${fixtures.badPolyrepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(field)
         )
       );
@@ -398,39 +398,39 @@ describe('::runProjectLinter', () => {
     expect.hasAssertions();
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     patchReadPackageJsonData({
-      [Fixtures.badMonorepo.unnamedPkgMapData[0][1].root]: {
+      [fixtures.badMonorepo.unnamedPkgMapData[0][1].root]: {
         private: true
       }
     });
 
     const monorepoPrivateSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     patchReadPackageJsonData({
-      [Fixtures.badPolyrepo.root]: {
+      [fixtures.badPolyrepo.root]: {
         private: true
       }
     });
 
     const polyrepoPrivateRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -438,7 +438,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepo.root}/package.json`,
+          `${fixtures.badMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(field)
         )
       );
@@ -448,7 +448,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(field)
         )
       );
@@ -458,7 +458,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoPrivateSubRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[2][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[2][1].root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(field)
         )
       );
@@ -468,7 +468,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badPolyrepo.root}/package.json`,
+          `${fixtures.badPolyrepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(field)
         )
       );
@@ -478,7 +478,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoPrivateRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badPolyrepo.root}/package.json`,
+          `${fixtures.badPolyrepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(field)
         )
       );
@@ -504,24 +504,24 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     expect(monorepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.root}/package.json`,
+        `${fixtures.badMonorepo.root}/package.json`,
         ErrorMessage.PackageJsonDuplicateDependency('async')
       )
     );
@@ -529,7 +529,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonDuplicateDependency('async')
       )
     );
@@ -537,7 +537,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonDuplicateDependency('async')
       )
     );
@@ -553,17 +553,17 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -571,7 +571,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepo.root}/package.json`,
+          `${fixtures.badMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingValue('files', field)
         )
       );
@@ -579,7 +579,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonMissingValue('files', field)
         )
       );
@@ -587,7 +587,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badPolyrepo.root}/package.json`,
+          `${fixtures.badPolyrepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingValue('files', field)
         )
       );
@@ -604,12 +604,12 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoSubRoot1 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot1 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -625,19 +625,19 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoSubRoot2 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot2 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     expect(monorepoSubRoot1.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonMissingEntryPoint('./package')
       )
     );
@@ -645,7 +645,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot1.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonMissingEntryPoint('./package.json')
       )
     );
@@ -653,7 +653,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot2.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonMissingEntryPoint('./package')
       )
     );
@@ -661,7 +661,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot2.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonMissingEntryPoint('./package.json')
       )
     );
@@ -669,7 +669,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot1.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonMissingEntryPoint('./package')
       )
     );
@@ -677,7 +677,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot1.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonMissingEntryPoint('./package.json')
       )
     );
@@ -685,7 +685,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot2.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonMissingEntryPoint('./package')
       )
     );
@@ -693,7 +693,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot2.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonMissingEntryPoint('./package.json')
       )
     );
@@ -703,17 +703,17 @@ describe('::runProjectLinter', () => {
     expect.hasAssertions();
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -721,7 +721,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepo.root}/${file}`,
+          `${fixtures.badMonorepo.root}/${file}`,
           ErrorMessage.MissingFile()
         )
       );
@@ -729,7 +729,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/${file}`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/${file}`,
           ErrorMessage.MissingFile()
         )
       );
@@ -737,7 +737,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badPolyrepo.root}/${file}`,
+          `${fixtures.badPolyrepo.root}/${file}`,
           ErrorMessage.MissingFile()
         )
       );
@@ -751,7 +751,7 @@ describe('::runProjectLinter', () => {
     mockedRun.mockImplementation(makeMockGitCommit(commits));
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -768,7 +768,7 @@ describe('::runProjectLinter', () => {
     commits.splice(0, commits.length);
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -798,12 +798,12 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoSubRoot1 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot1 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -831,19 +831,19 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoSubRoot2 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot2 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     expect(monorepoSubRoot1.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonBadTypesEntryPoint(['*', '*'])
       )
     );
@@ -851,7 +851,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot2.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonBadTypesEntryPoint(['*', 'special.d.ts'])
       )
     );
@@ -859,7 +859,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot2.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonBadEntryPoint(['.', 'default'])
       )
     );
@@ -867,7 +867,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot2.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonBadEntryPoint(['.', 'node', 'custom'])
       )
     );
@@ -875,7 +875,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot2.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonBadEntryPoint(['./package'])
       )
     );
@@ -883,7 +883,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot1.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonBadTypesEntryPoint(['*', '*'])
       )
     );
@@ -891,7 +891,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot2.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonBadTypesEntryPoint(['*', 'special.d.ts'])
       )
     );
@@ -899,7 +899,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot2.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonBadEntryPoint(['.', 'default'])
       )
     );
@@ -907,7 +907,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot2.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonBadEntryPoint(['.', 'node', 'custom'])
       )
     );
@@ -915,7 +915,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot2.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonBadEntryPoint(['./package'])
       )
     );
@@ -925,12 +925,12 @@ describe('::runProjectLinter', () => {
     expect.hasAssertions();
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -938,7 +938,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.root}/${file}`,
+          `${fixtures.badMonorepo.root}/${file}`,
           ErrorMessage.MissingFile()
         )
       );
@@ -948,7 +948,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepo.root}/${file}`,
+          `${fixtures.badPolyrepo.root}/${file}`,
           ErrorMessage.MissingFile()
         )
       );
@@ -959,7 +959,7 @@ describe('::runProjectLinter', () => {
     expect.hasAssertions();
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -967,7 +967,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/${file}`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/${file}`,
           ErrorMessage.MissingFile()
         )
       );
@@ -978,12 +978,12 @@ describe('::runProjectLinter', () => {
     expect.hasAssertions();
 
     const monorepoRoot1 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot2 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -994,19 +994,19 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoRoot3 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot4 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     expect(monorepoRoot1.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonMissingValue('license', Constants.pkgJsonLicense)
       )
     );
@@ -1014,7 +1014,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot2.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonMissingValue('license', Constants.pkgJsonLicense)
       )
     );
@@ -1022,7 +1022,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoRoot3.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonMissingValue('license', Constants.pkgJsonLicense)
       )
     );
@@ -1030,7 +1030,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot4.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonMissingValue('license', Constants.pkgJsonLicense)
       )
     );
@@ -1046,17 +1046,17 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const monorepoSubRoot1 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot1 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -1067,26 +1067,26 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoSubRoot2 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot2 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     patchReadPackageJsonData({});
 
     const goodMonorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.goodMonorepo.root,
+      rootDir: fixtures.goodMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     expect(monorepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.root}/package.json`,
+        `${fixtures.badMonorepo.root}/package.json`,
         ErrorMessage.PackageJsonIllegalKey('version')
       )
     );
@@ -1094,7 +1094,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot1.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonExperimentalVersion()
       )
     );
@@ -1102,7 +1102,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot2.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonExperimentalVersion()
       )
     );
@@ -1110,7 +1110,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot1.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonExperimentalVersion()
       )
     );
@@ -1118,7 +1118,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot2.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonExperimentalVersion()
       )
     );
@@ -1126,7 +1126,7 @@ describe('::runProjectLinter', () => {
     expect(goodMonorepoRoot.output).not.toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.goodMonorepo.root}/package.json`,
+        `${fixtures.goodMonorepo.root}/package.json`,
         ErrorMessage.PackageJsonIllegalKey('version')
       )
     );
@@ -1134,7 +1134,7 @@ describe('::runProjectLinter', () => {
     expect(goodMonorepoRoot.output).not.toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.goodMonorepo.root}/package.json`,
+        `${fixtures.goodMonorepo.root}/package.json`,
         ErrorMessage.PackageJsonExperimentalVersion()
       )
     );
@@ -1153,12 +1153,12 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -1166,7 +1166,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonObsoleteKey(key)
         )
       );
@@ -1174,7 +1174,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepo.root}/package.json`,
+          `${fixtures.badPolyrepo.root}/package.json`,
           ErrorMessage.PackageJsonObsoleteKey(key)
         )
       );
@@ -1204,17 +1204,17 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -1222,7 +1222,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.root}/package.json`,
+          `${fixtures.badMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonObsoleteScript(key)
         )
       );
@@ -1230,7 +1230,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonObsoleteScript(key)
         )
       );
@@ -1238,7 +1238,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepo.root}/package.json`,
+          `${fixtures.badPolyrepo.root}/package.json`,
           ErrorMessage.PackageJsonObsoleteScript(key)
         )
       );
@@ -1255,27 +1255,27 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const nextMonorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepoNextjsProject.root,
+      rootDir: fixtures.badMonorepoNextjsProject.root,
       linkProtectionMarkdownPaths: []
     });
 
     const nextPolyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepoNextjsProject.root,
+      rootDir: fixtures.badPolyrepoNextjsProject.root,
       linkProtectionMarkdownPaths: []
     });
 
@@ -1283,7 +1283,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.root}/package.json`,
+          `${fixtures.badMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(`scripts['${key}']`)
         )
       );
@@ -1293,7 +1293,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(`scripts['${key}']`)
         )
       );
@@ -1303,7 +1303,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepo.root}/package.json`,
+          `${fixtures.badPolyrepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(`scripts['${key}']`)
         )
       );
@@ -1313,7 +1313,7 @@ describe('::runProjectLinter', () => {
       expect(nextMonorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoNextjsProject.root}/package.json`,
+          `${fixtures.badMonorepoNextjsProject.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(`scripts['${key}']`)
         )
       );
@@ -1323,7 +1323,7 @@ describe('::runProjectLinter', () => {
       expect(nextMonorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoNextjsProject.root}/package.json`,
+          `${fixtures.badMonorepoNextjsProject.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(`scripts['${key}']`)
         )
       );
@@ -1333,7 +1333,7 @@ describe('::runProjectLinter', () => {
       expect(nextPolyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoNextjsProject.root}/package.json`,
+          `${fixtures.badPolyrepoNextjsProject.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(`scripts['${key}']`)
         )
       );
@@ -1343,7 +1343,7 @@ describe('::runProjectLinter', () => {
       expect(nextPolyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoNextjsProject.root}/package.json`,
+          `${fixtures.badPolyrepoNextjsProject.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey(`scripts['${key}']`)
         )
       );
@@ -1360,19 +1360,19 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     expect(monorepoSubRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonMissingKey('engines.node')
       )
     );
@@ -1380,7 +1380,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonMissingKey('engines.node')
       )
     );
@@ -1398,21 +1398,21 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
-    const engines = Utils.getExpectedPkgNodeEngines();
+    const engines = Utils.getMaintainedPkgNodeEngines();
 
     expect(monorepoSubRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonBadEngine(engines)
       )
     );
@@ -1420,7 +1420,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonBadEngine(engines)
       )
     );
@@ -1445,24 +1445,24 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     expect(monorepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.root}/package.json`,
+        `${fixtures.badMonorepo.root}/package.json`,
         ErrorMessage.PackageJsonPinnedDependency('chalk')
       )
     );
@@ -1470,7 +1470,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.root}/package.json`,
+        `${fixtures.badMonorepo.root}/package.json`,
         ErrorMessage.PackageJsonPinnedDependency('async')
       )
     );
@@ -1478,7 +1478,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonPinnedDependency('chalk')
       )
     );
@@ -1486,7 +1486,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonPinnedDependency('async')
       )
     );
@@ -1494,7 +1494,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonPinnedDependency('chalk')
       )
     );
@@ -1502,7 +1502,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonPinnedDependency('async')
       )
     );
@@ -1511,7 +1511,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.root}/package.json`,
+          `${fixtures.badMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonNonSemverDependency(dep)
         )
       );
@@ -1519,7 +1519,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonNonSemverDependency(dep)
         )
       );
@@ -1527,7 +1527,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepo.root}/package.json`,
+          `${fixtures.badPolyrepo.root}/package.json`,
           ErrorMessage.PackageJsonNonSemverDependency(dep)
         )
       );
@@ -1555,24 +1555,24 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     expect(monorepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.root}/package.json`,
+        `${fixtures.badMonorepo.root}/package.json`,
         ErrorMessage.PackageJsonNonSemverDependency('jest')
       )
     );
@@ -1580,7 +1580,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.root}/package.json`,
+        `${fixtures.badMonorepo.root}/package.json`,
         ErrorMessage.PackageJsonNonSemverDependency('async')
       )
     );
@@ -1588,7 +1588,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonNonSemverDependency('jest')
       )
     );
@@ -1596,7 +1596,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonNonSemverDependency('async')
       )
     );
@@ -1604,7 +1604,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonNonSemverDependency('jest')
       )
     );
@@ -1612,7 +1612,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonNonSemverDependency('async')
       )
     );
@@ -1621,7 +1621,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.root}/package.json`,
+          `${fixtures.badMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonNonSemverDependency(dep)
         )
       );
@@ -1629,7 +1629,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonNonSemverDependency(dep)
         )
       );
@@ -1637,7 +1637,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepo.root}/package.json`,
+          `${fixtures.badPolyrepo.root}/package.json`,
           ErrorMessage.PackageJsonNonSemverDependency(dep)
         )
       );
@@ -1660,24 +1660,24 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     expect(monorepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.root}/package.json`,
+        `${fixtures.badMonorepo.root}/package.json`,
         ErrorMessage.PackageJsonNonPinnedPreReleaseDependency('jest')
       )
     );
@@ -1685,7 +1685,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.root}/package.json`,
+        `${fixtures.badMonorepo.root}/package.json`,
         ErrorMessage.PackageJsonNonPinnedPreReleaseDependency('async')
       )
     );
@@ -1693,7 +1693,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoRoot.output).not.toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.root}/package.json`,
+        `${fixtures.badMonorepo.root}/package.json`,
         ErrorMessage.PackageJsonNonPinnedPreReleaseDependency('rest')
       )
     );
@@ -1701,7 +1701,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonNonPinnedPreReleaseDependency('jest')
       )
     );
@@ -1709,7 +1709,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonNonPinnedPreReleaseDependency('async')
       )
     );
@@ -1717,7 +1717,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot.output).not.toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonNonPinnedPreReleaseDependency('rest')
       )
     );
@@ -1725,7 +1725,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonNonPinnedPreReleaseDependency('jest')
       )
     );
@@ -1733,7 +1733,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonNonPinnedPreReleaseDependency('async')
       )
     );
@@ -1741,7 +1741,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot.output).not.toStrictEqual(
       stringContainingErrorMessage(
         'error',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonNonPinnedPreReleaseDependency('rest')
       )
     );
@@ -1751,24 +1751,24 @@ describe('::runProjectLinter', () => {
     expect.hasAssertions();
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     expect(monorepoRoot.output).not.toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.root}/package.json`,
+        `${fixtures.badMonorepo.root}/package.json`,
         ErrorMessage.PackageJsonMissingKey("config['plugin-build'].docs.entry")
       )
     );
@@ -1776,7 +1776,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonMissingKey("config['plugin-build'].docs.entry")
       )
     );
@@ -1784,7 +1784,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonMissingKey("config['plugin-build'].docs.entry")
       )
     );
@@ -1806,24 +1806,24 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.root,
+      rootDir: fixtures.badMonorepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     const monorepoSubRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: []
     });
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepo.root,
+      rootDir: fixtures.badPolyrepo.root,
       linkProtectionMarkdownPaths: []
     });
 
     expect(monorepoRoot.output).not.toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.root}/package.json`,
+        `${fixtures.badMonorepo.root}/package.json`,
         ErrorMessage.PackageJsonBadConfigDocsEntry()
       )
     );
@@ -1831,7 +1831,7 @@ describe('::runProjectLinter', () => {
     expect(monorepoSubRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+        `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
         ErrorMessage.PackageJsonBadConfigDocsEntry()
       )
     );
@@ -1839,7 +1839,7 @@ describe('::runProjectLinter', () => {
     expect(polyrepoRoot.output).toStrictEqual(
       stringContainingErrorMessage(
         'warn',
-        `${Fixtures.badPolyrepo.root}/package.json`,
+        `${fixtures.badPolyrepo.root}/package.json`,
         ErrorMessage.PackageJsonBadConfigDocsEntry()
       )
     );
@@ -1851,22 +1851,22 @@ describe('::runProjectLinter', () => {
     jest.spyOn(fs, 'readFile').mockImplementation(() => getBadMarkdown());
 
     const monorepoRoot1 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+      rootDir: fixtures.badMonorepoEmptyMdFiles.root,
       linkProtectionMarkdownPaths: [Constants.defaultMarkdownGlob]
     });
 
     const monorepoSubRoot1 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: [Constants.defaultMarkdownGlob]
     });
 
     const polyrepoRoot1 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+      rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
       linkProtectionMarkdownPaths: [Constants.defaultMarkdownGlob]
     });
 
     patchReadPackageJsonData({
-      [Fixtures.badMonorepoEmptyMdFiles.root]: {
+      [fixtures.badMonorepoEmptyMdFiles.root]: {
         config: {
           'plugin-lint': {
             'link-protection': {
@@ -1887,17 +1887,17 @@ describe('::runProjectLinter', () => {
     });
 
     const monorepoRoot2 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+      rootDir: fixtures.badMonorepoEmptyMdFiles.root,
       linkProtectionMarkdownPaths: [Constants.defaultMarkdownGlob]
     });
 
     const monorepoSubRoot2 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+      rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
       linkProtectionMarkdownPaths: [Constants.defaultMarkdownGlob]
     });
 
     const polyrepoRoot2 = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+      rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
       linkProtectionMarkdownPaths: [Constants.defaultMarkdownGlob]
     });
 
@@ -1905,7 +1905,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot1.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/CONTRIBUTING.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/CONTRIBUTING.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -1913,7 +1913,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot1.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -1921,7 +1921,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot1.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/RANDOM.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/RANDOM.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -1929,7 +1929,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot1.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -1937,7 +1937,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot1.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/RANDOM.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/RANDOM.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -1945,7 +1945,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot1.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -1953,7 +1953,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot2.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/CONTRIBUTING.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/CONTRIBUTING.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -1963,7 +1963,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot2.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -1971,7 +1971,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot2.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/RANDOM.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/RANDOM.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -1979,7 +1979,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot2.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -1987,7 +1987,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot2.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/RANDOM.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/RANDOM.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -1995,7 +1995,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot2.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -2018,24 +2018,24 @@ describe('::runProjectLinter', () => {
       expect.hasAssertions();
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownInvalidSyntaxOpeningComment()
         )
       );
@@ -2043,7 +2043,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownInvalidSyntaxOpeningComment()
         )
       );
@@ -2051,7 +2051,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownInvalidSyntaxOpeningComment()
         )
       );
@@ -2075,24 +2075,24 @@ describe('::runProjectLinter', () => {
       }));
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownInvalidSyntaxClosingComment()
         )
       );
@@ -2100,7 +2100,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownInvalidSyntaxClosingComment()
         )
       );
@@ -2108,7 +2108,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownInvalidSyntaxClosingComment()
         )
       );
@@ -2156,12 +2156,12 @@ describe('::runProjectLinter', () => {
       }));
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
@@ -2204,14 +2204,14 @@ describe('::runProjectLinter', () => {
       }));
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownInvalidSyntaxLinkRef('link-blm')
         )
       );
@@ -2219,7 +2219,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownInvalidSyntaxLinkRef('link-blm')
         )
       );
@@ -2227,7 +2227,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownInvalidSyntaxLinkRef('(unlabeled)')
         )
       );
@@ -2239,24 +2239,24 @@ describe('::runProjectLinter', () => {
       mockedFromMarkdown.mockImplementation(() => mockMdastReadmeMonorepo);
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownUnknownTopmatterItem('badge-projector')
         )
       );
@@ -2264,7 +2264,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownUnknownTopmatterItem('badge-projector')
         )
       );
@@ -2272,7 +2272,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownUnknownTopmatterItem('badge-projector')
         )
       );
@@ -2332,24 +2332,24 @@ describe('::runProjectLinter', () => {
       }));
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterLinkRefLabel(
             'blm-link',
             Constants.markdownReadmeStandardTopmatter.badge.blm.link.label
@@ -2360,7 +2360,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterLinkRefLabel(
             'blm-link',
             Constants.markdownReadmeStandardTopmatter.badge.blm.link.label
@@ -2371,7 +2371,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterLinkRefLabel(
             'blm-link',
             Constants.markdownReadmeStandardTopmatter.badge.blm.link.label
@@ -2382,7 +2382,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterImageRefAlt(
             'badge-blm',
             Constants.markdownReadmeStandardTopmatter.badge.blm.alt
@@ -2393,7 +2393,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterImageRefAlt(
             'badge-blm',
             Constants.markdownReadmeStandardTopmatter.badge.blm.alt
@@ -2404,7 +2404,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterImageRefAlt(
             'badge-blm',
             Constants.markdownReadmeStandardTopmatter.badge.blm.alt
@@ -2415,7 +2415,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterMissingLinkRefDef('blm-link')
         )
       );
@@ -2423,7 +2423,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterMissingLinkRefDef('blm-link')
         )
       );
@@ -2431,7 +2431,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterMissingLinkRefDef('blm-link')
         )
       );
@@ -2502,24 +2502,24 @@ describe('::runProjectLinter', () => {
       }));
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterMissingImageRefDef(
             Constants.markdownReadmeStandardTopmatter.badge.blm.label
           )
@@ -2529,7 +2529,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterMissingImageRefDef(
             Constants.markdownReadmeStandardTopmatter.badge.blm.label
           )
@@ -2539,7 +2539,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterMissingImageRefDef(
             Constants.markdownReadmeStandardTopmatter.badge.blm.label
           )
@@ -2623,26 +2623,26 @@ describe('::runProjectLinter', () => {
       }));
 
       patchReadPackageJsonData({
-        [Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root]: {
+        [fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root]: {
           repository: 'https://github.com/user/repo'
         },
-        [Fixtures.badPolyrepoEmptyMdFiles.root]: {
+        [fixtures.badPolyrepoEmptyMdFiles.root]: {
           repository: { type: 'git', url: 'https://github.com/user/repo' }
         }
       });
 
       const monorepoRoot1 = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot1 = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot1 = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
@@ -2651,30 +2651,30 @@ describe('::runProjectLinter', () => {
           name: Math.random().toString(16).slice(2),
           repository: 'https://github.com/user/repo'
         },
-        [Fixtures.badPolyrepoEmptyMdFiles.root]: {
+        [fixtures.badPolyrepoEmptyMdFiles.root]: {
           repository: { type: 'git', url: 'https://github.com/user/repo' }
         }
       });
 
       const monorepoRoot2 = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot2 = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot2 = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepoRoot1.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.PackageJsonMissingKeysCheckSkipped()
         )
       );
@@ -2682,7 +2682,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot1.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.PackageJsonMissingKeysCheckSkipped()
         )
       );
@@ -2690,7 +2690,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot1.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.PackageJsonMissingKeysCheckSkipped()
         )
       );
@@ -2698,7 +2698,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot2.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.PackageJsonMissingKeysCheckSkipped()
         )
       );
@@ -2706,7 +2706,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot2.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.PackageJsonMissingKeysCheckSkipped()
         )
       );
@@ -2714,7 +2714,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot2.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.PackageJsonMissingKeysCheckSkipped()
         )
       );
@@ -2806,24 +2806,24 @@ describe('::runProjectLinter', () => {
       }));
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterImageRefDefTitle(
             'badge-last-commit',
             Constants.markdownReadmeStandardTopmatter.badge.lastCommit.title
@@ -2834,7 +2834,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterImageRefDefTitle(
             'badge-last-commit',
             Constants.markdownReadmeStandardTopmatter.badge.lastCommit.title
@@ -2845,7 +2845,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterImageRefDefTitle(
             'badge-last-commit',
             Constants.markdownReadmeStandardTopmatter.badge.lastCommit.title
@@ -2856,7 +2856,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterImageRefDefUrl(
             'badge-last-commit',
             Constants.markdownReadmeStandardTopmatter.badge.lastCommit.url({
@@ -2871,7 +2871,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterImageRefDefUrl(
             'badge-last-commit',
             Constants.markdownReadmeStandardTopmatter.badge.lastCommit.url({
@@ -2886,7 +2886,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterImageRefDefUrl(
             'badge-last-commit',
             Constants.markdownReadmeStandardTopmatter.badge.lastCommit.url({
@@ -2901,7 +2901,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterLinkRefDefUrl(
             'link-last-commit',
             Constants.markdownReadmeStandardTopmatter.badge.lastCommit.link.url({
@@ -2916,7 +2916,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterLinkRefDefUrl(
             'link-last-commit',
             Constants.markdownReadmeStandardTopmatter.badge.lastCommit.link.url({
@@ -2931,7 +2931,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownBadTopmatterLinkRefDefUrl(
             'link-last-commit',
             Constants.markdownReadmeStandardTopmatter.badge.lastCommit.link.url({
@@ -2974,24 +2974,24 @@ describe('::runProjectLinter', () => {
       }));
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownMissingTopmatter()
         )
       );
@@ -2999,7 +2999,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownMissingTopmatter()
         )
       );
@@ -3007,7 +3007,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownMissingTopmatter()
         )
       );
@@ -3019,24 +3019,24 @@ describe('::runProjectLinter', () => {
       mockedFromMarkdown.mockImplementation(() => mockMdastReadmeMonorepoOOOrder);
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownTopmatterOutOfOrder()
         )
       );
@@ -3044,7 +3044,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownTopmatterOutOfOrder()
         )
       );
@@ -3052,7 +3052,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownTopmatterOutOfOrder()
         )
       );
@@ -3112,17 +3112,17 @@ describe('::runProjectLinter', () => {
       }));
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
@@ -3133,7 +3133,7 @@ describe('::runProjectLinter', () => {
             expect(monorepoRoot.output).toStrictEqual(
               stringContainingErrorMessage(
                 'warn',
-                `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+                `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
                 ErrorMessage.MarkdownMissingTopmatterItem(label)
               )
             );
@@ -3143,7 +3143,7 @@ describe('::runProjectLinter', () => {
             expect(monorepoSubRoot.output).toStrictEqual(
               stringContainingErrorMessage(
                 'warn',
-                `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+                `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
                 ErrorMessage.MarkdownMissingTopmatterItem(label)
               )
             );
@@ -3153,7 +3153,7 @@ describe('::runProjectLinter', () => {
             expect(polyrepoRoot.output).toStrictEqual(
               stringContainingErrorMessage(
                 'warn',
-                `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+                `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
                 ErrorMessage.MarkdownMissingTopmatterItem(label)
               )
             );
@@ -3180,17 +3180,17 @@ describe('::runProjectLinter', () => {
       }));
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
@@ -3198,7 +3198,7 @@ describe('::runProjectLinter', () => {
         expect(monorepoRoot.output).toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+            `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
             ErrorMessage.MarkdownMissingLink(label)
           )
         );
@@ -3206,7 +3206,7 @@ describe('::runProjectLinter', () => {
         expect(monorepoSubRoot.output).toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+            `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
             ErrorMessage.MarkdownMissingLink(label)
           )
         );
@@ -3214,7 +3214,7 @@ describe('::runProjectLinter', () => {
         expect(polyrepoRoot.output).toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+            `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
             ErrorMessage.MarkdownMissingLink(label)
           )
         );
@@ -3252,24 +3252,24 @@ describe('::runProjectLinter', () => {
       }));
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownBadLink(
             'choose-new-issue',
             Constants.markdownReadmeStandardLinks.chooseNewIssue.url({
@@ -3284,7 +3284,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownBadLink(
             'choose-new-issue',
             Constants.markdownReadmeStandardLinks.chooseNewIssue.url({
@@ -3299,7 +3299,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownBadLink(
             'choose-new-issue',
             Constants.markdownReadmeStandardLinks.chooseNewIssue.url({
@@ -3318,11 +3318,11 @@ describe('::runProjectLinter', () => {
       expect.hasAssertions();
 
       const monorepo = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoNonPackageDir.root,
+        rootDir: fixtures.badMonorepoNonPackageDir.root,
         linkProtectionMarkdownPaths: []
       });
 
-      Fixtures.badMonorepoNonPackageDir.brokenPkgRoots.forEach((pkgRoot) => {
+      fixtures.badMonorepoNonPackageDir.brokenPkgRoots.forEach((pkgRoot) => {
         expect(monorepo.output).toStrictEqual(
           stringContainingErrorMessage(
             'error',
@@ -3345,7 +3345,7 @@ describe('::runProjectLinter', () => {
 
       await expect(
         Linters.runProjectLinter({
-          rootDir: Fixtures.goodMonorepo.root,
+          rootDir: fixtures.goodMonorepo.root,
           linkProtectionMarkdownPaths: []
         })
       ).resolves.toStrictEqual({
@@ -3353,7 +3353,7 @@ describe('::runProjectLinter', () => {
         summary: expect.stringContaining('1 error, 0 warnings'),
         output: stringContainingErrorMessage(
           'error',
-          `${Fixtures.goodMonorepo.namedPkgMapData[1][1].root}/package.json`,
+          `${fixtures.goodMonorepo.namedPkgMapData[1][1].root}/package.json`,
           ErrorMessage.PackageJsonUnparsable()
         )
       });
@@ -3363,17 +3363,17 @@ describe('::runProjectLinter', () => {
       expect.hasAssertions();
 
       const monorepo = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoDuplicateName.root,
+        rootDir: fixtures.badMonorepoDuplicateName.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepo.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoDuplicateName.root}/pkg/pkg-1`,
+          `${fixtures.badMonorepoDuplicateName.root}/pkg/pkg-1`,
           ErrorMessage.DuplicatePackageName(
             'pkg',
-            `${Fixtures.badMonorepoDuplicateName.root}/pkg/pkg-2`
+            `${fixtures.badMonorepoDuplicateName.root}/pkg/pkg-2`
           )
         )
       );
@@ -3381,10 +3381,10 @@ describe('::runProjectLinter', () => {
       expect(monorepo.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoDuplicateName.root}/pkg/pkg-2`,
+          `${fixtures.badMonorepoDuplicateName.root}/pkg/pkg-2`,
           ErrorMessage.DuplicatePackageName(
             'pkg',
-            `${Fixtures.badMonorepoDuplicateName.root}/pkg/pkg-1`
+            `${fixtures.badMonorepoDuplicateName.root}/pkg/pkg-1`
           )
         )
       );
@@ -3394,17 +3394,17 @@ describe('::runProjectLinter', () => {
       expect.hasAssertions();
 
       const monorepo = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoDuplicateId.root,
+        rootDir: fixtures.badMonorepoDuplicateId.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepo.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoDuplicateId.root}/packages-1/pkg-1`,
+          `${fixtures.badMonorepoDuplicateId.root}/packages-1/pkg-1`,
           ErrorMessage.DuplicatePackageId(
             'pkg-1',
-            `${Fixtures.badMonorepoDuplicateId.root}/packages-2/pkg-1`
+            `${fixtures.badMonorepoDuplicateId.root}/packages-2/pkg-1`
           )
         )
       );
@@ -3412,10 +3412,10 @@ describe('::runProjectLinter', () => {
       expect(monorepo.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoDuplicateId.root}/packages-2/pkg-1`,
+          `${fixtures.badMonorepoDuplicateId.root}/packages-2/pkg-1`,
           ErrorMessage.DuplicatePackageId(
             'pkg-1',
-            `${Fixtures.badMonorepoDuplicateId.root}/packages-1/pkg-1`
+            `${fixtures.badMonorepoDuplicateId.root}/packages-1/pkg-1`
           )
         )
       );
@@ -3427,17 +3427,17 @@ describe('::runProjectLinter', () => {
       expect.hasAssertions();
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.root,
+        rootDir: fixtures.badMonorepo.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepo.root,
+        rootDir: fixtures.badPolyrepo.root,
         linkProtectionMarkdownPaths: []
       });
 
@@ -3446,7 +3446,7 @@ describe('::runProjectLinter', () => {
         expect(monorepoRoot.output).toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badMonorepo.root}/${file}`,
+            `${fixtures.badMonorepo.root}/${file}`,
             ErrorMessage.MissingFile()
           )
         );
@@ -3455,7 +3455,7 @@ describe('::runProjectLinter', () => {
         expect(monorepoRoot.output).not.toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/${file}`,
+            `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/${file}`,
             ErrorMessage.MissingFile()
           )
         );
@@ -3464,7 +3464,7 @@ describe('::runProjectLinter', () => {
         expect(monorepoSubRoot.output).not.toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/${file}`,
+            `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/${file}`,
             ErrorMessage.MissingFile()
           )
         );
@@ -3473,7 +3473,7 @@ describe('::runProjectLinter', () => {
         expect(polyrepoRoot.output).toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badPolyrepo.root}/${file}`,
+            `${fixtures.badPolyrepo.root}/${file}`,
             ErrorMessage.MissingFile()
           )
         );
@@ -3484,17 +3484,17 @@ describe('::runProjectLinter', () => {
       expect.hasAssertions();
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.root,
+        rootDir: fixtures.badMonorepo.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepo.root,
+        rootDir: fixtures.badPolyrepo.root,
         linkProtectionMarkdownPaths: []
       });
 
@@ -3503,7 +3503,7 @@ describe('::runProjectLinter', () => {
         expect(monorepoRoot.output).toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badMonorepo.root}/${dir}`,
+            `${fixtures.badMonorepo.root}/${dir}`,
             ErrorMessage.MissingDirectory()
           )
         );
@@ -3512,7 +3512,7 @@ describe('::runProjectLinter', () => {
         expect(monorepoRoot.output).not.toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/${dir}`,
+            `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/${dir}`,
             ErrorMessage.MissingDirectory()
           )
         );
@@ -3521,7 +3521,7 @@ describe('::runProjectLinter', () => {
         expect(monorepoSubRoot.output).not.toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/${dir}`,
+            `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/${dir}`,
             ErrorMessage.MissingDirectory()
           )
         );
@@ -3530,7 +3530,7 @@ describe('::runProjectLinter', () => {
         expect(polyrepoRoot.output).toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badPolyrepo.root}/${dir}`,
+            `${fixtures.badPolyrepo.root}/${dir}`,
             ErrorMessage.MissingDirectory()
           )
         );
@@ -3541,17 +3541,17 @@ describe('::runProjectLinter', () => {
       expect.hasAssertions();
 
       const monorepoRoot1 = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.root,
+        rootDir: fixtures.badMonorepo.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot1 = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot1 = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepo.root,
+        rootDir: fixtures.badPolyrepo.root,
         linkProtectionMarkdownPaths: []
       });
 
@@ -3565,17 +3565,17 @@ describe('::runProjectLinter', () => {
       );
 
       const monorepoRoot2 = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.root,
+        rootDir: fixtures.badMonorepo.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot2 = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot2 = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepo.root,
+        rootDir: fixtures.badPolyrepo.root,
         linkProtectionMarkdownPaths: []
       });
 
@@ -3583,7 +3583,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot1.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.root}/release.config.js`,
+          `${fixtures.badMonorepo.root}/release.config.js`,
           ErrorMessage.MissingFile()
         )
       );
@@ -3592,7 +3592,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot1.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/release.config.js`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/release.config.js`,
           ErrorMessage.MissingFile()
         )
       );
@@ -3601,7 +3601,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot1.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/release.config.js`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/release.config.js`,
           ErrorMessage.MissingFile()
         )
       );
@@ -3610,7 +3610,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot1.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepo.root}/release.config.js`,
+          `${fixtures.badPolyrepo.root}/release.config.js`,
           ErrorMessage.MissingFile()
         )
       );
@@ -3619,7 +3619,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot2.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.root}/release.config.js`,
+          `${fixtures.badMonorepo.root}/release.config.js`,
           ErrorMessage.MissingFile()
         )
       );
@@ -3628,7 +3628,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot2.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/release.config.js`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/release.config.js`,
           ErrorMessage.MissingFile()
         )
       );
@@ -3637,7 +3637,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot2.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/release.config.js`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/release.config.js`,
           ErrorMessage.MissingFile()
         )
       );
@@ -3646,7 +3646,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot2.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepo.root}/release.config.js`,
+          `${fixtures.badPolyrepo.root}/release.config.js`,
           ErrorMessage.MissingFile()
         )
       );
@@ -3670,17 +3670,17 @@ describe('::runProjectLinter', () => {
       });
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
@@ -3697,7 +3697,7 @@ describe('::runProjectLinter', () => {
         expect(monorepoRoot.output).toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badMonorepoEmptyMdFiles.root}/${mdFile}`,
+            `${fixtures.badMonorepoEmptyMdFiles.root}/${mdFile}`,
             ErrorMessage.MarkdownBlueprintMismatch(`${blueprint}.txt`)
           )
         );
@@ -3705,7 +3705,7 @@ describe('::runProjectLinter', () => {
         expect(monorepoSubRoot.output).not.toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badMonorepoEmptyMdFiles.root}/${mdFile}`,
+            `${fixtures.badMonorepoEmptyMdFiles.root}/${mdFile}`,
             ErrorMessage.MarkdownBlueprintMismatch(`${blueprint}.txt`)
           )
         );
@@ -3713,7 +3713,7 @@ describe('::runProjectLinter', () => {
         expect(polyrepoRoot.output).toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badPolyrepoEmptyMdFiles.root}/${mdFile}`,
+            `${fixtures.badPolyrepoEmptyMdFiles.root}/${mdFile}`,
             ErrorMessage.MarkdownBlueprintMismatch(`${blueprint}.txt`)
           )
         );
@@ -3724,17 +3724,17 @@ describe('::runProjectLinter', () => {
       expect.hasAssertions();
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+        rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
         linkProtectionMarkdownPaths: []
       });
 
@@ -3744,7 +3744,7 @@ describe('::runProjectLinter', () => {
         expect(monorepoRoot.output).toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badMonorepoEmptyMdFiles.root}/${mdFile}`,
+            `${fixtures.badMonorepoEmptyMdFiles.root}/${mdFile}`,
             ErrorMessage.MarkdownBlueprintMismatch(`${blueprint}.txt`)
           )
         );
@@ -3752,7 +3752,7 @@ describe('::runProjectLinter', () => {
         expect(monorepoSubRoot.output).not.toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badMonorepoEmptyMdFiles.root}/${mdFile}`,
+            `${fixtures.badMonorepoEmptyMdFiles.root}/${mdFile}`,
             ErrorMessage.MarkdownBlueprintMismatch(`${blueprint}.txt`)
           )
         );
@@ -3760,7 +3760,7 @@ describe('::runProjectLinter', () => {
         expect(polyrepoRoot.output).toStrictEqual(
           stringContainingErrorMessage(
             'warn',
-            `${Fixtures.badPolyrepoEmptyMdFiles.root}/${mdFile}`,
+            `${fixtures.badPolyrepoEmptyMdFiles.root}/${mdFile}`,
             ErrorMessage.MarkdownBlueprintMismatch(`${blueprint}.txt`)
           )
         );
@@ -3770,7 +3770,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/SECURITY.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/SECURITY.md`,
           ErrorMessage.MarkdownBlueprintMismatch('security.md.txt')
         )
       );
@@ -3821,18 +3821,18 @@ describe('::runProjectLinter', () => {
         });
 
         const monorepoRoot = await Linters.runProjectLinter({
-          rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+          rootDir: fixtures.badMonorepoEmptyMdFiles.root,
           linkProtectionMarkdownPaths: []
         });
 
         const polyrepoRoot = await Linters.runProjectLinter({
-          rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+          rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
           linkProtectionMarkdownPaths: []
         });
 
         [
-          [monorepoRoot, Fixtures.badMonorepoEmptyMdFiles] as const,
-          [polyrepoRoot, Fixtures.badPolyrepoEmptyMdFiles] as const
+          [monorepoRoot, fixtures.badMonorepoEmptyMdFiles] as const,
+          [polyrepoRoot, fixtures.badPolyrepoEmptyMdFiles] as const
         ].forEach(([output, fixture]) => {
           expect(output.output).toStrictEqual(
             stringContainingErrorMessage(
@@ -3977,18 +3977,18 @@ describe('::runProjectLinter', () => {
         });
 
         const monorepoRoot = await Linters.runProjectLinter({
-          rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+          rootDir: fixtures.badMonorepoEmptyMdFiles.root,
           linkProtectionMarkdownPaths: []
         });
 
         const polyrepoRoot = await Linters.runProjectLinter({
-          rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+          rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
           linkProtectionMarkdownPaths: []
         });
 
         [
-          [monorepoRoot, Fixtures.badMonorepoEmptyMdFiles] as const,
-          [polyrepoRoot, Fixtures.badPolyrepoEmptyMdFiles] as const
+          [monorepoRoot, fixtures.badMonorepoEmptyMdFiles] as const,
+          [polyrepoRoot, fixtures.badPolyrepoEmptyMdFiles] as const
         ].forEach(([output, fixture]) => {
           expect(output.output).toStrictEqual(
             stringContainingErrorMessage(
@@ -4055,18 +4055,18 @@ describe('::runProjectLinter', () => {
         });
 
         const monorepoRoot = await Linters.runProjectLinter({
-          rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+          rootDir: fixtures.badMonorepoEmptyMdFiles.root,
           linkProtectionMarkdownPaths: []
         });
 
         const polyrepoRoot = await Linters.runProjectLinter({
-          rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+          rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
           linkProtectionMarkdownPaths: []
         });
 
         [
-          [monorepoRoot, Fixtures.badMonorepoEmptyMdFiles] as const,
-          [polyrepoRoot, Fixtures.badPolyrepoEmptyMdFiles] as const
+          [monorepoRoot, fixtures.badMonorepoEmptyMdFiles] as const,
+          [polyrepoRoot, fixtures.badPolyrepoEmptyMdFiles] as const
         ].forEach(([output, fixture]) => {
           expect(output.output).toStrictEqual(
             stringContainingErrorMessage(
@@ -4133,18 +4133,18 @@ describe('::runProjectLinter', () => {
         });
 
         const monorepoRoot = await Linters.runProjectLinter({
-          rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+          rootDir: fixtures.badMonorepoEmptyMdFiles.root,
           linkProtectionMarkdownPaths: []
         });
 
         const polyrepoRoot = await Linters.runProjectLinter({
-          rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+          rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
           linkProtectionMarkdownPaths: []
         });
 
         [
-          [monorepoRoot, Fixtures.badMonorepoEmptyMdFiles] as const,
-          [polyrepoRoot, Fixtures.badPolyrepoEmptyMdFiles] as const
+          [monorepoRoot, fixtures.badMonorepoEmptyMdFiles] as const,
+          [polyrepoRoot, fixtures.badPolyrepoEmptyMdFiles] as const
         ].forEach(([output, fixture]) => {
           expect(output.output).toStrictEqual(
             stringContainingErrorMessage(
@@ -4176,21 +4176,21 @@ describe('::runProjectLinter', () => {
         expect.hasAssertions();
 
         patchReadPackageJsonData({
-          [Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root]: {
+          [fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root]: {
             repository: 'https://github.com/user/repo'
           },
-          [Fixtures.badPolyrepoEmptyMdFiles.root]: {
+          [fixtures.badPolyrepoEmptyMdFiles.root]: {
             repository: { type: 'git', url: 'https://github.com/user/repo' }
           }
         });
 
         const monorepoRoot1 = await Linters.runProjectLinter({
-          rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+          rootDir: fixtures.badMonorepoEmptyMdFiles.root,
           linkProtectionMarkdownPaths: []
         });
 
         const polyrepoRoot1 = await Linters.runProjectLinter({
-          rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+          rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
           linkProtectionMarkdownPaths: []
         });
 
@@ -4199,18 +4199,18 @@ describe('::runProjectLinter', () => {
             name: Math.random().toString(16).slice(2),
             repository: 'https://github.com/user/repo'
           },
-          [Fixtures.badPolyrepoEmptyMdFiles.root]: {
+          [fixtures.badPolyrepoEmptyMdFiles.root]: {
             repository: { type: 'git', url: 'https://github.com/user/repo' }
           }
         });
 
         const monorepoRoot2 = await Linters.runProjectLinter({
-          rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+          rootDir: fixtures.badMonorepoEmptyMdFiles.root,
           linkProtectionMarkdownPaths: []
         });
 
         const polyrepoRoot2 = await Linters.runProjectLinter({
-          rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+          rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
           linkProtectionMarkdownPaths: []
         });
 
@@ -4218,7 +4218,7 @@ describe('::runProjectLinter', () => {
           expect(monorepoRoot1.output).toStrictEqual(
             stringContainingErrorMessage(
               'warn',
-              `${Fixtures.badMonorepoEmptyMdFiles.root}/${mdFile}`,
+              `${fixtures.badMonorepoEmptyMdFiles.root}/${mdFile}`,
               ErrorMessage.PackageJsonMissingKeysCheckSkipped()
             )
           );
@@ -4226,7 +4226,7 @@ describe('::runProjectLinter', () => {
           expect(polyrepoRoot1.output).toStrictEqual(
             stringContainingErrorMessage(
               'warn',
-              `${Fixtures.badPolyrepoEmptyMdFiles.root}/${mdFile}`,
+              `${fixtures.badPolyrepoEmptyMdFiles.root}/${mdFile}`,
               ErrorMessage.PackageJsonMissingKeysCheckSkipped()
             )
           );
@@ -4234,7 +4234,7 @@ describe('::runProjectLinter', () => {
           expect(monorepoRoot2.output).not.toStrictEqual(
             stringContainingErrorMessage(
               'warn',
-              `${Fixtures.badMonorepoEmptyMdFiles.root}/${mdFile}`,
+              `${fixtures.badMonorepoEmptyMdFiles.root}/${mdFile}`,
               ErrorMessage.PackageJsonMissingKeysCheckSkipped()
             )
           );
@@ -4242,7 +4242,7 @@ describe('::runProjectLinter', () => {
           expect(polyrepoRoot2.output).not.toStrictEqual(
             stringContainingErrorMessage(
               'warn',
-              `${Fixtures.badPolyrepoEmptyMdFiles.root}/${mdFile}`,
+              `${fixtures.badPolyrepoEmptyMdFiles.root}/${mdFile}`,
               ErrorMessage.PackageJsonMissingKeysCheckSkipped()
             )
           );
@@ -4262,17 +4262,17 @@ describe('::runProjectLinter', () => {
       });
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.root,
+        rootDir: fixtures.badMonorepo.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepo.root,
+        rootDir: fixtures.badPolyrepo.root,
         linkProtectionMarkdownPaths: []
       });
 
@@ -4280,7 +4280,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.root}/package.json`,
+          `${fixtures.badMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey('name')
         )
       );
@@ -4289,7 +4289,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonMissingKey('name')
         )
       );
@@ -4298,7 +4298,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonMissingKey('name')
         )
       );
@@ -4307,7 +4307,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepo.root}/package.json`,
+          `${fixtures.badPolyrepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey('name')
         )
       );
@@ -4317,7 +4317,7 @@ describe('::runProjectLinter', () => {
       expect.hasAssertions();
 
       const monorepoRoot1 = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.root,
+        rootDir: fixtures.badMonorepo.root,
         linkProtectionMarkdownPaths: []
       });
 
@@ -4328,14 +4328,14 @@ describe('::runProjectLinter', () => {
       });
 
       const monorepoRoot2 = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.root,
+        rootDir: fixtures.badMonorepo.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepoRoot1.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.root}/package.json`,
+          `${fixtures.badMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey('private')
         )
       );
@@ -4343,7 +4343,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot2.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.root}/package.json`,
+          `${fixtures.badMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingValue('private', 'true')
         )
       );
@@ -4361,19 +4361,19 @@ describe('::runProjectLinter', () => {
       });
 
       const badMonorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.root,
+        rootDir: fixtures.badMonorepo.root,
         linkProtectionMarkdownPaths: []
       });
 
       const goodMonorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoNextjsProject.root,
+        rootDir: fixtures.badMonorepoNextjsProject.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(badMonorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.root}/package.json`,
+          `${fixtures.badMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonIllegalKey('dependencies')
         )
       );
@@ -4381,7 +4381,7 @@ describe('::runProjectLinter', () => {
       expect(goodMonorepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.goodMonorepo.root}/package.json`,
+          `${fixtures.goodMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonIllegalKey('dependencies')
         )
       );
@@ -4391,13 +4391,13 @@ describe('::runProjectLinter', () => {
       expect.hasAssertions();
 
       patchReadPackageJsonData({
-        [Fixtures.badMonorepo.root]: {
+        [fixtures.badMonorepo.root]: {
           version: '0.0.0-monorepo'
         }
       });
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.root,
+        rootDir: fixtures.badMonorepo.root,
         linkProtectionMarkdownPaths: []
       });
 
@@ -4408,29 +4408,29 @@ describe('::runProjectLinter', () => {
       });
 
       const monorepoRoot2 = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.root,
+        rootDir: fixtures.badMonorepo.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoRoot3 = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepoNextjsProject.root,
+        rootDir: fixtures.badMonorepoNextjsProject.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepo.root,
+        rootDir: fixtures.badPolyrepo.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.root}/package.json`,
+          `${fixtures.badMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonIllegalKey('version')
         )
       );
@@ -4438,7 +4438,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot2.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.root}/package.json`,
+          `${fixtures.badMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonIllegalKey('version')
         )
       );
@@ -4446,7 +4446,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot3.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepoNextjsProject.root}/package.json`,
+          `${fixtures.badMonorepoNextjsProject.root}/package.json`,
           ErrorMessage.PackageJsonIllegalKey('version')
         )
       );
@@ -4454,7 +4454,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonIllegalKey('version')
         )
       );
@@ -4462,7 +4462,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.goodPolyrepo.root}/package.json`,
+          `${fixtures.goodPolyrepo.root}/package.json`,
           ErrorMessage.PackageJsonIllegalKey('version')
         )
       );
@@ -4481,24 +4481,24 @@ describe('::runProjectLinter', () => {
       expect.hasAssertions();
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.root,
+        rootDir: fixtures.badMonorepo.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepo.root,
+        rootDir: fixtures.badPolyrepo.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.root}/package.json`,
+          `${fixtures.badMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey("config['plugin-build'].codecov.flag")
         )
       );
@@ -4506,7 +4506,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonMissingKey("config['plugin-build'].codecov.flag")
         )
       );
@@ -4514,7 +4514,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badPolyrepo.root}/package.json`,
+          `${fixtures.badPolyrepo.root}/package.json`,
           ErrorMessage.PackageJsonMissingKey("config['plugin-build'].codecov.flag")
         )
       );
@@ -4538,7 +4538,7 @@ describe('::runProjectLinter', () => {
       // TODO: sub-root but does NOT fail on monorepo root or polyrepo
 
       patchReadPackageJsonData({
-        [Fixtures.badMonorepo.root]: {
+        [fixtures.badMonorepo.root]: {
           devDependencies: {
             async: '1.2.3'
           }
@@ -4546,24 +4546,24 @@ describe('::runProjectLinter', () => {
       });
 
       const monorepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.root,
+        rootDir: fixtures.badMonorepo.root,
         linkProtectionMarkdownPaths: []
       });
 
       const monorepoSubRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
+        rootDir: fixtures.badMonorepo.unnamedPkgMapData[0][1].root,
         linkProtectionMarkdownPaths: []
       });
 
       const polyrepoRoot = await Linters.runProjectLinter({
-        rootDir: Fixtures.badPolyrepo.root,
+        rootDir: fixtures.badPolyrepo.root,
         linkProtectionMarkdownPaths: []
       });
 
       expect(monorepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.root}/package.json`,
+          `${fixtures.badMonorepo.root}/package.json`,
           ErrorMessage.PackageJsonIllegalKey('devDependencies')
         )
       );
@@ -4571,7 +4571,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonIllegalKey('devDependencies')
         )
       );
@@ -4579,7 +4579,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoSubRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
+          `${fixtures.badMonorepo.unnamedPkgMapData[0][1].root}/package.json`,
           ErrorMessage.PackageJsonIllegalKey('devDependencies')
         )
       );
@@ -4587,7 +4587,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'warn',
-          `${Fixtures.goodPolyrepo.root}/package.json`,
+          `${fixtures.goodPolyrepo.root}/package.json`,
           ErrorMessage.PackageJsonIllegalKey('devDependencies')
         )
       );
@@ -4616,7 +4616,7 @@ describe('::runProjectLinter', () => {
       );
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+      rootDir: fixtures.badMonorepoEmptyMdFiles.root,
       linkProtectionMarkdownPaths: [Constants.defaultMarkdownGlob],
       mode: 'pre-push'
     });
@@ -4634,7 +4634,7 @@ describe('::runProjectLinter', () => {
     commits.splice(0, commits.length);
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+      rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
       linkProtectionMarkdownPaths: [Constants.defaultMarkdownGlob],
       mode: 'pre-push'
     });
@@ -4653,7 +4653,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/CONTRIBUTING.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/CONTRIBUTING.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -4661,7 +4661,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -4669,7 +4669,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/RANDOM.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/RANDOM.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -4677,7 +4677,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).not.toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -4699,7 +4699,7 @@ describe('::runProjectLinter', () => {
       );
 
     const monorepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badMonorepoEmptyMdFiles.root,
+      rootDir: fixtures.badMonorepoEmptyMdFiles.root,
       linkProtectionMarkdownPaths: [Constants.defaultMarkdownGlob],
       mode: 'link-protection'
     });
@@ -4717,7 +4717,7 @@ describe('::runProjectLinter', () => {
     commits.splice(0, commits.length);
 
     const polyrepoRoot = await Linters.runProjectLinter({
-      rootDir: Fixtures.badPolyrepoEmptyMdFiles.root,
+      rootDir: fixtures.badPolyrepoEmptyMdFiles.root,
       linkProtectionMarkdownPaths: [Constants.defaultMarkdownGlob],
       mode: 'link-protection'
     });
@@ -4736,7 +4736,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoEmptyMdFiles.root}/CONTRIBUTING.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.root}/CONTRIBUTING.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -4744,7 +4744,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/README.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -4752,7 +4752,7 @@ describe('::runProjectLinter', () => {
       expect(monorepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/RANDOM.md`,
+          `${fixtures.badMonorepoEmptyMdFiles.unnamedPkgMapData[0][1].root}/RANDOM.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );
@@ -4760,7 +4760,7 @@ describe('::runProjectLinter', () => {
       expect(polyrepoRoot.output).toStrictEqual(
         stringContainingErrorMessage(
           'error',
-          `${Fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
+          `${fixtures.badPolyrepoEmptyMdFiles.root}/README.md`,
           ErrorMessage.MarkdownDisabledLink(badLine)
         )
       );

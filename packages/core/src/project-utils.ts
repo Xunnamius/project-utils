@@ -1,7 +1,9 @@
-import { readFileSync as readFile } from 'fs';
-import { dirname, basename, isAbsolute } from 'path';
+import { readFileSync as readFile } from 'node:fs';
+import { dirname, basename } from 'node:path';
 import { sync as globSync } from 'glob';
 import { sync as findUp } from 'find-up';
+
+import { ensurePathIsAbsolute } from 'pkgverse/core/src/helpers';
 
 import {
   BadPackageJsonError,
@@ -9,10 +11,10 @@ import {
   DuplicatePackageNameError,
   NotAGitRepositoryError,
   NotAMonorepoError,
-  PackageJsonNotFoundError,
-  PathIsNotAbsoluteError
-} from './errors';
+  PackageJsonNotFoundError
+} from 'pkgverse/core/src/errors';
 
+import type { PackageJson } from 'type-fest';
 import type { PackageJsonWithConfig } from 'types/global';
 import type { IOptions as GlobOptions } from 'glob';
 
@@ -123,22 +125,137 @@ export type PolyrepoRunContext = RunContext & {
 };
 
 /**
- * Throws if the provided path is not absolute.
+ * A single flattened subpath in a `package.json` `exports`/`imports` map along
+ * with its target, matchable conditions, and other metadata. One or more
+ * subpath mappings together form an imports/exports "entry point" or
+ * "specifier".
  */
-export function ensurePathIsAbsolute({ path }: { path: string }) {
-  if (!isAbsolute(path)) {
-    throw new PathIsNotAbsoluteError(path);
-  }
-}
+export type SubpathMapping = {
+  /**
+   * The subpath that maps to `target`, e.g.:
+   *
+   * @example
+   * ```json
+   * {
+   *   "exports": {
+   *     "subpath": "target"
+   *   }
+   * }
+   * ```
+   *
+   * If `isSugared` is `true`, `subpath` is
+   * [sugared](https://nodejs.org/api/packages.html#exports-sugar) and thus does
+   * not exist as property in the actual `package.json` file. `subpath`, if it
+   * contains at most one asterisk ("*"), becomes a [subpath
+   * pattern](https://nodejs.org/docs/latest-v19.x/api/packages.html#subpath-patterns).
+   */
+  subpath: string;
+  /**
+   * The path to a target file that maps to `subpath`, e.g.:
+   *
+   * @example
+   * ```json
+   * {
+   *   "exports": {
+   *     "subpath": "target"
+   *   }
+   * }
+   * ```
+   *
+   * Target may also contain one or more asterisks ("*") only if `subpath` is a
+   * [subpath
+   * pattern](https://nodejs.org/docs/latest-v19.x/api/packages.html#subpath-patterns).
+   */
+  target: string | null;
+  /**
+   * The combination of resolution conditions that, when matched, result in
+   * `subpath` resolving to `target`. Conditions are listed in the order they
+   * are encountered in the map object.
+   *
+   * Note that the "default" condition, while present in `conditions`, may not
+   * actually exist in the actual `package.json` file.
+   */
+  conditions: PackageJson.ExportCondition[];
+  /**
+   * If `true`, the value of `subpath` was inferred but no corresponding
+   * property exists in the actual `package.json` file.
+   *
+   * @example
+   * ```json
+   * {
+   *   "name": "my-package",
+   *   "exports": "./is-sugared.js"
+   * }
+   * ```
+   *
+   * In the above example, `subpath` would be `"."` even though it does not
+   * exist in the actual `package.json` file.
+   *
+   * @see https://nodejs.org/api/packages.html#exports-sugar
+   */
+  isSugared: boolean;
+  /**
+   * If `true`, `target` is a so-called "fallback target". This means either (1)
+   * `target` is a member of a fallback array or (2) the parent or ancestor
+   * object containing `target` is a member of a fallback array. For example:
+   *
+   * @example
+   * ```json
+   * {
+   *   "name": "my-package",
+   *   "exports": [
+   *     "./target-is-fallback-1.js",
+   *     {
+   *       "require": "./target-is-fallback-2.js",
+   *       "default": "./target-is-fallback-3.js"
+   *     }
+   *   ]
+   * }
+   * ```
+   *
+   * Note that, due to how fallback arrays work, a fallback `target` may not be
+   * reachable in any environment or under any circumstances ever even if all
+   * the conditions match; multiple fallback `target`s might even overlap in
+   * strange ways that are hard to reason about. [Node.js also ignores all but
+   * the first valid defined non-null fallback
+   * target](https://github.com/nodejs/node/blob/a9cdeeda880a56de6dad10b24b3bfa45e2cccb5d/lib/internal/modules/esm/resolve.js#L417-L432).
+   *
+   * **It is for these reasons that fallback arrays should be avoided entirely
+   * in `package.json` files,** especially any sort of complex nested fallback
+   * configurations. They're really only useful for consumption by build tools
+   * like Webpack or TypeScript, and even then their utility is limited.
+   */
+  isFallback: boolean;
+
+  /**
+   * When `isFallback` is true, `isFistNonNullFallback` will be `true` if
+   * `target` is the first non-`null` member in the flattened fallback array.
+   */
+  isFirstNonNullFallback: boolean;
+
+  /**
+   * When `isFallback` is true, `isLastFallback` will be `true` if `target` is
+   * the last member in the flattened fallback array regardless of value of
+   * `target`.
+   */
+  isLastFallback: boolean;
+};
 
 /**
- * Determine the package-id of a package from its root directory path.
+ * A flat array of subpath-target mappings enumerating all potential
+ * `exports`/`imports` entry points within a `package.json` file.
+ */
+export type SubpathMappings = SubpathMapping[];
+
+/**
+ * Determine the package-id of a package in a monorepo from the path to the
+ * package's root directory.
  */
 export function packageRootToId({
   root
 }: {
   /**
-   * The absolute path to the root directory of a package.
+   * The absolute path to the root directory of a package in a monorepo.
    */
   root: string;
 }) {
@@ -175,9 +292,9 @@ export function readPackageJson({
   const packageJsonPath = `${root}/package.json`;
   const rawJson = (() => {
     try {
-      return readFile(packageJsonPath, 'utf-8');
-    } catch (e) {
-      throw new PackageJsonNotFoundError(e);
+      return readFile(packageJsonPath, 'utf8');
+    } catch (error) {
+      throw new PackageJsonNotFoundError(error);
     }
   })();
 
@@ -185,8 +302,8 @@ export function readPackageJson({
     const json = JSON.parse(rawJson) as PackageJsonWithConfig;
     _packageJsonReadCache.set(root, json);
     return json;
-  } catch (e) {
-    throw new BadPackageJsonError(packageJsonPath, e);
+  } catch (error) {
+    throw new BadPackageJsonError(packageJsonPath, error);
   }
 }
 
@@ -260,7 +377,7 @@ export function getWorkspacePackages(options: {
     }
 
     // ? Normalize path separators
-    pattern = pattern.replace(/\\/g, '/');
+    pattern = pattern.replaceAll('\\', '/');
 
     // ? Strip off any / from the start of the pattern: /foo ==> foo
     pattern = pattern.replace(/^\/+/, '');
@@ -313,11 +430,11 @@ export function getWorkspacePackages(options: {
             }
           }
         }
-      } catch (e) {
-        if (e instanceof PackageJsonNotFoundError) {
+      } catch (error) {
+        if (error instanceof PackageJsonNotFoundError) {
           packages.broken.push(root);
         } else {
-          throw e;
+          throw error;
         }
       }
     }
@@ -394,5 +511,85 @@ export function getRunContext(
       },
       package: null
     } as PolyrepoRunContext;
+  }
+}
+
+/**
+ * Flatten entry points within a `package.json` `imports`/`exports` map into a
+ * one dimensional array of subpath-target mappings.
+ */
+export function flattenPackageJsonSubpathMap({
+  map
+}: {
+  map: PackageJsonWithConfig['exports'] | PackageJsonWithConfig['imports'];
+}): SubpathMappings {
+  return map === undefined
+    ? []
+    : _flattenPackageJsonSubpathMap(map, undefined, [], false, undefined);
+}
+
+function _flattenPackageJsonSubpathMap(
+  map: Parameters<typeof flattenPackageJsonSubpathMap>[0]['map'],
+  subpath: string | undefined,
+  conditions: string[],
+  isFallback: boolean,
+  isNotSugared: boolean | undefined
+): SubpathMappings {
+  const isSugared =
+    isNotSugared === undefined
+      ? map === null || Array.isArray(map) || typeof map == 'string'
+      : !isNotSugared;
+
+  const partial: Readonly<Omit<SubpathMapping, 'target'>> = {
+    subpath: subpath ?? '.',
+    conditions: conditions.length ? Array.from(new Set(conditions)) : ['default'],
+    isSugared,
+    isFallback,
+    isFirstNonNullFallback: false,
+    isLastFallback: false
+  };
+
+  if (!map || typeof map == 'string') {
+    return [{ target: map ?? null, ...partial }];
+  } else if (Array.isArray(map)) {
+    const mappings = map.flatMap((value) => {
+      return typeof value == 'string'
+        ? [{ target: value, ...partial, isFallback: true }]
+        : _flattenPackageJsonSubpathMap(
+            value,
+            subpath,
+            partial.conditions,
+            true,
+            !isSugared
+          );
+    });
+
+    if (!isFallback && mappings.length) {
+      mappings.at(-1)!.isLastFallback = true;
+      const firstNonNullMapping = mappings.find((mapping) => mapping.target !== null);
+      if (firstNonNullMapping) {
+        firstNonNullMapping.isFirstNonNullFallback = true;
+      }
+    }
+
+    return mappings;
+  } else {
+    return Object.entries(map).flatMap(([subTarget, value]) => {
+      return subpath === undefined && !isFallback
+        ? _flattenPackageJsonSubpathMap(
+            value,
+            subTarget,
+            conditions,
+            isFallback,
+            !isSugared
+          )
+        : _flattenPackageJsonSubpathMap(
+            value,
+            partial.subpath,
+            [...conditions, subTarget],
+            isFallback,
+            !isSugared
+          );
+    });
   }
 }

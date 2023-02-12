@@ -76,7 +76,7 @@ Further documentation can be found under [`docs/`][x-repo-docs].
 This is a [CJS2 package][x-pkg-cjs-mojito] with statically-analyzable exports
 built by Babel for Node14 and above.
 
-<details><summary>More details</summary>
+<details><summary>Expand details</summary>
 
 That means both CJS2 (via `require(...)`) and ESM (via `import { ... } from ...`
 or `await import(...)`) source will load this package from the same entry points

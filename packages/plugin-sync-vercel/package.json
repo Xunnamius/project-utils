@@ -15,7 +15,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Xunnamius/projector"
+    "url": "https://github.com/Xunnamius/projector",
+    "lens": "cli-cjs"
   },
   "license": "MIT",
   "author": "Xunnamius",
@@ -67,7 +68,10 @@
     }
   },
   "dependencies": {
-    "debug": "^4.3.4"
+    "@babel/runtime-corejs3": "^7.20.13",
+    "core-js": "^3.27.2",
+    "debug": "^4.3.4",
+    "type-fest": "^3.5.5"
   },
   "engines": {
     "node": "^14.19.0 || ^16.13.0 || >=17.4.0"

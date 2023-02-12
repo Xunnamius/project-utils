@@ -1,9 +1,9 @@
-import * as Alias from 'pkgverse/core/src/import-aliases';
+import * as alias from 'pkgverse/core/src/alias-utils';
 
 import { withMockedOutput } from 'testverse/setup';
 
 beforeEach(() => {
-  jest.spyOn(Alias, 'getRawAliases').mockReturnValue({
+  jest.spyOn(alias, 'getRawAliases').mockReturnValue({
     a: './a',
     '^b': './.b.json',
     c$: '<rootDir>/c',
@@ -12,7 +12,7 @@ beforeEach(() => {
     '^f/(.*)$': '<rootDir>/f/f/$1',
     'g/(.*)$': './$1',
     'h/(.*)$': '<rootDir>/$1'
-  } as unknown as ReturnType<typeof Alias.getRawAliases>);
+  } as unknown as ReturnType<typeof alias.getRawAliases>);
 
   jest.spyOn(process, 'cwd').mockReturnValue('/some/fake/packages/dir');
 });
@@ -23,8 +23,8 @@ describe('::getRawAliases', () => {
     jest.restoreAllMocks();
 
     await withMockedOutput(() => {
-      Object.entries(Alias.getRawAliases()).map((mapping) => {
-        expect(() => Alias.getProcessedAliasMapping({ mapping })).not.toThrow();
+      Object.entries(alias.getRawAliases()).map((mapping) => {
+        expect(() => alias.getProcessedAliasMapping({ mapping })).not.toThrow();
       });
     });
   });
@@ -35,12 +35,12 @@ describe('::getProcessedAliasMapping', () => {
     expect.hasAssertions();
 
     await withMockedOutput(({ warnSpy }) => {
-      Alias.getProcessedAliasMapping({ mapping: ['a', '<rootDir>/a'] });
+      alias.getProcessedAliasMapping({ mapping: ['a', '<rootDir>/a'] });
       expect(warnSpy).not.toBeCalled();
     });
 
     await withMockedOutput(({ warnSpy }) => {
-      Alias.getProcessedAliasMapping({
+      alias.getProcessedAliasMapping({
         mapping: ['a', './a'],
         issueTypescriptWarning: true
       });
@@ -53,23 +53,23 @@ describe('::getProcessedAliasMapping', () => {
 
     await withMockedOutput(() => {
       expect(() =>
-        Alias.getProcessedAliasMapping({ mapping: ['a', './a'] })
+        alias.getProcessedAliasMapping({ mapping: ['a', './a'] })
       ).not.toThrow();
 
       expect(() =>
-        Alias.getProcessedAliasMapping({ mapping: ['a', '<rootDir>/a'] })
+        alias.getProcessedAliasMapping({ mapping: ['a', '<rootDir>/a'] })
       ).not.toThrow();
 
       expect(() =>
-        Alias.getProcessedAliasMapping({ mapping: ['a$', '<rootDir>/a'] })
+        alias.getProcessedAliasMapping({ mapping: ['a$', '<rootDir>/a'] })
       ).not.toThrow();
 
       expect(() =>
-        Alias.getProcessedAliasMapping({ mapping: ['a/(.*)$', '<rootDir>/a/$1'] })
+        alias.getProcessedAliasMapping({ mapping: ['a/(.*)$', '<rootDir>/a/$1'] })
       ).not.toThrow();
 
       expect(() =>
-        Alias.getProcessedAliasMapping({ mapping: ['^a/(.*)$', '<rootDir>/a/$1'] })
+        alias.getProcessedAliasMapping({ mapping: ['^a/(.*)$', '<rootDir>/a/$1'] })
       ).not.toThrow();
     });
   });
@@ -77,7 +77,7 @@ describe('::getProcessedAliasMapping', () => {
   it('throws on bad alias:path "a":"a"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a', 'a'] })).toThrow(
+    expect(() => alias.getProcessedAliasMapping({ mapping: ['a', 'a'] })).toThrow(
       /invalid syntax/
     );
   });
@@ -85,7 +85,7 @@ describe('::getProcessedAliasMapping', () => {
   it('throws on bad alias:path "a/b":"./a"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a/b', './a'] })).toThrow(
+    expect(() => alias.getProcessedAliasMapping({ mapping: ['a/b', './a'] })).toThrow(
       /invalid syntax/
     );
   });
@@ -93,7 +93,7 @@ describe('::getProcessedAliasMapping', () => {
   it('throws on bad alias:path "$":"./a"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping({ mapping: ['$', './a'] })).toThrow(
+    expect(() => alias.getProcessedAliasMapping({ mapping: ['$', './a'] })).toThrow(
       /invalid syntax/
     );
   });
@@ -101,7 +101,7 @@ describe('::getProcessedAliasMapping', () => {
   it('throws on bad alias:path "$$":"./a"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping({ mapping: ['$$', './a'] })).toThrow(
+    expect(() => alias.getProcessedAliasMapping({ mapping: ['$$', './a'] })).toThrow(
       /invalid syntax/
     );
   });
@@ -109,7 +109,7 @@ describe('::getProcessedAliasMapping', () => {
   it('throws on bad alias:path "a/":"./a"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a/', './a'] })).toThrow(
+    expect(() => alias.getProcessedAliasMapping({ mapping: ['a/', './a'] })).toThrow(
       /invalid syntax/
     );
   });
@@ -118,14 +118,14 @@ describe('::getProcessedAliasMapping', () => {
     expect.hasAssertions();
 
     expect(() =>
-      Alias.getProcessedAliasMapping({ mapping: ['a/(.*)$/(.*)$', './a'] })
+      alias.getProcessedAliasMapping({ mapping: ['a/(.*)$/(.*)$', './a'] })
     ).toThrow(/invalid syntax/);
   });
 
   it('throws on bad path ".d.json"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a', '.d.json'] })).toThrow(
+    expect(() => alias.getProcessedAliasMapping({ mapping: ['a', '.d.json'] })).toThrow(
       /invalid syntax/
     );
   });
@@ -134,7 +134,7 @@ describe('::getProcessedAliasMapping', () => {
     expect.hasAssertions();
 
     expect(() =>
-      Alias.getProcessedAliasMapping({ mapping: ['a', 'e/e/e/e.json'] })
+      alias.getProcessedAliasMapping({ mapping: ['a', 'e/e/e/e.json'] })
     ).toThrow(/invalid syntax/);
   });
 
@@ -142,7 +142,7 @@ describe('::getProcessedAliasMapping', () => {
     expect.hasAssertions();
 
     expect(() =>
-      Alias.getProcessedAliasMapping({ mapping: ['a', '.e/e/e/e.json'] })
+      alias.getProcessedAliasMapping({ mapping: ['a', '.e/e/e/e.json'] })
     ).toThrow(/invalid syntax/);
   });
 
@@ -150,14 +150,14 @@ describe('::getProcessedAliasMapping', () => {
     expect.hasAssertions();
 
     expect(() =>
-      Alias.getProcessedAliasMapping({ mapping: ['a', '<rootDir>e/e/e/e.json'] })
+      alias.getProcessedAliasMapping({ mapping: ['a', '<rootDir>e/e/e/e.json'] })
     ).toThrow(/invalid syntax/);
   });
 
   it('throws on bad path "./e.json/"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a', './e.json/'] })).toThrow(
+    expect(() => alias.getProcessedAliasMapping({ mapping: ['a', './e.json/'] })).toThrow(
       /invalid syntax/
     );
   });
@@ -165,7 +165,7 @@ describe('::getProcessedAliasMapping', () => {
   it('throws on bad alias:path "a/(.*)$":"."', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a/(.*)$', '.'] })).toThrow(
+    expect(() => alias.getProcessedAliasMapping({ mapping: ['a/(.*)$', '.'] })).toThrow(
       /must end with "\/\$1"/
     );
   });
@@ -174,7 +174,7 @@ describe('::getProcessedAliasMapping', () => {
     expect.hasAssertions();
 
     expect(() =>
-      Alias.getProcessedAliasMapping({ mapping: ['a/(.*)$', '<rootDir>'] })
+      alias.getProcessedAliasMapping({ mapping: ['a/(.*)$', '<rootDir>'] })
     ).toThrow(/must end with "\/\$1"/);
   });
 
@@ -182,7 +182,7 @@ describe('::getProcessedAliasMapping', () => {
     expect.hasAssertions();
 
     expect(() =>
-      Alias.getProcessedAliasMapping({ mapping: ['a/(.*)$', '<rootDir>/some/path'] })
+      alias.getProcessedAliasMapping({ mapping: ['a/(.*)$', '<rootDir>/some/path'] })
     ).toThrow(/must end with "\/\$1"/);
   });
 
@@ -190,14 +190,14 @@ describe('::getProcessedAliasMapping', () => {
     expect.hasAssertions();
 
     expect(() =>
-      Alias.getProcessedAliasMapping({ mapping: ['a', '<rootDir>/$1'] })
+      alias.getProcessedAliasMapping({ mapping: ['a', '<rootDir>/$1'] })
     ).toThrow(/must end with "\/\(\.\*\)\$"/);
   });
 
   it('throws on bad alias:path "a":"./$1"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a', './$1'] })).toThrow(
+    expect(() => alias.getProcessedAliasMapping({ mapping: ['a', './$1'] })).toThrow(
       /must end with "\/\(\.\*\)\$"/
     );
   });
@@ -205,7 +205,7 @@ describe('::getProcessedAliasMapping', () => {
   it('throws on bad alias:path "a":"./?/?/?"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a', './?/?/?'] })).toThrow(
+    expect(() => alias.getProcessedAliasMapping({ mapping: ['a', './?/?/?'] })).toThrow(
       /not a valid path$/
     );
   });
@@ -213,7 +213,7 @@ describe('::getProcessedAliasMapping', () => {
   it('throws on bad alias:path "":"./?/?/?"', async () => {
     expect.hasAssertions();
 
-    expect(() => Alias.getProcessedAliasMapping({ mapping: ['a', './?/?/?'] })).toThrow(
+    expect(() => alias.getProcessedAliasMapping({ mapping: ['a', './?/?/?'] })).toThrow(
       /not a valid path$/
     );
   });
@@ -224,7 +224,7 @@ describe('::getEslintAliases', () => {
     expect.hasAssertions();
 
     await withMockedOutput(() => {
-      expect(Alias.getEslintAliases()).toStrictEqual([
+      expect(alias.getEslintAliases()).toStrictEqual([
         ['a', './a'],
         ['b', './.b.json'],
         ['c', './c'],
@@ -243,7 +243,7 @@ describe('::getJestAliases', () => {
     expect.hasAssertions();
 
     await withMockedOutput(() => {
-      expect(Alias.getJestAliases({ rootDir: '/some/fake' })).toStrictEqual({
+      expect(alias.getJestAliases({ rootDir: '/some/fake' })).toStrictEqual({
         a: '<rootDir>/packages/dir/a',
         '^b': '<rootDir>/packages/dir/.b.json',
         c$: '<rootDir>/c',
@@ -259,12 +259,12 @@ describe('::getJestAliases', () => {
   it('resolves relative path from rootDir even if above root', async () => {
     expect.hasAssertions();
 
-    jest.spyOn(Alias, 'getRawAliases').mockReturnValue({
+    jest.spyOn(alias, 'getRawAliases').mockReturnValue({
       '^package$': './package.json'
-    } as unknown as ReturnType<typeof Alias.getRawAliases>);
+    } as unknown as ReturnType<typeof alias.getRawAliases>);
 
     await withMockedOutput(() => {
-      expect(Alias.getJestAliases({ rootDir: '/some/other/dir' })).toStrictEqual({
+      expect(alias.getJestAliases({ rootDir: '/some/other/dir' })).toStrictEqual({
         '^package$': '<rootDir>/../../fake/packages/dir/package.json'
       });
     });
@@ -273,12 +273,12 @@ describe('::getJestAliases', () => {
   it('resolves syntactically correct path even if rootDir == cwd', async () => {
     expect.hasAssertions();
 
-    jest.spyOn(Alias, 'getRawAliases').mockReturnValue({
+    jest.spyOn(alias, 'getRawAliases').mockReturnValue({
       '^package$': './package.json'
-    } as unknown as ReturnType<typeof Alias.getRawAliases>);
+    } as unknown as ReturnType<typeof alias.getRawAliases>);
 
     await withMockedOutput(() => {
-      expect(Alias.getJestAliases({ rootDir: '/some/fake/packages/dir' })).toStrictEqual({
+      expect(alias.getJestAliases({ rootDir: '/some/fake/packages/dir' })).toStrictEqual({
         '^package$': '<rootDir>/package.json'
       });
     });
@@ -287,13 +287,13 @@ describe('::getJestAliases', () => {
   it('returns expected Jest aliases without rootDir', async () => {
     expect.hasAssertions();
 
-    jest.spyOn(Alias, 'getRawAliases').mockReturnValue({
+    jest.spyOn(alias, 'getRawAliases').mockReturnValue({
       a: '<rootDir>/a',
       '^b/(.*)$': '<rootDir>/packages/b/$1'
-    } as unknown as ReturnType<typeof Alias.getRawAliases>);
+    } as unknown as ReturnType<typeof alias.getRawAliases>);
 
     await withMockedOutput(() => {
-      expect(Alias.getJestAliases()).toStrictEqual({
+      expect(alias.getJestAliases()).toStrictEqual({
         a: '<rootDir>/a',
         '^b/(.*)$': '<rootDir>/packages/b/$1'
       });
@@ -303,24 +303,24 @@ describe('::getJestAliases', () => {
   it('throws if using relative alias path without rootDir argument', async () => {
     expect.hasAssertions();
 
-    jest.spyOn(Alias, 'getRawAliases').mockReturnValue({
+    jest.spyOn(alias, 'getRawAliases').mockReturnValue({
       a: './a'
-    } as unknown as ReturnType<typeof Alias.getRawAliases>);
+    } as unknown as ReturnType<typeof alias.getRawAliases>);
 
     await withMockedOutput(() => {
-      expect(() => Alias.getJestAliases()).toThrow(/must provide a rootDir argument/);
+      expect(() => alias.getJestAliases()).toThrow(/must provide a rootDir argument/);
     });
   });
 
   it('throws if using relative alias path with relative rootDir argument', async () => {
     expect.hasAssertions();
 
-    jest.spyOn(Alias, 'getRawAliases').mockReturnValue({
+    jest.spyOn(alias, 'getRawAliases').mockReturnValue({
       a: './a'
-    } as unknown as ReturnType<typeof Alias.getRawAliases>);
+    } as unknown as ReturnType<typeof alias.getRawAliases>);
 
     await withMockedOutput(() => {
-      expect(() => Alias.getJestAliases({ rootDir: 'relative/path' })).toThrow(
+      expect(() => alias.getJestAliases({ rootDir: 'relative/path' })).toThrow(
         /is not an absolute path/
       );
     });
@@ -332,7 +332,7 @@ describe('::getWebpackAliases', () => {
     expect.hasAssertions();
 
     await withMockedOutput(() => {
-      expect(Alias.getWebpackAliases({ rootDir: '/some/fake' })).toStrictEqual({
+      expect(alias.getWebpackAliases({ rootDir: '/some/fake' })).toStrictEqual({
         a: '/some/fake/packages/dir/a',
         b: '/some/fake/packages/dir/.b.json',
         c$: '/some/fake/c',
@@ -348,13 +348,13 @@ describe('::getWebpackAliases', () => {
   it('returns expected Webpack aliases without rootDir argument', async () => {
     expect.hasAssertions();
 
-    jest.spyOn(Alias, 'getRawAliases').mockReturnValue({
+    jest.spyOn(alias, 'getRawAliases').mockReturnValue({
       a: './a',
       '^b/(.*)$': './deeper.dir/$1'
-    } as unknown as ReturnType<typeof Alias.getRawAliases>);
+    } as unknown as ReturnType<typeof alias.getRawAliases>);
 
     await withMockedOutput(() => {
-      expect(Alias.getWebpackAliases()).toStrictEqual({
+      expect(alias.getWebpackAliases()).toStrictEqual({
         a: '/some/fake/packages/dir/a',
         b: '/some/fake/packages/dir/deeper.dir/'
       });
@@ -364,24 +364,24 @@ describe('::getWebpackAliases', () => {
   it('throws if using "<rootDir>" in alias path without rootDir argument', async () => {
     expect.hasAssertions();
 
-    jest.spyOn(Alias, 'getRawAliases').mockReturnValue({
+    jest.spyOn(alias, 'getRawAliases').mockReturnValue({
       a: '<rootDir>/a'
-    } as unknown as ReturnType<typeof Alias.getRawAliases>);
+    } as unknown as ReturnType<typeof alias.getRawAliases>);
 
     await withMockedOutput(() => {
-      expect(() => Alias.getWebpackAliases()).toThrow(/must provide a rootDir argument/);
+      expect(() => alias.getWebpackAliases()).toThrow(/must provide a rootDir argument/);
     });
   });
 
   it('throws if using "<rootDir>" in alias path with relative rootDir argument', async () => {
     expect.hasAssertions();
 
-    jest.spyOn(Alias, 'getRawAliases').mockReturnValue({
+    jest.spyOn(alias, 'getRawAliases').mockReturnValue({
       a: '<rootDir>/a'
-    } as unknown as ReturnType<typeof Alias.getRawAliases>);
+    } as unknown as ReturnType<typeof alias.getRawAliases>);
 
     await withMockedOutput(() => {
-      expect(() => Alias.getWebpackAliases({ rootDir: 'relative/root' })).toThrow(
+      expect(() => alias.getWebpackAliases({ rootDir: 'relative/root' })).toThrow(
         /is not an absolute path/
       );
     });
@@ -393,7 +393,7 @@ describe('::getTypeScriptAliases', () => {
     expect.hasAssertions();
 
     await withMockedOutput(() => {
-      expect(Alias.getTypeScriptAliases()).toStrictEqual({
+      expect(alias.getTypeScriptAliases()).toStrictEqual({
         a: ['a'],
         b: ['.b.json'],
         c: ['c'],
@@ -411,28 +411,28 @@ test('only getTypeScriptAliases issues a warning when called', async () => {
   expect.hasAssertions();
 
   const spy = jest
-    .spyOn(Alias, 'getProcessedAliasMapping')
+    .spyOn(alias, 'getProcessedAliasMapping')
     .mockImplementation(
-      () => ['', {}] as unknown as ReturnType<typeof Alias.getProcessedAliasMapping>
+      () => ['', {}] as unknown as ReturnType<typeof alias.getProcessedAliasMapping>
     );
 
   await withMockedOutput(() => {
-    Alias.getEslintAliases();
+    alias.getEslintAliases();
     expect(spy).toBeCalledWith({ mapping: expect.anything() });
   });
 
   await withMockedOutput(() => {
-    Alias.getJestAliases({ rootDir: '/something/or/other' });
+    alias.getJestAliases({ rootDir: '/something/or/other' });
     expect(spy).toBeCalledWith({ mapping: expect.anything() });
   });
 
   await withMockedOutput(() => {
-    Alias.getWebpackAliases({ rootDir: '/something/or/other' });
+    alias.getWebpackAliases({ rootDir: '/something/or/other' });
     expect(spy).toBeCalledWith({ mapping: expect.anything() });
   });
 
   await withMockedOutput(() => {
-    Alias.getTypeScriptAliases();
+    alias.getTypeScriptAliases();
     expect(spy).toBeCalledWith({
       mapping: expect.anything(),
       issueTypescriptWarning: true

@@ -8,14 +8,14 @@ import {
   dummyDirectoriesFixture,
   dummyNpmPackageFixture,
   npmLinkSelfFixture,
-  nodeImportTestFixture
+  nodeImportAndRunTestFixture
 } from 'testverse/setup';
 
 import {
   name as pkgName,
   version as pkgVersion,
   exports as pkgExports
-} from '../package.json';
+} from '../../package.json';
 
 import type { FixtureOptions } from 'testverse/setup';
 
@@ -47,7 +47,7 @@ const fixtureOptions = {
     dummyDirectoriesFixture(),
     dummyFilesFixture(),
     npmLinkSelfFixture(),
-    nodeImportTestFixture()
+    nodeImportAndRunTestFixture()
   ]
 } as Partial<FixtureOptions> & {
   initialFileContents: FixtureOptions['initialFileContents'];

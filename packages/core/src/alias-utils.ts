@@ -1,6 +1,7 @@
+import { relative as relativePath } from 'node:path';
 import isValidPath from 'is-valid-path';
-import { relative as relativePath } from 'path';
-import { ensurePathIsAbsolute } from './project-utils';
+
+import { ensurePathIsAbsolute } from 'pkgverse/core/src/helpers';
 
 /**
  * Regular expressions used to parse out components of raw alias keys and
@@ -12,8 +13,8 @@ const matchers = {
 };
 
 /**
- * A mapping of import/require aliases used throughout the project. Object keys
- * represent aliases their corresponding values represent mappings to the
+ * A mapping of specifier aliases used throughout the project. Object keys
+ * represent aliases while their corresponding values represent mappings to the
  * filesystem.
  *
  * Since this is used by several tooling subsystems with several different alias

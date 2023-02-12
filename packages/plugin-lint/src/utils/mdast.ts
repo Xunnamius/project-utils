@@ -53,7 +53,7 @@ export function getUrlParams(json: PackageJsonWithConfig): StandardUrlParams | n
     pkgName: json.name,
     repo: match.groups.repo,
     user: match.groups.user,
-    flag: json.config?.['plugin-build']?.codecov?.flag
+    flag: json.project?.codecov?.flag
   };
 }
 

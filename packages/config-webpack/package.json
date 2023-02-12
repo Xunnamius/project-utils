@@ -10,7 +10,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Xunnamius/projector"
+    "url": "https://github.com/Xunnamius/projector",
+    "lens": "cli-cjs"
   },
   "license": "MIT",
   "author": "Xunnamius",
@@ -62,8 +63,11 @@
     }
   },
   "dependencies": {
+    "@babel/runtime-corejs3": "^7.20.13",
     "@projector-js/core": "^1.2.0",
+    "core-js": "^3.27.2",
     "debug": "^4.3.4",
+    "type-fest": "^3.5.5",
     "webpack-node-externals": "^3.0.0"
   },
   "devDependencies": {

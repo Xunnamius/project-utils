@@ -176,3 +176,18 @@ export class DuplicatePackageIdError extends DuplicateWorkspaceError {
   }
 }
 makeNamedError(DuplicatePackageIdError, 'DuplicatePackageIdError');
+
+/**
+ * Represents an error that occurred while resolving a specifier, entry point,
+ * path, or some other identifier.
+ */
+export class ResolutionError extends Error {
+  /**
+   * Represents an error that occurred while resolving a specifier, entry point,
+   * path, or some other identifier.
+   */
+  constructor(message: string) {
+    super(message);
+  }
+}
+makeNamedError(ResolutionError, 'ResolutionError');
