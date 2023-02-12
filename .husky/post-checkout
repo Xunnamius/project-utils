@@ -2,4 +2,4 @@
 . "$(dirname "$0")/_/husky.sh"
 
 echo 'Creating test fixture dummy .git directories'
-for dir in test/fixtures/*/; do mkdir -p -- "$dir/.git"; done
+for dir in test/fixtures/dummy-repos/*/; do mkdir -p -- "$dir/.git"; done
