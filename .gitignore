@@ -4,8 +4,9 @@ ignore.*
 *.tsbuildinfo
 dist
 build
-.vscode
+.vscode/**
 !.vscode/launch.example.json
+!.vscode/settings.example.json
 .vercel
 .env
 .npmrc
