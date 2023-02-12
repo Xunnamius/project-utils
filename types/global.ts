@@ -1,45 +1,41 @@
 import { PackageJson } from 'type-fest';
 
 /**
- * Type describing the global config object used by various Projector plugins
- * and shared configuration packages.
+ * Type describing the global config object stored under the `project` key in
+ * package.json files. This config is used by various Projector plugins and
+ * shared configuration packages.
  */
-export type PackageJsonConfig = {
+export type PackageJsonProjectConfig = {
   /**
-   * Configurations that affect code, asset, and/or resource generation.
+   * Configurations that affect documentation generation.
    */
-  'plugin-build'?: {
+  documentation?: {
     /**
-     * Configurations that affect documentation generation.
+     * Determines the entry point for generating documentation using
+     * `typedoc`. At the moment, only one entry point per package is
+     * supported.
      */
-    docs?: {
-      /**
-       * Determines the entry point for generating documentation using
-       * `typedoc`. At the moment, only one entry point per package is
-       * supported.
-       */
-      entry?: string;
-    };
+    entry?: string;
+  };
+  /**
+   * Configurations that affect codecov coverage generation and data upload.
+   */
+  codecov?: {
     /**
-     * Configurations that affect codecov coverage generation and data upload.
+     * Determines the flag used when uploading coverage data to codecov.
+     *
+     * @see https://docs.codecov.com/docs/flags
      */
-    codecov?: {
-      /**
-       * Determines the flag used when uploading coverage data to codecov.
-       *
-       * @see https://docs.codecov.com/docs/flags
-       */
-      flag?: string;
-    };
+    flag?: string;
   };
   /**
    * Configurations that affect project linting.
    */
-  'plugin-lint'?: {
+  lint?: {
     /**
      * Configurations that affect checks for potentially disabled links.
      */
-    'link-protection'?: {
+    linkProtection?: {
       /**
        * One or more glob patterns used to ignore files that shouldn't be
        * checked for disabled links. Use this to get rid of false positives.
@@ -56,4 +52,4 @@ export type PackageJsonConfig = {
  * Type for npm's `package.json` file based on type-fest's `PackageJson` type
  * but with optional shared `config` definitions included.
  */
-export type PackageJsonWithConfig = PackageJson & { config?: PackageJsonConfig };
+export type PackageJsonWithConfig = PackageJson & { project?: PackageJsonProjectConfig };
