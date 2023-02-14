@@ -18,7 +18,7 @@ import {
   type SubpathMapping,
   type SubpathMappings
 } from 'pkgverse/core/src/project-utils';
-import { PackageJson } from 'type-fest';
+import { Integer, PackageJson } from 'type-fest';
 
 const dummyRootPackage = getDummyPackage('root');
 
@@ -153,7 +153,8 @@ describe('::resolveEntryPointsFromExportsPath', () => {
           './null',
           './pattern-1/private-explicit/secret.js',
           './pattern-2/private-explicit/secret.js',
-          './pattern-1/private-internal/*'
+          './pattern-1/private-internal/*',
+          './pattern-4/maybe-private/*'
         ]
       ]
     });
@@ -226,6 +227,8 @@ describe('::resolveEntryPointsFromExportsPath', () => {
         options: [
           {},
           {},
+          {},
+          { includeUnsafeFallbackTargets: true },
           { includeUnsafeFallbackTargets: true },
           { includeUnsafeFallbackTargets: true }
         ]
@@ -238,7 +241,9 @@ describe('::resolveEntryPointsFromExportsPath', () => {
         expectAllTargets: [
           [['./import.js'], ['./import.js', './string.js']],
           [],
-          [['./import.js'], ['./import.js', './string.js']],
+          [['./string.js']],
+          [['./import.js'], ['./import.js'], ['./import.js', './string.js']],
+          [],
           [['./string.js'], ['./import.js', './string.js']]
         ]
       },
@@ -250,20 +255,72 @@ describe('::resolveEntryPointsFromExportsPath', () => {
         expectOnlyTargets: [
           './import.js',
           null,
+          './string.js',
           './import.js',
+          null,
           ['./string.js', './import.js']
         ]
       },
-      conditions: [['import'], ['import'], ['import'], ['import']],
+      conditions: [
+        ['import'],
+        ['import'],
+        ['import'],
+        ['import'],
+        ['import'],
+        ['import']
+      ],
       // ? When includeUnsafeFallbackTargets is true, all targets are considered.
       // ? This yields results radically different from Node.js or the library.
-      targets: ['./import.js', './default.js', './default.js', './string.js'],
+      targets: [
+        './import.js',
+        './default.js',
+        './string.js',
+        './import.js',
+        './default.js',
+        './string.js'
+      ],
       subpaths: [
         ['./edge-case-2', './edge-case-3'],
         [],
-        ['./edge-case-2', './edge-case-3'],
+        ['./edge-case-1'],
+        ['./null-in-fallback-edge-case-1', './edge-case-2', './edge-case-3'],
+        [],
         ['./edge-case-1', './edge-case-3']
       ]
+    });
+
+    registerCoreResolverTest(context);
+    registerLibraryResolverTest(context);
+    // ? Node will only ever return the first defined non-null fallback target.
+    registerNodeResolverTest(context);
+  });
+
+  describe('does not return the default condition when path matches but another condition would match first', () => {
+    const context = createSharedReverseMappingTestContext({
+      core: {
+        ...defaultCoreExportsConfig,
+        flattenedMap: {
+          flattenedExports: flattenPackageJsonSubpathMap({ map: dummyComplexExports })
+        },
+        operation: 'resolveEntryPointsFromExportsPath',
+        options: [
+          {},
+          { includeUnsafeFallbackTargets: true },
+          {},
+          { includeUnsafeFallbackTargets: true }
+        ]
+      },
+      library: {
+        ...defaultLibraryConfig,
+        packageJson: dummyComplexPackage.packageJson
+      },
+      node: {
+        ...defaultNodeConfig,
+        packageName: dummyComplexPackage.name
+      },
+      conditions: [['import'], ['import'], undefined, undefined],
+      targets: ['./default.js', './default.js', './default.js', './default.js'],
+      subpaths: [[], [], ['./edge-case-2'], ['./edge-case-2', './edge-case-3']]
     });
 
     registerCoreResolverTest(context);
@@ -535,7 +592,7 @@ describe('::resolveEntryPointsFromExportsPath', () => {
       targets: ['./features/*.js', './features/deep/*.js'],
       subpaths: [
         ['./pattern-1/*.js'],
-        ['./pattern-1/*.js', './pattern-2/*', './pattern-3/*.js']
+        ['./pattern-3/*.js', './pattern-1/*.js', './pattern-2/*']
       ]
     });
 
@@ -635,7 +692,7 @@ describe('::resolveEntryPointsFromExportsPath', () => {
     registerNodeResolverTest(context);
   });
 
-  describe('handles nested defaults', () => {
+  describe('chooses longest nested default pattern', () => {
     const dummyDefaultsPackage = getDummyPackage('defaults');
 
     const context = createSharedReverseMappingTestContext({
@@ -652,7 +709,7 @@ describe('::resolveEntryPointsFromExportsPath', () => {
       node: { ...defaultNodeConfig, packageName: dummyDefaultsPackage.name },
       conditions: [undefined, ['import']],
       targets: ['./default-1.js', './default-2.js'],
-      subpaths: [['./default1'], ['./default2', './default/2']]
+      subpaths: [['./default1'], ['./default/2']]
     });
 
     registerCoreResolverTest(context);
@@ -750,25 +807,7 @@ describe('::resolveEntryPointsFromExportsPath', () => {
     registerNodeResolverTest(context);
   });
 
-  describe('returns the longest matching literal subpath pattern (so-called "best match") and ignores the others', () => {
-    const context = createSharedReverseMappingTestContext({
-      core: {
-        ...defaultCoreExportsConfig,
-        operation: 'resolveEntryPointsFromExportsPath'
-      },
-      library: defaultLibraryConfig,
-      node: defaultNodeConfig,
-      conditions: [undefined, undefined],
-      targets: ['./not-private/file.js', './not-private/deep/file.js'],
-      subpaths: [['./pattern-4/deep/deeper/file.js'], ['./pattern-4/deep/file.js']]
-    });
-
-    registerCoreResolverTest(context);
-    registerLibraryResolverTest(context);
-    registerNodeResolverTest(context);
-  });
-
-  describe('does not consider characters after the asterisk when determining longest subpath', () => {
+  describe('returns the longest matching subpath pattern (so-called "best match") and ignores the others', () => {
     const context = createSharedReverseMappingTestContext({
       core: {
         ...defaultCoreExportsConfig,
@@ -777,8 +816,37 @@ describe('::resolveEntryPointsFromExportsPath', () => {
       library: defaultLibraryConfig,
       node: defaultNodeConfig,
       conditions: [undefined],
+      targets: ['./not-private/not-secret.js'],
+      subpaths: [['./pattern-4/deep/deeper/not-secret.js']]
+    });
+
+    registerCoreResolverTest(context);
+    registerLibraryResolverTest(context);
+    registerNodeResolverTest(context);
+  });
+
+  describe('considers characters after the asterisk only when pattern before asterisk is identical', () => {
+    const context = createSharedReverseMappingTestContext({
+      core: {
+        ...defaultCoreExportsConfig,
+        operation: 'resolveEntryPointsFromExportsPath'
+      },
+      library: {
+        ...defaultLibraryConfig,
+        // ? resolve.exports cannot handle the overlapping subpaths and fails
+        expectTestsToFail: ['1.2']
+      },
+      node: defaultNodeConfig,
+      conditions: [undefined],
       targets: ['./not-private/maybe-private/might-be-secret.cjs'],
-      subpaths: [['./pattern-4/maybe-private/might-be-secret.cjs']]
+      subpaths: [
+        [
+          // ? For subpath patterns with targets without asterisks, the literal
+          // ? subpath is returned since the asterisk can be replaced with
+          // ? anything.
+          './pattern-4/maybe-private/m*.cjs'
+        ]
+      ]
     });
 
     registerCoreResolverTest(context);
@@ -804,7 +872,7 @@ describe('::resolveEntryPointsFromExportsPath', () => {
     registerNodeResolverTest(context);
   });
 
-  describe('does not return a subpath if its target is actually unreachable', () => {
+  describe('does not return a subpath if its target is unreachable due to overlapping subpath patterns (implicitly dead)', () => {
     const context = createSharedReverseMappingTestContext({
       core: {
         ...defaultCoreExportsConfig,
@@ -813,7 +881,7 @@ describe('::resolveEntryPointsFromExportsPath', () => {
       library: defaultLibraryConfig,
       node: defaultNodeConfig,
       conditions: [undefined],
-      targets: ['./not-private/deep/deeper/file.js'],
+      targets: ['./not-private/file.js'],
       subpaths: [[]]
     });
 
@@ -822,24 +890,23 @@ describe('::resolveEntryPointsFromExportsPath', () => {
     registerNodeResolverTest(context);
   });
 
-  describe('skips null fallback targets and considers first non-null fallback target', () => {
+  describe('does not return subpaths if its target is actually unreachable because the wanted condition occurs after the "default" condition (explicitly dead)', () => {
     const context = createSharedReverseMappingTestContext({
       core: {
         ...defaultCoreExportsConfig,
         operation: 'resolveEntryPointsFromExportsPath',
         options: [
-          { includeUnsafeFallbackTargets: false },
+          {},
+          {},
+          { includeUnsafeFallbackTargets: true },
           { includeUnsafeFallbackTargets: true }
         ]
       },
       library: defaultLibraryConfig,
       node: defaultNodeConfig,
-      conditions: [undefined, undefined],
-      targets: ['./not-private/deep/file.js', './not-private/deep/file.js'],
-      subpaths: [
-        ['./pattern-4/deep/file.js', './pattern-4/deep/deep/file.js'],
-        ['./pattern-4/deep/file.js', './pattern-4/deep/deep/file.js']
-      ]
+      conditions: [['dead-case-1'], ['dead-case-2'], ['dead-case-1'], ['dead-case-2']],
+      targets: ['./unsafe.js', './unsafe.js', './unsafe.js', './unsafe.js'],
+      subpaths: [[], [], [], []]
     });
 
     registerCoreResolverTest(context);
@@ -847,7 +914,7 @@ describe('::resolveEntryPointsFromExportsPath', () => {
     registerNodeResolverTest(context);
   });
 
-  describe('returns a subpath when a different subpath pattern with a null target matches and a non-pattern subpath target also matches', () => {
+  describe('returns mutually exclusive pattern and non-pattern subpaths when a different subpath pattern with a null target matches', () => {
     const context = createSharedReverseMappingTestContext({
       core: {
         ...defaultCoreExportsConfig,
@@ -856,8 +923,13 @@ describe('::resolveEntryPointsFromExportsPath', () => {
       library: defaultLibraryConfig,
       node: defaultNodeConfig,
       conditions: [undefined],
-      targets: ['./pattern-4/maybe-private/secret.js'],
-      subpaths: [['./pattern-4/maybe-private/secret.js']]
+      targets: ['./not-private/maybe-private/not-secret.js'],
+      subpaths: [
+        [
+          './pattern-4/maybe-private/not-secret.js',
+          './pattern-4/deep/deeper/maybe-private/not-secret.js'
+        ]
+      ]
     });
 
     registerCoreResolverTest(context);
@@ -896,7 +968,7 @@ describe('::resolveEntryPointsFromExportsPath', () => {
     registerNodeResolverTest(context);
   });
 
-  describe('skips null fallback targets even when `target` is null unless last fallback target is also null', () => {
+  describe('skips null fallback targets, even when `target` is null, unless last fallback target is also null', () => {
     const context = createSharedReverseMappingTestContext({
       core: {
         ...defaultCoreExportsConfig,
@@ -1118,6 +1190,17 @@ function createSharedReverseMappingTestContext({
     expectAllTargets?:
       | SubpathMapping['target'][]
       | (SubpathMapping['target'][] | SubpathMapping['target'][][])[];
+    /**
+     * Sometimes resolve.exports has bugs or cannot handle some more complex
+     * spec-compliant use cases. When this is the case, add the failing test's
+     * numeric id (the number after the "#", e.g. "1.2" or "2.3") to
+     * `expectTestsToFail` to prevent the test from reporting a failure.
+     *
+     * However, if said test does not fail, the testing framework will report an
+     * error. This lets us know when resolve.exports has released bug fixes and
+     * to update our tests accordingly.
+     */
+    expectTestsToFail?: `${bigint}.${bigint}`[];
   };
   /**
    * Configuration for the Node.js resolver.
@@ -1233,14 +1316,19 @@ function registerCoreResolverTest({
 }
 
 function registerLibraryResolverTest({
-  library: { packageJson, expectAllTargets: expectAllTargets, shouldApplyEAPGlobally },
+  library: {
+    packageJson,
+    expectAllTargets: expectAllTargets,
+    shouldApplyEAPGlobally,
+    expectTestsToFail
+  },
   conditions,
   targets,
   subpaths
 }: ReturnType<typeof createSharedReverseMappingTestContext>) {
   // eslint-disable-next-line unicorn/no-for-loop
   for (let index = 0; index < conditions.length; ++index) {
-    const title = `resolve.exports library #${index + 1}`;
+    const title = 'resolve.exports library';
     const selectedTarget = subpaths[index];
     const expectedResult = expectAllTargets
       ? shouldApplyEAPGlobally
@@ -1253,16 +1341,29 @@ function registerLibraryResolverTest({
 
     if (selectedTarget.length) {
       selectedTarget.forEach((target, subIndex) => {
+        const testId = `${index + 1}.${subIndex + 1}` as NonNullable<
+          typeof expectTestsToFail
+        >[number];
+
+        const expectTestToFail = expectTestsToFail?.includes(testId);
+
         // eslint-disable-next-line jest/valid-title
-        test(`${title}.${subIndex + 1}`, async () => {
+        test(`${title} #${testId}${
+          expectTestToFail ? ' (library failure expected)' : ''
+        }`, async () => {
           expect.hasAssertions();
-          expect(
+
+          // eslint-disable-next-line jest/valid-expect
+          const expectation = expect(
             resolveTargetWithResolveExports({
               packageJson,
               subpath: target,
               conditions: conditions[index] || []
             })[expectAllTargets ? 'allResolvedTargets' : 'resolvedTarget']
-          ).toStrictEqual(
+          );
+
+          // eslint-disable-next-line jest/unbound-method
+          (expectTestToFail ? expectation.not.toStrictEqual : expectation.toStrictEqual)(
             Array.isArray(expectedResult) && Array.isArray(expectedResult.at(subIndex))
               ? expectedResult[subIndex]
               : expectedResult

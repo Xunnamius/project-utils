@@ -1,6 +1,6 @@
 import escapeRegex from 'escape-string-regexp';
 
-import type { SubpathMappings } from 'pkgverse/core/src/project-utils';
+import type { SubpathMapping, SubpathMappings } from 'pkgverse/core/src/project-utils';
 import type { PackageJson } from 'type-fest';
 
 export type ConditionsOption = {
@@ -91,20 +91,42 @@ export type ReplaceSubpathAsterisksOption = {
   replaceSubpathAsterisks?: boolean;
 };
 
-type PotentialEntryPoint = { literal: string; withAsterisksReplaced: string };
+type PotentialEntryPoint = {
+  subpathActual: string;
+  subpathWithAsterisksReplaced: string;
+};
 
 /**
  * Given `target` and `conditions`, this function returns an array of zero or
  * more entry points that are guaranteed to resolve to `target` when the exact
  * `conditions` are present. This is done by reverse-mapping `target` using
  * `exports` from `package.json`.
+ *
+ * Entry points are sorted in the order they're encountered with the caveat that
+ * exact subpaths always come before subpath patterns. Note that, if `target`
+ * contains one or more asterisks, the subpaths returned by this function will
+ * also contain an asterisk. The only other time this function returns a subpath
+ * with an asterisk is if the subpath is a "many-to-one" mapping; that is: the
+ * subpath has an asterisk but its target does not. For instance:
+ *
+ * @example
+ * ```json
+ * {
+ *   "exports": {
+ *     "many-to-one-subpath/*": "target-with-no-asterisk.js"
+ *   }
+ * }
+ * ```
+ *
+ * In this case, the asterisk can be replaced with literally anything and it
+ * would still match. Hence, the replacement is left up to the caller.
  */
 export function resolveEntryPointsFromExportsPath({
   flattenedExports,
   target: wantedTarget,
   conditions: wantedConditions = [],
-  includeUnsafeFallbackTargets = false,
-  replaceSubpathAsterisks = true
+  includeUnsafeFallbackTargets: shouldIncludeUnsafeFallbackTargets = false,
+  replaceSubpathAsterisks: shouldReplaceSubpathAsterisks = true
 }: {
   /**
    * The target that will be reverse-mapped to zero or more subpaths from the
@@ -116,110 +138,158 @@ export function resolveEntryPointsFromExportsPath({
   UnsafeFallbackOption &
   ReplaceSubpathAsterisksOption): string[] {
   let sawNonNullFallback = false;
-  let matchedNonPatternSubpath = false;
-  const relevantNullSubpaths: string[] = [];
 
-  return Array.from(
-    new Set(
-      flattenedExports
-        .map(
-          ({
-            subpath,
-            target: seenTarget,
-            conditions: exportsConditions,
-            isFallback,
-            isFirstNonNullFallback,
-            isLastFallback
-          }) => {
-            // ? Subpaths with multiple asterisks will never match with Node.js,
-            // ? so we exclude them here
-            if (
-              !subpath.includes('*') ||
-              subpath.indexOf('*') == subpath.lastIndexOf('*')
-            ) {
-              const isNotFallback = !isFallback;
+  const nonPatternSubpaths: Pick<SubpathMapping, 'subpath' | 'target'>[] = [];
+  const nullTargetSubpaths: PotentialEntryPoint[] = [];
+  const potentialEntryPoints = {
+    patterns: [] as PotentialEntryPoint[],
+    nonPatterns: [] as PotentialEntryPoint[]
+  };
 
-              if (isFirstNonNullFallback) {
-                sawNonNullFallback = true;
+  for (const {
+    subpath: seenSubpath,
+    target: seenTarget,
+    conditions: seenConditions,
+    excludedConditions,
+    isFallback,
+    isFirstNonNullFallback,
+    isLastFallback,
+    isDeadCondition
+  } of flattenedExports) {
+    const subpathDoesNotHaveMultipleAsterisks =
+      !isAPattern(seenSubpath) ||
+      seenSubpath.indexOf('*') == seenSubpath.lastIndexOf('*');
+
+    if (subpathDoesNotHaveMultipleAsterisks) {
+      const isNotFallback = !isFallback;
+
+      if (isFirstNonNullFallback) {
+        sawNonNullFallback = true;
+      }
+
+      const shouldConsiderMapping =
+        // ? Eliminate explicitly dead mappings right off the bat
+        !isDeadCondition &&
+        excludedConditions.every((condition) => !wantedConditions.includes(condition)) &&
+        (isNotFallback ||
+          isFirstNonNullFallback ||
+          (!sawNonNullFallback && isLastFallback) ||
+          (shouldIncludeUnsafeFallbackTargets && seenTarget !== null));
+
+      if (isLastFallback) {
+        sawNonNullFallback = false;
+      }
+
+      if (shouldConsiderMapping) {
+        const isConditionsAMatch = isAConditionsMatch(seenConditions, wantedConditions);
+        const isTargetAnExactMatch = seenTarget === wantedTarget;
+
+        if (isConditionsAMatch) {
+          if (!isAPattern(seenSubpath)) {
+            // ? Save a copy of this mapping for later processing
+            nonPatternSubpaths.push({ subpath: seenSubpath, target: seenTarget });
+          }
+
+          const potentialEntryPoint: PotentialEntryPoint = {
+            subpathActual: seenSubpath,
+            subpathWithAsterisksReplaced: seenSubpath
+          };
+
+          if (isTargetAnExactMatch) {
+            potentialEntryPoints.nonPatterns.push(potentialEntryPoint);
+
+            // ? Exact keys will always beat subpath patterns, so delete all
+            // ? the subpath patterns that would otherwise match this exact key.
+            potentialEntryPoints.patterns = potentialEntryPoints.patterns.filter(
+              (entry) => {
+                return !isAMatch(entry.subpathActual, seenSubpath);
               }
+            );
+          } else if (seenTarget === null /* wantedTarget must !== null */) {
+            // ? We'll eliminate null target subpaths later.
+            nullTargetSubpaths.push(potentialEntryPoint);
+          } else if (wantedTarget !== null && isAMatch(seenTarget, wantedTarget)) {
+            // ? Exact keys will always beat subpath patterns, so don't bother
+            // ? if one of those was already found.
+            const alreadyHasExactSubpath = potentialEntryPoints.nonPatterns.some(
+              (entry) => isAMatch(seenSubpath, entry.subpathActual)
+            );
 
-              const shouldConsiderMapping =
-                isNotFallback ||
-                isFirstNonNullFallback ||
-                (!sawNonNullFallback && isLastFallback) ||
-                (includeUnsafeFallbackTargets && seenTarget !== null);
+            if (!alreadyHasExactSubpath) {
+              // ? If a subpath "wins" against this subpath (i.e. this pattern
+              // ? would be sorted below it), ignore this subpath and move on.
+              let alreadyHasBetterSubpathPattern = false;
 
-              if (isLastFallback) {
-                sawNonNullFallback = false;
-              }
-
-              if (shouldConsiderMapping) {
-                const isConditionsAMatch = isAConditionsMatch(
-                  exportsConditions,
-                  wantedConditions
-                );
-
-                const isPathAnExactMatch = seenTarget === wantedTarget;
-
-                if (isConditionsAMatch) {
-                  if (wantedTarget !== null && seenTarget === null) {
-                    relevantNullSubpaths.push(subpath);
-                  }
-
-                  let potentialEntryPoint: PotentialEntryPoint | undefined = undefined;
-
-                  if (isPathAnExactMatch) {
-                    potentialEntryPoint = {
-                      literal: subpath,
-                      withAsterisksReplaced: subpath
-                    };
-                  } else if (
-                    seenTarget &&
-                    wantedTarget &&
-                    isAPatternMatch(seenTarget, wantedTarget)
+              // ? Delete the subpaths that "lose" to this subpath (i.e. are
+              // ? sorted below this pattern) using Node.js's patternKeyCompare.
+              potentialEntryPoints.patterns = potentialEntryPoints.patterns.filter(
+                (entry) => {
+                  if (
+                    isAMatch(seenSubpath, entry.subpathActual) ||
+                    isAMatch(entry.subpathActual, seenSubpath)
                   ) {
-                    potentialEntryPoint = {
-                      literal: subpath,
-                      withAsterisksReplaced: replaceAsterisksInSubpath(
-                        subpath,
-                        seenTarget,
-                        wantedTarget
-                      )
-                    };
+                    if (patternKeyCompare(entry.subpathActual, seenSubpath) === 1) {
+                      // ? We win
+                      return false;
+                    } else {
+                      // ? They win
+                      alreadyHasBetterSubpathPattern = true;
+                    }
                   }
 
-                  return potentialEntryPoint;
+                  // ? Encountered a mutually exclusive subpath so move along.
+                  return true;
                 }
+              );
+
+              if (!alreadyHasBetterSubpathPattern) {
+                if (shouldReplaceSubpathAsterisks) {
+                  potentialEntryPoint.subpathWithAsterisksReplaced =
+                    replaceAsterisksInSubpath(seenSubpath, seenTarget, wantedTarget);
+                }
+
+                potentialEntryPoints.patterns.push(potentialEntryPoint);
               }
             }
           }
-        )
-        .reduce(() => {})
+        }
+      }
+    }
+  }
 
-        .filter((potentialEntryPoint): potentialEntryPoint is PotentialEntryPoint => {
-          if (potentialEntryPoint !== undefined) {
-            const isEntryPointANullMatch = relevantNullSubpaths.some((nullEntryPoint) => {
-              return (
-                nullEntryPoint == potentialEntryPoint.literal ||
-                nullEntryPoint == potentialEntryPoint.withAsterisksReplaced ||
-                isAPatternMatch(nullEntryPoint, potentialEntryPoint.withAsterisksReplaced)
-              );
-            });
-            // ? Exclude all potential entry points that match subpaths with
-            // ? null targets
-            return !isEntryPointANullMatch;
-          }
-          return false;
-        })
-        .map((potentialEntryPoint) => {
-          return potentialEntryPoint[
-            replaceSubpathAsterisks && !wantedTarget?.includes('*')
-              ? 'withAsterisksReplaced'
-              : 'literal'
-          ];
-        })
-    )
+  const entryPoints: string[] = potentialEntryPoints.nonPatterns.map(
+    ({ subpathWithAsterisksReplaced }) => subpathWithAsterisksReplaced
   );
+
+  // ? Eliminate subpath patterns that (1) lose to null target subpath patterns
+  // ? or (2) match non-patterns after asterisk replacement (implicitly dead).
+  for (const {
+    subpathActual,
+    subpathWithAsterisksReplaced
+  } of potentialEntryPoints.patterns) {
+    const losesToNullTargetSubpath = nullTargetSubpaths.some(
+      ({ subpathActual: nullSubpathActual }) => {
+        return (
+          isAMatch(nullSubpathActual, subpathWithAsterisksReplaced) &&
+          patternKeyCompare(subpathActual, nullSubpathActual) === 1
+        );
+      }
+    );
+
+    const isImplicitlyDead = nonPatternSubpaths.some(({ subpath, target }) => {
+      return (
+        subpathWithAsterisksReplaced === subpath &&
+        ((target === null && wantedTarget !== null) ||
+          (target !== null && wantedTarget !== null && !isAMatch(target, wantedTarget)))
+      );
+    });
+
+    if (!losesToNullTargetSubpath && !isImplicitlyDead) {
+      entryPoints.push(subpathWithAsterisksReplaced);
+    }
+  }
+
+  return entryPoints;
 }
 
 /**
@@ -249,6 +319,25 @@ export function resolveExportsPathsFromEntryPoint(
  * more entry points that are guaranteed to resolve to `target` when the exact
  * `conditions` are present. This is done by reverse-mapping `target` using
  * `imports` from `package.json`.
+ *
+ * Entry points are sorted in the order they're encountered with the caveat that
+ * exact subpaths always come before subpath patterns. Note that, if `target`
+ * contains one or more asterisks, the subpaths returned by this function will
+ * also contain an asterisk. The only other time this function returns a subpath
+ * with an asterisk is if the subpath is a "many-to-one" mapping; that is: the
+ * subpath has an asterisk but its target does not. For instance:
+ *
+ * @example
+ * ```json
+ * {
+ *   "imports": {
+ *     "many-to-one-subpath/*": "target-with-no-asterisk.js"
+ *   }
+ * }
+ * ```
+ *
+ * In this case, the asterisk can be replaced with literally anything and it
+ * would still match. Hence, the replacement is left up to the caller.
  */
 export function resolveEntryPointsFromImportsPath(
   options: {
@@ -291,70 +380,101 @@ export function resolveImportsPathsFromEntryPoints(
 
 /**
  * Returns a regular expression after replacing all asterisks in `pattern` with
- * `(.*)`.
+ * `(.+)`. "+" is used over "*" to obviate the need for a >= length check when
+ * reducing.
  */
 function patternToRegExp(pattern: string) {
   return new RegExp(
     `^${pattern
       .split('*')
       .map((p) => escapeRegex(p))
-      .join('(.*)')}$`
+      .join('(.+)')}$`
   );
 }
 
 /**
- * Returns `true` if `pattern` contains one or more asterisks ("*") and as a
- * result includes `path` with respect to [the rules of Node.js asterisk
+ * Returns `true` if (1) `maybePattern` does not contain any asterisks ("*") and
+ * matches `path` exactly or (2) `maybePattern` contains one or more asterisks
+ * and as a result includes `path` with respect to [the rules of Node.js
+ * asterisk
  * replacement](https://nodejs.org/docs/latest-v19.x/api/packages.html#subpath-patterns).
  * That is: all asterisks in `path` must equate to the exact same text, which is
- * the text matched by the single asterisk in `pattern`.
+ * the text matched by the single asterisk in `maybePattern`.
  */
-function isAPatternMatch(pattern: string, path: string) {
-  if (pattern.includes('*')) {
+function isAMatch(maybePattern: string, path: string) {
+  if (isAPattern(maybePattern)) {
     let firstMatch: string;
-    const matches = path.match(patternToRegExp(pattern))?.slice(1);
+    const matches = path.match(patternToRegExp(maybePattern))?.slice(1);
 
-    return (
+    return !!(
       matches &&
       matches.every((match) => {
         return firstMatch === undefined ? (firstMatch = match) : match == firstMatch;
       })
     );
+  } else {
+    return maybePattern === path;
   }
-
-  return false;
 }
 
 /**
- * Replaces all asterisks ("*") in `subpath` with the parts of `actualTarget`
- * that map to the asterisks in `literalTarget`.
+ * Returns `true` is `maybePattern` is a pattern and `false` otherwise.
+ */
+function isAPattern(maybePattern: string) {
+  return !!maybePattern?.includes('*');
+}
+
+/**
+ * Replaces the asterisk ("*") in `subpath` with the parts of `wantedTarget`
+ * that map to the asterisks in `seenTarget`.
  */
 function replaceAsterisksInSubpath(
   subpath: string,
-  literalTarget: string,
-  actualTarget: string
+  seenTarget: string,
+  wantedTarget: string
 ) {
-  const firstMatch = actualTarget.match(patternToRegExp(literalTarget))?.at(1);
+  const firstMatch = wantedTarget.match(patternToRegExp(seenTarget))?.at(1);
 
   /* istanbul ignore else */
   if (firstMatch) {
-    return subpath.replaceAll('*', firstMatch);
+    return subpath.replace('*', firstMatch);
   } else {
     throw new TypeError(
-      'sanity check failed: actualTarget does not map cleanly to literalTarget'
+      'sanity check failed: wantedTarget does not map cleanly to seenTarget'
     );
   }
 }
 
 /**
- * Returns `true` if `actualConditions` array matches `requiredConditions`
- * array, or if `actualConditions` contains the `"default"` condition
+ * Returns `true` if `seenConditions` array matches `wantedConditions` array, or
+ * if `seenConditions` contains the `"default"` condition.
  */
 function isAConditionsMatch(
-  actualConditions: SubpathMappings[number]['conditions'],
-  requiredConditions: NonNullable<ConditionsOption['conditions']>
+  seenConditions: SubpathMapping['conditions'],
+  wantedConditions: NonNullable<ConditionsOption['conditions']>
 ) {
-  return actualConditions.every(
-    (condition) => condition == 'default' || requiredConditions.includes(condition)
+  return seenConditions.every(
+    (condition) => condition == 'default' || wantedConditions.includes(condition)
   );
+}
+
+/**
+ * An implementation of PATTERN_KEY_COMPARE from the Node.js resolver algorithm
+ * specification.
+ *
+ * @see
+ * https://nodejs.org/dist/latest-v19.x/docs/api/esm.html#resolver-algorithm-specification
+ */
+function patternKeyCompare(keyA: string, keyB: string) {
+  const aPatternIndex = keyA.indexOf('*');
+  const bPatternIndex = keyB.indexOf('*');
+  const baseLengthA = aPatternIndex === -1 ? keyA.length : aPatternIndex + 1;
+  const baseLengthB = bPatternIndex === -1 ? keyB.length : bPatternIndex + 1;
+  if (baseLengthA > baseLengthB) return -1;
+  if (baseLengthB > baseLengthA) return 1;
+  if (aPatternIndex === -1) return 1;
+  if (bPatternIndex === -1) return -1;
+  if (keyA.length > keyB.length) return -1;
+  if (keyB.length > keyA.length) return 1;
+  return 0;
 }

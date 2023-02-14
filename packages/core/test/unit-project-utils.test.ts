@@ -539,352 +539,507 @@ describe('::flattenPackageJsonSubpathMap', () => {
         subpath: '.',
         target: './import.mjs',
         conditions: ['import'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './require.js',
         conditions: ['require'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './null',
         target: null,
         conditions: ['import'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './null',
         target: './require.js',
         conditions: ['require'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './lite',
         target: './lite-worker-browser.js',
         conditions: ['worker', 'browser'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './lite',
         target: './lite-worker-node.js',
         conditions: ['worker', 'node'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './lite',
         target: './lite-import.mjs',
         conditions: ['import'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './lite',
         target: './lite-require.js',
         conditions: ['require'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './alias',
         target: './alias.d.ts',
         conditions: ['types'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './alias',
         target: './alias.js',
         conditions: ['node'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './alias',
         target: './alias.js',
         conditions: ['default'],
+        excludedConditions: ['types', 'node'],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './alias/path/node',
         target: './alias-node-import.js',
         conditions: ['node', 'import'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './alias/path/node',
         target: './require.js',
         conditions: ['node', 'require'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './alias/path/node',
         target: './alias.js',
         conditions: ['default'],
+        excludedConditions: ['node'],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './multi',
         target: './path-1.d.ts',
         conditions: ['types'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './multi',
         target: './path-1.js',
         conditions: ['default'],
+        excludedConditions: ['types'],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: true,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './multi',
         target: './path-2.js',
         conditions: ['default'],
+        excludedConditions: ['types'],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './multi',
         target: './path-3.js',
         conditions: ['default'],
+        excludedConditions: ['types'],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: true
+        isLastFallback: true,
+        isDeadCondition: false
       },
       {
         subpath: './mixed/*',
         target: './mixed/deep/*.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: true,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './mixed/*',
         target: './mixed/*.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: true
+        isLastFallback: true,
+        isDeadCondition: false
       },
       {
         subpath: './pattern-1/*.js',
         target: './features/*.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './pattern-1/private-explicit/secret.js',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './pattern-2/private-explicit/secret.js',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './pattern-2/private-explicit/secret.js',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './pattern-2/private-explicit/secret.js',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: true
+        isLastFallback: true,
+        isDeadCondition: false
       },
       {
         subpath: './pattern-2/*',
         target: './features/*',
         conditions: ['require'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './pattern-3/*.js',
         target: './features/deep/*.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './pattern-1/private-internal/*',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './many-to-one/*',
         target: './many-to-one.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './multiple-asterisks-bad/*/*',
         target: './*/yet-another/*',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './multiple-asterisk-good-1/*',
         target: './asterisk/*/*.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './multiple-asterisk-good-2/*',
         target: './*/yet-another/*.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './pattern-4/*.js',
         target: './not-private/*.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
+      },
+      {
+        subpath: './pattern-4/deep/deeper/*.js',
+        target: './not-private/*.js',
+        conditions: ['default'],
+        excludedConditions: [],
+        isSugared: false,
+        isFallback: false,
+        isFirstNonNullFallback: false,
+        isLastFallback: false,
+        isDeadCondition: false
+      },
+      {
+        subpath: './pattern-4/deep/deeper/file.js',
+        target: './not-private/deep/file.js',
+        conditions: ['default'],
+        excludedConditions: [],
+        isSugared: false,
+        isFallback: false,
+        isFirstNonNullFallback: false,
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './pattern-4/deep/*.js',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './pattern-4/deep/*.js',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './pattern-4/deep/*.js',
         target: './not-private/*.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: true,
-        isLastFallback: true
+        isLastFallback: true,
+        isDeadCondition: false
+      },
+      {
+        subpath: './pattern-4/maybe-private/*',
+        target: null,
+        conditions: ['default'],
+        excludedConditions: [],
+        isSugared: false,
+        isFallback: false,
+        isFirstNonNullFallback: false,
+        isLastFallback: false,
+        isDeadCondition: false
+      },
+      {
+        subpath: './pattern-4/maybe-private/not-secret.js',
+        target: './not-private/maybe-private/not-secret.js',
+        conditions: ['default'],
+        excludedConditions: [],
+        isSugared: false,
+        isFallback: false,
+        isFirstNonNullFallback: false,
+        isLastFallback: false,
+        isDeadCondition: false
+      },
+      {
+        subpath: './pattern-4/maybe-private/m*cjs',
+        target: './not-private/maybe-private/m*.cjs',
+        conditions: ['default'],
+        excludedConditions: [],
+        isSugared: false,
+        isFallback: false,
+        isFirstNonNullFallback: false,
+        isLastFallback: false,
+        isDeadCondition: false
+      },
+      {
+        subpath: './pattern-4/maybe-private/m*.cjs',
+        target: './not-private/maybe-private/might-be-secret.cjs',
+        conditions: ['default'],
+        excludedConditions: [],
+        isSugared: false,
+        isFallback: false,
+        isFirstNonNullFallback: false,
+        isLastFallback: false,
+        isDeadCondition: false
+      },
+      {
+        subpath: './pattern-4/maybe-*.js',
+        target: './not-private/maybe-private/secret.js',
+        conditions: ['default'],
+        excludedConditions: [],
+        isSugared: false,
+        isFallback: false,
+        isFirstNonNullFallback: false,
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './.hidden',
         target: './.hidden',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './package',
         target: './package.json',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './package.json',
         target: './package.json',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       }
     ]);
   });
@@ -899,64 +1054,78 @@ describe('::flattenPackageJsonSubpathMap', () => {
         subpath: '#hash',
         target: './hash-import-browser.mjs',
         conditions: ['import', 'browser'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '#hash',
         target: 'hash-pkg/polyfill.js',
         conditions: ['import', 'node'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '#hash',
         target: 'hash-pkg',
         conditions: ['default'],
+        excludedConditions: ['import'],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '#null',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '#null2',
         target: 'some-package/browser.js',
         conditions: ['require', 'browser'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '#null2',
         target: 'some-package',
         conditions: ['require', 'node'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '#null2',
         target: null,
         conditions: ['default'],
+        excludedConditions: ['require'],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       }
     ]);
   });
@@ -971,10 +1140,12 @@ describe('::flattenPackageJsonSubpathMap', () => {
         subpath: '.',
         target: './sugared/index.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: true,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       }
     ]);
   });
@@ -991,19 +1162,23 @@ describe('::flattenPackageJsonSubpathMap', () => {
         subpath: '.',
         target: './string-1.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: true,
         isFallback: true,
         isFirstNonNullFallback: true,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './string-2.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: true,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: true
+        isLastFallback: true,
+        isDeadCondition: false
       }
     ]);
 
@@ -1019,37 +1194,45 @@ describe('::flattenPackageJsonSubpathMap', () => {
         subpath: '.',
         target: './string.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: true,
         isFallback: true,
         isFirstNonNullFallback: true,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './import.js',
         conditions: ['default', 'import'],
+        excludedConditions: [],
         isSugared: true,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './node.js',
         conditions: ['default', 'import'],
+        excludedConditions: [],
         isSugared: true,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './default.js',
         conditions: ['default'],
+        excludedConditions: ['import'],
         isSugared: true,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: true
+        isLastFallback: true,
+        isDeadCondition: false
       }
     ]);
   });
@@ -1064,10 +1247,12 @@ describe('::flattenPackageJsonSubpathMap', () => {
         subpath: '.',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: true,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       }
     ]);
   });
@@ -1089,19 +1274,23 @@ describe('::flattenPackageJsonSubpathMap', () => {
         subpath: '.',
         target: './string-1.js',
         conditions: ['condition-1'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './string-2.js',
         conditions: ['condition-2', 'condition-3'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       }
     ]);
   });
@@ -1118,370 +1307,507 @@ describe('::flattenPackageJsonSubpathMap', () => {
         subpath: '.',
         target: './import-1.js',
         conditions: ['require'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './string-1.js',
         conditions: ['import'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: true,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './import-2.js',
         conditions: ['import'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './node-2.js',
         conditions: ['import', 'node'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './default-2.js',
         conditions: ['import', 'default'],
+        excludedConditions: ['import', 'node'],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: true
+        isLastFallback: true,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './string-2.js',
         conditions: ['custom'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: true,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './import-3.js',
         conditions: ['custom', 'import'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './import-4.js',
         conditions: ['custom', 'import', 'custom-2'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './default-4.js',
         conditions: ['custom', 'import', 'default'],
+        excludedConditions: ['custom-2'],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './node-3.js',
         conditions: ['custom', 'node', 'custom-2'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './node-4.js',
         conditions: ['custom', 'node', 'custom-3'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './node-5.js',
         conditions: ['custom', 'node', 'custom-3', 'import'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './browser-1.js',
         conditions: ['custom', 'node', 'custom-3', 'custom-4'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './default-3.js',
         conditions: ['custom', 'default'],
+        excludedConditions: ['import', 'node'],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './string-3.js',
         conditions: ['custom'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: true
+        isLastFallback: true,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './node-1.js',
         conditions: ['node'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '.',
         target: './default-1.js',
         conditions: ['default'],
+        excludedConditions: ['require', 'import', 'custom', 'node'],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './null-in-fallback',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './null-in-fallback',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './null-in-fallback',
         target: './node-1.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: true,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './null-in-fallback',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './null-in-fallback',
         target: './string-3.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: true
+        isLastFallback: true,
+        isDeadCondition: false
       },
       {
         subpath: './null-in-fallback-edge-case-1',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './null-in-fallback-edge-case-1',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './null-in-fallback-edge-case-1',
         target: './string-3.js',
         conditions: ['default', 'custom-edge-1'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: true,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './null-in-fallback-edge-case-1',
         target: './string',
         conditions: ['default', 'require'],
+        excludedConditions: ['custom-edge-1'],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './null-in-fallback-edge-case-1',
         target: null,
         conditions: ['default', 'import'],
+        excludedConditions: ['custom-edge-1'],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './null-in-fallback-edge-case-1',
         target: './import.js',
         conditions: ['default', 'import'],
+        excludedConditions: ['custom-edge-1'],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './null-in-fallback-edge-case-1',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: true
+        isLastFallback: true,
+        isDeadCondition: false
       },
       {
         subpath: './null-in-fallback-edge-case-2',
         target: null,
         conditions: ['custom-edge-2'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './null-in-fallback-edge-case-2',
         target: null,
         conditions: ['custom-edge-2'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: true
+        isLastFallback: true,
+        isDeadCondition: false
       },
       {
         subpath: './null-in-fallback-edge-case-2',
         target: null,
         conditions: ['default'],
+        excludedConditions: ['custom-edge-2'],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './null-in-fallback-edge-case-2',
         target: './string-3.js',
         conditions: ['default'],
+        excludedConditions: ['custom-edge-2'],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: true,
-        isLastFallback: true
+        isLastFallback: true,
+        isDeadCondition: false
       },
       {
         subpath: './edge-case-1',
         target: './string.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
+      },
+      {
+        subpath: './edge-case-2',
+        target: './string-2.js',
+        conditions: ['custom-edge-2'],
+        excludedConditions: [],
+        isSugared: false,
+        isFallback: false,
+        isFirstNonNullFallback: false,
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './edge-case-2',
         target: './import.js',
         conditions: ['default', 'import'],
+        excludedConditions: ['custom-edge-2'],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './edge-case-2',
         target: './node.js',
         conditions: ['default', 'node'],
+        excludedConditions: ['custom-edge-2'],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
+      },
+      {
+        subpath: './edge-case-2',
+        target: './string.js',
+        conditions: ['default', 'custom-edge-2-x'],
+        excludedConditions: ['custom-edge-2', 'import', 'node'],
+        isSugared: false,
+        isFallback: false,
+        isFirstNonNullFallback: false,
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './edge-case-2',
         target: './default.js',
         conditions: ['default'],
+        excludedConditions: ['custom-edge-2', 'import', 'node', 'custom-edge-2-x'],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
+      },
+      {
+        subpath: './edge-case-2',
+        target: './unsafe.js',
+        conditions: ['default', 'dead-case-1'],
+        excludedConditions: ['custom-edge-2'],
+        isSugared: false,
+        isFallback: false,
+        isFirstNonNullFallback: false,
+        isLastFallback: false,
+        isDeadCondition: true
+      },
+      {
+        subpath: './edge-case-3',
+        target: './string-3.js',
+        conditions: ['custom-edge-3'],
+        excludedConditions: [],
+        isSugared: false,
+        isFallback: false,
+        isFirstNonNullFallback: false,
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './edge-case-3',
         target: './import.js',
         conditions: ['default', 'import'],
+        excludedConditions: ['custom-edge-3'],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: true,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './edge-case-3',
         target: './node.js',
         conditions: ['default', 'node'],
+        excludedConditions: ['custom-edge-3'],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: './edge-case-3',
         target: './default.js',
         conditions: ['default'],
+        excludedConditions: ['custom-edge-3', 'import', 'node'],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
+      },
+      {
+        subpath: './edge-case-3',
+        target: './unsafe.js',
+        conditions: ['default', 'dead-case-2'],
+        excludedConditions: ['custom-edge-3'],
+        isSugared: false,
+        isFallback: true,
+        isFirstNonNullFallback: false,
+        isLastFallback: false,
+        isDeadCondition: true
       },
       {
         subpath: './edge-case-3',
         target: './string.js',
         conditions: ['default'],
+        excludedConditions: ['custom-edge-3'],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: true
+        isLastFallback: true,
+        isDeadCondition: false
       }
     ]);
   });
@@ -1498,82 +1824,100 @@ describe('::flattenPackageJsonSubpathMap', () => {
         subpath: '#complex-1',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '#complex-2',
         target: './default.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: true,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '#complex-2',
         target: './default-2.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: true
+        isLastFallback: true,
+        isDeadCondition: false
       },
       {
         subpath: '#complex-3',
         target: './import.js',
         conditions: ['default', 'import'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: true,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '#complex-3',
         target: './node.js',
         conditions: ['default', 'node'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '#complex-3',
         target: './default.js',
         conditions: ['default'],
+        excludedConditions: ['import', 'node'],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '#complex-3',
         target: './string.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: true,
         isFirstNonNullFallback: false,
-        isLastFallback: true
+        isLastFallback: true,
+        isDeadCondition: false
       },
       {
         subpath: '#complex-4/*.js',
         target: './features/*.js',
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       },
       {
         subpath: '#complex-4/deep/*',
         target: null,
         conditions: ['default'],
+        excludedConditions: [],
         isSugared: false,
         isFallback: false,
         isFirstNonNullFallback: false,
-        isLastFallback: false
+        isLastFallback: false,
+        isDeadCondition: false
       }
     ]);
   });

@@ -177,6 +177,28 @@ export type SubpathMapping = {
    */
   conditions: PackageJson.ExportCondition[];
   /**
+   * When the subpath mapping is a "default" mapping that occurs after one or
+   * more sibling conditions, it cannot be selected if one of those siblings is
+   * selected first. This property contains those sibling conditions that, if
+   * present, mean this subpath mapping should not be considered.
+   *
+   * Useful when reverse-mapping targets to subpaths.
+   *
+   * @example
+   * ```jsonc
+   * {
+   *   "./strange-subpath": {
+   *     "default": {
+   *       "import": "./import.js",
+   *       "node": "./node.js",
+   *       "default": "./default.js" // <- Never chosen if "import" is specified
+   *     }
+   *   }
+   * }
+   * ```
+   */
+  excludedConditions: PackageJson.ExportCondition[];
+  /**
    * If `true`, the value of `subpath` was inferred but no corresponding
    * property exists in the actual `package.json` file.
    *
@@ -226,19 +248,22 @@ export type SubpathMapping = {
    * like Webpack or TypeScript, and even then their utility is limited.
    */
   isFallback: boolean;
-
   /**
    * When `isFallback` is true, `isFistNonNullFallback` will be `true` if
    * `target` is the first non-`null` member in the flattened fallback array.
    */
   isFirstNonNullFallback: boolean;
-
   /**
    * When `isFallback` is true, `isLastFallback` will be `true` if `target` is
    * the last member in the flattened fallback array regardless of value of
    * `target`.
    */
   isLastFallback: boolean;
+  /**
+   * If `true`, this condition is guaranteed to be impossible to reach, likely
+   * because it occurs after the "default" condition.
+   */
+  isDeadCondition: boolean;
 };
 
 /**
@@ -525,7 +550,7 @@ export function flattenPackageJsonSubpathMap({
 }): SubpathMappings {
   return map === undefined
     ? []
-    : _flattenPackageJsonSubpathMap(map, undefined, [], false, undefined);
+    : _flattenPackageJsonSubpathMap(map, undefined, [], false, undefined, [], false);
 }
 
 function _flattenPackageJsonSubpathMap(
@@ -533,7 +558,9 @@ function _flattenPackageJsonSubpathMap(
   subpath: string | undefined,
   conditions: string[],
   isFallback: boolean,
-  isNotSugared: boolean | undefined
+  isNotSugared: boolean | undefined,
+  excludedConditions: string[],
+  isDeadCondition: boolean
 ): SubpathMappings {
   const isSugared =
     isNotSugared === undefined
@@ -543,10 +570,12 @@ function _flattenPackageJsonSubpathMap(
   const partial: Readonly<Omit<SubpathMapping, 'target'>> = {
     subpath: subpath ?? '.',
     conditions: conditions.length ? Array.from(new Set(conditions)) : ['default'],
+    excludedConditions,
     isSugared,
     isFallback,
     isFirstNonNullFallback: false,
-    isLastFallback: false
+    isLastFallback: false,
+    isDeadCondition
   };
 
   if (!map || typeof map == 'string') {
@@ -560,7 +589,9 @@ function _flattenPackageJsonSubpathMap(
             subpath,
             partial.conditions,
             true,
-            !isSugared
+            !isSugared,
+            excludedConditions,
+            isDeadCondition
           );
     });
 
@@ -574,21 +605,37 @@ function _flattenPackageJsonSubpathMap(
 
     return mappings;
   } else {
-    return Object.entries(map).flatMap(([subTarget, value]) => {
+    const keys = Object.keys(map);
+    const indexOfDefaultCondition = keys.indexOf('default');
+    const preDefaultKeys =
+      indexOfDefaultCondition !== -1 ? keys.slice(0, indexOfDefaultCondition) : [];
+
+    return Object.entries(map).flatMap(([key, value], index) => {
+      const excludeConditions = [
+        ...excludedConditions,
+        ...(key === 'default' ? preDefaultKeys : [])
+      ];
+
+      const isDead = indexOfDefaultCondition !== -1 && indexOfDefaultCondition < index;
+
       return subpath === undefined && !isFallback
         ? _flattenPackageJsonSubpathMap(
             value,
-            subTarget,
+            key,
             conditions,
             isFallback,
-            !isSugared
+            !isSugared,
+            excludeConditions,
+            isDead
           )
         : _flattenPackageJsonSubpathMap(
             value,
             partial.subpath,
-            [...conditions, subTarget],
+            [...conditions, key],
             isFallback,
-            !isSugared
+            !isSugared,
+            excludeConditions,
+            isDead
           );
     });
   }
