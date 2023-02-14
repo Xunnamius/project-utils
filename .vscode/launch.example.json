@@ -25,18 +25,24 @@
       "windows": {
         "program": "${workspaceFolder}/node_modules/jest/bin/jest"
       },
-      "env": { "NODE_ENV": "test" },
-      // ? Set to false to step through transpiled code
-      "sourceMaps": false,
       // * Note: These settings only apply when lauching the debugger using this
       // * profile. Check .vscode/settings.json for the debug terminal versions
       // * of the following:
-      // ? Use this version to skip node_modules and node internal when debugging
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
+      // ? Use this version to skip all external files while debugging
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       // ? Use this version for deeper debugging
       //"skipFiles": ["<node_internals>/**", "!**/node_modules/**"],
+      // ? Use this version to go pretty deep but still skip annoying stuff
+      // "skipFiles": [
+      //   "!<node_internals>/**",
+      //   "<node_internals>/**/*async*",
+      //   "!**/node_modules/**"
+      // ],
       // ? Use this version for the deepest debugging possible
-      //"skipFiles": ["!<node_internals>/**", "!**/node_modules/**"]
+      //"skipFiles": ["!<node_internals>/**", "!**/node_modules/**"],
+      "env": { "NODE_ENV": "test" },
+      // ? Set to false to step through transpiled code
+      "sourceMaps": true
     }
   ]
 }

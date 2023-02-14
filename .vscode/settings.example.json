@@ -1,14 +1,21 @@
 {
   "debug.javascript.terminalOptions": {
-    "sourceMaps": false,
     // * Note: These settings only apply to the debug terminal. To configure
     // * debugging behavior during tests (e.g. with Jest), see
     // * .vscode/launch.json.
-    // ? Use this version to skip node_modules and node internal when debugging
-    //"skipFiles": ["<node_internals>/**", "**/node_modules/**"]
+    // ? Use this version to skip all external files while debugging
+    //"skipFiles": ["<node_internals>/**", "**/node_modules/**"],
     // ? Use this version for deeper debugging
     //"skipFiles": ["<node_internals>/**", "!**/node_modules/**"],
+    // ? Use this version to go pretty deep but still skip annoying stuff
+    "skipFiles": [
+      "!<node_internals>/**",
+      "<node_internals>/**/*async*",
+      "!**/node_modules/**"
+    ],
     // ? Use this version for the deepest debugging possible
-    "skipFiles": ["!<node_internals>/**", "!**/node_modules/**"]
+    //"skipFiles": ["!<node_internals>/**", "!**/node_modules/**"],
+    // ? Set to false to step through transpiled code when source maps available
+    "sourceMaps": false
   }
 }
