@@ -73,7 +73,7 @@
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.20.13",
-    "core-js": "^3.27.2",
+    "core-js": "^3.28.0",
     "debug": "^4.3.4",
     "type-fest": "^3.5.7"
   },
