@@ -1,33 +1,34 @@
 /* eslint-disable jest/no-conditional-expect */
-import fs from 'fs/promises';
-import { readFileSync } from 'fs';
+import fs from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import * as Linters from '../src/linters';
 import * as Constants from '../src/constants';
 import * as Utils from '../src/utils';
 import * as UtilsMdast from '../src/utils/mdast';
 import { glob, sync as globSync } from 'glob';
-import { promisify } from 'util';
-import { fixtures, patchReadPackageJsonData } from 'testverse/fixtures';
+import { promisify } from 'node:util';
+import { fixtures, patchReadPackageJsonData } from 'testverse/helpers/dummy-repo';
 import { toss } from 'toss-expression';
 import { ErrorMessage } from '../src/errors';
 import { clearPackageJsonCache } from 'pkgverse/core/src/project-utils';
+import { getMaintainedNodeVersions } from 'pkgverse/core/src/helpers';
 import { asMockedFunction } from '@xunnamius/jest-types';
 import { run, RunReturnType } from 'multiverse/run';
 import { TrialError } from 'named-app-errors';
-import { basename } from 'path';
+import { basename } from 'node:path';
 import escapeRegexp from 'escape-string-regexp';
 // ? Secretly an ES module, but mocked as a CJS module
 import { fromMarkdown } from 'mdast-util-from-markdown';
 
-import type { PathLike } from 'fs';
+import type { PathLike } from 'node:fs';
 
 jest.mock('multiverse/run');
 
-jest.mock('mdast-util-from-markdown', () => {
+jest.mock('mdast-util-from-markdown', (): typeof import('mdast-util-from-markdown') => {
   return {
     fromMarkdown: jest.fn(),
     __esModule: true
-  };
+  } as typeof import('mdast-util-from-markdown');
 });
 
 const globAsync = promisify(glob);
@@ -42,7 +43,7 @@ const stringContainingErrorMessage = (
   errorMessage: string
 ) => {
   return expect.stringMatching(
-    RegExp(
+    new RegExp(
       `^.*${escapeRegexp(currentFile)}(?!/).*(?:\n  .*?)*(?:\n  .*?${
         type == 'warn' ? 'warn' : 'ERR!'
       }.*?) ${escapeRegexp(errorMessage)}$`,
@@ -58,8 +59,10 @@ const makeMockGitCommit =
   (commits: string[]): typeof run =>
   (_, args) => {
     if (args?.includes('A...B')) {
-      commits.push(Math.random().toString(16).slice(2, 8));
-      commits.push(Math.random().toString(16).slice(2, 8));
+      commits.push(
+        Math.random().toString(16).slice(2, 8),
+        Math.random().toString(16).slice(2, 8)
+      );
       return {
         stdout: `${commits.at(-2)} X Y Z\n${commits.at(-1)} A B C`
       } as unknown as ReturnType<typeof run>;
@@ -100,7 +103,7 @@ is optimally structured and conforms to best practices, including detecting when
 running in a monorepo root vs a polyrepo root vs a sub-root.` as const
   );
 
-const actualRun = jest.requireActual('multiverse/run').run;
+//const actualRun = jest.requireActual('multiverse/run').run;
 const mockedRun = asMockedFunction(run);
 const mockedFromMarkdown = asMockedFunction(fromMarkdown);
 
@@ -121,7 +124,7 @@ beforeAll(() => {
         throw new TrialError(`blueprint name collision: ${blueprintName}`);
       }
 
-      blueprints[blueprintName] = readFileSync(blueprintPath, { encoding: 'utf-8' });
+      blueprints[blueprintName] = readFileSync(blueprintPath, { encoding: 'utf8' });
     }
   );
 });
@@ -145,7 +148,7 @@ test('certain markdown blueprints end with a colon and not a new line', async ()
       files.map((file) => {
         return fs
           .readFile(file, {
-            encoding: 'utf-8'
+            encoding: 'utf8'
           })
           .then((blueprint) => expect(blueprint).toEndWith(':'));
       })
@@ -1407,7 +1410,7 @@ describe('::runProjectLinter', () => {
       linkProtectionMarkdownPaths: []
     });
 
-    const engines = Utils.getMaintainedPkgNodeEngines();
+    const engines = getMaintainedNodeVersions();
 
     expect(monorepoSubRoot.output).toStrictEqual(
       stringContainingErrorMessage(
@@ -2494,8 +2497,8 @@ describe('::runProjectLinter', () => {
             title: null,
             url: 'https://xunn.at/donate-blm',
             position: {
-              start: { line: 967, column: 1, offset: 32180 },
-              end: { line: 967, column: 39, offset: 32218 }
+              start: { line: 967, column: 1, offset: 32_180 },
+              end: { line: 967, column: 39, offset: 32_218 }
             }
           }
         ]
@@ -2604,8 +2607,8 @@ describe('::runProjectLinter', () => {
             title: null,
             url: 'https://xunn.at/donate-blm',
             position: {
-              start: { line: 967, column: 1, offset: 32180 },
-              end: { line: 967, column: 39, offset: 32218 }
+              start: { line: 967, column: 1, offset: 32_180 },
+              end: { line: 967, column: 39, offset: 32_218 }
             }
           },
           {
@@ -2615,8 +2618,8 @@ describe('::runProjectLinter', () => {
             title: null,
             url: 'https://xunn.at/donate-blm',
             position: {
-              start: { line: 967, column: 1, offset: 32180 },
-              end: { line: 967, column: 39, offset: 32218 }
+              start: { line: 967, column: 1, offset: 32_180 },
+              end: { line: 967, column: 39, offset: 32_218 }
             }
           }
         ]
@@ -2787,8 +2790,8 @@ describe('::runProjectLinter', () => {
             title: null,
             url: 'https://github.com/x/y',
             position: {
-              start: { line: 968, column: 1, offset: 32219 },
-              end: { line: 968, column: 52, offset: 32270 }
+              start: { line: 968, column: 1, offset: 32_219 },
+              end: { line: 968, column: 52, offset: 32_270 }
             }
           },
           {
@@ -2798,8 +2801,8 @@ describe('::runProjectLinter', () => {
             title: 'LCT',
             url: 'https://img.shields.io/github/last-commit/x/y',
             position: {
-              start: { line: 969, column: 1, offset: 32271 },
-              end: { line: 971, column: 28, offset: 32383 }
+              start: { line: 969, column: 1, offset: 32_271 },
+              end: { line: 971, column: 28, offset: 32_383 }
             }
           }
         ]
@@ -3244,8 +3247,8 @@ describe('::runProjectLinter', () => {
             title: null,
             url: 'https://fake.bad',
             position: {
-              start: { line: 968, column: 1, offset: 32219 },
-              end: { line: 968, column: 52, offset: 32270 }
+              start: { line: 968, column: 1, offset: 32_219 },
+              end: { line: 968, column: 52, offset: 32_270 }
             }
           }
         ]
@@ -4611,8 +4614,8 @@ describe('::runProjectLinter', () => {
 
     jest
       .spyOn(fs, 'readFile')
-      .mockImplementation((path, opts) =>
-        path.toString().endsWith('.md') ? getBadMarkdown() : actualReadFile(path, opts)
+      .mockImplementation((path, options) =>
+        path.toString().endsWith('.md') ? getBadMarkdown() : actualReadFile(path, options)
       );
 
     const monorepoRoot = await Linters.runProjectLinter({
@@ -4694,8 +4697,8 @@ describe('::runProjectLinter', () => {
 
     jest
       .spyOn(fs, 'readFile')
-      .mockImplementation((path, opts) =>
-        path.toString().endsWith('.md') ? getBadMarkdown() : actualReadFile(path, opts)
+      .mockImplementation((path, options) =>
+        path.toString().endsWith('.md') ? getBadMarkdown() : actualReadFile(path, options)
       );
 
     const monorepoRoot = await Linters.runProjectLinter({

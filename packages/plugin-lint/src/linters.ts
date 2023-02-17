@@ -1,11 +1,16 @@
+/* eslint-disable unicorn/no-array-push-push */
 import * as Constants from './constants';
 import * as Utils from './utils';
 import { run } from 'multiverse/run';
 import { CliError, ErrorMessage } from './errors';
-import { getRunContext } from 'pkgverse/core/src/project-utils';
-import { access } from 'fs/promises';
+import {
+  getRunContext,
+  flattenPackageJsonSubpathMap
+} from 'pkgverse/core/src/project-utils';
+import { getMaintainedNodeVersions } from 'pkgverse/core/src/helpers';
+import { access } from 'node:fs/promises';
 import { glob } from 'glob';
-import { promisify } from 'util';
+import { promisify } from 'node:util';
 import { toss } from 'toss-expression';
 import semver from 'semver';
 import stripAnsi from 'strip-ansi';
@@ -79,44 +84,44 @@ export async function runProjectLinter({
       );
     };
 
-    const ctx = (() => {
+    const context = (() => {
       try {
         // ? Technically we could accept cwd instead of forcing rootDir, but
         // ? accepting a cwd would not align with the other linter interfaces...
         return getRunContext({ cwd: rootDir });
-      } catch (e) {
-        if (e instanceof PackageJsonNotFoundError) {
+      } catch (error) {
+        if (error instanceof PackageJsonNotFoundError) {
           reporterFactory(`${rootDir}/package.json`)(
             'error',
             ErrorMessage.FatalMissingFile()
           );
-        } else if (e instanceof BadPackageJsonError) {
-          reporterFactory(e.packageJsonPath)(
+        } else if (error instanceof BadPackageJsonError) {
+          reporterFactory(error.packageJsonPath)(
             'error',
             ErrorMessage.PackageJsonUnparsable()
           );
-        } else if (e instanceof NotAGitRepositoryError) {
+        } else if (error instanceof NotAGitRepositoryError) {
           reporterFactory(rootDir)('error', ErrorMessage.NotAGitRepository());
-        } else if (e instanceof DuplicatePackageIdError) {
-          reporterFactory(e.firstPath)(
+        } else if (error instanceof DuplicatePackageIdError) {
+          reporterFactory(error.firstPath)(
             'error',
-            ErrorMessage.DuplicatePackageId(e.id, e.secondPath)
+            ErrorMessage.DuplicatePackageId(error.id, error.secondPath)
           );
-          reporterFactory(e.secondPath)(
+          reporterFactory(error.secondPath)(
             'error',
-            ErrorMessage.DuplicatePackageId(e.id, e.firstPath)
+            ErrorMessage.DuplicatePackageId(error.id, error.firstPath)
           );
-        } else if (e instanceof DuplicatePackageNameError) {
-          reporterFactory(e.firstPath)(
+        } else if (error instanceof DuplicatePackageNameError) {
+          reporterFactory(error.firstPath)(
             'error',
-            ErrorMessage.DuplicatePackageName(e.pkgName, e.secondPath)
+            ErrorMessage.DuplicatePackageName(error.pkgName, error.secondPath)
           );
-          reporterFactory(e.secondPath)(
+          reporterFactory(error.secondPath)(
             'error',
-            ErrorMessage.DuplicatePackageName(e.pkgName, e.firstPath)
+            ErrorMessage.DuplicatePackageName(error.pkgName, error.firstPath)
           );
         } else {
-          throw e;
+          throw error;
         }
 
         return undefined;
@@ -127,8 +132,8 @@ export async function runProjectLinter({
     const tasks: Promise<unknown>[] = [];
 
     // ? Some checks are performed regardless of context
-    if (ctx !== undefined) {
-      const startedAtMonorepoRoot = ctx.context == 'monorepo' && !ctx.package;
+    if (context !== undefined) {
+      const startedAtMonorepoRoot = context.context == 'monorepo' && !context.package;
 
       /**
        * Ensure the current repository has no unpublished fixup/mergeme commits.
@@ -138,17 +143,17 @@ export async function runProjectLinter({
           (async () => {
             const status = await run('git', ['status', '-sb'], {
               reject: true,
-              cwd: ctx.project.root
+              cwd: context.project.root
             });
-            const rawRefs = status.stdout.split('\n')[0];
+            const rawReferences = status.stdout.split('\n')[0];
 
             // ? Repos not tracking upstream won't return "..."
-            if (rawRefs.includes('...')) {
-              const refs = rawRefs.split(' ').at(-1) || toss(new CliError(2));
+            if (rawReferences.includes('...')) {
+              const references = rawReferences.split(' ').at(-1) || toss(new CliError(2));
               const commits = await run(
                 'git',
-                ['log', '--oneline', refs, '--grep', 'fixup', '--grep', 'mergeme'],
-                { reject: true, cwd: ctx.project.root }
+                ['log', '--oneline', references, '--grep', 'fixup', '--grep', 'mergeme'],
+                { reject: true, cwd: context.project.root }
               );
 
               commits.stdout
@@ -209,9 +214,9 @@ export async function runProjectLinter({
 
         // ? package.json has duplicate dependencies
         if (json.dependencies && json.devDependencies) {
-          const devDeps = Object.keys(json.devDependencies);
+          const devDependencies = Object.keys(json.devDependencies);
           Object.keys(json.dependencies)
-            .filter((d) => devDeps.includes(d))
+            .filter((d) => devDependencies.includes(d))
             .forEach((dep) => {
               reportPkg('error', ErrorMessage.PackageJsonDuplicateDependency(dep));
             });
@@ -236,7 +241,7 @@ export async function runProjectLinter({
               : json.exports;
 
           const entryPoints = Object.keys(xports);
-          const distPaths = Utils.deepFlattenPkgExports(xports);
+          const distPaths = flattenPackageJsonSubpathMap({ map: xports });
 
           Constants.pkgJsonRequiredExports.forEach((requiredEntryPoint) => {
             if (!entryPoints.includes(requiredEntryPoint)) {
@@ -350,7 +355,7 @@ export async function runProjectLinter({
           Constants.pkgJsonObsoleteScripts.forEach((outdatedKey) => {
             const isRegExp = outdatedKey instanceof RegExp;
             if (
-              scriptKeys.find((key) =>
+              scriptKeys.some((key) =>
                 isRegExp ? outdatedKey.test(key) : key == outdatedKey
               )
             ) {
@@ -374,7 +379,7 @@ export async function runProjectLinter({
         // ? Has maintained node version engines.node entries
         if (json.engines) {
           if (json.engines.node) {
-            const expectedNodeEngines = Utils.getMaintainedPkgNodeEngines();
+            const expectedNodeEngines = getMaintainedNodeVersions({ format: 'engines' });
             if (json.engines.node != expectedNodeEngines) {
               reportPkg('warn', ErrorMessage.PackageJsonBadEngine(expectedNodeEngines));
             }
@@ -394,7 +399,7 @@ export async function runProjectLinter({
             Object.entries(depsObj).forEach(([dep, version]) => {
               // ? Since dist-tags shouldn't start with numbers anyway...
               // ? See: https://docs.npmjs.com/adding-dist-tags-to-packages
-              if (version && !Number.isNaN(parseInt(version[0]))) {
+              if (version && !Number.isNaN(Number.parseInt(version[0]))) {
                 reportPkg('warn', ErrorMessage.PackageJsonPinnedDependency(dep));
               } else if (version && semver.validRange(version)) {
                 if (semver.prerelease(version.replace(/^\D+/i, ''))) {
@@ -416,9 +421,9 @@ export async function runProjectLinter({
         // ? Has a docs entry point pointing to an existing file (if not a
         // ? monorepo root)
         if (!isCheckingMonorepoRoot) {
-          const docsEntry = json.project?.documentation?.entry;
+          const documentationEntry = json.project?.documentation?.entry;
 
-          if (!docsEntry) {
+          if (!documentationEntry) {
             reportPkg(
               'warn',
               ErrorMessage.PackageJsonMissingKey("config['plugin-build'].docs.entry")
@@ -426,7 +431,7 @@ export async function runProjectLinter({
           } else {
             tasks.push(
               (async () => {
-                const doesExist = await globAsync(docsEntry, {
+                const doesExist = await globAsync(documentationEntry, {
                   cwd: root,
                   ignore: Constants.globIgnorePatterns
                 }).then((files) => !!files.length);
@@ -473,7 +478,7 @@ export async function runProjectLinter({
           }
 
           // ? Has no "devDependencies"
-          if (ctx.project.json.devDependencies) {
+          if (context.project.json.devDependencies) {
             reportPkg('warn', ErrorMessage.PackageJsonIllegalKey('devDependencies'));
           }
         }
@@ -489,7 +494,7 @@ export async function runProjectLinter({
             Utils.checkForPotentiallyDisabledLinks({
               rootDir,
               markdownPaths: linkProtectionMarkdownPaths,
-              projectCtx: ctx,
+              projectContext: context,
               reporterFactory
             })
           );
@@ -499,21 +504,21 @@ export async function runProjectLinter({
         checkForUnpublishedFixupCommits();
       } else {
         rootAndSubRootChecks({
-          root: ctx.package?.root || ctx.project.root,
-          json: ctx.package?.json || ctx.project.json,
+          root: context.package?.root || context.project.root,
+          json: context.package?.json || context.project.json,
           isCheckingMonorepoRoot: startedAtMonorepoRoot,
-          isCheckingMonorepoSubRoot: !!ctx.package
+          isCheckingMonorepoSubRoot: !!context.package
         });
 
         const isNextJsProject = await (async () => {
           try {
-            await access(`${ctx.project.root}/next.config.js`);
+            await access(`${context.project.root}/next.config.js`);
             return true;
           } catch {}
           return false;
         })();
 
-        const reportPkg = reporterFactory(`${ctx.project.root}/package.json`);
+        const reportPkg = reporterFactory(`${context.project.root}/package.json`);
 
         // ? These additional checks are performed ONLY IF linting a monorepo root
         if (startedAtMonorepoRoot) {
@@ -521,15 +526,15 @@ export async function runProjectLinter({
           tasks.push(
             Utils.checkPathsExist(
               Constants.monorepoRootTsconfigFiles,
-              ctx.project.root,
+              context.project.root,
               reporterFactory,
               'warn'
             )
           );
 
           // ? Has no "broken" packages (workspaces missing a package.json file)
-          if (ctx.project.packages.broken.length) {
-            ctx.project.packages.broken.forEach((pkgRoot) =>
+          if (context.project.packages.broken.length) {
+            context.project.packages.broken.forEach((pkgRoot) =>
               reporterFactory(`${pkgRoot}/package.json`)(
                 'error',
                 ErrorMessage.MissingFile()
@@ -538,19 +543,19 @@ export async function runProjectLinter({
           }
 
           // ? Has a "name" field (the case where !private is already covered)
-          if (ctx.project.json.private && !ctx.project.json.name) {
+          if (context.project.json.private && !context.project.json.name) {
             reportPkg('warn', ErrorMessage.PackageJsonMissingKey('name'));
           }
 
           // ? Is private
-          if (ctx.project.json.private === undefined) {
+          if (context.project.json.private === undefined) {
             reportPkg('warn', ErrorMessage.PackageJsonMissingKey('private'));
-          } else if (ctx.project.json.private !== true) {
+          } else if (context.project.json.private !== true) {
             reportPkg('warn', ErrorMessage.PackageJsonMissingValue('private', 'true'));
           }
 
-          if (ctx.project.json.scripts) {
-            const scriptKeys = Object.keys(ctx.project.json.scripts);
+          if (context.project.json.scripts) {
+            const scriptKeys = Object.keys(context.project.json.scripts);
 
             // ? package.json has expected script fields
             Constants.monorepoRootScripts.forEach((script) => {
@@ -577,15 +582,16 @@ export async function runProjectLinter({
 
           if (!isNextJsProject) {
             // ? Has no "dependencies" field
-            if (ctx.project.json.dependencies) {
+            if (context.project.json.dependencies) {
               reportPkg('warn', ErrorMessage.PackageJsonIllegalKey('dependencies'));
             }
 
             // ? Has no non-whitelisted "version" field
             if (
-              ctx.project.json.version &&
+              context.project.json.version &&
               !Constants.pkgVersionWhitelist.includes(
-                ctx.project.json.version as (typeof Constants.pkgVersionWhitelist)[number]
+                context.project.json
+                  .version as (typeof Constants.pkgVersionWhitelist)[number]
               )
             ) {
               reportPkg('warn', ErrorMessage.PackageJsonIllegalKey('version'));
@@ -593,7 +599,7 @@ export async function runProjectLinter({
           }
 
           // ? Recursively lint all sub-roots
-          ctx.project.packages.all.forEach(({ root, json }) => {
+          context.project.packages.all.forEach(({ root, json }) => {
             rootAndSubRootChecks({
               root,
               json,
@@ -603,19 +609,19 @@ export async function runProjectLinter({
           });
         }
         // ? These additional checks are performed ONLY IF linting a polyrepo root
-        else if (!ctx.package) {
+        else if (!context.package) {
           // ? Has certain tsconfig files
           tasks.push(
             Utils.checkPathsExist(
               Constants.polyrepoTsconfigFiles,
-              ctx.project.root,
+              context.project.root,
               reporterFactory,
               'warn'
             )
           );
 
-          if (ctx.project.json.scripts) {
-            const scriptKeys = Object.keys(ctx.project.json.scripts);
+          if (context.project.json.scripts) {
+            const scriptKeys = Object.keys(context.project.json.scripts);
 
             // ? package.json has expected script fields
             Constants.polyrepoScripts.forEach((script) => {
@@ -642,8 +648,8 @@ export async function runProjectLinter({
         }
 
         // ? These additional checks are performed ONLY IF NOT linting a sub-root
-        if (!ctx.package) {
-          const root = ctx.project.root;
+        if (!context.package) {
+          const root = context.project.root;
 
           // ? Has required files
           tasks.push(
@@ -667,7 +673,7 @@ export async function runProjectLinter({
           );
 
           // ? Has release.config.js if not private
-          if (!ctx.project.json.private) {
+          if (!context.project.json.private) {
             tasks.push(
               Utils.checkPathsExist(['release.config.js'], root, reporterFactory, 'warn')
             );
@@ -678,7 +684,7 @@ export async function runProjectLinter({
           tasks.push(
             Utils.checkStandardMdFile({
               mdPath: `${root}/SECURITY.md`,
-              pkgJson: ctx.project.json,
+              pkgJson: context.project.json,
               standardTopmatter: Constants.markdownSecurityStandardTopmatter,
               standardLinks: Constants.markdownSecurityStandardLinks,
               reporterFactory
@@ -690,7 +696,7 @@ export async function runProjectLinter({
           tasks.push(
             Utils.checkStandardMdFile({
               mdPath: `${root}/.github/SUPPORT.md`,
-              pkgJson: ctx.project.json,
+              pkgJson: context.project.json,
               standardTopmatter: Constants.markdownSupportStandardTopmatter,
               standardLinks: Constants.markdownSupportStandardLinks,
               reporterFactory
@@ -702,7 +708,7 @@ export async function runProjectLinter({
           tasks.push(
             Utils.checkStandardMdFile({
               mdPath: `${root}/CONTRIBUTING.md`,
-              pkgJson: ctx.project.json,
+              pkgJson: context.project.json,
               standardTopmatter: null,
               standardLinks: Constants.markdownContributingStandardLinks,
               reporterFactory
@@ -713,7 +719,7 @@ export async function runProjectLinter({
           tasks.push(
             Utils.checkStandardMdFile({
               mdPath: `${root}/.github/CODE_OF_CONDUCT.md`,
-              pkgJson: ctx.project.json,
+              pkgJson: context.project.json,
               standardTopmatter: null,
               standardLinks: null,
               reporterFactory
@@ -724,7 +730,7 @@ export async function runProjectLinter({
           tasks.push(
             Utils.checkStandardMdFile({
               mdPath: `${root}/.github/PULL_REQUEST_TEMPLATE.md`,
-              pkgJson: ctx.project.json,
+              pkgJson: context.project.json,
               standardTopmatter: null,
               standardLinks: null,
               reporterFactory
@@ -735,7 +741,7 @@ export async function runProjectLinter({
           tasks.push(
             Utils.checkStandardMdFile({
               mdPath: `${root}/.github/ISSUE_TEMPLATE/BUG_REPORT.md`,
-              pkgJson: ctx.project.json,
+              pkgJson: context.project.json,
               standardTopmatter: null,
               standardLinks: null,
               reporterFactory
@@ -746,7 +752,7 @@ export async function runProjectLinter({
           tasks.push(
             Utils.checkStandardMdFile({
               mdPath: `${root}/.github/ISSUE_TEMPLATE/FEATURE_REQUEST.md`,
-              pkgJson: ctx.project.json,
+              pkgJson: context.project.json,
               standardTopmatter: null,
               standardLinks: null,
               reporterFactory
@@ -757,7 +763,7 @@ export async function runProjectLinter({
           tasks.push(
             Utils.checkStandardMdFile({
               mdPath: `${root}/.github/ISSUE_TEMPLATE/config.yml`,
-              pkgJson: ctx.project.json,
+              pkgJson: context.project.json,
               standardTopmatter: null,
               standardLinks: null,
               reporterFactory
@@ -768,7 +774,7 @@ export async function runProjectLinter({
           tasks.push(
             Utils.checkStandardMdFile({
               mdPath: `${root}/.github/dependabot.yml`,
-              pkgJson: ctx.project.json,
+              pkgJson: context.project.json,
               standardTopmatter: null,
               standardLinks: null,
               reporterFactory
@@ -782,7 +788,7 @@ export async function runProjectLinter({
             Utils.checkForPotentiallyDisabledLinks({
               rootDir,
               markdownPaths: linkProtectionMarkdownPaths,
-              projectCtx: ctx,
+              projectContext: context,
               reporterFactory
             })
           );
@@ -813,8 +819,8 @@ export async function runProjectLinter({
             }`
           : 'no issues'
     };
-  } catch (e) {
-    throw new Error(`project linting failed: ${e}`, { cause: e as Error });
+  } catch (error) {
+    throw new Error(`project linting failed: ${error}`, { cause: error as Error });
   }
 }
 
@@ -850,7 +856,7 @@ export async function runTypescriptLinter({
       ?.trimEnd()
       .split('\n')
       // TODO: filter smarter (fix TypeScript output bug)
-      .filter(Utils.ignoreEmptyAndDebugLines)
+      .filter((line) => Utils.ignoreEmptyAndDebugLines(line))
       .at(-1) || '';
 
   const lastLineMeta =
@@ -906,7 +912,7 @@ export async function runEslintLinter({
   // ? Split this into two so we can save the knowledge from this step for later
   const lastLinesWithContent = stripAnsi(output)
     .split('\n')
-    .filter(Utils.ignoreEmptyAndDebugLines);
+    .filter((line) => Utils.ignoreEmptyAndDebugLines(line));
 
   const lastLine =
     lastLinesWithContent.filter((line) => !line.includes('--fix')).at(-1) || '';
@@ -1018,7 +1024,7 @@ export async function runRemarkLinter({
   const lastLine =
     stripAnsi(remarkOutput.all?.trimEnd() || '')
       .split('\n')
-      .filter(Utils.ignoreEmptyAndDebugLines)
+      .filter((line) => Utils.ignoreEmptyAndDebugLines(line))
       .at(-1) || '';
 
   const lastLineMeta =

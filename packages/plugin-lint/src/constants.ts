@@ -36,7 +36,7 @@ export const globIgnorePatterns = ['**/node_modules/**', '**/.git/**'] as const;
  * Regular expression that matches lines containing links that may have been
  * erroneously disabled.
  */
-export const disabledLinkRegex = /^.*\\\[[^\\]*\]\\.*/gim;
+export const disabledLinkRegex = /^.*\\\[[^\\]*]\\.*/gim;
 
 /**
  * Required value of the `license` field in package.json
@@ -124,7 +124,7 @@ export const pkgJsonObsoleteScripts = [
 /**
  * The parameters used to resolve Markdown urls.
  */
-export type StandardUrlParams = {
+export type StandardUrlParameters = {
   user: string;
   repo: string;
   pkgName: string;
@@ -137,9 +137,9 @@ export type StandardUrlParams = {
 export type StandardTopmatter = {
   [badgeName: string]: {
     label: string;
-    url: (params: StandardUrlParams) => string;
+    url: (parameters: StandardUrlParameters) => string;
     title: string;
-    link: { label: string; url: (params: StandardUrlParams) => string };
+    link: { label: string; url: (parameters: StandardUrlParameters) => string };
   };
 };
 
@@ -149,7 +149,7 @@ export type StandardTopmatter = {
 export type StandardLinks = {
   [linkName: string]: {
     label: string;
-    url: (params: StandardUrlParams) => string;
+    url: (parameters: StandardUrlParameters) => string;
   };
 };
 
@@ -173,47 +173,49 @@ export const markdownReadmeStandardTopmatter = {
       conditions: ['monorepo', 'polyrepo', 'subroot'] as Condition[],
       label: 'badge-blm',
       alt: 'Black Lives Matter!',
-      url: (_: StandardUrlParams) => 'https://xunn.at/badge-blm',
+      url: (_: StandardUrlParameters) => 'https://xunn.at/badge-blm',
       title: 'Join the movement!',
       link: {
         label: 'link-blm',
-        url: (_: StandardUrlParams) => 'https://xunn.at/donate-blm'
+        url: (_: StandardUrlParameters) => 'https://xunn.at/donate-blm'
       }
     },
     maintenance: {
       conditions: ['monorepo', 'polyrepo', 'subroot'] as Condition[],
       label: 'badge-maintenance',
       alt: 'Maintenance status',
-      url: (_: StandardUrlParams) =>
+      url: (_: StandardUrlParameters) =>
         `https://img.shields.io/maintenance/active/${new Date().getFullYear()}`,
       title: 'Is this package maintained?',
       link: {
         label: 'link-maintenance',
-        url: ({ user, repo }: StandardUrlParams) => `https://github.com/${user}/${repo}`
+        url: ({ user, repo }: StandardUrlParameters) =>
+          `https://github.com/${user}/${repo}`
       }
     },
     lastCommit: {
       conditions: ['monorepo', 'polyrepo', 'subroot'] as Condition[],
       label: 'badge-last-commit',
       alt: 'Last commit timestamp',
-      url: ({ user, repo }: StandardUrlParams) =>
+      url: ({ user, repo }: StandardUrlParameters) =>
         `https://img.shields.io/github/last-commit/${user}/${repo}`,
       title: 'Latest commit timestamp',
       link: {
         label: 'link-last-commit',
-        url: ({ user, repo }: StandardUrlParams) => `https://github.com/${user}/${repo}`
+        url: ({ user, repo }: StandardUrlParameters) =>
+          `https://github.com/${user}/${repo}`
       }
     },
     issues: {
       conditions: ['monorepo', 'polyrepo', 'subroot'] as Condition[],
       label: 'badge-issues',
       alt: 'Open issues',
-      url: ({ user, repo }: StandardUrlParams) =>
+      url: ({ user, repo }: StandardUrlParameters) =>
         `https://img.shields.io/github/issues/${user}/${repo}`,
       title: 'Open issues',
       link: {
         label: 'link-issues',
-        url: ({ user, repo }: StandardUrlParams) =>
+        url: ({ user, repo }: StandardUrlParameters) =>
           `https://github.com/${user}/${repo}/issues?q=`
       }
     },
@@ -221,12 +223,12 @@ export const markdownReadmeStandardTopmatter = {
       conditions: ['monorepo', 'polyrepo', 'subroot'] as Condition[],
       label: 'badge-pulls',
       alt: 'Pull requests',
-      url: ({ user, repo }: StandardUrlParams) =>
+      url: ({ user, repo }: StandardUrlParameters) =>
         `https://img.shields.io/github/issues-pr/${user}/${repo}`,
       title: 'Open pull requests',
       link: {
         label: 'link-pulls',
-        url: ({ user, repo }: StandardUrlParams) =>
+        url: ({ user, repo }: StandardUrlParameters) =>
           `https://github.com/${user}/${repo}/pulls`
       }
     },
@@ -234,14 +236,14 @@ export const markdownReadmeStandardTopmatter = {
       conditions: ['polyrepo', 'subroot'] as Condition[],
       label: 'badge-codecov',
       alt: 'Codecov',
-      url: ({ user, repo, flag }: StandardUrlParams) =>
+      url: ({ user, repo, flag }: StandardUrlParameters) =>
         `https://codecov.io/gh/${user}/${repo}/branch/main/graph/badge.svg${
           flag ? `?flag=${flag}` : ''
         }`,
       title: 'Is this package well-tested?',
       link: {
         label: 'link-codecov',
-        url: ({ user, repo }: StandardUrlParams) =>
+        url: ({ user, repo }: StandardUrlParameters) =>
           `https://codecov.io/gh/${user}/${repo}`
       }
     },
@@ -249,11 +251,12 @@ export const markdownReadmeStandardTopmatter = {
       conditions: ['polyrepo', 'subroot'] as Condition[],
       label: 'badge-license',
       alt: 'Source license',
-      url: ({ pkgName }: StandardUrlParams) => `https://img.shields.io/npm/l/${pkgName}`,
+      url: ({ pkgName }: StandardUrlParameters) =>
+        `https://img.shields.io/npm/l/${pkgName}`,
       title: "This package's source license",
       link: {
         label: 'link-license',
-        url: ({ user, repo }: StandardUrlParams) =>
+        url: ({ user, repo }: StandardUrlParameters) =>
           `https://github.com/${user}/${repo}/blob/main/LICENSE`
       }
     },
@@ -261,12 +264,12 @@ export const markdownReadmeStandardTopmatter = {
       conditions: ['polyrepo', 'subroot'] as Condition[],
       label: 'badge-npm',
       alt: 'NPM version',
-      url: ({ pkgName }: StandardUrlParams) =>
+      url: ({ pkgName }: StandardUrlParameters) =>
         `https://xunn.at/npm-pkg-version/${pkgName}`,
       title: 'Install this package using npm or yarn!',
       link: {
         label: 'link-npm',
-        url: ({ pkgName }: StandardUrlParams) =>
+        url: ({ pkgName }: StandardUrlParameters) =>
           `https://www.npmjs.com/package/${pkgName}`
       }
     },
@@ -274,11 +277,11 @@ export const markdownReadmeStandardTopmatter = {
       conditions: ['monorepo', 'polyrepo', 'subroot'] as Condition[],
       label: 'badge-semantic-release',
       alt: 'This repo uses semantic-release!',
-      url: (_: StandardUrlParams) => 'https://xunn.at/badge-semantic-release',
+      url: (_: StandardUrlParameters) => 'https://xunn.at/badge-semantic-release',
       title: 'This repo practices continuous integration and deployment!',
       link: {
         label: 'link-semantic-release',
-        url: (_: StandardUrlParams) =>
+        url: (_: StandardUrlParameters) =>
           'https://github.com/semantic-release/semantic-release'
       }
     }
@@ -292,12 +295,12 @@ export const markdownReadmeStandardTopmatter = {
 export const markdownSecurityStandardTopmatter = {
   vulnerabilities: {
     label: 'badge-security',
-    url: ({ user, repo }: StandardUrlParams) =>
+    url: ({ user, repo }: StandardUrlParameters) =>
       `https://snyk.io/test/github/${user}/${repo}/badge.svg`,
     title: 'Number of vulnerabilities (scanned by Snyk)',
     link: {
       label: 'link-security',
-      url: ({ user, repo }: StandardUrlParams) =>
+      url: ({ user, repo }: StandardUrlParameters) =>
         `https://snyk.io/test/github/${user}/${repo}`
     }
   }
@@ -310,23 +313,23 @@ export const markdownSecurityStandardTopmatter = {
 export const markdownSupportStandardTopmatter = {
   issuesResolution: {
     label: 'badge-issue-resolution',
-    url: ({ user, repo }: StandardUrlParams) =>
+    url: ({ user, repo }: StandardUrlParameters) =>
       `https://isitmaintained.com/badge/resolution/${user}/${repo}.svg`,
     title: 'Average time to resolve an issue',
     link: {
       label: 'link-issue-resolution',
-      url: ({ user, repo }: StandardUrlParams) =>
+      url: ({ user, repo }: StandardUrlParameters) =>
         `https://isitmaintained.com/project/${user}/${repo}`
     }
   },
   issuesPercentage: {
     label: 'badge-issue-percentage',
-    url: ({ user, repo }: StandardUrlParams) =>
+    url: ({ user, repo }: StandardUrlParameters) =>
       `https://isitmaintained.com/badge/open/${user}/${repo}.svg`,
     title: 'Open issues as a percentage of all issues',
     link: {
       label: 'link-issue-percentage',
-      url: ({ user, repo }: StandardUrlParams) =>
+      url: ({ user, repo }: StandardUrlParameters) =>
         `https://github.com/${user}/${repo}/issues?q=`
     }
   }
@@ -336,22 +339,22 @@ export const markdownSupportStandardTopmatter = {
  * Standard Markdown reference links (i.e. links and references) for README.md
  */
 export const markdownReadmeStandardLinks = {
-  docs: { label: 'docs', url: (_: StandardUrlParams) => 'docs' },
+  docs: { label: 'docs', url: (_: StandardUrlParameters) => 'docs' },
   chooseNewIssue: {
     label: 'choose-new-issue',
-    url: ({ user, repo }: StandardUrlParams) =>
+    url: ({ user, repo }: StandardUrlParameters) =>
       `https://github.com/${user}/${repo}/issues/new/choose`
   },
   prCompare: {
     label: 'pr-compare',
-    url: ({ user, repo }: StandardUrlParams) =>
+    url: ({ user, repo }: StandardUrlParameters) =>
       `https://github.com/${user}/${repo}/compare`
   },
   contributing: {
     label: 'contributing',
-    url: (_: StandardUrlParams) => 'CONTRIBUTING.md'
+    url: (_: StandardUrlParameters) => 'CONTRIBUTING.md'
   },
-  support: { label: 'support', url: (_: StandardUrlParams) => '.github/SUPPORT.md' }
+  support: { label: 'support', url: (_: StandardUrlParameters) => '.github/SUPPORT.md' }
 } as const;
 
 /**
@@ -360,17 +363,17 @@ export const markdownReadmeStandardLinks = {
 export const markdownSecurityStandardLinks = {
   openIssues: {
     label: 'open-issues',
-    url: ({ user, repo }: StandardUrlParams) =>
+    url: ({ user, repo }: StandardUrlParameters) =>
       `https://github.com/${user}/${repo}/issues?q=`
   },
   chooseNewIssue: {
     label: 'choose-new-issue',
-    url: ({ user, repo }: StandardUrlParams) =>
+    url: ({ user, repo }: StandardUrlParameters) =>
       `https://github.com/${user}/${repo}/issues/new/choose`
   },
   securityMailTo: {
     label: 'security-mailto',
-    url: (_: StandardUrlParams) =>
+    url: (_: StandardUrlParameters) =>
       'mailto:security@ergodark.com?subject=ALERT%3A%20SECURITY%20INCIDENT%3A%20%28five%20word%20summary%29'
   }
 } as const;
@@ -381,17 +384,17 @@ export const markdownSecurityStandardLinks = {
 export const markdownSupportStandardLinks = {
   openIssues: {
     label: 'open-issues',
-    url: ({ user, repo }: StandardUrlParams) =>
+    url: ({ user, repo }: StandardUrlParameters) =>
       `https://github.com/${user}/${repo}/issues?q=`
   },
   githubBlog: {
     label: 'github-blog',
-    url: (_: StandardUrlParams) =>
+    url: (_: StandardUrlParameters) =>
       'https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments'
   },
   chooseNewIssue: {
     label: 'choose-new-issue',
-    url: ({ user, repo }: StandardUrlParams) =>
+    url: ({ user, repo }: StandardUrlParameters) =>
       `https://github.com/${user}/${repo}/issues/new/choose`
   }
 } as const;
@@ -402,81 +405,84 @@ export const markdownSupportStandardLinks = {
 export const markdownContributingStandardLinks = {
   howToContribute: {
     label: 'how-to-contribute',
-    url: (_: StandardUrlParams) => 'https://www.dataschool.io/how-to-contribute-on-github'
+    url: (_: StandardUrlParameters) =>
+      'https://www.dataschool.io/how-to-contribute-on-github'
   },
   codeOfConduct: {
     label: 'code-of-conduct',
-    url: (_: StandardUrlParams) => '/.github/CODE_OF_CONDUCT.md'
+    url: (_: StandardUrlParameters) => '/.github/CODE_OF_CONDUCT.md'
   },
   githubActions: {
     label: 'github-actions',
-    url: (_: StandardUrlParams) => 'https://github.com/features/actions'
+    url: (_: StandardUrlParameters) => 'https://github.com/features/actions'
   },
   HuskyCl: {
     label: 'husky-cl',
-    url: ({ user, repo }: StandardUrlParams) =>
+    url: ({ user, repo }: StandardUrlParameters) =>
       `https://github.com/${user}/${repo}/tree/main/.husky`
   },
   ghaCi: {
     label: 'gha-ci',
-    url: (_: StandardUrlParams) => '.github/workflows/build-test.yml'
+    url: (_: StandardUrlParameters) => '.github/workflows/build-test.yml'
   },
   projector: {
     label: 'projector',
-    url: (_: StandardUrlParams) => 'https://github.com/Xunnamius/projector#readme'
+    url: (_: StandardUrlParameters) => 'https://github.com/Xunnamius/projector#readme'
   },
   pkgDebug: {
     label: 'pkg-debug',
-    url: (_: StandardUrlParams) => 'https://www.npmjs.com/package/debug'
+    url: (_: StandardUrlParameters) => 'https://www.npmjs.com/package/debug'
   },
   pkgDebugWildcards: {
     label: 'pkg-debug-wildcards',
-    url: (_: StandardUrlParams) => 'https://www.npmjs.com/package/debug#wildcards'
+    url: (_: StandardUrlParameters) => 'https://www.npmjs.com/package/debug#wildcards'
   },
   fork: {
     label: 'fork',
-    url: ({ user, repo }: StandardUrlParams) => `https://github.com/${user}/${repo}/fork`
+    url: ({ user, repo }: StandardUrlParameters) =>
+      `https://github.com/${user}/${repo}/fork`
   },
   howToClone: {
     label: 'how-to-clone',
-    url: (_: StandardUrlParams) =>
+    url: (_: StandardUrlParameters) =>
       'https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/cloning-a-repository'
   },
   npmCi: {
     label: 'npm-ci',
-    url: (_: StandardUrlParams) => 'https://docs.npmjs.com/cli/v6/commands/npm-ci'
+    url: (_: StandardUrlParameters) => 'https://docs.npmjs.com/cli/v6/commands/npm-ci'
   },
   prCompare: {
     label: 'pr-compare',
-    url: ({ user, repo }: StandardUrlParams) =>
+    url: ({ user, repo }: StandardUrlParameters) =>
       `https://github.com/${user}/${repo}/compare`
   },
   chooseNewIssue: {
     label: 'choose-new-issue',
-    url: ({ user, repo }: StandardUrlParams) =>
+    url: ({ user, repo }: StandardUrlParameters) =>
       `https://github.com/${user}/${repo}/issues/new/choose`
   },
   openIssues: {
     label: 'open-issues',
-    url: ({ user, repo }: StandardUrlParams) =>
+    url: ({ user, repo }: StandardUrlParameters) =>
       `https://github.com/${user}/${repo}/issues?q=`
   },
   atomicCommits: {
     label: 'atomic-commits',
-    url: (_: StandardUrlParams) => 'https://www.codewithjason.com/atomic-commits-testing/'
+    url: (_: StandardUrlParameters) =>
+      'https://www.codewithjason.com/atomic-commits-testing/'
   },
   codecov: {
     label: 'codecov',
-    url: (_: StandardUrlParams) => 'https://about.codecov.io/'
+    url: (_: StandardUrlParameters) => 'https://about.codecov.io/'
   },
   conventionalCommits: {
     label: 'conventional-commits',
-    url: (_: StandardUrlParams) =>
+    url: (_: StandardUrlParameters) =>
       'https://www.conventionalcommits.org/en/v1.0.0/#summary'
   },
   cosmeticCommits: {
     label: 'cosmetic-commits',
-    url: (_: StandardUrlParams) =>
+    url: (_: StandardUrlParameters) =>
       'https://github.com/rails/rails/pull/13771#issuecomment-32746700'
   }
 } as const;

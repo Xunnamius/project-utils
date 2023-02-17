@@ -1,7 +1,7 @@
-import { resolve } from 'path';
-import { readFile } from 'fs/promises';
+import { resolve } from 'node:path';
+import { readFile } from 'node:fs/promises';
 import { glob } from 'glob';
-import { promisify } from 'util';
+import { promisify } from 'node:util';
 import { disabledLinkRegex, globIgnorePatterns } from '../constants';
 import { ErrorMessage } from '../errors';
 
@@ -21,19 +21,19 @@ const globAsync = promisify(glob);
 export async function checkForPotentiallyDisabledLinks({
   rootDir,
   markdownPaths,
-  projectCtx: ctx,
+  projectContext: context,
   reporterFactory
 }: {
   rootDir: string;
   markdownPaths: readonly string[];
-  projectCtx: MonorepoRunContext | PolyrepoRunContext;
+  projectContext: MonorepoRunContext | PolyrepoRunContext;
   reporterFactory: ReporterFactory;
 }) {
   const configIgnorePatterns: string[] = [
-    ...(ctx.project.json.project?.lint?.linkProtection?.ignore || [])
+    ...(context.project.json.project?.lint?.linkProtection?.ignore || [])
   ];
 
-  for (const pkg of ctx.project.packages?.all || []) {
+  for (const pkg of context.project.packages?.all || []) {
     // ? Append resolved ignore paths (if they exist) to configIgnorePatterns
     configIgnorePatterns.splice(
       -1,
@@ -55,7 +55,7 @@ export async function checkForPotentiallyDisabledLinks({
       return Promise.all(
         files.map(async (filePath) => {
           const reportFile = reporterFactory(filePath);
-          const fileContents = await readFile(filePath, 'utf-8');
+          const fileContents = await readFile(filePath, 'utf8');
           for (const badLine of fileContents.match(disabledLinkRegex) || []) {
             reportFile('error', ErrorMessage.MarkdownDisabledLink(badLine));
           }

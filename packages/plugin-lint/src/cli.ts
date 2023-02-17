@@ -11,14 +11,18 @@ import { configureProgram, CliError, LinterError } from './index';
 const debug = debugFactory(`${pkgName}:cli`);
 
 export default (({ program, parse }) =>
-  parse().catch(async (e: Error | string) => {
-    if (!(e instanceof LinterError) && !(await program.argv).silent) {
+  parse().catch(async (error: Error | string) => {
+    if (!(error instanceof LinterError) && !(await program.argv).silent) {
       // eslint-disable-next-line no-console
       console.error(
-        `fatal: ${(typeof e == 'string' ? e : e.message).replace(/^fatal: /, '')}`
+        `fatal: ${(typeof error == 'string' ? error : error.message).replace(
+          /^fatal: /,
+          ''
+        )}`
       );
     }
 
-    debug('%O', e);
-    process.exit(e instanceof CliError ? e.exitCode : 1);
+    debug('%O', error);
+    // eslint-disable-next-line unicorn/no-process-exit
+    process.exit(error instanceof CliError ? error.exitCode : 1);
   }))(configureProgram());

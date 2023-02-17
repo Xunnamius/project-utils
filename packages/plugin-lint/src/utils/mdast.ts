@@ -1,17 +1,14 @@
-import { basename } from 'path';
-import { readFile } from 'fs/promises';
+import { basename } from 'node:path';
+import { readFile } from 'node:fs/promises';
 import { ErrorMessage } from '../errors';
 
 import {
   markdownReadmeStandardLinks,
-  markdownReadmeStandardTopmatter
-} from '../constants';
-
-import type {
-  Condition,
-  StandardUrlParams,
-  StandardTopmatter,
-  StandardLinks
+  markdownReadmeStandardTopmatter,
+  type Condition,
+  type StandardUrlParameters,
+  type StandardTopmatter,
+  type StandardLinks
 } from '../constants';
 
 import type { ReporterFactory } from './index';
@@ -28,9 +25,9 @@ export async function getAst(path: string) {
     return (
       await import(/* webpackIgnore: true */ 'mdast-util-from-markdown')
     ).fromMarkdown(await readFile(path));
-  } catch (e) {
-    if (!(e as Error).message.includes('ENOENT')) {
-      throw e;
+  } catch (error) {
+    if (!(error as Error).message.includes('ENOENT')) {
+      throw error;
     }
   }
 }
@@ -40,7 +37,9 @@ export async function getAst(path: string) {
  * `null` if the package.json object is missing the `"name"` or `"repository"`
  * fields.
  */
-export function getUrlParams(json: PackageJsonWithConfig): StandardUrlParams | null {
+export function getUrlParameters(
+  json: PackageJsonWithConfig
+): StandardUrlParameters | null {
   const match = /^https:\/\/github.com\/(?<user>[^/]+)\/(?<repo>[^/]+)/.exec(
     typeof json.repository == 'string' ? json.repository : json.repository?.url || ''
   );
@@ -68,7 +67,7 @@ export function checkStandardLinks({
   reporter
 }: {
   mdAst: Root;
-  urlParams: StandardUrlParams;
+  urlParams: StandardUrlParameters;
   standardLinks: StandardLinks;
   reporter: ReturnType<ReporterFactory>;
 }) {
@@ -111,11 +110,11 @@ export async function checkStandardMdFile({
 
   try {
     mdFile = await readFile(mdPath, {
-      encoding: 'utf-8'
+      encoding: 'utf8'
     });
-  } catch (e) {
-    if (!(e as Error).message.includes('ENOENT')) {
-      throw e;
+  } catch (error) {
+    if (!(error as Error).message.includes('ENOENT')) {
+      throw error;
     }
   }
 
@@ -123,7 +122,7 @@ export async function checkStandardMdFile({
     const reportMdFile = reporterFactory(mdPath);
     const blueprintBasename = `${basename(mdPath).toLowerCase()}.txt`;
     const blueprint = await readFile(`${__dirname}/../blueprints/${blueprintBasename}`, {
-      encoding: 'utf-8'
+      encoding: 'utf8'
     });
 
     if (!(isAdvancedCheck ? mdFile.startsWith(blueprint) : mdFile == blueprint)) {
@@ -134,9 +133,9 @@ export async function checkStandardMdFile({
       const mdAst = await getAst(mdPath);
 
       if (mdAst) {
-        const urlParams = getUrlParams(pkgJson);
+        const urlParameters = getUrlParameters(pkgJson);
 
-        if (!urlParams) {
+        if (!urlParameters) {
           reportMdFile('warn', ErrorMessage.PackageJsonMissingKeysCheckSkipped());
         } else {
           if (standardTopmatter) {
@@ -151,7 +150,7 @@ export async function checkStandardMdFile({
                   ErrorMessage.MarkdownBadTopmatterMissingImageRefDef(badgeSpec.label)
                 );
               } else {
-                const badgeUrl = badgeSpec.url(urlParams);
+                const badgeUrl = badgeSpec.url(urlParameters);
 
                 if (badge.url != badgeUrl) {
                   reportMdFile(
@@ -181,7 +180,7 @@ export async function checkStandardMdFile({
                   ErrorMessage.MarkdownBadTopmatterMissingLinkRefDef(badgeSpec.link.label)
                 );
               } else {
-                const linkUrl = badgeSpec.link.url(urlParams);
+                const linkUrl = badgeSpec.link.url(urlParameters);
                 if (link.url != linkUrl) {
                   reportMdFile(
                     'warn',
@@ -195,7 +194,7 @@ export async function checkStandardMdFile({
           if (standardLinks) {
             checkStandardLinks({
               mdAst,
-              urlParams,
+              urlParams: urlParameters,
               standardLinks,
               reporter: reportMdFile
             });
@@ -226,9 +225,9 @@ export async function checkReadmeFile({
   const readmeAst = await getAst(readmePath);
 
   if (readmeAst) {
-    const urlParams = getUrlParams(pkgJson);
+    const urlParameters = getUrlParameters(pkgJson);
 
-    if (!urlParams) {
+    if (!urlParameters) {
       reportReadme('warn', ErrorMessage.PackageJsonMissingKeysCheckSkipped());
     }
 
@@ -258,25 +257,25 @@ export async function checkReadmeFile({
       const seenBadgeKeys = [] as string[];
 
       if (topmatter.type == 'paragraph') {
-        topmatter.children.forEach((badgeLinkRef) => {
-          if (badgeLinkRef.type == 'linkReference') {
+        topmatter.children.forEach((badgeLinkReference) => {
+          if (badgeLinkReference.type == 'linkReference') {
             if (
-              !badgeLinkRef.label ||
-              badgeLinkRef.children.length != 1 ||
-              badgeLinkRef.children[0].type != 'imageReference'
+              !badgeLinkReference.label ||
+              badgeLinkReference.children.length != 1 ||
+              badgeLinkReference.children[0].type != 'imageReference'
             ) {
               reportReadme(
                 'warn',
-                ErrorMessage.MarkdownInvalidSyntaxLinkRef(badgeLinkRef.label)
+                ErrorMessage.MarkdownInvalidSyntaxLinkRef(badgeLinkReference.label)
               );
             } else {
-              let topmatterIndex = Infinity;
-              const badgeImageRef = badgeLinkRef.children[0];
+              let topmatterIndex = Number.POSITIVE_INFINITY;
+              const badgeImageReference = badgeLinkReference.children[0];
               const [badgeKey, badgeSpec] =
                 Object.entries(markdownReadmeStandardTopmatter.badge).find(
                   ([, spec], ndx) => {
                     topmatterIndex = ndx;
-                    return spec.label == badgeImageRef.label;
+                    return spec.label == badgeImageReference.label;
                   }
                 ) || [];
 
@@ -292,78 +291,82 @@ export async function checkReadmeFile({
 
                   seenBadgeKeys.push(badgeKey);
 
-                  const linkRefDef = readmeAst.children.find(
+                  const linkReferenceDefinition = readmeAst.children.find(
                     (child): child is Definition =>
-                      child.type == 'definition' && child.label == badgeLinkRef.label
+                      child.type == 'definition' &&
+                      child.label == badgeLinkReference.label
                   );
 
-                  const imageRefDef = readmeAst.children.find(
+                  const imageReferenceDefinition = readmeAst.children.find(
                     (child): child is Definition =>
-                      child.type == 'definition' && child.label == badgeImageRef.label
+                      child.type == 'definition' &&
+                      child.label == badgeImageReference.label
                   );
 
-                  if (badgeLinkRef.label != badgeSpec.link.label) {
+                  if (badgeLinkReference.label != badgeSpec.link.label) {
                     reportReadme(
                       'warn',
                       ErrorMessage.MarkdownBadTopmatterLinkRefLabel(
-                        badgeLinkRef.label,
+                        badgeLinkReference.label,
                         badgeSpec.link.label
                       )
                     );
                   }
 
-                  if (badgeImageRef.alt != badgeSpec.alt) {
+                  if (badgeImageReference.alt != badgeSpec.alt) {
                     reportReadme(
                       'warn',
                       ErrorMessage.MarkdownBadTopmatterImageRefAlt(
-                        badgeImageRef.label,
+                        badgeImageReference.label,
                         badgeSpec.alt
                       )
                     );
                   }
 
-                  if (!linkRefDef) {
+                  if (!linkReferenceDefinition) {
                     reportReadme(
                       'warn',
                       ErrorMessage.MarkdownBadTopmatterMissingLinkRefDef(
-                        badgeLinkRef.label
+                        badgeLinkReference.label
                       )
                     );
-                  } else if (!imageRefDef) {
+                  } else if (!imageReferenceDefinition) {
                     reportReadme(
                       'warn',
                       ErrorMessage.MarkdownBadTopmatterMissingImageRefDef(
-                        badgeImageRef.label
+                        badgeImageReference.label
                       )
                     );
                   } else {
-                    if (urlParams) {
-                      if (imageRefDef.title != badgeSpec.title) {
+                    if (urlParameters) {
+                      if (imageReferenceDefinition.title != badgeSpec.title) {
                         reportReadme(
                           'warn',
                           ErrorMessage.MarkdownBadTopmatterImageRefDefTitle(
-                            badgeImageRef.label,
+                            badgeImageReference.label,
                             badgeSpec.title
                           )
                         );
                       }
 
-                      if (imageRefDef.url != badgeSpec.url(urlParams)) {
+                      if (imageReferenceDefinition.url != badgeSpec.url(urlParameters)) {
                         reportReadme(
                           'warn',
                           ErrorMessage.MarkdownBadTopmatterImageRefDefUrl(
-                            badgeImageRef.label,
-                            badgeSpec.url(urlParams)
+                            badgeImageReference.label,
+                            badgeSpec.url(urlParameters)
                           )
                         );
                       }
 
-                      if (linkRefDef.url != badgeSpec.link.url(urlParams)) {
+                      if (
+                        linkReferenceDefinition.url != badgeSpec.link.url(urlParameters)
+                      ) {
                         reportReadme(
                           'warn',
                           ErrorMessage.MarkdownBadTopmatterLinkRefDefUrl(
-                            linkRefDef.label,
-                            badgeSpec.link.url(urlParams)
+                            linkReferenceDefinition.label,
+                            badgeSpec.link.url(urlParameters)
                           )
                         );
                       }
@@ -374,7 +377,7 @@ export async function checkReadmeFile({
                 reportReadme(
                   'warn',
                   ErrorMessage.MarkdownUnknownTopmatterItem(
-                    badgeImageRef.label || badgeLinkRef.label
+                    badgeImageReference.label || badgeLinkReference.label
                   )
                 );
               }
@@ -400,10 +403,10 @@ export async function checkReadmeFile({
       }
     }
 
-    if (urlParams) {
+    if (urlParameters) {
       checkStandardLinks({
         mdAst: readmeAst,
-        urlParams,
+        urlParams: urlParameters,
         standardLinks: markdownReadmeStandardLinks,
         reporter: reportReadme
       });

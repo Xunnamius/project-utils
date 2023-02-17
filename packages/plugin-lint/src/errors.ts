@@ -143,7 +143,7 @@ export const ErrorMessage = {
     }" link reference definition url should be "${url}"`,
   MarkdownDisabledLink: (badLine: string) =>
     `One or more links in the following line may be erroneously disabled: ${chalk.bgBlack(
-      badLine.trim().replace(/(\\\[[^\\]*\]\\)/gi, chalk.red('$1'))
+      badLine.trim().replaceAll(/(\\\[[^\\]*]\\)/gi, chalk.red('$1'))
     )}`,
   MarkdownBlueprintMismatch: (blueprintBasename: string) => {
     return `The file's contents are not up to date. For reference, see the blueprint at https://raw.githubusercontent.com/Xunnamius/projector/plugin-lint@${pkgVersion}/packages/plugin-lint/src/blueprints/${blueprintBasename}`;

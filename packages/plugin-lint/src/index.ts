@@ -3,7 +3,7 @@ import yargs from 'yargs/yargs';
 import { debugFactory } from 'multiverse/debug-extended';
 import { LinterError } from './errors';
 import { defaultMarkdownGlob } from './constants';
-import { ensurePathIsAbsolute } from 'pkgverse/core/src/project-utils';
+import { ensurePathIsAbsolute } from 'pkgverse/core/src/helpers';
 
 import {
   runEslintLinter,
@@ -185,7 +185,7 @@ export function configureProgram(program?: Program): Context {
           results[0].summary
         })\n`;
 
-        process.stdout.write(outputBuffer.replace(/\n\n\n+/g, '\n\n'));
+        process.stdout.write(outputBuffer.replaceAll(/\n\n\n+/g, '\n\n'));
       }
 
       if (results.some(({ success }) => !success)) {

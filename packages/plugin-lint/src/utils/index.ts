@@ -1,4 +1,4 @@
-import { access } from 'fs/promises';
+import { access } from 'node:fs/promises';
 import stripAnsi from 'strip-ansi';
 
 import { ErrorMessage } from 'pkgverse/plugin-lint/src/errors';
@@ -38,8 +38,8 @@ export function summarizeLinterOutput(
   summaryLine: string,
   summaryLineMeta: ReturnType<RegExp['exec']>
 ) {
-  const errors = parseInt(summaryLineMeta?.groups?.errors || '0');
-  const warnings = parseInt(summaryLineMeta?.groups?.warnings || '0');
+  const errors = Number.parseInt(summaryLineMeta?.groups?.errors || '0');
+  const warnings = Number.parseInt(summaryLineMeta?.groups?.warnings || '0');
 
   return !summaryLine
     ? exitCode == 0
