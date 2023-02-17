@@ -176,7 +176,10 @@ export async function resolveTargetWithNodeJs({
   const [resolvedSpecifier, resolvedTarget] =
     result.all?.match(/^(.*?) => (.*?)$/m)?.slice(1) || ([] as undefined[]);
 
-  if (result.all?.includes('ERR_PACKAGE_PATH_NOT_EXPORTED')) {
+  if (
+    result.all?.includes('ERR_PACKAGE_PATH_NOT_EXPORTED') ||
+    result.all?.includes('ERR_PACKAGE_IMPORT_NOT_DEFINED')
+  ) {
     return {
       resolvedTarget: null,
       resolverSubpath: subpath,
