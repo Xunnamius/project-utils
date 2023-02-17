@@ -100,7 +100,7 @@ type PotentialEntryPoint = {
  * Given `target` and `conditions`, this function returns an array of zero or
  * more entry points that are guaranteed to resolve to `target` when the exact
  * `conditions` are present. This is done by reverse-mapping `target` using
- * `exports` from `package.json`.
+ * `exports` from `package.json`. `exports` is assumed to be valid.
  *
  * Entry points are sorted in the order they're encountered with the caveat that
  * exact subpaths always come before subpath patterns. Note that, if `target`
@@ -121,12 +121,12 @@ type PotentialEntryPoint = {
  * In this case, the asterisk can be replaced with literally anything and it
  * would still match. Hence, the replacement is left up to the caller.
  */
-export function resolveEntryPointsFromExportsPath({
+export function resolveEntryPointsFromExportsTarget({
   flattenedExports,
-  target: wantedTarget,
-  conditions: wantedConditions = [],
-  includeUnsafeFallbackTargets: shouldIncludeUnsafeFallbackTargets = false,
-  replaceSubpathAsterisks: shouldReplaceSubpathAsterisks = true
+  target,
+  conditions = [],
+  includeUnsafeFallbackTargets = false,
+  replaceSubpathAsterisks = true
 }: {
   /**
    * The target that will be reverse-mapped to zero or more subpaths from the
@@ -137,6 +137,137 @@ export function resolveEntryPointsFromExportsPath({
   ConditionsOption &
   UnsafeFallbackOption &
   ReplaceSubpathAsterisksOption): string[] {
+  return resolveEntryPointsFromTarget({
+    flattenedMap: flattenedExports,
+    wantedTarget: target,
+    wantedConditions: conditions,
+    shouldIncludeUnsafeFallbackTargets: includeUnsafeFallbackTargets,
+    shouldReplaceSubpathAsterisks: replaceSubpathAsterisks
+  });
+}
+
+/**
+ * Given `entryPoint` and `conditions`, this function returns an array of zero
+ * or more targets that `entryPoint` is guaranteed to resolve to when the exact
+ * `conditions` are present. This is done by mapping `entryPoint` using
+ * `exports` from `package.json`. `exports` is assumed to be valid.
+ */
+export function resolveExportsTargetsFromEntryPoint({
+  flattenedExports,
+  entryPoint,
+  conditions = [],
+  includeUnsafeFallbackTargets = false
+}: {
+  /**
+   * The entry point that will be mapped to zero or more targets from the
+   * `package.json` `exports` object.
+   */
+  entryPoint: string;
+} & FlattenedExportsOption &
+  ConditionsOption &
+  UnsafeFallbackOption): string[] {
+  return resolveTargetsFromEntryPoint({
+    flattenedMap: flattenedExports,
+    wantedSubpath: entryPoint,
+    wantedConditions: conditions,
+    shouldIncludeUnsafeFallbackTargets: includeUnsafeFallbackTargets
+  });
+}
+
+/**
+ * Given `target` and `conditions`, this function returns an array of zero or
+ * more entry points that are guaranteed to resolve to `target` when the exact
+ * `conditions` are present. This is done by reverse-mapping `target` using
+ * `imports` from `package.json`. `imports` is assumed to be valid.
+ *
+ * Entry points are sorted in the order they're encountered with the caveat that
+ * exact subpaths always come before subpath patterns. Note that, if `target`
+ * contains one or more asterisks, the subpaths returned by this function will
+ * also contain an asterisk. The only other time this function returns a subpath
+ * with an asterisk is if the subpath is a "many-to-one" mapping; that is: the
+ * subpath has an asterisk but its target does not. For instance:
+ *
+ * @example
+ * ```json
+ * {
+ *   "imports": {
+ *     "many-to-one-subpath/*": "target-with-no-asterisk.js"
+ *   }
+ * }
+ * ```
+ *
+ * In this case, the asterisk can be replaced with literally anything and it
+ * would still match. Hence, the replacement is left up to the caller.
+ */
+export function resolveEntryPointsFromImportsTarget({
+  flattenedImports,
+  target,
+  conditions,
+  includeUnsafeFallbackTargets,
+  replaceSubpathAsterisks
+}: {
+  /**
+   * The target that will be reverse-mapped to zero or more subpaths from the
+   * `package.json` `imports` object.
+   */
+  target: string | null;
+} & FlattenedImportsOption &
+  ConditionsOption &
+  UnsafeFallbackOption &
+  ReplaceSubpathAsterisksOption): string[] {
+  return resolveEntryPointsFromTarget({
+    flattenedMap: flattenedImports,
+    wantedTarget: target,
+    wantedConditions: conditions,
+    shouldIncludeUnsafeFallbackTargets: includeUnsafeFallbackTargets,
+    shouldReplaceSubpathAsterisks: replaceSubpathAsterisks
+  });
+}
+
+/**
+ * Given `entryPoint` and `conditions`, this function returns an array of zero
+ * or more targets that `entryPoint` is guaranteed to resolve to when the exact
+ * `conditions` are present. This is done by mapping `entryPoint` using
+ * `imports` from `package.json`. `imports` is assumed to be valid.
+ */
+export function resolveImportsTargetsFromEntryPoint({
+  flattenedImports,
+  entryPoint,
+  conditions,
+  includeUnsafeFallbackTargets
+}: {
+  /**
+   * The entry point that will be mapped to zero or more targets from the
+   * `package.json` `imports` object.
+   */
+  entryPoint: string;
+} & FlattenedImportsOption &
+  ConditionsOption &
+  UnsafeFallbackOption): string[] {
+  return resolveTargetsFromEntryPoint({
+    flattenedMap: flattenedImports,
+    wantedSubpath: entryPoint,
+    wantedConditions: conditions,
+    shouldIncludeUnsafeFallbackTargets: includeUnsafeFallbackTargets
+  });
+}
+
+/**
+ * Shared target resolver.
+ */
+function resolveEntryPointsFromTarget({
+  flattenedMap,
+  wantedTarget,
+  wantedConditions = [],
+  shouldIncludeUnsafeFallbackTargets = false,
+  shouldReplaceSubpathAsterisks = true
+}: {
+  flattenedMap: SubpathMappings;
+  wantedTarget: string | null;
+  wantedConditions?: PackageJson.ExportCondition[];
+  shouldIncludeUnsafeFallbackTargets?: boolean;
+  shouldReplaceSubpathAsterisks?: boolean;
+}): string[] {
   let sawNonNullFallback = false;
 
   const nonPatternSubpaths: Pick<SubpathMapping, 'subpath' | 'target'>[] = [];
@@ -155,7 +286,7 @@ export function resolveEntryPointsFromExportsPath({
     isFirstNonNullFallback,
     isLastFallback,
     isDeadCondition
-  } of flattenedExports) {
+  } of flattenedMap) {
     const subpathDoesNotHaveMultipleAsterisks =
       !isAPattern(seenSubpath) ||
       seenSubpath.indexOf('*') == seenSubpath.lastIndexOf('*');
@@ -229,10 +360,10 @@ export function resolveEntryPointsFromExportsPath({
                     isAMatch(entry.subpathActual, seenSubpath)
                   ) {
                     if (patternKeyCompare(entry.subpathActual, seenSubpath) === 1) {
-                      // ? We win
+                      // ? We win.
                       return false;
                     } else {
-                      // ? They win
+                      // ? They win.
                       alreadyHasBetterSubpathPattern = true;
                     }
                   }
@@ -245,7 +376,7 @@ export function resolveEntryPointsFromExportsPath({
               if (!alreadyHasBetterSubpathPattern) {
                 if (shouldReplaceSubpathAsterisks) {
                   potentialEntryPoint.subpathWithAsterisksReplaced =
-                    replaceAsterisksInSubpath(seenSubpath, seenTarget, wantedTarget);
+                    replaceAsterisksInPattern(seenSubpath, seenTarget, wantedTarget);
                 }
 
                 potentialEntryPoints.patterns.push(potentialEntryPoint);
@@ -293,89 +424,131 @@ export function resolveEntryPointsFromExportsPath({
 }
 
 /**
- * Given `entryPoint` and `conditions`, this function returns an array of zero
- * or more targets that `entryPoint` is guaranteed to resolve to when the exact
- * `conditions` are present. This is done by mapping `entryPoint` using
- * `exports` from `package.json`.
+ * Shared entry point resolver.
  */
-export function resolveExportsPathsFromEntryPoint(
-  options: {
-    /**
-     * The entry point that will be mapped into zero or more targets from the
-     * `package.json` `exports` object.
-     */
-    entryPoint: string;
-  } & FlattenedExportsOption &
-    ConditionsOption &
-    UnsafeFallbackOption
-): (string | null)[] {
-  // TODO
-  void options;
-  return ['bad'];
-}
+function resolveTargetsFromEntryPoint({
+  flattenedMap,
+  wantedSubpath,
+  wantedConditions = [],
+  shouldIncludeUnsafeFallbackTargets = false
+}: {
+  flattenedMap: SubpathMappings;
+  wantedSubpath: string;
+  wantedConditions?: PackageJson.ExportCondition[];
+  shouldIncludeUnsafeFallbackTargets?: boolean;
+}): string[] {
+  let lastSeenSubpath: string | undefined = undefined;
+  let bestSubpathMatch: string | undefined = undefined;
 
-/**
- * Given `target` and `conditions`, this function returns an array of zero or
- * more entry points that are guaranteed to resolve to `target` when the exact
- * `conditions` are present. This is done by reverse-mapping `target` using
- * `imports` from `package.json`.
- *
- * Entry points are sorted in the order they're encountered with the caveat that
- * exact subpaths always come before subpath patterns. Note that, if `target`
- * contains one or more asterisks, the subpaths returned by this function will
- * also contain an asterisk. The only other time this function returns a subpath
- * with an asterisk is if the subpath is a "many-to-one" mapping; that is: the
- * subpath has an asterisk but its target does not. For instance:
- *
- * @example
- * ```json
- * {
- *   "imports": {
- *     "many-to-one-subpath/*": "target-with-no-asterisk.js"
- *   }
- * }
- * ```
- *
- * In this case, the asterisk can be replaced with literally anything and it
- * would still match. Hence, the replacement is left up to the caller.
- */
-export function resolveEntryPointsFromImportsPath(
-  options: {
-    /**
-     * The target that will be reverse-mapped to zero or more subpaths from the
-     * `package.json` `imports` object.
-     */
-    target: string | null;
-  } & FlattenedImportsOption &
-    ConditionsOption &
-    UnsafeFallbackOption &
-    ReplaceSubpathAsterisksOption
-): string[] {
-  // TODO
-  void options;
-  return ['bad'];
-}
+  // ? 1: find the best subpath.
+  for (const { subpath: seenSubpath } of flattenedMap) {
+    const isNotLastSeenSubpath = seenSubpath !== lastSeenSubpath;
+    const subpathDoesNotHaveMultipleAsterisks =
+      !isAPattern(seenSubpath) ||
+      seenSubpath.indexOf('*') == seenSubpath.lastIndexOf('*');
 
-/**
- * Given `entryPoint` and `conditions`, this function returns an array of zero
- * or more targets that `entryPoint` is guaranteed to resolve to when the exact
- * `conditions` are present. This is done by mapping `entryPoint` using
- * `imports` from `package.json`.
- */
-export function resolveImportsPathsFromEntryPoints(
-  options: {
-    /**
-     * The entry point that will be mapped into zero or more targets from the
-     * `package.json` `imports` object.
-     */
-    entryPoint: string;
-  } & FlattenedImportsOption &
-    ConditionsOption &
-    UnsafeFallbackOption
-): (string | null)[] {
-  // TODO
-  void options;
-  return ['bad'];
+    if (isNotLastSeenSubpath && subpathDoesNotHaveMultipleAsterisks) {
+      lastSeenSubpath = seenSubpath;
+
+      const isSubpathAnExactMatch = seenSubpath === wantedSubpath;
+
+      if (isSubpathAnExactMatch) {
+        bestSubpathMatch = seenSubpath;
+        break;
+      } else if (
+        isAMatch(seenSubpath, wantedSubpath) &&
+        (bestSubpathMatch === undefined ||
+          patternKeyCompare(bestSubpathMatch, seenSubpath) === 1)
+      ) {
+        bestSubpathMatch = seenSubpath;
+      }
+    }
+  }
+
+  // ? 2: process the best subpath's targets.
+  if (bestSubpathMatch !== undefined) {
+    const bestSubpathTargets: string[] = [];
+    let sawFistConditionsMatch = false;
+    lastSeenSubpath = undefined;
+
+    for (const {
+      subpath: seenSubpath,
+      target: seenTarget,
+      conditions: seenConditions,
+      excludedConditions,
+      isFallback,
+      isFirstNonNullFallback,
+      isLastFallback,
+      isDeadCondition
+    } of flattenedMap) {
+      // ? Ignore all subpaths except the best match.
+      if (seenSubpath === bestSubpathMatch) {
+        lastSeenSubpath = bestSubpathMatch;
+        const isNotFallback = !isFallback;
+
+        const isConditionsAMatch =
+          !isDeadCondition &&
+          isAConditionsMatch(seenConditions, wantedConditions) &&
+          excludedConditions.every((condition) => !wantedConditions.includes(condition));
+
+        if (isConditionsAMatch) {
+          // ? The first non-null fallback might not be the first matching
+          // ? fallback, so let's capture this information while we can.
+          const isFirstMatchingFallback = !isNotFallback && !sawFistConditionsMatch;
+          sawFistConditionsMatch = true;
+
+          // ? Ignore null targets
+          if (seenTarget !== null) {
+            if (isNotFallback) {
+              bestSubpathTargets.push(seenTarget);
+              // ? Since this is not a fallback, stop checking.
+              break;
+            } else if (
+              isFirstMatchingFallback ||
+              isFirstNonNullFallback ||
+              isLastFallback ||
+              shouldIncludeUnsafeFallbackTargets
+            ) {
+              bestSubpathTargets.push(seenTarget);
+
+              // ? Unless we're unsafely returning all fallbacks, stop checking.
+              if (!shouldIncludeUnsafeFallbackTargets) {
+                break;
+              }
+            }
+          }
+
+          // ? Stop checking if fallback target is the last target in its array.
+          if (isLastFallback) {
+            break;
+          }
+        }
+        // ? Only consider the very first match unless including unsafe
+        // ? fallbacks.
+        else if (sawFistConditionsMatch && !shouldIncludeUnsafeFallbackTargets) {
+          break;
+        }
+      }
+      // ? Only consider the best subpath.
+      else if (lastSeenSubpath !== undefined) {
+        break;
+      }
+    }
+
+    // ? 3: replace asterisks in targets and return the results.
+    return bestSubpathTargets.map((target) => {
+      return isAPattern(target)
+        ? replaceAsterisksInPattern(
+            target,
+            // ? bestSubpathMatch literally cannot be undefined at this point.
+            bestSubpathMatch!,
+            wantedSubpath
+          )
+        : target;
+    });
+  }
+
+  return [];
 }
 
 /**
@@ -399,7 +572,10 @@ function patternToRegExp(pattern: string) {
  * asterisk
  * replacement](https://nodejs.org/docs/latest-v19.x/api/packages.html#subpath-patterns).
  * That is: all asterisks in `path` must equate to the exact same text, which is
- * the text matched by the single asterisk in `maybePattern`.
+ * the text matched by the first asterisk in `maybePattern`.
+ *
+ * Useful for checking if one subpath matches another, or if one target matches
+ * another.
  */
 function isAMatch(maybePattern: string, path: string) {
   if (isAPattern(maybePattern)) {
@@ -425,22 +601,22 @@ function isAPattern(maybePattern: string) {
 }
 
 /**
- * Replaces the asterisk ("*") in `subpath` with the parts of `wantedTarget`
- * that map to the asterisks in `seenTarget`.
+ * Replaces all asterisks ("*") in `pattern` with the first match in
+ * `wantedPath` that maps to the first asterisk in `seenPath`.
  */
-function replaceAsterisksInSubpath(
-  subpath: string,
-  seenTarget: string,
-  wantedTarget: string
+function replaceAsterisksInPattern(
+  pattern: string,
+  seenPath: string,
+  wantedPath: string
 ) {
-  const firstMatch = wantedTarget.match(patternToRegExp(seenTarget))?.at(1);
+  const firstMatch = wantedPath.match(patternToRegExp(seenPath))?.at(1);
 
   /* istanbul ignore else */
   if (firstMatch) {
-    return subpath.replace('*', firstMatch);
+    return pattern.replaceAll('*', firstMatch);
   } else {
     throw new TypeError(
-      'sanity check failed: wantedTarget does not map cleanly to seenTarget'
+      'sanity check failed: wantedPath does not map cleanly to seenPath'
     );
   }
 }

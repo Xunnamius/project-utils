@@ -75,9 +75,9 @@ const runTest = async (
     console.log(getEslintAliases()[0][0] == 'universe' && getEslintAliases()[0][1] == './src');
 `;
 
-  await withMockedFixture(async (ctx) => {
-    if (!ctx.testResult) throw new Error('must use node-import-test fixture');
-    await testFixtureFn(ctx);
+  await withMockedFixture(async (context) => {
+    if (!context.testResult) throw new Error('must use node-import-test fixture');
+    await testFixtureFn(context);
   });
 
   delete fixtureOptions.initialFileContents[indexPath];
@@ -96,16 +96,16 @@ beforeAll(async () => {
 
 it('works as an ESM import', async () => {
   expect.hasAssertions();
-  await runTest(true, async (ctx) => {
-    expect(ctx.testResult?.stdout).toBe('true\ntrue\ntrue');
-    expect(ctx.testResult?.code).toBe(0);
+  await runTest(true, async (context) => {
+    expect(context.testResult?.stdout).toBe('true\ntrue\ntrue');
+    expect(context.testResult?.code).toBe(0);
   });
 });
 
 it('works as a CJS require(...)', async () => {
   expect.hasAssertions();
-  await runTest(false, async (ctx) => {
-    expect(ctx.testResult?.stdout).toBe('true\ntrue\ntrue');
-    expect(ctx.testResult?.code).toBe(0);
+  await runTest(false, async (context) => {
+    expect(context.testResult?.stdout).toBe('true\ntrue\ntrue');
+    expect(context.testResult?.code).toBe(0);
   });
 });
