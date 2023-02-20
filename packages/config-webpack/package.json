@@ -73,7 +73,7 @@
   "devDependencies": {
     "@types/debug": "^4.1.7",
     "@types/webpack": "^5.28.0",
-    "@types/webpack-node-externals": "^2.5.3"
+    "@types/webpack-node-externals": "^3.0.0"
   },
   "peerDependencies": {
     "webpack": ">=5"
