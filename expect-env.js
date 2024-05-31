@@ -101,8 +101,8 @@ module.exports = {
           typeof rule.value == 'string'
             ? RegExp(rule.value)
             : rule.value instanceof RegExp
-            ? rule.value
-            : DEFAULT_VALUE_REGEX[0];
+              ? rule.value
+              : DEFAULT_VALUE_REGEX[0];
 
         normalizedRule = {
           operation: 'or',

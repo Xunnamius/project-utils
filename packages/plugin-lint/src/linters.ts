@@ -452,8 +452,8 @@ export async function runProjectLinter({
             condition: isCheckingMonorepoRoot
               ? 'monorepo'
               : isCheckingMonorepoSubRoot
-              ? 'subroot'
-              : 'polyrepo'
+                ? 'subroot'
+                : 'polyrepo'
           })
         );
 

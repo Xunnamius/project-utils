@@ -3667,8 +3667,8 @@ describe('::runProjectLinter', () => {
           pathString.endsWith('/CODE_OF_CONDUCT.md')
             ? blueprints.code_of_conduct + 'additional content'
             : pathString.endsWith('.md') || pathString.endsWith('.yml')
-            ? 'fake content'
-            : readFileActual(path, options)
+              ? 'fake content'
+              : readFileActual(path, options)
         );
       });
 
@@ -3791,10 +3791,10 @@ describe('::runProjectLinter', () => {
             pathString.endsWith('/SECURITY.md')
               ? blueprints.security
               : pathString.endsWith('/CONTRIBUTING.md')
-              ? blueprints.contributing
-              : pathString.endsWith('/SUPPORT.md')
-              ? blueprints.support
-              : readFileActual(path, options)
+                ? blueprints.contributing
+                : pathString.endsWith('/SUPPORT.md')
+                  ? blueprints.support
+                  : readFileActual(path, options)
           );
         });
 
@@ -3805,10 +3805,10 @@ describe('::runProjectLinter', () => {
             path.endsWith('/SECURITY.md')
               ? mockMdastSecurity
               : path.endsWith('/CONTRIBUTING.md')
-              ? mockMdastContributing
-              : path.endsWith('/SUPPORT.md')
-              ? mockMdastSupport
-              : getAstActual(path)
+                ? mockMdastContributing
+                : path.endsWith('/SUPPORT.md')
+                  ? mockMdastSupport
+                  : getAstActual(path)
           );
         });
       });

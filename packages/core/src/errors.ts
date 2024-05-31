@@ -19,7 +19,10 @@ export class PathIsNotAbsoluteError extends ContextError {
    * via `super`.
    */
   constructor(path: string, message: string);
-  constructor(public readonly path: string, message: string | undefined = undefined) {
+  constructor(
+    public readonly path: string,
+    message: string | undefined = undefined
+  ) {
     super(message ?? `"${path}" is not an absolute path`);
   }
 }
@@ -79,7 +82,10 @@ export class PackageJsonNotFoundError extends ContextError {
    * via `super`.
    */
   constructor(reason: unknown, message: string);
-  constructor(public readonly reason: unknown, message: string | undefined = undefined) {
+  constructor(
+    public readonly reason: unknown,
+    message: string | undefined = undefined
+  ) {
     super(message ?? `unable to load package.json: ${reason}`);
   }
 }

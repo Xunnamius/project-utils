@@ -8,7 +8,10 @@ import { version as pkgVersion } from 'pkgverse/plugin-lint/package.json';
  * Represents an exception during the CLI runtime.
  */
 export class CliError extends Error {
-  constructor(public readonly exitCode = 1, message?: string) {
+  constructor(
+    public readonly exitCode = 1,
+    message?: string
+  ) {
     super(message ?? 'an error occurred while executing this program');
   }
 }

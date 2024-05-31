@@ -46,10 +46,10 @@ export function summarizeLinterOutput(
       ? 'no issues'
       : 'unknown issue'
     : errors + warnings
-    ? `${errors} error${errors != 1 ? 's' : ''}, ${warnings} warning${
-        warnings != 1 ? 's' : ''
-      }`
-    : '1 error, 0 warnings';
+      ? `${errors} error${errors != 1 ? 's' : ''}, ${warnings} warning${
+          warnings != 1 ? 's' : ''
+        }`
+      : '1 error, 0 warnings';
 }
 
 /**

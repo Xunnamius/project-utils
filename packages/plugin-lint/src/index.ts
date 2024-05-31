@@ -107,8 +107,8 @@ export function configureProgram(program?: Program): Context {
         finalArgv.prePushOnly
           ? 'pre-push'
           : finalArgv.linkProtectionOnly
-          ? 'link-protection'
-          : 'complete';
+            ? 'link-protection'
+            : 'complete';
 
       debug('finalArgv.silent: %O', silent);
       debug('finalArgv.tsconfig: %O', tsconfig);

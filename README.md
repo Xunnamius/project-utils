@@ -53,7 +53,6 @@ serverless or JAMstack app, bundling a CLI tool, etc.
   - [GitHub Action](#github-action)
   - [Semantic-Release Plugin](#semantic-release-plugin)
   - [Library](#library)
-- [Terminology](#terminology)
 - [Usage](#usage)
   - [Getting Started](#getting-started)
   - [CLI Command Glossary](#cli-command-glossary)
@@ -63,6 +62,7 @@ serverless or JAMstack app, bundling a CLI tool, etc.
   - [Life Cycle Scripts (Plugins)](#life-cycle-scripts-plugins)
   - [Badge Swag](#badge-swag)
 - [Appendix](#appendix)
+- [Terminology](#terminology)
   - [Inspiration](#inspiration)
 - [Contributing and Support](#contributing-and-support)
   - [Contributors](#contributors)
@@ -1006,7 +1006,6 @@ key][x-repo-all-contributors-emojis]):
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 <!-- remark-ignore-end -->
 

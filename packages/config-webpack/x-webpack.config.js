@@ -212,10 +212,10 @@ const selectAndCustomizeConfigs = (selectedConfigs) => {
         typeof configModifier == 'function'
           ? (configModifier(targetConfig), targetConfig)
           : typeof configModifier == 'object' && configModifier
-          ? configModifier
-          : !configModifier
-          ? toss(new Error(`invalid webpack configuration value: ${configModifier}`))
-          : targetConfig
+            ? configModifier
+            : !configModifier
+              ? toss(new Error(`invalid webpack configuration value: ${configModifier}`))
+              : targetConfig
       );
     }
   });
