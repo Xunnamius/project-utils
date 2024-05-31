@@ -75,8 +75,7 @@ module.exports = {
           [
             '@semantic-release/exec',
             {
-              prepareCmd:
-                'remark -o --use reference-links --use gfm --use frontmatter CHANGELOG.md'
+              prepareCmd: 'NODE_ENV=format npx remark --output --frail CHANGELOG.md'
             }
           ],
           [
