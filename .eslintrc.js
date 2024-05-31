@@ -59,7 +59,7 @@ const rules = {
     {
       argsIgnorePattern: '^_+',
       varsIgnorePattern: '^_+',
-      caughtErrorsIgnorePattern: '^ignored?\\d*$',
+      caughtErrorsIgnorePattern: String.raw`^ignored?\d*$`,
       caughtErrors: 'all'
     }
   ],
@@ -118,7 +118,9 @@ const rules = {
   // ? Lol, no
   'unicorn/explicit-length-check': 'off',
   // ? I don't think so
-  'unicorn/no-negated-condition': 'off'
+  'unicorn/no-negated-condition': 'off',
+  // ? No.
+  'unicorn/import-style': 'off'
 };
 
 module.exports = {
@@ -160,7 +162,8 @@ module.exports = {
         'jest/prefer-mock-promise-shorthand': 'off',
         'jest/no-conditional-in-test': 'off',
         'jest/no-conditional-expect': 'off',
-        'jest/prefer-each': 'off'
+        'jest/prefer-each': 'off',
+        'jest/prefer-importing-jest-globals': 'off'
       }
     }
   ],

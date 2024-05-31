@@ -54,7 +54,6 @@ function generateConfigObject() {
     },
     plugins: [
       '@babel/plugin-proposal-export-default-from',
-      '@babel/plugin-syntax-import-assertions',
       [
         'module-resolver',
         {
@@ -63,12 +62,12 @@ function generateConfigObject() {
           // ! If changed, also update these aliases in tsconfig.json,
           // ! webpack.config.js, next.config.ts, eslintrc.js, and jest.config.js
           alias: {
-            '^universe/(.*)$': './src/\\1',
-            '^multiverse/(.*)$': './lib/\\1',
-            '^testverse/(.*)$': './test/\\1',
+            '^universe/(.*)$': String.raw`./src/\1`,
+            '^multiverse/(.*)$': String.raw`./lib/\1`,
+            '^testverse/(.*)$': String.raw`./test/\1`,
             // ? pkgverse is handled by babel-plugin-transform-rewrite-imports
-            '^externals/(.*)$': './external-scripts/\\1',
-            '^types/(.*)$': './types/\\1',
+            '^externals/(.*)$': String.raw`./external-scripts/\1`,
+            '^types/(.*)$': String.raw`./types/\1`,
             '^package$': `./package.json`
           }
         }
@@ -197,7 +196,7 @@ function generateProductionConfigObject(moduleSystem, mutateConfigFn) {
           // ? https://babeljs.io/docs/en/babel-plugin-transform-runtime#version
           // TODO: use the @babel/runtime-corejs3 version from package.json and
           // TODO: error if dep is missing
-          version: '^7.20.13'
+          version: '^7.24.6'
         }
       ],
       [
