@@ -1,7 +1,6 @@
 import escapeRegex from 'escape-string-regexp';
 
 import type { SubpathMapping, SubpathMappings } from 'pkgverse/core/src/project-utils';
-import type { PackageJson } from 'type-fest';
 
 export type ConditionsOption = {
   /**
@@ -28,7 +27,7 @@ export type ConditionsOption = {
    *
    * @see https://nodejs.org/api/packages.html#community-conditions-definitions
    */
-  conditions?: PackageJson.ExportCondition[];
+  conditions?: string[];
 };
 
 export type FlattenedImportsOption = {
@@ -264,7 +263,7 @@ function resolveEntryPointsFromTarget({
 }: {
   flattenedMap: SubpathMappings;
   wantedTarget: string | null;
-  wantedConditions?: PackageJson.ExportCondition[];
+  wantedConditions?: string[];
   shouldIncludeUnsafeFallbackTargets?: boolean;
   shouldReplaceSubpathAsterisks?: boolean;
 }): string[] {
@@ -434,7 +433,7 @@ function resolveTargetsFromEntryPoint({
 }: {
   flattenedMap: SubpathMappings;
   wantedSubpath: string;
-  wantedConditions?: PackageJson.ExportCondition[];
+  wantedConditions?: string[];
   shouldIncludeUnsafeFallbackTargets?: boolean;
 }): string[] {
   let lastSeenSubpath: string | undefined = undefined;
@@ -523,13 +522,13 @@ function resolveTargetsFromEntryPoint({
             break;
           }
         }
-        // ? Only consider the very first match unless including unsafe
-        // ? fallbacks.
+        // ? Stop checking and only consider the very first match unless we're
+        // ? including unsafe fallbacks.
         else if (sawFistConditionsMatch && !shouldIncludeUnsafeFallbackTargets) {
           break;
         }
       }
-      // ? Only consider the best subpath.
+      // ? Stop checking and only consider the best subpath.
       else if (lastSeenSubpath !== undefined) {
         break;
       }
@@ -601,6 +600,19 @@ function isAPattern(maybePattern: string) {
 }
 
 /**
+ * Returns `true` if `seenConditions` array matches `wantedConditions` array, or
+ * if `seenConditions` contains the `"default"` condition.
+ */
+function isAConditionsMatch(
+  seenConditions: SubpathMapping['conditions'],
+  wantedConditions: NonNullable<ConditionsOption['conditions']>
+) {
+  return seenConditions.every(
+    (condition) => condition == 'default' || wantedConditions.includes(condition)
+  );
+}
+
+/**
  * Replaces all asterisks ("*") in `pattern` with the first match in
  * `wantedPath` that maps to the first asterisk in `seenPath`.
  */
@@ -619,19 +631,6 @@ function replaceAsterisksInPattern(
       'sanity check failed: wantedPath does not map cleanly to seenPath'
     );
   }
-}
-
-/**
- * Returns `true` if `seenConditions` array matches `wantedConditions` array, or
- * if `seenConditions` contains the `"default"` condition.
- */
-function isAConditionsMatch(
-  seenConditions: SubpathMapping['conditions'],
-  wantedConditions: NonNullable<ConditionsOption['conditions']>
-) {
-  return seenConditions.every(
-    (condition) => condition == 'default' || wantedConditions.includes(condition)
-  );
 }
 
 /**

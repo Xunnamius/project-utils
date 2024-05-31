@@ -1,5 +1,5 @@
-import { relative as relativePath } from 'node:path';
 import isValidPath from 'is-valid-path';
+import { relative as toRelativePath } from 'node:path';
 
 import { ensurePathIsAbsolute } from 'pkgverse/core/src/helpers';
 
@@ -9,7 +9,7 @@ import { ensurePathIsAbsolute } from 'pkgverse/core/src/helpers';
  */
 const matchers = {
   key: /^(?<prefix>\^?)(?<alias>\w(?:\w|-\w)*)(?<suffix>(?:(?:\/\(\.\*\))?\$)?)$/i,
-  value: /^(?<prefix>\.|<rootDir>)(?<path>(\/[^/]+)*?)(?<suffix>(\/\$1)?)$/i
+  value: /^(?<prefix>\.|<rootdir>)(?<path>(\/[^/]+)*?)(?<suffix>(\/\$1)?)$/i
 };
 
 /**
@@ -153,26 +153,28 @@ export function getWebpackAliases({
    */
   rootDir?: string;
 } = {}) {
-  return Object.entries(getRawAliases()).reduce<Record<string, string>>((o, mapping) => {
-    const [aliasMap, pathMap] = getProcessedAliasMapping({ mapping });
+  return Object.fromEntries(
+    Object.entries(getRawAliases()).map((mapping) => {
+      const [aliasMap, pathMap] = getProcessedAliasMapping({ mapping });
 
-    if (pathMap.prefix == '<rootDir>') {
-      if (!rootDir) {
-        throw new Error(
-          'WebpackAliasError: must provide a rootDir argument when using <rootDir> in alias paths'
-        );
-      } else {
-        ensurePathIsAbsolute({ path: rootDir });
+      if (pathMap.prefix == '<rootDir>') {
+        if (!rootDir) {
+          throw new Error(
+            'WebpackAliasError: must provide a rootDir argument when using <rootDir> in alias paths'
+          );
+        } else {
+          ensurePathIsAbsolute({ path: rootDir });
+        }
       }
-    }
 
-    return {
-      ...o,
-      [`${aliasMap.alias}${aliasMap.suffix == '$' ? '$' : ''}`]: `${
-        pathMap.prefix == '.' ? process.cwd() : rootDir
-      }${pathMap.path || ''}${pathMap.suffix || !pathMap.path ? '/' : ''}`
-    };
-  }, {});
+      return [
+        `${aliasMap.alias}${aliasMap.suffix == '$' ? '$' : ''}`,
+        `${pathMap.prefix == '.' ? process.cwd() : rootDir}${pathMap.path || ''}${
+          pathMap.suffix || !pathMap.path ? '/' : ''
+        }`
+      ];
+    })
+  );
 }
 
 /**
@@ -190,27 +192,26 @@ export function getJestAliases({
    */
   rootDir?: string;
 } = {}) {
-  return Object.entries(getRawAliases()).reduce<Record<string, string>>((o, mapping) => {
-    const [, pathMap] = getProcessedAliasMapping({ mapping });
-    let prefix = '<rootDir>';
+  return Object.fromEntries(
+    Object.entries(getRawAliases()).map((mapping) => {
+      const [, pathMap] = getProcessedAliasMapping({ mapping });
+      let prefix = '<rootDir>';
 
-    if (pathMap.prefix == '.') {
-      if (!rootDir) {
-        throw new Error(
-          'JestAliasError: must provide a rootDir argument when using relative alias paths'
-        );
-      } else {
-        ensurePathIsAbsolute({ path: rootDir });
-        const relPath = relativePath(rootDir, process.cwd());
-        prefix += relPath ? `/${relPath}` : '';
+      if (pathMap.prefix == '.') {
+        if (!rootDir) {
+          throw new Error(
+            'JestAliasError: must provide a rootDir argument when using relative alias paths'
+          );
+        } else {
+          ensurePathIsAbsolute({ path: rootDir });
+          const relativePath = toRelativePath(rootDir, process.cwd());
+          prefix += relativePath ? `/${relativePath}` : '';
+        }
       }
-    }
 
-    return {
-      ...o,
-      [mapping[0]]: `${prefix}${pathMap.path || ''}${pathMap.suffix || ''}`
-    };
-  }, {});
+      return [mapping[0], `${prefix}${pathMap.path || ''}${pathMap.suffix || ''}`];
+    })
+  );
 }
 
 /**
@@ -218,19 +219,17 @@ export function getJestAliases({
  * external TypeScript configurations at `compilerOptions.paths`.
  */
 export function getTypeScriptAliases() {
-  return Object.entries(getRawAliases()).reduce<Record<string, string[]>>(
-    (o, mapping) => {
+  return Object.fromEntries(
+    Object.entries(getRawAliases()).map((mapping) => {
       const [aliasMap, pathMap] = getProcessedAliasMapping({
         mapping,
         issueTypescriptWarning: true
       });
-      return {
-        ...o,
-        [`${aliasMap.alias}${aliasMap.suffix == '/(.*)$' ? '/*' : ''}`]: [
-          `${pathMap.path?.slice(1) || '.'}${pathMap.suffix ? '/*' : ''}`
-        ]
-      };
-    },
-    {}
+
+      return [
+        `${aliasMap.alias}${aliasMap.suffix == '/(.*)$' ? '/*' : ''}`,
+        [`${pathMap.path?.slice(1) || '.'}${pathMap.suffix ? '/*' : ''}`]
+      ];
+    })
   );
 }

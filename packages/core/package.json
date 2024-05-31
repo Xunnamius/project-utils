@@ -21,27 +21,22 @@
   "exports": {
     "./alias": {
       "types": "./dist/src/alias-utils.d.ts",
-      "node": "./dist/src/alias-utils.js",
       "default": "./dist/src/alias-utils.js"
     },
     "./error": {
       "types": "./dist/src/errors.d.ts",
-      "node": "./dist/src/errors.js",
       "default": "./dist/src/errors.js"
     },
     "./project": {
       "types": "./dist/src/project-utils.d.ts",
-      "node": "./dist/src/project-utils.js",
       "default": "./dist/src/project-utils.js"
     },
     "./project/resolve": {
       "types": "./dist/src/resolvers.d.ts",
-      "node": "./dist/src/resolvers.js",
       "default": "./dist/src/resolvers.js"
     },
     "./util": {
       "types": "./dist/src/helpers.d.ts",
-      "node": "./dist/src/helpers.js",
       "default": "./dist/src/helpers.js"
     },
     "./package": "./package.json",
@@ -49,8 +44,23 @@
   },
   "typesVersions": {
     "*": {
-      "*": [
-        "dist/src/*"
+      "alias": [
+        "dist/src/alias-utils.d.ts"
+      ],
+      "error": [
+        "dist/src/errors.d.ts"
+      ],
+      "project": [
+        "dist/src/project-utils.d.ts"
+      ],
+      "project/resolve": [
+        "dist/src/resolvers.d.ts"
+      ],
+      "util": [
+        "dist/src/helpers.d.ts"
+      ],
+      "package": [
+        "package.json"
       ]
     }
   },
@@ -71,7 +81,7 @@
   "scripts": {
     "build": "npm run build:dist --",
     "build:changelog": "conventional-changelog --outfile CHANGELOG.md --config ../../conventional.config.js --release-count 0 --skip-unstable && (if [ \"$CHANGELOG_SKIP_TITLE\" != 'true' ]; then { node -e 'console.log(require(\"../../conventional.config.js\").changelogTitle)'; cat CHANGELOG.md; } > CHANGELOG.md.ignore && mv CHANGELOG.md.ignore CHANGELOG.md; fi) && NODE_ENV=format remark --output --frail CHANGELOG.md && prettier --write CHANGELOG.md",
-    "build:dist": "echo '> Generating types...' && NODE_ENV=production tsc --project tsconfig.types.json --incremental false && tsconfig-replace-paths --project tsconfig.types.json && echo '> Building distributables...' && NODE_ENV=production-cjs babel src --extensions .ts --out-dir dist/src --out-file-extension .js --root-mode upward && NODE_ENV=production-cjs babel ../../lib --extensions .ts --ignore '../../lib/*/*.test.ts' --out-dir dist/lib --out-file-extension .js --root-mode upward && echo '> Organizing types...' && cp --recursive --link --force --target-directory=dist dist/$(realpath --relative-base=../.. .)/* && rm --recursive --force dist/$(realpath --relative-base=../.. ..) && echo '> Refactoring types...' && NODE_ENV=production-types npx babel dist --extensions .ts --only '**/*.d.ts' --out-dir dist --keep-file-extension --root-mode upward && if [ -r dist/src/cli.js ]; then CLI_FILE=./dist/src/cli.js; fi && if [ -r dist/src/cli.mjs ]; then CLI_FILE=./dist/src/cli.mjs; fi && if [ -n \"$CLI_FILE\" ]; then echo \"> Prepending shebang to $CLI_FILE...\" && { echo '#!/usr/bin/env node\n'; cat $CLI_FILE; } > $CLI_FILE.ignore && mv $CLI_FILE.ignore $CLI_FILE && chmod +x $CLI_FILE; fi && echo '> Build succeeded!'",
+    "build:dist": "echo '> Generating types...' && NODE_ENV=production tsc --project tsconfig.types.json --incremental false && tsconfig-replace-paths --project tsconfig.types.json && echo '> Building distributables...' && NODE_ENV=production-cjs babel src --extensions .ts --out-dir dist/src --out-file-extension .js --root-mode upward && NODE_ENV=production-cjs babel ../../lib --extensions .ts --ignore '../../lib/*/*.test.ts' --out-dir dist/lib --out-file-extension .js --root-mode upward && echo '> Organizing types...' && cp --recursive --link --force --target-directory=dist dist/types/$(realpath --relative-base=../.. .)/* dist/types/types && rm --recursive --force dist/types/$(realpath --relative-base=../.. ..) dist/types/types && echo '> Refactoring types...' && NODE_ENV=production-types npx babel dist --extensions .ts --only '**/*.d.ts' --out-dir dist --keep-file-extension --root-mode upward && if [ -r dist/src/cli.js ]; then CLI_FILE=./dist/src/cli.js; fi && if [ -r dist/src/cli.mjs ]; then CLI_FILE=./dist/src/cli.mjs; fi && if [ -n \"$CLI_FILE\" ]; then echo \"> Prepending shebang to $CLI_FILE...\" && { echo '#!/usr/bin/env node\n'; cat $CLI_FILE; } > $CLI_FILE.ignore && mv $CLI_FILE.ignore $CLI_FILE && chmod +x $CLI_FILE; fi && echo '> Build succeeded!'",
     "build:docs": "if [ -r ./next.config.js ]; then typedoc --plugin typedoc-plugin-markdown --cleanOutputDir --tsconfig tsconfig.docs.json --out docs --readme none lib src test types external-scripts --exclude '**/*.test.*' --exclude external-scripts/bin; else ENTRY=`node -e 'const entry = require(\"./package.json\").project?.documentation?.entry; if(!entry) throw new Error(\"\\\"project.documentation.entry\\\" field is not defined in package.json\"); console.log(entry)'` && echo 'Entry file:' \"$ENTRY\" && typedoc --plugin typedoc-plugin-markdown --cleanOutputDir --tsconfig tsconfig.docs.json --out docs --readme none $(echo $ENTRY); fi",
     "clean": "git ls-files --exclude-standard --ignored --others --directory | grep -vE '^((\\.(env|vscode|husky))|next-env\\.d\\.ts|node_modules)($|\\/)' | xargs -p rm -rf",
     "clean:force": "git ls-files --exclude-standard --ignored --others --directory | grep -vE '^((\\.(env|vscode|husky))|next-env\\.d\\.ts|node_modules)($|\\/)' | xargs rm -rf",
@@ -83,17 +93,17 @@
     "test:unit": "echo 'IMPLEMENT ME'"
   },
   "dependencies": {
-    "@babel/runtime-corejs3": "^7.20.13",
-    "core-js": "^3.28.0",
+    "@babel/runtime-corejs3": "^7.24.6",
+    "core-js": "^3.37.1",
     "find-up": "^5.0.0",
-    "glob": "^8.1.0",
+    "glob": "^10.4.1",
     "is-valid-path": "^0.1.1",
-    "named-app-errors": "^4.0.0",
-    "resolve.exports": "^2.0.0",
-    "type-fest": "^3.5.7"
+    "named-app-errors": "^4.0.2",
+    "resolve.exports": "^2.0.2",
+    "type-fest": "^4.18.3"
   },
   "engines": {
-    "node": "^14.21.0 || ^16.19.0 || ^18.12.0 || >=19.3.0"
+    "node": "^18.19.0 || ^20.10.0 || ^21.3.0 || >=22.2.0"
   },
   "publishConfig": {
     "access": "public"

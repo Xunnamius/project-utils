@@ -1,7 +1,10 @@
+import assert from 'node:assert';
 import { readFileSync as readFile } from 'node:fs';
-import { dirname, basename } from 'node:path';
-import { sync as globSync } from 'glob';
+import { basename, dirname } from 'node:path';
+import { isNativeError } from 'node:util/types';
+
 import { sync as findUp } from 'find-up';
+import { globSync } from 'glob';
 
 import { ensurePathIsAbsolute } from 'pkgverse/core/src/helpers';
 
@@ -14,9 +17,8 @@ import {
   PackageJsonNotFoundError
 } from 'pkgverse/core/src/errors';
 
-import type { PackageJson } from 'type-fest';
+import type { GlobOptions } from 'glob';
 import type { PackageJsonWithConfig } from 'types/global';
-import type { IOptions as GlobOptions } from 'glob';
 
 const _packageJsonReadCache = new Map<string, PackageJsonWithConfig>();
 
@@ -145,7 +147,7 @@ export type SubpathMapping = {
    *
    * If `isSugared` is `true`, `subpath` is
    * [sugared](https://nodejs.org/api/packages.html#exports-sugar) and thus does
-   * not exist as property in the actual `package.json` file. `subpath`, if it
+   * not exist as a property in the actual `package.json` file. `subpath`, if it
    * contains at most one asterisk ("*"), becomes a [subpath
    * pattern](https://nodejs.org/docs/latest-v19.x/api/packages.html#subpath-patterns).
    */
@@ -175,7 +177,7 @@ export type SubpathMapping = {
    * Note that the "default" condition, while present in `conditions`, may not
    * actually exist in the actual `package.json` file.
    */
-  conditions: PackageJson.ExportCondition[];
+  conditions: string[];
   /**
    * When the subpath mapping is a "default" mapping that occurs after one or
    * more sibling conditions, it cannot be selected if one of those siblings is
@@ -197,7 +199,7 @@ export type SubpathMapping = {
    * }
    * ```
    */
-  excludedConditions: PackageJson.ExportCondition[];
+  excludedConditions: string[];
   /**
    * If `true`, the value of `subpath` was inferred but no corresponding
    * property exists in the actual `package.json` file.
@@ -376,18 +378,20 @@ export function getWorkspacePackages(options: {
   workspaces = Array.isArray(workspaces)
     ? workspaces
     : Array.isArray(workspaces?.packages)
-    ? workspaces?.packages
-    : undefined;
+      ? workspaces?.packages
+      : undefined;
 
   if (!workspaces) {
     throw new NotAMonorepoError();
   }
 
+  assert(typeof globOptions.ignore === 'string' || Array.isArray(globOptions.ignore));
+
   globOptions = {
     ...globOptions,
     cwd: projectRoot,
     absolute: true,
-    ignore: [...(globOptions.ignore || []), '**/node_modules/**']
+    ignore: [...[globOptions.ignore].flat(), '**/node_modules/**']
   };
 
   const packages = new Map() as NonNullable<RootPackage['packages']>;
@@ -414,6 +418,8 @@ export function getWorkspacePackages(options: {
     pattern = pattern.endsWith('/') ? pattern : `${pattern}/`;
 
     for (const root of globSync(pattern, globOptions)) {
+      assert(typeof root === 'string');
+
       try {
         const workspacePackage = {
           id: packageRootToId({ root }),
@@ -456,7 +462,7 @@ export function getWorkspacePackages(options: {
           }
         }
       } catch (error) {
-        if (error instanceof PackageJsonNotFoundError) {
+        if (isNativeError(error) && error.name === PackageJsonNotFoundError.name) {
           packages.broken.push(root);
         } else {
           throw error;

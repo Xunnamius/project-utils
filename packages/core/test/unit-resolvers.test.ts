@@ -1,9 +1,9 @@
 /* eslint-disable jest/require-hook */
 /* eslint-disable unicorn/consistent-destructuring */
+import castArray from 'lodash.castarray';
+import { TrialError } from 'named-app-errors';
 import assert from 'node:assert';
 import { toss } from 'toss-expression';
-import { TrialError } from 'named-app-errors';
-import castArray from 'lodash.castarray';
 
 import * as resolver from 'pkgverse/core/src/resolvers';
 
