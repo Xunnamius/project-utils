@@ -4,7 +4,7 @@ const debug = require('debug')(
   `${require(`${process.cwd()}/package.json`).name}:semantic-release-config`
 );
 
-// TODO: turn this into @projector-js/config-semantic-release-atam
+// TODO: replace this with @xunnamius/semantic-release-projector-config
 
 const updateChangelog =
   process.env.UPDATE_CHANGELOG === 'true' ||
@@ -68,7 +68,7 @@ module.exports = {
           [
             '@semantic-release/exec',
             {
-              prepareCmd: 'CHANGELOG_SKIP_TITLE=true npm run build-changelog'
+              prepareCmd: 'CHANGELOG_SKIP_TITLE=true npm run build:changelog'
             }
           ],
           ['@semantic-release/changelog', { changelogTitle }],
