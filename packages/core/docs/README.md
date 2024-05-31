@@ -1,11 +1,13 @@
-## Table of contents
+**@projector-js/core** • **Docs**
 
-### Modules
+***
 
-- [errors][1]
-- [import-aliases][2]
-- [project-utils][3]
+# @projector-js/core
 
-[1]: modules/errors.md
-[2]: modules/import_aliases.md
-[3]: modules/project_utils.md
+## Modules
+
+- [alias-utils](alias-utils/README.md)
+- [errors](errors/README.md)
+- [helpers](helpers/README.md)
+- [project-utils](project-utils/README.md)
+- [resolvers](resolvers/README.md)
