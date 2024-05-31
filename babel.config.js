@@ -208,7 +208,12 @@ function generateProductionConfigObject(moduleSystem, mutateConfigFn) {
             // ? Ensure built distributables can locate the package.json file
             '^../package.json$': '../../package.json',
             // ? Replace pkgverse imports with their runtime equivalents
-            '^pkgverse/([^/]+)/src/index$': '$1'
+            // TODO: use @projector-js/core to reverse-map this automated-ly
+            '^pkgverse/core/src/alias-utils$': '@projector-js/core/alias',
+            '^pkgverse/core/src/errors$': '@projector-js/core/error',
+            '^pkgverse/core/src/project-utils$': '@projector-js/core/project',
+            '^pkgverse/core/src/resolvers$': '@projector-js/core/project/resolve',
+            '^pkgverse/core/src/helpers$': '@projector-js/core/util'
           }
         }
       ]
