@@ -36,48 +36,48 @@
     // ! directly, consider regenerating aliases across the entire project with:
     // ! `npx symbiote project renovate --regenerate-assets --assets-preset ...`
     "paths": {
-      "multiverse+alias:*": ["packages/alias/src/*"],
-      "multiverse+analyze:*": ["packages/analyze/src/*"],
       "multiverse+bidirectional-resolve:*": [
         "packages/bidirectional-resolve/src/*"
       ],
+      "multiverse+common:*": ["packages/common/src/*"],
       "multiverse+fs:*": ["packages/fs/src/*"],
+      "multiverse+graph:*": ["packages/graph/src/*"],
       "multiverse+types:*": ["packages/types/src/*"],
-      "multiverse+alias": ["packages/alias/src/index.ts"],
-      "multiverse+analyze": ["packages/analyze/src/index.ts"],
       "multiverse+bidirectional-resolve": [
         "packages/bidirectional-resolve/src/index.ts"
       ],
+      "multiverse+common": ["packages/common/src/index.ts"],
       "multiverse+fs": ["packages/fs/src/index.ts"],
+      "multiverse+graph": ["packages/graph/src/index.ts"],
       "multiverse+types": ["packages/types/src/index.ts"],
-      "rootverse+alias:*": ["packages/alias/*"],
-      "rootverse+analyze:*": ["packages/analyze/*"],
       "rootverse+bidirectional-resolve:*": ["packages/bidirectional-resolve/*"],
+      "rootverse+common:*": ["packages/common/*"],
       "rootverse+fs:*": ["packages/fs/*"],
+      "rootverse+graph:*": ["packages/graph/*"],
       "rootverse+types:*": ["packages/types/*"],
       "rootverse:*": ["*"],
-      "universe+alias:*": ["packages/alias/src/*"],
-      "universe+analyze:*": ["packages/analyze/src/*"],
       "universe+bidirectional-resolve:*": [
         "packages/bidirectional-resolve/src/*"
       ],
+      "universe+common:*": ["packages/common/src/*"],
       "universe+fs:*": ["packages/fs/src/*"],
+      "universe+graph:*": ["packages/graph/src/*"],
       "universe+types:*": ["packages/types/src/*"],
-      "universe+alias": ["packages/alias/src/index.ts"],
-      "universe+analyze": ["packages/analyze/src/index.ts"],
       "universe+bidirectional-resolve": [
         "packages/bidirectional-resolve/src/index.ts"
       ],
+      "universe+common": ["packages/common/src/index.ts"],
       "universe+fs": ["packages/fs/src/index.ts"],
+      "universe+graph": ["packages/graph/src/index.ts"],
       "universe+types": ["packages/types/src/index.ts"],
       "universe:*": ["src/*"],
       "universe": ["src/index.ts"],
-      "testverse+alias:*": ["packages/alias/test/*"],
-      "testverse+analyze:*": ["packages/analyze/test/*"],
       "testverse+bidirectional-resolve:*": [
         "packages/bidirectional-resolve/test/*"
       ],
+      "testverse+common:*": ["packages/common/test/*"],
       "testverse+fs:*": ["packages/fs/test/*"],
+      "testverse+graph:*": ["packages/graph/test/*"],
       "testverse+types:*": ["packages/types/test/*"],
       "testverse:*": ["test/*"],
       "typeverse:*": ["types/*"]

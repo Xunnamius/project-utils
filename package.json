@@ -57,7 +57,7 @@
   "scripts": {
     "build": "npm run build:dist --",
     "build:changelog": "symbiote build changelog --env NODE_NO_WARNINGS=1",
-    "build:dist": "symbiote build distributables --env NODE_NO_WARNINGS=1 --not-multiversal",
+    "build:dist": "symbiote build distributables --env NODE_NO_WARNINGS=1 --multiversal",
     "build:docs": "symbiote build docs --env NODE_NO_WARNINGS=1",
     "build:topological": "symbiote project topology --run build --env NODE_NO_WARNINGS=1",
     "clean": "symbiote clean --env NODE_NO_WARNINGS=1",
@@ -84,7 +84,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@-xun/symbiote": "^2.17.1",
+    "@-xun/symbiote": "^2.17.3",
     "resolve.exports": "^2.0.3"
   },
   "engines": {

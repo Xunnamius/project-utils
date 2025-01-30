@@ -1,0 +1,17 @@
+{
+  "name": "common",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Common unpublished multiversal imports (beware the dual package hazard!)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xunnamius/project-utils.git"
+  },
+  "license": "MIT",
+  "author": "Xunnamius",
+  "sideEffects": false,
+  "type": "commonjs",
+  "engines": {
+    "node": "^18.20.0 || ^20.18.0 || ^22.12.0 || >=23.3.0"
+  }
+}

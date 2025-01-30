@@ -29,44 +29,44 @@ function getBabelAliases() {
   // ! directly, consider regenerating aliases across the entire project with:
   // ! `npx symbiote project renovate --regenerate-assets --assets-preset ...`
   return {
-    '^multiverse\\+alias:(.+)$': './packages/alias/src/$1',
-    '^multiverse\\+analyze:(.+)$': './packages/analyze/src/$1',
     '^multiverse\\+bidirectional\\x2dresolve:(.+)$':
       './packages/bidirectional-resolve/src/$1',
+    '^multiverse\\+common:(.+)$': './packages/common/src/$1',
     '^multiverse\\+fs:(.+)$': './packages/fs/src/$1',
+    '^multiverse\\+graph:(.+)$': './packages/graph/src/$1',
     '^multiverse\\+types:(.+)$': './packages/types/src/$1',
-    '^multiverse\\+alias$': './packages/alias/src/index.js',
-    '^multiverse\\+analyze$': './packages/analyze/src/index.js',
     '^multiverse\\+bidirectional\\x2dresolve$':
       './packages/bidirectional-resolve/src/index.js',
+    '^multiverse\\+common$': './packages/common/src/index.js',
     '^multiverse\\+fs$': './packages/fs/src/index.js',
+    '^multiverse\\+graph$': './packages/graph/src/index.js',
     '^multiverse\\+types$': './packages/types/src/index.js',
-    '^rootverse\\+alias:(.+)$': './packages/alias/$1',
-    '^rootverse\\+analyze:(.+)$': './packages/analyze/$1',
     '^rootverse\\+bidirectional\\x2dresolve:(.+)$':
       './packages/bidirectional-resolve/$1',
+    '^rootverse\\+common:(.+)$': './packages/common/$1',
     '^rootverse\\+fs:(.+)$': './packages/fs/$1',
+    '^rootverse\\+graph:(.+)$': './packages/graph/$1',
     '^rootverse\\+types:(.+)$': './packages/types/$1',
     '^rootverse:(.+)$': './$1',
-    '^universe\\+alias:(.+)$': './packages/alias/src/$1',
-    '^universe\\+analyze:(.+)$': './packages/analyze/src/$1',
     '^universe\\+bidirectional\\x2dresolve:(.+)$':
       './packages/bidirectional-resolve/src/$1',
+    '^universe\\+common:(.+)$': './packages/common/src/$1',
     '^universe\\+fs:(.+)$': './packages/fs/src/$1',
+    '^universe\\+graph:(.+)$': './packages/graph/src/$1',
     '^universe\\+types:(.+)$': './packages/types/src/$1',
-    '^universe\\+alias$': './packages/alias/src/index.js',
-    '^universe\\+analyze$': './packages/analyze/src/index.js',
     '^universe\\+bidirectional\\x2dresolve$':
       './packages/bidirectional-resolve/src/index.js',
+    '^universe\\+common$': './packages/common/src/index.js',
     '^universe\\+fs$': './packages/fs/src/index.js',
+    '^universe\\+graph$': './packages/graph/src/index.js',
     '^universe\\+types$': './packages/types/src/index.js',
     '^universe:(.+)$': './src/$1',
     '^universe$': './src/index.js',
-    '^testverse\\+alias:(.+)$': './packages/alias/test/$1',
-    '^testverse\\+analyze:(.+)$': './packages/analyze/test/$1',
     '^testverse\\+bidirectional\\x2dresolve:(.+)$':
       './packages/bidirectional-resolve/test/$1',
+    '^testverse\\+common:(.+)$': './packages/common/test/$1',
     '^testverse\\+fs:(.+)$': './packages/fs/test/$1',
+    '^testverse\\+graph:(.+)$': './packages/graph/test/$1',
     '^testverse\\+types:(.+)$': './packages/types/test/$1',
     '^testverse:(.+)$': './test/$1',
     '^typeverse:(.+)$': './types/$1'

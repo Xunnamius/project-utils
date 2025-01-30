@@ -31,7 +31,7 @@ The filesystem utilities available to consumers of the @-xun/project package
 
 <!-- symbiote-template-region-end -->
 
-The filesystem utilities available to consumers of the @-xun/project package.
+The filesystem utilities available to consumers of the `@-xun/project` package.
 
 Wraps [@-xun/fs][1].
 

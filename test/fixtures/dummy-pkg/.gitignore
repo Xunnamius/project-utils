@@ -1,6 +1,0 @@
-# Per the .gitignore documentation: the parent directory must be unignored first
-!node_modules
-node_modules/**
-# Per the .gitignore documentation: the parent directory must be unignored first
-!node_modules/dummy-*
-!node_modules/dummy-*/**

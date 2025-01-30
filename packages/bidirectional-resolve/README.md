@@ -25,6 +25,8 @@ Resolve a package entry point to a file path <i>or a file path to a package entr
 
 </div>
 
+<br />
+
 # bidirectional-resolve
 
 <!-- symbiote-template-region-end -->
@@ -133,6 +135,8 @@ paths back into their more resilient entrypoint forms.
 <!-- symbiote-template-region-start 4 -->
 <!-- remark-ignore-end -->
 
+<br />
+
 ## Install
 
 <!-- symbiote-template-region-end -->
@@ -171,8 +175,8 @@ const flattenedExports = flattenPackageJsonSubpathMap({
 
 Given `target` and `conditions`, this function returns an array of zero or more
 entry points that are guaranteed to resolve to `target` when the exact
-`conditions` are present. This is done by reverse-mapping `target` using
-[`exports`][3] from `package.json`. [`exports`][3] is assumed to be valid.
+`conditions` are active in the runtime. This is done by reverse-mapping `target`
+using [`exports`][3] from `package.json`. [`exports`][3] is assumed to be valid.
 
 Entry points are sorted in the order they're encountered with the caveat that
 exact subpaths always come before subpath patterns. Note that, if `target`
@@ -215,8 +219,8 @@ const entrypoints = resolveEntryPointsFromExportsTarget({
 
 Given `entryPoint` and `conditions`, this function returns an array of zero or
 more targets that `entryPoint` is guaranteed to resolve to when the exact
-`conditions` are present. This is done by mapping `entryPoint` using
-[`exports`][3] from `package.json`. [`exports`][3] is assumed to be valid.
+`conditions` are active in the runtime. This is done by mapping `entryPoint`
+using [`exports`][3] from `package.json`. [`exports`][3] is assumed to be valid.
 
 #### Example
 
@@ -235,8 +239,8 @@ const targets = resolveExportsTargetsFromEntryPoint({
 
 Given `target` and `conditions`, this function returns an array of zero or more
 entry points that are guaranteed to resolve to `target` when the exact
-`conditions` are present. This is done by reverse-mapping `target` using
-[`imports`][2] from `package.json`. [`imports`][2] is assumed to be valid.
+`conditions` are active in the runtime. This is done by reverse-mapping `target`
+using [`imports`][2] from `package.json`. [`imports`][2] is assumed to be valid.
 
 Entry points are sorted in the order they're encountered with the caveat that
 exact subpaths always come before subpath patterns. Note that, if `target`
@@ -279,8 +283,8 @@ const entrypoints = resolveEntryPointsFromImportsTarget({
 
 Given `entryPoint` and `conditions`, this function returns an array of zero or
 more targets that `entryPoint` is guaranteed to resolve to when the exact
-`conditions` are present. This is done by mapping `entryPoint` using
-[`imports`][2] from `package.json`. [`imports`][2] is assumed to be valid.
+`conditions` are active in the runtime. This is done by mapping `entryPoint`
+using [`imports`][2] from `package.json`. [`imports`][2] is assumed to be valid.
 
 #### Example
 

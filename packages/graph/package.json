@@ -1,9 +1,9 @@
 {
-  "name": "bidirectional-resolve",
+  "name": "@-xun/project-graph",
   "version": "1.0.0",
-  "description": "Resolve a package entry point to a file path (like require.resolve/import.meta.resolve) or a file path to a package entry point; supports conditional imports/exports",
+  "description": "The project analysis utilities available to consumers of the @-xun/project package",
   "keywords": [],
-  "homepage": "https://github.com/Xunnamius/project-utils/tree/main/packages/bidirectional-resolve#readme",
+  "homepage": "https://github.com/Xunnamius/project-utils/tree/main/packages/graph#readme",
   "bugs": {
     "url": "https://github.com/Xunnamius/project-utils/issues"
   },
@@ -17,8 +17,8 @@
   "type": "commonjs",
   "exports": {
     ".": {
-      "types": "./dist/packages/bidirectional-resolve/src/index.d.ts",
-      "default": "./dist/packages/bidirectional-resolve/src/index.js"
+      "types": "./dist/packages/graph/src/index.d.ts",
+      "default": "./dist/packages/graph/src/index.js"
     },
     "./package": "./package.json",
     "./package.json": "./package.json"
@@ -26,7 +26,7 @@
   "typesVersions": {
     "*": {
       "index": [
-        "dist/packages/bidirectional-resolve/src/index.d.ts"
+        "dist/packages/graph/src/index.d.ts"
       ],
       "package": [
         "package.json"
@@ -42,7 +42,7 @@
   "scripts": {
     "build": "npm run build:dist --",
     "build:changelog": "symbiote build changelog --env NODE_NO_WARNINGS=1",
-    "build:dist": "symbiote build distributables --env NODE_NO_WARNINGS=1 --not-multiversal",
+    "build:dist": "symbiote build distributables --env NODE_NO_WARNINGS=1 --multiversal",
     "build:docs": "symbiote build docs --env NODE_NO_WARNINGS=1",
     "clean": "symbiote clean --env NODE_NO_WARNINGS=1",
     "format": "symbiote format --env NODE_NO_WARNINGS=1 --hush",
@@ -60,6 +60,10 @@
     "test:package:integration": "symbiote test --env NODE_NO_WARNINGS=1 --tests integration",
     "test:package:unit": "symbiote test --env NODE_NO_WARNINGS=1 --tests unit",
     "test:packages:all": "symbiote test --env NODE_NO_WARNINGS=1 --scope unlimited --coverage"
+  },
+  "dependencies": {
+    "@-xun/fs": "^1.0.0",
+    "glob-gitignore": "^1.0.15"
   },
   "engines": {
     "node": "^18.20.0 || ^20.18.0 || ^22.12.0 || >=23.3.0"

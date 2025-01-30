@@ -23,44 +23,44 @@ function getJestAliases() {
   // ! directly, consider regenerating aliases across the entire project with:
   // ! `npx symbiote project renovate --regenerate-assets --assets-preset ...`
   return {
-    '^multiverse\\+alias:(.+)$': '<rootDir>/packages/alias/src/$1',
-    '^multiverse\\+analyze:(.+)$': '<rootDir>/packages/analyze/src/$1',
     '^multiverse\\+bidirectional\\x2dresolve:(.+)$':
       '<rootDir>/packages/bidirectional-resolve/src/$1',
+    '^multiverse\\+common:(.+)$': '<rootDir>/packages/common/src/$1',
     '^multiverse\\+fs:(.+)$': '<rootDir>/packages/fs/src/$1',
+    '^multiverse\\+graph:(.+)$': '<rootDir>/packages/graph/src/$1',
     '^multiverse\\+types:(.+)$': '<rootDir>/packages/types/src/$1',
-    '^multiverse\\+alias$': '<rootDir>/packages/alias/src/index.ts',
-    '^multiverse\\+analyze$': '<rootDir>/packages/analyze/src/index.ts',
     '^multiverse\\+bidirectional\\x2dresolve$':
       '<rootDir>/packages/bidirectional-resolve/src/index.ts',
+    '^multiverse\\+common$': '<rootDir>/packages/common/src/index.ts',
     '^multiverse\\+fs$': '<rootDir>/packages/fs/src/index.ts',
+    '^multiverse\\+graph$': '<rootDir>/packages/graph/src/index.ts',
     '^multiverse\\+types$': '<rootDir>/packages/types/src/index.ts',
-    '^rootverse\\+alias:(.+)$': '<rootDir>/packages/alias/$1',
-    '^rootverse\\+analyze:(.+)$': '<rootDir>/packages/analyze/$1',
     '^rootverse\\+bidirectional\\x2dresolve:(.+)$':
       '<rootDir>/packages/bidirectional-resolve/$1',
+    '^rootverse\\+common:(.+)$': '<rootDir>/packages/common/$1',
     '^rootverse\\+fs:(.+)$': '<rootDir>/packages/fs/$1',
+    '^rootverse\\+graph:(.+)$': '<rootDir>/packages/graph/$1',
     '^rootverse\\+types:(.+)$': '<rootDir>/packages/types/$1',
     '^rootverse:(.+)$': '<rootDir>/$1',
-    '^universe\\+alias:(.+)$': '<rootDir>/packages/alias/src/$1',
-    '^universe\\+analyze:(.+)$': '<rootDir>/packages/analyze/src/$1',
     '^universe\\+bidirectional\\x2dresolve:(.+)$':
       '<rootDir>/packages/bidirectional-resolve/src/$1',
+    '^universe\\+common:(.+)$': '<rootDir>/packages/common/src/$1',
     '^universe\\+fs:(.+)$': '<rootDir>/packages/fs/src/$1',
+    '^universe\\+graph:(.+)$': '<rootDir>/packages/graph/src/$1',
     '^universe\\+types:(.+)$': '<rootDir>/packages/types/src/$1',
-    '^universe\\+alias$': '<rootDir>/packages/alias/src/index.ts',
-    '^universe\\+analyze$': '<rootDir>/packages/analyze/src/index.ts',
     '^universe\\+bidirectional\\x2dresolve$':
       '<rootDir>/packages/bidirectional-resolve/src/index.ts',
+    '^universe\\+common$': '<rootDir>/packages/common/src/index.ts',
     '^universe\\+fs$': '<rootDir>/packages/fs/src/index.ts',
+    '^universe\\+graph$': '<rootDir>/packages/graph/src/index.ts',
     '^universe\\+types$': '<rootDir>/packages/types/src/index.ts',
     '^universe:(.+)$': '<rootDir>/src/$1',
     '^universe$': '<rootDir>/src/index.ts',
-    '^testverse\\+alias:(.+)$': '<rootDir>/packages/alias/test/$1',
-    '^testverse\\+analyze:(.+)$': '<rootDir>/packages/analyze/test/$1',
     '^testverse\\+bidirectional\\x2dresolve:(.+)$':
       '<rootDir>/packages/bidirectional-resolve/test/$1',
+    '^testverse\\+common:(.+)$': '<rootDir>/packages/common/test/$1',
     '^testverse\\+fs:(.+)$': '<rootDir>/packages/fs/test/$1',
+    '^testverse\\+graph:(.+)$': '<rootDir>/packages/graph/test/$1',
     '^testverse\\+types:(.+)$': '<rootDir>/packages/types/test/$1',
     '^testverse:(.+)$': '<rootDir>/test/$1',
     '^typeverse:(.+)$': '<rootDir>/types/$1'

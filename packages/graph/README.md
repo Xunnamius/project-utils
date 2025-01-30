@@ -1,12 +1,12 @@
 <!-- symbiote-template-region-start 1 -->
 
 <p align="center" width="100%">
-  <img width="300" src="https://raw.githubusercontent.com/Xunnamius/project-utils/refs/heads/main/packages/types/logo.png">
+  <img width="300" src="https://raw.githubusercontent.com/Xunnamius/project-utils/refs/heads/main/packages/graph/logo.png">
 </p>
 
 <p align="center" width="100%">
 <!-- symbiote-template-region-end -->
-The types available to consumers of the @-xun/project package
+The project analysis utilities available to consumers of the @-xun/project package
 <!-- symbiote-template-region-start 2 -->
 </p>
 
@@ -27,11 +27,12 @@ The types available to consumers of the @-xun/project package
 
 <br />
 
-# @-xun/project-types
+# @-xun/project-graph
 
 <!-- symbiote-template-region-end -->
 
-The types available to consumers of the `@-xun/project` package.
+The project analysis utilities available to consumers of the @-xun/project
+package.
 
 <!-- symbiote-template-region-start 3 -->
 
@@ -63,7 +64,7 @@ The types available to consumers of the `@-xun/project` package.
 To install:
 
 ```shell
-npm install @-xun/project-types
+npm install @-xun/project-analyze
 ```
 
 ## Usage
@@ -168,25 +169,25 @@ See the [table of contributors][x-repo-contributors].
 [x-badge-blm-image]: https://xunn.at/badge-blm 'Join the movement!'
 [x-badge-blm-link]: https://xunn.at/donate-blm
 [x-badge-codecov-image]:
-  https://img.shields.io/codecov/c/github/Xunnamius/project-utils/main?style=flat-square&token=HWRIOBAAPW&flag=package.main_types
+  https://img.shields.io/codecov/c/github/Xunnamius/project-utils/main?style=flat-square&token=HWRIOBAAPW&flag=package.main_graph
   'Is this package well-tested?'
 [x-badge-codecov-link]: https://codecov.io/gh/Xunnamius/project-utils
 [x-badge-downloads-image]:
-  https://img.shields.io/npm/dm/@-xun/project-types?style=flat-square
+  https://img.shields.io/npm/dm/@-xun/project-graph?style=flat-square
   'Number of times this package has been downloaded per month'
-[x-badge-downloads-link]: https://npmtrends.com/@-xun/project-types
+[x-badge-downloads-link]: https://npmtrends.com/@-xun/project-graph
 [x-badge-lastcommit-image]:
   https://img.shields.io/github/last-commit/Xunnamius/project-utils?style=flat-square
   'Latest commit timestamp'
 [x-badge-license-image]:
-  https://img.shields.io/npm/l/@-xun/project-types?style=flat-square
+  https://img.shields.io/npm/l/@-xun/project-graph?style=flat-square
   "This package's source license"
 [x-badge-license-link]:
   https://github.com/Xunnamius/project-utils/blob/main/LICENSE
 [x-badge-npm-image]:
-  https://xunn.at/npm-pkg-version/@-xun/project-types
+  https://xunn.at/npm-pkg-version/@-xun/project-graph
   'Install this package using npm or yarn!'
-[x-badge-npm-link]: https://npm.im/@-xun/project-types
+[x-badge-npm-link]: https://npm.im/@-xun/project-graph
 [x-badge-repo-link]: https://github.com/Xunnamius/project-utils
 [x-badge-semanticrelease-image]:
   https://xunn.at/badge-semantic-release
