@@ -6,7 +6,7 @@
 
 <p align="center" width="100%">
 <!-- symbiote-template-region-end -->
-Resolve a package entry point to a file path (like require.resolve/import.meta.resolve) or a file path to a package entry point; supports conditional imports/exports
+Resolve a package entry point to a file path <i>or a file path to a package entry point!</i>
 <!-- symbiote-template-region-start 2 -->
 </p>
 
@@ -31,9 +31,83 @@ Resolve a package entry point to a file path (like require.resolve/import.meta.r
 
 <!-- symbiote-template-region-end -->
 
-Resolve a package entry point to a file path (like
-require.resolve/import.meta.resolve) or a file path to a package entry point;
-supports conditional imports/exports
+This package allows you to resolve a given package entry point (e.g.
+`mdast-util-from-markdown` in `import('mdast-util-from-markdown')`) into a file
+path (e.g. `./node_modules/mdast-util-from-markdown/lib/index.js`).
+
+```typescript
+import {
+  flattenPackageJsonSubpathMap,
+  resolveExportsTargetsFromEntryPoint
+} from 'bidirectional-resolve';
+
+const entrypoint = 'mdast-util-from-markdown';
+
+const { exports: packageJsonExports } = await readJsonFile(
+  // There are several ways to grab a package's package.json file
+  `${entrypoint}/package.json`
+);
+
+const flatExports = flattenPackageJsonSubpathMap({ map: packageJsonExports });
+
+const nodeModulesPaths = resolveExportsTargetsFromEntryPoint({
+  flattenedExports: flatExports,
+  entrypoint,
+  conditions: ['types', 'require', 'import', 'node']
+});
+
+console.log(nodeModulesPaths); // => ['./node_modules/mdast-util-from-markdown/lib/index.js']
+```
+
+This is similar to what is returned by `require.resolve` in CJS contexts, or
+`import.meta.resolve` in ESM contexts, and there are several other libraries
+that accomplish some form of this.
+
+What makes `bidirectional-resolve` special is that, unlike prior art, it can
+also _reverse_ a given file path (e.g.
+`./node_modules/mdast-util-from-markdown/lib/index.js`) back into an entry point
+(e.g. `mdast-util-from-markdown`).
+
+```typescript
+import {
+  flattenPackageJsonSubpathMap,
+  resolveEntryPointsFromExportsTarget
+} from 'bidirectional-resolve';
+
+const precariousNodeModulesImportPath =
+  './node_modules/mdast-util-from-markdown/lib/index.js';
+
+const { exports: packageJsonExports } = await readJsonFile(
+  await packageUp({ cwd: path.dirname(precariousNodeModulesImportPath) })
+);
+
+const flatExports = flattenPackageJsonSubpathMap({ map: packageJsonExports });
+
+const entrypoints = resolveEntryPointsFromExportsTarget({
+  flattenedExports: flatExports,
+  precariousNodeModulesImportPath,
+  conditions: ['types', 'require', 'import', 'node']
+});
+
+console.log(entrypoints); // => ['mdast-util-from-markdown']
+```
+
+As in the above examples, `bidirectional-resolve` supports bidirectional
+[conditional resolution][1], as well as both [imports][2] and [exports][3] entry
+points.
+
+Deriving a package's entry point from one of its internal file paths satisfies a
+variety of use cases. For instance, `bidirectional-resolve` can be used to [work
+around][4] strange behavior in the TypeScript compiler—behavior exhibited since
+version 3.9 (2020) and _still happening_ as of 5.7 (2025)—where `tsc` [sometimes
+emits definition files containing relative paths precariously pointing to files
+inside the nearest `node_modules` directory][5].
+
+This is not ideal for several reasons, including the fact that package managers
+like NPM frequently hoist packages in unpredictable ways, especially in
+monorepos, which will _silently break these hardcoded import paths_. As part of
+a post-emit step, `bidirectional-resolve` can be used to turn these hardcoded
+paths back into their more resilient entrypoint forms.
 
 <!-- symbiote-template-region-start 3 -->
 
@@ -46,6 +120,11 @@ supports conditional imports/exports
 
 - [Install](#install)
 - [Usage](#usage)
+  - [`flattenPackageJsonSubpathMap`](#flattenpackagejsonsubpathmap)
+  - [`resolveEntryPointsFromExportsTarget`](#resolveentrypointsfromexportstarget)
+  - [`resolveExportsTargetsFromEntryPoint`](#resolveexportstargetsfromentrypoint)
+  - [`resolveEntryPointsFromImportsTarget`](#resolveentrypointsfromimportstarget)
+  - [`resolveImportsTargetsFromEntryPoint`](#resolveimportstargetsfromentrypoint)
 - [Appendix](#appendix)
   - [Published Package Details](#published-package-details)
   - [License](#license)
@@ -70,9 +149,163 @@ npm install bidirectional-resolve
 
 ## Usage
 
-<!-- TODO -->
+This package exports five functions:
 
-TODO
+### `flattenPackageJsonSubpathMap`
+
+> [API reference][6]
+
+Flattens entry points within a `package.json` [`imports`][2]/[`exports`][3] map
+into a one-dimensional array of subpath-target mappings.
+
+Each resolver function consumes a flattened array of subpath mappings. This
+function takes the pain out of generating such mappings.
+
+#### Example
+
+```typescript
+const flattenedExports = flattenPackageJsonSubpathMap({
+  map: packageJson.exports
+});
+```
+
+<br />
+
+### `resolveEntryPointsFromExportsTarget`
+
+> [API reference][7]
+
+Given `target` and `conditions`, this function returns an array of zero or more
+entry points that are guaranteed to resolve to `target` when the exact
+`conditions` are present. This is done by reverse-mapping `target` using
+[`exports`][3] from `package.json`. [`exports`][3] is assumed to be valid.
+
+Entry points are sorted in the order they're encountered with the caveat that
+exact subpaths always come before subpath patterns. Note that, if `target`
+contains one or more asterisks, the subpaths returned by this function will also
+contain an asterisk.
+
+The only other time this function returns a subpath with an asterisk is if the
+subpath is a "many-to-one" mapping; that is: the subpath has an asterisk but its
+target does not.
+
+For instance:
+
+```json
+{
+  "exports": {
+    "many-to-one-subpath-returned-with-asterisk-1/*": "target-with-no-asterisk.js",
+    "many-to-one-subpath-returned-with-asterisk-2/*": null
+  }
+}
+```
+
+In this case, the asterisk can be replaced with literally anything and it would
+still match. Hence, the replacement is left up to the caller.
+
+#### Example
+
+```typescript
+const entrypoints = resolveEntryPointsFromExportsTarget({
+  flattenedExports,
+  target,
+  conditions,
+  includeUnsafeFallbackTargets,
+  replaceSubpathAsterisks
+});
+```
+
+<br />
+
+### `resolveExportsTargetsFromEntryPoint`
+
+> [API reference][8]
+
+Given `entryPoint` and `conditions`, this function returns an array of zero or
+more targets that `entryPoint` is guaranteed to resolve to when the exact
+`conditions` are present. This is done by mapping `entryPoint` using
+[`exports`][3] from `package.json`. [`exports`][3] is assumed to be valid.
+
+#### Example
+
+```typescript
+const targets = resolveExportsTargetsFromEntryPoint({
+  flattenedExports,
+  entryPoint,
+  conditions,
+  includeUnsafeFallbackTargets
+});
+```
+
+<br />
+
+### `resolveEntryPointsFromImportsTarget`
+
+> [API reference][9]
+
+Given `target` and `conditions`, this function returns an array of zero or more
+entry points that are guaranteed to resolve to `target` when the exact
+`conditions` are present. This is done by reverse-mapping `target` using
+[`imports`][2] from `package.json`. [`imports`][2] is assumed to be valid.
+
+Entry points are sorted in the order they're encountered with the caveat that
+exact subpaths always come before subpath patterns. Note that, if `target`
+contains one or more asterisks, the subpaths returned by this function will also
+contain an asterisk.
+
+The only other time this function returns a subpath with an asterisk is if the
+subpath is a "many-to-one" mapping; that is: the subpath has an asterisk but its
+target does not.
+
+For instance:
+
+```json
+{
+  "imports": {
+    "many-to-one-subpath-returned-with-asterisk-1/*": "target-with-no-asterisk.js",
+    "many-to-one-subpath-returned-with-asterisk-2/*": null
+  }
+}
+```
+
+In this case, the asterisk can be replaced with literally anything and it would
+still match. Hence, the replacement is left up to the caller.
+
+#### Example
+
+```typescript
+const entrypoints = resolveEntryPointsFromImportsTarget({
+  flattenedImports,
+  target,
+  conditions,
+  includeUnsafeFallbackTargets,
+  replaceSubpathAsterisks
+});
+```
+
+<br />
+
+### `resolveImportsTargetsFromEntryPoint`
+
+> [API reference][10]
+
+Given `entryPoint` and `conditions`, this function returns an array of zero or
+more targets that `entryPoint` is guaranteed to resolve to when the exact
+`conditions` are present. This is done by mapping `entryPoint` using
+[`imports`][2] from `package.json`. [`imports`][2] is assumed to be valid.
+
+#### Example
+
+```typescript
+const targets = resolveImportsTargetsFromEntryPoint({
+  flattenedImports,
+  entryPoint,
+  conditions,
+  includeUnsafeFallbackTargets
+});
+```
+
+<br />
 
 <!-- symbiote-template-region-start 5 -->
 
@@ -199,8 +432,6 @@ See the [table of contributors][x-repo-contributors].
   https://dev.to/jakobjingleheimer/configuring-commonjs-es-modules-for-nodejs-12ed#publish-only-a-cjs-distribution-with-property-exports
 [x-pkg-dual-package-hazard]:
   https://nodejs.org/api/packages.html#dual-package-hazard
-[x-pkg-esm-wine]:
-  https://dev.to/jakobjingleheimer/configuring-commonjs-es-modules-for-nodejs-12ed#esm-source-and-distribution
 [x-pkg-exports-conditions]:
   https://webpack.js.org/guides/package-exports#reference-syntax
 [x-pkg-exports-module-key]:
@@ -222,3 +453,19 @@ See the [table of contributors][x-repo-contributors].
 [x-repo-pr-compare]: https://github.com/Xunnamius/project-utils/compare
 [x-repo-sponsor]: https://github.com/sponsors/Xunnamius
 [x-repo-support]: /.github/SUPPORT.md
+[1]: https://nodejs.org/api/packages.html#conditional-exports
+[2]: https://nodejs.org/api/packages.html#imports
+[3]: https://nodejs.org/api/packages.html#exports
+[4]:
+  https://github.com/Xunnamius/symbiote/blob/c3fc1264932eb8224289ef973366fc0cb5435f59/babel.config.cjs#L344-L435
+[5]: https://github.com/microsoft/TypeScript/issues/38111
+[6]:
+  https://github.com/Xunnamius/project-utils/blob/main/packages/bidirectional-resolve/docs/functions/flattenPackageJsonSubpathMap.md
+[7]:
+  https://github.com/Xunnamius/project-utils/blob/main/packages/bidirectional-resolve/docs/functions/resolveEntryPointsFromExportsTarget.md
+[8]:
+  https://github.com/Xunnamius/project-utils/blob/main/packages/bidirectional-resolve/docs/functions/resolveExportsTargetsFromEntryPoint.md
+[9]:
+  https://github.com/Xunnamius/project-utils/blob/main/packages/bidirectional-resolve/docs/functions/resolveEntryPointsFromImportsTarget.md
+[10]:
+  https://github.com/Xunnamius/project-utils/blob/main/packages/bidirectional-resolve/docs/functions/resolveImportsTargetsFromEntryPoint.md
