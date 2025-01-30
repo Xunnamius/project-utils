@@ -25,8 +25,6 @@ Resolve a package entry point to a file path <i>or a file path to a package entr
 
 </div>
 
-<br />
-
 # bidirectional-resolve
 
 <!-- symbiote-template-region-end -->
@@ -92,9 +90,9 @@ const entrypoints = resolveEntryPointsFromExportsTarget({
 console.log(entrypoints); // => ['mdast-util-from-markdown']
 ```
 
-As in the above examples, `bidirectional-resolve` supports bidirectional
-[conditional resolution][1], as well as both [imports][2] and [exports][3] entry
-points.
+As the above examples demonstrate, `bidirectional-resolve` supports
+bidirectional [conditional resolution][1] of entry points in both [exports][3]
+_and [imports][2]_ `package.json` fields.
 
 Deriving a package's entry point from one of its internal file paths satisfies a
 variety of use cases. For instance, `bidirectional-resolve` can be used to [work
@@ -135,8 +133,6 @@ paths back into their more resilient entrypoint forms.
 <!-- symbiote-template-region-start 4 -->
 <!-- remark-ignore-end -->
 
-<br />
-
 ## Install
 
 <!-- symbiote-template-region-end -->
@@ -168,8 +164,6 @@ const flattenedExports = flattenPackageJsonSubpathMap({
   map: packageJson.exports
 });
 ```
-
-<br />
 
 ### `resolveEntryPointsFromExportsTarget`
 
@@ -215,8 +209,6 @@ const entrypoints = resolveEntryPointsFromExportsTarget({
 });
 ```
 
-<br />
-
 ### `resolveExportsTargetsFromEntryPoint`
 
 > [API reference][8]
@@ -236,8 +228,6 @@ const targets = resolveExportsTargetsFromEntryPoint({
   includeUnsafeFallbackTargets
 });
 ```
-
-<br />
 
 ### `resolveEntryPointsFromImportsTarget`
 
@@ -283,8 +273,6 @@ const entrypoints = resolveEntryPointsFromImportsTarget({
 });
 ```
 
-<br />
-
 ### `resolveImportsTargetsFromEntryPoint`
 
 > [API reference][10]
@@ -304,8 +292,6 @@ const targets = resolveImportsTargetsFromEntryPoint({
   includeUnsafeFallbackTargets
 });
 ```
-
-<br />
 
 <!-- symbiote-template-region-start 5 -->
 
