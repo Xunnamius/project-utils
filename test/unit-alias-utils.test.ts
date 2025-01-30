@@ -157,9 +157,9 @@ describe('::getProcessedAliasMapping', () => {
   it('throws on bad path "./e.json/"', async () => {
     expect.hasAssertions();
 
-    expect(() => alias.getProcessedAliasMapping({ mapping: ['a', './e.json/'] })).toThrow(
-      /invalid syntax/
-    );
+    expect(() =>
+      alias.getProcessedAliasMapping({ mapping: ['a', './e.json/'] })
+    ).toThrow(/invalid syntax/);
   });
 
   it('throws on bad alias:path "a/(.*)$":"."', async () => {
@@ -278,9 +278,11 @@ describe('::getJestAliases', () => {
     } as unknown as ReturnType<typeof alias.getRawAliases>);
 
     await withMockedOutput(() => {
-      expect(alias.getJestAliases({ rootDir: '/some/fake/packages/dir' })).toStrictEqual({
-        '^package$': '<rootDir>/package.json'
-      });
+      expect(alias.getJestAliases({ rootDir: '/some/fake/packages/dir' })).toStrictEqual(
+        {
+          '^package$': '<rootDir>/package.json'
+        }
+      );
     });
   });
 

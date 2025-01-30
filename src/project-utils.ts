@@ -522,7 +522,10 @@ export function getRunContext(
   const context = !!rootJson.workspaces ? 'monorepo' : 'polyrepo';
 
   if (context == 'monorepo') {
-    const { packages, cwdPackage } = getWorkspacePackages({ cwd, projectRoot: repoRoot });
+    const { packages, cwdPackage } = getWorkspacePackages({
+      cwd,
+      projectRoot: repoRoot
+    });
     return {
       context,
       project: {

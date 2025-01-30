@@ -137,9 +137,9 @@ describe('::getWorkspacePackages', () => {
   it('throws a PathIsNotAbsoluteError error when passed relative projectRoot', async () => {
     expect.hasAssertions();
 
-    expect(() => project.getWorkspacePackages({ projectRoot: 'fake/root' })).toThrowError(
-      error.PathIsNotAbsoluteError
-    );
+    expect(() =>
+      project.getWorkspacePackages({ projectRoot: 'fake/root' })
+    ).toThrowError(error.PathIsNotAbsoluteError);
   });
 
   it('throws a NotAMonorepo error when passed non-existent projectRoot', async () => {

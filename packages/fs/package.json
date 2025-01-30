@@ -1,0 +1,66 @@
+{
+  "name": "@-xun/project-fs",
+  "version": "1.0.0",
+  "description": "The filesystem utilities available to consumers of the @-xun/project package",
+  "keywords": [],
+  "homepage": "https://github.com/Xunnamius/project-utils/tree/main/packages/fs#readme",
+  "bugs": {
+    "url": "https://github.com/Xunnamius/project-utils/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xunnamius/project-utils.git"
+  },
+  "license": "MIT",
+  "author": "Xunnamius",
+  "sideEffects": false,
+  "type": "commonjs",
+  "exports": {
+    ".": {
+      "types": "./dist/packages/fs/src/index.d.ts",
+      "default": "./dist/packages/fs/src/index.js"
+    },
+    "./package": "./package.json",
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "index": [
+        "dist/packages/fs/src/index.d.ts"
+      ],
+      "package": [
+        "package.json"
+      ]
+    }
+  },
+  "files": [
+    "/dist",
+    "/LICENSE",
+    "/package.json",
+    "/README.md"
+  ],
+  "scripts": {
+    "clean": "symbiote clean --env NODE_NO_WARNINGS=1",
+    "format": "symbiote format --env NODE_NO_WARNINGS=1 --hush",
+    "info": "symbiote project info --env NODE_NO_WARNINGS=1",
+    "lint": "npm run lint:package --",
+    "lint:package": "symbiote lint --env NODE_NO_WARNINGS=1 --hush",
+    "lint:packages": "symbiote lint --env NODE_NO_WARNINGS=1 --hush --scope unlimited",
+    "lint:project": "symbiote project lint --env NODE_NO_WARNINGS=1",
+    "list-tasks": "symbiote list-tasks --env NODE_NO_WARNINGS=1 --scope this-package",
+    "start": "symbiote start --env NODE_NO_WARNINGS=1 --",
+    "test": "npm run test:package:unit --",
+    "test:package:all": "symbiote test --env NODE_NO_WARNINGS=1 --coverage",
+    "test:package:e2e": "symbiote test --env NODE_NO_WARNINGS=1 --tests end-to-end",
+    "test:package:integration": "symbiote test --env NODE_NO_WARNINGS=1 --tests integration",
+    "test:package:unit": "symbiote test --env NODE_NO_WARNINGS=1 --tests unit",
+    "test:packages:all": "symbiote test --env NODE_NO_WARNINGS=1 --scope unlimited --coverage"
+  },
+  "engines": {
+    "node": "^18.20.0 || ^20.18.0 || ^22.12.0 || >=23.3.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}

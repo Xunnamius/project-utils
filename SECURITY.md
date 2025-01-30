@@ -1,19 +1,18 @@
-# Security ☠️ [![Snyk vulnerability count][x-badge-security-image]][x-badge-security-link]
+# Security ☠️ [![Known Vulnerabilities][2]][1]
 
 If the issue is related to a public alert from OWASP/GitHub/Dependabot/CVE/etc
-and [does not already have an open issue][x-security-openissues], feel free to
-[open a new issue][x-repo-choose-new-issue]. Otherwise, please report any
-security vulnerability, other security-related incident, or otherwise sensitive
-subject to us [via email][x-security-mailto].
+and [does not already have an open issue][3], feel free to [open a new
+issue][4]. Otherwise, please report any security vulnerability or other
+security-related incident or sensitive subject to us [via private vulnerability
+disclosure through GitHub][5] or, if that fails, [via email][6].
 
 Thank you for your contribution!
 
-[x-badge-security-image]:
-  https://snyk.io/test/github/Xunnamius/projector/badge.svg
-  'Number of vulnerabilities (scanned by Snyk)'
-[x-badge-security-link]: https://snyk.io/test/github/Xunnamius/projector
-[x-repo-choose-new-issue]:
-  https://github.com/Xunnamius/projector/issues/new/choose
-[x-security-mailto]:
+[1]: https://snyk.io/test/github/Xunnamius/project-utils
+[2]: https://snyk.io/test/github/Xunnamius/project-utils/badge.svg
+[3]: https://github.com/Xunnamius/project-utils/issues?q=
+[4]: https://github.com/Xunnamius/project-utils/issues/new/choose
+[5]:
+  https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities/privately-reporting-a-security-vulnerability#privately-reporting-a-security-vulnerability
+[6]:
   mailto:security@ergodark.com?subject=ALERT%3A%20SECURITY%20INCIDENT%3A%20%28five%20word%20summary%29
-[x-security-openissues]: https://github.com/Xunnamius/projector/issues?q=

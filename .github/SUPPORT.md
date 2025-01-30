@@ -1,15 +1,15 @@
-# Support [![Average time to resolve an issue][x-badge-resolution-image]][x-badge-resolution-link] [![Percentage of issues still open][x-badge-percentage-image]][x-badge-percentage-link]
+# Support [![Average issue resolution time][badge-issue-resolution]][link-issue-resolution] [![Issue open percentage][badge-issue-percentage]][open-issues]
 
 Need help? Want to help this project? See below!
 
 ## Reporting an Issue
 
-Before you begin, please [search open and past issues][x-repo-open-issues] to
-see if your issue or feature request is already being talked about.
+Before you begin, please [search open and past issues][open-issues] to see if
+your issue or feature request is already being talked about.
 
 If you find your issue already exists, make sure to [bump the issue by adding a
-reaction][x-external-github-blog]. **If you're serious about wanting an issue to
-get attention, use a reaction in place of a "+1" or other similar comment.**
+reaction][github-blog]. **If you're serious about wanting an issue to get
+attention, use a reaction in place of a "+1" or other similar comment.**
 
 If you cannot find an existing issue that describes your bug or feature, then
 you're clear to create your issue using the guidelines below.
@@ -26,7 +26,7 @@ reaction emojis being present on issues, PRs, and replies:
 ### Bug Reports and Feature Requests
 
 For the timeliest resolution to bug reports specifically, please make a good
-faith effort to [follow the template][x-repo-choose-new-issue]. The more quality
+faith effort to [follow the template][choose-new-issue]. The more quality
 information you can provide, the quicker a fix will be found. Additionally:
 
 - Ensure you file one issue per problem or feature request.
@@ -35,8 +35,8 @@ information you can provide, the quicker a fix will be found. Additionally:
   experiencing identical behavior or behavior that stems from the exact same
   problem.
 
-That's it! You are now ready to [submit a new issue][x-repo-choose-new-issue]!
-Thank you for contribution 🎉, your efforts are greatly appreciated! 🙌🏿
+That's it! You are now ready to [submit a new issue][choose-new-issue]! Thank
+you for contribution 🎉, your efforts are greatly appreciated! 🙌🏿
 
 #### Closure Policy
 
@@ -45,17 +45,15 @@ Thank you for contribution 🎉, your efforts are greatly appreciated! 🙌🏿
   guidelines.
 - Issues that go for an extended period without activity are subject to closure.
 
-[x-badge-percentage-image]:
-  https://isitmaintained.com/badge/open/Xunnamius/projector.svg
+[badge-issue-percentage]:
+  https://isitmaintained.com/badge/open/Xunnamius/project-utils.svg
   'Open issues as a percentage of all issues'
-[x-badge-percentage-link]: https://github.com/Xunnamius/projector/issues?q=
-[x-badge-resolution-image]:
-  https://isitmaintained.com/badge/resolution/Xunnamius/projector.svg
+[badge-issue-resolution]:
+  https://isitmaintained.com/badge/resolution/Xunnamius/project-utils.svg
   'Average time to resolve an issue'
-[x-badge-resolution-link]:
-  https://isitmaintained.com/project/Xunnamius/projector
-[x-external-github-blog]:
+[choose-new-issue]: https://github.com/Xunnamius/project-utils/issues/new/choose
+[github-blog]:
   https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments
-[x-repo-choose-new-issue]:
-  https://github.com/Xunnamius/projector/issues/new/choose
-[x-repo-open-issues]: https://github.com/Xunnamius/projector/issues?q=
+[link-issue-resolution]:
+  https://isitmaintained.com/project/Xunnamius/project-utils
+[open-issues]: https://github.com/Xunnamius/project-utils/issues?q=

@@ -59,6 +59,8 @@ export function getMaintainedNodeVersions(options?: {
   return options?.format == 'array'
     ? versions
     : versions
-        .map((value, index, array) => `${index == array.length - 1 ? '>=' : '^'}${value}`)
+        .map(
+          (value, index, array) => `${index == array.length - 1 ? '>=' : '^'}${value}`
+        )
         .join(' || ');
 }
