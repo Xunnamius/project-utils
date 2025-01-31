@@ -89,9 +89,18 @@
     "test:packages:all": "symbiote test --env NODE_NO_WARNINGS=1 --scope unlimited --coverage",
     "test:topological": "symbiote project topology --run test --env NODE_NO_WARNINGS=1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@-xun/project-fs": "^1.0.0",
+    "@-xun/project-graph": "^1.0.0",
+    "@-xun/project-types": "^1.0.0",
+    "core-js": "^3.40.0",
+    "named-app-errors": "^4.0.2",
+    "type-fest": "^4.33.0"
+  },
   "devDependencies": {
     "@-xun/symbiote": "^2.18.0",
+    "glob": "^11.0.1",
+    "rejoinder": "^1.2.4",
     "resolve.exports": "^2.0.3"
   },
   "engines": {

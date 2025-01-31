@@ -68,6 +68,16 @@
     "test:package:unit": "symbiote test --env NODE_NO_WARNINGS=1 --tests unit",
     "test:packages:all": "symbiote test --env NODE_NO_WARNINGS=1 --scope unlimited --coverage"
   },
+  "dependencies": {
+    "@-xun/fs": "^1.0.0",
+    "@-xun/project-types": "^1.0.0",
+    "@-xun/run": "^0.0.1",
+    "core-js": "^3.40.0",
+    "jsonc-parser": "^3.3.1",
+    "named-app-errors": "^4.0.2",
+    "rejoinder": "^1.2.4",
+    "type-fest": "^4.33.0"
+  },
   "engines": {
     "node": "^18.20.0 || ^20.18.0 || ^22.12.0 || >=23.3.0"
   },
