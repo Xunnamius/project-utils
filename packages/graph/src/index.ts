@@ -12,4 +12,3 @@ export * from 'universe+graph:analysis/sort-packages-topologically.ts';
 export * from 'universe+graph:alias.ts';
 export * from 'universe+graph:common.ts';
 export * from 'universe+graph:constant.ts';
-export * from 'universe+graph:error.ts';

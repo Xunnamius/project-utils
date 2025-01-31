@@ -17,7 +17,7 @@ export * from 'multiverse+common:error.ts';
  * A collection of possible error and warning messages.
  */
 /* istanbul ignore next */
-export const AnalysisErrorMessage = {
+export const GraphErrorMessage = {
   ...CommonErrorMessage,
   Generic() {
     return 'an error occurred that caused this software to crash';
@@ -120,7 +120,7 @@ export const AnalysisErrorMessage = {
     return `encountered illegal import specifier "${specifier}": this specifier should be replaced with "${specifier.split(uriSchemeDelimiterUnescaped)[0]}" or the "index.ts" file renamed to something else${path ? ` in ${path}` : ''}`;
   },
   SpecifierNotOkSelfReferential(specifier: string, path?: string) {
-    return AnalysisErrorMessage.SpecifierNotOkSuboptimal(
+    return GraphErrorMessage.SpecifierNotOkSuboptimal(
       specifier,
       `universe${uriSchemeSubDelimiterUnescaped}${specifier.split(uriSchemeSubDelimiterUnescaped).at(-1)!.replace(`${uriSchemeDelimiterUnescaped}${directorySrcPackageBase}/`, uriSchemeDelimiterUnescaped)}`,
       path
