@@ -31,8 +31,22 @@ A library to help me wrangle the complex landscape between monorepos and polyrep
 
 <!-- symbiote-template-region-end -->
 
-A library to help me wrangle the complex landscape between monorepos and
-polyrepos.
+`@-xun/project` is a library to help me wrangle the complex landscape between
+monorepos and polyrepos.
+
+It essentially unifies and re-exports the contents of three packages:
+
+- [`@-xun/project-fs`][1] — utilities for parsing, interpreting, and
+  transforming a project's files.
+- [`@-xun/project-graph`][2] — utilities for deep structural analysis of
+  projects and their dependencies.
+- [`@-xun/project-types`][3] — powerful reflective project-related types.
+
+Though not re-exported as part of the official package, this monorepo also
+contains [`bidirectional-resolve`][4], which allows the [conditional][5] mapping
+of [package entry points][6] into file paths (similar to `require.resolve`).
+However, unlike prior art, `bidirectional-resolve` also allows the conditional
+mapping of arbitrary file paths _back into package entry points_!
 
 <!-- symbiote-template-region-start 3 -->
 
@@ -44,7 +58,6 @@ polyrepos.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Install](#install)
-- [Usage](#usage)
 - [Appendix](#appendix)
   - [Published Package Details](#published-package-details)
   - [License](#license)
@@ -66,12 +79,6 @@ To install:
 ```shell
 npm install @-xun/project
 ```
-
-## Usage
-
-<!-- TODO -->
-
-TODO
 
 <!-- symbiote-template-region-start 5 -->
 
@@ -236,8 +243,6 @@ specification. Contributions of any kind welcome!
   https://dev.to/jakobjingleheimer/configuring-commonjs-es-modules-for-nodejs-12ed#publish-only-a-cjs-distribution-with-property-exports
 [x-pkg-dual-package-hazard]:
   https://nodejs.org/api/packages.html#dual-package-hazard
-[x-pkg-esm-wine]:
-  https://dev.to/jakobjingleheimer/configuring-commonjs-es-modules-for-nodejs-12ed#esm-source-and-distribution
 [x-pkg-exports-conditions]:
   https://webpack.js.org/guides/package-exports#reference-syntax
 [x-pkg-exports-module-key]:
@@ -260,3 +265,9 @@ specification. Contributions of any kind welcome!
 [x-repo-pr-compare]: https://github.com/Xunnamius/project-utils/compare
 [x-repo-sponsor]: https://github.com/sponsors/Xunnamius
 [x-repo-support]: /.github/SUPPORT.md
+[1]: ./packages/fs
+[2]: ./packages/graph
+[3]: ./packages/types
+[4]: ./packages/bidirectional-resolve
+[5]: https://nodejs.org/api/packages.html#conditional-exports
+[6]: https://nodejs.org/api/packages.html#exports
