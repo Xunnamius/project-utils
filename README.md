@@ -86,7 +86,8 @@ npm install @-xun/project
 
 <!-- symbiote-template-region-end -->
 
-Further documentation can be found under [`docs/`][x-repo-docs].
+Further documentation can be found under [`docs/`][x-repo-docs], and at each
+sub-package's documentation directory.
 
 <!-- TODO: additional appendix sections here -->
 <!-- symbiote-template-region-start 6 -->
