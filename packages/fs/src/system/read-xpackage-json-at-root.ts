@@ -4,7 +4,7 @@ import { readJson } from 'universe+fs:system/read-json.ts';
 import type { AbsolutePath } from '@-xun/fs';
 import type { XPackageJson } from '@-xun/project-types';
 import type { Promisable } from 'type-fest';
-import type { ParametersNoFirst, SyncVersionOf } from 'typeverse:global.ts';
+import type { ParametersNoFirst, SyncVersionOf } from 'multiverse+common:types.ts';
 
 /**
  * @see {@link readXPackageJsonAtRoot}

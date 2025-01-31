@@ -10,6 +10,7 @@ import { deriveVirtualPrettierignoreLines } from '@-xun/project-fs';
 import { glob as globAsync, sync as globSync } from 'glob-gitignore';
 
 import { ProjectError } from 'multiverse+common:error.ts';
+import { type ParametersNoFirst } from 'multiverse+common:types.ts';
 
 import {
   assignResultTo,
@@ -18,8 +19,6 @@ import {
 } from 'universe+graph:common.ts';
 
 import { GraphErrorMessage } from 'universe+graph:error.ts';
-
-import { type ParametersNoFirst } from 'typeverse:global.ts';
 
 import type { GenericPackage, GenericProjectMetadata } from '@-xun/project-types';
 import type { Promisable } from 'type-fest';

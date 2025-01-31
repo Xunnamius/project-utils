@@ -11,7 +11,7 @@ import { commonDebug } from 'universe+fs:common.ts';
 import { FsErrorMessage } from 'universe+fs:error.ts';
 
 import type { Promisable } from 'type-fest';
-import type { ParametersNoFirst } from 'typeverse:global.ts';
+import type { ParametersNoFirst } from 'multiverse+common:types.ts';
 
 const debug = commonDebug.extend('deriveVirtualGitignoreLines');
 

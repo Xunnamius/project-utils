@@ -10,7 +10,7 @@ import { FsErrorMessage } from 'universe+fs:error.ts';
 
 import type { AbsolutePath } from '@-xun/fs';
 import type { JsonValue, Promisable } from 'type-fest';
-import type { ParametersNoFirst, SyncVersionOf } from 'typeverse:global.ts';
+import type { ParametersNoFirst, SyncVersionOf } from 'multiverse+common:types.ts';
 
 /**
  * @see {@link readJson}

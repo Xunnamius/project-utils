@@ -50,6 +50,8 @@ import {
   ProjectError
 } from 'multiverse+common:error.ts';
 
+import { type ParametersNoFirst } from 'multiverse+common:types.ts';
+
 import { packageRootToId } from 'universe+graph:analysis/package-root-to-id.ts';
 import { commonDebug } from 'universe+graph:common.ts';
 
@@ -63,8 +65,6 @@ import {
 } from 'universe+graph:constant.ts';
 
 import { GraphErrorMessage } from 'universe+graph:error.ts';
-
-import { type ParametersNoFirst } from 'typeverse:global.ts';
 
 import type { Merge, PackageJson, Promisable } from 'type-fest';
 

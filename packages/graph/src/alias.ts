@@ -84,7 +84,7 @@ export enum WellKnownImportAlias {
    * This alias always refers to the project root's `./types` directory.
    *
    * Examples of matching aliases:
-   * - `"typeverse:global.ts"`                (root ./types/global.ts)
+   * - `"multiverse+common:types.ts"`                (root ./types/global.ts)
    */
   Typeverse = 'typeverse',
   /**
@@ -296,7 +296,7 @@ export function makeRawAliasMapping(
  * - `"multiverse+package-id:some/path.js"` (package ./src/some/path.js)
  * - `"testverse:some/path.ts"`             (root ./test/some/path.ts)
  * - `"testverse+package-id:some/path.ts"`  (package ./test/some/path.ts)
- * - `"typeverse:global.ts"`                (root ./types/global.ts)
+ * - `"multiverse+common:types.ts"`                (root ./types/global.ts)
  * - `"rootverse:some/path.js"`             (root ./some/path.js)
  * - `"rootverse+package-id:some/path.ts"`  (package ./some/path.ts)
  *

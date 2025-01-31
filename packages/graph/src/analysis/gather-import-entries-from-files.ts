@@ -11,12 +11,11 @@ import {
 } from 'babel-plugin-metadata-accumulator';
 
 import { ProjectError } from 'multiverse+common:error.ts';
+import { type ParametersNoFirst, type SyncVersionOf } from 'multiverse+common:types.ts';
 
 import { commonDebug } from 'universe+graph:common.ts';
 import { hasExtensionAcceptedByBabel } from 'universe+graph:constant.ts';
 import { GraphErrorMessage } from 'universe+graph:error.ts';
-
-import { type ParametersNoFirst, type SyncVersionOf } from 'typeverse:global.ts';
 
 import type { Promisable } from 'type-fest';
 

@@ -14,6 +14,7 @@ import {
 import { glob as globAsync, sync as globSync } from 'glob';
 
 import { ProjectError } from 'multiverse+common:error.ts';
+import { type ParametersNoFirst, type SyncVersionOf } from 'multiverse+common:types.ts';
 
 import {
   ensureRawSpecifierOk,
@@ -33,8 +34,6 @@ import { pathToPackage } from 'universe+graph:analysis/path-to-package.ts';
 import { commonDebug, type PackageBuildTargets } from 'universe+graph:common.ts';
 import { hasTypescriptExtension } from 'universe+graph:constant.ts';
 import { GraphErrorMessage } from 'universe+graph:error.ts';
-
-import { type ParametersNoFirst, type SyncVersionOf } from 'typeverse:global.ts';
 
 import type { Entries, Promisable, SetFieldType } from 'type-fest';
 

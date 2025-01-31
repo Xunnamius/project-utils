@@ -4,9 +4,9 @@ import { readFile as readFileAsync } from 'node:fs/promises';
 import { cache, CacheScope } from '@-xun/cache';
 import isValidNpmPackageName from 'validate-npm-package-name';
 
-import { commonDebug } from 'universe+graph:common.ts';
+import { type ParametersNoFirst, type SyncVersionOf } from 'multiverse+common:types.ts';
 
-import { type ParametersNoFirst, type SyncVersionOf } from 'typeverse:global.ts';
+import { commonDebug } from 'universe+graph:common.ts';
 
 import type { AbsolutePath } from '@-xun/fs';
 import type { Promisable } from 'type-fest';

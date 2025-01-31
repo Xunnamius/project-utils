@@ -8,13 +8,13 @@ import {
 
 import { glob as globAsync, sync as globSync } from 'glob-gitignore';
 
+import { type ParametersNoFirst, type SyncVersionOf } from 'multiverse+common:types.ts';
+
 import {
   assignResultTo,
   commonDebug,
   type PackageFiles
 } from 'universe+graph:common.ts';
-
-import { type ParametersNoFirst, type SyncVersionOf } from 'typeverse:global.ts';
 
 import type { GenericPackage } from '@-xun/project-types';
 import type { Promisable } from 'type-fest';
