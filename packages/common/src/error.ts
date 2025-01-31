@@ -258,6 +258,9 @@ export const CommonErrorMessage = {
   Generic() {
     return 'an error occurred that caused this software to crash';
   },
+  GuruMeditation() {
+    return 'an impossible scenario occurred';
+  },
   NotAGitRepositoryError() {
     return 'unable to locate git repository root';
   },

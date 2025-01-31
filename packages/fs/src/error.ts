@@ -7,5 +7,14 @@ export * from 'multiverse+common:error.ts';
  */
 /* istanbul ignore next */
 export const FsErrorMessage = {
-  ...CommonErrorMessage
+  ...CommonErrorMessage,
+  NotReadable(path: string) {
+    return `"${path}" cannot be read and/or does not exist`;
+  },
+  NotParsable(path: string, type = 'json') {
+    return `${path} cannot be parsed as it does not contain valid ${type}`;
+  },
+  DeriverAsyncConfigurationConflict() {
+    return 'assertion failed: attempted to invoke function with conflicting or illegal configuration options';
+  }
 };

@@ -1,7 +1,3 @@
-import { isNativeError } from 'node:util/types';
-
-import { type WorkspacePackageName } from '@-xun/project-types';
-
 import { CommonErrorMessage } from 'multiverse+common:error.ts';
 import { type WellKnownImportAlias } from 'multiverse+graph:alias.ts';
 
@@ -19,49 +15,8 @@ export * from 'multiverse+common:error.ts';
 /* istanbul ignore next */
 export const GraphErrorMessage = {
   ...CommonErrorMessage,
-  Generic() {
-    return 'an error occurred that caused this software to crash';
-  },
-  GuruMeditation() {
-    return 'an impossible scenario occurred';
-  },
-  PathIsNotAbsolute(path: string) {
-    return `"${path}" is not an absolute path`;
-  },
-  PathIsNotRelative(path: string) {
-    return `"${path}" is not a relative path`;
-  },
-  NotReadable(path: string) {
-    return `"${path}" cannot be read and/or does not exist`;
-  },
-  NotWritable(path: string) {
-    return `"${path}" cannot be written to and/or does not exist`;
-  },
-  NotParsable(path: string, type = 'json') {
-    return `${path} cannot be parsed as it does not contain valid ${type}`;
-  },
-  NotAGitRepositoryError() {
-    return 'unable to locate git repository root';
-  },
   NotAMonorepoError() {
     return 'the project is not a monorepo (must define "workspaces" field in package.json)';
-  },
-  PackageJsonNotParsable(packageJsonPath: string, reason: unknown) {
-    return `unable to parse ${packageJsonPath}: ${isNativeError(reason) ? reason.message : String(reason)}`;
-  },
-  DuplicatePackageName(packageName: string, firstPath: string, secondPath: string) {
-    return (
-      `the following packages must not have the same name "${packageName}":\n` +
-      `  ${firstPath}\n` +
-      `  ${secondPath}`
-    );
-  },
-  DuplicatePackageId(id: string, firstPath: string, secondPath: string) {
-    return (
-      `the following unnamed packages must not have the same package-id "${id}":\n` +
-      `  ${firstPath}\n` +
-      `  ${secondPath}`
-    );
   },
   BadProjectTypeInPackageJson(path: string) {
     return `encountered invalid package.json file with a defined "type" field not equal to either "module" or "commonjs": ${path}`;
@@ -90,12 +45,6 @@ export const GraphErrorMessage = {
   },
   MissingOptionalBabelDependency(caller: string) {
     return `invoking \`${caller}\` requires the "@babel/core" and "@babel/plugin-syntax-typescript" packages. Run \`npm install --save-dev @babel/core @babel/plugin-syntax-typescript\` and then try again`;
-  },
-  AssertionFailedWantedPathIsNotSeenPath() {
-    return 'assertion failed: wantedPath does not map cleanly to seenPath';
-  },
-  DeriverAsyncConfigurationConflict() {
-    return 'assertion failed: attempted to invoke function with conflicting or illegal configuration options';
   },
   UnsupportedFeature(feature: string) {
     return `this package does not support ${feature}`;
@@ -132,9 +81,6 @@ export const GraphErrorMessage = {
     path?: string
   ) {
     return `encountered suboptimal import specifier "${specifier}": this specifier should be replaced with ${replacement ? `"${replacement}"` : 'something else or the import should be removed entirely'}${path ? ` in ${path}` : ''}`;
-  },
-  UnknownWorkspacePackageName(name: WorkspacePackageName) {
-    return `this project has no workspace package named "${name}"`;
   },
   PathOutsideRoot(path: string) {
     return `path is outside of the project root: ${path}`;
