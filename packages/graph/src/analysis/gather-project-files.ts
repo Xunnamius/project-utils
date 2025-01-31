@@ -3,7 +3,7 @@ import {
   CacheScope,
   type ArrayNoLast,
   type FunctionToCacheParameters
-} from '@-xun/cache';
+} from '@-xun/memoize';
 
 import { toAbsolutePath, toRelativePath, type AbsolutePath } from '@-xun/fs';
 import { deriveVirtualPrettierignoreLines } from '@-xun/project-fs';

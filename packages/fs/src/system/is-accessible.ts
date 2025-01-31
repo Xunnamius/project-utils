@@ -2,7 +2,7 @@ import { accessSync } from 'node:fs';
 import { access as accessAsync, constants as fsConstants_ } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
-import { cache, CacheScope } from '@-xun/cache';
+import { cache, CacheScope } from '@-xun/memoize';
 
 import type { Promisable } from 'type-fest';
 import type { ParametersNoFirst, SyncVersionOf } from 'multiverse+common:types.ts';

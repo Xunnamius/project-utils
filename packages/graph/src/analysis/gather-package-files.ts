@@ -1,4 +1,4 @@
-import { cache, CacheScope } from '@-xun/cache';
+import { cache, CacheScope } from '@-xun/memoize';
 import { toPath, toRelativePath, type AbsolutePath, type RelativePath } from '@-xun/fs';
 import { deriveVirtualGitignoreLines } from '@-xun/project-fs';
 import { glob as globAsync, sync as globSync } from 'glob-gitignore';

@@ -1,6 +1,6 @@
 import assert from 'node:assert';
 
-import { cache, CacheScope } from '@-xun/cache';
+import { cache, CacheScope } from '@-xun/memoize';
 import { toPath, toRelativePath, type AbsolutePath, type RelativePath } from '@-xun/fs';
 
 import {

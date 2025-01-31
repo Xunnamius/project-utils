@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { readFile as readFileAsync } from 'node:fs/promises';
 
-import { cache, CacheScope } from '@-xun/cache';
+import { cache, CacheScope } from '@-xun/memoize';
 import isValidNpmPackageName from 'validate-npm-package-name';
 
 import { commonDebug } from 'universe+graph:common.ts';

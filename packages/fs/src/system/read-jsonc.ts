@@ -2,7 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { readFile as readFileAsync } from 'node:fs/promises';
 
-import { cache, CacheScope } from '@-xun/cache';
+import { cache, CacheScope } from '@-xun/memoize';
 import * as JSONC from 'jsonc-parser';
 
 import { ProjectError } from 'multiverse+common:error.ts';
