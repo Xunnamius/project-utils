@@ -91,7 +91,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@-xun/symbiote": "^2.17.3",
+    "@-xun/symbiote": "^2.18.0",
     "resolve.exports": "^2.0.3"
   },
   "engines": {
