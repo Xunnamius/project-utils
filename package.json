@@ -94,8 +94,7 @@
     "@-xun/project-graph": "^1.0.0",
     "@-xun/project-types": "^1.0.0",
     "core-js": "^3.40.0",
-    "named-app-errors": "^4.0.2",
-    "type-fest": "^4.33.0"
+    "named-app-errors": "^4.0.2"
   },
   "devDependencies": {
     "@-xun/symbiote": "^2.18.0",
