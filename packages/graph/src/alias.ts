@@ -1,28 +1,24 @@
 import { extname } from 'node:path';
 
+import { toPath, toRelativePath, type RelativePath } from '@-xun/fs';
 import escapeStringRegExp from 'escape-string-regexp~4';
-import { type Arrayable } from 'type-fest';
 
-import { type WorkspacePackageId } from 'universe+project-utils';
-import { type GenericProjectMetadata } from 'universe+project-utils:analyze/common.ts';
-
-import {
-  uriSchemeDelimiterEscaped,
-  uriSchemeDelimiterUnescaped,
-  uriSchemeSubDelimiterUnescaped
-} from 'universe+project-utils:constant.ts';
-
-import { ErrorMessage, ProjectError } from 'universe+project-utils:error.ts';
+import { ProjectError } from 'multiverse+common:error.ts';
 
 import {
   directoryPackagesProjectBase,
   directorySrcPackageBase,
   directoryTestPackageBase,
   directoryTypesProjectBase,
-  toPath,
-  toRelativePath,
-  type RelativePath
-} from 'universe+project-utils:fs.ts';
+  uriSchemeDelimiterEscaped,
+  uriSchemeDelimiterUnescaped,
+  uriSchemeSubDelimiterUnescaped
+} from 'universe+graph:constant.ts';
+
+import { GraphErrorMessage } from 'universe+graph:error.ts';
+
+import type { GenericProjectMetadata, WorkspacePackageId } from '@-xun/project-types';
+import type { Arrayable } from 'type-fest';
 
 export {
   uriSchemeDelimiterUnescaped as uriSchemeDelimiter,
@@ -240,13 +236,16 @@ export function makeRawAliasMapping(
 
   if (invalidAliasRegExp.test(rawAlias.alias)) {
     throw new ProjectError(
-      ErrorMessage.IllegalAliasKeyInvalidCharacters(rawAlias.alias, invalidAliasRegExp)
+      GraphErrorMessage.IllegalAliasKeyInvalidCharacters(
+        rawAlias.alias,
+        invalidAliasRegExp
+      )
     );
   }
 
   if (invalidPathRegExp.test(rawPath.path)) {
     throw new ProjectError(
-      ErrorMessage.IllegalAliasValueInvalidCharacters(
+      GraphErrorMessage.IllegalAliasValueInvalidCharacters(
         rawAlias.alias,
         rawPath.path,
         invalidPathRegExp
@@ -262,12 +261,15 @@ export function makeRawAliasMapping(
     isLocalLookingRegExp.test(rawPath.path)
   ) {
     throw new ProjectError(
-      ErrorMessage.IllegalAliasValueInvalidSeparatorAdfix(rawAlias.alias, rawPath.path)
+      GraphErrorMessage.IllegalAliasValueInvalidSeparatorAdfix(
+        rawAlias.alias,
+        rawPath.path
+      )
     );
   }
 
   if (rawPath.suffix === 'open' && rawAlias.suffix !== 'open') {
-    throw new ProjectError(ErrorMessage.IllegalAliasBadSuffix(rawAlias.alias));
+    throw new ProjectError(GraphErrorMessage.IllegalAliasBadSuffix(rawAlias.alias));
   }
 
   return [rawAlias, rawPath] as const;
@@ -791,14 +793,14 @@ export function ensureRawSpecifierOk(
   // ? Fail if it is empty
   if (!specifier) {
     throw new ProjectError(
-      ErrorMessage.SpecifierNotOkEmpty(specifier, containingFilePath)
+      GraphErrorMessage.SpecifierNotOkEmpty(specifier, containingFilePath)
     );
   }
 
   // ? Fail if it begins with ./ or ../ or / or is . or ..
   if (specifier.startsWith('/') || isLocalLookingRegExp.test(specifier)) {
     throw new ProjectError(
-      ErrorMessage.SpecifierNotOkRelative(specifier, containingFilePath)
+      GraphErrorMessage.SpecifierNotOkRelative(specifier, containingFilePath)
     );
   }
 
@@ -820,7 +822,7 @@ export function ensureRawSpecifierOk(
       isLocalLookingRegExp.test(specifierPathComponent))
   ) {
     throw new ProjectError(
-      ErrorMessage.SpecifierNotOkRelative(specifier, containingFilePath)
+      GraphErrorMessage.SpecifierNotOkRelative(specifier, containingFilePath)
     );
   }
 
@@ -851,7 +853,7 @@ export function ensureRawSpecifierOk(
     rawAlias.group === WellKnownImportAlias.Universe
   ) {
     throw new ProjectError(
-      ErrorMessage.SpecifierNotOkVerseNotAllowed(
+      GraphErrorMessage.SpecifierNotOkVerseNotAllowed(
         `foreign ${rawAlias.group}` +
           (rawAlias.packageId ? ` (${rawAlias.packageId})` : ''),
         specifier,
@@ -863,7 +865,7 @@ export function ensureRawSpecifierOk(
   // ? Fail if allowTestversalImports is false and testverse encountered
   if (!allowTestversalImports && isTestversal) {
     throw new ProjectError(
-      ErrorMessage.SpecifierNotOkVerseNotAllowed(
+      GraphErrorMessage.SpecifierNotOkVerseNotAllowed(
         rawAlias.group === WellKnownImportAlias.Testverse
           ? rawAlias.group
           : `testversal ${rawAlias.group}`,
@@ -877,7 +879,7 @@ export function ensureRawSpecifierOk(
   // ! This check should happen before the more generic isMultiversal check
   if (isMultiversal && !isForeign) {
     throw new ProjectError(
-      ErrorMessage.SpecifierNotOkSelfReferential(specifier, containingFilePath)
+      GraphErrorMessage.SpecifierNotOkSelfReferential(specifier, containingFilePath)
     );
   }
 
@@ -885,7 +887,7 @@ export function ensureRawSpecifierOk(
   // ? encountered
   if (!allowMultiversalImports && isMultiversal && !isTypeversal && !isTestversal) {
     throw new ProjectError(
-      ErrorMessage.SpecifierNotOkVerseNotAllowed(
+      GraphErrorMessage.SpecifierNotOkVerseNotAllowed(
         rawAlias.group === WellKnownImportAlias.Multiverse
           ? rawAlias.group
           : `multiversal ${rawAlias.group}`,
@@ -903,14 +905,14 @@ export function ensureRawSpecifierOk(
     !extname(specifierPathComponent)
   ) {
     throw new ProjectError(
-      ErrorMessage.SpecifierNotOkMissingExtension(specifier, containingFilePath)
+      GraphErrorMessage.SpecifierNotOkMissingExtension(specifier, containingFilePath)
     );
   }
 
   // ? Fail if the specifier === "index.extensionToAppend"
   if (specifier.endsWith(`${uriSchemeDelimiterUnescaped}index${extensionToAppend}`)) {
     throw new ProjectError(
-      ErrorMessage.SpecifierNotOkUnnecessaryIndex(specifier, containingFilePath)
+      GraphErrorMessage.SpecifierNotOkUnnecessaryIndex(specifier, containingFilePath)
     );
   }
 
@@ -924,7 +926,7 @@ export function ensureRawSpecifierOk(
 
     if (specifierPathComponent.startsWith(`${directorySrcPackageBase}/`)) {
       throw new ProjectError(
-        ErrorMessage.SpecifierNotOkSuboptimal(
+        GraphErrorMessage.SpecifierNotOkSuboptimal(
           specifier,
           (isForeign ? WellKnownImportAlias.Multiverse : WellKnownImportAlias.Universe) +
             errorSuffix,
@@ -933,7 +935,7 @@ export function ensureRawSpecifierOk(
       );
     } else if (isTestversal) {
       throw new ProjectError(
-        ErrorMessage.SpecifierNotOkSuboptimal(
+        GraphErrorMessage.SpecifierNotOkSuboptimal(
           specifier,
           WellKnownImportAlias.Testverse + errorSuffix,
           containingFilePath
@@ -941,7 +943,7 @@ export function ensureRawSpecifierOk(
       );
     } else if (isTypeversal) {
       throw new ProjectError(
-        ErrorMessage.SpecifierNotOkSuboptimal(
+        GraphErrorMessage.SpecifierNotOkSuboptimal(
           specifier,
           WellKnownImportAlias.Typeverse + errorSuffix,
           containingFilePath
@@ -972,7 +974,7 @@ export function ensureRawSpecifierOk(
             : WellKnownImportAlias.Rootverse;
 
       throw new ProjectError(
-        ErrorMessage.SpecifierNotOkSuboptimal(
+        GraphErrorMessage.SpecifierNotOkSuboptimal(
           specifier,
           (verse === WellKnownImportAlias.Multiverse && !allowMultiversalImports) ||
             (verse === WellKnownImportAlias.Testverse && !allowTestversalImports)
@@ -990,7 +992,11 @@ export function ensureRawSpecifierOk(
       specifierPathComponent.startsWith('node_modules/')
     ) {
       throw new ProjectError(
-        ErrorMessage.SpecifierNotOkSuboptimal(specifier, undefined, containingFilePath)
+        GraphErrorMessage.SpecifierNotOkSuboptimal(
+          specifier,
+          undefined,
+          containingFilePath
+        )
       );
     }
   }
