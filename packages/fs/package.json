@@ -20,6 +20,10 @@
       "types": "./dist/packages/fs/src/index.d.ts",
       "default": "./dist/packages/fs/src/index.js"
     },
+    "./error": {
+      "types": "./dist/packages/fs/src/error.d.ts",
+      "default": "./dist/packages/fs/src/error.js"
+    },
     "./package": "./package.json",
     "./package.json": "./package.json"
   },
@@ -27,6 +31,9 @@
     "*": {
       "index": [
         "dist/packages/fs/src/index.d.ts"
+      ],
+      "error": [
+        "dist/packages/fs/src/error.d.ts"
       ],
       "package": [
         "package.json"
