@@ -1,11 +1,12 @@
 import { CommonErrorMessage } from 'multiverse+common:error.ts';
-import { type WellKnownImportAlias } from 'multiverse+graph:alias.ts';
+
+import { type WellKnownImportAlias } from 'universe+graph:alias.ts';
 
 import {
   directorySrcPackageBase,
   uriSchemeDelimiterUnescaped,
   uriSchemeSubDelimiterUnescaped
-} from 'multiverse+graph:constant.ts';
+} from 'universe+graph:constant.ts';
 
 export * from 'multiverse+common:error.ts';
 
