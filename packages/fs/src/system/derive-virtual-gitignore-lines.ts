@@ -2,7 +2,6 @@ import { readFileSync } from 'node:fs';
 import { readFile as readFileAsync } from 'node:fs/promises';
 
 import { cache, CacheScope } from '@-xun/cache';
-import { type AbsolutePath } from '@-xun/fs';
 import { runNoRejectOnBadExit } from '@-xun/run';
 
 import { ProjectError } from 'multiverse+common:error.ts';
@@ -10,6 +9,7 @@ import { ProjectError } from 'multiverse+common:error.ts';
 import { commonDebug } from 'universe+fs:common.ts';
 import { FsErrorMessage } from 'universe+fs:error.ts';
 
+import type { AbsolutePath } from '@-xun/fs';
 import type { Promisable } from 'type-fest';
 import type { ParametersNoFirst } from 'multiverse+common:types.ts';
 

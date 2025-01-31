@@ -1,14 +1,7 @@
 import { cache, CacheScope } from '@-xun/cache';
 import { toPath, toRelativePath, type AbsolutePath, type RelativePath } from '@-xun/fs';
-
-import {
-  deriveVirtualGitignoreLines,
-  directoryPackagesProjectBase
-} from '@-xun/project-fs';
-
+import { deriveVirtualGitignoreLines } from '@-xun/project-fs';
 import { glob as globAsync, sync as globSync } from 'glob-gitignore';
-
-import { type ParametersNoFirst, type SyncVersionOf } from 'multiverse+common:types.ts';
 
 import {
   assignResultTo,
@@ -16,8 +9,11 @@ import {
   type PackageFiles
 } from 'universe+graph:common.ts';
 
+import { directoryPackagesProjectBase } from 'universe+graph:constant.ts';
+
 import type { GenericPackage } from '@-xun/project-types';
 import type { Promisable } from 'type-fest';
+import type { ParametersNoFirst, SyncVersionOf } from 'multiverse+common:types.ts';
 
 const debug = commonDebug.extend('gatherPackageFiles');
 

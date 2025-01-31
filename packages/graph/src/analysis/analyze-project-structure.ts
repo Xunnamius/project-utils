@@ -50,8 +50,6 @@ import {
   ProjectError
 } from 'multiverse+common:error.ts';
 
-import { type ParametersNoFirst } from 'multiverse+common:types.ts';
-
 import { packageRootToId } from 'universe+graph:analysis/package-root-to-id.ts';
 import { commonDebug } from 'universe+graph:common.ts';
 
@@ -67,6 +65,7 @@ import {
 import { GraphErrorMessage } from 'universe+graph:error.ts';
 
 import type { Merge, PackageJson, Promisable } from 'type-fest';
+import type { ParametersNoFirst } from 'multiverse+common:types.ts';
 
 const debug = commonDebug.extend('getProjectMetadata');
 const subrootDebug = debug.extend('subroot');

@@ -1,5 +1,4 @@
-import { type AbsolutePath, type RelativePath } from '@-xun/fs';
-
+import type { AbsolutePath, RelativePath } from '@-xun/fs';
 import type { OmitIndexSignature, PackageJson } from 'type-fest';
 
 export type WorkspacePackageName = string;

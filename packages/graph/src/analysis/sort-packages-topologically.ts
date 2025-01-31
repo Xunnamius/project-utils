@@ -8,12 +8,12 @@ import {
   type ProjectMetadata
 } from '@-xun/project-types';
 
-import { type Entries } from 'type-fest';
-
 import { ProjectError } from 'multiverse+common:error.ts';
 
 import { commonDebug } from 'universe+graph:common.ts';
 import { GraphErrorMessage } from 'universe+graph:error.ts';
+
+import type { Entries } from 'type-fest';
 
 const debug = commonDebug.extend('sortPackagesTopologically');
 

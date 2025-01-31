@@ -1,8 +1,8 @@
-import { type AbsolutePath, type RelativePath } from '@-xun/fs';
 import { createDebugLogger } from 'rejoinder';
 
 import { globalDebuggerNamespace } from 'multiverse+common:constant.ts';
 
+import type { AbsolutePath, RelativePath } from '@-xun/fs';
 // ? Used in documentation
 // @ts-expect-error: used in documentation
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

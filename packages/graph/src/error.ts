@@ -1,12 +1,14 @@
-import { CommonErrorMessage } from 'multiverse+common:error.ts';
+import { FsErrorMessage } from '@-xun/project-fs/error';
 
-import { type WellKnownImportAlias } from 'universe+graph:alias.ts';
+import { CommonErrorMessage } from 'multiverse+common:error.ts';
 
 import {
   directorySrcPackageBase,
   uriSchemeDelimiterUnescaped,
   uriSchemeSubDelimiterUnescaped
 } from 'universe+graph:constant.ts';
+
+import type { WellKnownImportAlias } from 'universe+graph:alias.ts';
 
 export * from 'multiverse+common:error.ts';
 
@@ -16,6 +18,8 @@ export * from 'multiverse+common:error.ts';
 /* istanbul ignore next */
 export const GraphErrorMessage = {
   ...CommonErrorMessage,
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  DeriverAsyncConfigurationConflict: FsErrorMessage.DeriverAsyncConfigurationConflict,
   NotAMonorepoError() {
     return 'the project is not a monorepo (must define "workspaces" field in package.json)';
   },
