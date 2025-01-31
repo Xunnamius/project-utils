@@ -1,7 +1,7 @@
 <!-- symbiote-template-region-start 1 -->
 
 <p align="center" width="100%">
-  <img width="300" src="https://raw.githubusercontent.com/Xunnamius/project-utils/refs/heads/main/packages/bidirectional-resolve/logo.png">
+  <img width="400" src="https://raw.githubusercontent.com/Xunnamius/project-utils/refs/heads/main/packages/bidirectional-resolve/logo.png">
 </p>
 
 <p align="center" width="100%">
