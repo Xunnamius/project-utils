@@ -1,8 +1,21 @@
 {
   "name": "bidirectional-resolve",
   "version": "1.0.0",
-  "description": "Resolve a package entry point to a file path (like require.resolve/import.meta.resolve) or a file path to a package entry point; supports conditional imports/exports",
-  "keywords": [],
+  "description": "Resolve a package entry point to a file path (like require.resolve/import.meta.resolve) OR a file path to a package entry point",
+  "keywords": [
+    "inverse",
+    "reverse",
+    "bidirectional",
+    "enhanced",
+    "advanced",
+    "resolve",
+    "require",
+    "import",
+    "node",
+    "module",
+    "package",
+    "cjs"
+  ],
   "homepage": "https://github.com/Xunnamius/project-utils/tree/main/packages/bidirectional-resolve#readme",
   "bugs": {
     "url": "https://github.com/Xunnamius/project-utils/issues"
