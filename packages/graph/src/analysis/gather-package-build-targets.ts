@@ -32,7 +32,7 @@ import { gatherPackageFiles } from 'universe+graph:analysis/gather-package-files
 import { pathToPackage } from 'universe+graph:analysis/path-to-package.ts';
 import { commonDebug, type PackageBuildTargets } from 'universe+graph:common.ts';
 import { hasTypescriptExtension } from 'universe+graph:constant.ts';
-import { AnalysisErrorMessage } from 'universe+graph:error.ts';
+import { GraphErrorMessage } from 'universe+graph:error.ts';
 
 import { type ParametersNoFirst, type SyncVersionOf } from 'typeverse:global.ts';
 
@@ -489,7 +489,7 @@ function gatherPackageBuildTargets_(
               specifier
             );
 
-            assert(specifierResolvedPath, AnalysisErrorMessage.GuruMeditation());
+            assert(specifierResolvedPath, GraphErrorMessage.GuruMeditation());
 
             if (isOkVerse) {
               targetPaths[importKind].push(specifierResolvedPath);
@@ -507,7 +507,7 @@ function gatherPackageBuildTargets_(
               );
 
               throw new ProjectError(
-                AnalysisErrorMessage.SpecifierNotOkVerseNotAllowed(
+                GraphErrorMessage.SpecifierNotOkVerseNotAllowed(
                   group,
                   specifier,
                   specifiersPath

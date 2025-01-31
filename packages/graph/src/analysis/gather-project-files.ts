@@ -17,7 +17,7 @@ import {
   type ProjectFiles
 } from 'universe+graph:common.ts';
 
-import { AnalysisErrorMessage } from 'universe+graph:error.ts';
+import { GraphErrorMessage } from 'universe+graph:error.ts';
 
 import { type ParametersNoFirst } from 'typeverse:global.ts';
 
@@ -99,7 +99,7 @@ function gatherProjectFiles_(
   } = cacheIdComponentsObject;
 
   if (shouldRunSynchronously && skipUnknown) {
-    throw new ProjectError(AnalysisErrorMessage.DeriverAsyncConfigurationConflict());
+    throw new ProjectError(GraphErrorMessage.DeriverAsyncConfigurationConflict());
   }
 
   if (useCached) {
@@ -269,7 +269,7 @@ function gatherProjectFiles_(
 
   function runSynchronously() {
     if (skipUnknown) {
-      throw new ProjectError(AnalysisErrorMessage.DeriverAsyncConfigurationConflict());
+      throw new ProjectError(GraphErrorMessage.DeriverAsyncConfigurationConflict());
     }
 
     initialize();
@@ -368,7 +368,7 @@ function gatherProjectFiles_(
         subRootPackagesArray.some(({ json: { directories } }) => directories))
     ) {
       throw new ProjectError(
-        AnalysisErrorMessage.UnsupportedFeature('the package.json "directories" field')
+        GraphErrorMessage.UnsupportedFeature('the package.json "directories" field')
       );
     }
 

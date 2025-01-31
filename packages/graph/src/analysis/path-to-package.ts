@@ -1,6 +1,6 @@
 import { ProjectError } from 'multiverse+common:error.ts';
 
-import { AnalysisErrorMessage } from 'universe+graph:error.ts';
+import { GraphErrorMessage } from 'universe+graph:error.ts';
 
 import type { AbsolutePath } from '@-xun/fs';
 import type { GenericPackageJson, Package, ProjectMetadata } from '@-xun/project-types';
@@ -29,5 +29,5 @@ export function pathToPackage<T extends GenericPackageJson>(
     return rootPackage;
   }
 
-  throw new ProjectError(AnalysisErrorMessage.PathOutsideRoot(path));
+  throw new ProjectError(GraphErrorMessage.PathOutsideRoot(path));
 }

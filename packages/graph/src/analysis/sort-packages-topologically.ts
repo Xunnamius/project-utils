@@ -13,7 +13,7 @@ import { type Entries } from 'type-fest';
 import { ProjectError } from 'multiverse+common:error.ts';
 
 import { commonDebug } from 'universe+graph:common.ts';
-import { AnalysisErrorMessage } from 'universe+graph:error.ts';
+import { GraphErrorMessage } from 'universe+graph:error.ts';
 
 const debug = commonDebug.extend('sortPackagesTopologically');
 
@@ -81,7 +81,7 @@ export function sortPackagesTopologically(
 
   assert(
     rootPackage.json.name,
-    AnalysisErrorMessage.MissingNameInPackageJson(rootPackage.root)
+    GraphErrorMessage.MissingNameInPackageJson(rootPackage.root)
   );
 
   const packageGraphNodeEntries: Entries<PackageGraph> = [
@@ -121,10 +121,7 @@ export function sortPackagesTopologically(
             !node.package.json.private
           ) {
             throw new ProjectError(
-              AnalysisErrorMessage.IllegalPrivateDependency(
-                currentPackageName,
-                packageName
-              )
+              GraphErrorMessage.IllegalPrivateDependency(currentPackageName, packageName)
             );
           }
 
@@ -165,7 +162,7 @@ export function sortPackagesTopologically(
     if (previousNodeCount === nodeCount) {
       // ? No nodes were deleted in the last iteration, meaning we've
       // ? encountered a cycle
-      throw new ProjectError(AnalysisErrorMessage.DependencyCycle(nodeNames));
+      throw new ProjectError(GraphErrorMessage.DependencyCycle(nodeNames));
     }
 
     const collator = new Intl.Collator(undefined, { numeric: true });

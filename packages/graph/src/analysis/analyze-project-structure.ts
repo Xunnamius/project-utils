@@ -62,7 +62,7 @@ import {
   webpackConfigProjectBase
 } from 'universe+graph:constant.ts';
 
-import { AnalysisErrorMessage } from 'universe+graph:error.ts';
+import { GraphErrorMessage } from 'universe+graph:error.ts';
 
 import { type ParametersNoFirst } from 'typeverse:global.ts';
 
@@ -278,7 +278,7 @@ function analyzeProjectStructure_(
       assert(
         projectMetadata.cwdPackage.json.name,
         new ProjectError(
-          AnalysisErrorMessage.MissingNameInPackageJson(
+          GraphErrorMessage.MissingNameInPackageJson(
             'current package: ' +
               toPath(projectMetadata.cwdPackage.root, packageJsonConfigPackageBase)
           )
@@ -288,7 +288,7 @@ function analyzeProjectStructure_(
       assert(
         projectMetadata.rootPackage.json.name,
         new ProjectError(
-          AnalysisErrorMessage.MissingNameInPackageJson(
+          GraphErrorMessage.MissingNameInPackageJson(
             'root package: ' +
               toPath(projectMetadata.rootPackage.root, packageJsonConfigPackageBase)
           )
@@ -299,7 +299,7 @@ function analyzeProjectStructure_(
         assert(
           json.name,
           new ProjectError(
-            AnalysisErrorMessage.MissingNameInPackageJson(
+            GraphErrorMessage.MissingNameInPackageJson(
               toPath(root, packageJsonConfigPackageBase)
             )
           )
@@ -417,7 +417,7 @@ function setSubrootPackagesAndCwdPackage(
       ? workspaces_.packages
       : undefined;
 
-  assert(workspaces, AnalysisErrorMessage.NotAMonorepoError());
+  assert(workspaces, GraphErrorMessage.NotAMonorepoError());
 
   const globOptions: GlobGitignoreOptions = {
     cwd: projectRoot,
@@ -439,7 +439,7 @@ function setSubrootPackagesAndCwdPackage(
       const [pattern, negate] = normalizePattern(pattern_);
 
       for (const packageRoot of globSync(pattern, globOptions) as AbsolutePath[]) {
-        assert(typeof packageRoot === 'string', AnalysisErrorMessage.GuruMeditation());
+        assert(typeof packageRoot === 'string', GraphErrorMessage.GuruMeditation());
 
         // TODO: maybe be redundant given package.json workspaces negated glob
         if (packageRoot.endsWith('.ignore')) {
@@ -504,7 +504,7 @@ function setSubrootPackagesAndCwdPackage(
               packageRoots.map(async (packageRoot) => {
                 assert(
                   typeof packageRoot === 'string',
-                  AnalysisErrorMessage.GuruMeditation()
+                  GraphErrorMessage.GuruMeditation()
                 );
 
                 // TODO: maybe redundant w/ package.json workspaces negated glob
@@ -736,7 +736,7 @@ function determineCwdPackage(
       cwdPackage =
         (cwdPackageName ? subRootPackages?.get(cwdPackageName) : undefined) ||
         (allowUnnamedPackages && subRootPackages?.unnamed.get(packageId)) ||
-        toss(new ProjectError(AnalysisErrorMessage.GuruMeditation()));
+        toss(new ProjectError(GraphErrorMessage.GuruMeditation()));
     }
   }
 }
@@ -880,7 +880,7 @@ function getProjectAttributes(
   function finalize() {
     if (!['module', 'commonjs'].includes(type)) {
       throw new ProjectError(
-        AnalysisErrorMessage.BadProjectTypeInPackageJson(
+        GraphErrorMessage.BadProjectTypeInPackageJson(
           toPath(root, packageJsonConfigPackageBase)
         )
       );
@@ -911,7 +911,7 @@ function getProjectAttributes(
     }
 
     if (attributes[ProjectAttribute.Cli] && attributes[ProjectAttribute.Next]) {
-      throw new ProjectError(AnalysisErrorMessage.CannotBeCliAndNextJs());
+      throw new ProjectError(GraphErrorMessage.CannotBeCliAndNextJs());
     }
   }
 }
@@ -944,7 +944,7 @@ function getWorkspaceAttributes(
 
   if (!['module', 'commonjs'].includes(type)) {
     throw new ProjectError(
-      AnalysisErrorMessage.BadProjectTypeInPackageJson(
+      GraphErrorMessage.BadProjectTypeInPackageJson(
         toPath(root, packageJsonConfigPackageBase)
       )
     );

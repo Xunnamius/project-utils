@@ -14,7 +14,7 @@ import { ProjectError } from 'multiverse+common:error.ts';
 
 import { commonDebug } from 'universe+graph:common.ts';
 import { hasExtensionAcceptedByBabel } from 'universe+graph:constant.ts';
-import { AnalysisErrorMessage } from 'universe+graph:error.ts';
+import { GraphErrorMessage } from 'universe+graph:error.ts';
 
 import { type ParametersNoFirst, type SyncVersionOf } from 'typeverse:global.ts';
 
@@ -111,7 +111,7 @@ function gatherImportEntriesFromFiles_(
         babel.transformFileSync(path, makeMinimalBabelConfigObject(plugin, options));
 
         const { imports } = accumulator.get(path) || {};
-        assert(imports, AnalysisErrorMessage.GuruMeditation());
+        assert(imports, GraphErrorMessage.GuruMeditation());
 
         dbg('normal imports seen (%O): %O', imports.normal.size, imports.normal);
         dbg('type-only imports seen (%O): %O', imports.typeOnly.size, imports.typeOnly);
@@ -173,7 +173,7 @@ function gatherImportEntriesFromFiles_(
             );
 
             const { imports } = accumulator.get(path) || {};
-            assert(imports, AnalysisErrorMessage.GuruMeditation());
+            assert(imports, GraphErrorMessage.GuruMeditation());
 
             dbg('normal imports seen (%O): %O', imports.normal.size, imports.normal);
             dbg(
@@ -259,7 +259,7 @@ function getBabel() {
   } catch (error) {
     debug('failed to import @babel/core: %O', error);
     throw new ProjectError(
-      AnalysisErrorMessage.MissingOptionalBabelDependency('gatherImportEntriesFromFiles')
+      GraphErrorMessage.MissingOptionalBabelDependency('gatherImportEntriesFromFiles')
     );
   }
 }
