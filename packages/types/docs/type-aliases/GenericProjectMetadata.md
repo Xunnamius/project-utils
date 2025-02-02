@@ -8,7 +8,7 @@
 
 > **GenericProjectMetadata**: [`ProjectMetadata`](ProjectMetadata.md)\<[`GenericPackageJson`](GenericPackageJson.md)\>
 
-Defined in: [index.ts:543](https://github.com/Xunnamius/projector/blob/e6720648fa9dc975b0426fb558b4c4b10c6b2e73/packages/types/src/index.ts#L543)
+Defined in: [index.ts:543](https://github.com/Xunnamius/projector/blob/13e6ed6a56dc037b1a9ba7cd7dfcf6687e7f59ca/packages/types/src/index.ts#L543)
 
 A version of [ProjectMetadata](ProjectMetadata.md) with [GenericPackageJson](GenericPackageJson.md) as its
 type parameter.
