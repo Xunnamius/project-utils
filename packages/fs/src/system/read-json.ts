@@ -2,7 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { readFile as readFileAsync } from 'node:fs/promises';
 
-import { cache, CacheScope } from '@-xun/memoize';
+import { memoizer } from '@-xun/memoize';
 
 import { ProjectError } from 'multiverse+common:error.ts';
 
@@ -52,8 +52,12 @@ function readJson_<T>(
   path: AbsolutePath,
   { useCached, try: try_, ...cacheIdComponentsObject }: ReadJsonOptions
 ): Promisable<T | undefined> {
+  type Memoization = (
+    ...args: [typeof path, typeof cacheIdComponentsObject]
+  ) => ReturnType<typeof readJson_>;
+
   if (useCached) {
-    const cachedResult = cache.get(CacheScope.ReadJson, [
+    const cachedResult = memoizer.get<Memoization>(readJson_ as unknown as Memoization, [
       path,
       cacheIdComponentsObject
     ]) as T;
@@ -93,7 +97,13 @@ function readJson_<T>(
   function parse(rawJson: string): T {
     try {
       const result = JSON.parse(rawJson);
-      cache.set(CacheScope.ReadJson, [path, cacheIdComponentsObject], result);
+
+      memoizer.set<Memoization>(
+        readJson_ as unknown as Memoization,
+        [path, cacheIdComponentsObject],
+        result
+      );
+
       return result;
     } catch (error) {
       throw new ProjectError(FsErrorMessage.NotParsable(path), { cause: error });

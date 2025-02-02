@@ -1,11 +1,11 @@
 import assert from 'node:assert';
 
-import { cache, CacheScope } from '@-xun/memoize';
+import { memoizer } from '@-xun/memoize';
 
 import {
   createMetadataAccumulatorPlugin,
-  type Options as AccumulatorOptions,
-  type PluginAndAccumulator
+  type AccumulatedMetadata,
+  type Options as AccumulatorOptions
 } from 'babel-plugin-metadata-accumulator';
 
 import { ProjectError } from 'multiverse+common:error.ts';
@@ -75,8 +75,11 @@ function gatherImportEntriesFromFiles_(
   debug('evaluating files: %O', files);
 
   let babel: ReturnType<typeof getBabel>;
-  let plugin: PluginAndAccumulator['plugin'];
-  let accumulator: PluginAndAccumulator['accumulator'];
+  const { plugin, accumulator } = createMetadataAccumulatorPlugin();
+
+  type Memoization = (
+    ...args: [AbsolutePath, typeof cacheIdComponentsObject]
+  ) => [AbsolutePath, AccumulatedMetadata['imports']];
 
   if (shouldRunSynchronously) {
     const importSpecifiersEntries = files.map((path, index) => {
@@ -85,10 +88,10 @@ function gatherImportEntriesFromFiles_(
 
       if (hasExtensionAcceptedByBabel(path)) {
         if (useCached) {
-          const cachedEntry = cache.get(CacheScope.GatherImportEntriesFromFiles, [
-            path,
-            cacheIdComponentsObject
-          ]);
+          const cachedEntry = memoizer.get<Memoization>(
+            gatherImportEntriesFromFiles_ as unknown as Memoization,
+            [path, cacheIdComponentsObject]
+          );
 
           if (cachedEntry) {
             dbg('reusing cached resources: %O', cachedEntry);
@@ -103,10 +106,6 @@ function gatherImportEntriesFromFiles_(
           babel = getBabel();
         }
 
-        if (!plugin || !accumulator) {
-          ({ plugin, accumulator } = createMetadataAccumulatorPlugin());
-        }
-
         babel.transformFileSync(path, makeMinimalBabelConfigObject(plugin, options));
 
         const { imports } = accumulator.get(path) || {};
@@ -117,8 +116,8 @@ function gatherImportEntriesFromFiles_(
 
         const entry: ImportSpecifiersEntry = [path, imports];
 
-        cache.set(
-          CacheScope.GatherImportEntriesFromFiles,
+        memoizer.set<Memoization>(
+          gatherImportEntriesFromFiles_ as unknown as Memoization,
           [path, cacheIdComponentsObject],
           entry
         );
@@ -144,10 +143,10 @@ function gatherImportEntriesFromFiles_(
 
           if (hasExtensionAcceptedByBabel(path)) {
             if (useCached) {
-              const cachedEntry = cache.get(CacheScope.GatherImportEntriesFromFiles, [
-                path,
-                cacheIdComponentsObject
-              ]);
+              const cachedEntry = memoizer.get<Memoization>(
+                gatherImportEntriesFromFiles_ as unknown as Memoization,
+                [path, cacheIdComponentsObject]
+              );
 
               if (cachedEntry) {
                 dbg('reusing cached resources: %O', cachedEntry);
@@ -160,10 +159,6 @@ function gatherImportEntriesFromFiles_(
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (!babel) {
               babel = getBabel();
-            }
-
-            if (!plugin || !accumulator) {
-              ({ plugin, accumulator } = createMetadataAccumulatorPlugin());
             }
 
             await babel.transformFileAsync(
@@ -183,8 +178,8 @@ function gatherImportEntriesFromFiles_(
 
             const entry: ImportSpecifiersEntry = [path, imports];
 
-            cache.set(
-              CacheScope.GatherImportEntriesFromFiles,
+            memoizer.set<Memoization>(
+              gatherImportEntriesFromFiles_ as unknown as Memoization,
               [path, cacheIdComponentsObject],
               entry
             );

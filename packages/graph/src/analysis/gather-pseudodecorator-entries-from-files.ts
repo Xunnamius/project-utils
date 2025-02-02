@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { readFile as readFileAsync } from 'node:fs/promises';
 
-import { cache, CacheScope } from '@-xun/memoize';
+import { memoizer } from '@-xun/memoize';
 import isValidNpmPackageName from 'validate-npm-package-name';
 
 import { commonDebug } from 'universe+graph:common.ts';
@@ -177,16 +177,20 @@ function gatherPseudodecoratorEntriesFromFiles_(
 ): Promisable<PseudodecoratorsEntry[]> {
   debug('evaluating files: %O', files);
 
+  type Memoization = (
+    ...args: [AbsolutePath, typeof cacheIdComponentsObject]
+  ) => PseudodecoratorsEntry;
+
   if (shouldRunSynchronously) {
     const pseudodecoratorsEntries = files.map((filepath, index) => {
       const dbg = debug.extend(`file-${index}`);
       dbg('evaluating file: %O', filepath);
 
       if (useCached) {
-        const cachedEntry = cache.get(CacheScope.GatherPseudodecoratorEntriesFromFiles, [
-          filepath,
-          cacheIdComponentsObject
-        ]);
+        const cachedEntry = memoizer.get<Memoization>(
+          gatherPseudodecoratorEntriesFromFiles_ as unknown as Memoization,
+          [filepath, cacheIdComponentsObject]
+        );
 
         if (cachedEntry) {
           dbg('reusing cached resources: %O', cachedEntry);
@@ -199,8 +203,8 @@ function gatherPseudodecoratorEntriesFromFiles_(
 
       debug('new pseudodecorator entry: %O', entry);
 
-      cache.set(
-        CacheScope.GatherPseudodecoratorEntriesFromFiles,
+      memoizer.set<Memoization>(
+        gatherPseudodecoratorEntriesFromFiles_ as unknown as Memoization,
         [filepath, cacheIdComponentsObject],
         entry
       );
@@ -217,8 +221,8 @@ function gatherPseudodecoratorEntriesFromFiles_(
         dbg('evaluating file: %O', filepath);
 
         if (useCached) {
-          const cachedEntry = cache.get(
-            CacheScope.GatherPseudodecoratorEntriesFromFiles,
+          const cachedEntry = memoizer.get<Memoization>(
+            gatherPseudodecoratorEntriesFromFiles_ as unknown as Memoization,
             [filepath, cacheIdComponentsObject]
           );
 
@@ -233,8 +237,8 @@ function gatherPseudodecoratorEntriesFromFiles_(
 
         debug('new pseudodecorator entry: %O', entry);
 
-        cache.set(
-          CacheScope.GatherPseudodecoratorEntriesFromFiles,
+        memoizer.set<Memoization>(
+          gatherPseudodecoratorEntriesFromFiles_ as unknown as Memoization,
           [filepath, cacheIdComponentsObject],
           entry
         );

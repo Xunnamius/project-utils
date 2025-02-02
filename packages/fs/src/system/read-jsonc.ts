@@ -2,7 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { readFile as readFileAsync } from 'node:fs/promises';
 
-import { cache, CacheScope } from '@-xun/memoize';
+import { memoizer } from '@-xun/memoize';
 import * as JSONC from 'jsonc-parser';
 
 import { ProjectError } from 'multiverse+common:error.ts';
@@ -69,11 +69,15 @@ function readJsonc_<T>(
 ): Promisable<T | undefined> {
   const { ignoreNonExceptionErrors, parseOptions } = cacheIdComponentsObject;
 
+  type Memoization = (
+    ...args: [typeof path, typeof cacheIdComponentsObject]
+  ) => ReturnType<typeof readJsonc_>;
+
   if (useCached) {
-    const cachedResult = cache.get(CacheScope.ReadJsonc, [
-      path,
-      cacheIdComponentsObject
-    ]) as T;
+    const cachedResult = memoizer.get<Memoization>(
+      readJsonc_ as unknown as Memoization,
+      [path, cacheIdComponentsObject]
+    ) as T;
 
     if (cachedResult) {
       return shouldRunSynchronously ? cachedResult : Promise.resolve(cachedResult);
@@ -124,7 +128,12 @@ function readJsonc_<T>(
         );
       }
 
-      cache.set(CacheScope.ReadJsonc, [path, cacheIdComponentsObject], result);
+      memoizer.set<Memoization>(
+        readJsonc_ as unknown as Memoization,
+        [path, cacheIdComponentsObject],
+        result
+      );
+
       return result;
     } catch (error) {
       throw new ProjectError(FsErrorMessage.NotParsable(path, 'jsonc'), {

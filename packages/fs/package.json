@@ -70,6 +70,7 @@
   },
   "dependencies": {
     "@-xun/fs": "^1.0.0",
+    "@-xun/memoize": "^1.1.0",
     "@-xun/project-types": "^1.0.0",
     "@-xun/run": "^0.0.1",
     "core-js": "^3.40.0",

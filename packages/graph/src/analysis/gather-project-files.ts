@@ -1,11 +1,5 @@
-import {
-  cache,
-  CacheScope,
-  type ArrayNoLast,
-  type FunctionToCacheParameters
-} from '@-xun/memoize';
-
 import { toAbsolutePath, toRelativePath, type AbsolutePath } from '@-xun/fs';
+import { memoizer } from '@-xun/memoize';
 import { deriveVirtualPrettierignoreLines } from '@-xun/project-fs';
 import { glob as globAsync, sync as globSync } from 'glob-gitignore';
 
@@ -97,16 +91,18 @@ function gatherProjectFiles_(
     ignoreUnsupportedFeatures = false
   } = cacheIdComponentsObject;
 
+  type Memoization = (
+    ...args: [typeof projectMetadata, typeof cacheIdComponentsObject]
+  ) => ReturnType<typeof gatherProjectFiles_>;
+
   if (shouldRunSynchronously && skipUnknown) {
     throw new ProjectError(GraphErrorMessage.DeriverAsyncConfigurationConflict());
   }
 
   if (useCached) {
-    const cachedPackageFiles = cache.get(
-      CacheScope.GatherProjectFiles,
-      ...([[projectMetadata, cacheIdComponentsObject]] as ArrayNoLast<
-        FunctionToCacheParameters<typeof gatherProjectFiles>
-      >)
+    const cachedPackageFiles = memoizer.get<Memoization>(
+      gatherProjectFiles_ as unknown as Memoization,
+      [projectMetadata, cacheIdComponentsObject]
     );
 
     if (cachedPackageFiles) {
@@ -410,11 +406,9 @@ function gatherProjectFiles_(
 
     debug('project files: %O', projectFiles);
 
-    cache.set(
-      CacheScope.GatherProjectFiles,
-      ...([[projectMetadata, cacheIdComponentsObject]] as ArrayNoLast<
-        FunctionToCacheParameters<typeof gatherProjectFiles>
-      >),
+    memoizer.set<Memoization>(
+      gatherProjectFiles_ as unknown as Memoization,
+      [projectMetadata, cacheIdComponentsObject],
       projectFiles
     );
   }

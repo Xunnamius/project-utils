@@ -2,7 +2,7 @@ import { accessSync } from 'node:fs';
 import { access as accessAsync, constants as fsConstants_ } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
-import { cache, CacheScope } from '@-xun/memoize';
+import { memoizer } from '@-xun/memoize';
 
 import type { Promisable } from 'type-fest';
 import type { ParametersNoFirst, SyncVersionOf } from 'multiverse+common:types.ts';
@@ -50,11 +50,15 @@ function isAccessible_(
 ): Promisable<boolean> {
   const { fsConstant = fsConstants.R_OK } = cacheIdComponentsObject;
 
+  type Memoization = (
+    ...args: [typeof path, typeof cacheIdComponentsObject]
+  ) => ReturnType<typeof isAccessible_>;
+
   if (useCached) {
-    const cachedResult = cache.get(CacheScope.IsAccessible, [
-      path,
-      cacheIdComponentsObject
-    ]);
+    const cachedResult = memoizer.get<Memoization>(
+      isAccessible_ as unknown as Memoization,
+      [path, cacheIdComponentsObject]
+    );
 
     if (cachedResult) {
       return shouldRunSynchronously ? cachedResult : Promise.resolve(cachedResult);
@@ -80,7 +84,12 @@ function isAccessible_(
   }
 
   function finalize(result: boolean) {
-    cache.set(CacheScope.IsAccessible, [path, cacheIdComponentsObject], result);
+    memoizer.set<Memoization>(
+      isAccessible_ as unknown as Memoization,
+      [path, cacheIdComponentsObject],
+      result
+    );
+
     return result;
   }
 }

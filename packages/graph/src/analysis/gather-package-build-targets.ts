@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
-import { cache, CacheScope } from '@-xun/memoize';
 import { toPath, toRelativePath, type AbsolutePath, type RelativePath } from '@-xun/fs';
+import { memoizer } from '@-xun/memoize';
 
 import {
   isWorkspacePackage,
@@ -132,11 +132,15 @@ function gatherPackageBuildTargets_(
   const { rootPackage } = projectMetadata;
   const { root: projectRoot } = rootPackage;
 
+  type Memoization = (
+    ...args: [typeof package_, typeof cacheIdComponentsObject]
+  ) => ReturnType<typeof gatherPackageBuildTargets_>;
+
   if (useCached) {
-    const cachedBuildTargets = cache.get(CacheScope.GatherPackageBuildTargets, [
-      package_,
-      cacheIdComponentsObject
-    ]);
+    const cachedBuildTargets = memoizer.get<Memoization>(
+      gatherPackageBuildTargets_ as unknown as Memoization,
+      [package_, cacheIdComponentsObject]
+    );
 
     if (cachedBuildTargets) {
       debug('reusing cached resources: %O', cachedBuildTargets);
@@ -353,8 +357,8 @@ function gatherPackageBuildTargets_(
 
     debug('package build targets: %O', packageBuildTargets);
 
-    cache.set(
-      CacheScope.GatherPackageBuildTargets,
+    memoizer.set<Memoization>(
+      gatherPackageBuildTargets_ as unknown as Memoization,
       [package_, cacheIdComponentsObject],
       packageBuildTargets
     );

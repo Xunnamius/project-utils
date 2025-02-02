@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { readFile as readFileAsync } from 'node:fs/promises';
 
-import { cache, CacheScope } from '@-xun/memoize';
+import { memoizer } from '@-xun/memoize';
 import { runNoRejectOnBadExit } from '@-xun/run';
 
 import { ProjectError } from 'multiverse+common:error.ts';
@@ -52,11 +52,15 @@ function deriveVirtualPrettierignoreLines_(
 ): Promisable<string[]> {
   const { includeUnknownPaths = false } = cacheIdComponentsObject;
 
+  type Memoization = (
+    ...args: [typeof projectRoot, typeof cacheIdComponentsObject]
+  ) => ReturnType<typeof deriveVirtualPrettierignoreLines_>;
+
   if (useCached) {
-    const cachedIgnored = cache.get(CacheScope.DeriveVirtualPrettierignoreLines, [
-      projectRoot,
-      cacheIdComponentsObject
-    ]);
+    const cachedIgnored = memoizer.get<Memoization>(
+      deriveVirtualPrettierignoreLines_ as unknown as Memoization,
+      [projectRoot, cacheIdComponentsObject]
+    );
 
     if (cachedIgnored) {
       debug('reusing cached resources: %O', cachedIgnored);
@@ -111,8 +115,8 @@ function deriveVirtualPrettierignoreLines_(
   }
 
   function finalize(ignores: string[]) {
-    cache.set(
-      CacheScope.DeriveVirtualPrettierignoreLines,
+    memoizer.set<Memoization>(
+      deriveVirtualPrettierignoreLines_ as unknown as Memoization,
       [projectRoot, cacheIdComponentsObject],
       ignores
     );

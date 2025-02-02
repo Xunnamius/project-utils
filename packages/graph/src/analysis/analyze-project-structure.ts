@@ -1,7 +1,5 @@
 import assert from 'node:assert';
 
-import { cache, CacheScope } from '@-xun/memoize';
-
 import {
   getCurrentWorkingDirectory,
   toAbsolutePath,
@@ -11,6 +9,8 @@ import {
   type AbsolutePath,
   type RelativePath
 } from '@-xun/fs';
+
+import { memoizer } from '@-xun/memoize';
 
 import {
   deriveVirtualGitignoreLines,
@@ -118,6 +118,10 @@ function analyzeProjectStructure_(
     allowUnnamedPackages
   };
 
+  type Memoization = (
+    ...args: [typeof cacheIdComponentsObject]
+  ) => ReturnType<typeof analyzeProjectStructure_>;
+
   debug('cwd: %O', cwd);
   debug('allowUnnamedPackages: %O', allowUnnamedPackages);
   debug('shouldRunSynchronously: %O,', shouldRunSynchronously);
@@ -130,9 +134,10 @@ function analyzeProjectStructure_(
       debug('projectRoot: %O', projectRoot);
 
       if (useCached) {
-        const cachedMetadata_ = cache.get(CacheScope.AnalyzeProjectStructure, [
-          cacheIdComponentsObject
-        ]);
+        const cachedMetadata_ = memoizer.get<Memoization>(
+          analyzeProjectStructure_ as unknown as Memoization,
+          [cacheIdComponentsObject]
+        );
 
         if (cachedMetadata_) {
           const cachedMetadata = {
@@ -202,9 +207,10 @@ function analyzeProjectStructure_(
     debug('projectRoot: %O', projectRoot);
 
     if (useCached) {
-      const cachedMetadata_ = cache.get(CacheScope.AnalyzeProjectStructure, [
-        cacheIdComponentsObject
-      ]);
+      const cachedMetadata_ = memoizer.get<Memoization>(
+        analyzeProjectStructure_ as unknown as Memoization,
+        [cacheIdComponentsObject]
+      );
 
       if (cachedMetadata_) {
         const cachedMetadata = {
@@ -306,8 +312,8 @@ function analyzeProjectStructure_(
       });
     }
 
-    cache.set(
-      CacheScope.AnalyzeProjectStructure,
+    memoizer.set<Memoization>(
+      analyzeProjectStructure_ as unknown as Memoization,
       [cacheIdComponentsObject],
       projectMetadata
     );

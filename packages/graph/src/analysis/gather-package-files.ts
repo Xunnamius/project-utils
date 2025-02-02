@@ -1,5 +1,5 @@
-import { cache, CacheScope } from '@-xun/memoize';
 import { toPath, toRelativePath, type AbsolutePath, type RelativePath } from '@-xun/fs';
+import { memoizer } from '@-xun/memoize';
 import { deriveVirtualGitignoreLines } from '@-xun/project-fs';
 import { glob as globAsync, sync as globSync } from 'glob-gitignore';
 
@@ -75,11 +75,15 @@ function gatherPackageFiles_(
   const { skipGitIgnored: skipIgnored = true, ignore: additionalIgnores = [] } =
     cacheIdComponentsObject;
 
+  type Memoization = (
+    ...args: [typeof package_, typeof cacheIdComponentsObject]
+  ) => ReturnType<typeof gatherPackageFiles_>;
+
   if (useCached) {
-    const cachedPackageFiles = cache.get(CacheScope.GatherPackageFiles, [
-      package_,
-      cacheIdComponentsObject
-    ]);
+    const cachedPackageFiles = memoizer.get<Memoization>(
+      gatherPackageFiles_ as unknown as Memoization,
+      [package_, cacheIdComponentsObject]
+    );
 
     if (cachedPackageFiles) {
       debug('reusing cached resources: %O', cachedPackageFiles);
@@ -212,8 +216,8 @@ function gatherPackageFiles_(
   function finalize() {
     debug('package files: %O', packageFiles);
 
-    cache.set(
-      CacheScope.GatherPackageFiles,
+    memoizer.set<Memoization>(
+      gatherPackageFiles_ as unknown as Memoization,
       [package_, cacheIdComponentsObject],
       packageFiles
     );
