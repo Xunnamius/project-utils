@@ -8,7 +8,7 @@
 
 > **SubpathMapping**: `object`
 
-Defined in: [resolvers.ts:104](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/bidirectional-resolve/src/resolvers.ts#L104)
+Defined in: [resolvers.ts:104](https://github.com/Xunnamius/projector/blob/d875f4ef259217f83da06d38dff9212ae8293b8a/packages/bidirectional-resolve/src/resolvers.ts#L104)
 
 A single flattened subpath in a `package.json` `exports`/`imports` map along
 with its target, matchable conditions, and other metadata. One or more

@@ -8,7 +8,7 @@
 
 > `const` **ErrorMessage**: `object`
 
-Defined in: [error.ts:5](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/bidirectional-resolve/src/error.ts#L5)
+Defined in: [error.ts:5](https://github.com/Xunnamius/projector/blob/d875f4ef259217f83da06d38dff9212ae8293b8a/packages/bidirectional-resolve/src/error.ts#L5)
 
 A collection of possible error and warning messages.
 
