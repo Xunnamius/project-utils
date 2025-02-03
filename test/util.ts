@@ -10,7 +10,7 @@ import { runNoRejectOnBadExit } from '@-xun/run';
 import { TrialError } from 'named-app-errors';
 import { resolve as resolverLibrary } from 'resolve.exports';
 
-import type { XPackageJson } from 'multiverse+types:index.ts';
+import type { XPackageJson } from 'multiverse+types';
 
 // TODO:
 //export * from '@-xun/jest';
