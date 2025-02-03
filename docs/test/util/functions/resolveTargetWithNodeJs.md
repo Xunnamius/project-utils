@@ -8,7 +8,7 @@
 
 > **resolveTargetWithNodeJs**(`__namedParameters`): `Promise`\<[`ResolvedSummary`](../type-aliases/ResolvedSummary.md)\>
 
-Defined in: [test/util.ts:32](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/test/util.ts#L32)
+Defined in: [test/util.ts:32](https://github.com/Xunnamius/projector/blob/f08ba65b842709375f6fb4363372a734742d54c1/test/util.ts#L32)
 
 Resolves a subpath to a target using the Node.js runtime. This function is
 used to ensure project-utils's resolver functions follow the Node.js resolver
