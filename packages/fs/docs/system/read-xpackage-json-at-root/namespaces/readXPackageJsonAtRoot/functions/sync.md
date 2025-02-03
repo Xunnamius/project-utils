@@ -8,7 +8,7 @@
 
 > **sync**(...`arguments_`): `Omit`\<`OmitIndexSignature`\<`PackageJson`\>, `"bin"` \| `"name"`\> & `object`
 
-Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:99](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/fs/src/system/read-xpackage-json-at-root.ts#L99)
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:99](https://github.com/Xunnamius/projector/blob/f1c4cd0ac601a9a5f65f41d830f0ce9a716e9d77/packages/fs/src/system/read-xpackage-json-at-root.ts#L99)
 
 Synchronously read in and parse the contents of a package.json file.
 

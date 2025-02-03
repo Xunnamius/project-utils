@@ -8,7 +8,7 @@
 
 > `const` **FsErrorMessage**: `object`
 
-Defined in: [packages/fs/src/error.ts:9](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/fs/src/error.ts#L9)
+Defined in: [packages/fs/src/error.ts:9](https://github.com/Xunnamius/projector/blob/f1c4cd0ac601a9a5f65f41d830f0ce9a716e9d77/packages/fs/src/error.ts#L9)
 
 A collection of possible error and warning messages.
 
