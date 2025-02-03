@@ -8,6 +8,6 @@
 
 > `const` **directoryWikiProjectBase**: `".wiki"` = `'.wiki'`
 
-Defined in: [packages/graph/src/constant.ts:176](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/graph/src/constant.ts#L176)
+Defined in: [packages/graph/src/constant.ts:176](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/constant.ts#L176)
 
 The basename of the well-known .wiki directory.

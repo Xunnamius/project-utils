@@ -8,7 +8,7 @@
 
 > **sync**(...`arguments_`): [`PseudodecoratorsEntry`](../../../type-aliases/PseudodecoratorsEntry.md)[]
 
-Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:290](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L290)
+Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:290](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L290)
 
 Accepts zero or more file paths and synchronously returns an array of
 [PseudodecoratorsEntry](../../../type-aliases/PseudodecoratorsEntry.md)s each mapping a given file path to an array

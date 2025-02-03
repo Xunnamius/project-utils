@@ -8,7 +8,7 @@
 
 > **GatherPackageFilesOptions**: `object`
 
-Defined in: [packages/graph/src/analysis/gather-package-files.ts:30](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/graph/src/analysis/gather-package-files.ts#L30)
+Defined in: [packages/graph/src/analysis/gather-package-files.ts:30](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/analysis/gather-package-files.ts#L30)
 
 ## Type declaration
 

@@ -8,7 +8,7 @@
 
 > `const` **invalidAliasRegExp**: `RegExp`
 
-Defined in: [packages/graph/src/alias.ts:34](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/graph/src/alias.ts#L34)
+Defined in: [packages/graph/src/alias.ts:34](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/alias.ts#L34)
 
 A regex containing illegal alias key characters.
 

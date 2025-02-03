@@ -22,7 +22,7 @@ cache.clear.
 
 > **sync**(`options`): `ProjectMetadata`\<`PackageJson`\>
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:372](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/graph/src/analysis/analyze-project-structure.ts#L372)
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:372](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/analysis/analyze-project-structure.ts#L372)
 
 ### Parameters
 
@@ -67,7 +67,7 @@ cache
 
 > **sync**(`options`): `ProjectMetadata`
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:372](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/graph/src/analysis/analyze-project-structure.ts#L372)
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:372](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/analysis/analyze-project-structure.ts#L372)
 
 ### Parameters
 

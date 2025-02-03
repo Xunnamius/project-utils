@@ -10,7 +10,7 @@
 
 > **generatePackageJsonEngineMaintainedNodeVersions**(`options`?): `string`
 
-Defined in: [packages/graph/src/analysis/generate-package-json-engine-maintained-node-versions.ts:9](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/graph/src/analysis/generate-package-json-engine-maintained-node-versions.ts#L9)
+Defined in: [packages/graph/src/analysis/generate-package-json-engine-maintained-node-versions.ts:9](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/analysis/generate-package-json-engine-maintained-node-versions.ts#L9)
 
 Synchronously returns the expected value for `package.json`
 `engines`/`engines.node` field.
@@ -42,7 +42,7 @@ engines
 
 > **generatePackageJsonEngineMaintainedNodeVersions**(`options`?): `string`[]
 
-Defined in: [packages/graph/src/analysis/generate-package-json-engine-maintained-node-versions.ts:23](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/graph/src/analysis/generate-package-json-engine-maintained-node-versions.ts#L23)
+Defined in: [packages/graph/src/analysis/generate-package-json-engine-maintained-node-versions.ts:23](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/analysis/generate-package-json-engine-maintained-node-versions.ts#L23)
 
 Synchronously returns an array of the currently maintained node versions.
 
@@ -73,7 +73,7 @@ engines
 
 > **generatePackageJsonEngineMaintainedNodeVersions**(`options`?): `Arrayable`\<`string`\>
 
-Defined in: [packages/graph/src/analysis/generate-package-json-engine-maintained-node-versions.ts:37](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/graph/src/analysis/generate-package-json-engine-maintained-node-versions.ts#L37)
+Defined in: [packages/graph/src/analysis/generate-package-json-engine-maintained-node-versions.ts:37](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/analysis/generate-package-json-engine-maintained-node-versions.ts#L37)
 
 Synchronously returns maintained node versions in the given format.
 

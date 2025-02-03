@@ -8,7 +8,7 @@
 
 > **gatherProjectFiles**(...`args`): `Promise`\<[`ProjectFiles`](../../../common/type-aliases/ProjectFiles.md)\>
 
-Defined in: [packages/graph/src/analysis/gather-project-files.ts:450](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/graph/src/analysis/gather-project-files.ts#L450)
+Defined in: [packages/graph/src/analysis/gather-project-files.ts:450](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/analysis/gather-project-files.ts#L450)
 
 Asynchronously construct a [ProjectFiles](../../../common/type-aliases/ProjectFiles.md) instance containing absolute
 file paths (AbsolutePaths) derived from `projectMetadata`.

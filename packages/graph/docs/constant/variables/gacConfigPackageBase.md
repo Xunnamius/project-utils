@@ -8,7 +8,7 @@
 
 > `const` **gacConfigPackageBase**: `"gac.config.mjs"` = `'gac.config.mjs'`
 
-Defined in: [packages/graph/src/constant.ts:258](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/graph/src/constant.ts#L258)
+Defined in: [packages/graph/src/constant.ts:258](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/constant.ts#L258)
 
 The basename of the well-known git-add-then-commit CLI tool configuration
 file.
