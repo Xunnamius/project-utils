@@ -1,0 +1,82 @@
+[**@-xun/project-graph**](../README.md)
+
+***
+
+[@-xun/project-graph](../README.md) / constant
+
+# constant
+
+## Enumerations
+
+- [Tsconfig](enumerations/Tsconfig.md)
+
+## Variables
+
+- [aliasMapConfigProjectBase](variables/aliasMapConfigProjectBase.md)
+- [allContributorsConfigProjectBase](variables/allContributorsConfigProjectBase.md)
+- [babelConfigProjectBase](variables/babelConfigProjectBase.md)
+- [browserslistrcConfigProjectBase](variables/browserslistrcConfigProjectBase.md)
+- [changelogPatchConfigPackageBase](variables/changelogPatchConfigPackageBase.md)
+- [changelogPatchConfigProjectBase](variables/changelogPatchConfigProjectBase.md)
+- [codecovConfigProjectBase](variables/codecovConfigProjectBase.md)
+- [commitlintConfigProjectBase](variables/commitlintConfigProjectBase.md)
+- [directoryCoveragePackageBase](variables/directoryCoveragePackageBase.md)
+- [directoryDistPackageBase](variables/directoryDistPackageBase.md)
+- [directoryDocumentationPackageBase](variables/directoryDocumentationPackageBase.md)
+- [directoryGithubConfigProjectBase](variables/directoryGithubConfigProjectBase.md)
+- [directoryHuskyProjectBase](variables/directoryHuskyProjectBase.md)
+- [directoryIntermediatesPackageBase](variables/directoryIntermediatesPackageBase.md)
+- [directoryPackagesProjectBase](variables/directoryPackagesProjectBase.md)
+- [directorySrcPackageBase](variables/directorySrcPackageBase.md)
+- [directoryTestPackageBase](variables/directoryTestPackageBase.md)
+- [directoryTypesProjectBase](variables/directoryTypesProjectBase.md)
+- [directoryVscodeProjectBase](variables/directoryVscodeProjectBase.md)
+- [directoryWikiProjectBase](variables/directoryWikiProjectBase.md)
+- [dotEnvConfigPackageBase](variables/dotEnvConfigPackageBase.md)
+- [dotEnvConfigProjectBase](variables/dotEnvConfigProjectBase.md)
+- [dotEnvDefaultConfigPackageBase](variables/dotEnvDefaultConfigPackageBase.md)
+- [dotEnvDefaultConfigProjectBase](variables/dotEnvDefaultConfigProjectBase.md)
+- [editorConfigProjectBase](variables/editorConfigProjectBase.md)
+- [eslintConfigProjectBase](variables/eslintConfigProjectBase.md)
+- [extensionsAcceptedByBabel](variables/extensionsAcceptedByBabel.md)
+- [extensionsJavascript](variables/extensionsJavascript.md)
+- [extensionsTypescript](variables/extensionsTypescript.md)
+- [extensionTypescriptDefinition](variables/extensionTypescriptDefinition.md)
+- [gacConfigPackageBase](variables/gacConfigPackageBase.md)
+- [gitattributesConfigProjectBase](variables/gitattributesConfigProjectBase.md)
+- [gitignoreConfigProjectBase](variables/gitignoreConfigProjectBase.md)
+- [jestConfigProjectBase](variables/jestConfigProjectBase.md)
+- [lcovCoverageInfoPackageBase](variables/lcovCoverageInfoPackageBase.md)
+- [lintStagedConfigProjectBase](variables/lintStagedConfigProjectBase.md)
+- [markdownArchitectureProjectBase](variables/markdownArchitectureProjectBase.md)
+- [markdownContributingProjectBase](variables/markdownContributingProjectBase.md)
+- [markdownLicensePackageBase](variables/markdownLicensePackageBase.md)
+- [markdownMaintainingProjectBase](variables/markdownMaintainingProjectBase.md)
+- [markdownReadmePackageBase](variables/markdownReadmePackageBase.md)
+- [markdownSecurityProjectBase](variables/markdownSecurityProjectBase.md)
+- [ncuConfigProjectBase](variables/ncuConfigProjectBase.md)
+- [nextjsConfigProjectBase](variables/nextjsConfigProjectBase.md)
+- [packageJsonConfigPackageBase](variables/packageJsonConfigPackageBase.md)
+- [postcssConfigProjectBase](variables/postcssConfigProjectBase.md)
+- [postNpmInstallPackageBase](variables/postNpmInstallPackageBase.md)
+- [prettierConfigProjectBase](variables/prettierConfigProjectBase.md)
+- [prettierIgnoreConfigProjectBase](variables/prettierIgnoreConfigProjectBase.md)
+- [remarkConfigProjectBase](variables/remarkConfigProjectBase.md)
+- [sharedAttributeFileBase](variables/sharedAttributeFileBase.md)
+- [spellcheckIgnoreConfigProjectBase](variables/spellcheckIgnoreConfigProjectBase.md)
+- [tailwindConfigProjectBase](variables/tailwindConfigProjectBase.md)
+- [tstycheConfigProjectBase](variables/tstycheConfigProjectBase.md)
+- [uriSchemeDelimiterEscaped](variables/uriSchemeDelimiterEscaped.md)
+- [uriSchemeDelimiterUnescaped](variables/uriSchemeDelimiterUnescaped.md)
+- [uriSchemeSubDelimiterEscaped](variables/uriSchemeSubDelimiterEscaped.md)
+- [uriSchemeSubDelimiterUnescaped](variables/uriSchemeSubDelimiterUnescaped.md)
+- [vercelConfigProjectBase](variables/vercelConfigProjectBase.md)
+- [webpackConfigProjectBase](variables/webpackConfigProjectBase.md)
+- [xchangelogConfigProjectBase](variables/xchangelogConfigProjectBase.md)
+- [xreleaseConfigProjectBase](variables/xreleaseConfigProjectBase.md)
+
+## Functions
+
+- [hasExtensionAcceptedByBabel](functions/hasExtensionAcceptedByBabel.md)
+- [hasJavascriptExtension](functions/hasJavascriptExtension.md)
+- [hasTypescriptExtension](functions/hasTypescriptExtension.md)

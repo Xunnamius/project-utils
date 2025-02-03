@@ -83,7 +83,7 @@ Synchronously returns maintained node versions in the given format.
 
 ##### format
 
-`"array"` \| `"engines"`
+`"engines"` \| `"array"`
 
 ### Returns
 

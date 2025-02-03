@@ -6,7 +6,7 @@
 
 # Enumeration: ProjectAttribute
 
-Defined in: [index.ts:93](https://github.com/Xunnamius/projector/blob/13e6ed6a56dc037b1a9ba7cd7dfcf6687e7f59ca/packages/types/src/index.ts#L93)
+Defined in: [index.ts:93](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L93)
 
 A "project attribute" describes a capability, scope, or some other
 interesting property of a project's repository.
@@ -17,7 +17,7 @@ interesting property of a project's repository.
 
 > **Cjs**: `"cjs"`
 
-Defined in: [index.ts:113](https://github.com/Xunnamius/projector/blob/13e6ed6a56dc037b1a9ba7cd7dfcf6687e7f59ca/packages/types/src/index.ts#L113)
+Defined in: [index.ts:113](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L113)
 
 The root `package.json` file does not have a `type: "module"` key.
 
@@ -27,7 +27,7 @@ The root `package.json` file does not have a `type: "module"` key.
 
 > **Cli**: `"cli"`
 
-Defined in: [index.ts:101](https://github.com/Xunnamius/projector/blob/13e6ed6a56dc037b1a9ba7cd7dfcf6687e7f59ca/packages/types/src/index.ts#L101)
+Defined in: [index.ts:101](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L101)
 
 The root `package.json` file has a `bin` key.
 
@@ -37,7 +37,7 @@ The root `package.json` file has a `bin` key.
 
 > **Esm**: `"esm"`
 
-Defined in: [index.ts:117](https://github.com/Xunnamius/projector/blob/13e6ed6a56dc037b1a9ba7cd7dfcf6687e7f59ca/packages/types/src/index.ts#L117)
+Defined in: [index.ts:117](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L117)
 
 The root `package.json` file has a `type: "module"` key.
 
@@ -47,7 +47,7 @@ The root `package.json` file has a `type: "module"` key.
 
 > **Hybridrepo**: `"hybridrepo"`
 
-Defined in: [index.ts:134](https://github.com/Xunnamius/projector/blob/13e6ed6a56dc037b1a9ba7cd7dfcf6687e7f59ca/packages/types/src/index.ts#L134)
+Defined in: [index.ts:134](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L134)
 
 The root `package.json` file has a `workspaces` key and a `src` directory
 exists at the project root.
@@ -58,7 +58,7 @@ exists at the project root.
 
 > **Monorepo**: `"monorepo"`
 
-Defined in: [index.ts:125](https://github.com/Xunnamius/projector/blob/13e6ed6a56dc037b1a9ba7cd7dfcf6687e7f59ca/packages/types/src/index.ts#L125)
+Defined in: [index.ts:125](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L125)
 
 The root `package.json` file has a `workspaces` key.
 
@@ -68,7 +68,7 @@ The root `package.json` file has a `workspaces` key.
 
 > **Multiversal**: `"multiversal"`
 
-Defined in: [index.ts:140](https://github.com/Xunnamius/projector/blob/13e6ed6a56dc037b1a9ba7cd7dfcf6687e7f59ca/packages/types/src/index.ts#L140)
+Defined in: [index.ts:140](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L140)
 
 The root `package.json` file contains a `build:dist` script containing the
 string "--multiversal" or "--not-multiversal=false" and does not contain
@@ -80,7 +80,7 @@ the string "--multiversal=false"
 
 > **Next**: `"nextjs"`
 
-Defined in: [index.ts:97](https://github.com/Xunnamius/projector/blob/13e6ed6a56dc037b1a9ba7cd7dfcf6687e7f59ca/packages/types/src/index.ts#L97)
+Defined in: [index.ts:97](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L97)
 
 A nextjsConfigProjectBase file exists at the project root.
 
@@ -90,7 +90,7 @@ A nextjsConfigProjectBase file exists at the project root.
 
 > **Polyrepo**: `"polyrepo"`
 
-Defined in: [index.ts:129](https://github.com/Xunnamius/projector/blob/13e6ed6a56dc037b1a9ba7cd7dfcf6687e7f59ca/packages/types/src/index.ts#L129)
+Defined in: [index.ts:129](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L129)
 
 The root `package.json` file does not have a `workspaces` key.
 
@@ -100,7 +100,7 @@ The root `package.json` file does not have a `workspaces` key.
 
 > **Private**: `"private"`
 
-Defined in: [index.ts:121](https://github.com/Xunnamius/projector/blob/13e6ed6a56dc037b1a9ba7cd7dfcf6687e7f59ca/packages/types/src/index.ts#L121)
+Defined in: [index.ts:121](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L121)
 
 The root `package.json` file has a `private: true` key.
 
@@ -110,7 +110,7 @@ The root `package.json` file has a `private: true` key.
 
 > **Vercel**: `"vercel"`
 
-Defined in: [index.ts:109](https://github.com/Xunnamius/projector/blob/13e6ed6a56dc037b1a9ba7cd7dfcf6687e7f59ca/packages/types/src/index.ts#L109)
+Defined in: [index.ts:109](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L109)
 
 A `vercel.json` or `.vercel/project.json` file exists at the project root.
 
@@ -120,6 +120,6 @@ A `vercel.json` or `.vercel/project.json` file exists at the project root.
 
 > **Webpack**: `"webpack"`
 
-Defined in: [index.ts:105](https://github.com/Xunnamius/projector/blob/13e6ed6a56dc037b1a9ba7cd7dfcf6687e7f59ca/packages/types/src/index.ts#L105)
+Defined in: [index.ts:105](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L105)
 
 A webpackConfigProjectBase file exists at the project root.

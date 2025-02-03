@@ -8,7 +8,7 @@
 
 > **WorkspacePackageId**: `string`
 
-Defined in: [index.ts:13](https://github.com/Xunnamius/projector/blob/13e6ed6a56dc037b1a9ba7cd7dfcf6687e7f59ca/packages/types/src/index.ts#L13)
+Defined in: [index.ts:13](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L13)
 
 A so-called "package-id" of a workspace package. The package-id is derived
 from the name of the parent directory of the package's `package.json` file,
