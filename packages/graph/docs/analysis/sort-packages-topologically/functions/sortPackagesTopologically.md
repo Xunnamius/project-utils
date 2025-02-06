@@ -8,7 +8,7 @@
 
 > **sortPackagesTopologically**(`projectMetadata`, `__namedParameters`): `Package`\<`GenericPackageJson`\>[][]
 
-Defined in: [packages/graph/src/analysis/sort-packages-topologically.ts:43](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/analysis/sort-packages-topologically.ts#L43)
+Defined in: [packages/graph/src/analysis/sort-packages-topologically.ts:39](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/analysis/sort-packages-topologically.ts#L39)
 
 Synchronously derive a directed graph representing the project's package
 dependency topology and return said project's packages in a

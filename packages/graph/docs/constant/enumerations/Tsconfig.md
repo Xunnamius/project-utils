@@ -6,7 +6,7 @@
 
 # Enumeration: Tsconfig
 
-Defined in: [packages/graph/src/constant.ts:44](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/constant.ts#L44)
+Defined in: [packages/graph/src/constant.ts:44](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/constant.ts#L44)
 
 The basename of a well-known Typescript configuration file.
 
@@ -16,7 +16,7 @@ The basename of a well-known Typescript configuration file.
 
 > **PackageDocumentation**: `"tsc.package.docs.json"`
 
-Defined in: [packages/graph/src/constant.ts:47](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/constant.ts#L47)
+Defined in: [packages/graph/src/constant.ts:47](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/constant.ts#L47)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [packages/graph/src/constant.ts:47](https://github.com/Xunnamius/pro
 
 > **PackageLint**: `"tsc.package.lint.json"`
 
-Defined in: [packages/graph/src/constant.ts:48](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/constant.ts#L48)
+Defined in: [packages/graph/src/constant.ts:48](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/constant.ts#L48)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [packages/graph/src/constant.ts:48](https://github.com/Xunnamius/pro
 
 > **PackageTypes**: `"tsc.package.types.json"`
 
-Defined in: [packages/graph/src/constant.ts:49](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/constant.ts#L49)
+Defined in: [packages/graph/src/constant.ts:49](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/constant.ts#L49)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [packages/graph/src/constant.ts:49](https://github.com/Xunnamius/pro
 
 > **ProjectBase**: `"tsconfig.json"`
 
-Defined in: [packages/graph/src/constant.ts:45](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/constant.ts#L45)
+Defined in: [packages/graph/src/constant.ts:45](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/constant.ts#L45)
 
 ***
 
@@ -48,4 +48,4 @@ Defined in: [packages/graph/src/constant.ts:45](https://github.com/Xunnamius/pro
 
 > **ProjectLint**: `"tsc.project.lint.json"`
 
-Defined in: [packages/graph/src/constant.ts:46](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/constant.ts#L46)
+Defined in: [packages/graph/src/constant.ts:46](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/constant.ts#L46)

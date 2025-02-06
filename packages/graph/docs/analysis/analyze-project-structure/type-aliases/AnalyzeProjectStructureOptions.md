@@ -8,7 +8,7 @@
 
 > **AnalyzeProjectStructureOptions**: `object`
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:77](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/analysis/analyze-project-structure.ts#L77)
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:71](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/analysis/analyze-project-structure.ts#L71)
 
 ## Type declaration
 

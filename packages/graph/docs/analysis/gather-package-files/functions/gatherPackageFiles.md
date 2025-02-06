@@ -8,7 +8,7 @@
 
 > **gatherPackageFiles**(...`args`): `Promise`\<[`PackageFiles`](../../../common/type-aliases/PackageFiles.md)\>
 
-Defined in: [packages/graph/src/analysis/gather-package-files.ts:236](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/analysis/gather-package-files.ts#L236)
+Defined in: [packages/graph/src/analysis/gather-package-files.ts:233](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/analysis/gather-package-files.ts#L233)
 
 Asynchronously construct a [PackageFiles](../../../common/type-aliases/PackageFiles.md) instance containing
 AbsolutePaths to every file under `package_`'s root.

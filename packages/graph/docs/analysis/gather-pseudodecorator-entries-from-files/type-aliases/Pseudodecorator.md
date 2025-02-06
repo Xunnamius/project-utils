@@ -8,7 +8,7 @@
 
 > **Pseudodecorator**: `object`
 
-Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:125](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L125)
+Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:125](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L125)
 
 A so-called "pseudodecorator" is a decorator-like syntax that can appear
 anywhere in almost any type of file and is used to pass information to

@@ -8,7 +8,7 @@
 
 > **isDuplicatePackageIdError**(`parameter`): `parameter is DuplicatePackageIdError`
 
-Defined in: [packages/common/src/error.ts:88](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/common/src/error.ts#L88)
+Defined in: [packages/common/src/error.ts:88](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/common/src/error.ts#L88)
 
 Type guard for [DuplicatePackageIdError](../classes/DuplicatePackageIdError.md).
 

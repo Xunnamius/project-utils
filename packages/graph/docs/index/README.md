@@ -32,12 +32,6 @@ Re-exports [AnalyzeProjectStructureOptions](../analysis/analyze-project-structur
 
 ***
 
-### assignResultTo
-
-Re-exports [assignResultTo](../common/functions/assignResultTo.md)
-
-***
-
 ### babelConfigProjectBase
 
 Re-exports [babelConfigProjectBase](../constant/variables/babelConfigProjectBase.md)
@@ -71,12 +65,6 @@ Re-exports [codecovConfigProjectBase](../constant/variables/codecovConfigProject
 ### commitlintConfigProjectBase
 
 Re-exports [commitlintConfigProjectBase](../constant/variables/commitlintConfigProjectBase.md)
-
-***
-
-### commonDebug
-
-Re-exports [commonDebug](../common/functions/commonDebug.md)
 
 ***
 

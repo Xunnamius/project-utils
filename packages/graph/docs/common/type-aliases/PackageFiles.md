@@ -8,7 +8,7 @@
 
 > **PackageFiles**: `object`
 
-Defined in: [packages/graph/src/common.ts:222](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/common.ts#L222)
+Defined in: [packages/graph/src/common.ts:220](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/common.ts#L220)
 
 In the context of a Package, this type represents a collection of
 AbsolutePaths, one for each file under the package root that is not

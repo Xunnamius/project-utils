@@ -8,7 +8,7 @@
 
 > **packageRootToId**(`packageRoot`): `WorkspacePackageId`
 
-Defined in: [packages/graph/src/analysis/package-root-to-id.ts:14](https://github.com/Xunnamius/projector/blob/5f5f92eca551ebad2a8ed7123cb7ab801a86ad67/packages/graph/src/analysis/package-root-to-id.ts#L14)
+Defined in: [packages/graph/src/analysis/package-root-to-id.ts:14](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/analysis/package-root-to-id.ts#L14)
 
 Synchronously determine the package-id of a package in a monorepo from the
 path to the package's root directory.
