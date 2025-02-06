@@ -1,16 +1,8 @@
 import assert from 'node:assert';
 
-import { toPath, toRelativePath, type AbsolutePath, type RelativePath } from '@-xun/fs';
+import { toPath, toRelativePath } from '@-xun/fs';
 import { memoizer } from '@-xun/memoize';
-
-import {
-  isWorkspacePackage,
-  type GenericPackage,
-  // ? Used in documentation
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  type Package
-} from '@-xun/project-types';
-
+import { isWorkspacePackage } from '@-xun/project-types';
 import { glob as globAsync, sync as globSync } from 'glob';
 
 import { ProjectError } from 'multiverse+common:error.ts';
@@ -23,19 +15,26 @@ import {
   WellKnownImportAlias
 } from 'universe+graph:alias.ts';
 
-import {
-  gatherImportEntriesFromFiles,
-  type ImportSpecifiersEntry
-} from 'universe+graph:analysis/gather-import-entries-from-files.ts';
-
+import { gatherImportEntriesFromFiles } from 'universe+graph:analysis/gather-import-entries-from-files.ts';
 import { gatherPackageFiles } from 'universe+graph:analysis/gather-package-files.ts';
 import { pathToPackage } from 'universe+graph:analysis/path-to-package.ts';
-import { commonDebug, type PackageBuildTargets } from 'universe+graph:common.ts';
+import { commonDebug } from 'universe+graph:common.ts';
 import { hasTypescriptExtension } from 'universe+graph:constant.ts';
 import { GraphErrorMessage } from 'universe+graph:error.ts';
 
+import type { AbsolutePath, RelativePath } from '@-xun/fs';
+
+import type {
+  GenericPackage,
+  // ? Used in documentation
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  Package
+} from '@-xun/project-types';
+
 import type { Entries, Promisable, SetFieldType } from 'type-fest';
 import type { ParametersNoFirst, SyncVersionOf } from 'multiverse+common:types.ts';
+import type { ImportSpecifiersEntry } from 'universe+graph:analysis/gather-import-entries-from-files.ts';
+import type { PackageBuildTargets } from 'universe+graph:common.ts';
 
 const debug = commonDebug.extend('gatherPackageBuildTargets');
 
@@ -582,12 +581,14 @@ export namespace gatherPackageBuildTargets {
  */
 export function specifierToPackageName(specifier: string) {
   const split = specifier.split('/').slice(0, 2);
+  const split0 = split[0]!;
+
   const packageName =
     specifier.startsWith('@') && split.length === 2
       ? split.join('/')
-      : ['.', '..'].includes(split[0])
+      : ['.', '..'].includes(split0)
         ? specifier
-        : split[0];
+        : split0;
 
   return packageName;
 }

@@ -18,6 +18,9 @@ export * from 'multiverse+common:error.ts';
 /* istanbul ignore next */
 export const GraphErrorMessage = {
   ...CommonErrorMessage,
+  TargetUnserializable() {
+    return 'attempted to serialize an unserializable id component';
+  },
   // eslint-disable-next-line @typescript-eslint/unbound-method
   DeriverAsyncConfigurationConflict: FsErrorMessage.DeriverAsyncConfigurationConflict,
   NotAMonorepoError() {
@@ -71,7 +74,7 @@ export const GraphErrorMessage = {
     return `encountered illegal import specifier "${specifier}": all non-exact aliases must end with an extension${path ? ` in ${path}` : ''}`;
   },
   SpecifierNotOkUnnecessaryIndex(specifier: string, path?: string) {
-    return `encountered illegal import specifier "${specifier}": this specifier should be replaced with "${specifier.split(uriSchemeDelimiterUnescaped)[0]}" or the "index.ts" file renamed to something else${path ? ` in ${path}` : ''}`;
+    return `encountered illegal import specifier "${specifier}": this specifier should be replaced with "${specifier.split(uriSchemeDelimiterUnescaped)[0]!}" or the "index.ts" file renamed to something else${path ? ` in ${path}` : ''}`;
   },
   SpecifierNotOkSelfReferential(specifier: string, path?: string) {
     return GraphErrorMessage.SpecifierNotOkSuboptimal(

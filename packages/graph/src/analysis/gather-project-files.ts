@@ -1,21 +1,18 @@
-import { toAbsolutePath, toRelativePath, type AbsolutePath } from '@-xun/fs';
+import { toAbsolutePath, toRelativePath } from '@-xun/fs';
 import { memoizer } from '@-xun/memoize';
 import { deriveVirtualPrettierignoreLines } from '@-xun/project-fs';
 import { glob as globAsync, sync as globSync } from 'glob-gitignore';
 
 import { ProjectError } from 'multiverse+common:error.ts';
 
-import {
-  assignResultTo,
-  commonDebug,
-  type ProjectFiles
-} from 'universe+graph:common.ts';
-
+import { assignResultTo, commonDebug, toSerializable } from 'universe+graph:common.ts';
 import { GraphErrorMessage } from 'universe+graph:error.ts';
 
+import type { AbsolutePath } from '@-xun/fs';
 import type { GenericPackage, GenericProjectMetadata } from '@-xun/project-types';
 import type { Promisable } from 'type-fest';
 import type { ParametersNoFirst } from 'multiverse+common:types.ts';
+import type { ProjectFiles } from 'universe+graph:common.ts';
 
 const debug = commonDebug.extend('gatherProjectFiles');
 
@@ -102,7 +99,7 @@ function gatherProjectFiles_(
   if (useCached) {
     const cachedPackageFiles = memoizer.get<Memoization>(
       gatherProjectFiles_ as unknown as Memoization,
-      [projectMetadata, cacheIdComponentsObject]
+      [toSerializable(projectMetadata), cacheIdComponentsObject]
     );
 
     if (cachedPackageFiles) {
@@ -408,7 +405,7 @@ function gatherProjectFiles_(
 
     memoizer.set<Memoization>(
       gatherProjectFiles_ as unknown as Memoization,
-      [projectMetadata, cacheIdComponentsObject],
+      [toSerializable(projectMetadata), cacheIdComponentsObject],
       projectFiles
     );
   }

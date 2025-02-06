@@ -1,12 +1,7 @@
 import assert from 'node:assert';
 
 import { memoizer } from '@-xun/memoize';
-
-import {
-  createMetadataAccumulatorPlugin,
-  type AccumulatedMetadata,
-  type Options as AccumulatorOptions
-} from 'babel-plugin-metadata-accumulator';
+import { createMetadataAccumulatorPlugin } from 'babel-plugin-metadata-accumulator';
 
 import { ProjectError } from 'multiverse+common:error.ts';
 
@@ -16,6 +11,12 @@ import { GraphErrorMessage } from 'universe+graph:error.ts';
 
 import type { AbsolutePath } from '@-xun/fs';
 import type { PluginObj, TransformOptions } from '@babel/core';
+
+import type {
+  AccumulatedMetadata,
+  Options as AccumulatorOptions
+} from 'babel-plugin-metadata-accumulator';
+
 import type { Promisable } from 'type-fest';
 import type { ParametersNoFirst, SyncVersionOf } from 'multiverse+common:types.ts';
 

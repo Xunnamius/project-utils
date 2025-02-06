@@ -1,19 +1,16 @@
-import { toPath, toRelativePath, type AbsolutePath, type RelativePath } from '@-xun/fs';
+import { toPath, toRelativePath } from '@-xun/fs';
 import { memoizer } from '@-xun/memoize';
 import { deriveVirtualGitignoreLines } from '@-xun/project-fs';
 import { glob as globAsync, sync as globSync } from 'glob-gitignore';
 
-import {
-  assignResultTo,
-  commonDebug,
-  type PackageFiles
-} from 'universe+graph:common.ts';
-
+import { assignResultTo, commonDebug } from 'universe+graph:common.ts';
 import { directoryPackagesProjectBase } from 'universe+graph:constant.ts';
 
+import type { AbsolutePath, RelativePath } from '@-xun/fs';
 import type { GenericPackage } from '@-xun/project-types';
 import type { Promisable } from 'type-fest';
 import type { ParametersNoFirst, SyncVersionOf } from 'multiverse+common:types.ts';
+import type { PackageFiles } from 'universe+graph:common.ts';
 
 const debug = commonDebug.extend('gatherPackageFiles');
 

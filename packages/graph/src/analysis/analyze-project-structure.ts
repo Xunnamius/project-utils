@@ -5,9 +5,7 @@ import {
   toAbsolutePath,
   toDirname,
   toPath,
-  toRelativePath,
-  type AbsolutePath,
-  type RelativePath
+  toRelativePath
 } from '@-xun/fs';
 
 import { memoizer } from '@-xun/memoize';
@@ -18,29 +16,9 @@ import {
   readXPackageJsonAtRoot
 } from '@-xun/project-fs';
 
-import {
-  ProjectAttribute,
-  WorkspaceAttribute,
-  type GenericPackage,
-  type GenericPackageJson,
-  type GenericProjectMetadata,
-  type GenericRootPackage,
-  type GenericWorkspacePackage,
-  type PolyrepoMetadata,
-  type ProjectMetadata,
-  type RootPackage,
-  type WorkspacePackage,
-  type WorkspacePackageId
-} from '@-xun/project-types';
-
+import { ProjectAttribute, WorkspaceAttribute } from '@-xun/project-types';
 import { sync as findUp } from 'find-up~5';
-
-import {
-  glob as globAsync,
-  sync as globSync,
-  type GlobGitignoreOptions
-} from 'glob-gitignore';
-
+import { glob as globAsync, sync as globSync } from 'glob-gitignore';
 import { toss } from 'toss-expression';
 
 import {
@@ -64,6 +42,22 @@ import {
 
 import { GraphErrorMessage } from 'universe+graph:error.ts';
 
+import type { AbsolutePath, RelativePath } from '@-xun/fs';
+
+import type {
+  GenericPackage,
+  GenericPackageJson,
+  GenericProjectMetadata,
+  GenericRootPackage,
+  GenericWorkspacePackage,
+  PolyrepoMetadata,
+  ProjectMetadata,
+  RootPackage,
+  WorkspacePackage,
+  WorkspacePackageId
+} from '@-xun/project-types';
+
+import type { GlobGitignoreOptions } from 'glob-gitignore';
 import type { Merge, PackageJson, Promisable } from 'type-fest';
 import type { ParametersNoFirst } from 'multiverse+common:types.ts';
 

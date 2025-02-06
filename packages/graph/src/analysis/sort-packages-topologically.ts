@@ -1,18 +1,14 @@
 /* eslint-disable unicorn/prevent-abbreviations */
 import assert from 'node:assert';
 
-import {
-  isRootPackage,
-  type GenericPackageJson,
-  type Package,
-  type ProjectMetadata
-} from '@-xun/project-types';
+import { isRootPackage } from '@-xun/project-types';
 
 import { ProjectError } from 'multiverse+common:error.ts';
 
 import { commonDebug } from 'universe+graph:common.ts';
 import { GraphErrorMessage } from 'universe+graph:error.ts';
 
+import type { GenericPackageJson, Package, ProjectMetadata } from '@-xun/project-types';
 import type { Entries } from 'type-fest';
 
 const debug = commonDebug.extend('sortPackagesTopologically');

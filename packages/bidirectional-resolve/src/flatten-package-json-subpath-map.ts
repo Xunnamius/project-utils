@@ -1,9 +1,8 @@
-import {
-  type SubpathMapping,
-  type SubpathMappings
-} from 'universe+bidirectional-resolve:resolvers.ts';
-
 import type { PackageJson } from 'type-fest';
+import type {
+  SubpathMapping,
+  SubpathMappings
+} from 'universe+bidirectional-resolve:resolvers.ts';
 
 /**
  * Flatten entry points within a `package.json` `imports`/`exports` map into a

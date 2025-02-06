@@ -765,7 +765,7 @@ function replaceAsterisksInPattern(
   seenPath: string,
   wantedPath: string
 ) {
-  const firstMatch = wantedPath.match(patternToRegExp(seenPath))?.at(1);
+  const firstMatch = wantedPath.match(patternToRegExp(seenPath))?.[1];
   assert(firstMatch, ErrorMessage.AssertionFailedWantedPathIsNotSeenPath());
   return pattern.replaceAll('*', firstMatch);
 }

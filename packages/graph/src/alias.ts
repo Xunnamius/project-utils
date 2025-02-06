@@ -1,6 +1,6 @@
 import { extname } from 'node:path';
 
-import { toPath, toRelativePath, type RelativePath } from '@-xun/fs';
+import { toPath, toRelativePath } from '@-xun/fs';
 import escapeStringRegExp from 'escape-string-regexp~4';
 
 import { ProjectError } from 'multiverse+common:error.ts';
@@ -17,6 +17,7 @@ import {
 
 import { GraphErrorMessage } from 'universe+graph:error.ts';
 
+import type { RelativePath } from '@-xun/fs';
 import type { GenericProjectMetadata, WorkspacePackageId } from '@-xun/project-types';
 import type { Arrayable } from 'type-fest';
 
@@ -959,8 +960,8 @@ export function ensureRawSpecifierOk(
         .at(-1)!
         .split('/');
 
-      const derivedPackageId = pathSplit.at(0)!;
-      const verseHint = pathSplit.at(1);
+      const derivedPackageId = pathSplit[0]!;
+      const verseHint = pathSplit[1];
 
       // * By this point, we know the import isn't multiversal IF multiversal
       // * is not allowed
