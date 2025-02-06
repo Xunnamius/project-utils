@@ -8,7 +8,7 @@
 
 > **UnsafeFallbackOption**: `object`
 
-Defined in: [resolvers.ts:56](https://github.com/Xunnamius/projector/blob/d875f4ef259217f83da06d38dff9212ae8293b8a/packages/bidirectional-resolve/src/resolvers.ts#L56)
+Defined in: [packages/bidirectional-resolve/src/resolvers.ts:56](https://github.com/Xunnamius/projector/blob/61532866dbae96e2887c058c574cab9291a80986/packages/bidirectional-resolve/src/resolvers.ts#L56)
 
 ## Type declaration
 

@@ -8,7 +8,7 @@
 
 > **resolveEntryPointsFromExportsTarget**(`__namedParameters`): `string`[]
 
-Defined in: [resolvers.ts:273](https://github.com/Xunnamius/projector/blob/d875f4ef259217f83da06d38dff9212ae8293b8a/packages/bidirectional-resolve/src/resolvers.ts#L273)
+Defined in: [packages/bidirectional-resolve/src/resolvers.ts:273](https://github.com/Xunnamius/projector/blob/61532866dbae96e2887c058c574cab9291a80986/packages/bidirectional-resolve/src/resolvers.ts#L273)
 
 Given `target` and `conditions`, this function returns an array of zero or
 more entry points that are guaranteed to resolve to `target` when the exact
