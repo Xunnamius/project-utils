@@ -6,14 +6,17 @@
 import assert from 'node:assert';
 import { isNativeError } from 'node:util/types';
 
+import { getDummyLoaderPath } from '@-xun/common-dummies/loaders';
 import { runNoRejectOnBadExit } from '@-xun/run';
 import { TrialError } from 'named-app-errors';
 import { resolve as resolverLibrary } from 'resolve.exports';
 
 import type { XPackageJson } from 'multiverse+types';
 
-// TODO:
-//export * from '@-xun/jest';
+// ? @-xun/jest will always come from @-xun/symbiote (i.e. transitively)
+// {@symbiote/notInvalid @-xun/jest}
+
+export * from '@-xun/jest';
 
 /**
  * Represents the summary of an import resolution attempt.
@@ -67,7 +70,7 @@ export async function resolveTargetWithNodeJs({
     'node',
     [
       '--loader',
-      `${__dirname}/../fixtures/node-loader.mjs`,
+      getDummyLoaderPath('reflective'),
       '--input-type',
       'module',
       '--eval',
@@ -169,7 +172,7 @@ export function resolveTargetWithResolveExports({
   })();
 
   return {
-    resolvedTarget: result[0],
+    resolvedTarget: result[0]!,
     allResolvedTargets: result,
     resolverSubpath: subpath,
     isExportedTypescriptType: !!result[0]?.endsWith('.d.ts')
