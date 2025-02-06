@@ -8,7 +8,7 @@
 
 > **XPackageJsonSubRoot**: `Omit`\<[`XPackageJson`](XPackageJson.md), `"workspaces"` \| `"devDependencies"`\>
 
-Defined in: [index.ts:531](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L531)
+Defined in: [index.ts:533](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L533)
 
 A version of [XPackageJson](XPackageJson.md) specifically for package subroots in a
 monorepo.

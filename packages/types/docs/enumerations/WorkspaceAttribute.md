@@ -6,7 +6,7 @@
 
 # Enumeration: WorkspaceAttribute
 
-Defined in: [index.ts:147](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L147)
+Defined in: [index.ts:149](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L149)
 
 A "workspace attribute" describes a capability, scope, or some other
 interesting property of a workspace/sub-root within a monorepo project.
@@ -17,7 +17,7 @@ interesting property of a workspace/sub-root within a monorepo project.
 
 > **Cjs**: `"cjs"`
 
-Defined in: [index.ts:151](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L151)
+Defined in: [index.ts:153](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L153)
 
 The workspace's `package.json` file does not have a `type: "module"` key.
 
@@ -27,7 +27,7 @@ The workspace's `package.json` file does not have a `type: "module"` key.
 
 > **Cli**: `"cli"`
 
-Defined in: [index.ts:155](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L155)
+Defined in: [index.ts:157](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L157)
 
 The workspace's `package.json` file has a `bin` key.
 
@@ -37,7 +37,7 @@ The workspace's `package.json` file has a `bin` key.
 
 > **Esm**: `"esm"`
 
-Defined in: [index.ts:159](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L159)
+Defined in: [index.ts:161](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L161)
 
 The workspace's `package.json` file has a `type: "module"` key.
 
@@ -47,7 +47,7 @@ The workspace's `package.json` file has a `type: "module"` key.
 
 > **Multiversal**: `"multiversal"`
 
-Defined in: [index.ts:189](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L189)
+Defined in: [index.ts:191](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L191)
 
 The workspace's `package.json` file contains a `build:dist` script
 containing the string "--multiversal" or "--not-multiversal=false" and does
@@ -59,7 +59,7 @@ not contain the string "--multiversal=false"
 
 > **Private**: `"private"`
 
-Defined in: [index.ts:163](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L163)
+Defined in: [index.ts:165](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L165)
 
 The workspace's `package.json` file has a `private: true` key.
 
@@ -69,7 +69,7 @@ The workspace's `package.json` file has a `private: true` key.
 
 > **Shared**: `"shared"`
 
-Defined in: [index.ts:183](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L183)
+Defined in: [index.ts:185](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L185)
 
 The workspace root contains the file sharedAttributeFileBase,
 signifying that paths and commits scoped to this workspace will be
@@ -91,6 +91,6 @@ package.
 
 > **Webpack**: `"webpack"`
 
-Defined in: [index.ts:167](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L167)
+Defined in: [index.ts:169](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L169)
 
 A webpackConfigProjectBase file exists at the workspace's root.

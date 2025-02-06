@@ -8,7 +8,7 @@
 
 > **RootPackage**\<`Json`\>: `object`
 
-Defined in: [index.ts:19](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L19)
+Defined in: [index.ts:21](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L21)
 
 An object representing the root or "top-level" package in a monorepo or
 polyrepo project.

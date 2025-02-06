@@ -8,7 +8,7 @@
 
 > **XPackageJson**\<`Scripts`\>: `Omit`\<`OmitIndexSignature`\<`PackageJson`\>, `"bin"` \| `"name"`\> & `object`
 
-Defined in: [index.ts:502](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L502)
+Defined in: [index.ts:504](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L504)
 
 A version of PackageJson used by symbiote-powered projects with
 certain additional properties and other properties that are guaranteed to

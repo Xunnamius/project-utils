@@ -8,7 +8,7 @@
 
 > **XPackageJsonScripts**: `object`
 
-Defined in: [index.ts:272](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L272)
+Defined in: [index.ts:274](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L274)
 
 Additional scripts available when working on an symbiote-powered project.
 

@@ -6,19 +6,75 @@
 
 # Function: isRootPackage()
 
-> **isRootPackage**(`o`): `o is RootPackage<XPackageJson<XPackageJsonScripts>>`
+## Call Signature
 
-Defined in: [index.ts:593](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L593)
+> **isRootPackage**(`o`, `options`?): `o is GenericRootPackage`
+
+Defined in: [index.ts:633](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L633)
 
 Returns `true` if `o` is probably an instance of `RootPackage` (i.e. not a
 [WorkspacePackage](../type-aliases/WorkspacePackage.md)).
 
-## Parameters
+### Parameters
 
-### o
+#### o
 
 `unknown`
 
-## Returns
+#### options?
+
+##### generic
+
+`true`
+
+### Returns
+
+`o is GenericRootPackage`
+
+## Call Signature
+
+> **isRootPackage**(`o`, `options`): `o is RootPackage<XPackageJson<XPackageJsonScripts>>`
+
+Defined in: [index.ts:637](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L637)
+
+Returns `true` if `o` is probably an instance of `RootPackage` (i.e. not a
+[WorkspacePackage](../type-aliases/WorkspacePackage.md)).
+
+### Parameters
+
+#### o
+
+`unknown`
+
+#### options
+
+##### generic
+
+`false`
+
+### Returns
 
 `o is RootPackage<XPackageJson<XPackageJsonScripts>>`
+
+## Call Signature
+
+> **isRootPackage**(`o`, `options`): o is RootPackage\<XPackageJson\<XPackageJsonScripts\>\> \| GenericRootPackage
+
+Defined in: [index.ts:638](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L638)
+
+Returns `true` if `o` is probably an instance of `RootPackage` (i.e. not a
+[WorkspacePackage](../type-aliases/WorkspacePackage.md)).
+
+### Parameters
+
+#### o
+
+`unknown`
+
+#### options
+
+[`SentinelOptions`](../type-aliases/SentinelOptions.md)
+
+### Returns
+
+o is RootPackage\<XPackageJson\<XPackageJsonScripts\>\> \| GenericRootPackage

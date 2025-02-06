@@ -8,7 +8,7 @@
 
 > **PolyrepoMetadata**\<`Json`\>: [`ProjectMetadata`](ProjectMetadata.md)\<`Json`\> & `object`
 
-Defined in: [index.ts:252](https://github.com/Xunnamius/projector/blob/c3d70cc0dc43081a6d4b8f7587b002c35d826272/packages/types/src/index.ts#L252)
+Defined in: [index.ts:254](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L254)
 
 A collection of useful information about a polyrepo.
 

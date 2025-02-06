@@ -21,6 +21,7 @@
 - [PolyrepoMetadata](type-aliases/PolyrepoMetadata.md)
 - [ProjectMetadata](type-aliases/ProjectMetadata.md)
 - [RootPackage](type-aliases/RootPackage.md)
+- [SentinelOptions](type-aliases/SentinelOptions.md)
 - [WorkspacePackage](type-aliases/WorkspacePackage.md)
 - [WorkspacePackageId](type-aliases/WorkspacePackageId.md)
 - [WorkspacePackageName](type-aliases/WorkspacePackageName.md)
