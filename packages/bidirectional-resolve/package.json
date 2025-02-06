@@ -77,7 +77,13 @@
   "dependencies": {
     "core-js": "^3.40.0",
     "escape-string-regexp~4": "npm:escape-string-regexp@^4.0.0",
-    "type-fest": "^4.33.0"
+    "type-fest": "^4.33.0",
+    "named-app-errors": "4.0.2"
+  },
+  "devDependencies": {
+    "@-xun/project-types": "^1.0.1",
+    "toss-expression": "^0.1.2",
+    "@-xun/common-dummies": "^1.0.2"
   },
   "engines": {
     "node": "^18.20.0 || ^20.18.0 || ^22.12.0 || >=23.3.0"

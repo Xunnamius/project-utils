@@ -8,9 +8,8 @@ import { getDummyPackage } from '@-xun/common-dummies/packages';
 import { TrialError } from 'named-app-errors';
 import { toss } from 'toss-expression';
 
-import { CommonErrorMessage } from 'multiverse+common:error.ts';
-
 import {
+  ErrorMessage,
   flattenPackageJsonSubpathMap,
   resolveEntryPointsFromExportsTarget,
   resolveEntryPointsFromImportsTarget,
@@ -6181,7 +6180,7 @@ function registerLibraryResolverTest(
         }`, async () => {
           expect.hasAssertions();
 
-          assert(subpath, CommonErrorMessage.GuruMeditation());
+          assert(subpath, ErrorMessage.GuruMeditation());
 
           // eslint-disable-next-line jest/valid-expect
           const expectation = expect(
@@ -6251,7 +6250,7 @@ function registerNodeResolverTest(
         test(`${title}.${subIndex + 1}`, async () => {
           expect.hasAssertions();
 
-          assert(subpath, CommonErrorMessage.GuruMeditation());
+          assert(subpath, ErrorMessage.GuruMeditation());
 
           await expect(
             resolveTargetWithNodeJs({
