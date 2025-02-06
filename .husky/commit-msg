@@ -10,7 +10,8 @@ if beginswith 'rebase' "$GIT_REFLOG_ACTION"; then
 fi
 
 NODE_NO_WARNINGS=1 commitlint -e
-if [ -z "$GAC_VERIFY_SIMPLE" ]; then npm run test; fi
+# ? -xx === --skip-slow-tests --skip-slow-tests === skip really slow unit tests
+if [ -z "$GAC_VERIFY_SIMPLE" ]; then npm run test -- -xx; fi
 # TODO: bring back spellchecker:
 #echo
 #NODE_NO_WARNINGS=1 node spellcheck-commit.cjs
