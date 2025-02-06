@@ -144,7 +144,7 @@ makeNamedError(ProjectError, 'ProjectError');
  */
 export class NotAGitRepositoryError extends ProjectError {
   // TODO: this prop should be added by makeNamedError or whatever other fn
-  [$type] = [$type_NotAGitRepositoryError, $type_ProjectError];
+  override [$type] = [$type_NotAGitRepositoryError, $type_ProjectError];
   /**
    * Represents encountering a project that is not a git repository.
    */
@@ -166,7 +166,7 @@ makeNamedError(NotAGitRepositoryError, 'NotAGitRepositoryError');
  */
 export class XPackageJsonNotParsableError extends ProjectError {
   // TODO: this prop should be added by makeNamedError or whatever other fn
-  [$type] = [$type_XPackageJsonNotParsableError, $type_ProjectError];
+  override [$type] = [$type_XPackageJsonNotParsableError, $type_ProjectError];
   /**
    * Represents encountering an unparsable package.json file.
    */
@@ -192,7 +192,7 @@ makeNamedError(XPackageJsonNotParsableError, 'XPackageJsonNotParsableError');
  */
 export class DuplicatePackageNameError extends ProjectError {
   // TODO: this prop should be added by makeNamedError or whatever other fn
-  [$type] = [$type_DuplicatePackageNameError, $type_ProjectError];
+  override [$type] = [$type_DuplicatePackageNameError, $type_ProjectError];
   /**
    * Represents encountering a workspace package.json file with the same
    * `"name"` field as another workspace.
@@ -228,7 +228,7 @@ makeNamedError(DuplicatePackageNameError, 'DuplicatePackageNameError');
  */
 export class DuplicatePackageIdError extends ProjectError {
   // TODO: this prop should be added by makeNamedError or whatever other fn
-  [$type] = [$type_DuplicatePackageIdError, $type_ProjectError];
+  override [$type] = [$type_DuplicatePackageIdError, $type_ProjectError];
   /**
    * Represents encountering an unnamed workspace with the same package-id as
    * another workspace.

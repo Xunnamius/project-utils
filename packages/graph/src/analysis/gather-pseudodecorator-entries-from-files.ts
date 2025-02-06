@@ -299,7 +299,7 @@ function contentsToDecorators(contents: string): Pseudodecorator[] {
       .map(function ([, rawTag, rawItems]) {
         return {
           tag: rawTag as PseudodecoratorTag,
-          items: rawItems.split(whitespace).filter((packageName) => {
+          items: rawItems!.split(whitespace).filter((packageName) => {
             const npmValidationResult = isValidNpmPackageName(
               packageName.replaceAll('~', '_')
             );

@@ -1,4 +1,5 @@
 import type { PackageJson } from 'type-fest';
+
 import type {
   SubpathMapping,
   SubpathMappings
