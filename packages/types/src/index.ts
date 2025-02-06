@@ -1,3 +1,5 @@
+import { isMap } from 'node:util/types';
+
 import type { AbsolutePath, RelativePath } from '@-xun/fs';
 import type { OmitIndexSignature, PackageJson } from 'type-fest';
 
@@ -561,18 +563,56 @@ export type GenericWorkspacePackage = WorkspacePackage<GenericPackageJson>;
 export type GenericRootPackage = RootPackage<GenericPackageJson>;
 
 /**
+ * The options accepted by several of the `isX` sentinel functions.
+ */
+export type SentinelOptions = {
+  /**
+   * If `true`, both the generic {@link PackageJson} and non-generic
+   * {@link XPackageJson} JSON objects are accepted by this instance. If
+   * `false`, only {@link XPackageJson} is acceptable.
+   *
+   * @default true
+   */
+  generic?: boolean;
+};
+
+/**
  * Returns `true` if `o` is probably an instance of `RootPackage` or
  * `WorkspacePackage`.
  */
-export function isPackage(o: unknown): o is Package {
-  return isWorkspacePackage(o) || isRootPackage(o);
+export function isPackage(o: unknown, options?: { generic?: true }): o is GenericPackage;
+export function isPackage(o: unknown, options: { generic: false }): o is Package;
+export function isPackage(
+  o: unknown,
+  options: SentinelOptions
+): o is GenericPackage | Package;
+export function isPackage(
+  o: unknown,
+  options: SentinelOptions = {}
+): o is GenericPackage | Package {
+  return isWorkspacePackage(o, options) || isRootPackage(o, options);
 }
 
 /**
  * Returns `true` if `o` is probably an instance of `WorkspacePackage` (i.e. not
  * a {@link RootPackage}).
  */
-export function isWorkspacePackage(o: unknown): o is WorkspacePackage {
+export function isWorkspacePackage(
+  o: unknown,
+  options?: { generic?: true }
+): o is GenericWorkspacePackage;
+export function isWorkspacePackage(
+  o: unknown,
+  options: { generic: false }
+): o is WorkspacePackage;
+export function isWorkspacePackage(
+  o: unknown,
+  options: SentinelOptions
+): o is GenericWorkspacePackage | WorkspacePackage;
+export function isWorkspacePackage(
+  o: unknown,
+  { generic = true }: SentinelOptions = {}
+): o is GenericWorkspacePackage | WorkspacePackage {
   return (
     !!o &&
     typeof o === 'object' &&
@@ -581,7 +621,8 @@ export function isWorkspacePackage(o: unknown): o is WorkspacePackage {
     'relativeRoot' in o &&
     'json' in o &&
     'attributes' in o &&
-    'projectMetadata' in o
+    'projectMetadata' in o &&
+    (generic ? true : isXPackageJson(o.json))
   );
 }
 
@@ -589,8 +630,19 @@ export function isWorkspacePackage(o: unknown): o is WorkspacePackage {
  * Returns `true` if `o` is probably an instance of `RootPackage` (i.e. not a
  * {@link WorkspacePackage}).
  */
-// TODO: unit test these isX functions
-export function isRootPackage(o: unknown): o is RootPackage {
+export function isRootPackage(
+  o: unknown,
+  options?: { generic?: true }
+): o is GenericRootPackage;
+export function isRootPackage(o: unknown, options: { generic: false }): o is RootPackage;
+export function isRootPackage(
+  o: unknown,
+  options: SentinelOptions
+): o is GenericRootPackage | RootPackage;
+export function isRootPackage(
+  o: unknown,
+  { generic = true }: SentinelOptions = {}
+): o is GenericRootPackage | RootPackage {
   return (
     !!o &&
     typeof o === 'object' &&
@@ -599,15 +651,30 @@ export function isRootPackage(o: unknown): o is RootPackage {
     !('relativeRoot' in o) &&
     'json' in o &&
     'attributes' in o &&
-    'projectMetadata' in o
+    'projectMetadata' in o &&
+    (generic ? true : isXPackageJson(o.json))
   );
 }
 
-// TODO: aren't these sentinel functions the use case for Zod? Let's try that!
 /**
  * Returns `true` if `o` is probably an instance of `ProjectMetadata`.
  */
-export function isProjectMetadata(o: unknown): o is ProjectMetadata {
+export function isProjectMetadata(
+  o: unknown,
+  options?: { generic?: true }
+): o is GenericProjectMetadata;
+export function isProjectMetadata(
+  o: unknown,
+  options: { generic: false }
+): o is ProjectMetadata;
+export function isProjectMetadata(
+  o: unknown,
+  options: SentinelOptions
+): o is GenericProjectMetadata | ProjectMetadata;
+export function isProjectMetadata(
+  o: unknown,
+  options: SentinelOptions = {}
+): o is GenericProjectMetadata | ProjectMetadata {
   return (
     !!o &&
     typeof o === 'object' &&
@@ -616,10 +683,11 @@ export function isProjectMetadata(o: unknown): o is ProjectMetadata {
       o.type as ProjectAttribute
     ) &&
     'rootPackage' in o &&
-    isRootPackage(o.rootPackage) &&
+    isRootPackage(o.rootPackage, options) &&
     'cwdPackage' in o &&
-    isPackage(o.cwdPackage) &&
-    'subRootPackages' in o
+    isPackage(o.cwdPackage, options) &&
+    'subRootPackages' in o &&
+    (o.subRootPackages === undefined || isMap(o.subRootPackages))
   );
 }
 

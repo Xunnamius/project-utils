@@ -3,14 +3,14 @@ import { memoizer } from '@-xun/memoize';
 import { deriveVirtualGitignoreLines } from '@-xun/project-fs';
 import { glob as globAsync, sync as globSync } from 'glob-gitignore';
 
-import { assignResultTo, commonDebug } from 'universe+graph:common.ts';
+import { assignResultTo, commonDebug, toSerializable } from 'universe+graph:common.ts';
 import { directoryPackagesProjectBase } from 'universe+graph:constant.ts';
 
 import type { AbsolutePath, RelativePath } from '@-xun/fs';
 import type { GenericPackage } from '@-xun/project-types';
 import type { Promisable } from 'type-fest';
 import type { ParametersNoFirst, SyncVersionOf } from 'multiverse+common:types.ts';
-import type { PackageFiles } from 'universe+graph:common.ts';
+import type { PackageFiles, Serializable } from 'universe+graph:common.ts';
 
 const debug = commonDebug.extend('gatherPackageFiles');
 
@@ -73,13 +73,13 @@ function gatherPackageFiles_(
     cacheIdComponentsObject;
 
   type Memoization = (
-    ...args: [typeof package_, typeof cacheIdComponentsObject]
+    ...args: [Serializable<typeof package_>, typeof cacheIdComponentsObject]
   ) => ReturnType<typeof gatherPackageFiles_>;
 
   if (useCached) {
     const cachedPackageFiles = memoizer.get<Memoization>(
       gatherPackageFiles_ as unknown as Memoization,
-      [package_, cacheIdComponentsObject]
+      [toSerializable(package_), cacheIdComponentsObject]
     );
 
     if (cachedPackageFiles) {
@@ -215,7 +215,7 @@ function gatherPackageFiles_(
 
     memoizer.set<Memoization>(
       gatherPackageFiles_ as unknown as Memoization,
-      [package_, cacheIdComponentsObject],
+      [toSerializable(package_), cacheIdComponentsObject],
       packageFiles
     );
   }

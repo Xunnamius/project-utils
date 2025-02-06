@@ -18,7 +18,7 @@ import {
 import { gatherImportEntriesFromFiles } from 'universe+graph:analysis/gather-import-entries-from-files.ts';
 import { gatherPackageFiles } from 'universe+graph:analysis/gather-package-files.ts';
 import { pathToPackage } from 'universe+graph:analysis/path-to-package.ts';
-import { commonDebug } from 'universe+graph:common.ts';
+import { commonDebug, toSerializable } from 'universe+graph:common.ts';
 import { hasTypescriptExtension } from 'universe+graph:constant.ts';
 import { GraphErrorMessage } from 'universe+graph:error.ts';
 
@@ -34,7 +34,7 @@ import type {
 import type { Entries, Promisable, SetFieldType } from 'type-fest';
 import type { ParametersNoFirst, SyncVersionOf } from 'multiverse+common:types.ts';
 import type { ImportSpecifiersEntry } from 'universe+graph:analysis/gather-import-entries-from-files.ts';
-import type { PackageBuildTargets } from 'universe+graph:common.ts';
+import type { PackageBuildTargets, Serializable } from 'universe+graph:common.ts';
 
 const debug = commonDebug.extend('gatherPackageBuildTargets');
 
@@ -132,13 +132,13 @@ function gatherPackageBuildTargets_(
   const { root: projectRoot } = rootPackage;
 
   type Memoization = (
-    ...args: [typeof package_, typeof cacheIdComponentsObject]
+    ...args: [Serializable<typeof package_>, typeof cacheIdComponentsObject]
   ) => ReturnType<typeof gatherPackageBuildTargets_>;
 
   if (useCached) {
     const cachedBuildTargets = memoizer.get<Memoization>(
       gatherPackageBuildTargets_ as unknown as Memoization,
-      [package_, cacheIdComponentsObject]
+      [toSerializable(package_), cacheIdComponentsObject]
     );
 
     if (cachedBuildTargets) {
@@ -358,7 +358,7 @@ function gatherPackageBuildTargets_(
 
     memoizer.set<Memoization>(
       gatherPackageBuildTargets_ as unknown as Memoization,
-      [package_, cacheIdComponentsObject],
+      [toSerializable(package_), cacheIdComponentsObject],
       packageBuildTargets
     );
   }

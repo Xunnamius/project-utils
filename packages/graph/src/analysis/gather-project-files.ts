@@ -12,7 +12,7 @@ import type { AbsolutePath } from '@-xun/fs';
 import type { GenericPackage, GenericProjectMetadata } from '@-xun/project-types';
 import type { Promisable } from 'type-fest';
 import type { ParametersNoFirst } from 'multiverse+common:types.ts';
-import type { ProjectFiles } from 'universe+graph:common.ts';
+import type { ProjectFiles, Serializable } from 'universe+graph:common.ts';
 
 const debug = commonDebug.extend('gatherProjectFiles');
 
@@ -89,7 +89,7 @@ function gatherProjectFiles_(
   } = cacheIdComponentsObject;
 
   type Memoization = (
-    ...args: [typeof projectMetadata, typeof cacheIdComponentsObject]
+    ...args: [Serializable<typeof projectMetadata>, typeof cacheIdComponentsObject]
   ) => ReturnType<typeof gatherProjectFiles_>;
 
   if (shouldRunSynchronously && skipUnknown) {

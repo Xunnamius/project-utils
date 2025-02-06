@@ -1,24 +1,22 @@
+import { isPackage, isProjectMetadata } from '@-xun/project-types';
 import { createDebugLogger } from 'rejoinder';
 
 import { globalDebuggerNamespace } from 'multiverse+common:constant.ts';
 
-import type { AbsolutePath, RelativePath } from '@-xun/fs';
-// ? Used in documentation
-// @ts-expect-error: used in documentation
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type { sharedAttributeFileBase } from '@-xun/project-fs';
-import type { WorkspacePackageId } from '@-xun/project-types';
-import type { MetadataImportsPrefix } from 'universe+graph:analysis/gather-package-build-targets.ts';
+import { GraphErrorMessage } from 'universe+graph:error.ts';
 
-// @ts-expect-error: used in documentation
+import type { AbsolutePath, RelativePath } from '@-xun/fs';
+
 import type {
-  // ? Used in documentation
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  nextjsConfigProjectBase,
-  // ? Used in documentation
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  webpackConfigProjectBase
-} from 'universe+graph:constant.ts';
+  GenericPackage,
+  GenericProjectMetadata,
+  Package,
+  ProjectMetadata,
+  WorkspacePackageId
+} from '@-xun/project-types';
+
+import type { Tagged } from 'type-fest';
+import type { MetadataImportsPrefix } from 'universe+graph:analysis/gather-package-build-targets.ts';
 
 export const commonDebug = createDebugLogger({
   namespace: `${globalDebuggerNamespace}:analyze`
@@ -280,4 +278,30 @@ export function assignResultTo(parentObject: Record<string, unknown>, key: strin
   return function (result: unknown) {
     parentObject[key] = result;
   };
+}
+
+export type Serializable<T> = Tagged<T, 'serializable'>;
+
+/**
+ * Make `component` serializable by `@-xun/memoizer` (`JSON.stringify`).
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#description
+ */
+export function toSerializable<
+  T extends GenericProjectMetadata | ProjectMetadata | GenericPackage | Package
+>(idComponent: T): Serializable<T> {
+  if (isPackage(idComponent)) {
+    // ? Packages are cyclical data structures, so we account for that
+    const { projectMetadata: _, ...serializablePackage } = idComponent;
+    return serializablePackage as Serializable<T>;
+  } else if (isProjectMetadata(idComponent)) {
+    // ? ProjectMetadata has cyclical data structures, so we account for that
+    const {
+      rootPackage: { projectMetadata: _, ...serializablePackage }
+    } = idComponent;
+
+    return serializablePackage as Serializable<T>;
+  }
+
+  throw new TypeError(GraphErrorMessage.TargetUnserializable());
 }
