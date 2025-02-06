@@ -8,7 +8,7 @@
 
 > **PackageBuildTargets**: `object`
 
-Defined in: packages/graph/dist/packages/graph/src/common.d.ts:15
+Defined in: packages/graph/dist/packages/graph/src/common.d.ts:16
 
 In the context of a [Package](Package.md), this object represents a collection of
 all the file paths **relative to the _project root_** that must be transpiled

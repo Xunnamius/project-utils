@@ -8,7 +8,7 @@
 
 > **hasMagic**(`patterns`, `options`?): `string`
 
-Defined in: [types/glob-gitignore.d.ts:23](https://github.com/Xunnamius/projector/blob/f08ba65b842709375f6fb4363372a734742d54c1/types/glob-gitignore.d.ts#L23)
+Defined in: [types/glob-gitignore.d.ts:23](https://github.com/Xunnamius/projector/blob/17e0fc2cbfbba96d7aaeeb5e98ce42b294402225/types/glob-gitignore.d.ts#L23)
 
 ## Parameters
 

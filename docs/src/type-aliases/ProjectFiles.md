@@ -8,7 +8,7 @@
 
 > **ProjectFiles**: `object`
 
-Defined in: packages/graph/dist/packages/graph/src/common.d.ts:82
+Defined in: packages/graph/dist/packages/graph/src/common.d.ts:83
 
 A collection of AbsolutePaths within this project organized by
 location and utility.

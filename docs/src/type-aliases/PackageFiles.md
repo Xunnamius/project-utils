@@ -8,7 +8,7 @@
 
 > **PackageFiles**: `object`
 
-Defined in: packages/graph/dist/packages/graph/src/common.d.ts:201
+Defined in: packages/graph/dist/packages/graph/src/common.d.ts:202
 
 In the context of a [Package](Package.md), this type represents a collection of
 AbsolutePaths, one for each file under the package root that is not

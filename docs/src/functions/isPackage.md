@@ -6,19 +6,75 @@
 
 # Function: isPackage()
 
-> **isPackage**(`o`): `o is Package<XPackageJson<XPackageJsonScripts>>`
+## Call Signature
 
-Defined in: packages/types/dist/packages/types/src/index.d.ts:535
+> **isPackage**(`o`, `options`?): `o is GenericPackage`
+
+Defined in: packages/types/dist/packages/types/src/index.d.ts:548
 
 Returns `true` if `o` is probably an instance of `RootPackage` or
 `WorkspacePackage`.
 
-## Parameters
+### Parameters
 
-### o
+#### o
 
 `unknown`
 
-## Returns
+#### options?
+
+##### generic
+
+`true`
+
+### Returns
+
+`o is GenericPackage`
+
+## Call Signature
+
+> **isPackage**(`o`, `options`): `o is Package<XPackageJson<XPackageJsonScripts>>`
+
+Defined in: packages/types/dist/packages/types/src/index.d.ts:551
+
+Returns `true` if `o` is probably an instance of `RootPackage` or
+`WorkspacePackage`.
+
+### Parameters
+
+#### o
+
+`unknown`
+
+#### options
+
+##### generic
+
+`false`
+
+### Returns
 
 `o is Package<XPackageJson<XPackageJsonScripts>>`
+
+## Call Signature
+
+> **isPackage**(`o`, `options`): o is GenericPackage \| Package\<XPackageJson\<XPackageJsonScripts\>\>
+
+Defined in: packages/types/dist/packages/types/src/index.d.ts:554
+
+Returns `true` if `o` is probably an instance of `RootPackage` or
+`WorkspacePackage`.
+
+### Parameters
+
+#### o
+
+`unknown`
+
+#### options
+
+[`SentinelOptions`](../type-aliases/SentinelOptions.md)
+
+### Returns
+
+o is GenericPackage \| Package\<XPackageJson\<XPackageJsonScripts\>\>

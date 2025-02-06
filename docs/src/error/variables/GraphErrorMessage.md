@@ -368,6 +368,12 @@ A collection of possible error and warning messages.
 
 `string`
 
+### TargetUnserializable()
+
+#### Returns
+
+`string`
+
 ### UnsupportedFeature()
 
 #### Parameters
