@@ -8,7 +8,7 @@
 
 > **DeriveVirtualGitignoreLinesOptions**: `object`
 
-Defined in: [packages/fs/src/system/derive-virtual-gitignore-lines.ts:20](https://github.com/Xunnamius/projector/blob/f1c4cd0ac601a9a5f65f41d830f0ce9a716e9d77/packages/fs/src/system/derive-virtual-gitignore-lines.ts#L20)
+Defined in: [packages/fs/src/system/derive-virtual-gitignore-lines.ts:20](https://github.com/Xunnamius/projector/blob/d4cf8eeb9fc68bed9fcdc6582a854ec38ada9801/packages/fs/src/system/derive-virtual-gitignore-lines.ts#L20)
 
 ## Type declaration
 

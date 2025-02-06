@@ -8,7 +8,7 @@
 
 > **readJsonc**\<`T`\>(...`args`): `Promise`\<`T`\>
 
-Defined in: [packages/fs/src/system/read-jsonc.ts:165](https://github.com/Xunnamius/projector/blob/f1c4cd0ac601a9a5f65f41d830f0ce9a716e9d77/packages/fs/src/system/read-jsonc.ts#L165)
+Defined in: [packages/fs/src/system/read-jsonc.ts:165](https://github.com/Xunnamius/projector/blob/d4cf8eeb9fc68bed9fcdc6582a854ec38ada9801/packages/fs/src/system/read-jsonc.ts#L165)
 
 Asynchronously read in and parse the contents of an arbitrary JSONC file.
 

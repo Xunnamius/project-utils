@@ -8,7 +8,7 @@
 
 > **ReadXPackageJsonAtRootOptions**: `object`
 
-Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:12](https://github.com/Xunnamius/projector/blob/f1c4cd0ac601a9a5f65f41d830f0ce9a716e9d77/packages/fs/src/system/read-xpackage-json-at-root.ts#L12)
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:12](https://github.com/Xunnamius/projector/blob/d4cf8eeb9fc68bed9fcdc6582a854ec38ada9801/packages/fs/src/system/read-xpackage-json-at-root.ts#L12)
 
 ## Type declaration
 

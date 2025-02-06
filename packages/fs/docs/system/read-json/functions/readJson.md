@@ -8,7 +8,7 @@
 
 > **readJson**\<`T`\>(...`args`): `Promise`\<`T`\>
 
-Defined in: [packages/fs/src/system/read-json.ts:133](https://github.com/Xunnamius/projector/blob/f1c4cd0ac601a9a5f65f41d830f0ce9a716e9d77/packages/fs/src/system/read-json.ts#L133)
+Defined in: [packages/fs/src/system/read-json.ts:133](https://github.com/Xunnamius/projector/blob/d4cf8eeb9fc68bed9fcdc6582a854ec38ada9801/packages/fs/src/system/read-json.ts#L133)
 
 Asynchronously read in and parse the contents of an arbitrary JSON file.
 

@@ -8,4 +8,4 @@
 
 > `const` **$type\_DuplicatePackageIdError**: *typeof* [`$type_DuplicatePackageIdError`]($type_DuplicatePackageIdError.md)
 
-Defined in: [packages/common/src/error.ts:16](https://github.com/Xunnamius/projector/blob/f1c4cd0ac601a9a5f65f41d830f0ce9a716e9d77/packages/common/src/error.ts#L16)
+Defined in: [packages/common/src/error.ts:16](https://github.com/Xunnamius/projector/blob/d4cf8eeb9fc68bed9fcdc6582a854ec38ada9801/packages/common/src/error.ts#L16)

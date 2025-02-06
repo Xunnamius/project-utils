@@ -8,4 +8,4 @@
 
 > `const` **$type\_XPackageJsonNotParsableError**: *typeof* [`$type_XPackageJsonNotParsableError`]($type_XPackageJsonNotParsableError.md)
 
-Defined in: [packages/common/src/error.ts:10](https://github.com/Xunnamius/projector/blob/f1c4cd0ac601a9a5f65f41d830f0ce9a716e9d77/packages/common/src/error.ts#L10)
+Defined in: [packages/common/src/error.ts:10](https://github.com/Xunnamius/projector/blob/d4cf8eeb9fc68bed9fcdc6582a854ec38ada9801/packages/common/src/error.ts#L10)

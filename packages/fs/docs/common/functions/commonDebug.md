@@ -8,7 +8,7 @@
 
 > **commonDebug**(...`args`): `void`
 
-Defined in: [packages/fs/src/common.ts:5](https://github.com/Xunnamius/projector/blob/f1c4cd0ac601a9a5f65f41d830f0ce9a716e9d77/packages/fs/src/common.ts#L5)
+Defined in: [packages/fs/src/common.ts:5](https://github.com/Xunnamius/projector/blob/d4cf8eeb9fc68bed9fcdc6582a854ec38ada9801/packages/fs/src/common.ts#L5)
 
 Send an optionally-formatted message to output.
 
