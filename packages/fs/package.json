@@ -77,10 +77,10 @@
     "jsonc-parser": "^3.3.1",
     "named-app-errors": "^4.0.2",
     "rejoinder": "^1.2.4",
-    "type-fest": "^4.33.0"
+    "type-fest": "^4.34.1"
   },
   "devDependencies": {
-    "@-xun/common-dummies": "^1.0.2",
+    "@-xun/common-dummies": "^1.0.3",
     "toss-expression": "^0.1.2"
   },
   "engines": {

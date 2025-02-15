@@ -78,10 +78,10 @@
     "core-js": "^3.40.0",
     "escape-string-regexp~4": "npm:escape-string-regexp@^4.0.0",
     "named-app-errors": "4.0.2",
-    "type-fest": "^4.33.0"
+    "type-fest": "^4.34.1"
   },
   "devDependencies": {
-    "@-xun/common-dummies": "^1.0.2",
+    "@-xun/common-dummies": "^1.0.3",
     "@-xun/project-types": "^1.0.1",
     "toss-expression": "^0.1.2"
   },
