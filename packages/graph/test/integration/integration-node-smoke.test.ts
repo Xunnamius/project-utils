@@ -39,7 +39,7 @@ test.todo('disable this for now');
 // debug(`nodeVersion: "${nodeVersion}"`);
 
 // beforeAll(async () => {
-//   ensurePackageHasBeenBuilt(
+//   await ensurePackageHasBeenBuilt(
 //     toDirname(require.resolve('rootverse+graph:package.json')),
 //     packageName,
 //     packageExports

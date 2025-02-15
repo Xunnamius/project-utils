@@ -2,18 +2,19 @@ import { isNativeError } from 'node:util/types';
 
 import { makeNamedError } from 'named-app-errors';
 
-export const $type = Symbol.for('object-type-hint');
-export const $type_ProjectError = Symbol.for('object-type-hint:ProjectError');
-export const $type_NotAGitRepositoryError = Symbol.for(
+// TODO: replace all of this with the @-xun/error and @-xun/instance-of packages
+const $type = Symbol.for('object-type-hint');
+const $type_ProjectError = Symbol.for('object-type-hint:ProjectError');
+const $type_NotAGitRepositoryError = Symbol.for(
   'object-type-hint:NotAGitRepositoryError'
 );
-export const $type_XPackageJsonNotParsableError = Symbol.for(
+const $type_XPackageJsonNotParsableError = Symbol.for(
   'object-type-hint:XPackageJsonNotParsableError'
 );
-export const $type_DuplicatePackageNameError = Symbol.for(
+const $type_DuplicatePackageNameError = Symbol.for(
   'object-type-hint:DuplicatePackageNameError'
 );
-export const $type_DuplicatePackageIdError = Symbol.for(
+const $type_DuplicatePackageIdError = Symbol.for(
   'object-type-hint:DuplicatePackageIdError'
 );
 
@@ -22,12 +23,13 @@ export const $type_DuplicatePackageIdError = Symbol.for(
  */
 export type ProjectErrorOptions = {
   /**
-   * By default, if an {@link Error} object is passed to `CliError`, that
-   * `Error` instance will be passed through as `CliError.cause` and that
-   * instance's `Error.message` will be passed through as `CliError.message`.
+   * By default, if an {@link Error} object is passed to `ProjectError`, that
+   * `Error` instance will be passed through as `ProjectError.cause` and that
+   * instance's `Error.message` will be passed through as
+   * `ProjectError.message`.
    *
    * Use this option to override this default behavior and instead set
-   * `CliError.cause` manually.
+   * `ProjectError.cause` manually.
    */
   cause?: ErrorOptions['cause'];
 };
