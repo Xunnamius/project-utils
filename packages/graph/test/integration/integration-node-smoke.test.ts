@@ -6,118 +6,130 @@
 // * containers, and are built to run in GitHub Actions CI pipelines; some can
 // * also be run locally.
 
-/* eslint-disable unicorn/no-abusive-eslint-disable */
-/* eslint-disable */
+import { toAbsolutePath, toDirname } from '@-xun/fs';
+import { readXPackageJsonAtRoot } from '@-xun/project-fs';
+import { createDebugLogger } from 'rejoinder';
 
-test.todo('disable this for now');
+import {
+  exports as packageExports,
+  name as packageName,
+  version as packageVersion
+} from 'rootverse+graph:package.json';
 
-// import {
-//   dummyDirectoriesFixture,
-//   dummyFilesFixture,
-//   dummyNpmPackageFixture,
-//   ensurePackageHasBeenBuilt,
-//   mockFixtureFactory,
-//   nodeImportAndRunTestFixture,
-//   npmLinkPackageFixture,
-//   reconfigureJestGlobalsToSkipTestsInThisFileIfRequested
-// } from 'testverse:util.ts';
+import {
+  dummyFilesFixture,
+  dummyNpmPackageFixture,
+  ensurePackageHasBeenBuilt,
+  gitRepositoryFixture,
+  mockFixturesFactory,
+  nodeImportAndRunTestFixture,
+  npmLinkPackageFixture,
+  reconfigureJestGlobalsToSkipTestsInThisFileIfRequested
+} from 'testverse:util.ts';
 
-// import { createDebugLogger } from 'rejoinder';
-// import { toDirname } from '@-xun/fs';
-// import {
-//   name as packageName,
-//   version as packageVersion,
-//   exports as packageExports
-// } from 'rootverse+graph:package.json';
+reconfigureJestGlobalsToSkipTestsInThisFileIfRequested({ it: true });
 
-// reconfigureJestGlobalsToSkipTestsInThisFileIfRequested({ it: true });
+const TEST_IDENTIFIER = `${packageName.split('/').at(-1)!}-integration-node`;
+const debug = createDebugLogger({ namespace: 'graph' }).extend(TEST_IDENTIFIER);
+const nodeVersion = process.env.XPIPE_MATRIX_NODE_VERSION || process.version;
 
-// const TEST_IDENTIFIER = 'integration-node';
-// const debug = createDebugLogger({ namespace: 'graph' }).extend(TEST_IDENTIFIER);
-// const nodeVersion = process.env.XPIPE_MATRIX_NODE_VERSION || process.version;
+debug(`nodeVersion: "${nodeVersion}"`);
 
-// debug(`nodeVersion: "${nodeVersion}"`);
+beforeAll(async () => {
+  await ensurePackageHasBeenBuilt(
+    toDirname(toAbsolutePath(require.resolve('rootverse+graph:package.json'))),
+    packageName,
+    packageExports
+  );
+});
 
-// beforeAll(async () => {
-//   await ensurePackageHasBeenBuilt(
-//     toDirname(require.resolve('rootverse+graph:package.json')),
-//     packageName,
-//     packageExports
-//   );
-// });
+const packageRoot = toAbsolutePath(__dirname, '../..');
+const withMockedFixture = mockFixturesFactory(
+  [
+    dummyNpmPackageFixture,
+    dummyFilesFixture,
+    gitRepositoryFixture,
+    npmLinkPackageFixture,
+    nodeImportAndRunTestFixture
+  ],
+  {
+    performCleanup: false,
+    identifier: TEST_IDENTIFIER,
+    packageUnderTest: {
+      root: packageRoot,
+      json: readXPackageJsonAtRoot.sync(packageRoot, { useCached: true }),
+      attributes: { cjs: true, multiversal: true }
+    },
+    initialVirtualFiles: {
+      'package.json': /* js */ `{
+  "name":"dummy-pkg",
+  "version":"0.1.2",
+  "workspaces": ["packages/*"]
+}`,
+      'packages/pkg1/package.json': /* js */ `{
+  "name":"pkg-1",
+  "version":"1.2.3"
+}`,
+      'packages/pkg2/package.json': /* js */ `{
+  "name":"pkg-2",
+  "version":"4.5.6"
+}`
+    }
+  }
+);
 
-// const withMockedFixture = mockFixtureFactory(
-//   [
-//     dummyNpmPackageFixture,
-//     dummyDirectoriesFixture,
-//     dummyFilesFixture,
-//     npmLinkPackageFixture,
-//     nodeImportAndRunTestFixture
-//   ],
-//   {
-//     performCleanup: true,
-//     identifier: TEST_IDENTIFIER,
-//     directoryPaths: ['packages/pkg1', 'packages/pkg2', '.git'],
-//     initialVirtualFiles: {
-//       'package.json': /* js */ `{
-//         "name":"dummy-pkg",
-//         "workspaces": ["packages/*"],
-//         "dependencies": {
-//           "${packageName}": "${packageVersion}"
-//         }
-//       }`,
-//       'packages/pkg1/package.json': /* js */ `{
-//         "name":"pkg-1",
-//         "version":"1.2.3"
-//       }`,
-//       'packages/pkg2/package.json': /* js */ `{
-//         "name":"pkg-2",
-//         "version":"1.2.3"
-//       }`
-//     }
-//   }
-// );
+const runTest = async (
+  importAs: 'esm' | 'cjs',
+  testFixtureFn: Parameters<typeof withMockedFixture>[0]
+) => {
+  await withMockedFixture(
+    async (context) => {
+      await testFixtureFn(context);
+    },
+    {
+      initialVirtualFiles: {
+        [`src/index.${importAs === 'esm' ? 'm' : ''}js`]:
+          (importAs === 'esm'
+            ? /* ts */ `import {
+  analyzeProjectStructure,
+  deriveAliasesForBabel,
+  generateRawAliasMap
+} from '${packageName}';`
+            : /* ts */ `const {
+  analyzeProjectStructure,
+  deriveAliasesForBabel,
+  generateRawAliasMap
+} = require('${packageName}');`) +
+          /* ts */ `
 
-// const runTest = async (
-//   importAs: 'esm' | 'cjs',
-//   testFixtureFn: Parameters<typeof withMockedFixture>[0]
-// ) => {
-//   await withMockedFixture(
-//     async (context) => {
-//       await testFixtureFn(context);
-//     },
-//     {
-//       initialVirtualFiles: {
-//         [`src/index.${importAs === 'esm' ? 'm' : ''}js`]:
-//           (importAs === 'esm'
-//             ? /* ts */ `import { analyzeProjectStructure } from '${packageName}/project-utils';`
-//             : /* ts */ `const { analyzeProjectStructure } = require('${packageName}/project-utils');`) +
-//           '\n' +
-//           (importAs === 'esm'
-//             ? /* ts */ `import { getEslintAliases } from '${packageName}/???';`
-//             : /* ts */ `const { getEslintAliases } = require('${packageName}/???');`) +
-//           /* ts */ `
-// console.log(analyzeProjectStructure().project.json.name === 'dummy-pkg');
-// console.log(analyzeProjectStructure().project.packages.get('pkg-1').json.name === 'pkg-1');
-// console.log(getEslintAliases()[0][0] === 'universe' && getEslintAliases()[0][1] === './src');
-// `
-//       }
-//     }
-//   );
-// };
+const projectMetadata = analyzeProjectStructure.sync({
+  useCached: true
+});
 
-// it('works as an ESM import', async () => {
-//   expect.hasAssertions();
-//   await runTest('esm', async (context) => {
-//     expect(context.testResult.stdout).toBe('true\ntrue\ntrue');
-//     expect(context.testResult.exitCode).toBe(0);
-//   });
-// });
+const { rootPackage, subRootPackages } = projectMetadata;
+const rawAliasMappings = generateRawAliasMap(projectMetadata);
 
-// it('works as a CJS require(...)', async () => {
-//   expect.hasAssertions();
-//   await runTest('cjs', async (context) => {
-//     expect(context.testResult.stdout).toBe('true\ntrue\ntrue');
-//     expect(context.testResult.exitCode).toBe(0);
-//   });
-// });
+console.log(rootPackage.json.name === 'dummy-pkg');
+console.log(subRootPackages.get('pkg-1').json.version === '1.2.3');
+console.log(deriveAliasesForBabel(rawAliasMappings)['^universe$'] === './src/index.js');
+`
+      }
+    }
+  );
+};
+
+it('works as an ESM import', async () => {
+  expect.hasAssertions();
+  await runTest('esm', async (context) => {
+    expect(context.testResult.stdout).toBe('true\ntrue\ntrue');
+    expect(context.testResult.exitCode).toBe(0);
+  });
+});
+
+it('works as a CJS require(...)', async () => {
+  expect.hasAssertions();
+  await runTest('cjs', async (context) => {
+    expect(context.testResult.stdout).toBe('true\ntrue\ntrue');
+    expect(context.testResult.exitCode).toBe(0);
+  });
+});
