@@ -52,7 +52,7 @@ const withMockedFixture = mockFixturesFactory(
     nodeImportAndRunTestFixture
   ],
   {
-    performCleanup: false,
+    performCleanup: true,
     identifier: TEST_IDENTIFIER,
     packageUnderTest: {
       root: packageRoot,
