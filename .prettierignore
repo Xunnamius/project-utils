@@ -45,7 +45,7 @@ node_modules
 package-lock.json
 
 # Ignore test fixtures in any subdir (which may depend on remaining as they are)
-fixtures
+**/test/**/fixtures/**
 __*__
 
 # Ignore things that prettier isn't good at in any subdir
