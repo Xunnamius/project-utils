@@ -12,8 +12,7 @@ import { createDebugLogger } from 'rejoinder';
 
 import {
   exports as packageExports,
-  name as packageName,
-  version as packageVersion
+  name as packageName
 } from 'rootverse+graph:package.json';
 
 import {

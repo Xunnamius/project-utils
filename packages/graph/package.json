@@ -91,7 +91,8 @@
   },
   "devDependencies": {
     "@-xun/common-dummies": "^1.0.3",
-    "@-xun/run": "^0.0.1"
+    "@-xun/run": "^0.0.1",
+    "@types/validate-npm-package-name": "^4.0.2"
   },
   "engines": {
     "node": "^18.20.0 || ^20.18.0 || ^22.12.0 || >=23.3.0"
