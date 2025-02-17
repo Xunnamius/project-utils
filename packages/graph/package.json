@@ -90,7 +90,7 @@
     "validate-npm-package-name": "^6.0.0"
   },
   "devDependencies": {
-    "@-xun/common-dummies": "^1.0.3",
+    "@-xun/common-dummies": "^1.0.4",
     "@-xun/run": "^1.0.1",
     "@types/validate-npm-package-name": "^4.0.2"
   },

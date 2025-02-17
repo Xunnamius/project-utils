@@ -99,7 +99,7 @@
     "named-app-errors": "^4.0.2"
   },
   "devDependencies": {
-    "@-xun/common-dummies": "^1.0.3",
+    "@-xun/common-dummies": "^1.0.4",
     "@-xun/run": "^1.0.1",
     "@-xun/symbiote": "^2.25.1",
     "glob": "^11.0.1",
