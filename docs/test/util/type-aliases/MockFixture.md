@@ -8,7 +8,7 @@
 
 > **MockFixture**\<`Name`, `Context`\>: `object`
 
-Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/types/fixtures.d.ts:20
+Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/types/fixtures.d.ts:22
 
 An object describing a mock or "dummy" filesystem structure used to simulate
 one or more runtime environments for the package under test.
@@ -17,7 +17,7 @@ one or more runtime environments for the package under test.
 
 • **Name** *extends* `string`
 
-• **Context** *extends* [`GenericFixtureContext`](GenericFixtureContext.md)
+• **Context**
 
 ## Type declaration
 
@@ -37,9 +37,9 @@ the fixture. This string _should_ be unique per fixture.
 
 Including invalid characters in the fixture name will cause an error.
 
-### setup?
+### setup()?
 
-> `optional` **setup**: [`FixtureAction`](FixtureAction.md)\<`Context`\>
+> `optional` **setup**: (`context`) => `Promisable`\<`unknown`\>
 
 An optional function that is run before the `test` function is invoked.
 
@@ -49,9 +49,19 @@ If this function throws, the error will bubble, preventing other fixtures
 If a fixture provides neither a `setup` nor `teardown` function, it is
 essentially a no-op.
 
-### teardown?
+#### Parameters
 
-> `optional` **teardown**: [`FixtureAction`](FixtureAction.md)\<`Context`\>
+##### context
+
+`Context`
+
+#### Returns
+
+`Promisable`\<`unknown`\>
+
+### teardown()?
+
+> `optional` **teardown**: (`context`) => `Promisable`\<`unknown`\>
 
 An optional function that is run after the `test` function completes.
 
@@ -65,3 +75,13 @@ function defined by a fixture will be the last `teardown` function to run.
 
 If a fixture provides neither a `setup` nor `teardown` function, it is
 essentially a no-op.
+
+#### Parameters
+
+##### context
+
+`Context`
+
+#### Returns
+
+`Promisable`\<`unknown`\>

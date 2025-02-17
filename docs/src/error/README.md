@@ -20,12 +20,6 @@
 
 ## Variables
 
-- [$type](variables/$type.md)
-- [$type\_DuplicatePackageIdError](variables/$type_DuplicatePackageIdError.md)
-- [$type\_DuplicatePackageNameError](variables/$type_DuplicatePackageNameError.md)
-- [$type\_NotAGitRepositoryError](variables/$type_NotAGitRepositoryError.md)
-- [$type\_ProjectError](variables/$type_ProjectError.md)
-- [$type\_XPackageJsonNotParsableError](variables/$type_XPackageJsonNotParsableError.md)
 - [CommonErrorMessage](variables/CommonErrorMessage.md)
 - [FsErrorMessage](variables/FsErrorMessage.md)
 - [GraphErrorMessage](variables/GraphErrorMessage.md)

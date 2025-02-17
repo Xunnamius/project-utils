@@ -8,7 +8,7 @@
 
 > **reconfigureJestGlobalsToSkipTestsInThisFileIfRequested**(`targets`?): `object`
 
-Defined in: node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:140
+Defined in: node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:141
 
 This function replaces Jest's `describe`, `test`, and `it` functions in the
 current file with `describe.skip`, `test.skip`, and `it.skip` if
@@ -39,7 +39,7 @@ By default, only `describe` is reconfigured while `test` and `it` are left
 alone. This makes it easier to apply `noskip` to a collection of tests, but
 sometimes it's prudent to reconfigure the other globals as well.
 
-#### describe
+#### describe?
 
 `boolean`
 
@@ -49,7 +49,7 @@ sometimes it's prudent to reconfigure the other globals as well.
 true
 ```
 
-#### it
+#### it?
 
 `boolean`
 
@@ -59,7 +59,7 @@ true
 false
 ```
 
-#### test
+#### test?
 
 `boolean`
 
@@ -75,12 +75,12 @@ false
 
 ### describe
 
-> **describe**: `jest.Describe`
+> **describe**: `Describe`
 
 ### it
 
-> **it**: `jest.It`
+> **it**: `It`
 
 ### test
 
-> **test**: `jest.It`
+> **test**: `It`

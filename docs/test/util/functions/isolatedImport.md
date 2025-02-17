@@ -6,11 +6,12 @@
 
 # Function: isolatedImport()
 
-> **isolatedImport**\<`T`\>(`path`, `options`?): `T`
+> **isolatedImport**\<`Module`\>(`specifier`, `options`?): `Module`
 
-Defined in: node\_modules/@-xun/test-mock-import/dist/packages/test-mock-import/src/index.d.ts:24
+Defined in: node\_modules/@-xun/test-mock-import/dist/packages/test-mock-import/src/index.d.ts:34
 
-Performs a module import as if it were being imported for the first time.
+Performs a CJS module import (via `require`) as if it were being imported for
+the first time.
 
 Note that this function breaks the "require caching" expectation of Node.js
 modules. Problems can arise, for example, when closing an app-wide database
@@ -21,15 +22,17 @@ test to hang unexpectedly, even when all tests pass.
 
 ## Type Parameters
 
-• **T**
+• **Module**
 
 ## Parameters
 
-### path
+### specifier
 
-`string`
+Specifier or absolute path to the module under test. Module resolution is
+handled by `require`, therefore the specifier, if a filesystem path, should
+never be relative and must always use unix-style separators (i.e. `/`).
 
-Path to the module to import. Module resolution is handled by `require`.
+`string` | `AbsolutePath`
 
 ### options?
 
@@ -37,4 +40,4 @@ Path to the module to import. Module resolution is handled by `require`.
 
 ## Returns
 
-`T`
+`Module`

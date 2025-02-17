@@ -6,8 +6,13 @@
 
 # test/util
 
+## Classes
+
+- [MockedExitError](classes/MockedExitError.md)
+
 ## Type Aliases
 
+- [AsDefault](type-aliases/AsDefault.md)
 - [DescribeRootFixture](type-aliases/DescribeRootFixture.md)
 - [DescribeRootFixtureContext](type-aliases/DescribeRootFixtureContext.md)
 - [DescribeRootFixtureOptions](type-aliases/DescribeRootFixtureOptions.md)
@@ -20,7 +25,6 @@
 - [DummyNpmPackageFixture](type-aliases/DummyNpmPackageFixture.md)
 - [DummyNpmPackageFixtureContext](type-aliases/DummyNpmPackageFixtureContext.md)
 - [DummyNpmPackageFixtureOptions](type-aliases/DummyNpmPackageFixtureOptions.md)
-- [FixtureAction](type-aliases/FixtureAction.md)
 - [FixtureContext](type-aliases/FixtureContext.md)
 - [FixtureFs](type-aliases/FixtureFs.md)
 - [FixtureOptions](type-aliases/FixtureOptions.md)
@@ -59,6 +63,7 @@
 - [dummyDirectoriesFixtureName](variables/dummyDirectoriesFixtureName.md)
 - [dummyFilesFixtureName](variables/dummyFilesFixtureName.md)
 - [dummyNpmPackageFixtureName](variables/dummyNpmPackageFixtureName.md)
+- [ExitErrorMessage](variables/ExitErrorMessage.md)
 - [gitRepositoryFixtureName](variables/gitRepositoryFixtureName.md)
 - [nodeImportAndRunTestFixtureName](variables/nodeImportAndRunTestFixtureName.md)
 - [npmCopyPackageFixtureName](variables/npmCopyPackageFixtureName.md)
@@ -76,10 +81,11 @@
 - [dummyNpmPackageFixture](functions/dummyNpmPackageFixture.md)
 - [ensurePackageHasBeenBuilt](functions/ensurePackageHasBeenBuilt.md)
 - [gitRepositoryFixture](functions/gitRepositoryFixture.md)
+- [isMockedExitError](functions/isMockedExitError.md)
 - [isolatedImport](functions/isolatedImport.md)
 - [mockArgvFactory](functions/mockArgvFactory.md)
 - [mockEnvFactory](functions/mockEnvFactory.md)
-- [mockFixtureFactory](functions/mockFixtureFactory.md)
+- [mockFixturesFactory](functions/mockFixturesFactory.md)
 - [nodeImportAndRunTestFixture](functions/nodeImportAndRunTestFixture.md)
 - [npmCopyPackageFixture](functions/npmCopyPackageFixture.md)
 - [npmLinkPackageFixture](functions/npmLinkPackageFixture.md)

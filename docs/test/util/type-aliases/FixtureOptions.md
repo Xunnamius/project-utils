@@ -4,15 +4,19 @@
 
 [@-xun/project](../../../README.md) / [test/util](../README.md) / FixtureOptions
 
-# Type Alias: FixtureOptions\<T\>
+# Type Alias: FixtureOptions\<MockFixture, ShouldUnwrap\>
 
-> **FixtureOptions**\<`T`\>: [`GlobalFixtureOptions`](GlobalFixtureOptions.md) & `T` *extends* [`DescribeRootFixture`](DescribeRootFixture.md) ? [`DescribeRootFixtureOptions`](DescribeRootFixtureOptions.md) : `unknown` & `T` *extends* [`DummyDirectoriesFixture`](DummyDirectoriesFixture.md) ? [`DummyDirectoriesFixtureOptions`](DummyDirectoriesFixtureOptions.md) : `unknown` & `T` *extends* [`DummyFilesFixture`](DummyFilesFixture.md) ? [`DummyFilesFixtureOptions`](DummyFilesFixtureOptions.md) : `unknown` & `T` *extends* [`DummyNpmPackageFixture`](DummyNpmPackageFixture.md) ? [`DummyNpmPackageFixtureOptions`](DummyNpmPackageFixtureOptions.md) : `unknown` & `T` *extends* [`GitRepositoryFixture`](GitRepositoryFixture.md) ? [`GitRepositoryFixtureOptions`](GitRepositoryFixtureOptions.md) : `unknown` & `T` *extends* [`NodeImportAndRunTestFixture`](NodeImportAndRunTestFixture.md) ? [`NodeImportAndRunTestFixtureOptions`](NodeImportAndRunTestFixtureOptions.md) : `unknown` & `T` *extends* [`RunTestFixture`](RunTestFixture.md) ? [`RunTestFixtureOptions`](RunTestFixtureOptions.md) : `unknown` & `T` *extends* [`NpmCopyPackageFixture`](NpmCopyPackageFixture.md) ? [`NpmCopyPackageFixtureOptions`](NpmCopyPackageFixtureOptions.md) : `unknown` & `T` *extends* [`NpmLinkPackageFixture`](NpmLinkPackageFixture.md) ? [`NpmLinkPackageFixtureOptions`](NpmLinkPackageFixtureOptions.md) : `unknown` & `T` *extends* [`WebpackTestFixture`](WebpackTestFixture.md) ? [`WebpackTestFixtureOptions`](WebpackTestFixtureOptions.md) : `unknown`
+> **FixtureOptions**\<`MockFixture`, `ShouldUnwrap`\>: [`GlobalFixtureOptions`](GlobalFixtureOptions.md) & `IfAny`\<`MockFixture`, `unknown`, `ReturnVIfTExtendsU`\<[`DescribeRootFixture`](DescribeRootFixture.md), `MockFixture`, [`DescribeRootFixtureOptions`](DescribeRootFixtureOptions.md), `ShouldUnwrap`\> & `ReturnVIfTExtendsU`\<[`DummyDirectoriesFixture`](DummyDirectoriesFixture.md), `MockFixture`, [`DummyDirectoriesFixtureOptions`](DummyDirectoriesFixtureOptions.md), `ShouldUnwrap`\> & `ReturnVIfTExtendsU`\<[`DummyFilesFixture`](DummyFilesFixture.md), `MockFixture`, [`DummyFilesFixtureOptions`](DummyFilesFixtureOptions.md), `ShouldUnwrap`\> & `ReturnVIfTExtendsU`\<[`DummyNpmPackageFixture`](DummyNpmPackageFixture.md), `MockFixture`, [`DummyNpmPackageFixtureOptions`](DummyNpmPackageFixtureOptions.md), `ShouldUnwrap`\> & `ReturnVIfTExtendsU`\<[`GitRepositoryFixture`](GitRepositoryFixture.md), `MockFixture`, [`GitRepositoryFixtureOptions`](GitRepositoryFixtureOptions.md), `ShouldUnwrap`\> & `ReturnVIfTExtendsU`\<[`NodeImportAndRunTestFixture`](NodeImportAndRunTestFixture.md), `MockFixture`, [`NodeImportAndRunTestFixtureOptions`](NodeImportAndRunTestFixtureOptions.md), `ShouldUnwrap`\> & `ReturnVIfTExtendsU`\<[`RunTestFixture`](RunTestFixture.md), `MockFixture`, [`RunTestFixtureOptions`](RunTestFixtureOptions.md), `ShouldUnwrap`\> & `ReturnVIfTExtendsU`\<[`NpmCopyPackageFixture`](NpmCopyPackageFixture.md), `MockFixture`, [`NpmCopyPackageFixtureOptions`](NpmCopyPackageFixtureOptions.md), `ShouldUnwrap`\> & `ReturnVIfTExtendsU`\<[`NpmLinkPackageFixture`](NpmLinkPackageFixture.md), `MockFixture`, [`NpmLinkPackageFixtureOptions`](NpmLinkPackageFixtureOptions.md), `ShouldUnwrap`\> & `ReturnVIfTExtendsU`\<[`WebpackTestFixture`](WebpackTestFixture.md), `MockFixture`, [`WebpackTestFixtureOptions`](WebpackTestFixtureOptions.md), `ShouldUnwrap`\>\>
 
-Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/types/options.d.ts:58
+Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/types/options.d.ts:61
 
 This type combines all possible configurable options conditioned on which
 fixtures are actually used.
 
+Pass `unknown` to return a generic result.
+
 ## Type Parameters
 
-• **T** *extends* [`GenericMockFixture`](GenericMockFixture.md)
+• **MockFixture**
+
+• **ShouldUnwrap** *extends* `boolean` = `true`

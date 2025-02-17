@@ -32,7 +32,7 @@ ignored. Dependency cycles will cause this function to throw.
 
 ### \_\_namedParameters?
 
-#### allowPrivateDependencies
+#### allowPrivateDependencies?
 
 `boolean`
 
@@ -46,7 +46,7 @@ true` field. If such a relation is encountered, an error will be thrown.
 false
 ```
 
-#### includeDevDependencies
+#### includeDevDependencies?
 
 `boolean`
 
@@ -59,7 +59,7 @@ included in package dependency calculations.
 false
 ```
 
-#### skipPrivateDependencies
+#### skipPrivateDependencies?
 
 `boolean`
 

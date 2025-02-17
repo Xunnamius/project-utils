@@ -30,14 +30,24 @@ true
 
 > `optional` **replaceEntireEnv**: `boolean`
 
-By default, the `process.env` object is emptied and re-hydrated with
-`newEnv`. Setting `replace` to `false` will cause `newEnv` to be appended
-instead.
+By default, all environment variables in the `process.env` object are
+deleted before the object is re-hydrated with `newEnv`.
+
+Two environment variables, if present, are exempt from deletion:
+`process.env.DEBUG` and `process.env.DEBUG_COLORS`.
+
+Setting `replace` to `false` will cause `newEnv` to be merged on top of
+`process.env` instead of replacing it. Setting `replace` to `true` will
+cause `newEnv` to replace the _entire_ `process.env` object, including
+`process.env.DEBUG_COLORS`.
+
+Note that `process.env.DEBUG` is unaffected by this option (see
+[MockedEnvOptions.passthroughDebugEnv](MockedEnvOptions.md#passthroughdebugenv) instead).
 
 #### Default
 
 ```ts
-true
+undefined
 ```
 
 ## See

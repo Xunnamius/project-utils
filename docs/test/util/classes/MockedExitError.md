@@ -2,77 +2,58 @@
 
 ***
 
-[@-xun/project](../../../README.md) / [src/error](../README.md) / ProjectError
+[@-xun/project](../../../README.md) / [test/util](../README.md) / MockedExitError
 
-# Class: ProjectError
+# Class: MockedExitError
 
-Defined in: [packages/common/src/error.ts:104](https://github.com/Xunnamius/projector/blob/6ad473c22060f08ec679a30da0c0a6d99b2008f4/packages/common/src/error.ts#L104)
+Defined in: node\_modules/@-xun/test-mock-exit/dist/packages/test-mock-exit/src/error.d.ts:7
 
-Represents an exception originating from project meta-analysis tooling (e.g.
-@-xun/project).
+Represents a call to `process.exit` when said function was mocked by
+`withMockedExit`.
 
 ## Extends
 
 - `Error`
 
-## Extended by
-
-- [`NotAGitRepositoryError`](NotAGitRepositoryError.md)
-- [`XPackageJsonNotParsableError`](XPackageJsonNotParsableError.md)
-- [`DuplicatePackageNameError`](DuplicatePackageNameError.md)
-- [`DuplicatePackageIdError`](DuplicatePackageIdError.md)
-
-## Implements
-
-- `NonNullable`\<[`ProjectErrorOptions`](../type-aliases/ProjectErrorOptions.md)\>
-
 ## Constructors
 
-### new ProjectError()
+### new MockedExitError()
 
-> **new ProjectError**(`reason`?, `options`?): [`ProjectError`](ProjectError.md)
+> **new MockedExitError**(`code`): [`MockedExitError`](MockedExitError.md)
 
-Defined in: [packages/common/src/error.ts:111](https://github.com/Xunnamius/projector/blob/6ad473c22060f08ec679a30da0c0a6d99b2008f4/packages/common/src/error.ts#L111)
+Defined in: node\_modules/@-xun/test-mock-exit/dist/packages/test-mock-exit/src/error.d.ts:13
 
-Represents a project-specific error, optionally with suggested exit code
-and other context.
+Represents a call to `process.exit` when said function was mocked by
+`withMockedExit`.
 
 #### Parameters
 
-##### reason?
+##### code
 
-`string` | `Error`
-
-##### options?
-
-[`ProjectErrorOptions`](../type-aliases/ProjectErrorOptions.md)
+`undefined` | `null` | `string` | `number`
 
 #### Returns
 
-[`ProjectError`](ProjectError.md)
+[`MockedExitError`](MockedExitError.md)
 
 #### Overrides
 
 `Error.constructor`
 
-### new ProjectError()
+### new MockedExitError()
 
-> **new ProjectError**(`reason`, `options`, `message`, `superOptions`): [`ProjectError`](ProjectError.md)
+> **new MockedExitError**(`code`, `message`, `superOptions`): [`MockedExitError`](MockedExitError.md)
 
-Defined in: [packages/common/src/error.ts:116](https://github.com/Xunnamius/projector/blob/6ad473c22060f08ec679a30da0c0a6d99b2008f4/packages/common/src/error.ts#L116)
+Defined in: node\_modules/@-xun/test-mock-exit/dist/packages/test-mock-exit/src/error.d.ts:18
 
 This constructor syntax is used by subclasses when calling this constructor
 via `super`.
 
 #### Parameters
 
-##### reason
+##### code
 
-`string` | `Error`
-
-##### options
-
-[`ProjectErrorOptions`](../type-aliases/ProjectErrorOptions.md)
+`undefined` | `null` | `string` | `number`
 
 ##### message
 
@@ -84,7 +65,7 @@ via `super`.
 
 #### Returns
 
-[`ProjectError`](ProjectError.md)
+[`MockedExitError`](MockedExitError.md)
 
 #### Overrides
 
@@ -96,7 +77,7 @@ via `super`.
 
 > **\[$type\]**: `symbol`[]
 
-Defined in: [packages/common/src/error.ts:106](https://github.com/Xunnamius/projector/blob/6ad473c22060f08ec679a30da0c0a6d99b2008f4/packages/common/src/error.ts#L106)
+Defined in: node\_modules/@-xun/test-mock-exit/dist/packages/test-mock-exit/src/error.d.ts:8
 
 ***
 
@@ -105,10 +86,6 @@ Defined in: [packages/common/src/error.ts:106](https://github.com/Xunnamius/proj
 > `optional` **cause**: `unknown`
 
 Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:26
-
-#### Implementation of
-
-`NonNullable.cause`
 
 #### Inherited from
 

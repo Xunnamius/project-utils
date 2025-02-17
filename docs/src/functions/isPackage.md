@@ -23,7 +23,7 @@ Returns `true` if `o` is probably an instance of `RootPackage` or
 
 #### options?
 
-##### generic
+##### generic?
 
 `true`
 

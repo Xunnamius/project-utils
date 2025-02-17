@@ -23,7 +23,7 @@ a [RootPackage](../type-aliases/RootPackage.md)).
 
 #### options?
 
-##### generic
+##### generic?
 
 `true`
 

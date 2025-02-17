@@ -32,7 +32,7 @@ Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-stru
 
 `true`
 
-##### cwd
+##### cwd?
 
 `AbsolutePath`
 
@@ -73,11 +73,11 @@ Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-stru
 
 #### options
 
-##### allowUnnamedPackages
+##### allowUnnamedPackages?
 
 `false`
 
-##### cwd
+##### cwd?
 
 `AbsolutePath`
 

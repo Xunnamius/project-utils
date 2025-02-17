@@ -8,7 +8,7 @@
 
 > **ResolvedSummary**: `object`
 
-Defined in: [test/util.ts:24](https://github.com/Xunnamius/projector/blob/17e0fc2cbfbba96d7aaeeb5e98ce42b294402225/test/util.ts#L24)
+Defined in: [test/util.ts:24](https://github.com/Xunnamius/projector/blob/6ad473c22060f08ec679a30da0c0a6d99b2008f4/test/util.ts#L24)
 
 Represents the summary of an import resolution attempt.
 

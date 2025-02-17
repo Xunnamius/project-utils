@@ -8,10 +8,12 @@
 
 > **ensurePackageHasBeenBuilt**(`packageRoot`, `packageName`, `packageExports`): `Promise`\<`void`\>
 
-Defined in: node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:183
+Defined in: node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:186
 
-This function will throw if `packageName` (at `packageRoot`) has one or more
-inaccessible entry points defined in `packageExports`.
+This function will throw if at least one of `packageName`'s entry points
+(relative to `packageRoot` and as defined in `packageExports`, are
+inaccessible. If this package has no entry points, this function becomes a
+no-op.
 
 ## Parameters
 

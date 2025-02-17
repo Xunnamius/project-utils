@@ -19,7 +19,7 @@ Synchronously returns the expected value for `package.json`
 
 #### options?
 
-##### format
+##### format?
 
 `"engines"`
 
@@ -81,7 +81,7 @@ Synchronously returns maintained node versions in the given format.
 
 #### options?
 
-##### format
+##### format?
 
 `"engines"` \| `"array"`
 

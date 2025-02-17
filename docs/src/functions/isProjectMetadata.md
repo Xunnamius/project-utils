@@ -22,7 +22,7 @@ Returns `true` if `o` is probably an instance of `ProjectMetadata`.
 
 #### options?
 
-##### generic
+##### generic?
 
 `true`
 

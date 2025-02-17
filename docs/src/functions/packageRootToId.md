@@ -6,7 +6,7 @@
 
 # Function: packageRootToId()
 
-> **packageRootToId**(`packageRoot`): [`WorkspacePackageId`](../type-aliases/WorkspacePackageId.md)
+> **packageRootToId**(`packageRoot`): `string`
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/package-root-to-id.d.ts:11
 
@@ -25,4 +25,4 @@ character, it is trimmed off.
 
 ## Returns
 
-[`WorkspacePackageId`](../type-aliases/WorkspacePackageId.md)
+`string`

@@ -16,8 +16,15 @@ Defined in: node\_modules/@-xun/test-mock-output/dist/packages/test-mock-output/
 
 > `optional` **passthrough**: (`"log"` \| `"warn"` \| `"error"` \| `"info"` \| `"stdout"` \| `"stderr"`)[]
 
-Call jest.SpyInstance.mockRestore on one or more output functions
-currently being spied upon.
+Prevent mocking the implementation of one or more output spies, allowing
+output to be passed through to the original function. Said spies will
+remain functional.
+
+#### Default
+
+```ts
+[]
+```
 
 ### passthroughOutputIfDebugging?
 

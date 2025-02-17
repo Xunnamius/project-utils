@@ -8,7 +8,7 @@
 
 > **RunTestFixtureContext**: `Tagged`\<\{ `testResult`: `RunReturnType`; \}, *typeof* [`runTestFixtureName`](../variables/runTestFixtureName.md)\>
 
-Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/run-test.d.ts:35
+Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/run-test.d.ts:59
 
 Contains any additional context properties this fixture makes available by
 the time its `setup` function has successfully executed.

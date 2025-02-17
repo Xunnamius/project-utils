@@ -66,14 +66,14 @@ throw.
 Note that multiversal testverse imports, while technically a type of
 multiversal import, are _never_ governed by `allowMultiversalImports`.
 
-#### containingFilePath
+#### containingFilePath?
 
 `string`
 
 A string representing the file containing the alias that, if given, will
 be included in any exceptions thrown by this function.
 
-#### extensionToAppend
+#### extensionToAppend?
 
 `string`
 
@@ -91,7 +91,7 @@ function.
 ".ts"
 ```
 
-#### packageId
+#### packageId?
 
 `string`
 

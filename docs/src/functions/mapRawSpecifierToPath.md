@@ -6,7 +6,7 @@
 
 # Function: mapRawSpecifierToPath()
 
-> **mapRawSpecifierToPath**(`rawAliasMappings`, `specifier`, `__namedParameters`?): `RelativePath` \| `undefined`
+> **mapRawSpecifierToPath**(`rawAliasMappings`, `specifier`, `__namedParameters`?): `undefined` \| `RelativePath`
 
 Defined in: packages/graph/dist/packages/graph/src/alias.d.ts:288
 
@@ -31,7 +31,7 @@ has been resolved to a real filesystem path (such as by this function).
 
 ### \_\_namedParameters?
 
-#### extensionToAppend
+#### extensionToAppend?
 
 `string`
 
@@ -47,4 +47,4 @@ a "." character.
 
 ## Returns
 
-`RelativePath` \| `undefined`
+`undefined` \| `RelativePath`

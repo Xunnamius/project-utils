@@ -26,11 +26,11 @@ option to `false` or clear the internal cache with cache.clear.
 
 #### options
 
-##### allowUnnamedPackages
+##### allowUnnamedPackages?
 
 `false`
 
-##### cwd
+##### cwd?
 
 `AbsolutePath`
 
@@ -85,7 +85,7 @@ option to `false` or clear the internal cache with cache.clear.
 
 `true`
 
-##### cwd
+##### cwd?
 
 `AbsolutePath`
 

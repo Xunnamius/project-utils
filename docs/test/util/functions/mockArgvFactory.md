@@ -6,7 +6,7 @@
 
 # Function: mockArgvFactory()
 
-> **mockArgvFactory**(`factorySimulatedArgv`, `factoryOptions`): (`test`, `simulatedArgv`?, `options`?) => `Promise`\<`void`\>
+> **mockArgvFactory**(`factorySimulatedArgv`, `factoryOptions`?): (`test`, `simulatedArgv`?, `options`?) => `Promise`\<`void`\>
 
 Defined in: node\_modules/@-xun/test-mock-argv/dist/packages/test-mock-argv/src/index.d.ts:31
 
@@ -22,7 +22,7 @@ duplicating configuration across [withMockedArgv](withMockedArgv.md) calls.
 
 `string`[]
 
-### factoryOptions
+### factoryOptions?
 
 [`MockedArgvOptions`](../type-aliases/MockedArgvOptions.md)
 
