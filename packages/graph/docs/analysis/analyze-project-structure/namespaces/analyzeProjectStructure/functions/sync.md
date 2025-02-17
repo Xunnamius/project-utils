@@ -22,7 +22,7 @@ cache.clear.
 
 > **sync**(`options`): `ProjectMetadata`\<`PackageJson`\>
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:366](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/analysis/analyze-project-structure.ts#L366)
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:366](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/graph/src/analysis/analyze-project-structure.ts#L366)
 
 ### Parameters
 
@@ -32,7 +32,7 @@ Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:366](https
 
 `true`
 
-##### cwd
+##### cwd?
 
 `AbsolutePath`
 
@@ -67,17 +67,17 @@ cache
 
 > **sync**(`options`): `ProjectMetadata`
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:366](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/analysis/analyze-project-structure.ts#L366)
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:366](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/graph/src/analysis/analyze-project-structure.ts#L366)
 
 ### Parameters
 
 #### options
 
-##### allowUnnamedPackages
+##### allowUnnamedPackages?
 
 `false`
 
-##### cwd
+##### cwd?
 
 `AbsolutePath`
 

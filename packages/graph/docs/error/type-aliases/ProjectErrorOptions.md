@@ -8,7 +8,7 @@
 
 > **ProjectErrorOptions**: `object`
 
-Defined in: [packages/common/src/error.ts:23](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/common/src/error.ts#L23)
+Defined in: [packages/common/src/error.ts:24](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/common/src/error.ts#L24)
 
 Options available when constructing a new `ProjectError` object.
 
@@ -18,9 +18,10 @@ Options available when constructing a new `ProjectError` object.
 
 > `optional` **cause**: `ErrorOptions`\[`"cause"`\]
 
-By default, if an Error object is passed to `CliError`, that
-`Error` instance will be passed through as `CliError.cause` and that
-instance's `Error.message` will be passed through as `CliError.message`.
+By default, if an Error object is passed to `ProjectError`, that
+`Error` instance will be passed through as `ProjectError.cause` and that
+instance's `Error.message` will be passed through as
+`ProjectError.message`.
 
 Use this option to override this default behavior and instead set
-`CliError.cause` manually.
+`ProjectError.cause` manually.

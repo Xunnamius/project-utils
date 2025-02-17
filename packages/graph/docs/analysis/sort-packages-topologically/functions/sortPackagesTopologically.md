@@ -8,7 +8,7 @@
 
 > **sortPackagesTopologically**(`projectMetadata`, `__namedParameters`): `Package`\<`GenericPackageJson`\>[][]
 
-Defined in: [packages/graph/src/analysis/sort-packages-topologically.ts:39](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/analysis/sort-packages-topologically.ts#L39)
+Defined in: [packages/graph/src/analysis/sort-packages-topologically.ts:39](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/graph/src/analysis/sort-packages-topologically.ts#L39)
 
 Synchronously derive a directed graph representing the project's package
 dependency topology and return said project's packages in a
@@ -32,7 +32,7 @@ ignored. Dependency cycles will cause this function to throw.
 
 ### \_\_namedParameters
 
-#### allowPrivateDependencies
+#### allowPrivateDependencies?
 
 `boolean` = `false`
 
@@ -46,7 +46,7 @@ true` field. If such a relation is encountered, an error will be thrown.
 false
 ```
 
-#### includeDevDependencies
+#### includeDevDependencies?
 
 `boolean` = `false`
 
@@ -59,7 +59,7 @@ included in package dependency calculations.
 false
 ```
 
-#### skipPrivateDependencies
+#### skipPrivateDependencies?
 
 `boolean` = `true`
 

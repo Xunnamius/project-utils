@@ -8,7 +8,7 @@
 
 > **deriveAliasesForTypeScript**(`rawAliasMappings`): `object`
 
-Defined in: [packages/graph/src/alias.ts:633](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/alias.ts#L633)
+Defined in: [packages/graph/src/alias.ts:633](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/graph/src/alias.ts#L633)
 
 Returns an object that can be plugged into TypeScript project configurations
 at `compilerOptions.paths`.

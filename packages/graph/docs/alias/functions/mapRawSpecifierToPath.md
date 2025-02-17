@@ -6,9 +6,9 @@
 
 # Function: mapRawSpecifierToPath()
 
-> **mapRawSpecifierToPath**(`rawAliasMappings`, `specifier`, `__namedParameters`): `RelativePath` \| `undefined`
+> **mapRawSpecifierToPath**(`rawAliasMappings`, `specifier`, `__namedParameters`): `undefined` \| `RelativePath`
 
-Defined in: [packages/graph/src/alias.ts:683](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/alias.ts#L683)
+Defined in: [packages/graph/src/alias.ts:683](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/graph/src/alias.ts#L683)
 
 Accepts a _raw `specifier`_ and returns an "bare" RelativePath (in
 that it does not begin with "./") to a theoretical location on the filesystem
@@ -31,7 +31,7 @@ has been resolved to a real filesystem path (such as by this function).
 
 ### \_\_namedParameters
 
-#### extensionToAppend
+#### extensionToAppend?
 
 `string` = `'.ts'`
 
@@ -47,4 +47,4 @@ a "." character.
 
 ## Returns
 
-`RelativePath` \| `undefined`
+`undefined` \| `RelativePath`

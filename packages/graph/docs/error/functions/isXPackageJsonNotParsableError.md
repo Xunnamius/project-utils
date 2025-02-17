@@ -8,7 +8,7 @@
 
 > **isXPackageJsonNotParsableError**(`parameter`): `parameter is XPackageJsonNotParsableError`
 
-Defined in: [packages/common/src/error.ts:64](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/common/src/error.ts#L64)
+Defined in: [packages/common/src/error.ts:66](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/common/src/error.ts#L66)
 
 Type guard for [XPackageJsonNotParsableError](../classes/XPackageJsonNotParsableError.md).
 

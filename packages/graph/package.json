@@ -1,6 +1,6 @@
 {
   "name": "@-xun/project-graph",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "The project analysis utilities available to consumers of the @-xun/project package",
   "keywords": [],
   "homepage": "https://github.com/Xunnamius/project-utils/tree/main/packages/graph#readme",
@@ -71,8 +71,8 @@
   "dependencies": {
     "@-xun/fs": "^1.0.0",
     "@-xun/memoize": "^1.1.0",
-    "@-xun/project-fs": "^1.0.1",
-    "@-xun/project-types": "^1.0.1",
+    "@-xun/project-fs": "^1.0.2",
+    "@-xun/project-types": "^1.0.2",
     "@babel/core": "^7.26.9",
     "@babel/plugin-syntax-typescript": "^7.25.9",
     "babel-plugin-metadata-accumulator": "^1.0.1",

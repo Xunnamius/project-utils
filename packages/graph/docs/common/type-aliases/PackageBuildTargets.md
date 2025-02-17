@@ -8,7 +8,7 @@
 
 > **PackageBuildTargets**: `object`
 
-Defined in: [packages/graph/src/common.ts:35](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/common.ts#L35)
+Defined in: [packages/graph/src/common.ts:35](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/graph/src/common.ts#L35)
 
 In the context of a Package, this object represents a collection of
 all the file paths **relative to the _project root_** that must be transpiled

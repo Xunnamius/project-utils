@@ -8,7 +8,7 @@
 
 > **gatherPseudodecoratorEntriesFromFilesOptions**: `object`
 
-Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:149](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L149)
+Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:149](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L149)
 
 ## Type declaration
 

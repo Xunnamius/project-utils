@@ -8,7 +8,7 @@
 
 > **ensureRawSpecifierOk**(`rawAliasMappings`, `specifier`, `__namedParameters`): `void`
 
-Defined in: [packages/graph/src/alias.ts:719](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/alias.ts#L719)
+Defined in: [packages/graph/src/alias.ts:719](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/graph/src/alias.ts#L719)
 
 This function throws if the given specifier violates any general symbiote
 project invariants with respect to the given [RawAliasMapping](../type-aliases/RawAliasMapping.md)s.
@@ -66,14 +66,14 @@ throw.
 Note that multiversal testverse imports, while technically a type of
 multiversal import, are _never_ governed by `allowMultiversalImports`.
 
-#### containingFilePath
+#### containingFilePath?
 
 `string`
 
 A string representing the file containing the alias that, if given, will
 be included in any exceptions thrown by this function.
 
-#### extensionToAppend
+#### extensionToAppend?
 
 `string` = `'.ts'`
 
@@ -91,7 +91,7 @@ function.
 ".ts"
 ```
 
-#### packageId
+#### packageId?
 
 `string`
 

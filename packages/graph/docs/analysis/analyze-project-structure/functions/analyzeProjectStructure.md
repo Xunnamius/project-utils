@@ -10,7 +10,7 @@
 
 > **analyzeProjectStructure**(`options`): `Promise`\<`ProjectMetadata`\>
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:328](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/analysis/analyze-project-structure.ts#L328)
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:328](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/graph/src/analysis/analyze-project-structure.ts#L328)
 
 Asynchronously returns information about the structure of the project at the
 current working directory.
@@ -26,11 +26,11 @@ option to `false` or clear the internal cache with cache.clear.
 
 #### options
 
-##### allowUnnamedPackages
+##### allowUnnamedPackages?
 
 `false`
 
-##### cwd
+##### cwd?
 
 `AbsolutePath`
 
@@ -65,7 +65,7 @@ cache
 
 > **analyzeProjectStructure**(`options`): `Promise`\<`ProjectMetadata`\<`PackageJson`\>\>
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:342](https://github.com/Xunnamius/projector/blob/59b666306f350998305385510a73188f6fba94a3/packages/graph/src/analysis/analyze-project-structure.ts#L342)
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:342](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/graph/src/analysis/analyze-project-structure.ts#L342)
 
 Asynchronously returns information about the structure of the project at the
 current working directory.
@@ -85,7 +85,7 @@ option to `false` or clear the internal cache with cache.clear.
 
 `true`
 
-##### cwd
+##### cwd?
 
 `AbsolutePath`
 
