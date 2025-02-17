@@ -86,12 +86,12 @@
     "rejoinder": "^1.2.4",
     "semver": "^7.7.1",
     "toss-expression": "^0.1.2",
-    "type-fest": "^4.34.1",
+    "type-fest": "^4.35.0",
     "validate-npm-package-name": "^6.0.0"
   },
   "devDependencies": {
     "@-xun/common-dummies": "^1.0.3",
-    "@-xun/run": "^0.0.1",
+    "@-xun/run": "^1.0.1",
     "@types/validate-npm-package-name": "^4.0.2"
   },
   "engines": {
