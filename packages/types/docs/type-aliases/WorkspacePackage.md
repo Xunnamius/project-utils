@@ -8,7 +8,7 @@
 
 > **WorkspacePackage**\<`Json`\>: `object`
 
-Defined in: [index.ts:44](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L44)
+Defined in: [index.ts:44](https://github.com/Xunnamius/projector/blob/ff90125e0338879bf7bf87de3d6d4aed56521e4c/packages/types/src/index.ts#L44)
 
 An object representing a non-root package in a monorepo project.
 

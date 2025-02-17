@@ -8,7 +8,7 @@
 
 > **ProjectMetadata**\<`Json`\>: `object`
 
-Defined in: [index.ts:197](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L197)
+Defined in: [index.ts:197](https://github.com/Xunnamius/projector/blob/ff90125e0338879bf7bf87de3d6d4aed56521e4c/packages/types/src/index.ts#L197)
 
 A collection of useful information about a project.
 

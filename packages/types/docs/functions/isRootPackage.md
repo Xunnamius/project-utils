@@ -10,7 +10,7 @@
 
 > **isRootPackage**(`o`, `options`?): `o is GenericRootPackage`
 
-Defined in: [index.ts:633](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L633)
+Defined in: [index.ts:633](https://github.com/Xunnamius/projector/blob/ff90125e0338879bf7bf87de3d6d4aed56521e4c/packages/types/src/index.ts#L633)
 
 Returns `true` if `o` is probably an instance of `RootPackage` (i.e. not a
 [WorkspacePackage](../type-aliases/WorkspacePackage.md)).
@@ -23,7 +23,7 @@ Returns `true` if `o` is probably an instance of `RootPackage` (i.e. not a
 
 #### options?
 
-##### generic
+##### generic?
 
 `true`
 
@@ -35,7 +35,7 @@ Returns `true` if `o` is probably an instance of `RootPackage` (i.e. not a
 
 > **isRootPackage**(`o`, `options`): `o is RootPackage<XPackageJson<XPackageJsonScripts>>`
 
-Defined in: [index.ts:637](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L637)
+Defined in: [index.ts:637](https://github.com/Xunnamius/projector/blob/ff90125e0338879bf7bf87de3d6d4aed56521e4c/packages/types/src/index.ts#L637)
 
 Returns `true` if `o` is probably an instance of `RootPackage` (i.e. not a
 [WorkspacePackage](../type-aliases/WorkspacePackage.md)).
@@ -60,7 +60,7 @@ Returns `true` if `o` is probably an instance of `RootPackage` (i.e. not a
 
 > **isRootPackage**(`o`, `options`): o is RootPackage\<XPackageJson\<XPackageJsonScripts\>\> \| GenericRootPackage
 
-Defined in: [index.ts:638](https://github.com/Xunnamius/projector/blob/e098c3f4be3b65babac4053c22c6872459d34fac/packages/types/src/index.ts#L638)
+Defined in: [index.ts:638](https://github.com/Xunnamius/projector/blob/ff90125e0338879bf7bf87de3d6d4aed56521e4c/packages/types/src/index.ts#L638)
 
 Returns `true` if `o` is probably an instance of `RootPackage` (i.e. not a
 [WorkspacePackage](../type-aliases/WorkspacePackage.md)).
