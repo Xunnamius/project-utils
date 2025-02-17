@@ -8,7 +8,7 @@
 
 > **IsAccessibleOptions**: `object`
 
-Defined in: [packages/fs/src/system/is-accessible.ts:18](https://github.com/Xunnamius/projector/blob/d4cf8eeb9fc68bed9fcdc6582a854ec38ada9801/packages/fs/src/system/is-accessible.ts#L18)
+Defined in: [packages/fs/src/system/is-accessible.ts:18](https://github.com/Xunnamius/projector/blob/1a87550070866e204d98f54387d23c3c57e13502/packages/fs/src/system/is-accessible.ts#L18)
 
 ## Type declaration
 

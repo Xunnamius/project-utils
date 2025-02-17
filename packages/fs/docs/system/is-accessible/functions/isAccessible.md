@@ -8,7 +8,7 @@
 
 > **isAccessible**(...`args`): `Promise`\<`boolean`\>
 
-Defined in: [packages/fs/src/system/is-accessible.ts:107](https://github.com/Xunnamius/projector/blob/d4cf8eeb9fc68bed9fcdc6582a854ec38ada9801/packages/fs/src/system/is-accessible.ts#L107)
+Defined in: [packages/fs/src/system/is-accessible.ts:107](https://github.com/Xunnamius/projector/blob/1a87550070866e204d98f54387d23c3c57e13502/packages/fs/src/system/is-accessible.ts#L107)
 
 Sugar for asynchronous `access(path, fsConstant)` that returns `true` or
 `false` rather than rejecting or resolving to `undefined`. Also supports
