@@ -27,7 +27,7 @@ const TEST_IDENTIFIER = `${packageName.split('/').at(-1)!}-integration-smoke`;
 const debug = createDebugLogger({ namespace: 'graph' }).extend(TEST_IDENTIFIER);
 const nodeVersion = process.env.XPIPE_MATRIX_NODE_VERSION || process.version;
 
-debug(`nodeVersion: "${nodeVersion}"`);
+debug(`nodeVersion: "${nodeVersion}" (process.version=${process.version})`);
 
 beforeAll(async () => {
   await ensurePackageHasBeenBuilt(
