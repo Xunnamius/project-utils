@@ -99,7 +99,7 @@ export function isDuplicatePackageIdError(
 // TODO: often
 /**
  * Represents an exception originating from project meta-analysis tooling (e.g.
- * @-xun/project).
+ * `@-xun/project`).
  */
 export class ProjectError extends Error implements NonNullable<ProjectErrorOptions> {
   // TODO: this prop should be added by makeNamedError or whatever other fn
