@@ -72,7 +72,7 @@
     "@-xun/fs": "^1.0.0",
     "@-xun/memoize": "^1.1.0",
     "@-xun/project-types": "^1.0.2",
-    "@-xun/run": "^1.0.1",
+    "@-xun/run": "^1.0.2",
     "core-js": "^3.40.0",
     "jsonc-parser": "^3.3.1",
     "named-app-errors": "^4.0.2",
