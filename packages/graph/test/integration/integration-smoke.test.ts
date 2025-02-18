@@ -1,10 +1,5 @@
-// * These are relatively-simple "smoke" tests to ensure this software is
-// * fetchable/installable/executable and exits cleanly when run within the
-// * runtimes we support (e.g. the currently maintained node versions).
-// *
-// * Typically, these tests involve the use of deep mock fixtures and/or Docker
-// * containers, and are built to run in GitHub Actions CI pipelines; some can
-// * also be run locally.
+// * These brutally minimal "smoke" tests ensure this software can be invoked
+// * and, when it is, exits cleanly. Functionality testing is not the goal here.
 
 import { toAbsolutePath, toDirname } from '@-xun/fs';
 import { readXPackageJsonAtRoot } from '@-xun/project-fs';
@@ -28,7 +23,7 @@ import {
 
 reconfigureJestGlobalsToSkipTestsInThisFileIfRequested({ it: true });
 
-const TEST_IDENTIFIER = `${packageName.split('/').at(-1)!}-integration-node`;
+const TEST_IDENTIFIER = `${packageName.split('/').at(-1)!}-integration-smoke`;
 const debug = createDebugLogger({ namespace: 'graph' }).extend(TEST_IDENTIFIER);
 const nodeVersion = process.env.XPIPE_MATRIX_NODE_VERSION || process.version;
 
