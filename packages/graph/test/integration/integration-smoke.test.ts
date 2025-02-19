@@ -23,7 +23,7 @@ import {
 
 reconfigureJestGlobalsToSkipTestsInThisFileIfRequested({ it: true });
 
-const TEST_IDENTIFIER = `${packageName.split('/').at(-1)!}-integration-smoke`;
+const TEST_IDENTIFIER = `${packageName.split('/').at(-1)!}-smoke`;
 const debug = createDebugLogger({ namespace: 'graph' }).extend(TEST_IDENTIFIER);
 const nodeVersion = process.env.XPIPE_MATRIX_NODE_VERSION || process.version;
 
