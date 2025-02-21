@@ -83,7 +83,7 @@
     "glob": "^11.0.1",
     "glob-gitignore": "^1.0.15",
     "named-app-errors": "^4.0.2",
-    "rejoinder": "^1.2.4",
+    "rejoinder": "^1.2.5",
     "semver": "^7.7.1",
     "toss-expression": "^0.1.2",
     "type-fest": "^4.35.0",
