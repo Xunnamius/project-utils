@@ -6,9 +6,11 @@
 
 # Function: sync()
 
-> **sync**(...`arguments_`): `Omit`\<`OmitIndexSignature`\<`PackageJson`\>, `"bin"` \| `"name"`\> & `object`
+## Call Signature
 
-Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:99](https://github.com/Xunnamius/projector/blob/1a87550070866e204d98f54387d23c3c57e13502/packages/fs/src/system/read-xpackage-json-at-root.ts#L99)
+> **sync**(`path`, `options`): `XPackageJson`
+
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:156](https://github.com/Xunnamius/projector/blob/af2aba5aa55ae25931180f8845a9a815a4bb9eeb/packages/fs/src/system/read-xpackage-json-at-root.ts#L156)
 
 Synchronously read in and parse the contents of a package.json file.
 
@@ -18,16 +20,52 @@ in this specific function's options for details.** To fetch fresh results,
 set the `useCached` option to `false` or clear the internal cache with
 `cache.clear`.
 
-## Parameters
+### Parameters
 
-### arguments\_
+#### path
 
-...\[`AbsolutePath`, [`ReadXPackageJsonAtRootOptions`](../../../type-aliases/ReadXPackageJsonAtRootOptions.md)\]
+`AbsolutePath`
 
-## Returns
+#### options
 
-`Omit`\<`OmitIndexSignature`\<`PackageJson`\>, `"bin"` \| `"name"`\> & `object`
+[`ReadXPackageJsonAtRootOptions`](../../../type-aliases/ReadXPackageJsonAtRootOptions.md) & `object`
 
-## See
+### Returns
+
+`XPackageJson`
+
+### See
+
+[readJson](../../../../read-json/functions/readJson.md) (the function that actually does the reading/caching)
+
+## Call Signature
+
+> **sync**(`path`, `options`): `EmptyObject` \| `XPackageJson`
+
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:156](https://github.com/Xunnamius/projector/blob/af2aba5aa55ae25931180f8845a9a815a4bb9eeb/packages/fs/src/system/read-xpackage-json-at-root.ts#L156)
+
+Synchronously read in and parse the contents of a package.json file.
+
+**NOTE: the result of this function is memoized! This does NOT
+_necessarily_ mean results will strictly equal each other. See `useCached`
+in this specific function's options for details.** To fetch fresh results,
+set the `useCached` option to `false` or clear the internal cache with
+`cache.clear`.
+
+### Parameters
+
+#### path
+
+`AbsolutePath`
+
+#### options
+
+[`ReadXPackageJsonAtRootOptions`](../../../type-aliases/ReadXPackageJsonAtRootOptions.md)
+
+### Returns
+
+`EmptyObject` \| `XPackageJson`
+
+### See
 
 [readJson](../../../../read-json/functions/readJson.md) (the function that actually does the reading/caching)

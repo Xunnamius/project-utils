@@ -8,7 +8,7 @@
 
 > **ProjectErrorOptions**: `object`
 
-Defined in: [packages/common/src/error.ts:24](https://github.com/Xunnamius/projector/blob/1a87550070866e204d98f54387d23c3c57e13502/packages/common/src/error.ts#L24)
+Defined in: [packages/common/src/error.ts:24](https://github.com/Xunnamius/projector/blob/af2aba5aa55ae25931180f8845a9a815a4bb9eeb/packages/common/src/error.ts#L24)
 
 Options available when constructing a new `ProjectError` object.
 

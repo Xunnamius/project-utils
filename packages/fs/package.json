@@ -1,6 +1,6 @@
 {
   "name": "@-xun/project-fs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The filesystem utilities available to consumers of the @-xun/project package",
   "keywords": [],
   "homepage": "https://github.com/Xunnamius/project-utils/tree/main/packages/fs#readme",

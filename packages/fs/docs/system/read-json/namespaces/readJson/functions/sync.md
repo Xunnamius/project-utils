@@ -6,9 +6,11 @@
 
 # Function: sync()
 
-> **sync**(...`arguments_`): `unknown`
+## Call Signature
 
-Defined in: [packages/fs/src/system/read-json.ts:153](https://github.com/Xunnamius/projector/blob/1a87550070866e204d98f54387d23c3c57e13502/packages/fs/src/system/read-json.ts#L153)
+> **sync**\<`T`\>(`path`, `options`): `T`
+
+Defined in: [packages/fs/src/system/read-json.ts:181](https://github.com/Xunnamius/projector/blob/af2aba5aa55ae25931180f8845a9a815a4bb9eeb/packages/fs/src/system/read-json.ts#L181)
 
 Synchronously read in and parse the contents of an arbitrary JSON file.
 
@@ -21,12 +23,55 @@ in this specific function's options for details.** To fetch fresh results,
 set the `useCached` option to `false` or clear the internal cache with
 cache.clear.
 
-## Parameters
+### Type Parameters
 
-### arguments\_
+• **T** = `JsonValue`
 
-...\[`AbsolutePath`, [`ReadJsonOptions`](../../../type-aliases/ReadJsonOptions.md)\]
+### Parameters
 
-## Returns
+#### path
 
-`unknown`
+`AbsolutePath`
+
+#### options
+
+[`ReadJsonOptions`](../../../type-aliases/ReadJsonOptions.md) & `object`
+
+### Returns
+
+`T`
+
+## Call Signature
+
+> **sync**\<`T`\>(`path`, `options`): `EmptyObject` \| `T`
+
+Defined in: [packages/fs/src/system/read-json.ts:181](https://github.com/Xunnamius/projector/blob/af2aba5aa55ae25931180f8845a9a815a4bb9eeb/packages/fs/src/system/read-json.ts#L181)
+
+Synchronously read in and parse the contents of an arbitrary JSON file.
+
+Use the template variable (`T`) to bring your own types. Otherwise, it
+defaults to JsonValue.
+
+**NOTE: the result of this function is memoized! This does NOT
+_necessarily_ mean results will strictly equal each other. See `useCached`
+in this specific function's options for details.** To fetch fresh results,
+set the `useCached` option to `false` or clear the internal cache with
+cache.clear.
+
+### Type Parameters
+
+• **T** = `JsonValue`
+
+### Parameters
+
+#### path
+
+`AbsolutePath`
+
+#### options
+
+[`ReadJsonOptions`](../../../type-aliases/ReadJsonOptions.md)
+
+### Returns
+
+`EmptyObject` \| `T`
