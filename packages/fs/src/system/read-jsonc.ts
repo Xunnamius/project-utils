@@ -10,8 +10,8 @@ import { ProjectError } from 'multiverse+common:error.ts';
 import { FsErrorMessage } from 'universe+fs:error.ts';
 
 import type { AbsolutePath } from '@-xun/fs';
-import type { JsonValue, Promisable } from 'type-fest';
-import type { ParametersNoFirst, SyncVersionOf } from 'multiverse+common:types.ts';
+import type { EmptyObject, JsonValue, Promisable } from 'type-fest';
+import type { ParametersNoFirst } from 'multiverse+common:types.ts';
 
 export { JSONC };
 
@@ -56,17 +56,17 @@ function readJsonc_<T>(
   shouldRunSynchronously: false,
   path: AbsolutePath,
   options: ReadJsoncOptions
-): Promise<T>;
+): Promise<T | EmptyObject>;
 function readJsonc_<T>(
   shouldRunSynchronously: true,
   path: AbsolutePath,
   options: ReadJsoncOptions
-): T;
+): T | EmptyObject;
 function readJsonc_<T>(
   shouldRunSynchronously: boolean,
   path: AbsolutePath,
   { useCached, try: try_, ...cacheIdComponentsObject }: ReadJsoncOptions
-): Promisable<T | undefined> {
+): Promisable<T | EmptyObject> {
   const { ignoreNonExceptionErrors, parseOptions } = cacheIdComponentsObject;
 
   type Memoization = (
@@ -163,6 +163,14 @@ function readJsonc_<T>(
  * option to `false` or clear the internal cache with {@link cache.clear}.
  */
 export function readJsonc<T = JsonValue>(
+  path: AbsolutePath,
+  options: ReadJsoncOptions & { try?: false }
+): Promise<T>;
+export function readJsonc<T = JsonValue>(
+  path: AbsolutePath,
+  options: ReadJsoncOptions
+): Promise<T | EmptyObject>;
+export function readJsonc<T = JsonValue>(
   ...args: ParametersNoFirst<typeof readJsonc_<T>>
 ) {
   return readJsonc_<T>(false, ...args);
@@ -182,9 +190,19 @@ export namespace readJsonc {
    * set the `useCached` option to `false` or clear the internal cache with
    * {@link cache.clear}.
    */
-  export const sync = function <T = JsonValue>(
+  function readJsoncSync<T = JsonValue>(
+    path: AbsolutePath,
+    options: ReadJsoncOptions & { try?: false }
+  ): T;
+  function readJsoncSync<T = JsonValue>(
+    path: AbsolutePath,
+    options: ReadJsoncOptions
+  ): T | EmptyObject;
+  function readJsoncSync<T = JsonValue>(
     ...args: ParametersNoFirst<typeof readJsonc_<T>>
   ) {
     return readJsonc_<T>(true, ...args);
-  } as SyncVersionOf<typeof readJsonc>;
+  }
+
+  export const sync = readJsoncSync;
 }

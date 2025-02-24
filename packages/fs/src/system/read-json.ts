@@ -5,12 +5,15 @@ import { readFile as readFileAsync } from 'node:fs/promises';
 import { memoizer } from '@-xun/memoize';
 
 import { ProjectError } from 'multiverse+common:error.ts';
+import { commonDebug } from 'multiverse+fs:common.ts';
 
 import { FsErrorMessage } from 'universe+fs:error.ts';
 
 import type { AbsolutePath } from '@-xun/fs';
-import type { JsonValue, Promisable } from 'type-fest';
-import type { ParametersNoFirst, SyncVersionOf } from 'multiverse+common:types.ts';
+import type { EmptyObject, JsonValue, Promisable } from 'type-fest';
+import type { ParametersNoFirst } from 'multiverse+common:types.ts';
+
+const debug = commonDebug.extend('readJson');
 
 /**
  * @see {@link readJson}
@@ -41,17 +44,17 @@ function readJson_<T>(
   shouldRunSynchronously: false,
   path: AbsolutePath,
   options: ReadJsonOptions
-): Promise<T>;
+): Promise<T | EmptyObject>;
 function readJson_<T>(
   shouldRunSynchronously: true,
   path: AbsolutePath,
   options: ReadJsonOptions
-): T;
+): T | EmptyObject;
 function readJson_<T>(
   shouldRunSynchronously: boolean,
   path: AbsolutePath,
   { useCached, try: try_, ...cacheIdComponentsObject }: ReadJsonOptions
-): Promisable<T | undefined> {
+): Promisable<T | EmptyObject> {
   type Memoization = (
     ...args: [typeof path, typeof cacheIdComponentsObject]
   ) => ReturnType<typeof readJson_>;
@@ -112,6 +115,11 @@ function readJson_<T>(
 
   function handleError(error: unknown): T | never {
     if (try_) {
+      debug.warn(
+        'attempt to read json file failed (this error will be ignored): %O',
+        error
+      );
+
       return {} as T;
     }
 
@@ -130,6 +138,14 @@ function readJson_<T>(
  * function's options for details.** To fetch fresh results, set the `useCached`
  * option to `false` or clear the internal cache with {@link cache.clear}.
  */
+export function readJson<T = JsonValue>(
+  path: AbsolutePath,
+  options: ReadJsonOptions & { try?: false }
+): Promise<T>;
+export function readJson<T = JsonValue>(
+  path: AbsolutePath,
+  options: ReadJsonOptions
+): Promise<T | EmptyObject>;
 export function readJson<T = JsonValue>(
   ...args: ParametersNoFirst<typeof readJson_<T>>
 ) {
@@ -150,9 +166,17 @@ export namespace readJson {
    * set the `useCached` option to `false` or clear the internal cache with
    * {@link cache.clear}.
    */
-  export const sync = function <T = JsonValue>(
-    ...args: ParametersNoFirst<typeof readJson_<T>>
-  ) {
+  function readJsonSync<T = JsonValue>(
+    path: AbsolutePath,
+    options: ReadJsonOptions & { try?: false }
+  ): T;
+  function readJsonSync<T = JsonValue>(
+    path: AbsolutePath,
+    options: ReadJsonOptions
+  ): T | EmptyObject;
+  function readJsonSync<T = JsonValue>(...args: ParametersNoFirst<typeof readJson_<T>>) {
     return readJson_<T>(true, ...args);
-  } as SyncVersionOf<typeof readJson>;
+  }
+
+  export const sync = readJsonSync;
 }
