@@ -1,10 +1,21 @@
-import { XPackageJsonNotParsableError } from 'universe+fs:error.ts';
+import { isXPackageJson } from '@-xun/project-types';
+
+import { commonDebug } from 'multiverse+fs:common.ts';
+
+import {
+  FsErrorMessage,
+  ProjectError,
+  XPackageJsonNotParsableError
+} from 'universe+fs:error.ts';
+
 import { readJson } from 'universe+fs:system/read-json.ts';
 
 import type { AbsolutePath } from '@-xun/fs';
 import type { XPackageJson } from '@-xun/project-types';
-import type { Promisable } from 'type-fest';
+import type { EmptyObject, Promisable } from 'type-fest';
 import type { ParametersNoFirst, SyncVersionOf } from 'multiverse+common:types.ts';
+
+const debug = commonDebug.extend('readXPackageJsonAtRoot');
 
 /**
  * @see {@link readXPackageJsonAtRoot}
@@ -32,37 +43,59 @@ export type ReadXPackageJsonAtRootOptions = {
 function readXPackageJsonAtRoot_(
   shouldRunSynchronously: false,
   packageRoot: AbsolutePath,
-  options: ReadXPackageJsonAtRootOptions & { try: true }
-): Promise<XPackageJson | undefined>;
-function readXPackageJsonAtRoot_(
-  shouldRunSynchronously: true,
-  packageRoot: AbsolutePath,
-  options: ReadXPackageJsonAtRootOptions & { try: true }
-): XPackageJson | undefined;
-function readXPackageJsonAtRoot_(
-  shouldRunSynchronously: false,
-  packageRoot: AbsolutePath,
   options: ReadXPackageJsonAtRootOptions
-): Promise<XPackageJson>;
+): Promise<XPackageJson | EmptyObject>;
 function readXPackageJsonAtRoot_(
   shouldRunSynchronously: true,
   packageRoot: AbsolutePath,
   options: ReadXPackageJsonAtRootOptions
-): XPackageJson;
+): XPackageJson | EmptyObject;
 function readXPackageJsonAtRoot_(
   shouldRunSynchronously: boolean,
   packageRoot: AbsolutePath,
   { useCached, try: try_ }: ReadXPackageJsonAtRootOptions
-): Promisable<XPackageJson | undefined> {
+): Promisable<XPackageJson | EmptyObject> {
   // ? readJson will check if the path is absolute for us
   const packageJsonPath = `${packageRoot}/package.json` as AbsolutePath;
 
-  try {
-    return (shouldRunSynchronously ? readJson.sync : readJson)(packageJsonPath, {
+  if (shouldRunSynchronously) {
+    try {
+      return handleResult(
+        readJson.sync(packageJsonPath, {
+          useCached,
+          try: try_
+        })
+      );
+    } catch (error) {
+      return handleError(error);
+    }
+  } else {
+    return readJson(packageJsonPath, {
       useCached,
       try: try_
-    }) as ReturnType<typeof readXPackageJsonAtRoot_>;
-  } catch (error) {
+    })
+      .then(handleResult)
+      .catch(handleError);
+  }
+
+  function handleResult(result: unknown) {
+    if (isXPackageJson(result)) {
+      return result;
+    }
+
+    throw new ProjectError(FsErrorMessage.IsNotXPackageJson(packageJsonPath));
+  }
+
+  function handleError(error: unknown): EmptyObject | never {
+    if (try_) {
+      debug.warn(
+        'attempt to parse file contents as XPackageJson failed (this error will be ignored): %O',
+        error
+      );
+
+      return {};
+    }
+
     throw new XPackageJsonNotParsableError(packageJsonPath, error);
   }
 }
@@ -78,8 +111,18 @@ function readXPackageJsonAtRoot_(
  * @see {@link readJson} (the function that actually does the reading/caching)
  */
 export function readXPackageJsonAtRoot(
+  path: AbsolutePath,
+  options: ReadXPackageJsonAtRootOptions & { try?: false }
+): Promisable<XPackageJson>;
+export function readXPackageJsonAtRoot(
+  path: AbsolutePath,
+  options: ReadXPackageJsonAtRootOptions
+): Promisable<XPackageJson | EmptyObject>;
+export function readXPackageJsonAtRoot(
   ...args: ParametersNoFirst<typeof readXPackageJsonAtRoot_>
-) {
+  // ? Could avoid "any" by further overloading readXPackageJsonAtRoot_, but meh
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<any> {
   return readXPackageJsonAtRoot_(false, ...args);
 }
 
@@ -96,7 +139,19 @@ export namespace readXPackageJsonAtRoot {
    *
    * @see {@link readJson} (the function that actually does the reading/caching)
    */
-  export const sync = function (...args) {
+  function readXPackageJsonAtRootSync(
+    path: AbsolutePath,
+    options: ReadXPackageJsonAtRootOptions & { try?: false }
+  ): XPackageJson;
+  function readXPackageJsonAtRootSync(
+    path: AbsolutePath,
+    options: ReadXPackageJsonAtRootOptions
+  ): XPackageJson | EmptyObject;
+  function readXPackageJsonAtRootSync(
+    ...args: Parameters<SyncVersionOf<typeof readXPackageJsonAtRoot>>
+  ) {
     return readXPackageJsonAtRoot_(true, ...args);
-  } as SyncVersionOf<typeof readXPackageJsonAtRoot>;
+  }
+
+  export const sync = readXPackageJsonAtRootSync;
 }

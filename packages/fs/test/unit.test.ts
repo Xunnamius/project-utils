@@ -49,6 +49,22 @@ describe('::isAccessible', () => {
       ).toBeTrue();
     });
 
+    it('returns true for path with default accessibility (R_OK) using file URL string', () => {
+      expect.hasAssertions();
+
+      mockedAccessSync.mockImplementation(jest.requireActual('node:fs').accessSync);
+
+      expect(
+        isAccessible.sync(repositories.goodPolyrepo.root, { useCached: true })
+      ).toBeTrue();
+
+      expect(
+        isAccessible.sync(`file://${repositories.goodPolyrepo.root}`, {
+          useCached: true
+        })
+      ).toBeTrue();
+    });
+
     it('returns false for path without default accessibility (R_OK)', () => {
       expect.hasAssertions();
 
@@ -102,6 +118,22 @@ describe('::isAccessible', () => {
 
       await expect(
         isAccessible('/pretend/it/does/exist', { useCached: true })
+      ).resolves.toBeTrue();
+    });
+
+    it('returns true for path with default accessibility (R_OK) using file URL string', async () => {
+      expect.hasAssertions();
+
+      mockedAccessAsync.mockImplementation(
+        jest.requireActual('node:fs/promises').access
+      );
+
+      await expect(
+        isAccessible(repositories.goodPolyrepo.root, { useCached: true })
+      ).resolves.toBeTrue();
+
+      await expect(
+        isAccessible(`file://${repositories.goodPolyrepo.root}`, { useCached: true })
       ).resolves.toBeTrue();
     });
 
@@ -278,7 +310,7 @@ describe('::readJson', () => {
       );
     });
 
-    it('does not throw on read failure', async () => {
+    it('does not throw on read failure when try is true', async () => {
       expect.hasAssertions();
 
       mockedReadFileAsync.mockImplementation(() => Promise.reject());
@@ -291,7 +323,7 @@ describe('::readJson', () => {
       ).resolves.toBeEmptyObject();
     });
 
-    it('does not throw on parse failure', async () => {
+    it('does not throw on parse failure when try is true', async () => {
       expect.hasAssertions();
 
       const path = '/fake/path/package.json' as AbsolutePath;
@@ -370,7 +402,7 @@ describe('::readJsonc', () => {
       );
     });
 
-    it('does not throw on read failure', () => {
+    it('does not throw on read failure when try is true', () => {
       expect.hasAssertions();
 
       mockedReadFileSync.mockImplementation(() => toss(new Error('contrived')));
@@ -383,7 +415,7 @@ describe('::readJsonc', () => {
       ).toBeEmptyObject();
     });
 
-    it('does not throw on parse failure', () => {
+    it('does not throw on parse failure when try is true', () => {
       expect.hasAssertions();
 
       const path = '/fake/path/package.json' as AbsolutePath;
@@ -457,7 +489,7 @@ describe('::readJsonc', () => {
       );
     });
 
-    it('does not throw on read failure', async () => {
+    it('does not throw on read failure when try is true', async () => {
       expect.hasAssertions();
 
       mockedReadFileAsync.mockImplementation(() => Promise.reject('fail'));
@@ -470,7 +502,7 @@ describe('::readJsonc', () => {
       ).resolves.toBeEmptyObject();
     });
 
-    it('does not throw on parse failure', async () => {
+    it('does not throw on parse failure when try is true', async () => {
       expect.hasAssertions();
 
       const path = '/fake/path/package.json' as AbsolutePath;
@@ -548,7 +580,21 @@ describe('::readXPackageJsonAtRoot', () => {
       ).toThrow(`${repositories.goodPolyrepo.root}/package.json`);
     });
 
-    it('does not throw on read failure', () => {
+    it('throws on parse failure when package.json is not valid XPackageJson', () => {
+      expect.hasAssertions();
+
+      mockedReadFileSync.mockImplementation(() => '{}');
+
+      expect(() =>
+        readXPackageJsonAtRoot.sync(repositories.goodPolyrepo.root, { useCached: true })
+      ).toThrow(
+        FsErrorMessage.IsNotXPackageJson(
+          `${repositories.goodPolyrepo.root}/package.json`
+        )
+      );
+    });
+
+    it('does not throw on read failure when try is true', () => {
       expect.hasAssertions();
 
       mockedReadFileSync.mockImplementation(() => toss(new Error('contrived')));
@@ -561,10 +607,23 @@ describe('::readXPackageJsonAtRoot', () => {
       ).toBeEmptyObject();
     });
 
-    it('does not throw on parse failure', () => {
+    it('does not throw on parse failure when try is true', () => {
       expect.hasAssertions();
 
       mockedReadFileSync.mockImplementation(() => '{{');
+
+      expect(
+        readXPackageJsonAtRoot.sync(repositories.goodPolyrepo.root, {
+          useCached: true,
+          try: true
+        })
+      ).toBeEmptyObject();
+    });
+
+    it('does not throw on parse failure when package.json is not valid XPackageJson but try is true', () => {
+      expect.hasAssertions();
+
+      mockedReadFileSync.mockImplementation(() => '{}');
 
       expect(
         readXPackageJsonAtRoot.sync(repositories.goodPolyrepo.root, {
@@ -644,7 +703,21 @@ describe('::readXPackageJsonAtRoot', () => {
       ).rejects.toThrow(`${repositories.goodPolyrepo.root}/package.json`);
     });
 
-    it('does not throw on read failure', async () => {
+    it('throws on parse failure when package.json is not valid XPackageJson', async () => {
+      expect.hasAssertions();
+
+      mockedReadFileAsync.mockImplementation(() => Promise.resolve('{}'));
+
+      await expect(
+        readXPackageJsonAtRoot(repositories.goodPolyrepo.root, { useCached: true })
+      ).rejects.toThrow(
+        FsErrorMessage.IsNotXPackageJson(
+          `${repositories.goodPolyrepo.root}/package.json`
+        )
+      );
+    });
+
+    it('does not throw on read failure when try is true', async () => {
       expect.hasAssertions();
 
       mockedReadFileAsync.mockImplementation(() => Promise.reject('fail'));
@@ -657,7 +730,7 @@ describe('::readXPackageJsonAtRoot', () => {
       ).resolves.toBeEmptyObject();
     });
 
-    it('does not throw on parse failure', async () => {
+    it('does not throw on parse failure when try is true', async () => {
       expect.hasAssertions();
 
       mockedReadFileAsync.mockImplementation(() => Promise.resolve('{{'));
@@ -668,6 +741,19 @@ describe('::readXPackageJsonAtRoot', () => {
           try: true
         })
       ).resolves.toBeEmptyObject();
+    });
+
+    it('does not throw on parse failure when package.json is not valid XPackageJson but try is true', () => {
+      expect.hasAssertions();
+
+      mockedReadFileSync.mockImplementation(() => '{}');
+
+      expect(
+        readXPackageJsonAtRoot.sync(repositories.goodPolyrepo.root, {
+          useCached: true,
+          try: true
+        })
+      ).toBeEmptyObject();
     });
 
     it('returns result from internal cache if available unless useCached is false (new result is always added to internal cache)', async () => {

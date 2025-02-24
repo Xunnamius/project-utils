@@ -16,5 +16,8 @@ export const FsErrorMessage = {
   },
   DeriverAsyncConfigurationConflict() {
     return 'assertion failed: attempted to invoke function with conflicting or illegal configuration options';
+  },
+  IsNotXPackageJson(path: string) {
+    return `${path} content does not constitute a valid XPackageJson instance (is it missing a non-empty "name" field?). See https://github.com/Xunnamius/project-utils/blob/main/packages/types/docs/functions/isXPackageJson.md for details`;
   }
 };
