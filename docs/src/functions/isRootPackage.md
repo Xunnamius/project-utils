@@ -10,7 +10,7 @@
 
 > **isRootPackage**(`o`, `options`?): `o is GenericRootPackage`
 
-Defined in: packages/types/dist/packages/types/src/index.d.ts:570
+Defined in: packages/types/dist/packages/types/src/index.d.ts:579
 
 Returns `true` if `o` is probably an instance of `RootPackage` (i.e. not a
 [WorkspacePackage](../type-aliases/WorkspacePackage.md)).
@@ -35,7 +35,7 @@ Returns `true` if `o` is probably an instance of `RootPackage` (i.e. not a
 
 > **isRootPackage**(`o`, `options`): `o is RootPackage<XPackageJson<XPackageJsonScripts>>`
 
-Defined in: packages/types/dist/packages/types/src/index.d.ts:573
+Defined in: packages/types/dist/packages/types/src/index.d.ts:582
 
 Returns `true` if `o` is probably an instance of `RootPackage` (i.e. not a
 [WorkspacePackage](../type-aliases/WorkspacePackage.md)).
@@ -60,7 +60,7 @@ Returns `true` if `o` is probably an instance of `RootPackage` (i.e. not a
 
 > **isRootPackage**(`o`, `options`): o is RootPackage\<XPackageJson\<XPackageJsonScripts\>\> \| GenericRootPackage
 
-Defined in: packages/types/dist/packages/types/src/index.d.ts:576
+Defined in: packages/types/dist/packages/types/src/index.d.ts:585
 
 Returns `true` if `o` is probably an instance of `RootPackage` (i.e. not a
 [WorkspacePackage](../type-aliases/WorkspacePackage.md)).

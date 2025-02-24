@@ -6,7 +6,7 @@
 
 # Class: NotAGitRepositoryError
 
-Defined in: [packages/common/src/error.ts:147](https://github.com/Xunnamius/projector/blob/6ad473c22060f08ec679a30da0c0a6d99b2008f4/packages/common/src/error.ts#L147)
+Defined in: [packages/common/src/error.ts:147](https://github.com/Xunnamius/projector/blob/acc63ea8f0dbfad865586dad5763b8a39fe558a0/packages/common/src/error.ts#L147)
 
 Represents encountering a project that is not a git repository.
 
@@ -20,7 +20,7 @@ Represents encountering a project that is not a git repository.
 
 > **new NotAGitRepositoryError**(): [`NotAGitRepositoryError`](NotAGitRepositoryError.md)
 
-Defined in: [packages/common/src/error.ts:153](https://github.com/Xunnamius/projector/blob/6ad473c22060f08ec679a30da0c0a6d99b2008f4/packages/common/src/error.ts#L153)
+Defined in: [packages/common/src/error.ts:153](https://github.com/Xunnamius/projector/blob/acc63ea8f0dbfad865586dad5763b8a39fe558a0/packages/common/src/error.ts#L153)
 
 Represents encountering a project that is not a git repository.
 
@@ -36,7 +36,7 @@ Represents encountering a project that is not a git repository.
 
 > **new NotAGitRepositoryError**(`message`): [`NotAGitRepositoryError`](NotAGitRepositoryError.md)
 
-Defined in: [packages/common/src/error.ts:158](https://github.com/Xunnamius/projector/blob/6ad473c22060f08ec679a30da0c0a6d99b2008f4/packages/common/src/error.ts#L158)
+Defined in: [packages/common/src/error.ts:158](https://github.com/Xunnamius/projector/blob/acc63ea8f0dbfad865586dad5763b8a39fe558a0/packages/common/src/error.ts#L158)
 
 This constructor syntax is used by subclasses when calling this constructor
 via `super`.
@@ -61,7 +61,7 @@ via `super`.
 
 > **\[$type\]**: `symbol`[]
 
-Defined in: [packages/common/src/error.ts:149](https://github.com/Xunnamius/projector/blob/6ad473c22060f08ec679a30da0c0a6d99b2008f4/packages/common/src/error.ts#L149)
+Defined in: [packages/common/src/error.ts:149](https://github.com/Xunnamius/projector/blob/acc63ea8f0dbfad865586dad5763b8a39fe558a0/packages/common/src/error.ts#L149)
 
 #### Overrides
 

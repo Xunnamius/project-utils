@@ -6,9 +6,9 @@
 
 # Type Alias: WebpackTestFixtureContext
 
-> **WebpackTestFixtureContext**: `Tagged`\<\{ `testResult`: `RunReturnType`; \}, *typeof* [`webpackTestFixtureName`](../variables/webpackTestFixtureName.md)\>
+> **WebpackTestFixtureContext**: `Tagged`\<\{ `testResult`: `RunReturnType`\<`RunOptions`\>; \}, *typeof* [`webpackTestFixtureName`](../variables/webpackTestFixtureName.md)\>
 
-Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/webpack-test.d.ts:45
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/webpack-test.d.ts:45
 
 Contains any additional context properties this fixture makes available by
 the time its `setup` function has successfully executed.

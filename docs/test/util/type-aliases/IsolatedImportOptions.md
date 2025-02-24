@@ -8,7 +8,7 @@
 
 > **IsolatedImportOptions**: `object`
 
-Defined in: node\_modules/@-xun/test-mock-import/dist/packages/test-mock-import/src/index.d.ts:12
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/test-mock-import/dist/packages/test-mock-import/src/index.d.ts:12
 
 ## Type declaration
 

@@ -8,7 +8,7 @@
 
 > **withMocks**(`fn`, `__namedParameters`?): `Promise`\<`void`\>
 
-Defined in: node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:171
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:171
 
 Wraps [withMockedArgv](withMockedArgv.md) + [withMockedEnv](withMockedEnv.md) with
 [withMockedExit](withMockedExit.md) + [withMockedOutput](withMockedOutput.md).

@@ -8,7 +8,7 @@
 
 > **rootFixture**(): [`RootFixture`](../type-aliases/RootFixture.md)
 
-Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/root.d.ts:20
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/root.d.ts:20
 
 This fixture creates the dummy root directory as well as the `src/`
 subdirectory. It is perhaps the most important fixture.

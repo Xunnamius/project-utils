@@ -17,9 +17,22 @@ Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-stru
 > `optional` **allowUnnamedPackages**: `boolean`
 
 Allow unnamed packages in this project, which will result in looser and
-less useful types being returned. Setting this to `true` is only useful
-when analyzing projects that do not adhere to standard symbiote (or
-NPM/Node) best practices.
+less useful types in the returned [ProjectMetadata](ProjectMetadata.md) object. Setting
+this to `true` is only useful when analyzing projects that do not adhere to
+standard symbiote (or npm/node) best practices.
+
+When this option is `false`, unnamed sub-root packages will be considered
+"broken," and an unnamed `rootPackage`/`cwdPackage` will throw an error;
+broken packages will be available under
+`ProjectMetadata.subRootPackages.broken`.
+
+When `true`, unnamed packages will be available under
+`ProjectMetadata.subRootPackages.unnamed` and `rootPackage`/`cwdPackage`
+can be unnamed.
+
+Unnamed packages are _never_ included in the
+[ProjectMetadata.subRootPackages](ProjectMetadata.md#subrootpackages) map itself regardless of this
+option.
 
 #### Default
 

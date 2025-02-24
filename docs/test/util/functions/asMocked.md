@@ -10,7 +10,7 @@
 
 > **asMocked**\<`T`\>(`options`?): `MaybeMockedDeep`\<`T`\>
 
-Defined in: node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:47
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:47
 
 Return a function representing `T` but wrapped with Jest mock definitions.
 Pass `{shallow: true}` as the only parameter to disable the deep mocking of
@@ -50,7 +50,7 @@ expect(mockRepresentingMyFunctionType.mock.calls[0][0]).toBe(42);
 
 > **asMocked**\<`T`\>(`options`): `MaybeMocked`\<`T`\>
 
-Defined in: node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:66
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:66
 
 Return a function representing `T` but wrapped (shallowly) with Jest mock
 definitions.
@@ -89,7 +89,7 @@ expect(mockRepresentingMyFunctionType.mock.calls[0][0]).toBe(42);
 
 > **asMocked**\<`T`\>(`source`, `options`?): `MaybeMockedDeep`\<`T`\>
 
-Defined in: node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:83
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:83
 
 Wrap the non-nullish `source` with Jest mock definitions. Pass `{shallow:
 true}` as the second parameter to disable the default deep mocking behavior.
@@ -130,7 +130,7 @@ expect(mockMyFunction.mock.calls[0][0]).toBe(42);
 
 > **asMocked**\<`T`\>(`source`, `options`): `MaybeMocked`\<`T`\>
 
-Defined in: node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:99
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:99
 
 Shallowly wrap the non-nullish `source` with Jest mock definitions.
 
@@ -170,7 +170,7 @@ expect(mockMyFunction.mock.calls[0][0]).toBe(42);
 
 > **asMocked**\<`T`\>(...`args`): `MaybeMockedDeep`\<`T`\> \| `MaybeMocked`\<`T`\>
 
-Defined in: node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:116
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:116
 
 Wrap the non-nullish `source` (or `T` itself is `source` is omitted) with
 Jest mock definitions.

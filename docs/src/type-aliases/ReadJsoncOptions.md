@@ -8,7 +8,7 @@
 
 > **ReadJsoncOptions**: `object`
 
-Defined in: packages/fs/dist/packages/fs/src/system/read-jsonc.d.ts:9
+Defined in: packages/fs/dist/packages/fs/src/system/read-jsonc.d.ts:8
 
 ## Type declaration
 

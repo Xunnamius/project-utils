@@ -22,7 +22,7 @@ cache.clear.
 
 > **sync**(`options`): [`ProjectMetadata`](../../../type-aliases/ProjectMetadata.md)\<`PackageJson`\>
 
-Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-structure.d.ts:77
+Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-structure.d.ts:90
 
 ### Parameters
 
@@ -67,7 +67,7 @@ cache
 
 > **sync**(`options`): [`ProjectMetadata`](../../../type-aliases/ProjectMetadata.md)
 
-Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-structure.d.ts:77
+Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-structure.d.ts:90
 
 ### Parameters
 

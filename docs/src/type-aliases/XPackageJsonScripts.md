@@ -8,7 +8,7 @@
 
 > **XPackageJsonScripts**: `object`
 
-Defined in: packages/types/dist/packages/types/src/index.d.ts:255
+Defined in: packages/types/dist/packages/types/src/index.d.ts:264
 
 Additional scripts available when working on an symbiote-powered project.
 

@@ -8,7 +8,7 @@
 
 > **GlobalFixtureOptions**: `object`
 
-Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/types/options.d.ts:17
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/types/options.d.ts:18
 
 The options available to every fixture.
 

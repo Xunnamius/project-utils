@@ -8,7 +8,7 @@
 
 > **ensurePackageHasBeenBuilt**(`packageRoot`, `packageName`, `packageExports`): `Promise`\<`void`\>
 
-Defined in: node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:186
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/jest/dist/packages/jest/src/index.d.ts:186
 
 This function will throw if at least one of `packageName`'s entry points
 (relative to `packageRoot` and as defined in `packageExports`, are

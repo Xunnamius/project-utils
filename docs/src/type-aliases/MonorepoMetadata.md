@@ -8,7 +8,7 @@
 
 > **MonorepoMetadata**\<`Json`\>: [`ProjectMetadata`](ProjectMetadata.md)\<`Json`\> & `object`
 
-Defined in: packages/types/dist/packages/types/src/index.d.ts:248
+Defined in: packages/types/dist/packages/types/src/index.d.ts:257
 
 A collection of useful information about a monorepo.
 

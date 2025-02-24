@@ -8,7 +8,7 @@
 
 > **ReadJsonOptions**: `object`
 
-Defined in: packages/fs/dist/packages/fs/src/system/read-json.d.ts:7
+Defined in: packages/fs/dist/packages/fs/src/system/read-json.d.ts:6
 
 ## Type declaration
 

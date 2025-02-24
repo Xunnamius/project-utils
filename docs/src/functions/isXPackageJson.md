@@ -8,7 +8,7 @@
 
 > **isXPackageJson**(`o`): `o is XPackageJson<XPackageJsonScripts>`
 
-Defined in: packages/types/dist/packages/types/src/index.d.ts:590
+Defined in: packages/types/dist/packages/types/src/index.d.ts:599
 
 Returns `true` if `o` is probably an instance of `XPackageJson`.
 

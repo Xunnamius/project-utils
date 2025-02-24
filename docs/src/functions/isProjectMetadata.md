@@ -10,7 +10,7 @@
 
 > **isProjectMetadata**(`o`, `options`?): `o is GenericProjectMetadata`
 
-Defined in: packages/types/dist/packages/types/src/index.d.ts:580
+Defined in: packages/types/dist/packages/types/src/index.d.ts:589
 
 Returns `true` if `o` is probably an instance of `ProjectMetadata`.
 
@@ -34,7 +34,7 @@ Returns `true` if `o` is probably an instance of `ProjectMetadata`.
 
 > **isProjectMetadata**(`o`, `options`): `o is ProjectMetadata<XPackageJson<XPackageJsonScripts>>`
 
-Defined in: packages/types/dist/packages/types/src/index.d.ts:583
+Defined in: packages/types/dist/packages/types/src/index.d.ts:592
 
 Returns `true` if `o` is probably an instance of `ProjectMetadata`.
 
@@ -58,7 +58,7 @@ Returns `true` if `o` is probably an instance of `ProjectMetadata`.
 
 > **isProjectMetadata**(`o`, `options`): o is GenericProjectMetadata \| ProjectMetadata\<XPackageJson\<XPackageJsonScripts\>\>
 
-Defined in: packages/types/dist/packages/types/src/index.d.ts:586
+Defined in: packages/types/dist/packages/types/src/index.d.ts:595
 
 Returns `true` if `o` is probably an instance of `ProjectMetadata`.
 

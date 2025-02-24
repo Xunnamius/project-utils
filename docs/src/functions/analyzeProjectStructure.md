@@ -10,7 +10,7 @@
 
 > **analyzeProjectStructure**(`options`): `Promise`\<[`ProjectMetadata`](../type-aliases/ProjectMetadata.md)\>
 
-Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-structure.d.ts:46
+Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-structure.d.ts:59
 
 Asynchronously returns information about the structure of the project at the
 current working directory.
@@ -65,7 +65,7 @@ cache
 
 > **analyzeProjectStructure**(`options`): `Promise`\<[`ProjectMetadata`](../type-aliases/ProjectMetadata.md)\<`PackageJson`\>\>
 
-Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-structure.d.ts:60
+Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-structure.d.ts:73
 
 Asynchronously returns information about the structure of the project at the
 current working directory.

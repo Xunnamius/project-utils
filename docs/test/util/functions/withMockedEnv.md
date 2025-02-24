@@ -8,12 +8,13 @@
 
 > **withMockedEnv**(`test`, `simulatedEnv`, `__namedParameters`?): `Promise`\<`void`\>
 
-Defined in: node\_modules/@-xun/test-mock-env/dist/packages/test-mock-env/src/index.d.ts:39
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/test-mock-env/dist/packages/test-mock-env/src/index.d.ts:40
 
 Mock `process.env` within the scope of `test`. Guaranteed to return
 `process.env` to its original state no matter how `test` terminates.
 
-It is not safe to run this function concurrently (e.g. with `Promise.all`).
+**WARNING: it is not safe to run this function concurrently (e.g. with
+`Promise.all`).**
 
 ## Parameters
 

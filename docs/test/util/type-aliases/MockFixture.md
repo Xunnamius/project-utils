@@ -8,7 +8,7 @@
 
 > **MockFixture**\<`Name`, `Context`\>: `object`
 
-Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/types/fixtures.d.ts:22
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/types/fixtures.d.ts:22
 
 An object describing a mock or "dummy" filesystem structure used to simulate
 one or more runtime environments for the package under test.

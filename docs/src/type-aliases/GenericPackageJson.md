@@ -8,7 +8,7 @@
 
 > **GenericPackageJson**: `PackageJson` \| [`XPackageJson`](XPackageJson.md)
 
-Defined in: packages/types/dist/packages/types/src/index.d.ts:510
+Defined in: packages/types/dist/packages/types/src/index.d.ts:519
 
 Represents any `package.json` file in the wild, including symbiote-ready
 `package.json` files.

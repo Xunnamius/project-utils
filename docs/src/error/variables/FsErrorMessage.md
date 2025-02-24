@@ -72,6 +72,12 @@ A collection of possible error and warning messages.
 
 `string`
 
+### IsNotXPackageJson()
+
+#### Returns
+
+`string`
+
 ### NotAGitRepositoryError()
 
 #### Returns

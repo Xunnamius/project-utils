@@ -8,7 +8,7 @@
 
 > **dummyNpmPackageFixture**(): [`DummyNpmPackageFixture`](../type-aliases/DummyNpmPackageFixture.md)
 
-Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/dummy-npm-package.d.ts:74
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/dummy-npm-package.d.ts:74
 
 This fixture initializes the dummy root directory as a NPM package with a
 `package.json` file (optionally described by `initialVirtualFiles`) and

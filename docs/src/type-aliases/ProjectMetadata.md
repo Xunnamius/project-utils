@@ -40,6 +40,10 @@ Project root package data.
 A mapping of sub-root package names to [WorkspacePackage](WorkspacePackage.md) objects in
 a monorepo, or `undefined` in a polyrepo.
 
+Note that unnamed and broken packages are _never_ included in this map,
+though they may be included in its `unnamed` and `broken` properties
+depending on the process that generated this metadata object.
+
 ### type
 
 > **type**: [`Polyrepo`](../enumerations/ProjectAttribute.md#polyrepo) \| [`Monorepo`](../enumerations/ProjectAttribute.md#monorepo)

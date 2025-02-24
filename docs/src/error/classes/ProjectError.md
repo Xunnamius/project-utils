@@ -6,10 +6,10 @@
 
 # Class: ProjectError
 
-Defined in: [packages/common/src/error.ts:104](https://github.com/Xunnamius/projector/blob/6ad473c22060f08ec679a30da0c0a6d99b2008f4/packages/common/src/error.ts#L104)
+Defined in: [packages/common/src/error.ts:104](https://github.com/Xunnamius/projector/blob/acc63ea8f0dbfad865586dad5763b8a39fe558a0/packages/common/src/error.ts#L104)
 
 Represents an exception originating from project meta-analysis tooling (e.g.
-@-xun/project).
+`@-xun/project`).
 
 ## Extends
 
@@ -32,7 +32,7 @@ Represents an exception originating from project meta-analysis tooling (e.g.
 
 > **new ProjectError**(`reason`?, `options`?): [`ProjectError`](ProjectError.md)
 
-Defined in: [packages/common/src/error.ts:111](https://github.com/Xunnamius/projector/blob/6ad473c22060f08ec679a30da0c0a6d99b2008f4/packages/common/src/error.ts#L111)
+Defined in: [packages/common/src/error.ts:111](https://github.com/Xunnamius/projector/blob/acc63ea8f0dbfad865586dad5763b8a39fe558a0/packages/common/src/error.ts#L111)
 
 Represents a project-specific error, optionally with suggested exit code
 and other context.
@@ -59,7 +59,7 @@ and other context.
 
 > **new ProjectError**(`reason`, `options`, `message`, `superOptions`): [`ProjectError`](ProjectError.md)
 
-Defined in: [packages/common/src/error.ts:116](https://github.com/Xunnamius/projector/blob/6ad473c22060f08ec679a30da0c0a6d99b2008f4/packages/common/src/error.ts#L116)
+Defined in: [packages/common/src/error.ts:116](https://github.com/Xunnamius/projector/blob/acc63ea8f0dbfad865586dad5763b8a39fe558a0/packages/common/src/error.ts#L116)
 
 This constructor syntax is used by subclasses when calling this constructor
 via `super`.
@@ -96,7 +96,7 @@ via `super`.
 
 > **\[$type\]**: `symbol`[]
 
-Defined in: [packages/common/src/error.ts:106](https://github.com/Xunnamius/projector/blob/6ad473c22060f08ec679a30da0c0a6d99b2008f4/packages/common/src/error.ts#L106)
+Defined in: [packages/common/src/error.ts:106](https://github.com/Xunnamius/projector/blob/acc63ea8f0dbfad865586dad5763b8a39fe558a0/packages/common/src/error.ts#L106)
 
 ***
 

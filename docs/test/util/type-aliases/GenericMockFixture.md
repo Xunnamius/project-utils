@@ -8,7 +8,7 @@
 
 > **GenericMockFixture**: [`MockFixture`](MockFixture.md)\<`string`, `any`\>
 
-Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/types/fixtures.d.ts:105
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/types/fixtures.d.ts:105
 
 ## See
 

@@ -8,7 +8,7 @@
 
 > **AsDefault**\<`T`\>: `T` *extends* `object` ? `T`\[`"default"`\] : `T`
 
-Defined in: node\_modules/@-xun/test-mock-import/dist/packages/test-mock-import/src/index.d.ts:6
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/test-mock-import/dist/packages/test-mock-import/src/index.d.ts:6
 
 A helper type that reduces an object type to its `default` property, if such
 a property exists, or returns it as-is if it does not.

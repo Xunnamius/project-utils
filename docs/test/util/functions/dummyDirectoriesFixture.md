@@ -8,7 +8,7 @@
 
 > **dummyDirectoriesFixture**(): [`DummyDirectoriesFixture`](../type-aliases/DummyDirectoriesFixture.md)
 
-Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/dummy-directories.d.ts:48
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/dummy-directories.d.ts:48
 
 This fixture writes out the directories described by `initialDirectories` to
 the filesystem. Subdirectory paths of any depth are allowed, any non-existent

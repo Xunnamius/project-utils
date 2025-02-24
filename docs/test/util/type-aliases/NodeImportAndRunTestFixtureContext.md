@@ -6,9 +6,9 @@
 
 # Type Alias: NodeImportAndRunTestFixtureContext
 
-> **NodeImportAndRunTestFixtureContext**: `Tagged`\<\{ `testResult`: `RunReturnType`; \}, *typeof* [`nodeImportAndRunTestFixtureName`](../variables/nodeImportAndRunTestFixtureName.md)\>
+> **NodeImportAndRunTestFixtureContext**: `Tagged`\<\{ `testResult`: `RunReturnType`\<`RunOptions`\>; \}, *typeof* [`nodeImportAndRunTestFixtureName`](../variables/nodeImportAndRunTestFixtureName.md)\>
 
-Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/node-import-and-run-test.d.ts:65
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/node-import-and-run-test.d.ts:65
 
 Contains any additional context properties this fixture makes available by
 the time its `setup` function has successfully executed.

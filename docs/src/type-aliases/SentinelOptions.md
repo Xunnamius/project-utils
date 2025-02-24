@@ -8,7 +8,7 @@
 
 > **SentinelOptions**: `object`
 
-Defined in: packages/types/dist/packages/types/src/index.d.ts:534
+Defined in: packages/types/dist/packages/types/src/index.d.ts:543
 
 The options accepted by several of the `isX` sentinel functions.
 

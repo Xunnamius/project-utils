@@ -8,7 +8,7 @@
 
 > **DummyDirectoriesFixtureContext**: `Tagged`\<`EmptyObject`, *typeof* [`dummyDirectoriesFixtureName`](../variables/dummyDirectoriesFixtureName.md)\>
 
-Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/dummy-directories.d.ts:40
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/dummy-directories.d.ts:40
 
 Contains any additional context properties this fixture makes available by
 the time its `setup` function has successfully executed.

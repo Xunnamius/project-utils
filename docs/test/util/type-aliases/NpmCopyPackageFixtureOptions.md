@@ -6,9 +6,9 @@
 
 # Type Alias: NpmCopyPackageFixtureOptions
 
-> **NpmCopyPackageFixtureOptions**: `Tagged`\<\{ `ignorePackageDependencies`: \{ `bundledDependencies`: `boolean`; `dependencies`: `boolean`; `devDependencies`: `boolean`; `optionalDependencies`: `boolean`; `peerDependencies`: `boolean`; `peerDependenciesMeta`: `boolean`; \}; `packageUnderTest`: `Omit`\<[`GenericPackage`](../../../src/type-aliases/GenericPackage.md), `"projectMetadata"`\>; `runInstallScripts`: `boolean`; \}, *typeof* [`npmCopyPackageFixtureName`](../variables/npmCopyPackageFixtureName.md)\>
+> **NpmCopyPackageFixtureOptions**: `Tagged`\<\{ `ignorePackageDependencies`: \{ `bundledDependencies`: `boolean`; `dependencies`: `boolean`; `devDependencies`: `boolean`; `optionalDependencies`: `boolean`; `peerDependencies`: `boolean`; `peerDependenciesMeta`: `boolean`; \}; `packageUnderTest`: `Omit`\<`GenericPackage`, `"projectMetadata"`\>; `runInstallScripts`: `boolean`; \}, *typeof* [`npmCopyPackageFixtureName`](../variables/npmCopyPackageFixtureName.md)\>
 
-Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/npm-copy-package.d.ts:20
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/npm-copy-package.d.ts:20
 
 Contains any additional options properties this fixture expects or allows.
 

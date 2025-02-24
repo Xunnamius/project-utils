@@ -8,4 +8,4 @@
 
 > `const` **dummyDirectoriesFixtureName**: `"dummy-directories"` = `"dummy-directories"`
 
-Defined in: node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/dummy-directories.d.ts:4
+Defined in: node\_modules/@-xun/symbiote/node\_modules/@-xun/test-mock-fixture/dist/packages/test-mock-fixture/src/fixtures/dummy-directories.d.ts:4
