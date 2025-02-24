@@ -8,7 +8,7 @@
 
 > **SentinelOptions**: `object`
 
-Defined in: [index.ts:568](https://github.com/Xunnamius/projector/blob/ff90125e0338879bf7bf87de3d6d4aed56521e4c/packages/types/src/index.ts#L568)
+Defined in: [index.ts:577](https://github.com/Xunnamius/projector/blob/ebf54405456d5ea4b1a9fbe57c92ad44289d3b1b/packages/types/src/index.ts#L577)
 
 The options accepted by several of the `isX` sentinel functions.
 

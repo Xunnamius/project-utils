@@ -8,7 +8,7 @@
 
 > **ProjectMetadata**\<`Json`\>: `object`
 
-Defined in: [index.ts:197](https://github.com/Xunnamius/projector/blob/ff90125e0338879bf7bf87de3d6d4aed56521e4c/packages/types/src/index.ts#L197)
+Defined in: [index.ts:197](https://github.com/Xunnamius/projector/blob/ebf54405456d5ea4b1a9fbe57c92ad44289d3b1b/packages/types/src/index.ts#L197)
 
 A collection of useful information about a project.
 
@@ -39,6 +39,10 @@ Project root package data.
 
 A mapping of sub-root package names to [WorkspacePackage](WorkspacePackage.md) objects in
 a monorepo, or `undefined` in a polyrepo.
+
+Note that unnamed and broken packages are _never_ included in this map,
+though they may be included in its `unnamed` and `broken` properties
+depending on the process that generated this metadata object.
 
 ### type
 
