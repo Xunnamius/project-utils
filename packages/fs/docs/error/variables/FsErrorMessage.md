@@ -8,7 +8,7 @@
 
 > `const` **FsErrorMessage**: `object`
 
-Defined in: [packages/fs/src/error.ts:9](https://github.com/Xunnamius/projector/blob/af2aba5aa55ae25931180f8845a9a815a4bb9eeb/packages/fs/src/error.ts#L9)
+Defined in: [packages/fs/src/error.ts:9](https://github.com/Xunnamius/projector/blob/0b2556518d9eedc0d26e5216e2be026aef0660ae/packages/fs/src/error.ts#L9)
 
 A collection of possible error and warning messages.
 
@@ -73,12 +73,6 @@ A collection of possible error and warning messages.
 `string`
 
 ### IsNotXPackageJson()
-
-#### Parameters
-
-##### path
-
-`string`
 
 #### Returns
 

@@ -8,9 +8,9 @@
 
 ## Call Signature
 
-> **readXPackageJsonAtRoot**(`path`, `options`): `Promisable`\<`XPackageJson`\>
+> **readXPackageJsonAtRoot**(`path`, `options`): `Promise`\<`XPackageJson`\>
 
-Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:113](https://github.com/Xunnamius/projector/blob/af2aba5aa55ae25931180f8845a9a815a4bb9eeb/packages/fs/src/system/read-xpackage-json-at-root.ts#L113)
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:113](https://github.com/Xunnamius/projector/blob/0b2556518d9eedc0d26e5216e2be026aef0660ae/packages/fs/src/system/read-xpackage-json-at-root.ts#L113)
 
 Asynchronously read in and parse the contents of a package.json file.
 
@@ -31,7 +31,7 @@ option to `false` or clear the internal cache with `cache.clear`.
 
 ### Returns
 
-`Promisable`\<`XPackageJson`\>
+`Promise`\<`XPackageJson`\>
 
 ### See
 
@@ -39,9 +39,9 @@ option to `false` or clear the internal cache with `cache.clear`.
 
 ## Call Signature
 
-> **readXPackageJsonAtRoot**(`path`, `options`): `Promisable`\<`EmptyObject` \| `XPackageJson`\>
+> **readXPackageJsonAtRoot**(`path`, `options`): `Promise`\<`EmptyObject` \| `XPackageJson`\>
 
-Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:117](https://github.com/Xunnamius/projector/blob/af2aba5aa55ae25931180f8845a9a815a4bb9eeb/packages/fs/src/system/read-xpackage-json-at-root.ts#L117)
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:117](https://github.com/Xunnamius/projector/blob/0b2556518d9eedc0d26e5216e2be026aef0660ae/packages/fs/src/system/read-xpackage-json-at-root.ts#L117)
 
 Asynchronously read in and parse the contents of a package.json file.
 
@@ -62,7 +62,7 @@ option to `false` or clear the internal cache with `cache.clear`.
 
 ### Returns
 
-`Promisable`\<`EmptyObject` \| `XPackageJson`\>
+`Promise`\<`EmptyObject` \| `XPackageJson`\>
 
 ### See
 

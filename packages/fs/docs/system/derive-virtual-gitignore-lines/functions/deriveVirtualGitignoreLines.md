@@ -8,7 +8,7 @@
 
 > **deriveVirtualGitignoreLines**(...`args`): `Promise`\<`string`[]\>
 
-Defined in: [packages/fs/src/system/derive-virtual-gitignore-lines.ts:140](https://github.com/Xunnamius/projector/blob/af2aba5aa55ae25931180f8845a9a815a4bb9eeb/packages/fs/src/system/derive-virtual-gitignore-lines.ts#L140)
+Defined in: [packages/fs/src/system/derive-virtual-gitignore-lines.ts:140](https://github.com/Xunnamius/projector/blob/0b2556518d9eedc0d26e5216e2be026aef0660ae/packages/fs/src/system/derive-virtual-gitignore-lines.ts#L140)
 
 Asynchronously return an array of the lines of a `.gitignore` file, or an
 empty array if an error occurs. The string '.git' is prepended to the result.
