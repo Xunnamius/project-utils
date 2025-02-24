@@ -83,7 +83,7 @@ function readXPackageJsonAtRoot_(
       return result;
     }
 
-    throw new ProjectError(FsErrorMessage.IsNotXPackageJson(packageJsonPath));
+    throw new ProjectError(FsErrorMessage.IsNotXPackageJson());
   }
 
   function handleError(error: unknown): EmptyObject | never {
@@ -113,11 +113,11 @@ function readXPackageJsonAtRoot_(
 export function readXPackageJsonAtRoot(
   path: AbsolutePath,
   options: ReadXPackageJsonAtRootOptions & { try?: false }
-): Promisable<XPackageJson>;
+): Promise<XPackageJson>;
 export function readXPackageJsonAtRoot(
   path: AbsolutePath,
   options: ReadXPackageJsonAtRootOptions
-): Promisable<XPackageJson | EmptyObject>;
+): Promise<XPackageJson | EmptyObject>;
 export function readXPackageJsonAtRoot(
   ...args: ParametersNoFirst<typeof readXPackageJsonAtRoot_>
   // ? Could avoid "any" by further overloading readXPackageJsonAtRoot_, but meh

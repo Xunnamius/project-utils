@@ -587,11 +587,7 @@ describe('::readXPackageJsonAtRoot', () => {
 
       expect(() =>
         readXPackageJsonAtRoot.sync(repositories.goodPolyrepo.root, { useCached: true })
-      ).toThrow(
-        FsErrorMessage.IsNotXPackageJson(
-          `${repositories.goodPolyrepo.root}/package.json`
-        )
-      );
+      ).toThrow(FsErrorMessage.IsNotXPackageJson());
     });
 
     it('does not throw on read failure when try is true', () => {
@@ -710,11 +706,7 @@ describe('::readXPackageJsonAtRoot', () => {
 
       await expect(
         readXPackageJsonAtRoot(repositories.goodPolyrepo.root, { useCached: true })
-      ).rejects.toThrow(
-        FsErrorMessage.IsNotXPackageJson(
-          `${repositories.goodPolyrepo.root}/package.json`
-        )
-      );
+      ).rejects.toThrow(FsErrorMessage.IsNotXPackageJson());
     });
 
     it('does not throw on read failure when try is true', async () => {
