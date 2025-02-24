@@ -5,8 +5,8 @@ import { readFile as readFileAsync } from 'node:fs/promises';
 import { memoizer } from '@-xun/memoize';
 
 import { ProjectError } from 'multiverse+common:error.ts';
-import { commonDebug } from 'multiverse+fs:common.ts';
 
+import { commonDebug } from 'universe+fs:common.ts';
 import { FsErrorMessage } from 'universe+fs:error.ts';
 
 import type { AbsolutePath } from '@-xun/fs';

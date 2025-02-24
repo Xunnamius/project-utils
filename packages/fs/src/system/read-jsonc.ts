@@ -7,11 +7,14 @@ import * as JSONC from 'jsonc-parser';
 
 import { ProjectError } from 'multiverse+common:error.ts';
 
+import { commonDebug } from 'universe+fs:common.ts';
 import { FsErrorMessage } from 'universe+fs:error.ts';
 
 import type { AbsolutePath } from '@-xun/fs';
 import type { EmptyObject, JsonValue, Promisable } from 'type-fest';
 import type { ParametersNoFirst } from 'multiverse+common:types.ts';
+
+const debug = commonDebug.extend('readJson');
 
 export { JSONC };
 
@@ -144,6 +147,11 @@ function readJsonc_<T>(
 
   function handleError(error: unknown): T | never {
     if (try_) {
+      debug.warn(
+        'attempt to read jsonc file failed (this error will be ignored): %O',
+        error
+      );
+
       return {} as T;
     }
 

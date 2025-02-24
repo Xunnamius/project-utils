@@ -1,6 +1,6 @@
 import { isXPackageJson } from '@-xun/project-types';
 
-import { commonDebug } from 'multiverse+fs:common.ts';
+import { commonDebug } from 'universe+fs:common.ts';
 
 import {
   FsErrorMessage,
