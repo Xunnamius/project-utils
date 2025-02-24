@@ -8,7 +8,7 @@
 
 > **RawAlias**: `object`
 
-Defined in: [packages/graph/src/alias.ts:107](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/graph/src/alias.ts#L107)
+Defined in: [packages/graph/src/alias.ts:107](https://github.com/Xunnamius/projector/blob/7505ea44374986d1d0ddf3a37cdd5d3729450f39/packages/graph/src/alias.ts#L107)
 
 A metadata object describing an "alias key," sometimes referred to as an
 "alias". Always corresponds to an "alias value" (i.e. an "alias path").

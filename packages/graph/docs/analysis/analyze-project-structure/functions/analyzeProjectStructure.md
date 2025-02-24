@@ -10,7 +10,7 @@
 
 > **analyzeProjectStructure**(`options`): `Promise`\<`ProjectMetadata`\>
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:328](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/graph/src/analysis/analyze-project-structure.ts#L328)
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:314](https://github.com/Xunnamius/projector/blob/7505ea44374986d1d0ddf3a37cdd5d3729450f39/packages/graph/src/analysis/analyze-project-structure.ts#L314)
 
 Asynchronously returns information about the structure of the project at the
 current working directory.
@@ -65,7 +65,7 @@ cache
 
 > **analyzeProjectStructure**(`options`): `Promise`\<`ProjectMetadata`\<`PackageJson`\>\>
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:342](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/graph/src/analysis/analyze-project-structure.ts#L342)
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:328](https://github.com/Xunnamius/projector/blob/7505ea44374986d1d0ddf3a37cdd5d3729450f39/packages/graph/src/analysis/analyze-project-structure.ts#L328)
 
 Asynchronously returns information about the structure of the project at the
 current working directory.

@@ -8,7 +8,7 @@
 
 > **gatherPseudodecoratorEntriesFromFiles**(...`args`): `Promise`\<[`PseudodecoratorsEntry`](../type-aliases/PseudodecoratorsEntry.md)[]\>
 
-Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:268](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L268)
+Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:268](https://github.com/Xunnamius/projector/blob/7505ea44374986d1d0ddf3a37cdd5d3729450f39/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L268)
 
 Accepts zero or more file paths and asynchronously returns an array of
 [PseudodecoratorsEntry](../type-aliases/PseudodecoratorsEntry.md)s each mapping a given file path to an array of

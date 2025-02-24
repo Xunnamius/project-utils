@@ -8,7 +8,7 @@
 
 > **sync**(...`arguments_`): [`PackageFiles`](../../../../../common/type-aliases/PackageFiles.md)
 
-Defined in: [packages/graph/src/analysis/gather-package-files.ts:251](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/graph/src/analysis/gather-package-files.ts#L251)
+Defined in: [packages/graph/src/analysis/gather-package-files.ts:251](https://github.com/Xunnamius/projector/blob/7505ea44374986d1d0ddf3a37cdd5d3729450f39/packages/graph/src/analysis/gather-package-files.ts#L251)
 
 Synchronously construct a [PackageFiles](../../../../../common/type-aliases/PackageFiles.md) instance containing
 AbsolutePaths to every file under `package_`'s root.

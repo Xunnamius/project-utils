@@ -8,7 +8,7 @@
 
 > **toSerializable**\<`T`\>(`idComponent`): [`Serializable`](../type-aliases/Serializable.md)\<`T`\>
 
-Defined in: [packages/graph/src/common.ts:290](https://github.com/Xunnamius/projector/blob/ea32adc50974a6b6b82e71ee97678647e4be8f84/packages/graph/src/common.ts#L290)
+Defined in: [packages/graph/src/common.ts:290](https://github.com/Xunnamius/projector/blob/7505ea44374986d1d0ddf3a37cdd5d3729450f39/packages/graph/src/common.ts#L290)
 
 Make `component` serializable by `@-xun/memoizer` (`JSON.stringify`).
 
