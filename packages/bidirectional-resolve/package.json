@@ -82,7 +82,7 @@
   },
   "devDependencies": {
     "@-xun/common-dummies": "^1.2.0",
-    "@-xun/project-types": "^1.0.2",
+    "@-xun/project-types": "^1.0.3",
     "toss-expression": "^0.1.2"
   },
   "engines": {
