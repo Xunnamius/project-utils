@@ -13,6 +13,7 @@ import { memoizer } from '@-xun/memoize';
 import {
   deriveVirtualGitignoreLines,
   isAccessible,
+  readJson,
   readXPackageJsonAtRoot
 } from '@-xun/project-fs';
 
@@ -43,6 +44,7 @@ import {
 import { GraphErrorMessage } from 'universe+graph:error.ts';
 
 import type { AbsolutePath, RelativePath } from '@-xun/fs';
+import type { ReadJsonOptions, ReadXPackageJsonAtRootOptions } from '@-xun/project-fs';
 
 import type {
   GenericPackage,
@@ -77,9 +79,22 @@ export type AnalyzeProjectStructureOptions = {
   cwd?: AbsolutePath;
   /**
    * Allow unnamed packages in this project, which will result in looser and
-   * less useful types being returned. Setting this to `true` is only useful
-   * when analyzing projects that do not adhere to standard symbiote (or
-   * NPM/Node) best practices.
+   * less useful types in the returned {@link ProjectMetadata} object. Setting
+   * this to `true` is only useful when analyzing projects that do not adhere to
+   * standard symbiote (or npm/node) best practices.
+   *
+   * When this option is `false`, unnamed sub-root packages will be considered
+   * "broken," and an unnamed `rootPackage`/`cwdPackage` will throw an error;
+   * broken packages will be available under
+   * `ProjectMetadata.subRootPackages.broken`.
+   *
+   * When `true`, unnamed packages will be available under
+   * `ProjectMetadata.subRootPackages.unnamed` and `rootPackage`/`cwdPackage`
+   * can be unnamed.
+   *
+   * Unnamed packages are _never_ included in the
+   * {@link ProjectMetadata.subRootPackages} map itself regardless of this
+   * option.
    *
    * @default false
    */
@@ -150,7 +165,10 @@ function analyzeProjectStructure_(
         }
       }
 
-      const projectJson = await readXPackageJsonAtRoot(projectRoot, { useCached });
+      const projectJson = await readPackageJsonAsync(projectRoot, {
+        allowUnnamedPackages,
+        useCached
+      });
 
       const projectAttributes = await getProjectAttributes(
         false,
@@ -223,7 +241,10 @@ function analyzeProjectStructure_(
       }
     }
 
-    const projectJson = readXPackageJsonAtRoot.sync(projectRoot, { useCached });
+    const projectJson = readPackageJsonSync(projectRoot, {
+      allowUnnamedPackages,
+      useCached
+    });
 
     const projectAttributes = getProjectAttributes(
       true,
@@ -270,41 +291,6 @@ function analyzeProjectStructure_(
 
   function finalize(projectMetadata: GenericProjectMetadata) {
     debug('project metadata: %O', projectMetadata);
-
-    if (!allowUnnamedPackages) {
-      debug('performing unnamed package check');
-
-      assert(
-        projectMetadata.cwdPackage.json.name,
-        new ProjectError(
-          GraphErrorMessage.MissingNameInPackageJson(
-            'current package: ' +
-              toPath(projectMetadata.cwdPackage.root, packageJsonConfigPackageBase)
-          )
-        )
-      );
-
-      assert(
-        projectMetadata.rootPackage.json.name,
-        new ProjectError(
-          GraphErrorMessage.MissingNameInPackageJson(
-            'root package: ' +
-              toPath(projectMetadata.rootPackage.root, packageJsonConfigPackageBase)
-          )
-        )
-      );
-
-      projectMetadata.subRootPackages?.all.forEach(({ json, root }) => {
-        assert(
-          json.name,
-          new ProjectError(
-            GraphErrorMessage.MissingNameInPackageJson(
-              toPath(root, packageJsonConfigPackageBase)
-            )
-          )
-        );
-      });
-    }
 
     memoizer.set<Memoization>(
       analyzeProjectStructure_ as unknown as Memoization,
@@ -448,7 +434,7 @@ function setSubrootPackagesAndCwdPackage(
 
         const packageJson = (() => {
           try {
-            return readXPackageJsonAtRoot.sync(packageRoot, { useCached });
+            return readPackageJsonSync(packageRoot, { allowUnnamedPackages, useCached });
           } catch (error) {
             subrootDebug.warn(
               'encountered broken package at %O: %O',
@@ -467,6 +453,7 @@ function setSubrootPackagesAndCwdPackage(
             packageJson,
             useCached
           );
+
           addWorkspacePackage({
             packageId: packageRootToId(packageRoot),
             attributes,
@@ -517,7 +504,10 @@ function setSubrootPackagesAndCwdPackage(
 
                 const packageJson = await (async () => {
                   try {
-                    return await readXPackageJsonAtRoot(packageRoot, { useCached });
+                    return await readPackageJsonAsync(packageRoot, {
+                      allowUnnamedPackages,
+                      useCached
+                    });
                   } catch (error) {
                     subrootDebug.warn(
                       'encountered broken package at %O: %O',
@@ -716,19 +706,21 @@ function determineCwdPackage(
     let cwdPackage: GenericPackage = rootPackage;
 
     if (runSynchronously) {
-      const cwdPackageName = readXPackageJsonAtRoot.sync(cwdPackageRoot, {
+      const cwdPackageName = readPackageJsonSync(cwdPackageRoot, {
+        allowUnnamedPackages,
         useCached
       }).name;
 
       finalize(cwdPackageName, packageRootToId(cwdPackageRoot));
       return cwdPackage;
     } else {
-      return readXPackageJsonAtRoot(cwdPackageRoot, { useCached }).then(
-        async ({ name: cwdPackageName }) => {
-          finalize(cwdPackageName, packageRootToId(cwdPackageRoot));
-          return cwdPackage;
-        }
-      );
+      return readPackageJsonAsync(cwdPackageRoot, {
+        allowUnnamedPackages,
+        useCached
+      }).then(async ({ name: cwdPackageName }) => {
+        finalize(cwdPackageName, packageRootToId(cwdPackageRoot));
+        return cwdPackage;
+      });
     }
 
     function finalize(cwdPackageName: string | undefined, packageId: string) {
@@ -1047,6 +1039,40 @@ function isAccessibleFromRoot(
   return (runSynchronously ? isAccessible.sync : isAccessible)(toPath(root, path), {
     useCached
   });
+}
+
+function readPackageJsonSync(
+  packageRoot: AbsolutePath,
+  {
+    allowUnnamedPackages,
+    ...readOptions
+  }: Omit<ReadJsonOptions & ReadXPackageJsonAtRootOptions, 'try'> & {
+    allowUnnamedPackages: boolean;
+  }
+) {
+  return allowUnnamedPackages
+    ? readJson.sync<PackageJson>(
+        toPath(packageRoot, packageJsonConfigPackageBase),
+        readOptions
+      )
+    : readXPackageJsonAtRoot.sync(packageRoot, readOptions);
+}
+
+async function readPackageJsonAsync(
+  packageRoot: AbsolutePath,
+  {
+    allowUnnamedPackages,
+    ...readOptions
+  }: Omit<ReadJsonOptions & ReadXPackageJsonAtRootOptions, 'try'> & {
+    allowUnnamedPackages: boolean;
+  }
+) {
+  return allowUnnamedPackages
+    ? readJson<PackageJson>(
+        toPath(packageRoot, packageJsonConfigPackageBase),
+        readOptions
+      )
+    : readXPackageJsonAtRoot(packageRoot, readOptions);
 }
 
 function normalizePattern(pattern: string) {

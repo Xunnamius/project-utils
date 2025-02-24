@@ -7,7 +7,7 @@ import { getDummyDecoratedPath } from '@-xun/common-dummies/pseudodecorators';
 
 import {
   dummyToProjectMetadata,
-  patchReadXPackageJsonAtRoot,
+  patchJsonObjectReaders,
   repositories
 } from '@-xun/common-dummies/repositories';
 
@@ -15,6 +15,9 @@ import { toPath } from '@-xun/fs';
 import { memoizer } from '@-xun/memoize';
 import { runNoRejectOnBadExit } from '@-xun/run';
 import { toss } from 'toss-expression';
+
+import { FsErrorMessage } from 'multiverse+fs:error.ts';
+import { ProjectAttribute } from 'multiverse+types';
 
 import {
   analyzeProjectStructure,
@@ -24,6 +27,7 @@ import {
   gatherProjectFiles,
   gatherPseudodecoratorEntriesFromFiles,
   generatePackageJsonEngineMaintainedNodeVersions,
+  packageJsonConfigPackageBase,
   packageRootToId,
   pathToPackage,
   prefixAssetImport,
@@ -36,15 +40,20 @@ import {
 } from 'universe+graph';
 
 import { GraphErrorMessage } from 'universe+graph:error.ts';
-import { ProjectAttribute } from 'universe+types';
 
 import { asMocked } from 'testverse:util.ts';
 
 import type { RepositoryName } from '@-xun/common-dummies/repositories';
 import type { AbsolutePath, RelativePath } from '@-xun/fs';
 import type { GenericProjectMetadata } from '@-xun/project-types';
+
+import type {
+  GenericPackage,
+  GenericWorkspacePackage,
+  WorkspacePackage
+} from 'multiverse+types';
+
 import type { PackageBuildTargets } from 'universe+graph';
-import type { WorkspacePackage } from 'universe+types';
 
 jest.mock<typeof import('browserslist')>('browserslist', () => {
   return mockShouldReturnBrowserslistMock
@@ -4388,14 +4397,24 @@ describe('::analyzeProjectStructure', () => {
     it('returns correct rootPackage regardless of cwd', () => {
       expect.hasAssertions();
 
-      const expectedJsonSpec = patchReadXPackageJsonAtRoot(
+      const goodMonorepoRoot = toPath(
+        repositories.goodMonorepo.root,
+        packageJsonConfigPackageBase
+      );
+
+      const goodPolyrepoRoot = toPath(
+        repositories.goodPolyrepo.root,
+        packageJsonConfigPackageBase
+      );
+
+      const expectedJsonSpec = patchJsonObjectReaders(
         {
-          [repositories.goodMonorepo.root]: {
+          [goodMonorepoRoot]: {
             name: 'good-monorepo-package-json-name',
             private: true,
             workspaces: ['packages/*']
           },
-          [repositories.goodPolyrepo.root]: {
+          [goodPolyrepoRoot]: {
             name: 'good-polyrepo-package-json-name'
           }
         },
@@ -4409,11 +4428,10 @@ describe('::analyzeProjectStructure', () => {
           allowUnnamedPackages: true
         });
 
-        expect(rootPackage).toStrictEqual({
+        expect(excludeCircularPropertiesFromPackage(rootPackage)).toStrictEqual({
           root: repositories.goodMonorepo.root,
-          json: expectedJsonSpec[repositories.goodMonorepo.root],
-          attributes: repositories.goodMonorepo.attributes,
-          projectMetadata: expect.anything()
+          json: expectedJsonSpec[goodMonorepoRoot],
+          attributes: repositories.goodMonorepo.attributes
         });
       }
 
@@ -4424,11 +4442,10 @@ describe('::analyzeProjectStructure', () => {
           allowUnnamedPackages: true
         });
 
-        expect(rootPackage).toStrictEqual({
+        expect(excludeCircularPropertiesFromPackage(rootPackage)).toStrictEqual({
           root: repositories.goodMonorepo.root,
-          json: expectedJsonSpec[repositories.goodMonorepo.root],
-          attributes: repositories.goodMonorepo.attributes,
-          projectMetadata: expect.anything()
+          json: expectedJsonSpec[goodMonorepoRoot],
+          attributes: repositories.goodMonorepo.attributes
         });
       }
 
@@ -4439,11 +4456,10 @@ describe('::analyzeProjectStructure', () => {
           allowUnnamedPackages: true
         });
 
-        expect(rootPackage).toStrictEqual({
+        expect(excludeCircularPropertiesFromPackage(rootPackage)).toStrictEqual({
           root: repositories.goodMonorepo.root,
-          json: expectedJsonSpec[repositories.goodMonorepo.root],
-          attributes: repositories.goodMonorepo.attributes,
-          projectMetadata: expect.anything()
+          json: expectedJsonSpec[goodMonorepoRoot],
+          attributes: repositories.goodMonorepo.attributes
         });
       }
 
@@ -4454,11 +4470,10 @@ describe('::analyzeProjectStructure', () => {
           allowUnnamedPackages: true
         });
 
-        expect(rootPackage).toStrictEqual({
+        expect(excludeCircularPropertiesFromPackage(rootPackage)).toStrictEqual({
           root: repositories.goodPolyrepo.root,
-          json: expectedJsonSpec[repositories.goodPolyrepo.root],
-          attributes: repositories.goodPolyrepo.attributes,
-          projectMetadata: expect.anything()
+          json: expectedJsonSpec[goodPolyrepoRoot],
+          attributes: repositories.goodPolyrepo.attributes
         });
       }
 
@@ -4469,11 +4484,10 @@ describe('::analyzeProjectStructure', () => {
           allowUnnamedPackages: true
         });
 
-        expect(rootPackage).toStrictEqual({
+        expect(excludeCircularPropertiesFromPackage(rootPackage)).toStrictEqual({
           root: repositories.goodPolyrepo.root,
-          json: expectedJsonSpec[repositories.goodPolyrepo.root],
-          attributes: repositories.goodPolyrepo.attributes,
-          projectMetadata: expect.anything()
+          json: expectedJsonSpec[goodPolyrepoRoot],
+          attributes: repositories.goodPolyrepo.attributes
         });
       }
     });
@@ -4689,46 +4703,75 @@ describe('::analyzeProjectStructure', () => {
       );
     });
 
-    it('throws when allowUnnamedPackages is false (the default) and unnamed packages are present', () => {
+    it('throws when allowUnnamedPackages is false (the default) and an unnamed package is the rootPackage/cwdPackage', () => {
       expect.hasAssertions();
 
       expect(() =>
         analyzeProjectStructure.sync({
-          cwd: repositories.goodMonorepo.root,
-          useCached: true,
+          cwd: repositories.badPolyrepoEmptyPackageJson.root,
+          useCached: false,
           allowUnnamedPackages: false
         })
-      ).toThrow(
-        GraphErrorMessage.MissingNameInPackageJson(
-          toPath(
-            repositories.goodMonorepo.unnamedPackageMapData[0]![1].root,
-            'package.json'
-          )
-        )
-      );
+      ).toThrow(FsErrorMessage.IsNotXPackageJson());
 
       expect(() =>
         analyzeProjectStructure.sync({
-          cwd: repositories.goodMonorepo.root,
+          cwd: repositories.goodMonorepo.unnamedPackageMapData[1]![1].root,
           useCached: true
           // * allowUnnamedPackages: false should be the default
         })
-      ).toThrow(
-        GraphErrorMessage.MissingNameInPackageJson(
-          toPath(
-            repositories.goodMonorepo.unnamedPackageMapData[0]![1].root,
-            'package.json'
-          )
-        )
-      );
+      ).toThrow(FsErrorMessage.IsNotXPackageJson());
+    });
 
-      expect(() =>
-        analyzeProjectStructure.sync({
+    it('considers all unnamed packages "broken" when allowUnnamedPackages is false (the default)', () => {
+      expect.hasAssertions();
+
+      {
+        const result = analyzeProjectStructure.sync({
           cwd: repositories.goodMonorepo.root,
-          useCached: false,
-          allowUnnamedPackages: true
-        })
-      ).not.toThrow();
+          useCached: true,
+          allowUnnamedPackages: false
+        });
+
+        expect(result.cwdPackage).toBe(result.rootPackage);
+        expect(result.subRootPackages).toBeDefined();
+        expect(result.type).toStrictEqual(ProjectAttribute.Monorepo);
+
+        expect(result.rootPackage.attributes).toStrictEqual(
+          repositories.goodMonorepo.attributes
+        );
+
+        expect(result.rootPackage.json).toStrictEqual(repositories.goodMonorepo.json);
+        expect(result.rootPackage.root).toBe(repositories.goodMonorepo.root);
+        expect(result.rootPackage.projectMetadata).toBe(result);
+
+        checkForExpectedPackages(result.subRootPackages, 'goodMonorepo', {
+          unnamedConsideredBroken: true
+        });
+      }
+
+      {
+        const result = analyzeProjectStructure.sync({
+          cwd: repositories.goodMonorepo.root,
+          useCached: false
+        });
+
+        expect(result.cwdPackage).toBe(result.rootPackage);
+        expect(result.subRootPackages).toBeDefined();
+        expect(result.type).toStrictEqual(ProjectAttribute.Monorepo);
+
+        expect(result.rootPackage.attributes).toStrictEqual(
+          repositories.goodMonorepo.attributes
+        );
+
+        expect(result.rootPackage.json).toStrictEqual(repositories.goodMonorepo.json);
+        expect(result.rootPackage.root).toBe(repositories.goodMonorepo.root);
+        expect(result.rootPackage.projectMetadata).toBe(result);
+
+        checkForExpectedPackages(result.subRootPackages, 'goodMonorepo', {
+          unnamedConsideredBroken: true
+        });
+      }
     });
   });
 
@@ -5082,14 +5125,24 @@ describe('::analyzeProjectStructure', () => {
     it('returns correct rootPackage regardless of cwd', async () => {
       expect.hasAssertions();
 
-      const expectedJsonSpec = patchReadXPackageJsonAtRoot(
+      const goodMonorepoRoot = toPath(
+        repositories.goodMonorepo.root,
+        packageJsonConfigPackageBase
+      );
+
+      const goodPolyrepoRoot = toPath(
+        repositories.goodPolyrepo.root,
+        packageJsonConfigPackageBase
+      );
+
+      const expectedJsonSpec = patchJsonObjectReaders(
         {
-          [repositories.goodMonorepo.root]: {
+          [goodMonorepoRoot]: {
             name: 'good-monorepo-package-json-name',
             private: true,
             workspaces: ['packages/*']
           },
-          [repositories.goodPolyrepo.root]: {
+          [goodPolyrepoRoot]: {
             name: 'good-polyrepo-package-json-name'
           }
         },
@@ -5103,11 +5156,10 @@ describe('::analyzeProjectStructure', () => {
           allowUnnamedPackages: true
         });
 
-        expect(rootPackage).toStrictEqual({
+        expect(excludeCircularPropertiesFromPackage(rootPackage)).toStrictEqual({
           root: repositories.goodMonorepo.root,
-          json: expectedJsonSpec[repositories.goodMonorepo.root],
-          attributes: repositories.goodMonorepo.attributes,
-          projectMetadata: expect.anything()
+          json: expectedJsonSpec[goodMonorepoRoot],
+          attributes: repositories.goodMonorepo.attributes
         });
       }
 
@@ -5118,11 +5170,10 @@ describe('::analyzeProjectStructure', () => {
           allowUnnamedPackages: true
         });
 
-        expect(rootPackage).toStrictEqual({
+        expect(excludeCircularPropertiesFromPackage(rootPackage)).toStrictEqual({
           root: repositories.goodMonorepo.root,
-          json: expectedJsonSpec[repositories.goodMonorepo.root],
-          attributes: repositories.goodMonorepo.attributes,
-          projectMetadata: expect.anything()
+          json: expectedJsonSpec[goodMonorepoRoot],
+          attributes: repositories.goodMonorepo.attributes
         });
       }
 
@@ -5133,11 +5184,10 @@ describe('::analyzeProjectStructure', () => {
           allowUnnamedPackages: true
         });
 
-        expect(rootPackage).toStrictEqual({
+        expect(excludeCircularPropertiesFromPackage(rootPackage)).toStrictEqual({
           root: repositories.goodMonorepo.root,
-          json: expectedJsonSpec[repositories.goodMonorepo.root],
-          attributes: repositories.goodMonorepo.attributes,
-          projectMetadata: expect.anything()
+          json: expectedJsonSpec[goodMonorepoRoot],
+          attributes: repositories.goodMonorepo.attributes
         });
       }
 
@@ -5148,11 +5198,10 @@ describe('::analyzeProjectStructure', () => {
           allowUnnamedPackages: true
         });
 
-        expect(rootPackage).toStrictEqual({
+        expect(excludeCircularPropertiesFromPackage(rootPackage)).toStrictEqual({
           root: repositories.goodPolyrepo.root,
-          json: expectedJsonSpec[repositories.goodPolyrepo.root],
-          attributes: repositories.goodPolyrepo.attributes,
-          projectMetadata: expect.anything()
+          json: expectedJsonSpec[goodPolyrepoRoot],
+          attributes: repositories.goodPolyrepo.attributes
         });
       }
 
@@ -5163,11 +5212,10 @@ describe('::analyzeProjectStructure', () => {
           allowUnnamedPackages: true
         });
 
-        expect(rootPackage).toStrictEqual({
+        expect(excludeCircularPropertiesFromPackage(rootPackage)).toStrictEqual({
           root: repositories.goodPolyrepo.root,
-          json: expectedJsonSpec[repositories.goodPolyrepo.root],
-          attributes: repositories.goodPolyrepo.attributes,
-          projectMetadata: expect.anything()
+          json: expectedJsonSpec[goodPolyrepoRoot],
+          attributes: repositories.goodPolyrepo.attributes
         });
       }
     });
@@ -5395,36 +5443,79 @@ describe('::analyzeProjectStructure', () => {
       );
     });
 
-    it('throws when allowUnnamedPackages is false (the default) and unnamed packages are present', async () => {
+    it('throws when allowUnnamedPackages is false (the default) and an unnamed package is the rootPackage/cwdPackage', async () => {
       expect.hasAssertions();
 
-      await expect(() =>
+      await expect(
         analyzeProjectStructure({
-          cwd: repositories.goodMonorepo.root,
-          useCached: true,
+          cwd: repositories.badPolyrepoEmptyPackageJson.root,
+          useCached: false,
           allowUnnamedPackages: false
         })
       ).rejects.toMatchObject({
-        message: expect.stringContaining(GraphErrorMessage.MissingNameInPackageJson(''))
-      });
-
-      await expect(() =>
-        analyzeProjectStructure({
-          cwd: repositories.goodMonorepo.root,
-          useCached: true
-          // * allowUnnamedPackages: false should be the default
-        })
-      ).rejects.toMatchObject({
-        message: expect.stringContaining(GraphErrorMessage.MissingNameInPackageJson(''))
+        message: expect.stringContaining(FsErrorMessage.IsNotXPackageJson())
       });
 
       await expect(
         analyzeProjectStructure({
-          cwd: repositories.goodMonorepo.root,
-          useCached: false,
-          allowUnnamedPackages: true
+          cwd: repositories.goodMonorepo.unnamedPackageMapData[1]![1].root,
+          useCached: true
+          // * allowUnnamedPackages: false should be the default
         })
-      ).resolves.not.toThrow();
+      ).rejects.toMatchObject({
+        message: expect.stringContaining(FsErrorMessage.IsNotXPackageJson())
+      });
+    });
+
+    it('considers all unnamed packages "broken" when allowUnnamedPackages is false (the default)', async () => {
+      expect.hasAssertions();
+
+      {
+        const result = await analyzeProjectStructure({
+          cwd: repositories.goodMonorepo.root,
+          useCached: true,
+          allowUnnamedPackages: false
+        });
+
+        expect(result.cwdPackage).toBe(result.rootPackage);
+        expect(result.subRootPackages).toBeDefined();
+        expect(result.type).toStrictEqual(ProjectAttribute.Monorepo);
+
+        expect(result.rootPackage.attributes).toStrictEqual(
+          repositories.goodMonorepo.attributes
+        );
+
+        expect(result.rootPackage.json).toStrictEqual(repositories.goodMonorepo.json);
+        expect(result.rootPackage.root).toBe(repositories.goodMonorepo.root);
+        expect(result.rootPackage.projectMetadata).toBe(result);
+
+        checkForExpectedPackages(result.subRootPackages, 'goodMonorepo', {
+          unnamedConsideredBroken: true
+        });
+      }
+
+      {
+        const result = await analyzeProjectStructure({
+          cwd: repositories.goodMonorepo.root,
+          useCached: false
+        });
+
+        expect(result.cwdPackage).toBe(result.rootPackage);
+        expect(result.subRootPackages).toBeDefined();
+        expect(result.type).toStrictEqual(ProjectAttribute.Monorepo);
+
+        expect(result.rootPackage.attributes).toStrictEqual(
+          repositories.goodMonorepo.attributes
+        );
+
+        expect(result.rootPackage.json).toStrictEqual(repositories.goodMonorepo.json);
+        expect(result.rootPackage.root).toBe(repositories.goodMonorepo.root);
+        expect(result.rootPackage.projectMetadata).toBe(result);
+
+        checkForExpectedPackages(result.subRootPackages, 'goodMonorepo', {
+          unnamedConsideredBroken: true
+        });
+      }
     });
   });
 });
@@ -5824,29 +5915,108 @@ describe('::sortPackagesTopologically', () => {
 });
 
 function checkForExpectedPackages(
-  maybeResult: GenericProjectMetadata['subRootPackages'],
-  fixtureName: RepositoryName
+  result: GenericProjectMetadata['subRootPackages'],
+  fixtureName: RepositoryName,
+  { unnamedConsideredBroken = false }: { unnamedConsideredBroken?: boolean } = {}
 ) {
-  const result = maybeResult!;
+  assert(result);
 
-  expect(maybeResult).toBeDefined();
-
-  expect(Array.from(result.entries())).toIncludeSameMembers(
-    repositories[fixtureName].namedPackageMapData
+  expect(
+    excludeCircularPropertiesFromEntries(
+      Array.from(result.entries()).toSorted(sortPackageMapEntriesByNameThenId)
+    )
+  ).toStrictEqual(
+    excludeCircularPropertiesFromEntries(
+      repositories[fixtureName].namedPackageMapData.toSorted(
+        sortPackageMapEntriesByNameThenId
+      )
+    )
   );
 
-  expect(Array.from(result.unnamed.entries())).toIncludeSameMembers(
-    repositories[fixtureName].unnamedPackageMapData
+  if (!unnamedConsideredBroken) {
+    expect(
+      excludeCircularPropertiesFromEntries(
+        Array.from(result.unnamed.entries()).toSorted(sortPackageMapEntriesByNameThenId)
+      )
+    ).toStrictEqual(
+      excludeCircularPropertiesFromEntries(
+        repositories[fixtureName].unnamedPackageMapData.toSorted(
+          sortPackageMapEntriesByNameThenId
+        )
+      )
+    );
+  }
+
+  expect(result.broken.toSorted()).toStrictEqual(
+    [
+      ...repositories[fixtureName].brokenPackageRoots,
+      ...(unnamedConsideredBroken
+        ? repositories[fixtureName].unnamedPackageMapData.map(([, { root }]) => root)
+        : [])
+    ].toSorted()
   );
 
-  expect(result.broken).toIncludeSameMembers(
-    repositories[fixtureName].brokenPackageRoots
+  expect(
+    excludeCircularPropertiesFromPackages(result.all.toSorted(sortPackagesByNameThenId))
+  ).toStrictEqual(
+    excludeCircularPropertiesFromPackages(
+      unnamedConsideredBroken
+        ? repositories[fixtureName].namedPackageMapData
+            .map(([, data]) => data)
+            .toSorted(sortPackagesByNameThenId)
+        : [
+            ...repositories[fixtureName].namedPackageMapData.map(([, data]) => data),
+            ...repositories[fixtureName].unnamedPackageMapData.map(([, data]) => data)
+          ].toSorted(sortPackagesByNameThenId)
+    )
   );
+}
 
-  expect(result.all).toIncludeSameMembers([
-    ...repositories[fixtureName].namedPackageMapData.map(([, data]) => data),
-    ...repositories[fixtureName].unnamedPackageMapData.map(([, data]) => data)
+type GenericEntry = [string, GenericWorkspacePackage];
+
+function excludeCircularPropertiesFromEntries(entries: GenericEntry[]) {
+  return entries.map(([key, package_]) => [
+    key,
+    excludeCircularPropertiesFromPackage(package_)
   ]);
+}
+
+function excludeCircularPropertiesFromPackages(packages: GenericPackage[]) {
+  return packages.map((package_) => excludeCircularPropertiesFromPackage(package_));
+}
+
+function excludeCircularPropertiesFromPackage({
+  projectMetadata: _,
+  ...package_
+}: GenericPackage) {
+  return package_;
+}
+
+function sortPackageMapEntriesByNameThenId(
+  [, valueA]: GenericEntry,
+  [, valueB]: GenericEntry
+) {
+  return sortPackagesByNameThenId(valueA, valueB);
+}
+
+function sortPackagesByNameThenId(packageA: GenericPackage, packageB: GenericPackage) {
+  const {
+    json: { name: packageAName }
+  } = packageA;
+
+  const {
+    json: { name: packageBName }
+  } = packageB;
+
+  return packageAName && packageBName
+    ? subSort(packageAName, packageBName)
+    : 'id' in packageA && 'id' in packageB
+      ? subSort(packageA.id, packageB.id)
+      : 0;
+}
+
+function subSort(a: string, b: string) {
+  return a > b ? 1 : a < b ? -1 : 0;
 }
 
 function getExpectedPseudodecorators(

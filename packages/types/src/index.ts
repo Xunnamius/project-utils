@@ -213,6 +213,10 @@ export type ProjectMetadata<Json extends PackageJson | XPackageJson = XPackageJs
   /**
    * A mapping of sub-root package names to {@link WorkspacePackage} objects in
    * a monorepo, or `undefined` in a polyrepo.
+   *
+   * Note that unnamed and broken packages are _never_ included in this map,
+   * though they may be included in its `unnamed` and `broken` properties
+   * depending on the process that generated this metadata object.
    */
   subRootPackages:
     | (Map<WorkspacePackageName, WorkspacePackage> & {
@@ -221,18 +225,23 @@ export type ProjectMetadata<Json extends PackageJson | XPackageJson = XPackageJs
          * respective `package.json` files and {@link WorkspacePackage} objects.
          *
          * This mapping is only populated when unnamed packages are _explicitly
-         * allowed_ by the process that generated this object.
+         * allowed_ by the process that generated this metadata object.
+         * Otherwise, unnamed packages are considered "broken" and will be
+         * available under the `broken` property instead.
          */
         unnamed: Map<WorkspacePackageId, WorkspacePackage<PackageJson>>;
         /**
          * An array of "broken" pseudo-sub-root pseudo-package directories that
-         * are matching workspace paths but are missing a `package.json` file.
+         * match a workspace path but are missing a valid `package.json`
+         * file.
          */
         broken: AbsolutePath[];
         /**
-         * An array of *all* non-broken sub-root packages both named and
-         * unnamed\*. Unnamed packages only appear when they are _explicitly
-         * allowed_ by the process that generated this array.
+         * An array of *all* non-broken sub-root packages.
+         *
+         * Unnamed packages are included in this array only when they are
+         * _explicitly allowed_ by the process that generated this metadata
+         * object.
          *
          * In effect, this property is sugar for the following:
          *
