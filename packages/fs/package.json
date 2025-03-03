@@ -77,7 +77,7 @@
     "jsonc-parser": "^3.3.1",
     "named-app-errors": "^4.0.2",
     "rejoinder": "^1.2.5",
-    "type-fest": "^4.35.0"
+    "type-fest": "^4.36.0"
   },
   "devDependencies": {
     "@-xun/common-dummies": "^1.2.0",
