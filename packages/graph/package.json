@@ -87,7 +87,7 @@
     "rejoinder": "^1.2.5",
     "semver": "^7.7.1",
     "toss-expression": "^0.1.2",
-    "type-fest": "^4.35.0",
+    "type-fest": "^4.36.0",
     "validate-npm-package-name": "^6.0.0"
   },
   "devDependencies": {
