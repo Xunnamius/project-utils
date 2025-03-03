@@ -101,7 +101,7 @@
   "devDependencies": {
     "@-xun/common-dummies": "^1.2.1",
     "@-xun/run": "^1.0.3",
-    "@-xun/symbiote": "^3.3.7",
+    "@-xun/symbiote": "^3.3.8",
     "glob": "^11.0.1",
     "rejoinder": "^1.2.5",
     "resolve.exports": "^2.0.3"
