@@ -8,7 +8,7 @@
 
 > **Package**\<`Json`\>: [`RootPackage`](RootPackage.md)\<`Json`\> \| [`WorkspacePackage`](WorkspacePackage.md)\<`Json`\>
 
-Defined in: [index.ts:87](https://github.com/Xunnamius/projector/blob/ebf54405456d5ea4b1a9fbe57c92ad44289d3b1b/packages/types/src/index.ts#L87)
+Defined in: [index.ts:87](https://github.com/Xunnamius/projector/blob/ebfb426738fc12f1d6a23d67f21f0cfd0d162c44/packages/types/src/index.ts#L87)
 
 An object representing a package in a monorepo or polyrepo project.
 
