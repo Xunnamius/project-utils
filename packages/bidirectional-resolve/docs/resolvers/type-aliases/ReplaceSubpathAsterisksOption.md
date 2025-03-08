@@ -8,7 +8,7 @@
 
 > **ReplaceSubpathAsterisksOption**: `object`
 
-Defined in: [packages/bidirectional-resolve/src/resolvers.ts:83](https://github.com/Xunnamius/projector/blob/6b3aeb0c9188952de0cc2f6a34e1f14bd789015b/packages/bidirectional-resolve/src/resolvers.ts#L83)
+Defined in: [packages/bidirectional-resolve/src/resolvers.ts:83](https://github.com/Xunnamius/projector/blob/abb7a8a9dd6d67e38b8f61a8a35a6da8e7f6b5f3/packages/bidirectional-resolve/src/resolvers.ts#L83)
 
 ## Type declaration
 
