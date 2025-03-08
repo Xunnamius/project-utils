@@ -10,7 +10,7 @@
 
 > **sync**(`path`, `options`): `XPackageJson`
 
-Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:156](https://github.com/Xunnamius/projector/blob/0b2556518d9eedc0d26e5216e2be026aef0660ae/packages/fs/src/system/read-xpackage-json-at-root.ts#L156)
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:156](https://github.com/Xunnamius/projector/blob/f4ac1fc5dfe0c775c2a6a91230908c438ca26815/packages/fs/src/system/read-xpackage-json-at-root.ts#L156)
 
 Synchronously read in and parse the contents of a package.json file.
 
@@ -42,7 +42,7 @@ set the `useCached` option to `false` or clear the internal cache with
 
 > **sync**(`path`, `options`): `EmptyObject` \| `XPackageJson`
 
-Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:156](https://github.com/Xunnamius/projector/blob/0b2556518d9eedc0d26e5216e2be026aef0660ae/packages/fs/src/system/read-xpackage-json-at-root.ts#L156)
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:156](https://github.com/Xunnamius/projector/blob/f4ac1fc5dfe0c775c2a6a91230908c438ca26815/packages/fs/src/system/read-xpackage-json-at-root.ts#L156)
 
 Synchronously read in and parse the contents of a package.json file.
 

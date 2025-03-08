@@ -1,6 +1,6 @@
 {
   "name": "@-xun/project-fs",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "The filesystem utilities available to consumers of the @-xun/project package",
   "keywords": [],
   "homepage": "https://github.com/Xunnamius/project-utils/tree/main/packages/fs#readme",
@@ -71,7 +71,7 @@
   "dependencies": {
     "@-xun/fs": "^1.0.0",
     "@-xun/memoize": "^1.1.0",
-    "@-xun/project-types": "^1.0.3",
+    "@-xun/project-types": "^1.0.4",
     "@-xun/run": "^1.1.0",
     "core-js": "^3.40.0",
     "jsonc-parser": "^3.3.1",

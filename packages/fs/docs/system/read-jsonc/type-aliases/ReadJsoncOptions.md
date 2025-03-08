@@ -8,7 +8,7 @@
 
 > **ReadJsoncOptions**: `object`
 
-Defined in: [packages/fs/src/system/read-jsonc.ts:24](https://github.com/Xunnamius/projector/blob/0b2556518d9eedc0d26e5216e2be026aef0660ae/packages/fs/src/system/read-jsonc.ts#L24)
+Defined in: [packages/fs/src/system/read-jsonc.ts:24](https://github.com/Xunnamius/projector/blob/f4ac1fc5dfe0c775c2a6a91230908c438ca26815/packages/fs/src/system/read-jsonc.ts#L24)
 
 ## Type declaration
 
