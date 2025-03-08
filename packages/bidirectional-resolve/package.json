@@ -78,7 +78,7 @@
     "core-js": "^3.40.0",
     "escape-string-regexp~4": "npm:escape-string-regexp@^4.0.0",
     "named-app-errors": "4.0.2",
-    "type-fest": "^4.36.0"
+    "type-fest": "^4.37.0"
   },
   "devDependencies": {
     "@-xun/common-dummies": "^1.2.1",
