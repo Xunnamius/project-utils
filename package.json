@@ -100,7 +100,7 @@
   },
   "devDependencies": {
     "@-xun/common-dummies": "^1.2.2",
-    "@-xun/run": "^1.0.3",
+    "@-xun/run": "^1.1.0",
     "@-xun/symbiote": "^3.3.8",
     "glob": "^11.0.1",
     "rejoinder": "^1.2.5",
