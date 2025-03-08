@@ -8,7 +8,7 @@
 
 > **specifierToPackageName**(`specifier`): `string`
 
-Defined in: [packages/graph/src/analysis/gather-package-build-targets.ts:582](https://github.com/Xunnamius/projector/blob/7505ea44374986d1d0ddf3a37cdd5d3729450f39/packages/graph/src/analysis/gather-package-build-targets.ts#L582)
+Defined in: [packages/graph/src/analysis/gather-package-build-targets.ts:582](https://github.com/Xunnamius/projector/blob/75b2ac9b21c6609d9b8cc2f9871d2d58f0db3dfa/packages/graph/src/analysis/gather-package-build-targets.ts#L582)
 
 Takes a fully-resolved (i.e. _not an alias_) import specifier and returns its
 package name. Accounts for imports of namespaced packages like `@babel/core`.

@@ -8,7 +8,7 @@
 
 > **ImportSpecifiersEntry**: \[`AbsolutePath`, `object`\]
 
-Defined in: [packages/graph/src/analysis/gather-import-entries-from-files.ts:38](https://github.com/Xunnamius/projector/blob/7505ea44374986d1d0ddf3a37cdd5d3729450f39/packages/graph/src/analysis/gather-import-entries-from-files.ts#L38)
+Defined in: [packages/graph/src/analysis/gather-import-entries-from-files.ts:38](https://github.com/Xunnamius/projector/blob/75b2ac9b21c6609d9b8cc2f9871d2d58f0db3dfa/packages/graph/src/analysis/gather-import-entries-from-files.ts#L38)
 
 An entry mapping an absolute file path to two sets of import/require
 specifiers present in said file: "normal" imports and "type-only" imports.

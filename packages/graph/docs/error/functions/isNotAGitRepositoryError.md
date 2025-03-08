@@ -8,7 +8,7 @@
 
 > **isNotAGitRepositoryError**(`parameter`): `parameter is NotAGitRepositoryError`
 
-Defined in: [packages/common/src/error.ts:55](https://github.com/Xunnamius/projector/blob/7505ea44374986d1d0ddf3a37cdd5d3729450f39/packages/common/src/error.ts#L55)
+Defined in: [packages/common/src/error.ts:55](https://github.com/Xunnamius/projector/blob/75b2ac9b21c6609d9b8cc2f9871d2d58f0db3dfa/packages/common/src/error.ts#L55)
 
 Type guard for [NotAGitRepositoryError](../classes/NotAGitRepositoryError.md).
 

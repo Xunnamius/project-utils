@@ -8,7 +8,7 @@
 
 > **MetadataImportsPrefix**: *typeof* [`prefixAssetImport`](../variables/prefixAssetImport.md) \| *typeof* [`prefixInternalImport`](../variables/prefixInternalImport.md) \| *typeof* [`prefixExternalImport`](../variables/prefixExternalImport.md) \| *typeof* [`prefixNormalImport`](../variables/prefixNormalImport.md) \| *typeof* [`prefixTypeOnlyImport`](../variables/prefixTypeOnlyImport.md)
 
-Defined in: [packages/graph/src/analysis/gather-package-build-targets.ts:70](https://github.com/Xunnamius/projector/blob/7505ea44374986d1d0ddf3a37cdd5d3729450f39/packages/graph/src/analysis/gather-package-build-targets.ts#L70)
+Defined in: [packages/graph/src/analysis/gather-package-build-targets.ts:70](https://github.com/Xunnamius/projector/blob/75b2ac9b21c6609d9b8cc2f9871d2d58f0db3dfa/packages/graph/src/analysis/gather-package-build-targets.ts#L70)
 
 A prefix potentially added to specifier metadata in
 [PackageBuildTargets](../../../common/type-aliases/PackageBuildTargets.md).
