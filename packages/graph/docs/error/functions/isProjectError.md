@@ -8,7 +8,7 @@
 
 > **isProjectError**(`parameter`): `parameter is ProjectError`
 
-Defined in: [packages/common/src/error.ts:43](https://github.com/Xunnamius/projector/blob/75b2ac9b21c6609d9b8cc2f9871d2d58f0db3dfa/packages/common/src/error.ts#L43)
+Defined in: [packages/common/src/error.ts:43](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/common/src/error.ts#L43)
 
 Type guard for [ProjectError](../classes/ProjectError.md).
 

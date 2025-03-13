@@ -8,7 +8,7 @@
 
 > **sync**(`projectMetadata`, `options`): [`ProjectFiles`](../../../../../common/type-aliases/ProjectFiles.md)
 
-Defined in: [packages/graph/src/analysis/gather-project-files.ts:469](https://github.com/Xunnamius/projector/blob/75b2ac9b21c6609d9b8cc2f9871d2d58f0db3dfa/packages/graph/src/analysis/gather-project-files.ts#L469)
+Defined in: [packages/graph/src/analysis/gather-project-files.ts:487](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/graph/src/analysis/gather-project-files.ts#L487)
 
 Synchronously construct a [ProjectFiles](../../../../../common/type-aliases/ProjectFiles.md) instance containing absolute
 file paths (AbsolutePaths) derived from `projectMetadata`.
