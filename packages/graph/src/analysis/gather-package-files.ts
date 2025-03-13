@@ -111,12 +111,13 @@ function gatherPackageFiles_(
     cwd: projectRoot
   };
 
-  const distGlob = toRelativePath(projectRoot, toPath(packageRoot, rawDistGlob));
+  const relativePackageRoot = toRelativePath(projectRoot, packageRoot);
+  const distGlob = toPath(relativePackageRoot, rawDistGlob);
   // eslint-disable-next-line unicorn/prevent-abbreviations
-  const docsGlob = toRelativePath(projectRoot, toPath(packageRoot, rawDocsGlob));
-  const srcGlob = toRelativePath(projectRoot, toPath(packageRoot, rawSrcGlob));
-  const testGlob = toRelativePath(projectRoot, toPath(packageRoot, rawTestGlob));
-  const otherGlob = toRelativePath(projectRoot, toPath(packageRoot, rawOtherGlob));
+  const docsGlob = toPath(relativePackageRoot, rawDocsGlob);
+  const srcGlob = toPath(relativePackageRoot, rawSrcGlob);
+  const testGlob = toPath(relativePackageRoot, rawTestGlob);
+  const otherGlob = toPath(relativePackageRoot, rawOtherGlob);
 
   debug('distGlob: %O', distGlob);
   debug('docsGlob: %O', docsGlob);
@@ -124,8 +125,7 @@ function gatherPackageFiles_(
   debug('testGlob: %O', testGlob);
   debug('otherGlob: %O', otherGlob);
 
-  const packagesIgnore =
-    '/' + toRelativePath(projectRoot, toPath(packageRoot, directoryPackagesProjectBase));
+  const packagesIgnore = '/' + toPath(relativePackageRoot, directoryPackagesProjectBase);
 
   debug('packagesIgnore: %O', packagesIgnore);
 
