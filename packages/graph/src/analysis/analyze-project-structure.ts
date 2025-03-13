@@ -493,7 +493,6 @@ function setSubrootPackagesAndCwdPackage(
                   GraphErrorMessage.GuruMeditation()
                 );
 
-                // TODO: maybe redundant w/ package.json workspaces negated glob
                 if (packageRoot.endsWith('.ignore')) {
                   subrootDebug.warn(
                     'encountered explicitly ignored package at %O',
@@ -527,10 +526,10 @@ function setSubrootPackagesAndCwdPackage(
                     useCached
                   );
 
-                  // ? Negation relies on addWorkspacePackage being called in ?
-                  // a specific order, so we need to preserve that order. ?
-                  // We'll execute these functions in a synchronization step ?
-                  // later.
+                  // ? Negation relies on addWorkspacePackage being called in
+                  // ? a specific order, so we need to preserve that order.
+                  // ? We'll execute these functions in a synchronization step
+                  // ? later.
                   workspacesAddFunctionsToCall.push({
                     patternIndex,
                     fn: async () =>
@@ -1086,7 +1085,7 @@ function normalizePattern(pattern: string) {
   // TODO: hoist the negation logic up to @-xun/glob-gitignore; note in the
   // TODO: documentation that negations only apply to the glob paths that
   // TODO: came before it and the later globs can re-add previously ignored
-  // TODO: entries. ? Is hoisting this necessary or is this once-off
+  // TODO: entries. Is hoisting this necessary or is this once-off
   // TODO: functionality?
 
   // * This pattern sanitization logic comes from @npmcli/map-workspaces
