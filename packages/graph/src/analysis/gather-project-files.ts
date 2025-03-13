@@ -1,4 +1,4 @@
-import { toAbsolutePath, toRelativePath } from '@-xun/fs';
+import { toAbsolutePath, toPath, toRelativePath } from '@-xun/fs';
 import { memoizer } from '@-xun/memoize';
 import { deriveVirtualPrettierignoreLines } from '@-xun/project-fs';
 import { glob as globAsync, sync as globSync } from 'glob-gitignore';
@@ -193,13 +193,16 @@ function gatherProjectFiles_(
 
       Promise.all(
         subRootPackagesArray.map(async (package_) => {
-          const paths = await globAsync(markdownGlob, {
-            ignore,
-            dot: true,
-            absolute: true,
-            nodir: true,
-            cwd: package_.root
-          });
+          const paths = await globAsync(
+            toPath(toRelativePath(projectRoot, package_.root), markdownGlob),
+            {
+              ignore,
+              dot: true,
+              absolute: true,
+              nodir: true,
+              cwd: projectRoot
+            }
+          );
 
           return [package_.id, paths] as [string, string[]];
         })
@@ -217,13 +220,16 @@ function gatherProjectFiles_(
 
       Promise.all(
         subRootPackagesArray.map(async (package_) => {
-          const paths = await globAsync(typescriptSrcGlob, {
-            ignore,
-            dot: true,
-            absolute: true,
-            nodir: true,
-            cwd: package_.root
-          });
+          const paths = await globAsync(
+            toPath(toRelativePath(projectRoot, package_.root), typescriptSrcGlob),
+            {
+              ignore,
+              dot: true,
+              absolute: true,
+              nodir: true,
+              cwd: projectRoot
+            }
+          );
 
           return [package_.id, paths] as [string, string[]];
         })
@@ -241,13 +247,16 @@ function gatherProjectFiles_(
 
       Promise.all(
         subRootPackagesArray.map(async (package_) => {
-          const paths = await globAsync(typescriptTestGlob, {
-            ignore,
-            dot: true,
-            absolute: true,
-            nodir: true,
-            cwd: package_.root
-          });
+          const paths = await globAsync(
+            toPath(toRelativePath(projectRoot, package_.root), typescriptTestGlob),
+            {
+              ignore,
+              dot: true,
+              absolute: true,
+              nodir: true,
+              cwd: projectRoot
+            }
+          );
 
           return [package_.id, paths] as [string, string[]];
         })
@@ -294,13 +303,16 @@ function gatherProjectFiles_(
 
     markdownFiles.inWorkspace = new Map(
       subRootPackagesArray.map((package_) => {
-        const paths = globSync(markdownGlob, {
-          ignore,
-          dot: true,
-          absolute: true,
-          nodir: true,
-          cwd: package_.root
-        });
+        const paths = globSync(
+          toPath(toRelativePath(projectRoot, package_.root), markdownGlob),
+          {
+            ignore,
+            dot: true,
+            absolute: true,
+            nodir: true,
+            cwd: projectRoot
+          }
+        );
 
         return [package_.id, paths] as [string, AbsolutePath[]];
       })
@@ -316,13 +328,16 @@ function gatherProjectFiles_(
 
     typescriptSrcFiles.inWorkspaceSrc = new Map(
       subRootPackagesArray.map((package_) => {
-        const paths = globSync(typescriptSrcGlob, {
-          ignore,
-          dot: true,
-          absolute: true,
-          nodir: true,
-          cwd: package_.root
-        });
+        const paths = globSync(
+          toPath(toRelativePath(projectRoot, package_.root), typescriptSrcGlob),
+          {
+            ignore,
+            dot: true,
+            absolute: true,
+            nodir: true,
+            cwd: projectRoot
+          }
+        );
 
         return [package_.id, paths] as [string, AbsolutePath[]];
       })
@@ -338,13 +353,16 @@ function gatherProjectFiles_(
 
     typescriptTestFiles.inWorkspaceTest = new Map(
       subRootPackagesArray.map((package_) => {
-        const paths = globSync(typescriptTestGlob, {
-          ignore,
-          dot: true,
-          absolute: true,
-          nodir: true,
-          cwd: package_.root
-        });
+        const paths = globSync(
+          toPath(toRelativePath(projectRoot, package_.root), typescriptTestGlob),
+          {
+            ignore,
+            dot: true,
+            absolute: true,
+            nodir: true,
+            cwd: projectRoot
+          }
+        );
 
         return [package_.id, paths] as [string, AbsolutePath[]];
       })

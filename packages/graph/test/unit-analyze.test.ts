@@ -552,6 +552,110 @@ describe('::gatherProjectFiles', () => {
       expect(result1).not.toBe(result2);
     });
 
+    it('respects complex double-asterisk lines in prettierignore when "skipPrettierIgnored" is enabled in monorepo context', () => {
+      expect.hasAssertions();
+
+      const root = repositories.goodHybridrepoComplexIgnore.root;
+
+      expect(
+        gatherProjectFiles.sync(dummyToProjectMetadata('goodHybridrepoComplexIgnore'), {
+          skipPrettierIgnored: true,
+          useCached: true
+        })
+      ).toStrictEqual({
+        mainBinFiles: {
+          atAnyRoot: [`${root}/packages/cli/dist/1.js`],
+          atProjectRoot: undefined,
+          atWorkspaceRoot: new Map([
+            ['cli', `${root}/packages/cli/dist/1.js`],
+            ['private', undefined],
+            ['webpack', undefined]
+          ])
+        },
+        markdownFiles: {
+          all: [
+            `${root}/docs/1.md`,
+            `${root}/docs/2.md`,
+            `${root}/README.md`,
+            `${root}/packages/cli/README.md`,
+            `${root}/packages/webpack/README.md`
+          ],
+          inRoot: [`${root}/docs/1.md`, `${root}/docs/2.md`, `${root}/README.md`],
+          inWorkspace: new Map([
+            ['cli', [`${root}/packages/cli/README.md`]],
+            ['private', []],
+            ['webpack', [`${root}/packages/webpack/README.md`]]
+          ])
+        },
+        packageJsonFiles: {
+          atAnyRoot: [
+            `${root}/package.json`,
+            `${root}/packages/cli/package.json`,
+            `${root}/packages/private/package.json`,
+            `${root}/packages/webpack/package.json`
+          ],
+          atProjectRoot: `${root}/package.json`,
+          atWorkspaceRoot: new Map([
+            ['cli', `${root}/packages/cli/package.json`],
+            ['private', `${root}/packages/private/package.json`],
+            ['webpack', `${root}/packages/webpack/package.json`]
+          ]),
+          elsewhere: [
+            `${root}/packages/unnamed-cjs/package.json`,
+            `${root}/packages/unnamed-esm/package.json`
+          ]
+        },
+        typescriptSrcFiles: {
+          all: [`${root}/src/api/2.mts`],
+          inRootSrc: [`${root}/src/api/2.mts`],
+          inWorkspaceSrc: new Map([
+            ['cli', []],
+            ['private', []],
+            ['webpack', []]
+          ])
+        },
+        typescriptTestFiles: {
+          all: [
+            `${root}/test/api/type-2.test.tsx`,
+            `${root}/test/type-1.test.ts`,
+            `${root}/packages/cli/test/nested/type-4.test.ts`,
+            `${root}/packages/cli/test/type-3.test.ts`,
+            `${root}/packages/private/test/nested/type-4.test.ts`,
+            `${root}/packages/private/test/type-3.test.ts`,
+            `${root}/packages/webpack/test/nested/type-4.test.ts`,
+            `${root}/packages/webpack/test/type-3.test.ts`
+          ],
+          inRootTest: [
+            `${root}/test/api/type-2.test.tsx`,
+            `${root}/test/type-1.test.ts`
+          ],
+          inWorkspaceTest: new Map([
+            [
+              'cli',
+              [
+                `${root}/packages/cli/test/nested/type-4.test.ts`,
+                `${root}/packages/cli/test/type-3.test.ts`
+              ]
+            ],
+            [
+              'private',
+              [
+                `${root}/packages/private/test/nested/type-4.test.ts`,
+                `${root}/packages/private/test/type-3.test.ts`
+              ]
+            ],
+            [
+              'webpack',
+              [
+                `${root}/packages/webpack/test/nested/type-4.test.ts`,
+                `${root}/packages/webpack/test/type-3.test.ts`
+              ]
+            ]
+          ])
+        }
+      });
+    });
+
     it('does not ignore files in prettier when "skipPrettierIgnored" is false', () => {
       expect.hasAssertions();
 
@@ -981,6 +1085,110 @@ describe('::gatherProjectFiles', () => {
       });
 
       expect(result1).not.toBe(result2);
+    });
+
+    it('respects complex double-asterisk lines in prettierignore when "skipPrettierIgnored" is enabled in monorepo context', async () => {
+      expect.hasAssertions();
+
+      const root = repositories.goodHybridrepoComplexIgnore.root;
+
+      await expect(
+        gatherProjectFiles(dummyToProjectMetadata('goodHybridrepoComplexIgnore'), {
+          skipPrettierIgnored: true,
+          useCached: true
+        })
+      ).resolves.toStrictEqual({
+        mainBinFiles: {
+          atAnyRoot: [`${root}/packages/cli/dist/1.js`],
+          atProjectRoot: undefined,
+          atWorkspaceRoot: new Map([
+            ['cli', `${root}/packages/cli/dist/1.js`],
+            ['private', undefined],
+            ['webpack', undefined]
+          ])
+        },
+        markdownFiles: {
+          all: [
+            `${root}/docs/1.md`,
+            `${root}/docs/2.md`,
+            `${root}/README.md`,
+            `${root}/packages/cli/README.md`,
+            `${root}/packages/webpack/README.md`
+          ],
+          inRoot: [`${root}/docs/1.md`, `${root}/docs/2.md`, `${root}/README.md`],
+          inWorkspace: new Map([
+            ['cli', [`${root}/packages/cli/README.md`]],
+            ['private', []],
+            ['webpack', [`${root}/packages/webpack/README.md`]]
+          ])
+        },
+        packageJsonFiles: {
+          atAnyRoot: [
+            `${root}/package.json`,
+            `${root}/packages/cli/package.json`,
+            `${root}/packages/private/package.json`,
+            `${root}/packages/webpack/package.json`
+          ],
+          atProjectRoot: `${root}/package.json`,
+          atWorkspaceRoot: new Map([
+            ['cli', `${root}/packages/cli/package.json`],
+            ['private', `${root}/packages/private/package.json`],
+            ['webpack', `${root}/packages/webpack/package.json`]
+          ]),
+          elsewhere: [
+            `${root}/packages/unnamed-cjs/package.json`,
+            `${root}/packages/unnamed-esm/package.json`
+          ]
+        },
+        typescriptSrcFiles: {
+          all: [`${root}/src/api/2.mts`],
+          inRootSrc: [`${root}/src/api/2.mts`],
+          inWorkspaceSrc: new Map([
+            ['cli', []],
+            ['private', []],
+            ['webpack', []]
+          ])
+        },
+        typescriptTestFiles: {
+          all: [
+            `${root}/test/api/type-2.test.tsx`,
+            `${root}/test/type-1.test.ts`,
+            `${root}/packages/cli/test/nested/type-4.test.ts`,
+            `${root}/packages/cli/test/type-3.test.ts`,
+            `${root}/packages/private/test/nested/type-4.test.ts`,
+            `${root}/packages/private/test/type-3.test.ts`,
+            `${root}/packages/webpack/test/nested/type-4.test.ts`,
+            `${root}/packages/webpack/test/type-3.test.ts`
+          ],
+          inRootTest: [
+            `${root}/test/api/type-2.test.tsx`,
+            `${root}/test/type-1.test.ts`
+          ],
+          inWorkspaceTest: new Map([
+            [
+              'cli',
+              [
+                `${root}/packages/cli/test/nested/type-4.test.ts`,
+                `${root}/packages/cli/test/type-3.test.ts`
+              ]
+            ],
+            [
+              'private',
+              [
+                `${root}/packages/private/test/nested/type-4.test.ts`,
+                `${root}/packages/private/test/type-3.test.ts`
+              ]
+            ],
+            [
+              'webpack',
+              [
+                `${root}/packages/webpack/test/nested/type-4.test.ts`,
+                `${root}/packages/webpack/test/type-3.test.ts`
+              ]
+            ]
+          ])
+        }
+      });
     });
 
     it('does not ignore files in prettier when "skipPrettierIgnored" is false', async () => {
@@ -1978,6 +2186,64 @@ describe('::gatherPackageFiles', () => {
       }
     });
 
+    it('respects complex double-asterisk "ignore" option in monorepo context', () => {
+      expect.hasAssertions();
+
+      const { rootPackage, subRootPackages } = dummyToProjectMetadata('goodHybridrepo');
+      const { root: projectRoot } = rootPackage;
+      const privatePackage = subRootPackages!.get('private')!;
+      const { root: privateRoot } = privatePackage;
+
+      expect(
+        gatherPackageFiles.sync(rootPackage, {
+          ignore: ['**/test/**', '!test/**', 'test/nested'],
+          useCached: true
+        })
+      ).toStrictEqual({
+        dist: [],
+        docs: [],
+        other: [
+          `${projectRoot}/.gitignore`,
+          `${projectRoot}/.prettierignore`,
+          `${projectRoot}/package.json`,
+          `${projectRoot}/vercel.json`,
+          `${projectRoot}/webpack.config.mjs`
+        ],
+        src: [
+          `${projectRoot}/src/1.js`,
+          `${projectRoot}/src/2.mts`,
+          `${projectRoot}/src/3.cts`,
+          `${projectRoot}/src/4.tsx`,
+          `${projectRoot}/src/index.ts`,
+          `${projectRoot}/src/package.json`
+        ],
+        test: [
+          `${projectRoot}/test/something-else.ts`,
+          `${projectRoot}/test/type-1.test.ts`,
+          `${projectRoot}/test/unit-jest.test.ts`
+        ]
+      });
+
+      expect(
+        gatherPackageFiles.sync(privatePackage, {
+          ignore: ['**/test/**', '!test/**', 'test/nested'],
+          useCached: true
+        })
+      ).toStrictEqual({
+        dist: [`${privateRoot}/dist/index.js`],
+        docs: [],
+        other: [`${privateRoot}/package.json`],
+        src: [
+          `${privateRoot}/src/index.js`,
+          `${privateRoot}/src/markdown/1.md`,
+          `${privateRoot}/src/markdown/2.md`,
+          `${privateRoot}/src/markdown/3.md`,
+          `${privateRoot}/src/markdown/package.json`
+        ],
+        test: []
+      });
+    });
+
     it('respects "skipGitIgnored" option', () => {
       expect.hasAssertions();
 
@@ -2318,6 +2584,64 @@ describe('::gatherPackageFiles', () => {
           ]
         });
       }
+    });
+
+    it('respects complex double-asterisk "ignore" option in monorepo context', async () => {
+      expect.hasAssertions();
+
+      const { rootPackage, subRootPackages } = dummyToProjectMetadata('goodHybridrepo');
+      const { root: projectRoot } = rootPackage;
+      const privatePackage = subRootPackages!.get('private')!;
+      const { root: privateRoot } = privatePackage;
+
+      await expect(
+        gatherPackageFiles(rootPackage, {
+          ignore: ['**/test/**', '!test/**', 'test/nested'],
+          useCached: true
+        })
+      ).resolves.toStrictEqual({
+        dist: [],
+        docs: [],
+        other: [
+          `${projectRoot}/.gitignore`,
+          `${projectRoot}/.prettierignore`,
+          `${projectRoot}/package.json`,
+          `${projectRoot}/vercel.json`,
+          `${projectRoot}/webpack.config.mjs`
+        ],
+        src: [
+          `${projectRoot}/src/1.js`,
+          `${projectRoot}/src/2.mts`,
+          `${projectRoot}/src/3.cts`,
+          `${projectRoot}/src/4.tsx`,
+          `${projectRoot}/src/index.ts`,
+          `${projectRoot}/src/package.json`
+        ],
+        test: [
+          `${projectRoot}/test/something-else.ts`,
+          `${projectRoot}/test/type-1.test.ts`,
+          `${projectRoot}/test/unit-jest.test.ts`
+        ]
+      });
+
+      await expect(
+        gatherPackageFiles(privatePackage, {
+          ignore: ['**/test/**', '!test/**', 'test/nested'],
+          useCached: true
+        })
+      ).resolves.toStrictEqual({
+        dist: [`${privateRoot}/dist/index.js`],
+        docs: [],
+        other: [`${privateRoot}/package.json`],
+        src: [
+          `${privateRoot}/src/index.js`,
+          `${privateRoot}/src/markdown/1.md`,
+          `${privateRoot}/src/markdown/2.md`,
+          `${privateRoot}/src/markdown/3.md`,
+          `${privateRoot}/src/markdown/package.json`
+        ],
+        test: []
+      });
     });
 
     it('respects "skipGitIgnored" option', async () => {
