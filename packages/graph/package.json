@@ -71,7 +71,7 @@
   "dependencies": {
     "@-xun/fs": "^1.0.0",
     "@-xun/memoize": "^1.1.0",
-    "@-xun/project-fs": "^1.0.5",
+    "@-xun/project-fs": "^1.1.0",
     "@-xun/project-types": "^1.0.4",
     "@babel/core": "^7.26.10",
     "@babel/plugin-syntax-typescript": "^7.25.9",
