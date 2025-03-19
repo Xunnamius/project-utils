@@ -4,9 +4,9 @@
 
 [@-xun/project-fs](../../../../README.md) / [index](../../../README.md) / [JSONC](../README.md) / createScanner
 
-# Function: createScanner()
+# Variable: createScanner()
 
-> **createScanner**(`text`, `ignoreTrivia`?): [`JSONScanner`](../interfaces/JSONScanner.md)
+> `const` **createScanner**: (`text`, `ignoreTrivia`?) => [`JSONScanner`](../interfaces/JSONScanner.md)
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:5
 

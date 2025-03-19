@@ -4,13 +4,11 @@
 
 [@-xun/project-fs](../../../../../README.md) / [system/read-json](../../../README.md) / [readJson](../README.md) / sync
 
-# Function: sync()
+# Variable: sync()
 
-## Call Signature
+> `const` **sync**: \<`T`\>(`path`, `options`) => `T`\<`T`\>(`path`, `options`) => `EmptyObject` \| `T` = `readJsonSync`
 
-> **sync**\<`T`\>(`path`, `options`): `T`
-
-Defined in: [packages/fs/src/system/read-json.ts:181](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/fs/src/system/read-json.ts#L181)
+Defined in: [packages/fs/src/system/read-json.ts:181](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/read-json.ts#L181)
 
 Synchronously read in and parse the contents of an arbitrary JSON file.
 
@@ -23,29 +21,25 @@ in this specific function's options for details.** To fetch fresh results,
 set the `useCached` option to `false` or clear the internal cache with
 cache.clear.
 
-### Type Parameters
+## Type Parameters
 
-• **T** = `JsonValue`
+### T
 
-### Parameters
+`T` = `JsonValue`
 
-#### path
+## Parameters
+
+### path
 
 `AbsolutePath`
 
-#### options
+### options
 
 [`ReadJsonOptions`](../../../type-aliases/ReadJsonOptions.md) & `object`
 
-### Returns
+## Returns
 
 `T`
-
-## Call Signature
-
-> **sync**\<`T`\>(`path`, `options`): `EmptyObject` \| `T`
-
-Defined in: [packages/fs/src/system/read-json.ts:181](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/fs/src/system/read-json.ts#L181)
 
 Synchronously read in and parse the contents of an arbitrary JSON file.
 
@@ -58,20 +52,22 @@ in this specific function's options for details.** To fetch fresh results,
 set the `useCached` option to `false` or clear the internal cache with
 cache.clear.
 
-### Type Parameters
+## Type Parameters
 
-• **T** = `JsonValue`
+### T
 
-### Parameters
+`T` = `JsonValue`
 
-#### path
+## Parameters
+
+### path
 
 `AbsolutePath`
 
-#### options
+### options
 
 [`ReadJsonOptions`](../../../type-aliases/ReadJsonOptions.md)
 
-### Returns
+## Returns
 
 `EmptyObject` \| `T`

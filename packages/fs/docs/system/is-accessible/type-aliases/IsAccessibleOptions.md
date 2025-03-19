@@ -6,15 +6,21 @@
 
 # Type Alias: IsAccessibleOptions
 
-> **IsAccessibleOptions**: `object`
+> **IsAccessibleOptions** = `object`
 
-Defined in: [packages/fs/src/system/is-accessible.ts:18](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/fs/src/system/is-accessible.ts#L18)
+Defined in: [packages/fs/src/system/is-accessible.ts:18](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/is-accessible.ts#L18)
 
-## Type declaration
+## See
+
+[isAccessible](../functions/isAccessible.md)
+
+## Properties
 
 ### fsConstant?
 
 > `optional` **fsConstant**: `number`
+
+Defined in: [packages/fs/src/system/is-accessible.ts:24](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/is-accessible.ts#L24)
 
 The type of access check to perform. Defaults to `fs.constants.R_OK`.
 
@@ -22,9 +28,13 @@ The type of access check to perform. Defaults to `fs.constants.R_OK`.
 
 fs.constants
 
+***
+
 ### useCached
 
 > **useCached**: `boolean`
+
+Defined in: [packages/fs/src/system/is-accessible.ts:33](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/is-accessible.ts#L33)
 
 Use the internal cached result from a previous run, if available.
 
@@ -34,7 +44,3 @@ always strictly equal (`===`) each other with respect to call signature.
 #### See
 
 cache
-
-## See
-
-[isAccessible](../functions/isAccessible.md)

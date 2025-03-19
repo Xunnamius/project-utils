@@ -4,13 +4,11 @@
 
 [@-xun/project-fs](../../../../../README.md) / [system/read-jsonc](../../../README.md) / [readJsonc](../README.md) / sync
 
-# Function: sync()
+# Variable: sync()
 
-## Call Signature
+> `const` **sync**: \<`T`\>(`path`, `options`) => `T`\<`T`\>(`path`, `options`) => `EmptyObject` \| `T` = `readJsoncSync`
 
-> **sync**\<`T`\>(`path`, `options`): `T`
-
-Defined in: [packages/fs/src/system/read-jsonc.ts:215](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/fs/src/system/read-jsonc.ts#L215)
+Defined in: [packages/fs/src/system/read-jsonc.ts:215](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/read-jsonc.ts#L215)
 
 Synchronously read in and parse the contents of an arbitrary JSONC file.
 
@@ -23,29 +21,25 @@ in this specific function's options for details.** To fetch fresh results,
 set the `useCached` option to `false` or clear the internal cache with
 cache.clear.
 
-### Type Parameters
+## Type Parameters
 
-• **T** = `JsonValue`
+### T
 
-### Parameters
+`T` = `JsonValue`
 
-#### path
+## Parameters
+
+### path
 
 `AbsolutePath`
 
-#### options
+### options
 
 [`ReadJsoncOptions`](../../../type-aliases/ReadJsoncOptions.md) & `object`
 
-### Returns
+## Returns
 
 `T`
-
-## Call Signature
-
-> **sync**\<`T`\>(`path`, `options`): `EmptyObject` \| `T`
-
-Defined in: [packages/fs/src/system/read-jsonc.ts:215](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/fs/src/system/read-jsonc.ts#L215)
 
 Synchronously read in and parse the contents of an arbitrary JSONC file.
 
@@ -58,20 +52,22 @@ in this specific function's options for details.** To fetch fresh results,
 set the `useCached` option to `false` or clear the internal cache with
 cache.clear.
 
-### Type Parameters
+## Type Parameters
 
-• **T** = `JsonValue`
+### T
 
-### Parameters
+`T` = `JsonValue`
 
-#### path
+## Parameters
+
+### path
 
 `AbsolutePath`
 
-#### options
+### options
 
 [`ReadJsoncOptions`](../../../type-aliases/ReadJsoncOptions.md)
 
-### Returns
+## Returns
 
 `EmptyObject` \| `T`

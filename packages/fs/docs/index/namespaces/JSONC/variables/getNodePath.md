@@ -4,9 +4,9 @@
 
 [@-xun/project-fs](../../../../README.md) / [index](../../../README.md) / [JSONC](../README.md) / getNodePath
 
-# Function: getNodePath()
+# Variable: getNodePath()
 
-> **getNodePath**(`node`): [`JSONPath`](../type-aliases/JSONPath.md)
+> `const` **getNodePath**: (`node`) => [`JSONPath`](../type-aliases/JSONPath.md)
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:103
 

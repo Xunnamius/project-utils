@@ -4,9 +4,9 @@
 
 [@-xun/project-fs](../../../../README.md) / [index](../../../README.md) / [JSONC](../README.md) / getLocation
 
-# Function: getLocation()
+# Variable: getLocation()
 
-> **getLocation**(`text`, `position`): [`Location`](../interfaces/Location.md)
+> `const` **getLocation**: (`text`, `position`) => [`Location`](../interfaces/Location.md)
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:82
 

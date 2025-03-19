@@ -4,9 +4,9 @@
 
 [@-xun/project-fs](../../../../README.md) / [index](../../../README.md) / [JSONC](../README.md) / findNodeAtLocation
 
-# Function: findNodeAtLocation()
+# Variable: findNodeAtLocation()
 
-> **findNodeAtLocation**(`root`, `path`): `undefined` \| [`Node`](../interfaces/Node.md)
+> `const` **findNodeAtLocation**: (`root`, `path`) => [`Node`](../interfaces/Node.md) \| `undefined`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:95
 
@@ -24,4 +24,4 @@ Finds the node at the given path in a JSON DOM.
 
 ## Returns
 
-`undefined` \| [`Node`](../interfaces/Node.md)
+[`Node`](../interfaces/Node.md) \| `undefined`

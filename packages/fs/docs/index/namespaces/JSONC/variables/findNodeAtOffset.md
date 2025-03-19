@@ -4,9 +4,9 @@
 
 [@-xun/project-fs](../../../../README.md) / [index](../../../README.md) / [JSONC](../README.md) / findNodeAtOffset
 
-# Function: findNodeAtOffset()
+# Variable: findNodeAtOffset()
 
-> **findNodeAtOffset**(`root`, `offset`, `includeRightBound`?): `undefined` \| [`Node`](../interfaces/Node.md)
+> `const` **findNodeAtOffset**: (`root`, `offset`, `includeRightBound`?) => [`Node`](../interfaces/Node.md) \| `undefined`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:99
 
@@ -28,4 +28,4 @@ Finds the innermost node at the given offset. If includeRightBound is set, also 
 
 ## Returns
 
-`undefined` \| [`Node`](../interfaces/Node.md)
+[`Node`](../interfaces/Node.md) \| `undefined`

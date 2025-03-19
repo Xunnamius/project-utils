@@ -10,7 +10,7 @@
 
 > **readJsonc**\<`T`\>(`path`, `options`): `Promise`\<`T`\>
 
-Defined in: [packages/fs/src/system/read-jsonc.ts:173](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/fs/src/system/read-jsonc.ts#L173)
+Defined in: [packages/fs/src/system/read-jsonc.ts:173](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/read-jsonc.ts#L173)
 
 Asynchronously read in and parse the contents of an arbitrary JSONC file.
 
@@ -24,7 +24,9 @@ option to `false` or clear the internal cache with cache.clear.
 
 ### Type Parameters
 
-• **T** = `JsonValue`
+#### T
+
+`T` = `JsonValue`
 
 ### Parameters
 
@@ -44,7 +46,7 @@ option to `false` or clear the internal cache with cache.clear.
 
 > **readJsonc**\<`T`\>(`path`, `options`): `Promise`\<`EmptyObject` \| `T`\>
 
-Defined in: [packages/fs/src/system/read-jsonc.ts:177](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/fs/src/system/read-jsonc.ts#L177)
+Defined in: [packages/fs/src/system/read-jsonc.ts:177](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/read-jsonc.ts#L177)
 
 Asynchronously read in and parse the contents of an arbitrary JSONC file.
 
@@ -58,7 +60,9 @@ option to `false` or clear the internal cache with cache.clear.
 
 ### Type Parameters
 
-• **T** = `JsonValue`
+#### T
+
+`T` = `JsonValue`
 
 ### Parameters
 

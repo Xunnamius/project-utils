@@ -6,7 +6,7 @@
 
 # Class: NotAGitRepositoryError
 
-Defined in: [packages/common/src/error.ts:147](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/common/src/error.ts#L147)
+Defined in: [packages/common/src/error.ts:147](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/common/src/error.ts#L147)
 
 Represents encountering a project that is not a git repository.
 
@@ -18,25 +18,25 @@ Represents encountering a project that is not a git repository.
 
 ### new NotAGitRepositoryError()
 
-> **new NotAGitRepositoryError**(): [`NotAGitRepositoryError`](NotAGitRepositoryError.md)
+> **new NotAGitRepositoryError**(): `NotAGitRepositoryError`
 
-Defined in: [packages/common/src/error.ts:153](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/common/src/error.ts#L153)
+Defined in: [packages/common/src/error.ts:153](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/common/src/error.ts#L153)
 
 Represents encountering a project that is not a git repository.
 
 #### Returns
 
-[`NotAGitRepositoryError`](NotAGitRepositoryError.md)
+`NotAGitRepositoryError`
 
 #### Overrides
 
-[`ProjectError`](ProjectError.md).[`constructor`](ProjectError.md#constructors)
+[`ProjectError`](ProjectError.md).[`constructor`](ProjectError.md#constructor)
 
 ### new NotAGitRepositoryError()
 
-> **new NotAGitRepositoryError**(`message`): [`NotAGitRepositoryError`](NotAGitRepositoryError.md)
+> **new NotAGitRepositoryError**(`message`): `NotAGitRepositoryError`
 
-Defined in: [packages/common/src/error.ts:158](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/common/src/error.ts#L158)
+Defined in: [packages/common/src/error.ts:158](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/common/src/error.ts#L158)
 
 This constructor syntax is used by subclasses when calling this constructor
 via `super`.
@@ -49,11 +49,11 @@ via `super`.
 
 #### Returns
 
-[`NotAGitRepositoryError`](NotAGitRepositoryError.md)
+`NotAGitRepositoryError`
 
 #### Overrides
 
-[`ProjectError`](ProjectError.md).[`constructor`](ProjectError.md#constructors)
+[`ProjectError`](ProjectError.md).[`constructor`](ProjectError.md#constructor)
 
 ## Properties
 
@@ -61,11 +61,11 @@ via `super`.
 
 > **\[$type\]**: `symbol`[]
 
-Defined in: [packages/common/src/error.ts:149](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/common/src/error.ts#L149)
+Defined in: [packages/common/src/error.ts:149](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/common/src/error.ts#L149)
 
 #### Overrides
 
-[`ProjectError`](ProjectError.md).[`[$type]`](ProjectError.md#$type)
+[`ProjectError`](ProjectError.md).[`[$type]`](ProjectError.md#type)
 
 ***
 
@@ -89,7 +89,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1077
 
 #### Inherited from
 
-[`ProjectError`](ProjectError.md).[`message`](ProjectError.md#message-1)
+[`ProjectError`](ProjectError.md).[`message`](ProjectError.md#message)
 
 ***
 

@@ -4,9 +4,9 @@
 
 [@-xun/project-fs](../../../../README.md) / [index](../../../README.md) / [JSONC](../README.md) / parse
 
-# Function: parse()
+# Variable: parse()
 
-> **parse**(`text`, `errors`?, `options`?): `any`
+> `const` **parse**: (`text`, `errors`?, `options`?) => `any`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:87
 

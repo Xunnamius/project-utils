@@ -4,9 +4,9 @@
 
 [@-xun/project-fs](../../../../README.md) / [index](../../../README.md) / [JSONC](../README.md) / stripComments
 
-# Function: stripComments()
+# Variable: stripComments()
 
-> **stripComments**(`text`, `replaceCh`?): `string`
+> `const` **stripComments**: (`text`, `replaceCh`?) => `string`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:117
 

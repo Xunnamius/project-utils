@@ -4,9 +4,9 @@
 
 [@-xun/project-fs](../../../../README.md) / [index](../../../README.md) / [JSONC](../README.md) / visit
 
-# Function: visit()
+# Variable: visit()
 
-> **visit**(`text`, `visitor`, `options`?): `any`
+> `const` **visit**: (`text`, `visitor`, `options`?) => `any`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:111
 

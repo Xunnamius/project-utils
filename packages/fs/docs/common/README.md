@@ -6,6 +6,6 @@
 
 # common
 
-## Functions
+## Variables
 
-- [commonDebug](functions/commonDebug.md)
+- [commonDebug](variables/commonDebug.md)

@@ -6,15 +6,21 @@
 
 # Type Alias: ReadXPackageJsonAtRootOptions
 
-> **ReadXPackageJsonAtRootOptions**: `object`
+> **ReadXPackageJsonAtRootOptions** = `object`
 
-Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:23](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/fs/src/system/read-xpackage-json-at-root.ts#L23)
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:23](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/read-xpackage-json-at-root.ts#L23)
 
-## Type declaration
+## See
+
+[readXPackageJsonAtRoot](../functions/readXPackageJsonAtRoot.md)
+
+## Properties
 
 ### try?
 
 > `optional` **try**: `boolean`
+
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:40](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/read-xpackage-json-at-root.ts#L40)
 
 If `true`, an attempt will be made to read in and parse the JSON file. If
 it fails (i.e. an error is thrown), `{}` is returned and no error is
@@ -28,15 +34,15 @@ Note that, currently, fail results (where `{}` is returned) are not cached.
 false
 ```
 
+***
+
 ### useCached
 
 > **useCached**: `boolean`
+
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:30](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/read-xpackage-json-at-root.ts#L30)
 
 Use the internal cached result from a previous run, if available.
 
 The caching behavior of this function is identical to that of
 [readJson](../../read-json/functions/readJson.md).
-
-## See
-
-[readXPackageJsonAtRoot](../functions/readXPackageJsonAtRoot.md)

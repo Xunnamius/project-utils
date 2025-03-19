@@ -6,15 +6,47 @@
 
 # Type Alias: ExtractExamplesFromDocumentOptions
 
-> **ExtractExamplesFromDocumentOptions**: `object`
+> **ExtractExamplesFromDocumentOptions** = `object`
 
-Defined in: [packages/fs/src/system/extract-examples-from-document.ts:19](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/fs/src/system/extract-examples-from-document.ts#L19)
+Defined in: [packages/fs/src/system/extract-examples-from-document.ts:21](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/extract-examples-from-document.ts#L21)
 
-## Type declaration
+## See
+
+[extractExamplesFromDocument](../functions/extractExamplesFromDocument.md)
+
+## Properties
+
+### asRegExp?
+
+> `optional` **asRegExp**: `boolean`
+
+Defined in: [packages/fs/src/system/extract-examples-from-document.ts:37](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/extract-examples-from-document.ts#L37)
+
+If `true`, the value returned by `extractExamplesFromDocument` will take
+the form `Map<string, RegExp>` where each example region is mapped to a
+regular expression representing that example. Newlines will be preserved
+(as `\n` characters), but multiple space characters will be collapsed and
+replaced with a single `\s+`. All other characters in the example text will
+be escaped using `RegExp.escape`.
+
+Returning a regular expression representing the example text instead of the
+text itself is useful when the real output contains a variable number of
+spaces, such as when examining CLI output that expands to fill the
+available terminal width.
+
+#### Default
+
+```ts
+false
+```
+
+***
 
 ### useCached
 
 > **useCached**: `boolean`
+
+Defined in: [packages/fs/src/system/extract-examples-from-document.ts:46](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/extract-examples-from-document.ts#L46)
 
 Use the internal cached result from a previous run, if available.
 
@@ -24,7 +56,3 @@ always strictly equal (`===`) each other with respect to call signature.
 #### See
 
 cache
-
-## See
-
-[extractExamplesFromDocument](../functions/extractExamplesFromDocument.md)

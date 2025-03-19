@@ -4,9 +4,9 @@
 
 [@-xun/project-fs](../../../../README.md) / [index](../../../README.md) / [JSONC](../README.md) / getNodeValue
 
-# Function: getNodeValue()
+# Variable: getNodeValue()
 
-> **getNodeValue**(`node`): `any`
+> `const` **getNodeValue**: (`node`) => `any`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:107
 

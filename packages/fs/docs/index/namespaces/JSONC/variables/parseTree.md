@@ -4,9 +4,9 @@
 
 [@-xun/project-fs](../../../../README.md) / [index](../../../README.md) / [JSONC](../README.md) / parseTree
 
-# Function: parseTree()
+# Variable: parseTree()
 
-> **parseTree**(`text`, `errors`?, `options`?): `undefined` \| [`Node`](../interfaces/Node.md)
+> `const` **parseTree**: (`text`, `errors`?, `options`?) => [`Node`](../interfaces/Node.md) \| `undefined`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:91
 
@@ -28,4 +28,4 @@ Parses the given text and returns a tree representation the JSON content. On inv
 
 ## Returns
 
-`undefined` \| [`Node`](../interfaces/Node.md)
+[`Node`](../interfaces/Node.md) \| `undefined`

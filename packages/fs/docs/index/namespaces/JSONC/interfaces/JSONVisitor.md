@@ -8,7 +8,7 @@
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:195
 
-Visitor called by [`visit`](../functions/visit.md) when parsing JSON.
+Visitor called by [`visit`](../variables/visit.md) when parsing JSON.
 
 The visitor functions have the following common parameters:
 - `offset`: Global offset within the JSON document, starting at 0

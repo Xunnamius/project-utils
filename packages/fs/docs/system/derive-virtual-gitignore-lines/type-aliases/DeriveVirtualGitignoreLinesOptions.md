@@ -6,15 +6,17 @@
 
 # Type Alias: DeriveVirtualGitignoreLinesOptions
 
-> **DeriveVirtualGitignoreLinesOptions**: `object`
+> **DeriveVirtualGitignoreLinesOptions** = `object`
 
-Defined in: [packages/fs/src/system/derive-virtual-gitignore-lines.ts:20](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/fs/src/system/derive-virtual-gitignore-lines.ts#L20)
+Defined in: [packages/fs/src/system/derive-virtual-gitignore-lines.ts:20](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/derive-virtual-gitignore-lines.ts#L20)
 
-## Type declaration
+## Properties
 
 ### includeUnknownPaths?
 
 > `optional` **includeUnknownPaths**: `boolean`
+
+Defined in: [packages/fs/src/system/derive-virtual-gitignore-lines.ts:35](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/derive-virtual-gitignore-lines.ts#L35)
 
 If `true`, include any paths unknown to git.
 
@@ -24,9 +26,13 @@ If `true`, include any paths unknown to git.
 false
 ```
 
+***
+
 ### useCached
 
 > **useCached**: `boolean`
+
+Defined in: [packages/fs/src/system/derive-virtual-gitignore-lines.ts:29](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/derive-virtual-gitignore-lines.ts#L29)
 
 Use the internal cached result from a previous run, if available.
 

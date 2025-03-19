@@ -6,15 +6,21 @@
 
 # Type Alias: ReadJsonOptions
 
-> **ReadJsonOptions**: `object`
+> **ReadJsonOptions** = `object`
 
-Defined in: [packages/fs/src/system/read-json.ts:21](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/fs/src/system/read-json.ts#L21)
+Defined in: [packages/fs/src/system/read-json.ts:21](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/read-json.ts#L21)
 
-## Type declaration
+## See
+
+[readJson](../functions/readJson.md)
+
+## Properties
 
 ### try?
 
 > `optional` **try**: `boolean`
+
+Defined in: [packages/fs/src/system/read-json.ts:40](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/read-json.ts#L40)
 
 If `true`, an attempt will be made to read in and parse the JSON file. If
 it fails (i.e. an error is thrown), `{}` is returned and no error is
@@ -28,9 +34,13 @@ Note that, currently, fail results (where `{}` is returned) are not cached.
 false
 ```
 
+***
+
 ### useCached
 
 > **useCached**: `boolean`
+
+Defined in: [packages/fs/src/system/read-json.ts:30](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/read-json.ts#L30)
 
 Use the internal cached result from a previous run, if available.
 
@@ -40,7 +50,3 @@ always strictly equal (`===`) each other with respect to call signature.
 #### See
 
 cache
-
-## See
-
-[readJson](../functions/readJson.md)

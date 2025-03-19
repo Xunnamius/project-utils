@@ -8,7 +8,7 @@
 
 > **sync**(`projectRoot`, `options`): `string`[]
 
-Defined in: [packages/fs/src/system/derive-virtual-prettierignore-lines.ts:160](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/fs/src/system/derive-virtual-prettierignore-lines.ts#L160)
+Defined in: [packages/fs/src/system/derive-virtual-prettierignore-lines.ts:160](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/derive-virtual-prettierignore-lines.ts#L160)
 
 Synchronously return an array of the lines of a `.prettierignore` file, or
 an empty array if an error occurs. The string '.git' is prepended to the
