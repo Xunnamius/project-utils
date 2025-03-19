@@ -2,8 +2,10 @@
 
 import { accessSync, readFileSync } from 'node:fs';
 import { access as accessAsync, readFile as readFileAsync } from 'node:fs/promises';
+import { pathToFileURL } from 'node:url';
 
 import { repositories } from '@-xun/common-dummies/repositories';
+import { toAbsolutePath } from '@-xun/fs';
 import { memoizer } from '@-xun/memoize';
 import { runNoRejectOnBadExit } from '@-xun/run';
 import { toss } from 'toss-expression';
@@ -11,6 +13,7 @@ import { toss } from 'toss-expression';
 import {
   deriveVirtualGitignoreLines,
   deriveVirtualPrettierignoreLines,
+  extractExamplesFromDocument,
   isAccessible,
   readJson,
   readJsonc,
@@ -32,6 +35,19 @@ const mockedReadFileAsync = asMocked(readFileAsync);
 const mockedAccessSync = asMocked(accessSync);
 const mockedAccessAsync = asMocked(accessAsync);
 const mockedRun = asMocked(runNoRejectOnBadExit);
+
+const actualReadFileSync =
+  jest.requireActual<typeof import('node:fs')>('node:fs').readFileSync;
+
+const exampleTextFixtures = {
+  backtick: actualReadFileSync(
+    require.resolve('./fixtures/backtick-examples.md'),
+    'utf8'
+  ),
+  invalid: actualReadFileSync(require.resolve('./fixtures/invalid-examples.md'), 'utf8'),
+  no: actualReadFileSync(require.resolve('./fixtures/no-examples.md'), 'utf8'),
+  precode: actualReadFileSync(require.resolve('./fixtures/precode-examples.md'), 'utf8')
+};
 
 afterEach(() => {
   memoizer.clearAll();
@@ -59,7 +75,7 @@ describe('::isAccessible', () => {
       ).toBeTrue();
 
       expect(
-        isAccessible.sync(`file://${repositories.goodPolyrepo.root}`, {
+        isAccessible.sync(pathToFileURL(repositories.goodPolyrepo.root).toString(), {
           useCached: true
         })
       ).toBeTrue();
@@ -133,7 +149,9 @@ describe('::isAccessible', () => {
       ).resolves.toBeTrue();
 
       await expect(
-        isAccessible(`file://${repositories.goodPolyrepo.root}`, { useCached: true })
+        isAccessible(pathToFileURL(repositories.goodPolyrepo.root).toString(), {
+          useCached: true
+        })
       ).resolves.toBeTrue();
     });
 
@@ -1194,6 +1212,215 @@ describe('::deriveVirtualGitignoreLines', () => {
           useCached: true
         })
       ).resolves.toBe(updatedResult);
+    });
+  });
+});
+
+describe('::extractExamplesFromDocument', () => {
+  describe('<synchronous>', () => {
+    it('returns 3, 4, and spaceless -backtick examples from document', () => {
+      expect.hasAssertions();
+
+      mockedReadFileSync.mockImplementation((path) => {
+        expect(path).toBe('fake.md');
+        return exampleTextFixtures.backtick;
+      });
+
+      expect(
+        extractExamplesFromDocument.sync('fake.md', { useCached: true })
+      ).toStrictEqual(
+        new Map([
+          ['1', "const myCodeExample1 = 'goes here';"],
+          ['2', "const myCodeExample2 = 'goes here';"],
+          ['3', ''],
+          ['4', ''],
+          ['5', ''],
+          ['6', ''],
+          ['7', "const myCodeExample7 = 'goes here';"]
+        ])
+      );
+    });
+
+    it('returns pre-code element examples from document regardless of spacing', () => {
+      expect.hasAssertions();
+
+      mockedReadFileSync.mockImplementation((path) => {
+        expect(path).toBe('fake.md');
+        return exampleTextFixtures.precode;
+      });
+
+      expect(
+        extractExamplesFromDocument.sync('fake.md', { useCached: true })
+      ).toStrictEqual(
+        new Map([
+          ['a', "const myCodeExampleA = 'goes here';"],
+          ['b', "const myCodeExampleB = 'goes here';"],
+          ['c', "const myCodeExampleC = 'goes here';"],
+          ['d', "const myCodeExampleD = 'goes here';"],
+          ['e', "const myCodeExampleE = 'goes here';"]
+        ])
+      );
+    });
+
+    it('returns no examples from a document that contains no examples', () => {
+      expect.hasAssertions();
+
+      mockedReadFileSync.mockImplementation((path) => {
+        expect(path).toBe('fake.md');
+        return exampleTextFixtures.no;
+      });
+
+      expect(
+        extractExamplesFromDocument.sync('fake.md', { useCached: true })
+      ).toStrictEqual(new Map([]));
+    });
+
+    it('returns no examples from a document that contains invalid example regions', () => {
+      expect.hasAssertions();
+
+      mockedReadFileSync.mockImplementation((path) => {
+        expect(path).toBe('fake.md');
+        return exampleTextFixtures.invalid;
+      });
+
+      expect(
+        extractExamplesFromDocument.sync('fake.md', { useCached: true })
+      ).toStrictEqual(new Map([]));
+    });
+
+    it('returns examples for a file URL string path', () => {
+      expect.hasAssertions();
+
+      mockedReadFileSync.mockImplementation(jest.requireActual('node:fs').readFileSync);
+
+      expect(
+        extractExamplesFromDocument.sync(
+          pathToFileURL(
+            toAbsolutePath(__dirname, './fixtures/backtick-examples.md')
+          ).toString(),
+          { useCached: true }
+        )
+      ).toStrictEqual(
+        new Map([
+          ['1', "const myCodeExample1 = 'goes here';"],
+          ['2', "const myCodeExample2 = 'goes here';"],
+          ['3', ''],
+          ['4', ''],
+          ['5', ''],
+          ['6', ''],
+          ['7', "const myCodeExample7 = 'goes here';"]
+        ])
+      );
+    });
+
+    it('returns result from internal cache if available unless useCached is false (new result is always added to internal cache)', () => {
+      expect.hasAssertions();
+
+      mockedReadFileSync.mockImplementation((path) => {
+        expect(path).toBe('fake.md');
+        return exampleTextFixtures.backtick;
+      });
+
+      const result = extractExamplesFromDocument.sync('fake.md', { useCached: true });
+
+      expect(extractExamplesFromDocument.sync('fake.md', { useCached: true })).toBe(
+        result
+      );
+
+      expect(extractExamplesFromDocument.sync('fake.md', { useCached: false })).not.toBe(
+        result
+      );
+    });
+  });
+
+  describe('<asynchronous>', () => {
+    it('returns 3, 4, and spaceless -backtick examples from document', async () => {
+      expect.hasAssertions();
+
+      mockedReadFileAsync.mockImplementation(async (path) => {
+        expect(path).toBe('fake.md');
+        return exampleTextFixtures.backtick;
+      });
+
+      await expect(
+        extractExamplesFromDocument('fake.md', { useCached: true })
+      ).resolves.toStrictEqual(
+        new Map([
+          ['1', "const myCodeExample1 = 'goes here';"],
+          ['2', "const myCodeExample2 = 'goes here';"],
+          ['3', ''],
+          ['4', ''],
+          ['5', ''],
+          ['6', ''],
+          ['7', "const myCodeExample7 = 'goes here';"]
+        ])
+      );
+    });
+
+    it('returns pre-code element examples from document regardless of spacing', async () => {
+      expect.hasAssertions();
+
+      mockedReadFileAsync.mockImplementation(async (path) => {
+        expect(path).toBe('fake.md');
+        return exampleTextFixtures.precode;
+      });
+
+      await expect(
+        extractExamplesFromDocument('fake.md', { useCached: true })
+      ).resolves.toStrictEqual(
+        new Map([
+          ['a', "const myCodeExampleA = 'goes here';"],
+          ['b', "const myCodeExampleB = 'goes here';"],
+          ['c', "const myCodeExampleC = 'goes here';"],
+          ['d', "const myCodeExampleD = 'goes here';"],
+          ['e', "const myCodeExampleE = 'goes here';"]
+        ])
+      );
+    });
+
+    it('returns no examples from a document that contains no examples', async () => {
+      expect.hasAssertions();
+
+      mockedReadFileAsync.mockImplementation(async (path) => {
+        expect(path).toBe('fake.md');
+        return exampleTextFixtures.no;
+      });
+
+      await expect(
+        extractExamplesFromDocument('fake.md', { useCached: true })
+      ).resolves.toStrictEqual(new Map([]));
+    });
+
+    it('returns no examples from a document that contains invalid example regions', async () => {
+      expect.hasAssertions();
+
+      mockedReadFileAsync.mockImplementation(async (path) => {
+        expect(path).toBe('fake.md');
+        return exampleTextFixtures.invalid;
+      });
+
+      await expect(
+        extractExamplesFromDocument('fake.md', { useCached: true })
+      ).resolves.toStrictEqual(new Map([]));
+    });
+
+    it('returns result from internal cache if available unless useCached is false (new result is always added to internal cache)', async () => {
+      expect.hasAssertions();
+
+      mockedReadFileAsync.mockImplementation(async (path) => {
+        expect(path).toBe('fake.md');
+        return exampleTextFixtures.backtick;
+      });
+
+      const result = await extractExamplesFromDocument('fake.md', { useCached: true });
+
+      await expect(
+        extractExamplesFromDocument('fake.md', { useCached: true })
+      ).resolves.toBe(result);
+
+      await expect(
+        extractExamplesFromDocument('fake.md', { useCached: false })
+      ).resolves.not.toBe(result);
     });
   });
 });
