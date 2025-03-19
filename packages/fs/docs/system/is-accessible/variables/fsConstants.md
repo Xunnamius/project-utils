@@ -8,7 +8,7 @@
 
 > `const` **fsConstants**: *typeof* `constants` = `fsConstants_`
 
-Defined in: [packages/fs/src/system/is-accessible.ts:13](https://github.com/Xunnamius/projector/blob/f4ac1fc5dfe0c775c2a6a91230908c438ca26815/packages/fs/src/system/is-accessible.ts#L13)
+Defined in: [packages/fs/src/system/is-accessible.ts:13](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/fs/src/system/is-accessible.ts#L13)
 
 ## See
 

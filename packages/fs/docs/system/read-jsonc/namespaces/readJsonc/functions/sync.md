@@ -10,7 +10,7 @@
 
 > **sync**\<`T`\>(`path`, `options`): `T`
 
-Defined in: [packages/fs/src/system/read-jsonc.ts:215](https://github.com/Xunnamius/projector/blob/f4ac1fc5dfe0c775c2a6a91230908c438ca26815/packages/fs/src/system/read-jsonc.ts#L215)
+Defined in: [packages/fs/src/system/read-jsonc.ts:215](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/fs/src/system/read-jsonc.ts#L215)
 
 Synchronously read in and parse the contents of an arbitrary JSONC file.
 
@@ -45,7 +45,7 @@ cache.clear.
 
 > **sync**\<`T`\>(`path`, `options`): `EmptyObject` \| `T`
 
-Defined in: [packages/fs/src/system/read-jsonc.ts:215](https://github.com/Xunnamius/projector/blob/f4ac1fc5dfe0c775c2a6a91230908c438ca26815/packages/fs/src/system/read-jsonc.ts#L215)
+Defined in: [packages/fs/src/system/read-jsonc.ts:215](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/fs/src/system/read-jsonc.ts#L215)
 
 Synchronously read in and parse the contents of an arbitrary JSONC file.
 

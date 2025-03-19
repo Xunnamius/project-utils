@@ -36,6 +36,18 @@ Re-exports [DeriveVirtualPrettierignoreLinesOptions](../system/derive-virtual-pr
 
 ***
 
+### extractExamplesFromDocument
+
+Re-exports [extractExamplesFromDocument](../system/extract-examples-from-document/functions/extractExamplesFromDocument.md)
+
+***
+
+### ExtractExamplesFromDocumentOptions
+
+Re-exports [ExtractExamplesFromDocumentOptions](../system/extract-examples-from-document/type-aliases/ExtractExamplesFromDocumentOptions.md)
+
+***
+
 ### fsConstants
 
 Re-exports [fsConstants](../system/is-accessible/variables/fsConstants.md)

@@ -8,7 +8,7 @@
 
 > **sync**(`projectRoot`, `options`): `string`[]
 
-Defined in: [packages/fs/src/system/derive-virtual-gitignore-lines.ts:159](https://github.com/Xunnamius/projector/blob/f4ac1fc5dfe0c775c2a6a91230908c438ca26815/packages/fs/src/system/derive-virtual-gitignore-lines.ts#L159)
+Defined in: [packages/fs/src/system/derive-virtual-gitignore-lines.ts:159](https://github.com/Xunnamius/projector/blob/124f6e6b6e700d669a6e7832c4ad15585be7dc80/packages/fs/src/system/derive-virtual-gitignore-lines.ts#L159)
 
 Synchronously return an array of the lines of a `.gitignore` file, or an
 empty array if an error occurs. The string '.git' is prepended to the
