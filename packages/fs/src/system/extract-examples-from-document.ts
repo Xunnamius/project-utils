@@ -5,7 +5,9 @@ import { fileURLToPath } from 'node:url';
 import { memoizer } from '@-xun/memoize';
 
 import type { Promisable } from 'type-fest';
-import type { ParametersNoFirst, SyncVersionOf } from 'multiverse+common:types.ts';
+import type { ParametersNoFirst } from 'multiverse+common:types.ts';
+
+const multiSpaceRegExp = /\s{2,}/g;
 
 /**
  * Matches an example region comment and its corresponding region itself.
@@ -17,6 +19,22 @@ const exampleRegionIdMatcherRegExp =
  * @see {@link extractExamplesFromDocument}
  */
 export type ExtractExamplesFromDocumentOptions = {
+  /**
+   * If `true`, the value returned by `extractExamplesFromDocument` will take
+   * the form `Map<string, RegExp>` where each example region is mapped to a
+   * regular expression representing that example. Newlines will be preserved
+   * (as `\n` characters), but multiple space characters will be collapsed and
+   * replaced with a single `\s+`. All other characters in the example text will
+   * be escaped using `RegExp.escape`.
+   *
+   * Returning a regular expression representing the example text instead of the
+   * text itself is useful when the real output contains a variable number of
+   * spaces, such as when examining CLI output that expands to fill the
+   * available terminal width.
+   *
+   * @default false
+   */
+  asRegExp?: boolean;
   /**
    * Use the internal cached result from a previous run, if available.
    *
@@ -32,17 +50,19 @@ function extractExamplesFromDocument_(
   shouldRunSynchronously: false,
   path: string,
   options: ExtractExamplesFromDocumentOptions
-): Promise<Map<string, string>>;
+): Promise<Map<string, string | RegExp>>;
 function extractExamplesFromDocument_(
   shouldRunSynchronously: true,
   path: string,
   options: ExtractExamplesFromDocumentOptions
-): Map<string, string>;
+): Map<string, string | RegExp>;
 function extractExamplesFromDocument_(
   shouldRunSynchronously: boolean,
   path: string,
   { useCached, ...cacheIdComponentsObject }: ExtractExamplesFromDocumentOptions
-): Promisable<Map<string, string>> {
+): Promisable<Map<string, string | RegExp>> {
+  const { asRegExp = false } = cacheIdComponentsObject;
+
   type Memoization = (
     ...args: [typeof path, typeof cacheIdComponentsObject]
   ) => ReturnType<typeof extractExamplesFromDocument_>;
@@ -69,14 +89,14 @@ function extractExamplesFromDocument_(
       );
 
   function extractExampleRegions(text: string) {
-    const regions = new Map<string, string>(
+    const regions = new Map<string, string | RegExp>(
       text
         .matchAll(exampleRegionIdMatcherRegExp)
         .map(([, regionId, regionContents1, regionContents2]) => [
           // ? RegExp should make it impossible to be an empty string/undefined
           regionId!,
           // ? RegExp should make it impossible to be undefined
-          regionContents1 ?? regionContents2!
+          maybeTransformToRegExp(regionContents1 ?? regionContents2!)
         ])
     );
 
@@ -87,6 +107,22 @@ function extractExamplesFromDocument_(
     );
 
     return regions;
+  }
+
+  function maybeTransformToRegExp(text: string) {
+    if (asRegExp) {
+      const splitByNewlines = text.split('\n').map((line) =>
+        line
+          .split(multiSpaceRegExp)
+          // @ts-expect-error: remove this comment when type libs are updated
+          .map((substr) => RegExp.escape(substr))
+          .join(String.raw`\s+`)
+      );
+
+      return new RegExp(`^${splitByNewlines.join(String.raw`\n`)}$`);
+    } else {
+      return text;
+    }
   }
 }
 
@@ -120,6 +156,14 @@ function extractExamplesFromDocument_(
  * function's options for details.** To fetch fresh results, set the `useCached`
  * option to `false` or clear the internal cache with {@link cache.clear}.
  */
+export function extractExamplesFromDocument(
+  path: string,
+  options: ExtractExamplesFromDocumentOptions & { asRegExp?: false }
+): Promise<Map<string, string>>;
+export function extractExamplesFromDocument(
+  path: string,
+  options: ExtractExamplesFromDocumentOptions
+): Promise<Map<string, RegExp>>;
 export function extractExamplesFromDocument(
   ...args: ParametersNoFirst<typeof extractExamplesFromDocument_>
 ) {
@@ -161,7 +205,19 @@ export namespace extractExamplesFromDocument {
    * set the `useCached` option to `false` or clear the internal cache with
    * {@link cache.clear}.
    */
-  export const sync = function (...args) {
+  function extractExamplesFromDocumentSync(
+    path: string,
+    options: ExtractExamplesFromDocumentOptions & { asRegExp?: false }
+  ): Map<string, string>;
+  function extractExamplesFromDocumentSync(
+    path: string,
+    options: ExtractExamplesFromDocumentOptions
+  ): Map<string, RegExp>;
+  function extractExamplesFromDocumentSync(
+    ...args: ParametersNoFirst<typeof extractExamplesFromDocument_>
+  ) {
     return extractExamplesFromDocument_(true, ...args);
-  } as SyncVersionOf<typeof extractExamplesFromDocument>;
+  }
+
+  export const sync = extractExamplesFromDocumentSync;
 }

@@ -45,9 +45,17 @@ const exampleTextFixtures = {
     'utf8'
   ),
   invalid: actualReadFileSync(require.resolve('./fixtures/invalid-examples.md'), 'utf8'),
+  multispace: actualReadFileSync(
+    require.resolve('./fixtures/multispace-examples.md'),
+    'utf8'
+  ),
   no: actualReadFileSync(require.resolve('./fixtures/no-examples.md'), 'utf8'),
   precode: actualReadFileSync(require.resolve('./fixtures/precode-examples.md'), 'utf8')
 };
+
+function expandMultiSpaces(text: string) {
+  return text.replaceAll(/( {2,})/g, '  $1  ');
+}
 
 afterEach(() => {
   memoizer.clearAll();
@@ -1313,6 +1321,30 @@ describe('::extractExamplesFromDocument', () => {
       );
     });
 
+    it('returns variable-space-matching regular expressions with respect to asRegExp', () => {
+      expect.hasAssertions();
+
+      mockedReadFileSync.mockImplementation((path) => {
+        expect(path).toBe('fake.md');
+        return exampleTextFixtures.multispace;
+      });
+
+      const result = extractExamplesFromDocument.sync('fake.md', { useCached: true });
+      const resultRegExp = extractExamplesFromDocument.sync('fake.md', {
+        useCached: true,
+        asRegExp: true
+      });
+
+      expect(result.size).toBe(resultRegExp.size);
+
+      expect(expandMultiSpaces(result.get('1')!)).toMatch(resultRegExp.get('1')!);
+      expect(expandMultiSpaces(result.get('2')!)).toMatch(resultRegExp.get('2')!);
+      expect(expandMultiSpaces(result.get('3')!)).toMatch(resultRegExp.get('3')!);
+      expect(expandMultiSpaces(result.get('4')!)).toMatch(resultRegExp.get('4')!);
+      expect(expandMultiSpaces(result.get('5')!)).toMatch(resultRegExp.get('5')!);
+      expect(expandMultiSpaces(result.get('6')!)).toMatch(resultRegExp.get('6')!);
+    });
+
     it('returns result from internal cache if available unless useCached is false (new result is always added to internal cache)', () => {
       expect.hasAssertions();
 
@@ -1389,6 +1421,30 @@ describe('::extractExamplesFromDocument', () => {
       await expect(
         extractExamplesFromDocument('fake.md', { useCached: true })
       ).resolves.toStrictEqual(new Map([]));
+    });
+
+    it('returns variable-space-matching regular expressions with respect to asRegExp', async () => {
+      expect.hasAssertions();
+
+      mockedReadFileAsync.mockImplementation(async (path) => {
+        expect(path).toBe('fake.md');
+        return exampleTextFixtures.multispace;
+      });
+
+      const result = await extractExamplesFromDocument('fake.md', { useCached: true });
+      const resultRegExp = await extractExamplesFromDocument('fake.md', {
+        useCached: true,
+        asRegExp: true
+      });
+
+      expect(result.size).toBe(resultRegExp.size);
+
+      expect(expandMultiSpaces(result.get('1')!)).toMatch(resultRegExp.get('1')!);
+      expect(expandMultiSpaces(result.get('2')!)).toMatch(resultRegExp.get('2')!);
+      expect(expandMultiSpaces(result.get('3')!)).toMatch(resultRegExp.get('3')!);
+      expect(expandMultiSpaces(result.get('4')!)).toMatch(resultRegExp.get('4')!);
+      expect(expandMultiSpaces(result.get('5')!)).toMatch(resultRegExp.get('5')!);
+      expect(expandMultiSpaces(result.get('6')!)).toMatch(resultRegExp.get('6')!);
     });
 
     it('returns no examples from a document that contains invalid example regions', async () => {
