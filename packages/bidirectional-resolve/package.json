@@ -1,6 +1,6 @@
 {
   "name": "bidirectional-resolve",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Resolve a package entry point to a file path (like require.resolve/import.meta.resolve) OR a file path to a package entry point",
   "keywords": [
     "inverse",
