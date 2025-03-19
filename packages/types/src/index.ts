@@ -468,7 +468,7 @@ export type XPackageJsonScripts = {
    * run the tests of any package that this package depends on (including
    * transitive dependencies).
    *
-   * @example `symbiote test --scope this-package --tests end-to-end`
+   * @example `symbiote test --scope this-package --tests e2e-local`
    */
   'test:package:e2e'?: string;
   /**
