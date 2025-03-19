@@ -32,19 +32,22 @@
 - [NodeType](type-aliases/NodeType.md)
 - [Segment](type-aliases/Segment.md)
 
+## Variables
+
+- [createScanner](variables/createScanner.md)
+- [findNodeAtLocation](variables/findNodeAtLocation.md)
+- [findNodeAtOffset](variables/findNodeAtOffset.md)
+- [getLocation](variables/getLocation.md)
+- [getNodePath](variables/getNodePath.md)
+- [getNodeValue](variables/getNodeValue.md)
+- [parse](variables/parse.md)
+- [parseTree](variables/parseTree.md)
+- [stripComments](variables/stripComments.md)
+- [visit](variables/visit.md)
+
 ## Functions
 
 - [applyEdits](functions/applyEdits.md)
-- [createScanner](functions/createScanner.md)
-- [findNodeAtLocation](functions/findNodeAtLocation.md)
-- [findNodeAtOffset](functions/findNodeAtOffset.md)
 - [format](functions/format.md)
-- [getLocation](functions/getLocation.md)
-- [getNodePath](functions/getNodePath.md)
-- [getNodeValue](functions/getNodeValue.md)
 - [modify](functions/modify.md)
-- [parse](functions/parse.md)
-- [parseTree](functions/parseTree.md)
 - [printParseErrorCode](functions/printParseErrorCode.md)
-- [stripComments](functions/stripComments.md)
-- [visit](functions/visit.md)

@@ -6,15 +6,17 @@
 
 # Type Alias: DeriveVirtualGitignoreLinesOptions
 
-> **DeriveVirtualGitignoreLinesOptions**: `object`
+> **DeriveVirtualGitignoreLinesOptions** = `object`
 
 Defined in: packages/fs/dist/packages/fs/src/system/derive-virtual-gitignore-lines.d.ts:3
 
-## Type declaration
+## Properties
 
 ### includeUnknownPaths?
 
 > `optional` **includeUnknownPaths**: `boolean`
+
+Defined in: packages/fs/dist/packages/fs/src/system/derive-virtual-gitignore-lines.d.ts:18
 
 If `true`, include any paths unknown to git.
 
@@ -24,9 +26,13 @@ If `true`, include any paths unknown to git.
 false
 ```
 
+***
+
 ### useCached
 
 > **useCached**: `boolean`
+
+Defined in: packages/fs/dist/packages/fs/src/system/derive-virtual-gitignore-lines.d.ts:12
 
 Use the internal cached result from a previous run, if available.
 

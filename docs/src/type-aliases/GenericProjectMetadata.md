@@ -6,7 +6,7 @@
 
 # Type Alias: GenericProjectMetadata
 
-> **GenericProjectMetadata**: [`ProjectMetadata`](ProjectMetadata.md)\<[`GenericPackageJson`](GenericPackageJson.md)\>
+> **GenericProjectMetadata** = [`ProjectMetadata`](ProjectMetadata.md)\<[`GenericPackageJson`](GenericPackageJson.md)\>
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:524
 

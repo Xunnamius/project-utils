@@ -6,7 +6,7 @@
 
 # Type Alias: EditResult
 
-> **EditResult**: [`Edit`](../interfaces/Edit.md)[]
+> **EditResult** = [`Edit`](../interfaces/Edit.md)[]
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:247
 

@@ -6,7 +6,7 @@
 
 # Type Alias: GatherProjectFilesOptions
 
-> **GatherProjectFilesOptions**: `object` & \{ `skipPrettierIgnored`: `false`; `skipUnknown`: `false`; \} \| \{ `skipPrettierIgnored`: `true`; `skipUnknown`: `boolean`; \}
+> **GatherProjectFilesOptions** = `object` & \{ `skipPrettierIgnored`: `false`; `skipUnknown`: `false`; \} \| \{ `skipPrettierIgnored`: `true`; `skipUnknown`: `boolean`; \}
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/gather-project-files.d.ts:7
 

@@ -6,7 +6,7 @@
 
 # Type Alias: XPackageJsonSubRoot
 
-> **XPackageJsonSubRoot**: `Omit`\<[`XPackageJson`](XPackageJson.md), `"workspaces"` \| `"devDependencies"`\>
+> **XPackageJsonSubRoot** = `Omit`\<[`XPackageJson`](XPackageJson.md), `"workspaces"` \| `"devDependencies"`\>
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:514
 

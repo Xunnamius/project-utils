@@ -6,7 +6,7 @@
 
 # Type Alias: XPackageJsonMonorepoRoot
 
-> **XPackageJsonMonorepoRoot**: `Omit`\<[`XPackageJson`](XPackageJson.md), `"dependencies"`\> & `NonNullable`\<`Pick`\<[`XPackageJson`](XPackageJson.md), `"workspaces"`\>\>
+> **XPackageJsonMonorepoRoot** = `Omit`\<[`XPackageJson`](XPackageJson.md), `"dependencies"`\> & `NonNullable`\<`Pick`\<[`XPackageJson`](XPackageJson.md), `"workspaces"`\>\>
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:505
 

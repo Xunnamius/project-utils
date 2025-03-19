@@ -6,7 +6,7 @@
 
 # Type Alias: Segment
 
-> **Segment**: `string` \| `number`
+> **Segment** = `string` \| `number`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:156
 

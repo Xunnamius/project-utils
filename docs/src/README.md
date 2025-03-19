@@ -11,6 +11,7 @@
 - [analyzeProjectStructure](namespaces/analyzeProjectStructure/README.md)
 - [deriveVirtualGitignoreLines](namespaces/deriveVirtualGitignoreLines/README.md)
 - [deriveVirtualPrettierignoreLines](namespaces/deriveVirtualPrettierignoreLines/README.md)
+- [extractExamplesFromDocument](namespaces/extractExamplesFromDocument/README.md)
 - [gatherImportEntriesFromFiles](namespaces/gatherImportEntriesFromFiles/README.md)
 - [gatherPackageBuildTargets](namespaces/gatherPackageBuildTargets/README.md)
 - [gatherPackageFiles](namespaces/gatherPackageFiles/README.md)
@@ -35,6 +36,7 @@
 - [AnalyzeProjectStructureOptions](type-aliases/AnalyzeProjectStructureOptions.md)
 - [DeriveVirtualGitignoreLinesOptions](type-aliases/DeriveVirtualGitignoreLinesOptions.md)
 - [DeriveVirtualPrettierignoreLinesOptions](type-aliases/DeriveVirtualPrettierignoreLinesOptions.md)
+- [ExtractExamplesFromDocumentOptions](type-aliases/ExtractExamplesFromDocumentOptions.md)
 - [GatherImportEntriesFromFilesOptions](type-aliases/GatherImportEntriesFromFilesOptions.md)
 - [GatherPackageBuildTargetsOptions](type-aliases/GatherPackageBuildTargetsOptions.md)
 - [GatherPackageFilesOptions](type-aliases/GatherPackageFilesOptions.md)
@@ -142,10 +144,10 @@
 - [spellcheckIgnoreConfigProjectBase](variables/spellcheckIgnoreConfigProjectBase.md)
 - [tailwindConfigProjectBase](variables/tailwindConfigProjectBase.md)
 - [tstycheConfigProjectBase](variables/tstycheConfigProjectBase.md)
-- [uriSchemeDelimiter](variables/uriSchemeDelimiter.md)
 - [uriSchemeDelimiterEscaped](variables/uriSchemeDelimiterEscaped.md)
-- [uriSchemeSubDelimiter](variables/uriSchemeSubDelimiter.md)
+- [uriSchemeDelimiterUnescaped](variables/uriSchemeDelimiterUnescaped.md)
 - [uriSchemeSubDelimiterEscaped](variables/uriSchemeSubDelimiterEscaped.md)
+- [uriSchemeSubDelimiterUnescaped](variables/uriSchemeSubDelimiterUnescaped.md)
 - [vercelConfigProjectBase](variables/vercelConfigProjectBase.md)
 - [webpackConfigProjectBase](variables/webpackConfigProjectBase.md)
 - [xchangelogConfigProjectBase](variables/xchangelogConfigProjectBase.md)
@@ -163,6 +165,7 @@
 - [deriveVirtualGitignoreLines](functions/deriveVirtualGitignoreLines.md)
 - [deriveVirtualPrettierignoreLines](functions/deriveVirtualPrettierignoreLines.md)
 - [ensureRawSpecifierOk](functions/ensureRawSpecifierOk.md)
+- [extractExamplesFromDocument](functions/extractExamplesFromDocument.md)
 - [gatherImportEntriesFromFiles](functions/gatherImportEntriesFromFiles.md)
 - [gatherPackageBuildTargets](functions/gatherPackageBuildTargets.md)
 - [gatherPackageFiles](functions/gatherPackageFiles.md)
@@ -193,12 +196,12 @@
 
 ## References
 
-### uriSchemeDelimiterUnescaped
+### uriSchemeDelimiter
 
-Renames and re-exports [uriSchemeDelimiter](variables/uriSchemeDelimiter.md)
+Renames and re-exports [uriSchemeDelimiterUnescaped](variables/uriSchemeDelimiterUnescaped.md)
 
 ***
 
-### uriSchemeSubDelimiterUnescaped
+### uriSchemeSubDelimiter
 
-Renames and re-exports [uriSchemeSubDelimiter](variables/uriSchemeSubDelimiter.md)
+Renames and re-exports [uriSchemeSubDelimiterUnescaped](variables/uriSchemeSubDelimiterUnescaped.md)

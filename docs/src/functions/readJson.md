@@ -24,7 +24,9 @@ option to `false` or clear the internal cache with cache.clear.
 
 ### Type Parameters
 
-• **T** = `JsonValue`
+#### T
+
+`T` = `JsonValue`
 
 ### Parameters
 
@@ -58,7 +60,9 @@ option to `false` or clear the internal cache with cache.clear.
 
 ### Type Parameters
 
-• **T** = `JsonValue`
+#### T
+
+`T` = `JsonValue`
 
 ### Parameters
 

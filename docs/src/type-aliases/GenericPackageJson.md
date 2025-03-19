@@ -6,7 +6,7 @@
 
 # Type Alias: GenericPackageJson
 
-> **GenericPackageJson**: `PackageJson` \| [`XPackageJson`](XPackageJson.md)
+> **GenericPackageJson** = `PackageJson` \| [`XPackageJson`](XPackageJson.md)
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:519
 

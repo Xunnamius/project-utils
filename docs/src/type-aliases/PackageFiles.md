@@ -6,7 +6,7 @@
 
 # Type Alias: PackageFiles
 
-> **PackageFiles**: `object`
+> **PackageFiles** = `object`
 
 Defined in: packages/graph/dist/packages/graph/src/common.d.ts:202
 
@@ -18,20 +18,26 @@ automatically ignored by this function.
 
 The collection is organized by location and utility.
 
-## Type declaration
+## Properties
 
 ### dist
 
 > **dist**: `AbsolutePath`[]
+
+Defined in: packages/graph/dist/packages/graph/src/common.d.ts:209
 
 Every file under the package's `./dist` directory.
 
 Files not owned by the package (such as those belonging to other packages
 in a monorepo) will never be returned.
 
+***
+
 ### docs
 
 > **docs**: `AbsolutePath`[]
+
+Defined in: packages/graph/dist/packages/graph/src/common.d.ts:217
 
 Every file under the package's `./docs` directory that is not ignored by
 Git.
@@ -39,30 +45,42 @@ Git.
 Files not owned by the package (such as those belonging to other packages
 in a monorepo) will never be returned.
 
+***
+
 ### other
 
 > **other**: `AbsolutePath`[]
 
+Defined in: packages/graph/dist/packages/graph/src/common.d.ts:242
+
 Every file under the package's root directory that is not ignored by Git
-nor contained in any other [PackageFiles](PackageFiles.md) property.
+nor contained in any other PackageFiles property.
 
 Files not owned by the package (such as those belonging to other packages
 in a monorepo) will never be returned.
+
+***
 
 ### src
 
 > **src**: `AbsolutePath`[]
 
+Defined in: packages/graph/dist/packages/graph/src/common.d.ts:226
+
 Every file under the package's `./src` directory that is not ignored by
 Git. Does not include files under `./types` (those are in
-[PackageFiles.other](PackageFiles.md#other)).
+[PackageFiles.other](#other)).
 
 Files not owned by the package (such as those belonging to other packages
 in a monorepo) will never be returned.
 
+***
+
 ### test
 
 > **test**: `AbsolutePath`[]
+
+Defined in: packages/graph/dist/packages/graph/src/common.d.ts:234
 
 Every file under the package's `./test` directory that is not ignored by
 Git.

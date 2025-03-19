@@ -6,7 +6,7 @@
 
 # Type Alias: XPackageJson\<Scripts\>
 
-> **XPackageJson**\<`Scripts`\>: `Omit`\<`OmitIndexSignature`\<`PackageJson`\>, `"bin"` \| `"name"`\> & `object`
+> **XPackageJson**\<`Scripts`\> = `Omit`\<`OmitIndexSignature`\<`PackageJson`\>, `"bin"` \| `"name"`\> & `object`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:493
 
@@ -30,4 +30,6 @@ exist.
 
 ## Type Parameters
 
-• **Scripts** *extends* `Partial`\<`Record`\<`string`, `string`\>\> = [`XPackageJsonScripts`](XPackageJsonScripts.md)
+### Scripts
+
+`Scripts` *extends* `Partial`\<`Record`\<`string`, `string`\>\> = [`XPackageJsonScripts`](XPackageJsonScripts.md)

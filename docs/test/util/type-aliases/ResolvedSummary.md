@@ -6,22 +6,32 @@
 
 # Type Alias: ResolvedSummary
 
-> **ResolvedSummary**: `object`
+> **ResolvedSummary** = `object`
 
-Defined in: [test/util.ts:24](https://github.com/Xunnamius/projector/blob/b4407b9dec88e62f1f2f2b3dd1bd93f181cb7d24/test/util.ts#L24)
+Defined in: [test/util.ts:24](https://github.com/Xunnamius/projector/blob/a04d9b108194223cb498fc3df18f9fe3f4abe241/test/util.ts#L24)
 
 Represents the summary of an import resolution attempt.
 
-## Type declaration
+## Properties
 
 ### isExportedTypescriptType
 
 > **isExportedTypescriptType**: `boolean`
 
+Defined in: [test/util.ts:27](https://github.com/Xunnamius/projector/blob/a04d9b108194223cb498fc3df18f9fe3f4abe241/test/util.ts#L27)
+
+***
+
 ### resolvedTarget
 
 > **resolvedTarget**: `string` \| `null`
 
+Defined in: [test/util.ts:25](https://github.com/Xunnamius/projector/blob/a04d9b108194223cb498fc3df18f9fe3f4abe241/test/util.ts#L25)
+
+***
+
 ### resolverSubpath
 
 > **resolverSubpath**: `string`
+
+Defined in: [test/util.ts:26](https://github.com/Xunnamius/projector/blob/a04d9b108194223cb498fc3df18f9fe3f4abe241/test/util.ts#L26)

@@ -6,7 +6,7 @@
 
 # Type Alias: WorkspacePackageId
 
-> **WorkspacePackageId**: `string`
+> **WorkspacePackageId** = `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:11
 

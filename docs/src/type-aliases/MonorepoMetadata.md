@@ -6,7 +6,7 @@
 
 # Type Alias: MonorepoMetadata\<Json\>
 
-> **MonorepoMetadata**\<`Json`\>: [`ProjectMetadata`](ProjectMetadata.md)\<`Json`\> & `object`
+> **MonorepoMetadata**\<`Json`\> = [`ProjectMetadata`](ProjectMetadata.md)\<`Json`\> & `object`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:257
 
@@ -24,7 +24,9 @@ A collection of useful information about a monorepo.
 
 ## Type Parameters
 
-• **Json** *extends* `PackageJson` \| [`XPackageJson`](XPackageJson.md) = [`XPackageJson`](XPackageJson.md)
+### Json
+
+`Json` *extends* `PackageJson` \| [`XPackageJson`](XPackageJson.md) = [`XPackageJson`](XPackageJson.md)
 
 ## See
 

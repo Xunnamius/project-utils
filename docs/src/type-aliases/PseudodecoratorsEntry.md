@@ -6,7 +6,7 @@
 
 # Type Alias: PseudodecoratorsEntry
 
-> **PseudodecoratorsEntry**: \[`AbsolutePath`, [`Pseudodecorator`](Pseudodecorator.md)[]\]
+> **PseudodecoratorsEntry** = \[`AbsolutePath`, [`Pseudodecorator`](Pseudodecorator.md)[]\]
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.d.ts:115
 

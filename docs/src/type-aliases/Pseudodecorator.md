@@ -6,7 +6,7 @@
 
 # Type Alias: Pseudodecorator
 
-> **Pseudodecorator**: `object`
+> **Pseudodecorator** = `object`
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.d.ts:105
 
@@ -85,16 +85,22 @@ More text.
 docs](https://github.com/Xunnamius/symbiote/wiki/Generic-Project-Architecture)
 for more details.
 
-## Type declaration
+## See
+
+[PseudodecoratorTag](../enumerations/PseudodecoratorTag.md)
+
+## Properties
 
 ### items
 
 > **items**: `string`[]
 
+Defined in: packages/graph/dist/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.d.ts:107
+
+***
+
 ### tag
 
 > **tag**: [`PseudodecoratorTag`](../enumerations/PseudodecoratorTag.md)
 
-## See
-
-[PseudodecoratorTag](../enumerations/PseudodecoratorTag.md)
+Defined in: packages/graph/dist/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.d.ts:106

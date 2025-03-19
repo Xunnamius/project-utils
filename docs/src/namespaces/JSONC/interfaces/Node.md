@@ -12,7 +12,7 @@ Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:143
 
 ### children?
 
-> `readonly` `optional` **children**: [`Node`](Node.md)[]
+> `readonly` `optional` **children**: `Node`[]
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:150
 
@@ -44,7 +44,7 @@ Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:146
 
 ### parent?
 
-> `readonly` `optional` **parent**: [`Node`](Node.md)
+> `readonly` `optional` **parent**: `Node`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:149
 

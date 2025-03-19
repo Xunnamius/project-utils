@@ -6,7 +6,7 @@
 
 # Type Alias: MetadataImportsPrefix
 
-> **MetadataImportsPrefix**: *typeof* [`prefixAssetImport`](../variables/prefixAssetImport.md) \| *typeof* [`prefixInternalImport`](../variables/prefixInternalImport.md) \| *typeof* [`prefixExternalImport`](../variables/prefixExternalImport.md) \| *typeof* [`prefixNormalImport`](../variables/prefixNormalImport.md) \| *typeof* [`prefixTypeOnlyImport`](../variables/prefixTypeOnlyImport.md)
+> **MetadataImportsPrefix** = *typeof* [`prefixAssetImport`](../variables/prefixAssetImport.md) \| *typeof* [`prefixInternalImport`](../variables/prefixInternalImport.md) \| *typeof* [`prefixExternalImport`](../variables/prefixExternalImport.md) \| *typeof* [`prefixNormalImport`](../variables/prefixNormalImport.md) \| *typeof* [`prefixTypeOnlyImport`](../variables/prefixTypeOnlyImport.md)
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/gather-package-build-targets.d.ts:28
 

@@ -6,7 +6,7 @@
 
 # Type Alias: RawAliasMapping
 
-> **RawAliasMapping**: \[[`RawAlias`](RawAlias.md), [`RawPath`](RawPath.md)\]
+> **RawAliasMapping** = \[[`RawAlias`](RawAlias.md), [`RawPath`](RawPath.md)\]
 
 Defined in: packages/graph/dist/packages/graph/src/alias.d.ts:174
 

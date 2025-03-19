@@ -6,7 +6,7 @@
 
 # Type Alias: GatherImportEntriesFromFilesOptions
 
-> **GatherImportEntriesFromFilesOptions**: `AccumulatorOptions` & `object`
+> **GatherImportEntriesFromFilesOptions** = `AccumulatorOptions` & `object`
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/gather-import-entries-from-files.d.ts:23
 

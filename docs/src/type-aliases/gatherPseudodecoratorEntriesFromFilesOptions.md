@@ -6,15 +6,21 @@
 
 # Type Alias: gatherPseudodecoratorEntriesFromFilesOptions
 
-> **gatherPseudodecoratorEntriesFromFilesOptions**: `object`
+> **gatherPseudodecoratorEntriesFromFilesOptions** = `object`
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.d.ts:123
 
-## Type declaration
+## See
+
+[gatherPseudodecoratorEntriesFromFiles](../functions/gatherPseudodecoratorEntriesFromFiles.md)
+
+## Properties
 
 ### useCached
 
 > **useCached**: `boolean`
+
+Defined in: packages/graph/dist/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.d.ts:134
 
 Use the internal cached result from a previous run, if available.
 
@@ -26,7 +32,3 @@ results _will_ strictly equal each other, respectively.
 #### See
 
 cache
-
-## See
-
-[gatherPseudodecoratorEntriesFromFiles](../functions/gatherPseudodecoratorEntriesFromFiles.md)

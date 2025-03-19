@@ -6,7 +6,7 @@
 
 # Type Alias: ImportSpecifiersEntry
 
-> **ImportSpecifiersEntry**: \[`AbsolutePath`, `object`\]
+> **ImportSpecifiersEntry** = \[`AbsolutePath`, `object`\]
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/gather-import-entries-from-files.d.ts:16
 

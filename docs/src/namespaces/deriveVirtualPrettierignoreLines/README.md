@@ -6,6 +6,6 @@
 
 # deriveVirtualPrettierignoreLines
 
-## Functions
+## Variables
 
-- [sync](functions/sync.md)
+- [sync](variables/sync.md)

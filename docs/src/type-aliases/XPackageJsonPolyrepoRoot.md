@@ -6,7 +6,7 @@
 
 # Type Alias: XPackageJsonPolyrepoRoot
 
-> **XPackageJsonPolyrepoRoot**: `Omit`\<[`XPackageJson`](XPackageJson.md), `"workspaces"`\>
+> **XPackageJsonPolyrepoRoot** = `Omit`\<[`XPackageJson`](XPackageJson.md), `"workspaces"`\>
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:501
 

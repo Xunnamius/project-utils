@@ -6,7 +6,7 @@
 
 # Type Alias: GenericRootPackage
 
-> **GenericRootPackage**: [`RootPackage`](RootPackage.md)\<[`GenericPackageJson`](GenericPackageJson.md)\>
+> **GenericRootPackage** = [`RootPackage`](RootPackage.md)\<[`GenericPackageJson`](GenericPackageJson.md)\>
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:539
 

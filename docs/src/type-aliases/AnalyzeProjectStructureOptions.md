@@ -6,15 +6,21 @@
 
 # Type Alias: AnalyzeProjectStructureOptions
 
-> **AnalyzeProjectStructureOptions**: `object`
+> **AnalyzeProjectStructureOptions** = `object`
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-structure.d.ts:7
 
-## Type declaration
+## See
+
+[analyzeProjectStructure](../functions/analyzeProjectStructure.md)
+
+## Properties
 
 ### allowUnnamedPackages?
 
 > `optional` **allowUnnamedPackages**: `boolean`
+
+Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-structure.d.ts:35
 
 Allow unnamed packages in this project, which will result in looser and
 less useful types in the returned [ProjectMetadata](ProjectMetadata.md) object. Setting
@@ -40,9 +46,13 @@ option.
 false
 ```
 
+***
+
 ### cwd?
 
 > `optional` **cwd**: `AbsolutePath`
+
+Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-structure.d.ts:13
 
 The current working directory as an absolute path.
 
@@ -52,9 +62,13 @@ The current working directory as an absolute path.
 process.cwd()
 ```
 
+***
+
 ### useCached
 
 > **useCached**: `boolean`
+
+Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-structure.d.ts:46
 
 Use the internal cached result from a previous run, if available.
 
@@ -66,7 +80,3 @@ strictly equal each other, respectively.
 #### See
 
 cache
-
-## See
-
-[analyzeProjectStructure](../functions/analyzeProjectStructure.md)

@@ -15,7 +15,9 @@ If `path` points to a location outside of the project, an error is thrown.
 
 ## Type Parameters
 
-• **T** *extends* [`GenericPackageJson`](../type-aliases/GenericPackageJson.md)
+### T
+
+`T` *extends* [`GenericPackageJson`](../type-aliases/GenericPackageJson.md)
 
 ## Parameters
 

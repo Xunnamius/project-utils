@@ -14,4 +14,4 @@ This delimiter is escaped for use in regular expressions.
 
 ## See
 
-[uriSchemeDelimiterUnescaped](uriSchemeDelimiter.md)
+[uriSchemeDelimiterUnescaped](uriSchemeDelimiterUnescaped.md)

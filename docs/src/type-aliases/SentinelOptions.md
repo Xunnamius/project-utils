@@ -6,17 +6,19 @@
 
 # Type Alias: SentinelOptions
 
-> **SentinelOptions**: `object`
+> **SentinelOptions** = `object`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:543
 
 The options accepted by several of the `isX` sentinel functions.
 
-## Type declaration
+## Properties
 
 ### generic?
 
 > `optional` **generic**: `boolean`
+
+Defined in: packages/types/dist/packages/types/src/index.d.ts:551
 
 If `true`, both the generic PackageJson and non-generic
 [XPackageJson](XPackageJson.md) JSON objects are accepted by this instance. If
