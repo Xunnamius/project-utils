@@ -6,9 +6,9 @@
 
 # Type Alias: PackageBuildTargets
 
-> **PackageBuildTargets**: `object`
+> **PackageBuildTargets** = `object`
 
-Defined in: [packages/graph/src/common.ts:35](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/graph/src/common.ts#L35)
+Defined in: [packages/graph/src/common.ts:35](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/common.ts#L35)
 
 In the context of a Package, this object represents a collection of
 all the file paths **relative to the _project root_** that must be transpiled
@@ -16,20 +16,22 @@ all the file paths **relative to the _project root_** that must be transpiled
 everything that isn't a TypeScript file) to build a specific package.
 
 These paths are split into internal and external
-[PackageBuildTargets.targets](PackageBuildTargets.md#targets). Interesting
-[PackageBuildTargets.metadata](PackageBuildTargets.md#metadata) is returned as well.
+[PackageBuildTargets.targets](#targets). Interesting
+[PackageBuildTargets.metadata](#metadata) is returned as well.
 
-## Type declaration
+## Properties
 
 ### metadata
 
 > **metadata**: `object`
 
-#### metadata.imports
+Defined in: [packages/graph/src/common.ts:65](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/common.ts#L65)
+
+#### imports
 
 > **imports**: `object`
 
-#### metadata.imports.aliasCounts
+##### imports.aliasCounts
 
 > **aliasCounts**: `Record`\<`string`, \{ `count`: `number`; `prefixes`: `Set`\<[`MetadataImportsPrefix`](../../analysis/gather-package-build-targets/type-aliases/MetadataImportsPrefix.md)\>; \}\>
 
@@ -39,7 +41,7 @@ number of times they are imported by the build target files.
 Imports also have tags in the form of "prefixes". See
 `gatherPackageBuildTargets` for details.
 
-#### metadata.imports.dependencyCounts
+##### imports.dependencyCounts
 
 > **dependencyCounts**: `Record`\<`string`, \{ `count`: `number`; `prefixes`: `Set`\<[`MetadataImportsPrefix`](../../analysis/gather-package-build-targets/type-aliases/MetadataImportsPrefix.md)\>; \}\>
 
@@ -50,14 +52,18 @@ number of times those packages are imported by the build target files.
 Imports also have tags in the form of "prefixes". See
 `gatherPackageBuildTargets` for details.
 
+***
+
 ### targets
 
 > **targets**: `object`
 
+Defined in: [packages/graph/src/common.ts:40](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/common.ts#L40)
+
 The file paths, **relative to the _project root_**, that must be transpiled
 and/or copied when building a specific Package's distributables.
 
-#### targets.external
+#### external
 
 > **external**: `object`
 
@@ -74,15 +80,15 @@ imports of type-only imports will also be classified as type-only imports
 regardless of their "import kind" _unless_ they are also imported by a
 normal import.
 
-#### targets.external.normal
+##### external.normal
 
 > **normal**: `Set`\<`RelativePath`\>
 
-#### targets.external.typeOnly
+##### external.typeOnly
 
 > **typeOnly**: `Set`\<`RelativePath`\>
 
-#### targets.internal
+#### internal
 
 > **internal**: `Set`\<`RelativePath`\>
 

@@ -8,7 +8,7 @@
 
 > **generateRawAliasMap**(`projectMetadata`): [`RawAliasMapping`](../type-aliases/RawAliasMapping.md)[]
 
-Defined in: [packages/graph/src/alias.ts:306](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/graph/src/alias.ts#L306)
+Defined in: [packages/graph/src/alias.ts:306](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/alias.ts#L306)
 
 Given `projectMetadata`, this function returns an array of
 [RawAliasMapping](../type-aliases/RawAliasMapping.md) entries. Each entry maps an import specifier alias

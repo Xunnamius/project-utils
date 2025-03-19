@@ -6,28 +6,38 @@
 
 # Type Alias: GatherPackageFilesOptions
 
-> **GatherPackageFilesOptions**: `object`
+> **GatherPackageFilesOptions** = `object`
 
-Defined in: [packages/graph/src/analysis/gather-package-files.ts:27](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/graph/src/analysis/gather-package-files.ts#L27)
+Defined in: [packages/graph/src/analysis/gather-package-files.ts:27](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/analysis/gather-package-files.ts#L27)
 
-## Type declaration
+## See
+
+[gatherPackageFiles](../functions/gatherPackageFiles.md)
+
+## Properties
 
 ### ignore?
 
 > `optional` **ignore**: (`string` \| `RelativePath`)[]
+
+Defined in: [packages/graph/src/analysis/gather-package-files.ts:54](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/analysis/gather-package-files.ts#L54)
 
 Exclude paths from the result with respect to the given patterns, which are
 interpreted **relative to the _project root_** according to gitignore
 rules.
 
 This option can also be used together with
-[GatherPackageFilesOptions.skipGitIgnored](GatherPackageFilesOptions.md#skipgitignored). Also, since `ignore` is
+[GatherPackageFilesOptions.skipGitIgnored](#skipgitignored). Also, since `ignore` is
 appended to the final list of ignored files, negated globs can be used to
 un-ignore files.
+
+***
 
 ### skipGitIgnored?
 
 > `optional` **skipGitIgnored**: `boolean`
+
+Defined in: [packages/graph/src/analysis/gather-package-files.ts:43](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/analysis/gather-package-files.ts#L43)
 
 If `true`, use the project root's `.gitignore` file exclusively to filter
 out returned project files.
@@ -38,9 +48,13 @@ out returned project files.
 true
 ```
 
+***
+
 ### useCached
 
 > **useCached**: `boolean`
+
+Defined in: [packages/graph/src/analysis/gather-package-files.ts:36](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/analysis/gather-package-files.ts#L36)
 
 Use the internal cached result from a previous run, if available.
 
@@ -50,7 +64,3 @@ always strictly equal (`===`) each other with respect to call signature.
 #### See
 
 cache
-
-## See
-
-[gatherPackageFiles](../functions/gatherPackageFiles.md)

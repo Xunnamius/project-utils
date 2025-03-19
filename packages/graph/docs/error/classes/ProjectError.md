@@ -6,7 +6,7 @@
 
 # Class: ProjectError
 
-Defined in: [packages/common/src/error.ts:104](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/common/src/error.ts#L104)
+Defined in: [packages/common/src/error.ts:104](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/common/src/error.ts#L104)
 
 Represents an exception originating from project meta-analysis tooling (e.g.
 `@-xun/project`).
@@ -30,9 +30,9 @@ Represents an exception originating from project meta-analysis tooling (e.g.
 
 ### new ProjectError()
 
-> **new ProjectError**(`reason`?, `options`?): [`ProjectError`](ProjectError.md)
+> **new ProjectError**(`reason`?, `options`?): `ProjectError`
 
-Defined in: [packages/common/src/error.ts:111](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/common/src/error.ts#L111)
+Defined in: [packages/common/src/error.ts:111](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/common/src/error.ts#L111)
 
 Represents a project-specific error, optionally with suggested exit code
 and other context.
@@ -49,7 +49,7 @@ and other context.
 
 #### Returns
 
-[`ProjectError`](ProjectError.md)
+`ProjectError`
 
 #### Overrides
 
@@ -57,9 +57,9 @@ and other context.
 
 ### new ProjectError()
 
-> **new ProjectError**(`reason`, `options`, `message`, `superOptions`): [`ProjectError`](ProjectError.md)
+> **new ProjectError**(`reason`, `options`, `message`, `superOptions`): `ProjectError`
 
-Defined in: [packages/common/src/error.ts:116](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/common/src/error.ts#L116)
+Defined in: [packages/common/src/error.ts:116](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/common/src/error.ts#L116)
 
 This constructor syntax is used by subclasses when calling this constructor
 via `super`.
@@ -84,7 +84,7 @@ via `super`.
 
 #### Returns
 
-[`ProjectError`](ProjectError.md)
+`ProjectError`
 
 #### Overrides
 
@@ -96,7 +96,7 @@ via `super`.
 
 > **\[$type\]**: `symbol`[]
 
-Defined in: [packages/common/src/error.ts:106](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/common/src/error.ts#L106)
+Defined in: [packages/common/src/error.ts:106](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/common/src/error.ts#L106)
 
 ***
 

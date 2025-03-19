@@ -4,7 +4,11 @@
 
 [@-xun/project-graph](../../../../../README.md) / [analysis/analyze-project-structure](../../../README.md) / [analyzeProjectStructure](../README.md) / sync
 
-# Function: sync()
+# Variable: sync()
+
+> `const` **sync**: (`options`) => `ProjectMetadata`\<`PackageJson`\>(`options`) => `ProjectMetadata` = `syncAnalyzeProjectStructure`
+
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:352](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/analysis/analyze-project-structure.ts#L352)
 
 Synchronously returns information about the structure of the project at the
 current working directory.
@@ -18,21 +22,15 @@ in this specific function's options for details.** To fetch fresh results,
 set the `useCached` option to `false` or clear the internal cache with
 cache.clear.
 
-## Call Signature
+## Parameters
 
-> **sync**(`options`): `ProjectMetadata`\<`PackageJson`\>
+### options
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:352](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/graph/src/analysis/analyze-project-structure.ts#L352)
-
-### Parameters
-
-#### options
-
-##### allowUnnamedPackages
+#### allowUnnamedPackages
 
 `true`
 
-##### cwd?
+#### cwd?
 
 `AbsolutePath`
 
@@ -44,7 +42,7 @@ The current working directory as an absolute path.
 process.cwd()
 ```
 
-##### useCached
+#### useCached
 
 `boolean`
 
@@ -59,25 +57,19 @@ strictly equal each other, respectively.
 
 cache
 
-### Returns
+## Returns
 
 `ProjectMetadata`\<`PackageJson`\>
 
-## Call Signature
+## Parameters
 
-> **sync**(`options`): `ProjectMetadata`
+### options
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:352](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/graph/src/analysis/analyze-project-structure.ts#L352)
-
-### Parameters
-
-#### options
-
-##### allowUnnamedPackages?
+#### allowUnnamedPackages?
 
 `false`
 
-##### cwd?
+#### cwd?
 
 `AbsolutePath`
 
@@ -89,7 +81,7 @@ The current working directory as an absolute path.
 process.cwd()
 ```
 
-##### useCached
+#### useCached
 
 `boolean`
 
@@ -104,6 +96,6 @@ strictly equal each other, respectively.
 
 cache
 
-### Returns
+## Returns
 
 `ProjectMetadata`

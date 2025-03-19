@@ -6,15 +6,21 @@
 
 # Type Alias: AnalyzeProjectStructureOptions
 
-> **AnalyzeProjectStructureOptions**: `object`
+> **AnalyzeProjectStructureOptions** = `object`
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:73](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/graph/src/analysis/analyze-project-structure.ts#L73)
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:73](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/analysis/analyze-project-structure.ts#L73)
 
-## Type declaration
+## See
+
+[analyzeProjectStructure](../functions/analyzeProjectStructure.md)
+
+## Properties
 
 ### allowUnnamedPackages?
 
 > `optional` **allowUnnamedPackages**: `boolean`
+
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:101](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/analysis/analyze-project-structure.ts#L101)
 
 Allow unnamed packages in this project, which will result in looser and
 less useful types in the returned ProjectMetadata object. Setting
@@ -40,9 +46,13 @@ option.
 false
 ```
 
+***
+
 ### cwd?
 
 > `optional` **cwd**: `AbsolutePath`
+
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:79](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/analysis/analyze-project-structure.ts#L79)
 
 The current working directory as an absolute path.
 
@@ -52,9 +62,13 @@ The current working directory as an absolute path.
 process.cwd()
 ```
 
+***
+
 ### useCached
 
 > **useCached**: `boolean`
+
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:112](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/analysis/analyze-project-structure.ts#L112)
 
 Use the internal cached result from a previous run, if available.
 
@@ -66,7 +80,3 @@ strictly equal each other, respectively.
 #### See
 
 cache
-
-## See
-
-[analyzeProjectStructure](../functions/analyzeProjectStructure.md)

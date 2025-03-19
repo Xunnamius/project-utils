@@ -6,7 +6,7 @@
 
 # Class: XPackageJsonNotParsableError
 
-Defined in: [packages/common/src/error.ts:169](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/common/src/error.ts#L169)
+Defined in: [packages/common/src/error.ts:169](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/common/src/error.ts#L169)
 
 Represents encountering an unparsable package.json file in an
 symbiote-powered project.
@@ -19,9 +19,9 @@ symbiote-powered project.
 
 ### new XPackageJsonNotParsableError()
 
-> **new XPackageJsonNotParsableError**(`packageJsonPath`, `reason`): [`XPackageJsonNotParsableError`](XPackageJsonNotParsableError.md)
+> **new XPackageJsonNotParsableError**(`packageJsonPath`, `reason`): `XPackageJsonNotParsableError`
 
-Defined in: [packages/common/src/error.ts:175](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/common/src/error.ts#L175)
+Defined in: [packages/common/src/error.ts:175](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/common/src/error.ts#L175)
 
 Represents encountering an unparsable package.json file.
 
@@ -37,17 +37,17 @@ Represents encountering an unparsable package.json file.
 
 #### Returns
 
-[`XPackageJsonNotParsableError`](XPackageJsonNotParsableError.md)
+`XPackageJsonNotParsableError`
 
 #### Overrides
 
-[`ProjectError`](ProjectError.md).[`constructor`](ProjectError.md#constructors)
+[`ProjectError`](ProjectError.md).[`constructor`](ProjectError.md#constructor)
 
 ### new XPackageJsonNotParsableError()
 
-> **new XPackageJsonNotParsableError**(`packageJsonPath`, `reason`, `message`): [`XPackageJsonNotParsableError`](XPackageJsonNotParsableError.md)
+> **new XPackageJsonNotParsableError**(`packageJsonPath`, `reason`, `message`): `XPackageJsonNotParsableError`
 
-Defined in: [packages/common/src/error.ts:180](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/common/src/error.ts#L180)
+Defined in: [packages/common/src/error.ts:180](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/common/src/error.ts#L180)
 
 This constructor syntax is used by subclasses when calling this constructor
 via `super`.
@@ -68,11 +68,11 @@ via `super`.
 
 #### Returns
 
-[`XPackageJsonNotParsableError`](XPackageJsonNotParsableError.md)
+`XPackageJsonNotParsableError`
 
 #### Overrides
 
-[`ProjectError`](ProjectError.md).[`constructor`](ProjectError.md#constructors)
+[`ProjectError`](ProjectError.md).[`constructor`](ProjectError.md#constructor)
 
 ## Properties
 
@@ -80,11 +80,11 @@ via `super`.
 
 > **\[$type\]**: `symbol`[]
 
-Defined in: [packages/common/src/error.ts:171](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/common/src/error.ts#L171)
+Defined in: [packages/common/src/error.ts:171](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/common/src/error.ts#L171)
 
 #### Overrides
 
-[`ProjectError`](ProjectError.md).[`[$type]`](ProjectError.md#$type)
+[`ProjectError`](ProjectError.md).[`[$type]`](ProjectError.md#type)
 
 ***
 
@@ -108,7 +108,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1077
 
 #### Inherited from
 
-[`ProjectError`](ProjectError.md).[`message`](ProjectError.md#message-1)
+[`ProjectError`](ProjectError.md).[`message`](ProjectError.md#message)
 
 ***
 
@@ -128,7 +128,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1076
 
 > `readonly` **packageJsonPath**: `string`
 
-Defined in: [packages/common/src/error.ts:182](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/common/src/error.ts#L182)
+Defined in: [packages/common/src/error.ts:182](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/common/src/error.ts#L182)
 
 ***
 
@@ -136,7 +136,7 @@ Defined in: [packages/common/src/error.ts:182](https://github.com/Xunnamius/proj
 
 > `readonly` **reason**: `unknown`
 
-Defined in: [packages/common/src/error.ts:183](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/common/src/error.ts#L183)
+Defined in: [packages/common/src/error.ts:183](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/common/src/error.ts#L183)
 
 ***
 

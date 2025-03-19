@@ -6,15 +6,21 @@
 
 # Type Alias: gatherPseudodecoratorEntriesFromFilesOptions
 
-> **gatherPseudodecoratorEntriesFromFilesOptions**: `object`
+> **gatherPseudodecoratorEntriesFromFilesOptions** = `object`
 
-Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:149](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L149)
+Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:149](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L149)
 
-## Type declaration
+## See
+
+[gatherPseudodecoratorEntriesFromFiles](../functions/gatherPseudodecoratorEntriesFromFiles.md)
+
+## Properties
 
 ### useCached
 
 > **useCached**: `boolean`
+
+Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:160](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L160)
 
 Use the internal cached result from a previous run, if available.
 
@@ -26,7 +32,3 @@ results _will_ strictly equal each other, respectively.
 #### See
 
 cache
-
-## See
-
-[gatherPseudodecoratorEntriesFromFiles](../functions/gatherPseudodecoratorEntriesFromFiles.md)

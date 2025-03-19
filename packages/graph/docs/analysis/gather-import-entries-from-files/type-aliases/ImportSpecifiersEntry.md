@@ -6,9 +6,9 @@
 
 # Type Alias: ImportSpecifiersEntry
 
-> **ImportSpecifiersEntry**: \[`AbsolutePath`, `object`\]
+> **ImportSpecifiersEntry** = \[`AbsolutePath`, `object`\]
 
-Defined in: [packages/graph/src/analysis/gather-import-entries-from-files.ts:38](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/graph/src/analysis/gather-import-entries-from-files.ts#L38)
+Defined in: [packages/graph/src/analysis/gather-import-entries-from-files.ts:38](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/analysis/gather-import-entries-from-files.ts#L38)
 
 An entry mapping an absolute file path to two sets of import/require
 specifiers present in said file: "normal" imports and "type-only" imports.

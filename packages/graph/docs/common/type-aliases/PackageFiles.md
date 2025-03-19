@@ -6,9 +6,9 @@
 
 # Type Alias: PackageFiles
 
-> **PackageFiles**: `object`
+> **PackageFiles** = `object`
 
-Defined in: [packages/graph/src/common.ts:220](https://github.com/Xunnamius/projector/blob/b164ec02958be4a3fc50929ad4f824678a7453d6/packages/graph/src/common.ts#L220)
+Defined in: [packages/graph/src/common.ts:220](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/common.ts#L220)
 
 In the context of a Package, this type represents a collection of
 AbsolutePaths, one for each file under the package root that is not
@@ -18,20 +18,26 @@ automatically ignored by this function.
 
 The collection is organized by location and utility.
 
-## Type declaration
+## Properties
 
 ### dist
 
 > **dist**: `AbsolutePath`[]
+
+Defined in: [packages/graph/src/common.ts:227](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/common.ts#L227)
 
 Every file under the package's `./dist` directory.
 
 Files not owned by the package (such as those belonging to other packages
 in a monorepo) will never be returned.
 
+***
+
 ### docs
 
 > **docs**: `AbsolutePath`[]
+
+Defined in: [packages/graph/src/common.ts:235](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/common.ts#L235)
 
 Every file under the package's `./docs` directory that is not ignored by
 Git.
@@ -39,30 +45,42 @@ Git.
 Files not owned by the package (such as those belonging to other packages
 in a monorepo) will never be returned.
 
+***
+
 ### other
 
 > **other**: `AbsolutePath`[]
 
+Defined in: [packages/graph/src/common.ts:260](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/common.ts#L260)
+
 Every file under the package's root directory that is not ignored by Git
-nor contained in any other [PackageFiles](PackageFiles.md) property.
+nor contained in any other PackageFiles property.
 
 Files not owned by the package (such as those belonging to other packages
 in a monorepo) will never be returned.
+
+***
 
 ### src
 
 > **src**: `AbsolutePath`[]
 
+Defined in: [packages/graph/src/common.ts:244](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/common.ts#L244)
+
 Every file under the package's `./src` directory that is not ignored by
 Git. Does not include files under `./types` (those are in
-[PackageFiles.other](PackageFiles.md#other)).
+[PackageFiles.other](#other)).
 
 Files not owned by the package (such as those belonging to other packages
 in a monorepo) will never be returned.
 
+***
+
 ### test
 
 > **test**: `AbsolutePath`[]
+
+Defined in: [packages/graph/src/common.ts:252](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/common.ts#L252)
 
 Every file under the package's `./test` directory that is not ignored by
 Git.

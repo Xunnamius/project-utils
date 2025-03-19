@@ -13,8 +13,11 @@
 - [ProjectFiles](type-aliases/ProjectFiles.md)
 - [Serializable](type-aliases/Serializable.md)
 
+## Variables
+
+- [commonDebug](variables/commonDebug.md)
+
 ## Functions
 
 - [assignResultTo](functions/assignResultTo.md)
-- [commonDebug](functions/commonDebug.md)
 - [toSerializable](functions/toSerializable.md)
