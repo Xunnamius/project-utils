@@ -8,9 +8,9 @@
 
 ## Call Signature
 
-> **isProjectMetadata**(`o`, `options`?): `o is GenericProjectMetadata`
+> **isProjectMetadata**(`o`, `options?`): `o is GenericProjectMetadata`
 
-Defined in: [index.ts:671](https://github.com/Xunnamius/projector/blob/ebfb426738fc12f1d6a23d67f21f0cfd0d162c44/packages/types/src/index.ts#L671)
+Defined in: [index.ts:671](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L671)
 
 Returns `true` if `o` is probably an instance of `ProjectMetadata`.
 
@@ -34,7 +34,7 @@ Returns `true` if `o` is probably an instance of `ProjectMetadata`.
 
 > **isProjectMetadata**(`o`, `options`): `o is ProjectMetadata<XPackageJson<XPackageJsonScripts>>`
 
-Defined in: [index.ts:675](https://github.com/Xunnamius/projector/blob/ebfb426738fc12f1d6a23d67f21f0cfd0d162c44/packages/types/src/index.ts#L675)
+Defined in: [index.ts:675](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L675)
 
 Returns `true` if `o` is probably an instance of `ProjectMetadata`.
 
@@ -58,7 +58,7 @@ Returns `true` if `o` is probably an instance of `ProjectMetadata`.
 
 > **isProjectMetadata**(`o`, `options`): o is GenericProjectMetadata \| ProjectMetadata\<XPackageJson\<XPackageJsonScripts\>\>
 
-Defined in: [index.ts:679](https://github.com/Xunnamius/projector/blob/ebfb426738fc12f1d6a23d67f21f0cfd0d162c44/packages/types/src/index.ts#L679)
+Defined in: [index.ts:679](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L679)
 
 Returns `true` if `o` is probably an instance of `ProjectMetadata`.
 

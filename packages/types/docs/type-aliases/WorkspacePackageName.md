@@ -6,6 +6,6 @@
 
 # Type Alias: WorkspacePackageName
 
-> **WorkspacePackageName**: `string`
+> **WorkspacePackageName** = `string`
 
-Defined in: [index.ts:6](https://github.com/Xunnamius/projector/blob/ebfb426738fc12f1d6a23d67f21f0cfd0d162c44/packages/types/src/index.ts#L6)
+Defined in: [index.ts:6](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L6)

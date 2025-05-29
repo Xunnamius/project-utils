@@ -6,9 +6,9 @@
 
 # Type Alias: GenericPackageJson
 
-> **GenericPackageJson**: `PackageJson` \| [`XPackageJson`](XPackageJson.md)
+> **GenericPackageJson** = `PackageJson` \| [`XPackageJson`](XPackageJson.md)
 
-Defined in: [index.ts:548](https://github.com/Xunnamius/projector/blob/ebfb426738fc12f1d6a23d67f21f0cfd0d162c44/packages/types/src/index.ts#L548)
+Defined in: [index.ts:548](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L548)
 
 Represents any `package.json` file in the wild, including symbiote-ready
 `package.json` files.

@@ -6,9 +6,9 @@
 
 # Type Alias: XPackageJson\<Scripts\>
 
-> **XPackageJson**\<`Scripts`\>: `Omit`\<`OmitIndexSignature`\<`PackageJson`\>, `"bin"` \| `"name"`\> & `object`
+> **XPackageJson**\<`Scripts`\> = `Omit`\<`OmitIndexSignature`\<`PackageJson`\>, `"bin"` \| `"name"`\> & `object`
 
-Defined in: [index.ts:513](https://github.com/Xunnamius/projector/blob/ebfb426738fc12f1d6a23d67f21f0cfd0d162c44/packages/types/src/index.ts#L513)
+Defined in: [index.ts:513](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L513)
 
 A version of PackageJson used by symbiote-powered projects with
 certain additional properties and other properties that are guaranteed to
@@ -30,4 +30,6 @@ exist.
 
 ## Type Parameters
 
-• **Scripts** *extends* `Partial`\<`Record`\<`string`, `string`\>\> = [`XPackageJsonScripts`](XPackageJsonScripts.md)
+### Scripts
+
+`Scripts` *extends* `Partial`\<`Record`\<`string`, `string`\>\> = [`XPackageJsonScripts`](XPackageJsonScripts.md)

@@ -6,40 +6,56 @@
 
 # Type Alias: RootPackage\<Json\>
 
-> **RootPackage**\<`Json`\>: `object`
+> **RootPackage**\<`Json`\> = `object`
 
-Defined in: [index.ts:21](https://github.com/Xunnamius/projector/blob/ebfb426738fc12f1d6a23d67f21f0cfd0d162c44/packages/types/src/index.ts#L21)
+Defined in: [index.ts:21](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L21)
 
 An object representing the root or "top-level" package in a monorepo or
 polyrepo project.
 
 ## Type Parameters
 
-• **Json** *extends* `PackageJson` \| [`XPackageJson`](XPackageJson.md) = [`XPackageJson`](XPackageJson.md)
+### Json
 
-## Type declaration
+`Json` *extends* `PackageJson` \| [`XPackageJson`](XPackageJson.md) = [`XPackageJson`](XPackageJson.md)
+
+## Properties
 
 ### attributes
 
 > **attributes**: `{ [key in ProjectAttribute]?: boolean }`
 
+Defined in: [index.ts:33](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L33)
+
 A collection of [ProjectAttribute](../enumerations/ProjectAttribute.md) flags describing the project.
+
+***
 
 ### json
 
 > **json**: `Json`
 
+Defined in: [index.ts:29](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L29)
+
 The contents of the root `package.json` file.
+
+***
 
 ### projectMetadata
 
 > **projectMetadata**: [`ProjectMetadata`](ProjectMetadata.md)\<`Json`\>
 
+Defined in: [index.ts:38](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L38)
+
 A link back to the [ProjectMetadata](ProjectMetadata.md) instance containing this
 package.
+
+***
 
 ### root
 
 > **root**: `AbsolutePath`
+
+Defined in: [index.ts:25](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L25)
 
 The absolute path to the root directory of the entire project.

@@ -6,9 +6,9 @@
 
 # Type Alias: GenericWorkspacePackage
 
-> **GenericWorkspacePackage**: [`WorkspacePackage`](WorkspacePackage.md)\<[`GenericPackageJson`](GenericPackageJson.md)\>
+> **GenericWorkspacePackage** = [`WorkspacePackage`](WorkspacePackage.md)\<[`GenericPackageJson`](GenericPackageJson.md)\>
 
-Defined in: [index.ts:566](https://github.com/Xunnamius/projector/blob/ebfb426738fc12f1d6a23d67f21f0cfd0d162c44/packages/types/src/index.ts#L566)
+Defined in: [index.ts:566](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L566)
 
 A version of [WorkspacePackage](WorkspacePackage.md) with [GenericPackageJson](GenericPackageJson.md) as its
 type parameter.
