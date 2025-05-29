@@ -283,21 +283,26 @@ export function makeRawAliasMapping(
  * said project. Filesystem paths will always be generated as relative paths
  * with respect to the project root.
  *
- * Entries will be returned in standard verse order: multiverse > rootverse >
- * universe > testverse > typeverse. Entries within the same verse are sorted in
- * "specificity" order, meaning open-suffix aliases will have a chance to match
- * before exact-suffix aliases, and more specific open-suffix aliases will have
- * a chance to match before less-specific or catch-all open-suffix aliases.
- * Entries of the same "specificity" will then be natural sorted.
+ * Entries will be returned in the order expected for the majority of
+ * configuration subsystems: multiverse \> universe \> testverse \> typeverse \>
+ * rootverse. An alternative order, expected for import sorting, is also
+ * available (via `outputTarget`): multiverse \> rootverse \> universe \>
+ * testverse \> typeverse.
  *
- * Examples of supported aliases:
+ * Entries within the same verse are sorted in "specificity" order, meaning
+ * open-suffix aliases will have a chance to match before exact-suffix aliases,
+ * and more specific open-suffix aliases will have a chance to match before
+ * less-specific or catch-all open-suffix aliases. Entries of the same
+ * "specificity" will then be natural sorted.
+ *
+ * (Unsorted) examples of supported aliases:
  * - `"universe"`                           (root ./index.ts)
  * - `"universe:some/path/index.ts"`        (root ./src/some/path/index.ts)
  * - `"multiverse+package-id"`              (package ./src/index.js)
  * - `"multiverse+package-id:some/path.js"` (package ./src/some/path.js)
  * - `"testverse:some/path.ts"`             (root ./test/some/path.ts)
  * - `"testverse+package-id:some/path.ts"`  (package ./test/some/path.ts)
- * - `"multiverse+common:types.ts"`                (root ./types/global.ts)
+ * - `"multiverse+common:types.ts"`         (root ./types/global.ts)
  * - `"rootverse:some/path.js"`             (root ./some/path.js)
  * - `"rootverse+package-id:some/path.ts"`  (package ./some/path.ts)
  *
