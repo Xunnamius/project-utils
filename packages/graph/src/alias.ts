@@ -304,7 +304,8 @@ export function makeRawAliasMapping(
  * @see https://github.com/Xunnamius/symbiote/wiki/Standard-Aliases
  */
 export function generateRawAliasMap(
-  projectMetadata: GenericProjectMetadata
+  projectMetadata: GenericProjectMetadata,
+  outputTarget: 'for-config' | 'for-import-ordering' = 'for-config'
 ): RawAliasMapping[] {
   // * Universe mappings support both root- and package- level, open and exact
   // * aliases
@@ -485,14 +486,27 @@ export function generateRawAliasMap(
     )
   );
 
-  // * Standard verse order:
-  return [
-    multiverseAliases,
-    rootverseAliases,
-    universeAliases,
-    testverseAliases,
-    typeverseAliases
-  ].flat();
+  return (
+    outputTarget === 'for-import-ordering'
+      ? // * "standard" verse order for import statements:
+        [
+          multiverseAliases,
+          rootverseAliases,
+          universeAliases,
+          testverseAliases,
+          typeverseAliases
+        ]
+      : // * Functionally correct verse order for configuration files:
+        [
+          multiverseAliases,
+          universeAliases,
+          testverseAliases,
+          typeverseAliases,
+          // ! Rootverse aliases MUST go last because tsc (and probably others) will
+          // ! subtly break (i.e. import intellisense) if the root open suffix is 1st
+          rootverseAliases
+        ]
+  ).flat();
 }
 
 /**
