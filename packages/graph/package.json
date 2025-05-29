@@ -81,7 +81,7 @@
     "core-js": "^3.42.0",
     "escape-string-regexp~4": "npm:escape-string-regexp@^4.0.0",
     "find-up~5": "npm:find-up@^5.0.0",
-    "glob": "^11.0.1",
+    "glob": "^11.0.2",
     "glob-gitignore": "^1.0.15",
     "named-app-errors": "^4.0.2",
     "rejoinder": "^1.2.5",
