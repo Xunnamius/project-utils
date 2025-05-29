@@ -95,7 +95,7 @@
     "@-xun/project-fs": "^1.2.0",
     "@-xun/project-graph": "^1.0.6",
     "@-xun/project-types": "^1.0.4",
-    "core-js": "^3.41.0",
+    "core-js": "^3.42.0",
     "named-app-errors": "^4.0.2"
   },
   "devDependencies": {
