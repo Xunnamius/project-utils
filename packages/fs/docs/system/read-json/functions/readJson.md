@@ -10,7 +10,7 @@
 
 > **readJson**\<`T`\>(`path`, `options`): `Promise`\<`T`\>
 
-Defined in: [packages/fs/src/system/read-json.ts:141](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/read-json.ts#L141)
+Defined in: [packages/fs/src/system/read-json.ts:141](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/fs/src/system/read-json.ts#L141)
 
 Asynchronously read in and parse the contents of an arbitrary JSON file.
 
@@ -46,7 +46,7 @@ option to `false` or clear the internal cache with cache.clear.
 
 > **readJson**\<`T`\>(`path`, `options`): `Promise`\<`T` \| `EmptyObject`\>
 
-Defined in: [packages/fs/src/system/read-json.ts:145](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/read-json.ts#L145)
+Defined in: [packages/fs/src/system/read-json.ts:145](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/fs/src/system/read-json.ts#L145)
 
 Asynchronously read in and parse the contents of an arbitrary JSON file.
 

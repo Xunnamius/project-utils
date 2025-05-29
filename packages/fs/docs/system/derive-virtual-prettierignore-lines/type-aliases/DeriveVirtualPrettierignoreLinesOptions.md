@@ -8,7 +8,7 @@
 
 > **DeriveVirtualPrettierignoreLinesOptions** = `object`
 
-Defined in: [packages/fs/src/system/derive-virtual-prettierignore-lines.ts:20](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/derive-virtual-prettierignore-lines.ts#L20)
+Defined in: [packages/fs/src/system/derive-virtual-prettierignore-lines.ts:20](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/fs/src/system/derive-virtual-prettierignore-lines.ts#L20)
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [packages/fs/src/system/derive-virtual-prettierignore-lines.ts:20](h
 
 > `optional` **includeUnknownPaths**: `boolean`
 
-Defined in: [packages/fs/src/system/derive-virtual-prettierignore-lines.ts:35](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/derive-virtual-prettierignore-lines.ts#L35)
+Defined in: [packages/fs/src/system/derive-virtual-prettierignore-lines.ts:35](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/fs/src/system/derive-virtual-prettierignore-lines.ts#L35)
 
 If `true`, include any paths unknown to git.
 
@@ -32,7 +32,7 @@ false
 
 > **useCached**: `boolean`
 
-Defined in: [packages/fs/src/system/derive-virtual-prettierignore-lines.ts:29](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/derive-virtual-prettierignore-lines.ts#L29)
+Defined in: [packages/fs/src/system/derive-virtual-prettierignore-lines.ts:29](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/fs/src/system/derive-virtual-prettierignore-lines.ts#L29)
 
 Use the internal cached result from a previous run, if available.
 

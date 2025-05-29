@@ -10,7 +10,7 @@
 
 > **extractExamplesFromDocument**(`path`, `options`): `Promise`\<`Map`\<`string`, `string`\>\>
 
-Defined in: [packages/fs/src/system/extract-examples-from-document.ts:159](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/extract-examples-from-document.ts#L159)
+Defined in: [packages/fs/src/system/extract-examples-from-document.ts:159](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/fs/src/system/extract-examples-from-document.ts#L159)
 
 This function returns a mapping of identifiers to code blocks by searching
 the document at `path` for _example regions_. Example regions are code blocks
@@ -59,7 +59,7 @@ option to `false` or clear the internal cache with cache.clear.
 
 > **extractExamplesFromDocument**(`path`, `options`): `Promise`\<`Map`\<`string`, `RegExp`\>\>
 
-Defined in: [packages/fs/src/system/extract-examples-from-document.ts:163](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/extract-examples-from-document.ts#L163)
+Defined in: [packages/fs/src/system/extract-examples-from-document.ts:163](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/fs/src/system/extract-examples-from-document.ts#L163)
 
 This function returns a mapping of identifiers to code blocks by searching
 the document at `path` for _example regions_. Example regions are code blocks

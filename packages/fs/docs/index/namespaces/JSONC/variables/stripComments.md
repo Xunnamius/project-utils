@@ -6,7 +6,7 @@
 
 # Variable: stripComments()
 
-> `const` **stripComments**: (`text`, `replaceCh`?) => `string`
+> `const` **stripComments**: (`text`, `replaceCh?`) => `string`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:117
 

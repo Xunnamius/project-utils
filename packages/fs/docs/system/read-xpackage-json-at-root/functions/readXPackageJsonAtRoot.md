@@ -10,7 +10,7 @@
 
 > **readXPackageJsonAtRoot**(`path`, `options`): `Promise`\<`XPackageJson`\>
 
-Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:113](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/read-xpackage-json-at-root.ts#L113)
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:113](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/fs/src/system/read-xpackage-json-at-root.ts#L113)
 
 Asynchronously read in and parse the contents of a package.json file.
 
@@ -41,7 +41,7 @@ option to `false` or clear the internal cache with `cache.clear`.
 
 > **readXPackageJsonAtRoot**(`path`, `options`): `Promise`\<`EmptyObject` \| `XPackageJson`\>
 
-Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:117](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/read-xpackage-json-at-root.ts#L117)
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:117](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/fs/src/system/read-xpackage-json-at-root.ts#L117)
 
 Asynchronously read in and parse the contents of a package.json file.
 

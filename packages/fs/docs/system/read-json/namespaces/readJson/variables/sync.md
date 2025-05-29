@@ -6,9 +6,13 @@
 
 # Variable: sync()
 
-> `const` **sync**: \<`T`\>(`path`, `options`) => `T`\<`T`\>(`path`, `options`) => `EmptyObject` \| `T` = `readJsonSync`
+> `const` **sync**: \{\<`T`\>(`path`, `options`): `T`; \<`T`\>(`path`, `options`): `EmptyObject` \| `T`; \} = `readJsonSync`
 
-Defined in: [packages/fs/src/system/read-json.ts:181](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/read-json.ts#L181)
+Defined in: [packages/fs/src/system/read-json.ts:181](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/fs/src/system/read-json.ts#L181)
+
+## Call Signature
+
+> \<`T`\>(`path`, `options`): `T`
 
 Synchronously read in and parse the contents of an arbitrary JSON file.
 
@@ -21,25 +25,29 @@ in this specific function's options for details.** To fetch fresh results,
 set the `useCached` option to `false` or clear the internal cache with
 cache.clear.
 
-## Type Parameters
+### Type Parameters
 
-### T
+#### T
 
 `T` = `JsonValue`
 
-## Parameters
+### Parameters
 
-### path
+#### path
 
 `AbsolutePath`
 
-### options
+#### options
 
 [`ReadJsonOptions`](../../../type-aliases/ReadJsonOptions.md) & `object`
 
-## Returns
+### Returns
 
 `T`
+
+## Call Signature
+
+> \<`T`\>(`path`, `options`): `EmptyObject` \| `T`
 
 Synchronously read in and parse the contents of an arbitrary JSON file.
 
@@ -52,22 +60,22 @@ in this specific function's options for details.** To fetch fresh results,
 set the `useCached` option to `false` or clear the internal cache with
 cache.clear.
 
-## Type Parameters
+### Type Parameters
 
-### T
+#### T
 
 `T` = `JsonValue`
 
-## Parameters
+### Parameters
 
-### path
+#### path
 
 `AbsolutePath`
 
-### options
+#### options
 
 [`ReadJsonOptions`](../../../type-aliases/ReadJsonOptions.md)
 
-## Returns
+### Returns
 
 `EmptyObject` \| `T`

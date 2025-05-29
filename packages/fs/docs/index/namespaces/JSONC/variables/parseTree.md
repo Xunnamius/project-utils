@@ -6,7 +6,7 @@
 
 # Variable: parseTree()
 
-> `const` **parseTree**: (`text`, `errors`?, `options`?) => [`Node`](../interfaces/Node.md) \| `undefined`
+> `const` **parseTree**: (`text`, `errors?`, `options?`) => [`Node`](../interfaces/Node.md) \| `undefined`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:91
 

@@ -6,9 +6,13 @@
 
 # Variable: sync()
 
-> `const` **sync**: (`path`, `options`) => `Map`\<`string`, `string`\>(`path`, `options`) => `Map`\<`string`, `RegExp`\> = `extractExamplesFromDocumentSync`
+> `const` **sync**: \{(`path`, `options`): `Map`\<`string`, `string`\>; (`path`, `options`): `Map`\<`string`, `RegExp`\>; \} = `extractExamplesFromDocumentSync`
 
-Defined in: [packages/fs/src/system/extract-examples-from-document.ts:222](https://github.com/Xunnamius/projector/blob/7eae313be5b26fe85e1c6ce76044bc731b50b838/packages/fs/src/system/extract-examples-from-document.ts#L222)
+Defined in: [packages/fs/src/system/extract-examples-from-document.ts:222](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/fs/src/system/extract-examples-from-document.ts#L222)
+
+## Call Signature
+
+> (`path`, `options`): `Map`\<`string`, `string`\>
 
 This function returns a mapping of identifiers to code blocks by searching
 the document at `path` for _example regions_. Example regions are code
@@ -42,19 +46,23 @@ in this specific function's options for details.** To fetch fresh results,
 set the `useCached` option to `false` or clear the internal cache with
 cache.clear.
 
-## Parameters
+### Parameters
 
-### path
+#### path
 
 `string`
 
-### options
+#### options
 
 [`ExtractExamplesFromDocumentOptions`](../../../type-aliases/ExtractExamplesFromDocumentOptions.md) & `object`
 
-## Returns
+### Returns
 
 `Map`\<`string`, `string`\>
+
+## Call Signature
+
+> (`path`, `options`): `Map`\<`string`, `RegExp`\>
 
 This function returns a mapping of identifiers to code blocks by searching
 the document at `path` for _example regions_. Example regions are code
@@ -88,16 +96,16 @@ in this specific function's options for details.** To fetch fresh results,
 set the `useCached` option to `false` or clear the internal cache with
 cache.clear.
 
-## Parameters
+### Parameters
 
-### path
+#### path
 
 `string`
 
-### options
+#### options
 
 [`ExtractExamplesFromDocumentOptions`](../../../type-aliases/ExtractExamplesFromDocumentOptions.md)
 
-## Returns
+### Returns
 
 `Map`\<`string`, `RegExp`\>
