@@ -75,7 +75,7 @@
     "test:packages:all": "symbiote test --env NODE_NO_WARNINGS=1 --scope unlimited --coverage"
   },
   "dependencies": {
-    "core-js": "^3.41.0",
+    "core-js": "^3.42.0",
     "escape-string-regexp~4": "npm:escape-string-regexp@^4.0.0",
     "named-app-errors": "4.0.2",
     "type-fest": "^4.37.0"
