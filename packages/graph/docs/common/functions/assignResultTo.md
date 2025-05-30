@@ -8,7 +8,7 @@
 
 > **assignResultTo**(`parentObject`, `key`): (`result`) => `void`
 
-Defined in: [packages/graph/src/common.ts:277](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/common.ts#L277)
+Defined in: [packages/graph/src/common.ts:277](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/common.ts#L277)
 
 Used to assign the result of an asynchronous operation to some key in some
 object. For example:
@@ -35,7 +35,7 @@ await someAsyncFn(something).then(
 
 ## Returns
 
-`Function`
+> (`result`): `void`
 
 ### Parameters
 

@@ -8,7 +8,7 @@
 
 > `const` **sharedAttributeFileBase**: `".shared"` = `'.shared'`
 
-Defined in: [packages/graph/src/constant.ts:346](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/constant.ts#L346)
+Defined in: [packages/graph/src/constant.ts:346](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/constant.ts#L346)
 
 The basename of the well-known "shared attribute file". The presence of this
 file at a workspace sub-root signifies that commits scoped to said package

@@ -8,7 +8,7 @@
 
 > `const` **directoryDocumentationPackageBase**: `"docs"` = `'docs'`
 
-Defined in: [packages/graph/src/constant.ts:336](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/constant.ts#L336)
+Defined in: [packages/graph/src/constant.ts:336](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/constant.ts#L336)
 
 The basename of the well-known generated documentation output directory.
 

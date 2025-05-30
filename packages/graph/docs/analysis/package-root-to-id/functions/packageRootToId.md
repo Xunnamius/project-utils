@@ -8,7 +8,7 @@
 
 > **packageRootToId**(`packageRoot`): `string`
 
-Defined in: [packages/graph/src/analysis/package-root-to-id.ts:14](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/analysis/package-root-to-id.ts#L14)
+Defined in: [packages/graph/src/analysis/package-root-to-id.ts:14](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/analysis/package-root-to-id.ts#L14)
 
 Synchronously determine the package-id of a package in a monorepo from the
 path to the package's root directory.

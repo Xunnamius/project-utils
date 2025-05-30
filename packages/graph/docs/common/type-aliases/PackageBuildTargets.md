@@ -8,7 +8,7 @@
 
 > **PackageBuildTargets** = `object`
 
-Defined in: [packages/graph/src/common.ts:35](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/common.ts#L35)
+Defined in: [packages/graph/src/common.ts:35](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/common.ts#L35)
 
 In the context of a Package, this object represents a collection of
 all the file paths **relative to the _project root_** that must be transpiled
@@ -25,7 +25,7 @@ These paths are split into internal and external
 
 > **metadata**: `object`
 
-Defined in: [packages/graph/src/common.ts:65](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/common.ts#L65)
+Defined in: [packages/graph/src/common.ts:65](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/common.ts#L65)
 
 #### imports
 
@@ -58,7 +58,7 @@ Imports also have tags in the form of "prefixes". See
 
 > **targets**: `object`
 
-Defined in: [packages/graph/src/common.ts:40](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/common.ts#L40)
+Defined in: [packages/graph/src/common.ts:40](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/common.ts#L40)
 
 The file paths, **relative to the _project root_**, that must be transpiled
 and/or copied when building a specific Package's distributables.

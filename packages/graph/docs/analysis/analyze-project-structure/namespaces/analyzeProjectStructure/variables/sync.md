@@ -6,9 +6,9 @@
 
 # Variable: sync()
 
-> `const` **sync**: (`options`) => `ProjectMetadata`\<`PackageJson`\>(`options`) => `ProjectMetadata` = `syncAnalyzeProjectStructure`
+> `const` **sync**: \{(`options`): `ProjectMetadata`\<`PackageJson`\>; (`options`): `ProjectMetadata`; \} = `syncAnalyzeProjectStructure`
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:352](https://github.com/Xunnamius/projector/blob/dcaa0a5acffff6ad085fbc2675121bb9ec6c0aeb/packages/graph/src/analysis/analyze-project-structure.ts#L352)
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:352](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/analysis/analyze-project-structure.ts#L352)
 
 Synchronously returns information about the structure of the project at the
 current working directory.
@@ -22,15 +22,19 @@ in this specific function's options for details.** To fetch fresh results,
 set the `useCached` option to `false` or clear the internal cache with
 cache.clear.
 
-## Parameters
+## Call Signature
 
-### options
+> (`options`): `ProjectMetadata`\<`PackageJson`\>
 
-#### allowUnnamedPackages
+### Parameters
+
+#### options
+
+##### allowUnnamedPackages
 
 `true`
 
-#### cwd?
+##### cwd?
 
 `AbsolutePath`
 
@@ -42,7 +46,7 @@ The current working directory as an absolute path.
 process.cwd()
 ```
 
-#### useCached
+##### useCached
 
 `boolean`
 
@@ -57,19 +61,23 @@ strictly equal each other, respectively.
 
 cache
 
-## Returns
+### Returns
 
 `ProjectMetadata`\<`PackageJson`\>
 
-## Parameters
+## Call Signature
 
-### options
+> (`options`): `ProjectMetadata`
 
-#### allowUnnamedPackages?
+### Parameters
+
+#### options
+
+##### allowUnnamedPackages?
 
 `false`
 
-#### cwd?
+##### cwd?
 
 `AbsolutePath`
 
@@ -81,7 +89,7 @@ The current working directory as an absolute path.
 process.cwd()
 ```
 
-#### useCached
+##### useCached
 
 `boolean`
 
@@ -96,6 +104,6 @@ strictly equal each other, respectively.
 
 cache
 
-## Returns
+### Returns
 
 `ProjectMetadata`
