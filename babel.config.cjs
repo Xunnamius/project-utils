@@ -41,13 +41,6 @@ function getBabelAliases() {
     '^multiverse\\+fs$': './packages/fs/src/index.js',
     '^multiverse\\+graph$': './packages/graph/src/index.js',
     '^multiverse\\+types$': './packages/types/src/index.js',
-    '^rootverse\\+bidirectional\\x2dresolve:(.+)$':
-      './packages/bidirectional-resolve/$1',
-    '^rootverse\\+common:(.+)$': './packages/common/$1',
-    '^rootverse\\+fs:(.+)$': './packages/fs/$1',
-    '^rootverse\\+graph:(.+)$': './packages/graph/$1',
-    '^rootverse\\+types:(.+)$': './packages/types/$1',
-    '^rootverse:(.+)$': './$1',
     '^universe\\+bidirectional\\x2dresolve:(.+)$':
       './packages/bidirectional-resolve/src/$1',
     '^universe\\+common:(.+)$': './packages/common/src/$1',
@@ -69,6 +62,13 @@ function getBabelAliases() {
     '^testverse\\+graph:(.+)$': './packages/graph/test/$1',
     '^testverse\\+types:(.+)$': './packages/types/test/$1',
     '^testverse:(.+)$': './test/$1',
-    '^typeverse:(.+)$': './types/$1'
+    '^typeverse:(.+)$': './types/$1',
+    '^rootverse\\+bidirectional\\x2dresolve:(.+)$':
+      './packages/bidirectional-resolve/$1',
+    '^rootverse\\+common:(.+)$': './packages/common/$1',
+    '^rootverse\\+fs:(.+)$': './packages/fs/$1',
+    '^rootverse\\+graph:(.+)$': './packages/graph/$1',
+    '^rootverse\\+types:(.+)$': './packages/types/$1',
+    '^rootverse:(.+)$': './$1'
   };
 }
