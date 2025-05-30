@@ -6,9 +6,9 @@
 
 # Function: mapRawSpecifierToPath()
 
-> **mapRawSpecifierToPath**(`rawAliasMappings`, `specifier`, `__namedParameters`?): `undefined` \| `RelativePath`
+> **mapRawSpecifierToPath**(`rawAliasMappings`, `specifier`, `__namedParameters?`): `undefined` \| `RelativePath`
 
-Defined in: packages/graph/dist/packages/graph/src/alias.d.ts:288
+Defined in: packages/graph/dist/packages/graph/src/alias.d.ts:293
 
 Accepts a _raw `specifier`_ and returns an "bare" RelativePath (in
 that it does not begin with "./") to a theoretical location on the filesystem

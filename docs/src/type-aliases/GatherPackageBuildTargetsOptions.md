@@ -30,12 +30,18 @@ If `true`, multiversal import support will be enabled.
 
 > `optional` **excludeInternalsPatterns**: `string`[]
 
-Defined in: packages/graph/dist/packages/graph/src/analysis/gather-package-build-targets.d.ts:52
+Defined in: packages/graph/dist/packages/graph/src/analysis/gather-package-build-targets.d.ts:64
 
 Exclude paths from the internals result with respect to the patterns in
 `excludeInternalsPatterns`, which are interpreted according to gitignore
 rules and _always_ relative to the _project_ (NEVER package or filesystem!)
 root.
+
+#### Default
+
+```ts
+[]
+```
 
 ***
 
@@ -43,11 +49,33 @@ root.
 
 > `optional` **includeExternalsPatterns**: `string`[]
 
-Defined in: packages/graph/dist/packages/graph/src/analysis/gather-package-build-targets.d.ts:58
+Defined in: packages/graph/dist/packages/graph/src/analysis/gather-package-build-targets.d.ts:72
 
 Include in the externals result all paths matching a pattern in
 `includeExternalsPatterns`, which are interpreted as glob strings and
 _always_ relative to the _project_ (NEVER package or filesystem!) root.
+
+#### Default
+
+```ts
+[]
+```
+
+***
+
+### includeInternalTestFiles
+
+> **includeInternalTestFiles**: `boolean`
+
+Defined in: packages/graph/dist/packages/graph/src/analysis/gather-package-build-targets.d.ts:55
+
+If `true`, files under `./test` will be treated the same as files under
+`./src`. Testversal imports will also be allowed.
+
+If `false`, `./test` files files will be ignored and testverse imports are
+not allowed.
+
+Most invocations of this function should set this to `false`.
 
 ***
 

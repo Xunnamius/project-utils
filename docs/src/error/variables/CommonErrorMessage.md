@@ -8,13 +8,15 @@
 
 > `const` **CommonErrorMessage**: `object`
 
-Defined in: [packages/common/src/error.ts:259](https://github.com/Xunnamius/projector/blob/a04d9b108194223cb498fc3df18f9fe3f4abe241/packages/common/src/error.ts#L259)
+Defined in: [packages/common/src/error.ts:259](https://github.com/Xunnamius/projector/blob/7d08d032705681ea15c0198d678da1844ace8e52/packages/common/src/error.ts#L259)
 
 A collection of possible error and warning messages.
 
 ## Type declaration
 
 ### DuplicatePackageId()
+
+> **DuplicatePackageId**(`id`, `firstPath`, `secondPath`): `string`
 
 #### Parameters
 
@@ -36,6 +38,8 @@ A collection of possible error and warning messages.
 
 ### DuplicatePackageName()
 
+> **DuplicatePackageName**(`packageName`, `firstPath`, `secondPath`): `string`
+
 #### Parameters
 
 ##### packageName
@@ -56,11 +60,15 @@ A collection of possible error and warning messages.
 
 ### Generic()
 
+> **Generic**(): `string`
+
 #### Returns
 
 `string`
 
 ### GuruMeditation()
+
+> **GuruMeditation**(): `string`
 
 #### Returns
 
@@ -68,11 +76,15 @@ A collection of possible error and warning messages.
 
 ### NotAGitRepositoryError()
 
+> **NotAGitRepositoryError**(): `string`
+
 #### Returns
 
 `string`
 
 ### PackageJsonNotParsable()
+
+> **PackageJsonNotParsable**(`packageJsonPath`, `reason`): `string`
 
 #### Parameters
 

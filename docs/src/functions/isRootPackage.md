@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **isRootPackage**(`o`, `options`?): `o is GenericRootPackage`
+> **isRootPackage**(`o`, `options?`): `o is GenericRootPackage`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:579
 

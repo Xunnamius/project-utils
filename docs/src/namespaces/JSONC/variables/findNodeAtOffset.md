@@ -6,7 +6,7 @@
 
 # Variable: findNodeAtOffset()
 
-> `const` **findNodeAtOffset**: (`root`, `offset`, `includeRightBound`?) => [`Node`](../interfaces/Node.md) \| `undefined`
+> `const` **findNodeAtOffset**: (`root`, `offset`, `includeRightBound?`) => [`Node`](../interfaces/Node.md) \| `undefined`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:99
 

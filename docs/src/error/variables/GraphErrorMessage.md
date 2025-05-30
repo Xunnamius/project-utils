@@ -24,6 +24,8 @@ A collection of possible error and warning messages.
 
 ### BadProjectTypeInPackageJson()
 
+> **BadProjectTypeInPackageJson**(`path`): `string`
+
 #### Parameters
 
 ##### path
@@ -36,11 +38,15 @@ A collection of possible error and warning messages.
 
 ### CannotBeCliAndNextJs()
 
+> **CannotBeCliAndNextJs**(): `string`
+
 #### Returns
 
 `string`
 
 ### DependencyCycle()
+
+> **DependencyCycle**(`involvedPackages`): `string`
 
 #### Parameters
 
@@ -53,6 +59,8 @@ A collection of possible error and warning messages.
 `string`
 
 ### DuplicatePackageId()
+
+> **DuplicatePackageId**(`id`, `firstPath`, `secondPath`): `string`
 
 #### Parameters
 
@@ -74,6 +82,8 @@ A collection of possible error and warning messages.
 
 ### DuplicatePackageName()
 
+> **DuplicatePackageName**(`packageName`, `firstPath`, `secondPath`): `string`
+
 #### Parameters
 
 ##### packageName
@@ -94,17 +104,23 @@ A collection of possible error and warning messages.
 
 ### Generic()
 
+> **Generic**(): `string`
+
 #### Returns
 
 `string`
 
 ### GuruMeditation()
 
+> **GuruMeditation**(): `string`
+
 #### Returns
 
 `string`
 
 ### IllegalAliasBadSuffix()
+
+> **IllegalAliasBadSuffix**(`key`): `string`
 
 #### Parameters
 
@@ -117,6 +133,8 @@ A collection of possible error and warning messages.
 `string`
 
 ### IllegalAliasKeyInvalidCharacters()
+
+> **IllegalAliasKeyInvalidCharacters**(`key`, `invalids`): `string`
 
 #### Parameters
 
@@ -133,6 +151,8 @@ A collection of possible error and warning messages.
 `string`
 
 ### IllegalAliasValueInvalidCharacters()
+
+> **IllegalAliasValueInvalidCharacters**(`key`, `path`, `invalids`): `string`
 
 #### Parameters
 
@@ -154,6 +174,8 @@ A collection of possible error and warning messages.
 
 ### IllegalAliasValueInvalidSeparatorAdfix()
 
+> **IllegalAliasValueInvalidSeparatorAdfix**(`key`, `path`): `string`
+
 #### Parameters
 
 ##### key
@@ -169,6 +191,8 @@ A collection of possible error and warning messages.
 `string`
 
 ### IllegalPrivateDependency()
+
+> **IllegalPrivateDependency**(`dependent`, `dependency`): `string`
 
 #### Parameters
 
@@ -186,6 +210,8 @@ A collection of possible error and warning messages.
 
 ### MissingNameInPackageJson()
 
+> **MissingNameInPackageJson**(`path`): `string`
+
 #### Parameters
 
 ##### path
@@ -197,6 +223,8 @@ A collection of possible error and warning messages.
 `string`
 
 ### MissingOptionalBabelDependency()
+
+> **MissingOptionalBabelDependency**(`caller`): `string`
 
 #### Parameters
 
@@ -210,17 +238,23 @@ A collection of possible error and warning messages.
 
 ### NotAGitRepositoryError()
 
+> **NotAGitRepositoryError**(): `string`
+
 #### Returns
 
 `string`
 
 ### NotAMonorepoError()
 
+> **NotAMonorepoError**(): `string`
+
 #### Returns
 
 `string`
 
 ### PackageJsonNotParsable()
+
+> **PackageJsonNotParsable**(`packageJsonPath`, `reason`): `string`
 
 #### Parameters
 
@@ -238,6 +272,8 @@ A collection of possible error and warning messages.
 
 ### PathOutsideRoot()
 
+> **PathOutsideRoot**(`path`): `string`
+
 #### Parameters
 
 ##### path
@@ -249,6 +285,8 @@ A collection of possible error and warning messages.
 `string`
 
 ### SpecifierNotOkEmpty()
+
+> **SpecifierNotOkEmpty**(`specifier`, `path?`): `string`
 
 #### Parameters
 
@@ -266,6 +304,8 @@ A collection of possible error and warning messages.
 
 ### SpecifierNotOkMissingExtension()
 
+> **SpecifierNotOkMissingExtension**(`specifier`, `path?`): `string`
+
 #### Parameters
 
 ##### specifier
@@ -281,6 +321,8 @@ A collection of possible error and warning messages.
 `string`
 
 ### SpecifierNotOkRelative()
+
+> **SpecifierNotOkRelative**(`specifier`, `path?`): `string`
 
 #### Parameters
 
@@ -298,6 +340,8 @@ A collection of possible error and warning messages.
 
 ### SpecifierNotOkSelfReferential()
 
+> **SpecifierNotOkSelfReferential**(`specifier`, `path?`): `string`
+
 #### Parameters
 
 ##### specifier
@@ -313,6 +357,8 @@ A collection of possible error and warning messages.
 `string`
 
 ### SpecifierNotOkSuboptimal()
+
+> **SpecifierNotOkSuboptimal**(`specifier`, `replacement`, `path?`): `string`
 
 #### Parameters
 
@@ -334,6 +380,8 @@ A collection of possible error and warning messages.
 
 ### SpecifierNotOkUnnecessaryIndex()
 
+> **SpecifierNotOkUnnecessaryIndex**(`specifier`, `path?`): `string`
+
 #### Parameters
 
 ##### specifier
@@ -349,6 +397,8 @@ A collection of possible error and warning messages.
 `string`
 
 ### SpecifierNotOkVerseNotAllowed()
+
+> **SpecifierNotOkVerseNotAllowed**(`verse`, `specifier`, `path?`): `string`
 
 #### Parameters
 
@@ -370,11 +420,15 @@ A collection of possible error and warning messages.
 
 ### TargetUnserializable()
 
+> **TargetUnserializable**(): `string`
+
 #### Returns
 
 `string`
 
 ### UnsupportedFeature()
+
+> **UnsupportedFeature**(`feature`): `string`
 
 #### Parameters
 

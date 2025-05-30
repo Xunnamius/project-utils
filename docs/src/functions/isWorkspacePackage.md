@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **isWorkspacePackage**(`o`, `options`?): `o is GenericWorkspacePackage`
+> **isWorkspacePackage**(`o`, `options?`): `o is GenericWorkspacePackage`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:568
 

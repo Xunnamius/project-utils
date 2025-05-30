@@ -6,7 +6,7 @@
 
 # Variable: parse()
 
-> `const` **parse**: (`text`, `errors`?, `options`?) => `any`
+> `const` **parse**: (`text`, `errors?`, `options?`) => `any`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:87
 

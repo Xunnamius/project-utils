@@ -8,7 +8,7 @@
 
 > **gatherPackageBuildTargets**(...`args`): `Promise`\<[`PackageBuildTargets`](../type-aliases/PackageBuildTargets.md)\>
 
-Defined in: packages/graph/dist/packages/graph/src/analysis/gather-package-build-targets.d.ts:74
+Defined in: packages/graph/dist/packages/graph/src/analysis/gather-package-build-targets.d.ts:88
 
 Asynchronously construct a [PackageBuildTargets](../type-aliases/PackageBuildTargets.md) instance derived from
 a [Package](../type-aliases/Package.md) instance.

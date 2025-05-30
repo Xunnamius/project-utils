@@ -8,7 +8,7 @@
 
 > **deriveAliasesForJest**(`rawAliasMappings`): `object`
 
-Defined in: packages/graph/dist/packages/graph/src/alias.d.ts:257
+Defined in: packages/graph/dist/packages/graph/src/alias.d.ts:262
 
 Returns an object that can be plugged into Jest configurations at
 `moduleNameMapper`.

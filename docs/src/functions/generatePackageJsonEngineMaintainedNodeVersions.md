@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **generatePackageJsonEngineMaintainedNodeVersions**(`options`?): `string`
+> **generatePackageJsonEngineMaintainedNodeVersions**(`options?`): `string`
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/generate-package-json-engine-maintained-node-versions.d.ts:6
 
@@ -40,7 +40,7 @@ engines
 
 ## Call Signature
 
-> **generatePackageJsonEngineMaintainedNodeVersions**(`options`?): `string`[]
+> **generatePackageJsonEngineMaintainedNodeVersions**(`options?`): `string`[]
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/generate-package-json-engine-maintained-node-versions.d.ts:20
 
@@ -71,7 +71,7 @@ engines
 
 ## Call Signature
 
-> **generatePackageJsonEngineMaintainedNodeVersions**(`options`?): `Arrayable`\<`string`\>
+> **generatePackageJsonEngineMaintainedNodeVersions**(`options?`): `Arrayable`\<`string`\>
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/generate-package-json-engine-maintained-node-versions.d.ts:34
 

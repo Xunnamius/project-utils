@@ -6,7 +6,7 @@
 
 # Function: sortPackagesTopologically()
 
-> **sortPackagesTopologically**(`projectMetadata`, `__namedParameters`?): [`Package`](../type-aliases/Package.md)\<[`GenericPackageJson`](../type-aliases/GenericPackageJson.md)\>[][]
+> **sortPackagesTopologically**(`projectMetadata`, `__namedParameters?`): [`Package`](../type-aliases/Package.md)\<[`GenericPackageJson`](../type-aliases/GenericPackageJson.md)\>[][]
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/sort-packages-topologically.d.ts:17
 

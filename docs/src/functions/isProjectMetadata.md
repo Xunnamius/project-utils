@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **isProjectMetadata**(`o`, `options`?): `o is GenericProjectMetadata`
+> **isProjectMetadata**(`o`, `options?`): `o is GenericProjectMetadata`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:589
 

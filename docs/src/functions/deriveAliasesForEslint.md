@@ -8,7 +8,7 @@
 
 > **deriveAliasesForEslint**(`rawAliasMappings`): `string`[][]
 
-Defined in: packages/graph/dist/packages/graph/src/alias.d.ts:229
+Defined in: packages/graph/dist/packages/graph/src/alias.d.ts:234
 
 Returns an array that can be plugged into ESLint configurations at
 `settings['import/resolver'].alias.map`.

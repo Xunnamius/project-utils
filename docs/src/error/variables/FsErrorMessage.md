@@ -16,11 +16,15 @@ A collection of possible error and warning messages.
 
 ### DeriverAsyncConfigurationConflict()
 
+> **DeriverAsyncConfigurationConflict**(): `string`
+
 #### Returns
 
 `string`
 
 ### DuplicatePackageId()
+
+> **DuplicatePackageId**(`id`, `firstPath`, `secondPath`): `string`
 
 #### Parameters
 
@@ -42,6 +46,8 @@ A collection of possible error and warning messages.
 
 ### DuplicatePackageName()
 
+> **DuplicatePackageName**(`packageName`, `firstPath`, `secondPath`): `string`
+
 #### Parameters
 
 ##### packageName
@@ -62,11 +68,15 @@ A collection of possible error and warning messages.
 
 ### Generic()
 
+> **Generic**(): `string`
+
 #### Returns
 
 `string`
 
 ### GuruMeditation()
+
+> **GuruMeditation**(): `string`
 
 #### Returns
 
@@ -74,17 +84,23 @@ A collection of possible error and warning messages.
 
 ### IsNotXPackageJson()
 
+> **IsNotXPackageJson**(): `string`
+
 #### Returns
 
 `string`
 
 ### NotAGitRepositoryError()
 
+> **NotAGitRepositoryError**(): `string`
+
 #### Returns
 
 `string`
 
 ### NotParsable()
+
+> **NotParsable**(`path`, `type?`): `string`
 
 #### Parameters
 
@@ -102,6 +118,8 @@ A collection of possible error and warning messages.
 
 ### NotReadable()
 
+> **NotReadable**(`path`): `string`
+
 #### Parameters
 
 ##### path
@@ -113,6 +131,8 @@ A collection of possible error and warning messages.
 `string`
 
 ### PackageJsonNotParsable()
+
+> **PackageJsonNotParsable**(`packageJsonPath`, `reason`): `string`
 
 #### Parameters
 

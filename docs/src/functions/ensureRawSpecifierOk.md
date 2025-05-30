@@ -8,7 +8,7 @@
 
 > **ensureRawSpecifierOk**(`rawAliasMappings`, `specifier`, `__namedParameters`): `void`
 
-Defined in: packages/graph/dist/packages/graph/src/alias.d.ts:304
+Defined in: packages/graph/dist/packages/graph/src/alias.d.ts:309
 
 This function throws if the given specifier violates any general symbiote
 project invariants with respect to the given [RawAliasMapping](../type-aliases/RawAliasMapping.md)s.

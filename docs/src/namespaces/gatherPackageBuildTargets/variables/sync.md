@@ -8,7 +8,7 @@
 
 > `const` **sync**: `SyncVersionOf`\<*typeof* [`gatherPackageBuildTargets`](../../../functions/gatherPackageBuildTargets.md)\>
 
-Defined in: packages/graph/dist/packages/graph/src/analysis/gather-package-build-targets.d.ts:89
+Defined in: packages/graph/dist/packages/graph/src/analysis/gather-package-build-targets.d.ts:103
 
 Synchronously construct a [PackageBuildTargets](../../../type-aliases/PackageBuildTargets.md) instance derived from
 a [Package](../../../type-aliases/Package.md) instance.
