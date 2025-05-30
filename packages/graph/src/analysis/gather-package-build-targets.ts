@@ -34,7 +34,12 @@ import type {
 import type { Entries, Promisable, SetFieldType } from 'type-fest';
 import type { ParametersNoFirst, SyncVersionOf } from 'multiverse+common:types.ts';
 import type { ImportSpecifiersEntry } from 'universe+graph:analysis/gather-import-entries-from-files.ts';
-import type { PackageBuildTargets, Serializable } from 'universe+graph:common.ts';
+
+import type {
+  PackageBuildTargets,
+  PackageFiles,
+  Serializable
+} from 'universe+graph:common.ts';
 
 const debug = commonDebug.extend('gatherPackageBuildTargets');
 
@@ -92,6 +97,16 @@ export type GatherPackageBuildTargetsOptions = {
    */
   allowMultiversalImports: boolean;
   /**
+   * If `true`, files under `./test` will be treated the same as files under
+   * `./src`. Testversal imports will also be allowed.
+   *
+   * If `false`, `./test` files files will be ignored and testverse imports are
+   * not allowed.
+   *
+   * Most invocations of this function should set this to `false`.
+   */
+  includeInternalTestFiles: boolean;
+  /**
    * Exclude paths from the internals result with respect to the patterns in
    * `excludeInternalsPatterns`, which are interpreted according to gitignore
    * rules and _always_ relative to the _project_ (NEVER package or filesystem!)
@@ -127,6 +142,7 @@ function gatherPackageBuildTargets_(
 ): Promisable<PackageBuildTargets> {
   const {
     allowMultiversalImports,
+    includeInternalTestFiles,
     excludeInternalsPatterns = [],
     includeExternalsPatterns = []
   } = cacheIdComponentsObject;
@@ -180,7 +196,7 @@ function gatherPackageBuildTargets_(
   async function runAsynchronously() {
     const [packageSrcPaths, additionalExternalPaths] = await Promise.all([
       gatherPackageFiles(package_, { ignore: excludeInternalsPatterns, useCached }).then(
-        ({ src }) => src
+        maybeFlattenPackageFilesSrcTest
       ),
       globAsync(includeExternalsPatterns, {
         dot: true,
@@ -222,10 +238,20 @@ function gatherPackageBuildTargets_(
       ] = await Promise.all([
         gatherImportEntriesFromFiles(Array.from(previousNormalDiff.values()), {
           useCached
-        }).then((entries) => rawSpecifiersToTargetPaths(entries, !firstIteration)),
+        }).then((entries) =>
+          rawSpecifiersToTargetPaths(entries, {
+            allowForeignUniversalImports: !firstIteration,
+            allowTestversalImports: includeInternalTestFiles
+          })
+        ),
         gatherImportEntriesFromFiles(Array.from(previousTypeOnlyDiff.values()), {
           useCached
-        }).then((entries) => rawSpecifiersToTargetPaths(entries, !firstIteration))
+        }).then((entries) =>
+          rawSpecifiersToTargetPaths(entries, {
+            allowForeignUniversalImports: !firstIteration,
+            allowTestversalImports: includeInternalTestFiles
+          })
+        )
       ]);
 
       // * Note that these are relative to the **PROJECT ROOT**
@@ -264,10 +290,12 @@ function gatherPackageBuildTargets_(
 
   function runSynchronously() {
     const [packageSrcPaths, additionalExternalPaths] = [
-      gatherPackageFiles.sync(package_, {
-        ignore: excludeInternalsPatterns,
-        useCached
-      }).src,
+      maybeFlattenPackageFilesSrcTest(
+        gatherPackageFiles.sync(package_, {
+          ignore: excludeInternalsPatterns,
+          useCached
+        })
+      ),
       globSync(includeExternalsPatterns, {
         dot: true,
         absolute: true,
@@ -308,13 +336,19 @@ function gatherPackageBuildTargets_(
           gatherImportEntriesFromFiles.sync(Array.from(previousNormalDiff.values()), {
             useCached
           }),
-          !firstIteration
+          {
+            allowForeignUniversalImports: !firstIteration,
+            allowTestversalImports: includeInternalTestFiles
+          }
         ),
         rawSpecifiersToTargetPaths(
           gatherImportEntriesFromFiles.sync(Array.from(previousTypeOnlyDiff.values()), {
             useCached
           }),
-          !firstIteration
+          {
+            allowForeignUniversalImports: !firstIteration,
+            allowTestversalImports: includeInternalTestFiles
+          }
         )
       ];
 
@@ -371,7 +405,7 @@ function gatherPackageBuildTargets_(
    * Given an array of {@link ImportSpecifiersEntry}s, this function returns a
    * flattened array of ({@link AbsolutePath})s resolved from those specifiers.
    * Specifiers that are not from a distributable source verse (i.e. testverse,
-   * typeverse) will cause an error. Specifiers that do not come from TypeScript
+   * typeverse) will cause an error unless . Specifiers that do not come from TypeScript
    * files or cannot be mapped are ignored, though their existence is still
    * noted in the metadata and, unless they do NOT come from a TypeScript file,
    * their syntax is still validated.
@@ -384,7 +418,10 @@ function gatherPackageBuildTargets_(
    */
   function rawSpecifiersToTargetPaths(
     entries: ImportSpecifiersEntry[],
-    allowForeignUniversalImports: boolean,
+    {
+      allowForeignUniversalImports,
+      allowTestversalImports
+    }: { allowForeignUniversalImports: boolean; allowTestversalImports: boolean },
     // * We'll see if setting this to true becomes useful at some point...
     allowRootverseNodeModules = false
   ): SetFieldType<ImportSpecifiersEntry[1], 'normal' | 'typeOnly', Set<AbsolutePath>> {
@@ -406,7 +443,8 @@ function gatherPackageBuildTargets_(
         targets.external.typeOnly.has(relativeSpecifiersPath),
         targets.external.normal.has(relativeSpecifiersPath),
         allowForeignUniversalImports,
-        allowRootverseNodeModules
+        allowRootverseNodeModules,
+        allowTestversalImports
       );
     }
 
@@ -425,7 +463,8 @@ function gatherPackageBuildTargets_(
     isTypeOnly: boolean,
     isNormal: boolean,
     allowForeignUniversalImports: boolean,
-    allowRootverseNodeModules: boolean
+    allowRootverseNodeModules: boolean,
+    allowTestversalImports: boolean
   ) {
     // TODO: consider optionally allowing files other than typescript to have
     // TODO: their raw specifiers checked
@@ -442,7 +481,7 @@ function gatherPackageBuildTargets_(
           ensureRawSpecifierOk(wellKnownAliases, specifier, {
             allowMultiversalImports,
             allowForeignUniversalImports,
-            allowTestversalImports: false,
+            allowTestversalImports,
             allowRootverseNodeModules,
             packageId: specifierPackageId,
             containingFilePath: specifiersPath
@@ -487,6 +526,7 @@ function gatherPackageBuildTargets_(
               WellKnownImportAlias.Universe,
               WellKnownImportAlias.Multiverse,
               WellKnownImportAlias.Rootverse,
+              ...(includeInternalTestFiles ? [WellKnownImportAlias.Testverse] : []),
               WellKnownImportAlias.Typeverse
             ].includes(group);
 
@@ -528,6 +568,10 @@ function gatherPackageBuildTargets_(
         }
       }
     }
+  }
+
+  function maybeFlattenPackageFilesSrcTest({ src, test }: PackageFiles) {
+    return [src, includeInternalTestFiles ? test : []].flat();
   }
 }
 

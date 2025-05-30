@@ -2758,7 +2758,11 @@ describe('::gatherPackageBuildTargets', () => {
       expect(
         gatherPackageBuildTargets.sync(
           dummyToProjectMetadata('goodPolyrepo').rootPackage,
-          { allowMultiversalImports: true, useCached: true }
+          {
+            allowMultiversalImports: true,
+            includeInternalTestFiles: false,
+            useCached: true
+          }
         )
       ).toStrictEqual({
         targets: {
@@ -2795,6 +2799,55 @@ describe('::gatherPackageBuildTargets', () => {
           }
         }
       } satisfies PackageBuildTargets);
+
+      expect(
+        gatherPackageBuildTargets.sync(
+          dummyToProjectMetadata('goodPolyrepo').rootPackage,
+          {
+            allowMultiversalImports: true,
+            includeInternalTestFiles: true,
+            useCached: true
+          }
+        )
+      ).toStrictEqual({
+        targets: {
+          external: {
+            normal: new Set(['types/global.ts'] as RelativePath[]),
+            typeOnly: new Set([] as RelativePath[])
+          },
+          internal: new Set([
+            'src/1.ts',
+            'src/2.mts',
+            'src/3.cts',
+            'src/4.tsx',
+            'src/index.js',
+            'src/package.json',
+            'test/something-else.ts',
+            'test/type-1.test.ts',
+            'test/unit-jest.test.ts',
+            'test/nested/type-2.test.tsx'
+          ] as RelativePath[])
+        },
+        metadata: {
+          imports: {
+            aliasCounts: {
+              typeverse: {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              universe: {
+                count: 4,
+                prefixes: new Set([prefixNormalImport, prefixInternalImport])
+              }
+            },
+            dependencyCounts: {}
+          }
+        }
+      } satisfies PackageBuildTargets);
     });
 
     it('returns expected build targets for multiversal hybridrepo root package', () => {
@@ -2803,7 +2856,11 @@ describe('::gatherPackageBuildTargets', () => {
       expect(
         gatherPackageBuildTargets.sync(
           dummyToProjectMetadata('goodHybridrepoMultiversal').rootPackage,
-          { allowMultiversalImports: true, useCached: true }
+          {
+            allowMultiversalImports: true,
+            includeInternalTestFiles: false,
+            useCached: true
+          }
         )
       ).toStrictEqual({
         targets: {
@@ -2972,19 +3029,236 @@ describe('::gatherPackageBuildTargets', () => {
           }
         }
       } satisfies PackageBuildTargets);
+
+      expect(
+        gatherPackageBuildTargets.sync(
+          dummyToProjectMetadata('goodHybridrepoMultiversal').rootPackage,
+          {
+            allowMultiversalImports: true,
+            includeInternalTestFiles: true,
+            useCached: true
+          }
+        )
+      ).toStrictEqual({
+        targets: {
+          external: {
+            normal: new Set([
+              'packages/cli/src/index.ts',
+              'packages/private/src/index.ts',
+              'packages/private/package.json',
+              'packages/webpack/webpack.config.ts',
+              'packages/private/src/lib/library.ts',
+              'packages/webpack/src/webpack-lib.ts',
+              'packages/webpack/package.json',
+              'packages/private/src/lib/library2.ts',
+              'packages/webpack/src/webpack-lib2.ts'
+            ] as RelativePath[]),
+            typeOnly: new Set([
+              'src/index.ts',
+              'src/others.ts',
+              'types/global.ts',
+              'types/others.ts',
+              'test/setup.ts'
+            ] as RelativePath[])
+          },
+          internal: new Set([
+            'src/index.ts',
+            'src/others.ts',
+            'test/setup.ts',
+            'test/unit-some.test.ts'
+          ] as RelativePath[])
+        },
+        metadata: {
+          imports: {
+            aliasCounts: {
+              'multiverse+cli': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'multiverse+private': {
+                count: 6,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'multiverse+webpack': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'rootverse+private': {
+                count: 4,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'rootverse+webpack': {
+                count: 6,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              testverse: {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              typeverse: {
+                count: 3,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixTypeOnlyImport,
+                  prefixExternalImport
+                ])
+              },
+              universe: {
+                count: 6,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'universe+private': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'universe+webpack': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              }
+            },
+            dependencyCounts: {
+              '@-xun/types': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              '@babel/core': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              '@black-flag/core': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'another-package': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'node:fs': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'node:path': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'some-package': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              somewhere: {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'type-fest': {
+                count: 2,
+                prefixes: new Set([prefixTypeOnlyImport, prefixExternalImport])
+              },
+              webpack: {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'webpack~2': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              }
+            }
+          }
+        }
+      } satisfies PackageBuildTargets);
     });
 
     it('returns expected build targets for multiversal hybridrepo sub-root "cli" package', () => {
       expect.hasAssertions();
 
-      expect(
-        gatherPackageBuildTargets.sync(
-          dummyToProjectMetadata('goodHybridrepoMultiversal').subRootPackages!.get(
-            'cli'
-          )!,
-          { allowMultiversalImports: true, useCached: true }
-        )
-      ).toStrictEqual({
+      const actual = gatherPackageBuildTargets.sync(
+        dummyToProjectMetadata('goodHybridrepoMultiversal').subRootPackages!.get('cli')!,
+        {
+          allowMultiversalImports: true,
+          includeInternalTestFiles: false,
+          useCached: true
+        }
+      );
+
+      expect(actual).toStrictEqual({
         targets: {
           external: {
             normal: new Set([
@@ -3056,6 +3330,19 @@ describe('::gatherPackageBuildTargets', () => {
           }
         }
       } satisfies PackageBuildTargets);
+
+      expect(
+        gatherPackageBuildTargets.sync(
+          dummyToProjectMetadata('goodHybridrepoMultiversal').subRootPackages!.get(
+            'cli'
+          )!,
+          {
+            allowMultiversalImports: true,
+            includeInternalTestFiles: true,
+            useCached: true
+          }
+        )
+      ).toStrictEqual(actual);
     });
 
     it('returns expected build targets for multiversal hybridrepo sub-root "private" package', () => {
@@ -3071,7 +3358,11 @@ describe('::gatherPackageBuildTargets', () => {
             dummyToProjectMetadata('goodHybridrepoMultiversal').subRootPackages!.get(
               'private'
             )!,
-            { allowMultiversalImports: true, useCached: true }
+            {
+              allowMultiversalImports: true,
+              includeInternalTestFiles: false,
+              useCached: true
+            }
           )
         ).toStrictEqual({
           targets: {
@@ -3126,6 +3417,91 @@ describe('::gatherPackageBuildTargets', () => {
             }
           }
         } satisfies PackageBuildTargets);
+
+        expect(
+          gatherPackageBuildTargets.sync(
+            dummyToProjectMetadata('goodHybridrepoMultiversal').subRootPackages!.get(
+              'private'
+            )!,
+            {
+              allowMultiversalImports: true,
+              includeInternalTestFiles: true,
+              useCached: true
+            }
+          )
+        ).toStrictEqual({
+          targets: {
+            external: {
+              normal: new Set([
+                'packages/private/package.json',
+                'test/setup.ts'
+              ] as RelativePath[]),
+              typeOnly: new Set(['types/global.ts', 'types/others.ts'] as RelativePath[])
+            },
+            internal: new Set([
+              'packages/private/src/index.ts',
+              'packages/private/src/lib/library.ts',
+              'packages/private/src/lib/library2.ts',
+              'packages/private/src/markdown/1.md',
+              'packages/private/src/markdown/2.md',
+              'packages/private/src/markdown/3.md',
+              'packages/private/test/unit-lib.test.ts'
+            ] as RelativePath[])
+          },
+          metadata: {
+            imports: {
+              aliasCounts: {
+                'rootverse+private': {
+                  count: 2,
+                  prefixes: new Set([prefixNormalImport, prefixInternalImport])
+                },
+                typeverse: {
+                  count: 2,
+                  prefixes: new Set([
+                    prefixTypeOnlyImport,
+                    prefixNormalImport,
+                    prefixInternalImport,
+                    prefixExternalImport
+                  ])
+                },
+                testverse: {
+                  count: 1,
+                  prefixes: new Set([prefixNormalImport, prefixInternalImport])
+                },
+                'universe+private': {
+                  count: 2,
+                  prefixes: new Set([prefixNormalImport, prefixInternalImport])
+                }
+              },
+              dependencyCounts: {
+                '@-xun/types': {
+                  count: 1,
+                  prefixes: new Set(['<norm>', '<type>', '<extr>'])
+                },
+                'another-package': {
+                  count: 1,
+                  prefixes: new Set([prefixNormalImport, prefixInternalImport])
+                },
+                'node:fs': {
+                  count: 1,
+                  prefixes: new Set(['<norm>', '<extr>'])
+                },
+                'some-package': {
+                  count: 1,
+                  prefixes: new Set([prefixNormalImport, prefixInternalImport])
+                },
+                somewhere: {
+                  count: 1,
+                  prefixes: new Set(['<norm>', '<extr>'])
+                },
+                'type-fest': {
+                  count: 2,
+                  prefixes: new Set([prefixTypeOnlyImport, prefixExternalImport])
+                }
+              }
+            }
+          }
+        } satisfies PackageBuildTargets);
       } finally {
         repositories.goodHybridrepoMultiversal.namedPackageMapData.pop();
       }
@@ -3134,14 +3510,18 @@ describe('::gatherPackageBuildTargets', () => {
     it('returns expected build targets for multiversal hybridrepo sub-root "package-one" package (where package name differs from its id)', () => {
       expect.hasAssertions();
 
-      expect(
-        gatherPackageBuildTargets.sync(
-          dummyToProjectMetadata('goodHybridrepoSelfRef').subRootPackages!.get(
-            'package-one'
-          )!,
-          { allowMultiversalImports: true, useCached: true }
-        )
-      ).toStrictEqual({
+      const actual = gatherPackageBuildTargets.sync(
+        dummyToProjectMetadata('goodHybridrepoSelfRef').subRootPackages!.get(
+          'package-one'
+        )!,
+        {
+          allowMultiversalImports: true,
+          includeInternalTestFiles: false,
+          useCached: true
+        }
+      );
+
+      expect(actual).toStrictEqual({
         targets: {
           external: {
             normal: new Set(['packages/pkg-1/package.json'] as RelativePath[]),
@@ -3173,6 +3553,19 @@ describe('::gatherPackageBuildTargets', () => {
           }
         }
       } satisfies PackageBuildTargets);
+
+      expect(
+        gatherPackageBuildTargets.sync(
+          dummyToProjectMetadata('goodHybridrepoSelfRef').subRootPackages!.get(
+            'package-one'
+          )!,
+          {
+            allowMultiversalImports: true,
+            includeInternalTestFiles: true,
+            useCached: true
+          }
+        )
+      ).toStrictEqual(actual);
     });
 
     it('returns result from internal cache if available unless useCached is false (new result is always added to internal cache)', () => {
@@ -3181,19 +3574,28 @@ describe('::gatherPackageBuildTargets', () => {
       const dummyMetadata = dummyToProjectMetadata('goodPolyrepo');
       const packageBuildTargets = gatherPackageBuildTargets.sync(
         dummyMetadata.rootPackage,
-        { allowMultiversalImports: true, useCached: false }
+        {
+          allowMultiversalImports: true,
+          includeInternalTestFiles: false,
+          useCached: false
+        }
       );
 
       expect(packageBuildTargets).toBe(
         gatherPackageBuildTargets.sync(dummyMetadata.rootPackage, {
           allowMultiversalImports: true,
+          includeInternalTestFiles: false,
           useCached: true
         })
       );
 
       const updatedPackageBuildTargets = gatherPackageBuildTargets.sync(
         dummyMetadata.rootPackage,
-        { allowMultiversalImports: true, useCached: false }
+        {
+          allowMultiversalImports: true,
+          includeInternalTestFiles: false,
+          useCached: false
+        }
       );
 
       expect(updatedPackageBuildTargets).not.toBe(packageBuildTargets);
@@ -3201,6 +3603,7 @@ describe('::gatherPackageBuildTargets', () => {
       expect(
         gatherPackageBuildTargets.sync(dummyMetadata.rootPackage, {
           allowMultiversalImports: true,
+          includeInternalTestFiles: false,
           useCached: true
         })
       ).toBe(updatedPackageBuildTargets);
@@ -3212,10 +3615,12 @@ describe('::gatherPackageBuildTargets', () => {
       const { rootPackage } = dummyToProjectMetadata('goodHybridrepo');
       const result1 = gatherPackageBuildTargets.sync(rootPackage, {
         allowMultiversalImports: true,
+        includeInternalTestFiles: false,
         useCached: true
       });
       const result2 = gatherPackageBuildTargets.sync(rootPackage, {
         allowMultiversalImports: true,
+        includeInternalTestFiles: false,
         excludeInternalsPatterns: ['/fake/exclude'],
         useCached: true
       });
@@ -3231,6 +3636,7 @@ describe('::gatherPackageBuildTargets', () => {
       expect(
         gatherPackageBuildTargets.sync(rootPackage, {
           allowMultiversalImports: true,
+          includeInternalTestFiles: false,
           excludeInternalsPatterns: [],
           includeExternalsPatterns: [],
           useCached: true
@@ -3238,6 +3644,7 @@ describe('::gatherPackageBuildTargets', () => {
       ).toStrictEqual(
         gatherPackageBuildTargets.sync(rootPackage, {
           allowMultiversalImports: true,
+          includeInternalTestFiles: false,
           useCached: true
         })
       );
@@ -3254,6 +3661,7 @@ describe('::gatherPackageBuildTargets', () => {
           subRootPackages.get('@namespaced/webpack-common-config')!,
           {
             allowMultiversalImports: true,
+            includeInternalTestFiles: false,
             includeExternalsPatterns: ['packages/private/src/index.ts'],
             useCached: true
           }
@@ -3308,6 +3716,7 @@ describe('::gatherPackageBuildTargets', () => {
           subRootPackages.get('@namespaced/webpack-common-config')!,
           {
             allowMultiversalImports: true,
+            includeInternalTestFiles: false,
             includeExternalsPatterns: ['**/private/*/index.ts'],
             useCached: true
           }
@@ -3369,6 +3778,7 @@ describe('::gatherPackageBuildTargets', () => {
           subRootPackages.get('@namespaced/webpack-common-config')!,
           {
             allowMultiversalImports: true,
+            includeInternalTestFiles: false,
             excludeInternalsPatterns: [
               'packages/webpack/src/webpack-lib.ts',
               'src/webpack-lib2.ts'
@@ -3409,6 +3819,7 @@ describe('::gatherPackageBuildTargets', () => {
           subRootPackages.get('@namespaced/webpack-common-config')!,
           {
             allowMultiversalImports: true,
+            includeInternalTestFiles: false,
             excludeInternalsPatterns: ['webpack-lib*'],
             useCached: true
           }
@@ -3433,6 +3844,7 @@ describe('::gatherPackageBuildTargets', () => {
           subRootPackages.get('@namespaced/webpack-common-config')!,
           {
             allowMultiversalImports: true,
+            includeInternalTestFiles: false,
             excludeInternalsPatterns: ['packages/webpack/src/webpack-lib2.ts'],
             includeExternalsPatterns: ['packages/webpack/src/webpack-lib2.ts'],
             useCached: true
@@ -3475,6 +3887,7 @@ describe('::gatherPackageBuildTargets', () => {
           subRootPackages.get('@namespaced/webpack-common-config')!,
           {
             allowMultiversalImports: true,
+            includeInternalTestFiles: false,
             includeExternalsPatterns: ['packages/webpack/webpack.config.mjs'],
             useCached: true
           }
@@ -3554,7 +3967,11 @@ describe('::gatherPackageBuildTargets', () => {
       expect(() =>
         gatherPackageBuildTargets.sync(
           dummyToProjectMetadata('badHybridrepoBadSpecifiers').rootPackage,
-          { allowMultiversalImports: true, useCached: true }
+          {
+            allowMultiversalImports: true,
+            includeInternalTestFiles: false,
+            useCached: true
+          }
         )
       ).toThrow(
         GraphErrorMessage.SpecifierNotOkSelfReferential('multiverse+pkg-1:lib.ts')
@@ -3569,6 +3986,7 @@ describe('::gatherPackageBuildTargets', () => {
       await expect(
         gatherPackageBuildTargets(dummyToProjectMetadata('goodPolyrepo').rootPackage, {
           allowMultiversalImports: true,
+          includeInternalTestFiles: false,
           useCached: true
         })
       ).resolves.toStrictEqual({
@@ -3606,6 +4024,52 @@ describe('::gatherPackageBuildTargets', () => {
           }
         }
       } satisfies PackageBuildTargets);
+
+      await expect(
+        gatherPackageBuildTargets(dummyToProjectMetadata('goodPolyrepo').rootPackage, {
+          allowMultiversalImports: true,
+          includeInternalTestFiles: true,
+          useCached: true
+        })
+      ).resolves.toStrictEqual({
+        targets: {
+          external: {
+            normal: new Set(['types/global.ts'] as RelativePath[]),
+            typeOnly: new Set([] as RelativePath[])
+          },
+          internal: new Set([
+            'src/1.ts',
+            'src/2.mts',
+            'src/3.cts',
+            'src/4.tsx',
+            'src/index.js',
+            'src/package.json',
+            'test/something-else.ts',
+            'test/type-1.test.ts',
+            'test/unit-jest.test.ts',
+            'test/nested/type-2.test.tsx'
+          ] as RelativePath[])
+        },
+        metadata: {
+          imports: {
+            aliasCounts: {
+              typeverse: {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              universe: {
+                count: 4,
+                prefixes: new Set([prefixNormalImport, prefixInternalImport])
+              }
+            },
+            dependencyCounts: {}
+          }
+        }
+      } satisfies PackageBuildTargets);
     });
 
     it('returns expected build targets for multiversal hybridrepo root package', async () => {
@@ -3614,7 +4078,11 @@ describe('::gatherPackageBuildTargets', () => {
       await expect(
         gatherPackageBuildTargets(
           dummyToProjectMetadata('goodHybridrepoMultiversal').rootPackage,
-          { allowMultiversalImports: true, useCached: true }
+          {
+            allowMultiversalImports: true,
+            includeInternalTestFiles: false,
+            useCached: true
+          }
         )
       ).resolves.toStrictEqual({
         targets: {
@@ -3783,19 +4251,236 @@ describe('::gatherPackageBuildTargets', () => {
           }
         }
       } satisfies PackageBuildTargets);
+
+      await expect(
+        gatherPackageBuildTargets(
+          dummyToProjectMetadata('goodHybridrepoMultiversal').rootPackage,
+          {
+            allowMultiversalImports: true,
+            includeInternalTestFiles: true,
+            useCached: true
+          }
+        )
+      ).resolves.toStrictEqual({
+        targets: {
+          external: {
+            normal: new Set([
+              'packages/cli/src/index.ts',
+              'packages/private/src/index.ts',
+              'packages/private/package.json',
+              'packages/webpack/webpack.config.ts',
+              'packages/private/src/lib/library.ts',
+              'packages/webpack/src/webpack-lib.ts',
+              'packages/webpack/package.json',
+              'packages/private/src/lib/library2.ts',
+              'packages/webpack/src/webpack-lib2.ts'
+            ] as RelativePath[]),
+            typeOnly: new Set([
+              'src/index.ts',
+              'src/others.ts',
+              'types/global.ts',
+              'types/others.ts',
+              'test/setup.ts'
+            ] as RelativePath[])
+          },
+          internal: new Set([
+            'src/index.ts',
+            'src/others.ts',
+            'test/setup.ts',
+            'test/unit-some.test.ts'
+          ] as RelativePath[])
+        },
+        metadata: {
+          imports: {
+            aliasCounts: {
+              'multiverse+cli': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'multiverse+private': {
+                count: 6,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'multiverse+webpack': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'rootverse+private': {
+                count: 4,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'rootverse+webpack': {
+                count: 6,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              testverse: {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              typeverse: {
+                count: 3,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixTypeOnlyImport,
+                  prefixExternalImport
+                ])
+              },
+              universe: {
+                count: 6,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'universe+private': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'universe+webpack': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              }
+            },
+            dependencyCounts: {
+              '@-xun/types': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              '@babel/core': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              '@black-flag/core': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'another-package': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'node:fs': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'node:path': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'some-package': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              somewhere: {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixInternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'type-fest': {
+                count: 2,
+                prefixes: new Set([prefixTypeOnlyImport, prefixExternalImport])
+              },
+              webpack: {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              },
+              'webpack~2': {
+                count: 2,
+                prefixes: new Set([
+                  prefixNormalImport,
+                  prefixExternalImport,
+                  prefixTypeOnlyImport
+                ])
+              }
+            }
+          }
+        }
+      } satisfies PackageBuildTargets);
     });
 
     it('returns expected build targets for multiversal hybridrepo sub-root package', async () => {
       expect.hasAssertions();
 
-      await expect(
-        gatherPackageBuildTargets(
-          dummyToProjectMetadata('goodHybridrepoMultiversal').subRootPackages!.get(
-            'cli'
-          )!,
-          { allowMultiversalImports: true, useCached: true }
-        )
-      ).resolves.toStrictEqual({
+      const actual = gatherPackageBuildTargets(
+        dummyToProjectMetadata('goodHybridrepoMultiversal').subRootPackages!.get('cli')!,
+        {
+          allowMultiversalImports: true,
+          includeInternalTestFiles: false,
+          useCached: true
+        }
+      );
+
+      await expect(actual).resolves.toStrictEqual({
         targets: {
           external: {
             normal: new Set([
@@ -3867,6 +4552,19 @@ describe('::gatherPackageBuildTargets', () => {
           }
         }
       } satisfies PackageBuildTargets);
+
+      await expect(
+        gatherPackageBuildTargets(
+          dummyToProjectMetadata('goodHybridrepoMultiversal').subRootPackages!.get(
+            'cli'
+          )!,
+          {
+            allowMultiversalImports: true,
+            includeInternalTestFiles: true,
+            useCached: true
+          }
+        )
+      ).resolves.toStrictEqual(await actual);
     });
 
     it('returns expected build targets for multiversal hybridrepo sub-root "private" package', async () => {
@@ -3882,7 +4580,11 @@ describe('::gatherPackageBuildTargets', () => {
             dummyToProjectMetadata('goodHybridrepoMultiversal').subRootPackages!.get(
               'private'
             )!,
-            { allowMultiversalImports: true, useCached: true }
+            {
+              allowMultiversalImports: true,
+              includeInternalTestFiles: false,
+              useCached: true
+            }
           )
         ).resolves.toStrictEqual({
           targets: {
@@ -3937,6 +4639,91 @@ describe('::gatherPackageBuildTargets', () => {
             }
           }
         } satisfies PackageBuildTargets);
+
+        await expect(
+          gatherPackageBuildTargets(
+            dummyToProjectMetadata('goodHybridrepoMultiversal').subRootPackages!.get(
+              'private'
+            )!,
+            {
+              allowMultiversalImports: true,
+              includeInternalTestFiles: true,
+              useCached: true
+            }
+          )
+        ).resolves.toStrictEqual({
+          targets: {
+            external: {
+              normal: new Set([
+                'packages/private/package.json',
+                'test/setup.ts'
+              ] as RelativePath[]),
+              typeOnly: new Set(['types/global.ts', 'types/others.ts'] as RelativePath[])
+            },
+            internal: new Set([
+              'packages/private/src/index.ts',
+              'packages/private/src/lib/library.ts',
+              'packages/private/src/lib/library2.ts',
+              'packages/private/src/markdown/1.md',
+              'packages/private/src/markdown/2.md',
+              'packages/private/src/markdown/3.md',
+              'packages/private/test/unit-lib.test.ts'
+            ] as RelativePath[])
+          },
+          metadata: {
+            imports: {
+              aliasCounts: {
+                'rootverse+private': {
+                  count: 2,
+                  prefixes: new Set([prefixNormalImport, prefixInternalImport])
+                },
+                typeverse: {
+                  count: 2,
+                  prefixes: new Set([
+                    prefixTypeOnlyImport,
+                    prefixNormalImport,
+                    prefixInternalImport,
+                    prefixExternalImport
+                  ])
+                },
+                testverse: {
+                  count: 1,
+                  prefixes: new Set([prefixNormalImport, prefixInternalImport])
+                },
+                'universe+private': {
+                  count: 2,
+                  prefixes: new Set([prefixNormalImport, prefixInternalImport])
+                }
+              },
+              dependencyCounts: {
+                '@-xun/types': {
+                  count: 1,
+                  prefixes: new Set(['<norm>', '<type>', '<extr>'])
+                },
+                'another-package': {
+                  count: 1,
+                  prefixes: new Set([prefixNormalImport, prefixInternalImport])
+                },
+                'node:fs': {
+                  count: 1,
+                  prefixes: new Set(['<norm>', '<extr>'])
+                },
+                'some-package': {
+                  count: 1,
+                  prefixes: new Set([prefixNormalImport, prefixInternalImport])
+                },
+                somewhere: {
+                  count: 1,
+                  prefixes: new Set(['<norm>', '<extr>'])
+                },
+                'type-fest': {
+                  count: 2,
+                  prefixes: new Set([prefixTypeOnlyImport, prefixExternalImport])
+                }
+              }
+            }
+          }
+        } satisfies PackageBuildTargets);
       } finally {
         repositories.goodHybridrepoMultiversal.namedPackageMapData.pop();
       }
@@ -3945,14 +4732,18 @@ describe('::gatherPackageBuildTargets', () => {
     it('returns expected build targets for multiversal hybridrepo sub-root "package-one" package (where package name differs from its id)', async () => {
       expect.hasAssertions();
 
-      await expect(
-        gatherPackageBuildTargets(
-          dummyToProjectMetadata('goodHybridrepoSelfRef').subRootPackages!.get(
-            'package-one'
-          )!,
-          { allowMultiversalImports: true, useCached: true }
-        )
-      ).resolves.toStrictEqual({
+      const actual = gatherPackageBuildTargets(
+        dummyToProjectMetadata('goodHybridrepoSelfRef').subRootPackages!.get(
+          'package-one'
+        )!,
+        {
+          allowMultiversalImports: true,
+          includeInternalTestFiles: false,
+          useCached: true
+        }
+      );
+
+      await expect(actual).resolves.toStrictEqual({
         targets: {
           external: {
             normal: new Set(['packages/pkg-1/package.json'] as RelativePath[]),
@@ -3984,6 +4775,19 @@ describe('::gatherPackageBuildTargets', () => {
           }
         }
       } satisfies PackageBuildTargets);
+
+      await expect(
+        gatherPackageBuildTargets(
+          dummyToProjectMetadata('goodHybridrepoSelfRef').subRootPackages!.get(
+            'package-one'
+          )!,
+          {
+            allowMultiversalImports: true,
+            includeInternalTestFiles: true,
+            useCached: true
+          }
+        )
+      ).resolves.toStrictEqual(await actual);
     });
 
     it('returns result from internal cache if available unless useCached is false (new result is always added to internal cache)', async () => {
@@ -3992,19 +4796,28 @@ describe('::gatherPackageBuildTargets', () => {
       const dummyMetadata = dummyToProjectMetadata('goodPolyrepo');
       const packageBuildTargets = await gatherPackageBuildTargets(
         dummyMetadata.rootPackage,
-        { allowMultiversalImports: true, useCached: false }
+        {
+          allowMultiversalImports: true,
+          includeInternalTestFiles: false,
+          useCached: false
+        }
       );
 
       expect(packageBuildTargets).toBe(
         await gatherPackageBuildTargets(dummyMetadata.rootPackage, {
           allowMultiversalImports: true,
+          includeInternalTestFiles: false,
           useCached: true
         })
       );
 
       const updatedPackageBuildTargets = await gatherPackageBuildTargets(
         dummyMetadata.rootPackage,
-        { allowMultiversalImports: true, useCached: false }
+        {
+          allowMultiversalImports: true,
+          includeInternalTestFiles: false,
+          useCached: false
+        }
       );
 
       expect(updatedPackageBuildTargets).not.toBe(packageBuildTargets);
@@ -4012,6 +4825,7 @@ describe('::gatherPackageBuildTargets', () => {
       await expect(
         gatherPackageBuildTargets(dummyMetadata.rootPackage, {
           allowMultiversalImports: true,
+          includeInternalTestFiles: false,
           useCached: true
         })
       ).resolves.toBe(updatedPackageBuildTargets);
@@ -4023,10 +4837,12 @@ describe('::gatherPackageBuildTargets', () => {
       const { rootPackage } = dummyToProjectMetadata('goodHybridrepo');
       const result1 = await gatherPackageBuildTargets(rootPackage, {
         allowMultiversalImports: true,
+        includeInternalTestFiles: false,
         useCached: true
       });
       const result2 = await gatherPackageBuildTargets(rootPackage, {
         allowMultiversalImports: true,
+        includeInternalTestFiles: false,
         excludeInternalsPatterns: ['/fake/exclude'],
         useCached: true
       });
@@ -4042,6 +4858,7 @@ describe('::gatherPackageBuildTargets', () => {
       await expect(
         gatherPackageBuildTargets(rootPackage, {
           allowMultiversalImports: true,
+          includeInternalTestFiles: false,
           excludeInternalsPatterns: [],
           includeExternalsPatterns: [],
           useCached: true
@@ -4049,6 +4866,7 @@ describe('::gatherPackageBuildTargets', () => {
       ).resolves.toStrictEqual(
         await gatherPackageBuildTargets(rootPackage, {
           allowMultiversalImports: true,
+          includeInternalTestFiles: false,
           useCached: true
         })
       );
@@ -4065,6 +4883,7 @@ describe('::gatherPackageBuildTargets', () => {
           subRootPackages.get('@namespaced/webpack-common-config')!,
           {
             allowMultiversalImports: true,
+            includeInternalTestFiles: false,
             includeExternalsPatterns: ['packages/private/src/index.ts'],
             useCached: true
           }
@@ -4119,6 +4938,7 @@ describe('::gatherPackageBuildTargets', () => {
           subRootPackages.get('@namespaced/webpack-common-config')!,
           {
             allowMultiversalImports: true,
+            includeInternalTestFiles: false,
             includeExternalsPatterns: ['**/private/*/index.ts'],
             useCached: true
           }
@@ -4180,6 +5000,7 @@ describe('::gatherPackageBuildTargets', () => {
           subRootPackages.get('@namespaced/webpack-common-config')!,
           {
             allowMultiversalImports: true,
+            includeInternalTestFiles: false,
             excludeInternalsPatterns: [
               'packages/webpack/src/webpack-lib.ts',
               'src/webpack-lib2.ts'
@@ -4220,6 +5041,7 @@ describe('::gatherPackageBuildTargets', () => {
           subRootPackages.get('@namespaced/webpack-common-config')!,
           {
             allowMultiversalImports: true,
+            includeInternalTestFiles: false,
             excludeInternalsPatterns: ['webpack-lib*'],
             useCached: true
           }
@@ -4244,6 +5066,7 @@ describe('::gatherPackageBuildTargets', () => {
           subRootPackages.get('@namespaced/webpack-common-config')!,
           {
             allowMultiversalImports: true,
+            includeInternalTestFiles: false,
             excludeInternalsPatterns: ['packages/webpack/src/webpack-lib2.ts'],
             includeExternalsPatterns: ['packages/webpack/src/webpack-lib2.ts'],
             useCached: true
@@ -4286,6 +5109,7 @@ describe('::gatherPackageBuildTargets', () => {
           subRootPackages.get('@namespaced/webpack-common-config')!,
           {
             allowMultiversalImports: true,
+            includeInternalTestFiles: false,
             includeExternalsPatterns: ['packages/webpack/webpack.config.mjs'],
             useCached: true
           }
@@ -4365,7 +5189,11 @@ describe('::gatherPackageBuildTargets', () => {
       await expect(
         gatherPackageBuildTargets(
           dummyToProjectMetadata('badHybridrepoBadSpecifiers').rootPackage,
-          { allowMultiversalImports: true, useCached: true }
+          {
+            allowMultiversalImports: true,
+            includeInternalTestFiles: false,
+            useCached: true
+          }
         )
       ).rejects.toThrow(
         GraphErrorMessage.SpecifierNotOkSelfReferential('multiverse+pkg-1:lib.ts')
