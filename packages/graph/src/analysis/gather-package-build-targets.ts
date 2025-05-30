@@ -96,12 +96,16 @@ export type GatherPackageBuildTargetsOptions = {
    * `excludeInternalsPatterns`, which are interpreted according to gitignore
    * rules and _always_ relative to the _project_ (NEVER package or filesystem!)
    * root.
+   *
+   * @default []
    */
   excludeInternalsPatterns?: string[];
   /**
    * Include in the externals result all paths matching a pattern in
    * `includeExternalsPatterns`, which are interpreted as glob strings and
    * _always_ relative to the _project_ (NEVER package or filesystem!) root.
+   *
+   * @default []
    */
   includeExternalsPatterns?: string[];
 };
