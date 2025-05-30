@@ -56,12 +56,6 @@
       "multiverse+fs": ["packages/fs/src/index.ts"],
       "multiverse+graph": ["packages/graph/src/index.ts"],
       "multiverse+types": ["packages/types/src/index.ts"],
-      "rootverse+bidirectional-resolve:*": ["packages/bidirectional-resolve/*"],
-      "rootverse+common:*": ["packages/common/*"],
-      "rootverse+fs:*": ["packages/fs/*"],
-      "rootverse+graph:*": ["packages/graph/*"],
-      "rootverse+types:*": ["packages/types/*"],
-      "rootverse:*": ["*"],
       "universe+bidirectional-resolve:*": [
         "packages/bidirectional-resolve/src/*"
       ],
@@ -86,7 +80,13 @@
       "testverse+graph:*": ["packages/graph/test/*"],
       "testverse+types:*": ["packages/types/test/*"],
       "testverse:*": ["test/*"],
-      "typeverse:*": ["types/*"]
+      "typeverse:*": ["types/*"],
+      "rootverse+bidirectional-resolve:*": ["packages/bidirectional-resolve/*"],
+      "rootverse+common:*": ["packages/common/*"],
+      "rootverse+fs:*": ["packages/fs/*"],
+      "rootverse+graph:*": ["packages/graph/*"],
+      "rootverse+types:*": ["packages/types/*"],
+      "rootverse:*": ["*"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
