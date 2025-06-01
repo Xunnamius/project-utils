@@ -69,7 +69,7 @@
     "test:packages:all": "symbiote test --env NODE_NO_WARNINGS=1 --tests all-local --scope unlimited --coverage"
   },
   "dependencies": {
-    "@-xun/fs": "^1.0.0",
+    "@-xun/fs": "^2.0.0",
     "@-xun/memoize": "^1.1.0",
     "@-xun/project-types": "^2.0.0",
     "@-xun/run": "^1.1.0",
