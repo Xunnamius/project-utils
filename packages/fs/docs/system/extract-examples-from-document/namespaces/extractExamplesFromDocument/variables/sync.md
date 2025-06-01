@@ -8,7 +8,7 @@
 
 > `const` **sync**: \{(`path`, `options`): `Map`\<`string`, `string`\>; (`path`, `options`): `Map`\<`string`, `RegExp`\>; \} = `extractExamplesFromDocumentSync`
 
-Defined in: [packages/fs/src/system/extract-examples-from-document.ts:222](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/fs/src/system/extract-examples-from-document.ts#L222)
+Defined in: [packages/fs/src/system/extract-examples-from-document.ts:222](https://github.com/Xunnamius/projector/blob/046ef48bf5d245c4f1a27d7c884708b74af0a9d1/packages/fs/src/system/extract-examples-from-document.ts#L222)
 
 ## Call Signature
 

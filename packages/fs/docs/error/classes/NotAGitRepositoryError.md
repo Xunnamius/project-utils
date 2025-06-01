@@ -6,7 +6,7 @@
 
 # Class: NotAGitRepositoryError
 
-Defined in: [packages/common/src/error.ts:147](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/common/src/error.ts#L147)
+Defined in: [packages/common/src/error.ts:147](https://github.com/Xunnamius/projector/blob/046ef48bf5d245c4f1a27d7c884708b74af0a9d1/packages/common/src/error.ts#L147)
 
 Represents encountering a project that is not a git repository.
 
@@ -20,7 +20,7 @@ Represents encountering a project that is not a git repository.
 
 > **new NotAGitRepositoryError**(): `NotAGitRepositoryError`
 
-Defined in: [packages/common/src/error.ts:153](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/common/src/error.ts#L153)
+Defined in: [packages/common/src/error.ts:153](https://github.com/Xunnamius/projector/blob/046ef48bf5d245c4f1a27d7c884708b74af0a9d1/packages/common/src/error.ts#L153)
 
 Represents encountering a project that is not a git repository.
 
@@ -36,7 +36,7 @@ Represents encountering a project that is not a git repository.
 
 > **new NotAGitRepositoryError**(`message`): `NotAGitRepositoryError`
 
-Defined in: [packages/common/src/error.ts:158](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/common/src/error.ts#L158)
+Defined in: [packages/common/src/error.ts:158](https://github.com/Xunnamius/projector/blob/046ef48bf5d245c4f1a27d7c884708b74af0a9d1/packages/common/src/error.ts#L158)
 
 This constructor syntax is used by subclasses when calling this constructor
 via `super`.
@@ -61,7 +61,7 @@ via `super`.
 
 > **\[$type\]**: `symbol`[]
 
-Defined in: [packages/common/src/error.ts:149](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/common/src/error.ts#L149)
+Defined in: [packages/common/src/error.ts:149](https://github.com/Xunnamius/projector/blob/046ef48bf5d245c4f1a27d7c884708b74af0a9d1/packages/common/src/error.ts#L149)
 
 #### Overrides
 

@@ -6,7 +6,7 @@
 
 # Class: DuplicatePackageIdError
 
-Defined in: [packages/common/src/error.ts:231](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/common/src/error.ts#L231)
+Defined in: [packages/common/src/error.ts:231](https://github.com/Xunnamius/projector/blob/046ef48bf5d245c4f1a27d7c884708b74af0a9d1/packages/common/src/error.ts#L231)
 
 Represents encountering an unnamed workspace with the same package-id as
 another workspace.
@@ -21,7 +21,7 @@ another workspace.
 
 > **new DuplicatePackageIdError**(`id`, `firstPath`, `secondPath`): `DuplicatePackageIdError`
 
-Defined in: [packages/common/src/error.ts:238](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/common/src/error.ts#L238)
+Defined in: [packages/common/src/error.ts:238](https://github.com/Xunnamius/projector/blob/046ef48bf5d245c4f1a27d7c884708b74af0a9d1/packages/common/src/error.ts#L238)
 
 Represents encountering an unnamed workspace with the same package-id as
 another workspace.
@@ -52,7 +52,7 @@ another workspace.
 
 > **new DuplicatePackageIdError**(`id`, `firstPath`, `secondPath`, `message`): `DuplicatePackageIdError`
 
-Defined in: [packages/common/src/error.ts:243](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/common/src/error.ts#L243)
+Defined in: [packages/common/src/error.ts:243](https://github.com/Xunnamius/projector/blob/046ef48bf5d245c4f1a27d7c884708b74af0a9d1/packages/common/src/error.ts#L243)
 
 This constructor syntax is used by subclasses when calling this constructor
 via `super`.
@@ -89,7 +89,7 @@ via `super`.
 
 > **\[$type\]**: `symbol`[]
 
-Defined in: [packages/common/src/error.ts:233](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/common/src/error.ts#L233)
+Defined in: [packages/common/src/error.ts:233](https://github.com/Xunnamius/projector/blob/046ef48bf5d245c4f1a27d7c884708b74af0a9d1/packages/common/src/error.ts#L233)
 
 #### Overrides
 
@@ -113,7 +113,7 @@ Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:26
 
 > `readonly` **firstPath**: `string`
 
-Defined in: [packages/common/src/error.ts:246](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/common/src/error.ts#L246)
+Defined in: [packages/common/src/error.ts:246](https://github.com/Xunnamius/projector/blob/046ef48bf5d245c4f1a27d7c884708b74af0a9d1/packages/common/src/error.ts#L246)
 
 ***
 
@@ -121,7 +121,7 @@ Defined in: [packages/common/src/error.ts:246](https://github.com/Xunnamius/proj
 
 > `readonly` **id**: `string`
 
-Defined in: [packages/common/src/error.ts:245](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/common/src/error.ts#L245)
+Defined in: [packages/common/src/error.ts:245](https://github.com/Xunnamius/projector/blob/046ef48bf5d245c4f1a27d7c884708b74af0a9d1/packages/common/src/error.ts#L245)
 
 ***
 
@@ -153,7 +153,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1076
 
 > `readonly` **secondPath**: `string`
 
-Defined in: [packages/common/src/error.ts:247](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/common/src/error.ts#L247)
+Defined in: [packages/common/src/error.ts:247](https://github.com/Xunnamius/projector/blob/046ef48bf5d245c4f1a27d7c884708b74af0a9d1/packages/common/src/error.ts#L247)
 
 ***
 

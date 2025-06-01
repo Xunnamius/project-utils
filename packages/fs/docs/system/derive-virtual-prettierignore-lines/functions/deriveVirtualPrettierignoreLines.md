@@ -8,7 +8,7 @@
 
 > **deriveVirtualPrettierignoreLines**(...`args`): `Promise`\<`string`[]\>
 
-Defined in: [packages/fs/src/system/derive-virtual-prettierignore-lines.ts:141](https://github.com/Xunnamius/projector/blob/f013ed7e8b6ac84d9c4de9e0d2d07c58f119f38c/packages/fs/src/system/derive-virtual-prettierignore-lines.ts#L141)
+Defined in: [packages/fs/src/system/derive-virtual-prettierignore-lines.ts:141](https://github.com/Xunnamius/projector/blob/046ef48bf5d245c4f1a27d7c884708b74af0a9d1/packages/fs/src/system/derive-virtual-prettierignore-lines.ts#L141)
 
 Asynchronously return an array of the lines of a `.prettierignore` file, or
 an empty array if an error occurs. The string '.git' is prepended to the
