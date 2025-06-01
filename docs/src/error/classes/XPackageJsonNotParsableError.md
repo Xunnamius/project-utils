@@ -6,7 +6,7 @@
 
 # Class: XPackageJsonNotParsableError
 
-Defined in: [packages/common/src/error.ts:169](https://github.com/Xunnamius/projector/blob/07d2d22c61663a5979a46f5e3de28e3c6f31eed4/packages/common/src/error.ts#L169)
+Defined in: [packages/common/src/error.ts:169](https://github.com/Xunnamius/projector/blob/e87ff4d3d233a191128ce203c3fd48b9ce3e7b29/packages/common/src/error.ts#L169)
 
 Represents encountering an unparsable package.json file in an
 symbiote-powered project.
@@ -21,7 +21,7 @@ symbiote-powered project.
 
 > **new XPackageJsonNotParsableError**(`packageJsonPath`, `reason`): `XPackageJsonNotParsableError`
 
-Defined in: [packages/common/src/error.ts:175](https://github.com/Xunnamius/projector/blob/07d2d22c61663a5979a46f5e3de28e3c6f31eed4/packages/common/src/error.ts#L175)
+Defined in: [packages/common/src/error.ts:175](https://github.com/Xunnamius/projector/blob/e87ff4d3d233a191128ce203c3fd48b9ce3e7b29/packages/common/src/error.ts#L175)
 
 Represents encountering an unparsable package.json file.
 
@@ -47,7 +47,7 @@ Represents encountering an unparsable package.json file.
 
 > **new XPackageJsonNotParsableError**(`packageJsonPath`, `reason`, `message`): `XPackageJsonNotParsableError`
 
-Defined in: [packages/common/src/error.ts:180](https://github.com/Xunnamius/projector/blob/07d2d22c61663a5979a46f5e3de28e3c6f31eed4/packages/common/src/error.ts#L180)
+Defined in: [packages/common/src/error.ts:180](https://github.com/Xunnamius/projector/blob/e87ff4d3d233a191128ce203c3fd48b9ce3e7b29/packages/common/src/error.ts#L180)
 
 This constructor syntax is used by subclasses when calling this constructor
 via `super`.
@@ -80,7 +80,7 @@ via `super`.
 
 > **\[$type\]**: `symbol`[]
 
-Defined in: [packages/common/src/error.ts:171](https://github.com/Xunnamius/projector/blob/07d2d22c61663a5979a46f5e3de28e3c6f31eed4/packages/common/src/error.ts#L171)
+Defined in: [packages/common/src/error.ts:171](https://github.com/Xunnamius/projector/blob/e87ff4d3d233a191128ce203c3fd48b9ce3e7b29/packages/common/src/error.ts#L171)
 
 #### Overrides
 
@@ -128,7 +128,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1076
 
 > `readonly` **packageJsonPath**: `string`
 
-Defined in: [packages/common/src/error.ts:182](https://github.com/Xunnamius/projector/blob/07d2d22c61663a5979a46f5e3de28e3c6f31eed4/packages/common/src/error.ts#L182)
+Defined in: [packages/common/src/error.ts:182](https://github.com/Xunnamius/projector/blob/e87ff4d3d233a191128ce203c3fd48b9ce3e7b29/packages/common/src/error.ts#L182)
 
 ***
 
@@ -136,7 +136,7 @@ Defined in: [packages/common/src/error.ts:182](https://github.com/Xunnamius/proj
 
 > `readonly` **reason**: `unknown`
 
-Defined in: [packages/common/src/error.ts:183](https://github.com/Xunnamius/projector/blob/07d2d22c61663a5979a46f5e3de28e3c6f31eed4/packages/common/src/error.ts#L183)
+Defined in: [packages/common/src/error.ts:183](https://github.com/Xunnamius/projector/blob/e87ff4d3d233a191128ce203c3fd48b9ce3e7b29/packages/common/src/error.ts#L183)
 
 ***
 
