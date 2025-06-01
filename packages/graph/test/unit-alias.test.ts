@@ -819,12 +819,410 @@ const mockConfigOrderHybridrepoMappings = [
   ]
 ] satisfies [Omit<RawAlias, 'regExp'>, RawPath][] as RawAliasMapping[];
 
+const mockHintOrderPolyrepoMappings = [
+  [
+    {
+      alias: 'universe',
+      prefix: 'exact',
+      suffix: 'exact',
+      group: WellKnownImportAlias.Universe,
+      packageId: undefined
+    },
+    {
+      path: 'src/index' as RelativePath,
+      prefix: 'root',
+      suffix: 'none',
+      extensionless: false
+    }
+  ],
+  [
+    {
+      alias: 'universe',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Universe,
+      packageId: undefined
+    },
+    { path: 'src' as RelativePath, prefix: 'root', suffix: 'open', extensionless: true }
+  ],
+  [
+    {
+      alias: 'testverse',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Testverse,
+      packageId: undefined
+    },
+    { path: 'test' as RelativePath, prefix: 'root', suffix: 'open', extensionless: true }
+  ],
+  [
+    {
+      alias: 'typeverse',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Typeverse,
+      packageId: undefined
+    },
+    {
+      path: 'types' as RelativePath,
+      prefix: 'root',
+      suffix: 'open',
+      extensionless: true
+    }
+  ],
+  [
+    {
+      alias: 'rootverse',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Rootverse,
+      packageId: undefined
+    },
+    { path: '' as RelativePath, prefix: 'root', suffix: 'open', extensionless: true }
+  ]
+] satisfies [Omit<RawAlias, 'regExp'>, RawPath][] as RawAliasMapping[];
+
+const mockHintOrderHybridrepoMappings = [
+  [
+    {
+      alias: 'universe',
+      prefix: 'exact',
+      suffix: 'exact',
+      group: WellKnownImportAlias.Universe,
+      packageId: undefined
+    },
+    {
+      path: 'src/index' as RelativePath,
+      prefix: 'root',
+      suffix: 'none',
+      extensionless: false
+    }
+  ],
+  [
+    {
+      alias: 'universe',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Universe,
+      packageId: undefined
+    },
+    { path: 'src' as RelativePath, prefix: 'root', suffix: 'open', extensionless: true }
+  ],
+  [
+    {
+      alias: 'universe+pkg-1',
+      prefix: 'exact',
+      suffix: 'exact',
+      group: WellKnownImportAlias.Universe,
+      packageId: 'pkg-1'
+    },
+    {
+      path: 'path/to/packages/pkg-1/src/index' as RelativePath,
+      prefix: 'root',
+      suffix: 'none',
+      extensionless: false
+    }
+  ],
+  [
+    {
+      alias: 'universe+pkg-2',
+      prefix: 'exact',
+      suffix: 'exact',
+      group: WellKnownImportAlias.Universe,
+      packageId: 'pkg-2'
+    },
+    {
+      path: 'path/to/packages/pkg-2/src/index' as RelativePath,
+      prefix: 'root',
+      suffix: 'none',
+      extensionless: false
+    }
+  ],
+  [
+    {
+      alias: 'universe+pkg-10',
+      prefix: 'exact',
+      suffix: 'exact',
+      group: WellKnownImportAlias.Universe,
+      packageId: 'pkg-10'
+    },
+    {
+      path: 'path/to/packages/pkg-10/src/index' as RelativePath,
+      prefix: 'root',
+      suffix: 'none',
+      extensionless: false
+    }
+  ],
+  [
+    {
+      alias: 'universe+pkg-1',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Universe,
+      packageId: 'pkg-1'
+    },
+    {
+      path: 'path/to/packages/pkg-1/src' as RelativePath,
+      prefix: 'root',
+      suffix: 'open',
+      extensionless: true
+    }
+  ],
+  [
+    {
+      alias: 'universe+pkg-2',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Universe,
+      packageId: 'pkg-2'
+    },
+    {
+      path: 'path/to/packages/pkg-2/src' as RelativePath,
+      prefix: 'root',
+      suffix: 'open',
+      extensionless: true
+    }
+  ],
+  [
+    {
+      alias: 'universe+pkg-10',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Universe,
+      packageId: 'pkg-10'
+    },
+    {
+      path: 'path/to/packages/pkg-10/src' as RelativePath,
+      prefix: 'root',
+      suffix: 'open',
+      extensionless: true
+    }
+  ],
+  [
+    {
+      alias: 'multiverse+pkg-1',
+      prefix: 'exact',
+      suffix: 'exact',
+      group: WellKnownImportAlias.Multiverse,
+      packageId: 'pkg-1'
+    },
+    {
+      path: 'path/to/packages/pkg-1/src/index' as RelativePath,
+      prefix: 'root',
+      suffix: 'none',
+      extensionless: false
+    }
+  ],
+  [
+    {
+      alias: 'multiverse+pkg-2',
+      prefix: 'exact',
+      suffix: 'exact',
+      group: WellKnownImportAlias.Multiverse,
+      packageId: 'pkg-2'
+    },
+    {
+      path: 'path/to/packages/pkg-2/src/index' as RelativePath,
+      prefix: 'root',
+      suffix: 'none',
+      extensionless: false
+    }
+  ],
+  [
+    {
+      alias: 'multiverse+pkg-10',
+      prefix: 'exact',
+      suffix: 'exact',
+      group: WellKnownImportAlias.Multiverse,
+      packageId: 'pkg-10'
+    },
+    {
+      path: 'path/to/packages/pkg-10/src/index' as RelativePath,
+      prefix: 'root',
+      suffix: 'none',
+      extensionless: false
+    }
+  ],
+  [
+    {
+      alias: 'multiverse+pkg-1',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Multiverse,
+      packageId: 'pkg-1'
+    },
+    {
+      path: 'path/to/packages/pkg-1/src' as RelativePath,
+      prefix: 'root',
+      suffix: 'open',
+      extensionless: true
+    }
+  ],
+  [
+    {
+      alias: 'multiverse+pkg-2',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Multiverse,
+      packageId: 'pkg-2'
+    },
+    {
+      path: 'path/to/packages/pkg-2/src' as RelativePath,
+      prefix: 'root',
+      suffix: 'open',
+      extensionless: true
+    }
+  ],
+  [
+    {
+      alias: 'multiverse+pkg-10',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Multiverse,
+      packageId: 'pkg-10'
+    },
+    {
+      path: 'path/to/packages/pkg-10/src' as RelativePath,
+      prefix: 'root',
+      suffix: 'open',
+      extensionless: true
+    }
+  ],
+  [
+    {
+      alias: 'testverse',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Testverse,
+      packageId: undefined
+    },
+    { path: 'test' as RelativePath, prefix: 'root', suffix: 'open', extensionless: true }
+  ],
+  [
+    {
+      alias: 'testverse+pkg-1',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Testverse,
+      packageId: 'pkg-1'
+    },
+    {
+      path: 'path/to/packages/pkg-1/test' as RelativePath,
+      prefix: 'root',
+      suffix: 'open',
+      extensionless: true
+    }
+  ],
+  [
+    {
+      alias: 'testverse+pkg-2',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Testverse,
+      packageId: 'pkg-2'
+    },
+    {
+      path: 'path/to/packages/pkg-2/test' as RelativePath,
+      prefix: 'root',
+      suffix: 'open',
+      extensionless: true
+    }
+  ],
+  [
+    {
+      alias: 'testverse+pkg-10',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Testverse,
+      packageId: 'pkg-10'
+    },
+    {
+      path: 'path/to/packages/pkg-10/test' as RelativePath,
+      prefix: 'root',
+      suffix: 'open',
+      extensionless: true
+    }
+  ],
+  [
+    {
+      alias: 'typeverse',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Typeverse,
+      packageId: undefined
+    },
+    {
+      path: 'types' as RelativePath,
+      prefix: 'root',
+      suffix: 'open',
+      extensionless: true
+    }
+  ],
+  [
+    {
+      alias: 'rootverse+pkg-1',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Rootverse,
+      packageId: 'pkg-1'
+    },
+    {
+      path: 'path/to/packages/pkg-1' as RelativePath,
+      prefix: 'root',
+      suffix: 'open',
+      extensionless: true
+    }
+  ],
+  [
+    {
+      alias: 'rootverse+pkg-2',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Rootverse,
+      packageId: 'pkg-2'
+    },
+    {
+      path: 'path/to/packages/pkg-2' as RelativePath,
+      prefix: 'root',
+      suffix: 'open',
+      extensionless: true
+    }
+  ],
+  [
+    {
+      alias: 'rootverse+pkg-10',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Rootverse,
+      packageId: 'pkg-10'
+    },
+    {
+      path: 'path/to/packages/pkg-10' as RelativePath,
+      prefix: 'root',
+      suffix: 'open',
+      extensionless: true
+    }
+  ],
+  [
+    {
+      alias: 'rootverse',
+      prefix: 'exact',
+      suffix: 'open',
+      group: WellKnownImportAlias.Rootverse,
+      packageId: undefined
+    },
+    { path: '' as RelativePath, prefix: 'root', suffix: 'open', extensionless: true }
+  ]
+] satisfies [Omit<RawAlias, 'regExp'>, RawPath][] as RawAliasMapping[];
+
 beforeAll(() => {
   [
     mockImportOrderPolyrepoMappings,
     mockImportOrderHybridrepoMappings,
     mockConfigOrderPolyrepoMappings,
-    mockConfigOrderHybridrepoMappings
+    mockConfigOrderHybridrepoMappings,
+    mockHintOrderPolyrepoMappings,
+    mockHintOrderHybridrepoMappings
   ]
     .flat()
     .forEach(([rawAlias]) => {
@@ -1204,6 +1602,55 @@ describe('::generateRawAliasMap', () => {
         'for-import-ordering'
       )
     ).toStrictEqual(mockImportOrderHybridrepoMappings);
+  });
+
+  it('translates polyrepo metadata into for-import-hinting raw alias map', async () => {
+    expect.hasAssertions();
+
+    expect(
+      generateRawAliasMap(
+        {
+          rootPackage: { root: mockProjectRoot },
+          subRootPackages: undefined
+        } as ProjectMetadata,
+        'for-import-hinting'
+      )
+    ).toStrictEqual(mockHintOrderPolyrepoMappings);
+  });
+
+  it('translates monorepo metadata into for-import-hinting raw alias map ordered by reverse semi-specificity', async () => {
+    expect.hasAssertions();
+
+    expect(
+      generateRawAliasMap(
+        {
+          rootPackage: { root: mockProjectRoot },
+          subRootPackages: {
+            all: [
+              {
+                id: 'pkg-1',
+                json: {},
+                root: '/path/to/root/path/to/packages/pkg-1',
+                relativeRoot: 'path/to/packages/pkg-1'
+              },
+              {
+                id: 'pkg-2',
+                json: {},
+                root: '/path/to/root/path/to/packages/pkg-2',
+                relativeRoot: 'path/to/packages/pkg-2'
+              },
+              {
+                id: 'pkg-10',
+                json: {},
+                root: '/path/to/root/path/to/packages/pkg-10',
+                relativeRoot: 'path/to/packages/pkg-10'
+              }
+            ]
+          }
+        } as ProjectMetadata,
+        'for-import-hinting'
+      )
+    ).toStrictEqual(mockHintOrderHybridrepoMappings);
   });
 
   it('natural-sorts monorepo metadata by package-id', async () => {

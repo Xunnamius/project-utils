@@ -310,7 +310,23 @@ export function makeRawAliasMapping(
  */
 export function generateRawAliasMap(
   projectMetadata: GenericProjectMetadata,
-  outputTarget: 'for-config' | 'for-import-ordering' = 'for-config'
+  /**
+   * This controls the order of the elements of this function's output. The
+   * options are:
+   *
+   * - for-config: the output is ordered for general consumption by tooling
+   * - for-import-ordering: the output is ordered for eslint-plugin-import
+   * - for-import-hinting: the output is ordered for tsconfig
+   *
+   * `"for-import-ordering"` is useful for automatic import ordering and sorting
+   * powered by eslint. `"for-import-hinting"` ensures that aliases are ordered
+   * in such a way that TypeScript-based intellisense will return more prudent
+   * results.
+   */
+  outputTarget:
+    | 'for-config'
+    | 'for-import-ordering'
+    | 'for-import-hinting' = 'for-config'
 ): RawAliasMapping[] {
   // * Universe mappings support both root- and package- level, open and exact
   // * aliases
@@ -330,7 +346,9 @@ export function generateRawAliasMap(
   // * Rootverse mappings support both root- and package- level open aliases
   const rootverseAliases: RawAliasMapping[] = [];
 
+  const isForHinting = outputTarget === 'for-import-hinting';
   const collator = new Intl.Collator(undefined, { numeric: true });
+
   const subRootPackagesSorted = projectMetadata.subRootPackages?.all.toSorted(
     ({ id: idA }, { id: idB }) => {
       // ? Natural sort using latest ES6/7 features!
@@ -338,162 +356,36 @@ export function generateRawAliasMap(
     }
   );
 
-  // ! Order matters here due to string matching. Hence, non-root open suffix
-  // ! (below, in conditional) always goes first.
-  if (subRootPackagesSorted) {
-    subRootPackagesSorted.forEach(function ({ id, relativeRoot }) {
-      universeAliases.push(
-        makeRawAliasMapping(
-          {
-            alias: `${WellKnownImportAlias.Universe}${uriSchemeSubDelimiterUnescaped}${id}`,
-            group: WellKnownImportAlias.Universe,
-            packageId: id
-          },
-          { path: toPath(relativeRoot, directorySrcPackageBase) }
-        )
-      );
-
-      multiverseAliases.push(
-        makeRawAliasMapping(
-          {
-            alias: `${WellKnownImportAlias.Multiverse}${uriSchemeSubDelimiterUnescaped}${id}`,
-            group: WellKnownImportAlias.Multiverse,
-            packageId: id
-          },
-          { path: toPath(relativeRoot, directorySrcPackageBase) }
-        )
-      );
-
-      testverseAliases.push(
-        makeRawAliasMapping(
-          {
-            alias: `${WellKnownImportAlias.Testverse}${uriSchemeSubDelimiterUnescaped}${id}`,
-            group: WellKnownImportAlias.Testverse,
-            packageId: id
-          },
-          { path: toPath(relativeRoot, directoryTestPackageBase) }
-        )
-      );
-
-      rootverseAliases.push(
-        makeRawAliasMapping(
-          {
-            alias: `${WellKnownImportAlias.Rootverse}${uriSchemeSubDelimiterUnescaped}${id}`,
-            group: WellKnownImportAlias.Rootverse,
-            packageId: id
-          },
-          { path: relativeRoot }
-        )
-      );
-    });
+  if (isForHinting) {
+    // ! For import hinting, we're interested in returning the most relevant
+    // ! results first. That means favoring exact matches, not rootverse, and
+    // ! universe above multiverse.
+    registerRootExact();
+    registerRootOpen();
+    registerNonRootExact();
+    registerNonRootOpen();
+  } else {
+    // ! Order matters here due to string matching. Hence, non-root open suffix
+    // ! (below, in conditional) always goes first.
+    registerNonRootOpen();
 
     // ! Order matters here due to string matching. Hence, open suffix (above)
     // ! goes ahead of non-root exact suffix (below, in loop).
-    subRootPackagesSorted.forEach(function ({ id, relativeRoot }) {
-      universeAliases.push(
-        makeRawAliasMapping(
-          {
-            alias: `${WellKnownImportAlias.Universe}${uriSchemeSubDelimiterUnescaped}${id}`,
-            suffix: 'exact',
-            group: WellKnownImportAlias.Universe,
-            packageId: id
-          },
-          {
-            path: toPath(relativeRoot, directorySrcPackageBase, 'index'),
-            suffix: 'none',
-            extensionless: false
-          }
-        )
-      );
+    registerNonRootExact();
 
-      multiverseAliases.push(
-        makeRawAliasMapping(
-          {
-            alias: `${WellKnownImportAlias.Multiverse}${uriSchemeSubDelimiterUnescaped}${id}`,
-            suffix: 'exact',
-            group: WellKnownImportAlias.Multiverse,
-            packageId: id
-          },
-          {
-            path: toPath(relativeRoot, directorySrcPackageBase, 'index'),
-            suffix: 'none',
-            extensionless: false
-          }
-        )
-      );
-    });
+    // ! Order matters here due to string matching. Hence, open suffix (above)
+    // !  and non-root exact suffix (also above) goes ahead of root open suffix
+    // ! (below, always penultimate).
+    registerRootOpen();
+
+    // ! Order matters here due to string matching. Hence, everything goes ahead
+    // ! of root exact suffix (below, always last).
+    registerRootExact();
   }
-
-  // ! Order matters here due to string matching. Hence, open suffix (above) and
-  // ! non-root exact suffix (also above) goes ahead of root open suffix
-  // ! (below, always penultimate).
-
-  rootverseAliases.push(
-    makeRawAliasMapping(
-      {
-        alias: WellKnownImportAlias.Rootverse,
-        group: WellKnownImportAlias.Rootverse,
-        packageId: undefined
-      },
-      { path: toRelativePath('') }
-    )
-  );
-
-  universeAliases.push(
-    makeRawAliasMapping(
-      {
-        alias: WellKnownImportAlias.Universe,
-        group: WellKnownImportAlias.Universe,
-        packageId: undefined
-      },
-      { path: toRelativePath(directorySrcPackageBase) }
-    )
-  );
-
-  testverseAliases.push(
-    makeRawAliasMapping(
-      {
-        alias: WellKnownImportAlias.Testverse,
-        group: WellKnownImportAlias.Testverse,
-        packageId: undefined
-      },
-      { path: toRelativePath(directoryTestPackageBase) }
-    )
-  );
-
-  typeverseAliases.push(
-    makeRawAliasMapping(
-      {
-        alias: WellKnownImportAlias.Typeverse,
-        group: WellKnownImportAlias.Typeverse,
-        packageId: undefined
-      },
-      { path: toRelativePath(directoryTypesProjectBase) }
-    )
-  );
-
-  // ! Order matters here due to string matching. Hence, everything goes ahead
-  // ! of root exact suffix (below, always last).
-
-  universeAliases.push(
-    makeRawAliasMapping(
-      {
-        alias: WellKnownImportAlias.Universe,
-        suffix: 'exact',
-        group: WellKnownImportAlias.Universe,
-        packageId: undefined
-      },
-      {
-        path: toRelativePath(toPath(directorySrcPackageBase, 'index')),
-        suffix: 'none',
-        extensionless: false
-      }
-    )
-  );
 
   return (
     outputTarget === 'for-import-ordering'
-      ? // * "standard" verse order for import statements:
+      ? // * Standard verse order for import statements:
         [
           multiverseAliases,
           rootverseAliases,
@@ -501,17 +393,185 @@ export function generateRawAliasMap(
           testverseAliases,
           typeverseAliases
         ]
-      : // * Functionally correct verse order for configuration files:
-        [
-          multiverseAliases,
-          universeAliases,
-          testverseAliases,
-          typeverseAliases,
-          // ! Rootverse aliases MUST go last because tsc (and probably others) will
-          // ! subtly break (i.e. import intellisense) if the root open suffix is 1st
-          rootverseAliases
-        ]
+      : outputTarget === 'for-import-hinting'
+        ? // * Standard verse order for tsconfig import hinting:
+          [
+            universeAliases,
+            multiverseAliases,
+            testverseAliases,
+            typeverseAliases,
+            // ! Rootverse aliases MUST go last because tsc-based import
+            // ! intellisense and hinting will return suboptimal results if the
+            // ! root open suffix is earlier
+            rootverseAliases
+          ]
+        : // * Functionally correct verse order for generic configuration files:
+          [
+            multiverseAliases,
+            universeAliases,
+            testverseAliases,
+            typeverseAliases,
+            rootverseAliases
+          ]
   ).flat();
+
+  function registerNonRootOpen() {
+    if (subRootPackagesSorted) {
+      subRootPackagesSorted.forEach(function ({ id, relativeRoot }) {
+        universeAliases.push(
+          makeRawAliasMapping(
+            {
+              alias: `${WellKnownImportAlias.Universe}${uriSchemeSubDelimiterUnescaped}${id}`,
+              group: WellKnownImportAlias.Universe,
+              packageId: id
+            },
+            { path: toPath(relativeRoot, directorySrcPackageBase) }
+          )
+        );
+
+        multiverseAliases.push(
+          makeRawAliasMapping(
+            {
+              alias: `${WellKnownImportAlias.Multiverse}${uriSchemeSubDelimiterUnescaped}${id}`,
+              group: WellKnownImportAlias.Multiverse,
+              packageId: id
+            },
+            { path: toPath(relativeRoot, directorySrcPackageBase) }
+          )
+        );
+
+        testverseAliases.push(
+          makeRawAliasMapping(
+            {
+              alias: `${WellKnownImportAlias.Testverse}${uriSchemeSubDelimiterUnescaped}${id}`,
+              group: WellKnownImportAlias.Testverse,
+              packageId: id
+            },
+            { path: toPath(relativeRoot, directoryTestPackageBase) }
+          )
+        );
+
+        const rootverseMapping = makeRawAliasMapping(
+          {
+            alias: `${WellKnownImportAlias.Rootverse}${uriSchemeSubDelimiterUnescaped}${id}`,
+            group: WellKnownImportAlias.Rootverse,
+            packageId: id
+          },
+          { path: relativeRoot }
+        );
+
+        if (isForHinting) {
+          // ! We expect that registerRootOpen() was called before
+          // ! registerNonRootOpen() if isForHinting is true
+          rootverseAliases.splice(-1, 0, rootverseMapping);
+        } else {
+          rootverseAliases.push(rootverseMapping);
+        }
+      });
+    }
+  }
+
+  function registerNonRootExact() {
+    if (subRootPackagesSorted) {
+      subRootPackagesSorted.forEach(function ({ id, relativeRoot }) {
+        universeAliases.push(
+          makeRawAliasMapping(
+            {
+              alias: `${WellKnownImportAlias.Universe}${uriSchemeSubDelimiterUnescaped}${id}`,
+              suffix: 'exact',
+              group: WellKnownImportAlias.Universe,
+              packageId: id
+            },
+            {
+              path: toPath(relativeRoot, directorySrcPackageBase, 'index'),
+              suffix: 'none',
+              extensionless: false
+            }
+          )
+        );
+
+        multiverseAliases.push(
+          makeRawAliasMapping(
+            {
+              alias: `${WellKnownImportAlias.Multiverse}${uriSchemeSubDelimiterUnescaped}${id}`,
+              suffix: 'exact',
+              group: WellKnownImportAlias.Multiverse,
+              packageId: id
+            },
+            {
+              path: toPath(relativeRoot, directorySrcPackageBase, 'index'),
+              suffix: 'none',
+              extensionless: false
+            }
+          )
+        );
+      });
+    }
+  }
+
+  function registerRootOpen() {
+    rootverseAliases.push(
+      makeRawAliasMapping(
+        {
+          alias: WellKnownImportAlias.Rootverse,
+          group: WellKnownImportAlias.Rootverse,
+          packageId: undefined
+        },
+        { path: toRelativePath('') }
+      )
+    );
+
+    universeAliases.push(
+      makeRawAliasMapping(
+        {
+          alias: WellKnownImportAlias.Universe,
+          group: WellKnownImportAlias.Universe,
+          packageId: undefined
+        },
+        { path: toRelativePath(directorySrcPackageBase) }
+      )
+    );
+
+    testverseAliases.push(
+      makeRawAliasMapping(
+        {
+          alias: WellKnownImportAlias.Testverse,
+          group: WellKnownImportAlias.Testverse,
+          packageId: undefined
+        },
+        { path: toRelativePath(directoryTestPackageBase) }
+      )
+    );
+
+    typeverseAliases.push(
+      makeRawAliasMapping(
+        {
+          alias: WellKnownImportAlias.Typeverse,
+          group: WellKnownImportAlias.Typeverse,
+          packageId: undefined
+        },
+        { path: toRelativePath(directoryTypesProjectBase) }
+      )
+    );
+  }
+
+  function registerRootExact() {
+    universeAliases.push(
+      makeRawAliasMapping(
+        {
+          alias: WellKnownImportAlias.Universe,
+          suffix: 'exact',
+          group: WellKnownImportAlias.Universe,
+          packageId: undefined
+        },
+        {
+          path: toRelativePath(toPath(directorySrcPackageBase, 'index')),
+          suffix: 'none',
+          extensionless: false
+        }
+      )
+    );
+  }
 }
 
 /**
@@ -546,7 +606,9 @@ export function deriveAliasesForBabel(rawAliasMappings: readonly RawAliasMapping
 
 /**
  * Returns an array that can be plugged into ESLint configurations at
- * `settings['import/resolver'].alias.map`.
+ * `settings['import/resolver'].alias.map`. These days, the output of this
+ * function is used primarily for import ordering and sorting via
+ * eslint-plugin-import.
  *
  * See also: https://www.npmjs.com/package/eslint-import-resolver-alias
  */
