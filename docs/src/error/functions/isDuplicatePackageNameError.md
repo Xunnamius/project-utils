@@ -8,7 +8,7 @@
 
 > **isDuplicatePackageNameError**(`parameter`): `parameter is DuplicatePackageNameError`
 
-Defined in: [packages/common/src/error.ts:78](https://github.com/Xunnamius/projector/blob/7d08d032705681ea15c0198d678da1844ace8e52/packages/common/src/error.ts#L78)
+Defined in: [packages/common/src/error.ts:78](https://github.com/Xunnamius/projector/blob/07d2d22c61663a5979a46f5e3de28e3c6f31eed4/packages/common/src/error.ts#L78)
 
 Type guard for [DuplicatePackageNameError](../classes/DuplicatePackageNameError.md).
 

@@ -8,7 +8,7 @@
 
 > **mapRawSpecifierToRawAliasMapping**(`rawAliasMappings`, `specifier`): `undefined` \| [`RawAliasMapping`](../type-aliases/RawAliasMapping.md)
 
-Defined in: packages/graph/dist/packages/graph/src/alias.d.ts:282
+Defined in: packages/graph/dist/packages/graph/src/alias.d.ts:298
 
 Accepts a _raw `specifier`_ and returns the first matching
 [RawAliasMapping](../type-aliases/RawAliasMapping.md) (in precedence order) or `undefined` if `specifier`
