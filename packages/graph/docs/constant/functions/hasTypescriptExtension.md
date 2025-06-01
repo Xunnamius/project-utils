@@ -8,7 +8,7 @@
 
 > **hasTypescriptExtension**(`path`): `boolean`
 
-Defined in: [packages/graph/src/constant.ts:394](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/constant.ts#L394)
+Defined in: [packages/graph/src/constant.ts:394](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/constant.ts#L394)
 
 Returns `true` if `path` points to a file with a TypeScript extension
 (including `.d.ts`).

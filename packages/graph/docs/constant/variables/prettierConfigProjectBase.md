@@ -8,6 +8,6 @@
 
 > `const` **prettierConfigProjectBase**: `"prettier.config.mjs"` = `'prettier.config.mjs'`
 
-Defined in: [packages/graph/src/constant.ts:155](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/constant.ts#L155)
+Defined in: [packages/graph/src/constant.ts:155](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/constant.ts#L155)
 
 The basename of the well-known Prettier configuration file.

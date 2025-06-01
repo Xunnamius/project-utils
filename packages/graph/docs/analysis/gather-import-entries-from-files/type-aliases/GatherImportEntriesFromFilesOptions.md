@@ -8,7 +8,7 @@
 
 > **GatherImportEntriesFromFilesOptions** = `AccumulatorOptions` & `object`
 
-Defined in: [packages/graph/src/analysis/gather-import-entries-from-files.ts:46](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/analysis/gather-import-entries-from-files.ts#L46)
+Defined in: [packages/graph/src/analysis/gather-import-entries-from-files.ts:46](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/analysis/gather-import-entries-from-files.ts#L46)
 
 ## Type declaration
 

@@ -8,7 +8,7 @@
 
 > **deriveAliasesForWebpack**(`rawAliasMappings`, `projectRoot`): `object`
 
-Defined in: [packages/graph/src/alias.ts:573](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/alias.ts#L573)
+Defined in: [packages/graph/src/alias.ts:635](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/alias.ts#L635)
 
 Returns an object that can be plugged into Webpack configurations at
 `resolve.alias`.

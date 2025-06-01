@@ -8,7 +8,7 @@
 
 > **generateRawAliasMap**(`projectMetadata`, `outputTarget`): [`RawAliasMapping`](../type-aliases/RawAliasMapping.md)[]
 
-Defined in: [packages/graph/src/alias.ts:311](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/alias.ts#L311)
+Defined in: [packages/graph/src/alias.ts:311](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/alias.ts#L311)
 
 Given `projectMetadata`, this function returns an array of
 [RawAliasMapping](../type-aliases/RawAliasMapping.md) entries. Each entry maps an import specifier alias
@@ -47,7 +47,19 @@ less-specific or catch-all open-suffix aliases. Entries of the same
 
 ### outputTarget
 
-`"for-config"` | `"for-import-ordering"`
+This controls the order of the elements of this function's output. The
+options are:
+
+- for-config: the output is ordered for general consumption by tooling
+- for-import-ordering: the output is ordered for eslint-plugin-import
+- for-import-hinting: the output is ordered for tsconfig
+
+`"for-import-ordering"` is useful for automatic import ordering and sorting
+powered by eslint. `"for-import-hinting"` ensures that aliases are ordered
+in such a way that TypeScript-based intellisense will return more prudent
+results.
+
+`"for-config"` | `"for-import-ordering"` | `"for-import-hinting"`
 
 ## Returns
 

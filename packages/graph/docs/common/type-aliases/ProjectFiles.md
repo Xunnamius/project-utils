@@ -8,7 +8,7 @@
 
 > **ProjectFiles** = `object`
 
-Defined in: [packages/graph/src/common.ts:100](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/common.ts#L100)
+Defined in: [packages/graph/src/common.ts:100](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/common.ts#L100)
 
 A collection of AbsolutePaths within this project organized by
 location and utility.
@@ -21,7 +21,7 @@ Unnamed and broken workspaces/packages are ignored.
 
 > **mainBinFiles**: `object`
 
-Defined in: [packages/graph/src/common.ts:130](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/common.ts#L130)
+Defined in: [packages/graph/src/common.ts:130](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/common.ts#L130)
 
 The first defined `bin` value (i.e. each package's "main binary") within
 the project's root and sub-root `package.json`'s files.
@@ -53,7 +53,7 @@ it exists).
 
 > **markdownFiles**: `object`
 
-Defined in: [packages/graph/src/common.ts:150](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/common.ts#L150)
+Defined in: [packages/graph/src/common.ts:150](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/common.ts#L150)
 
 The project's Markdown (.md) files.
 
@@ -83,7 +83,7 @@ Markdown files within the project's workspaces.
 
 > **packageJsonFiles**: `object`
 
-Defined in: [packages/graph/src/common.ts:104](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/common.ts#L104)
+Defined in: [packages/graph/src/common.ts:104](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/common.ts#L104)
 
 The project's various `package.json` files.
 
@@ -121,7 +121,7 @@ workspaces.
 
 > **typescriptSrcFiles**: `object`
 
-Defined in: [packages/graph/src/common.ts:170](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/common.ts#L170)
+Defined in: [packages/graph/src/common.ts:170](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/common.ts#L170)
 
 The project's TypeScript (.ts, .tsx, .mts, .cts) files that are within a
 `src/` directory.
@@ -152,7 +152,7 @@ TypeScript files within each project workspace's `src/` directory.
 
 > **typescriptTestFiles**: `object`
 
-Defined in: [packages/graph/src/common.ts:190](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/common.ts#L190)
+Defined in: [packages/graph/src/common.ts:190](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/common.ts#L190)
 
 The project's TypeScript (.ts, .tsx, .mts, .cts) files with names following
 the pattern `*.test.{ts,tsx,mts,cts}` that are within a `test/` directory.

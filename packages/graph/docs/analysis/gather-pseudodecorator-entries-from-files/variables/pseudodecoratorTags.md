@@ -8,7 +8,7 @@
 
 > `const` **pseudodecoratorTags**: [`PseudodecoratorTag`](../enumerations/PseudodecoratorTag.md)[]
 
-Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:144](https://github.com/Xunnamius/projector/blob/2730a290426f956d4d09df6f5838fcf6186fbf1f/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L144)
+Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:144](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L144)
 
 ## See
 

@@ -1,6 +1,6 @@
 {
   "name": "@-xun/project-graph",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "The project analysis utilities available to consumers of the @-xun/project package",
   "keywords": [],
   "homepage": "https://github.com/Xunnamius/project-utils/tree/main/packages/graph#readme",
