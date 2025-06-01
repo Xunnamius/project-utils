@@ -8,7 +8,7 @@
 
 > **ProjectMetadata**\<`Json`\> = `object`
 
-Defined in: [index.ts:197](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L197)
+Defined in: [index.ts:197](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L197)
 
 A collection of useful information about a project.
 
@@ -24,7 +24,7 @@ A collection of useful information about a project.
 
 > **cwdPackage**: [`Package`](Package.md)\<`Json`\>
 
-Defined in: [index.ts:212](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L212)
+Defined in: [index.ts:212](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L212)
 
 The "current package" data. The "current" package is determined by the
 current working directory and will always strictly equal (`===`) either (1)
@@ -37,7 +37,7 @@ exactly one value in RootPackage.packages's `all` property or (2)
 
 > **rootPackage**: [`RootPackage`](RootPackage.md)\<`Json`\>
 
-Defined in: [index.ts:205](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L205)
+Defined in: [index.ts:205](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L205)
 
 Project root package data.
 
@@ -47,7 +47,7 @@ Project root package data.
 
 > **subRootPackages**: `Map`\<[`WorkspacePackageName`](WorkspacePackageName.md), [`WorkspacePackage`](WorkspacePackage.md)\> & `object` \| `undefined`
 
-Defined in: [index.ts:221](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L221)
+Defined in: [index.ts:221](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L221)
 
 A mapping of sub-root package names to [WorkspacePackage](WorkspacePackage.md) objects in
 a monorepo, or `undefined` in a polyrepo.
@@ -62,6 +62,6 @@ depending on the process that generated this metadata object.
 
 > **type**: [`Polyrepo`](../enumerations/ProjectAttribute.md#polyrepo) \| [`Monorepo`](../enumerations/ProjectAttribute.md#monorepo)
 
-Defined in: [index.ts:201](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L201)
+Defined in: [index.ts:201](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L201)
 
 The type of the project.

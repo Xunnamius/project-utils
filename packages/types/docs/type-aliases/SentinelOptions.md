@@ -8,7 +8,7 @@
 
 > **SentinelOptions** = `object`
 
-Defined in: [index.ts:577](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L577)
+Defined in: [index.ts:577](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L577)
 
 The options accepted by several of the `isX` sentinel functions.
 
@@ -18,7 +18,7 @@ The options accepted by several of the `isX` sentinel functions.
 
 > `optional` **generic**: `boolean`
 
-Defined in: [index.ts:585](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L585)
+Defined in: [index.ts:585](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L585)
 
 If `true`, both the generic PackageJson and non-generic
 [XPackageJson](XPackageJson.md) JSON objects are accepted by this instance. If

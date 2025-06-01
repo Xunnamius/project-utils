@@ -8,7 +8,7 @@
 
 > **MonorepoMetadata**\<`Json`\> = [`ProjectMetadata`](ProjectMetadata.md)\<`Json`\> & `object`
 
-Defined in: [index.ts:274](https://github.com/Xunnamius/projector/blob/ace60864aaea74da9185b668e658744a8d21c609/packages/types/src/index.ts#L274)
+Defined in: [index.ts:274](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L274)
 
 A collection of useful information about a monorepo.
 
