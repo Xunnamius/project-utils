@@ -8,7 +8,7 @@
 
 > **RawPath** = `object`
 
-Defined in: [packages/graph/src/alias.ts:159](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/alias.ts#L159)
+Defined in: [packages/graph/src/alias.ts:159](https://github.com/Xunnamius/projector/blob/9c68f75450e3c8cd36c484a1863f7d61992f83cc/packages/graph/src/alias.ts#L159)
 
 A metadata object describing an "alias path," sometimes referred to as an
 "alias value". Always corresponds to an "alias key" (i.e. an "alias").
@@ -23,7 +23,7 @@ A metadata object describing an "alias path," sometimes referred to as an
 
 > **extensionless**: `boolean`
 
-Defined in: [packages/graph/src/alias.ts:197](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/alias.ts#L197)
+Defined in: [packages/graph/src/alias.ts:197](https://github.com/Xunnamius/projector/blob/9c68f75450e3c8cd36c484a1863f7d61992f83cc/packages/graph/src/alias.ts#L197)
 
 If `false`, an extension will be appended to the path automatically. The
 extension to be appended depends on which tooling the aliases are being
@@ -44,7 +44,7 @@ true
 
 > **path**: `RelativePath`
 
-Defined in: [packages/graph/src/alias.ts:186](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/alias.ts#L186)
+Defined in: [packages/graph/src/alias.ts:186](https://github.com/Xunnamius/projector/blob/9c68f75450e3c8cd36c484a1863f7d61992f83cc/packages/graph/src/alias.ts#L186)
 
 The eponymous "raw path". Must not contain the ":" linux path separator
 character. Must not start or end with the "/" character, or start with
@@ -58,7 +58,7 @@ character. Must not start or end with the "/" character, or start with
 
 > **prefix**: `"root"`
 
-Defined in: [packages/graph/src/alias.ts:167](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/alias.ts#L167)
+Defined in: [packages/graph/src/alias.ts:167](https://github.com/Xunnamius/projector/blob/9c68f75450e3c8cd36c484a1863f7d61992f83cc/packages/graph/src/alias.ts#L167)
 
 Determines the final path returned in lieu of a matched alias. Choices are:
 
@@ -72,7 +72,7 @@ Determines the final path returned in lieu of a matched alias. Choices are:
 
 > **suffix**: `"none"` \| `"open"`
 
-Defined in: [packages/graph/src/alias.ts:178](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/alias.ts#L178)
+Defined in: [packages/graph/src/alias.ts:178](https://github.com/Xunnamius/projector/blob/9c68f75450e3c8cd36c484a1863f7d61992f83cc/packages/graph/src/alias.ts#L178)
 
 Determines the final path returned in lieu of a matched alias. Choices are:
 

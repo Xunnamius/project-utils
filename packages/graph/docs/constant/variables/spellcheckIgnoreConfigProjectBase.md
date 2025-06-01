@@ -8,7 +8,7 @@
 
 > `const` **spellcheckIgnoreConfigProjectBase**: `".spellcheckignore"` = `'.spellcheckignore'`
 
-Defined in: [packages/graph/src/constant.ts:166](https://github.com/Xunnamius/projector/blob/7607517f14ad401cf959467e106fee9dead50bb3/packages/graph/src/constant.ts#L166)
+Defined in: [packages/graph/src/constant.ts:166](https://github.com/Xunnamius/projector/blob/9c68f75450e3c8cd36c484a1863f7d61992f83cc/packages/graph/src/constant.ts#L166)
 
 The basename of the well-known spellcheck-ignore (from commit-spell)
 configuration file.
