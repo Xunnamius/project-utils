@@ -92,8 +92,8 @@
     "test:topological": "symbiote project topology --run test --env NODE_NO_WARNINGS=1"
   },
   "dependencies": {
-    "@-xun/project-fs": "^2.0.2",
-    "@-xun/project-graph": "^2.1.2",
+    "@-xun/project-fs": "^2.0.3",
+    "@-xun/project-graph": "^2.1.3",
     "@-xun/project-types": "^2.0.1",
     "core-js": "^3.43.0",
     "named-app-errors": "^4.0.2"
