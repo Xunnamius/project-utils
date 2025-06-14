@@ -10,7 +10,7 @@ declare module 'glob-gitignore' {
     ignore?: string | string[];
   };
 
-  export async function glob(
+  export function glob(
     patterns: string | string[],
     options: GlobGitignoreOptions
   ): Promise<string[]>;
