@@ -6,7 +6,7 @@
 
 # Enumeration: PseudodecoratorTag
 
-Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:24](https://github.com/Xunnamius/projector/blob/929f57e95906b9d431b526feb4b0c2cf7ee47730/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L24)
+Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:24](https://github.com/Xunnamius/projector/blob/e9ee21374a7ed831ce875c6adff409f48ae6e839/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L24)
 
 The available [Pseudodecorator](../type-aliases/Pseudodecorator.md) tags. These tags must not contain valid
 RegExp quantifiers or other RegExp control characters.
@@ -17,7 +17,7 @@ RegExp quantifiers or other RegExp control characters.
 
 > **NotExtraneous**: `"@symbiote/notExtraneous"`
 
-Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:33](https://github.com/Xunnamius/projector/blob/929f57e95906b9d431b526feb4b0c2cf7ee47730/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L33)
+Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:33](https://github.com/Xunnamius/projector/blob/e9ee21374a7ed831ce875c6adff409f48ae6e839/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L33)
 
 This pseudodecorator provides a list of package names that should not be
 considered extraneous (the relevant checks are skipped).
@@ -32,7 +32,7 @@ NPM package name.
 
 > **NotInvalid**: `"@symbiote/notInvalid"`
 
-Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:42](https://github.com/Xunnamius/projector/blob/929f57e95906b9d431b526feb4b0c2cf7ee47730/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L42)
+Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:42](https://github.com/Xunnamius/projector/blob/e9ee21374a7ed831ce875c6adff409f48ae6e839/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L42)
 
 This pseudodecorator provides a list of package names that should not be
 considered invalid (the relevant checks are skipped).

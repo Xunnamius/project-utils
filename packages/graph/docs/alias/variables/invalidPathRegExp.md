@@ -8,7 +8,7 @@
 
 > `const` **invalidPathRegExp**: `RegExp`
 
-Defined in: [packages/graph/src/alias.ts:43](https://github.com/Xunnamius/projector/blob/929f57e95906b9d431b526feb4b0c2cf7ee47730/packages/graph/src/alias.ts#L43)
+Defined in: [packages/graph/src/alias.ts:43](https://github.com/Xunnamius/projector/blob/e9ee21374a7ed831ce875c6adff409f48ae6e839/packages/graph/src/alias.ts#L43)
 
 A regex containing illegal alias value characters.
 
