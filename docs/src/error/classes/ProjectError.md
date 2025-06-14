@@ -6,7 +6,7 @@
 
 # Class: ProjectError
 
-Defined in: [packages/common/src/error.ts:104](https://github.com/Xunnamius/projector/blob/aea4e1fc2dbd27c765738c988b14f1c9d60d19d2/packages/common/src/error.ts#L104)
+Defined in: [packages/common/src/error.ts:104](https://github.com/Xunnamius/projector/blob/f56bdcc7a5909c9ed93af22ef7ff06a41f9076fb/packages/common/src/error.ts#L104)
 
 Represents an exception originating from project meta-analysis tooling (e.g.
 `@-xun/project`).
@@ -32,7 +32,7 @@ Represents an exception originating from project meta-analysis tooling (e.g.
 
 > **new ProjectError**(`reason?`, `options?`): `ProjectError`
 
-Defined in: [packages/common/src/error.ts:111](https://github.com/Xunnamius/projector/blob/aea4e1fc2dbd27c765738c988b14f1c9d60d19d2/packages/common/src/error.ts#L111)
+Defined in: [packages/common/src/error.ts:111](https://github.com/Xunnamius/projector/blob/f56bdcc7a5909c9ed93af22ef7ff06a41f9076fb/packages/common/src/error.ts#L111)
 
 Represents a project-specific error, optionally with suggested exit code
 and other context.
@@ -59,7 +59,7 @@ and other context.
 
 > **new ProjectError**(`reason`, `options`, `message`, `superOptions`): `ProjectError`
 
-Defined in: [packages/common/src/error.ts:116](https://github.com/Xunnamius/projector/blob/aea4e1fc2dbd27c765738c988b14f1c9d60d19d2/packages/common/src/error.ts#L116)
+Defined in: [packages/common/src/error.ts:116](https://github.com/Xunnamius/projector/blob/f56bdcc7a5909c9ed93af22ef7ff06a41f9076fb/packages/common/src/error.ts#L116)
 
 This constructor syntax is used by subclasses when calling this constructor
 via `super`.
@@ -96,7 +96,7 @@ via `super`.
 
 > **\[$type\]**: `symbol`[]
 
-Defined in: [packages/common/src/error.ts:106](https://github.com/Xunnamius/projector/blob/aea4e1fc2dbd27c765738c988b14f1c9d60d19d2/packages/common/src/error.ts#L106)
+Defined in: [packages/common/src/error.ts:106](https://github.com/Xunnamius/projector/blob/f56bdcc7a5909c9ed93af22ef7ff06a41f9076fb/packages/common/src/error.ts#L106)
 
 ***
 
