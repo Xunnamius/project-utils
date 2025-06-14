@@ -213,7 +213,7 @@ export const postcssConfigProjectBase = 'postcss.config.mjs';
 /**
  * The basename of the well-known Tailwind configuration file.
  */
-export const tailwindConfigProjectBase = 'tailwind.config.mjs';
+export const tailwindConfigProjectBase = 'tailwind.config.ts';
 
 /**
  * The basename of the well-known @vercel/cli configuration file.
