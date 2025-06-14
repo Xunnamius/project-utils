@@ -8,7 +8,7 @@
 
 > **ProjectErrorOptions** = `object`
 
-Defined in: [packages/common/src/error.ts:24](https://github.com/Xunnamius/projector/blob/e87ff4d3d233a191128ce203c3fd48b9ce3e7b29/packages/common/src/error.ts#L24)
+Defined in: [packages/common/src/error.ts:24](https://github.com/Xunnamius/projector/blob/aea4e1fc2dbd27c765738c988b14f1c9d60d19d2/packages/common/src/error.ts#L24)
 
 Options available when constructing a new `ProjectError` object.
 
@@ -18,7 +18,7 @@ Options available when constructing a new `ProjectError` object.
 
 > `optional` **cause**: `ErrorOptions`\[`"cause"`\]
 
-Defined in: [packages/common/src/error.ts:34](https://github.com/Xunnamius/projector/blob/e87ff4d3d233a191128ce203c3fd48b9ce3e7b29/packages/common/src/error.ts#L34)
+Defined in: [packages/common/src/error.ts:34](https://github.com/Xunnamius/projector/blob/aea4e1fc2dbd27c765738c988b14f1c9d60d19d2/packages/common/src/error.ts#L34)
 
 By default, if an Error object is passed to `ProjectError`, that
 `Error` instance will be passed through as `ProjectError.cause` and that

@@ -6,7 +6,7 @@
 
 # Variable: tailwindConfigProjectBase
 
-> `const` **tailwindConfigProjectBase**: `"tailwind.config.mjs"` = `"tailwind.config.mjs"`
+> `const` **tailwindConfigProjectBase**: `"tailwind.config.ts"` = `"tailwind.config.ts"`
 
 Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:179
 
