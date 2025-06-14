@@ -8,4 +8,4 @@
 
 > `const` **commonDebug**: `ExtendedDebugger`
 
-Defined in: [packages/fs/src/common.ts:5](https://github.com/Xunnamius/projector/blob/9d3f5062654f593f52477505927007c896136ff7/packages/fs/src/common.ts#L5)
+Defined in: [packages/fs/src/common.ts:5](https://github.com/Xunnamius/projector/blob/c2c01047121dc52d072be87749a60b62bccc5a6e/packages/fs/src/common.ts#L5)

@@ -8,7 +8,7 @@
 
 > `const` **sync**: \{\<`T`\>(`path`, `options`): `T`; \<`T`\>(`path`, `options`): `EmptyObject` \| `T`; \} = `readJsonSync`
 
-Defined in: [packages/fs/src/system/read-json.ts:181](https://github.com/Xunnamius/projector/blob/9d3f5062654f593f52477505927007c896136ff7/packages/fs/src/system/read-json.ts#L181)
+Defined in: [packages/fs/src/system/read-json.ts:181](https://github.com/Xunnamius/projector/blob/c2c01047121dc52d072be87749a60b62bccc5a6e/packages/fs/src/system/read-json.ts#L181)
 
 ## Call Signature
 
