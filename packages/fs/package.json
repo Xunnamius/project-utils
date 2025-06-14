@@ -73,7 +73,7 @@
     "@-xun/memoize": "^1.1.0",
     "@-xun/project-types": "^2.0.1",
     "@-xun/run": "^1.1.0",
-    "core-js": "^3.42.0",
+    "core-js": "^3.43.0",
     "jsonc-parser": "^3.3.1",
     "named-app-errors": "^4.0.2",
     "rejoinder": "^1.2.5",
