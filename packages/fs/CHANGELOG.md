@@ -21,93 +21,102 @@ this project adheres to [Semantic Versioning][2].
 
 <br />
 
-### 🏗️ Patch @-xun/project-fs[@2.0.1][8] (2025-06-01)
+### 🏗️ Patch @-xun/project-fs[@2.0.2][8] (2025-06-14)
 
 #### ⚙️ Build System
 
-- **deps:** bump @-xun/fs from 1.0.0 to 2.0.0 ([9c537c6][9])
-- **deps:** bump internal monorepo interdependencies to latest versions ([b9ed4a0][10])
+- **deps:** bump core-js from 3.42.0 to 3.43.0 ([4951aa4][9])
+- **deps:** bump rejoinder from 1.2.5 to 2.0.0 ([e1b8dff][10])
 
 <br />
 
-## @-xun/project-fs[@1.2.0][11] (2025-03-19)
-
-### ✨ Features
-
-- **packages/fs:** allow `extractExamplesFromDocument` to return RegExp Maps with respect to `options.asRegExp` ([7eae313][12])
-
-### ⚙️ Build System
-
-- **deps:** bump core-js from 3.40.0 to 3.41.0 ([3415388][13])
-
-<br />
-
-## @-xun/project-fs[@1.1.0][14] (2025-03-19)
-
-### ✨ Features
-
-- **packages/fs:** implement `extractExamplesFromDocument` ([124f6e6][15])
-
-<br />
-
-## @-xun/project-fs[@1.0.0][16] (2025-02-03)
-
-### ⚙️ Build System
-
-- Integrate externalized @-xun/memoize and bpma packages ([e672064][17])
-- **release:** factor @-xun/project multirepo out from symbiote ([880d8ce][18])
-
-<br />
-
-### 🏗️ Patch @-xun/project-fs[@1.0.5][19] (2025-03-08)
+### 🏗️ Patch @-xun/project-fs[@2.0.1][11] (2025-06-01)
 
 #### ⚙️ Build System
 
-- **deps:** bump @-xun/run from 1.0.3 to 1.1.0 ([a8fc033][20])
-- **deps:** bump type-fest from 4.35.0 to 4.36.0 ([2fa0714][21])
-- **deps:** bump type-fest from 4.36.0 to 4.37.0 ([1031a44][22])
+- **deps:** bump @-xun/fs from 1.0.0 to 2.0.0 ([9c537c6][12])
+- **deps:** bump internal monorepo interdependencies to latest versions ([b9ed4a0][13])
+
+<br />
+
+## @-xun/project-fs[@1.2.0][14] (2025-03-19)
+
+### ✨ Features
+
+- **packages/fs:** allow `extractExamplesFromDocument` to return RegExp Maps with respect to `options.asRegExp` ([7eae313][15])
+
+### ⚙️ Build System
+
+- **deps:** bump core-js from 3.40.0 to 3.41.0 ([3415388][16])
+
+<br />
+
+## @-xun/project-fs[@1.1.0][17] (2025-03-19)
+
+### ✨ Features
+
+- **packages/fs:** implement `extractExamplesFromDocument` ([124f6e6][18])
+
+<br />
+
+## @-xun/project-fs[@1.0.0][19] (2025-02-03)
+
+### ⚙️ Build System
+
+- Integrate externalized @-xun/memoize and bpma packages ([e672064][20])
+- **release:** factor @-xun/project multirepo out from symbiote ([880d8ce][21])
+
+<br />
+
+### 🏗️ Patch @-xun/project-fs[@1.0.5][22] (2025-03-08)
+
+#### ⚙️ Build System
+
+- **deps:** bump @-xun/run from 1.0.3 to 1.1.0 ([a8fc033][23])
+- **deps:** bump type-fest from 4.35.0 to 4.36.0 ([2fa0714][24])
+- **deps:** bump type-fest from 4.36.0 to 4.37.0 ([1031a44][25])
 
 #### 🔥 Reverted
 
-- _"build(deps): bump core-js from 3.40.0 to 3.41.0"_ ([60c1d5e][23])
+- _"build(deps): bump core-js from 3.40.0 to 3.41.0"_ ([60c1d5e][26])
 
 <br />
 
-### 🏗️ Patch @-xun/project-fs[@1.0.4][24] (2025-02-24)
+### 🏗️ Patch @-xun/project-fs[@1.0.4][27] (2025-02-24)
 
 #### 🪄 Fixes
 
-- **packages/fs:** improve `readXPackageJsonAtRoot` error message output ([a847b98][25])
+- **packages/fs:** improve `readXPackageJsonAtRoot` error message output ([a847b98][28])
 
 <br />
 
-### 🏗️ Patch @-xun/project-fs[@1.0.3][26] (2025-02-24)
+### 🏗️ Patch @-xun/project-fs[@1.0.3][29] (2025-02-24)
 
 #### 🪄 Fixes
 
-- **packages/fs:** improve debug output and provide more accurate return types for `readJson` and `readJsonc` exports ([79c4ff5][27])
-- **packages/fs:** throw in `readXPackageJsonAtRoot` when reading a non-`XPackageJson` JSON file ([33d431e][28])
+- **packages/fs:** improve debug output and provide more accurate return types for `readJson` and `readJsonc` exports ([79c4ff5][30])
+- **packages/fs:** throw in `readXPackageJsonAtRoot` when reading a non-`XPackageJson` JSON file ([33d431e][31])
 
 #### ⚙️ Build System
 
-- **deps:** bump @-xun/run from 1.0.2 to 1.0.3 ([9a72b4f][29])
+- **deps:** bump @-xun/run from 1.0.2 to 1.0.3 ([9a72b4f][32])
 
 <br />
 
-### 🏗️ Patch @-xun/project-fs[@1.0.2][30] (2025-02-17)
+### 🏗️ Patch @-xun/project-fs[@1.0.2][33] (2025-02-17)
 
 #### ⚙️ Build System
 
-- Update @-xun/run to 1.0.1 ([ff90125][31])
+- Update @-xun/run to 1.0.1 ([ff90125][34])
 
 <br />
 
-### 🏗️ Patch @-xun/project-fs[@1.0.1][32] (2025-02-06)
+### 🏗️ Patch @-xun/project-fs[@1.0.1][35] (2025-02-06)
 
 #### ⚙️ Build System
 
-- **husky:** skip slow tests ([80a5ed7][33])
-- **post-npm-install:** add common-dummies post-install to npm-post-install ([2747383][34])
+- **husky:** skip slow tests ([80a5ed7][36])
+- **post-npm-install:** add common-dummies post-install to npm-post-install ([2747383][37])
 
 [1]: https://conventionalcommits.org
 [2]: https://semver.org
@@ -116,30 +125,33 @@ this project adheres to [Semantic Versioning][2].
 [5]: https://github.com/Xunnamius/project-utils/commit/64362b01f24c6c59988db9f068ede4ce16e5426d
 [6]: https://github.com/Xunnamius/project-utils/commit/773a174835927ef22171f6d21a2dedc008359a82
 [7]: https://github.com/Xunnamius/project-utils/commit/19084dae491dd3fb1056b307e670a0d5c6baeaf6
-[8]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@2.0.0...@-xun/project-fs@2.0.1
-[9]: https://github.com/Xunnamius/project-utils/commit/9c537c66f40a4ce99d199dd239cd4e58e66cb3b7
-[10]: https://github.com/Xunnamius/project-utils/commit/b9ed4a06f870e70fddad5d0f08720666aeeab7b0
-[11]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@1.1.0...@-xun/project-fs@1.2.0
-[12]: https://github.com/Xunnamius/project-utils/commit/7eae313be5b26fe85e1c6ce76044bc731b50b838
-[13]: https://github.com/Xunnamius/project-utils/commit/3415388ba58de8dd25b7d9d90b50d1dbb6b8a72d
-[14]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@1.0.5...@-xun/project-fs@1.1.0
-[15]: https://github.com/Xunnamius/project-utils/commit/124f6e6b6e700d669a6e7832c4ad15585be7dc80
-[16]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@0.0.0-init...@-xun/project-fs@1.0.0
-[17]: https://github.com/Xunnamius/project-utils/commit/e6720648fa9dc975b0426fb558b4c4b10c6b2e73
-[18]: https://github.com/Xunnamius/project-utils/commit/880d8ce103b19a190f99c2f5db4ca46d8da97664
-[19]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@1.0.4...@-xun/project-fs@1.0.5
-[20]: https://github.com/Xunnamius/project-utils/commit/a8fc03374e06a987e19d82e1a8d79618a516c6f6
-[21]: https://github.com/Xunnamius/project-utils/commit/2fa0714dbedab52c4a82a33adf20982b9fc3a34b
-[22]: https://github.com/Xunnamius/project-utils/commit/1031a44179c373e44b77aabad30d4505d263a012
-[23]: https://github.com/Xunnamius/project-utils/commit/60c1d5ecb7a22e53a2e1a7c32b140b925b2ce39f
-[24]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@1.0.3...@-xun/project-fs@1.0.4
-[25]: https://github.com/Xunnamius/project-utils/commit/a847b9875ec701ad22e6bc41ef194cc3890cf59f
-[26]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@1.0.2...@-xun/project-fs@1.0.3
-[27]: https://github.com/Xunnamius/project-utils/commit/79c4ff57591d529d751f338a01f8fae9485cbb10
-[28]: https://github.com/Xunnamius/project-utils/commit/33d431e58f082c1e978760f850868fb2b98938b9
-[29]: https://github.com/Xunnamius/project-utils/commit/9a72b4f54dbdddbb352c04844a10b2e6a28d17e6
-[30]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@1.0.1...@-xun/project-fs@1.0.2
-[31]: https://github.com/Xunnamius/project-utils/commit/ff90125e0338879bf7bf87de3d6d4aed56521e4c
-[32]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@1.0.0...@-xun/project-fs@1.0.1
-[33]: https://github.com/Xunnamius/project-utils/commit/80a5ed7472360ab582a2244137ed53d9f14dcec5
-[34]: https://github.com/Xunnamius/project-utils/commit/274738346fdc425d391c09d88ec14c504de107a1
+[8]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@2.0.1...@-xun/project-fs@2.0.2
+[9]: https://github.com/Xunnamius/project-utils/commit/4951aa433f72d0ec35b08e1547139ab0abb65745
+[10]: https://github.com/Xunnamius/project-utils/commit/e1b8dff3776b1a0ff976d25554f9d24101ff7e78
+[11]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@2.0.0...@-xun/project-fs@2.0.1
+[12]: https://github.com/Xunnamius/project-utils/commit/9c537c66f40a4ce99d199dd239cd4e58e66cb3b7
+[13]: https://github.com/Xunnamius/project-utils/commit/b9ed4a06f870e70fddad5d0f08720666aeeab7b0
+[14]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@1.1.0...@-xun/project-fs@1.2.0
+[15]: https://github.com/Xunnamius/project-utils/commit/7eae313be5b26fe85e1c6ce76044bc731b50b838
+[16]: https://github.com/Xunnamius/project-utils/commit/3415388ba58de8dd25b7d9d90b50d1dbb6b8a72d
+[17]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@1.0.5...@-xun/project-fs@1.1.0
+[18]: https://github.com/Xunnamius/project-utils/commit/124f6e6b6e700d669a6e7832c4ad15585be7dc80
+[19]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@0.0.0-init...@-xun/project-fs@1.0.0
+[20]: https://github.com/Xunnamius/project-utils/commit/e6720648fa9dc975b0426fb558b4c4b10c6b2e73
+[21]: https://github.com/Xunnamius/project-utils/commit/880d8ce103b19a190f99c2f5db4ca46d8da97664
+[22]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@1.0.4...@-xun/project-fs@1.0.5
+[23]: https://github.com/Xunnamius/project-utils/commit/a8fc03374e06a987e19d82e1a8d79618a516c6f6
+[24]: https://github.com/Xunnamius/project-utils/commit/2fa0714dbedab52c4a82a33adf20982b9fc3a34b
+[25]: https://github.com/Xunnamius/project-utils/commit/1031a44179c373e44b77aabad30d4505d263a012
+[26]: https://github.com/Xunnamius/project-utils/commit/60c1d5ecb7a22e53a2e1a7c32b140b925b2ce39f
+[27]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@1.0.3...@-xun/project-fs@1.0.4
+[28]: https://github.com/Xunnamius/project-utils/commit/a847b9875ec701ad22e6bc41ef194cc3890cf59f
+[29]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@1.0.2...@-xun/project-fs@1.0.3
+[30]: https://github.com/Xunnamius/project-utils/commit/79c4ff57591d529d751f338a01f8fae9485cbb10
+[31]: https://github.com/Xunnamius/project-utils/commit/33d431e58f082c1e978760f850868fb2b98938b9
+[32]: https://github.com/Xunnamius/project-utils/commit/9a72b4f54dbdddbb352c04844a10b2e6a28d17e6
+[33]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@1.0.1...@-xun/project-fs@1.0.2
+[34]: https://github.com/Xunnamius/project-utils/commit/ff90125e0338879bf7bf87de3d6d4aed56521e4c
+[35]: https://github.com/Xunnamius/project-utils/compare/@-xun/project-fs@1.0.0...@-xun/project-fs@1.0.1
+[36]: https://github.com/Xunnamius/project-utils/commit/80a5ed7472360ab582a2244137ed53d9f14dcec5
+[37]: https://github.com/Xunnamius/project-utils/commit/274738346fdc425d391c09d88ec14c504de107a1

@@ -8,7 +8,7 @@
 
 > `const` **sync**: \{(`path`, `options`): `XPackageJson`; (`path`, `options`): `EmptyObject` \| `XPackageJson`; \} = `readXPackageJsonAtRootSync`
 
-Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:156](https://github.com/Xunnamius/projector/blob/046ef48bf5d245c4f1a27d7c884708b74af0a9d1/packages/fs/src/system/read-xpackage-json-at-root.ts#L156)
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:156](https://github.com/Xunnamius/projector/blob/9d3f5062654f593f52477505927007c896136ff7/packages/fs/src/system/read-xpackage-json-at-root.ts#L156)
 
 ## Call Signature
 

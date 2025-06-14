@@ -8,7 +8,7 @@
 
 > **sync**(...`arguments_`): `boolean`
 
-Defined in: [packages/fs/src/system/is-accessible.ts:124](https://github.com/Xunnamius/projector/blob/046ef48bf5d245c4f1a27d7c884708b74af0a9d1/packages/fs/src/system/is-accessible.ts#L124)
+Defined in: [packages/fs/src/system/is-accessible.ts:124](https://github.com/Xunnamius/projector/blob/9d3f5062654f593f52477505927007c896136ff7/packages/fs/src/system/is-accessible.ts#L124)
 
 Sugar for the synchronous `access(path, fsConstant)` that returns `true` or
 `false` rather than throwing or returning `void`. Also supports `file:///`
