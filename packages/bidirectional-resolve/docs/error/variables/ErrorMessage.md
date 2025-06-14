@@ -8,7 +8,7 @@
 
 > `const` **ErrorMessage**: `object`
 
-Defined in: [packages/bidirectional-resolve/src/error.ts:8](https://github.com/Xunnamius/projector/blob/ff49dea649d2cb66826f02e52b0a8e211009f14d/packages/bidirectional-resolve/src/error.ts#L8)
+Defined in: [packages/bidirectional-resolve/src/error.ts:8](https://github.com/Xunnamius/projector/blob/38588c43723411fd0ec7837abba2c98bf624a467/packages/bidirectional-resolve/src/error.ts#L8)
 
 ## Type declaration
 
