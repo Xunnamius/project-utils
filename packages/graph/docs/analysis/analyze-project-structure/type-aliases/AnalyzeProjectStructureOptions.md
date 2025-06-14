@@ -8,7 +8,7 @@
 
 > **AnalyzeProjectStructureOptions** = `object`
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:73](https://github.com/Xunnamius/projector/blob/9c68f75450e3c8cd36c484a1863f7d61992f83cc/packages/graph/src/analysis/analyze-project-structure.ts#L73)
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:73](https://github.com/Xunnamius/projector/blob/929f57e95906b9d431b526feb4b0c2cf7ee47730/packages/graph/src/analysis/analyze-project-structure.ts#L73)
 
 ## See
 
@@ -20,7 +20,7 @@ Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:73](https:
 
 > `optional` **allowUnnamedPackages**: `boolean`
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:101](https://github.com/Xunnamius/projector/blob/9c68f75450e3c8cd36c484a1863f7d61992f83cc/packages/graph/src/analysis/analyze-project-structure.ts#L101)
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:101](https://github.com/Xunnamius/projector/blob/929f57e95906b9d431b526feb4b0c2cf7ee47730/packages/graph/src/analysis/analyze-project-structure.ts#L101)
 
 Allow unnamed packages in this project, which will result in looser and
 less useful types in the returned ProjectMetadata object. Setting
@@ -52,7 +52,7 @@ false
 
 > `optional` **cwd**: `AbsolutePath`
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:79](https://github.com/Xunnamius/projector/blob/9c68f75450e3c8cd36c484a1863f7d61992f83cc/packages/graph/src/analysis/analyze-project-structure.ts#L79)
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:79](https://github.com/Xunnamius/projector/blob/929f57e95906b9d431b526feb4b0c2cf7ee47730/packages/graph/src/analysis/analyze-project-structure.ts#L79)
 
 The current working directory as an absolute path.
 
@@ -68,7 +68,7 @@ process.cwd()
 
 > **useCached**: `boolean`
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:112](https://github.com/Xunnamius/projector/blob/9c68f75450e3c8cd36c484a1863f7d61992f83cc/packages/graph/src/analysis/analyze-project-structure.ts#L112)
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:112](https://github.com/Xunnamius/projector/blob/929f57e95906b9d431b526feb4b0c2cf7ee47730/packages/graph/src/analysis/analyze-project-structure.ts#L112)
 
 Use the internal cached result from a previous run, if available.
 

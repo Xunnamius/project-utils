@@ -8,7 +8,7 @@
 
 > `const` **sync**: \{(`options`): `ProjectMetadata`\<`PackageJson`\>; (`options`): `ProjectMetadata`; \} = `syncAnalyzeProjectStructure`
 
-Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:352](https://github.com/Xunnamius/projector/blob/9c68f75450e3c8cd36c484a1863f7d61992f83cc/packages/graph/src/analysis/analyze-project-structure.ts#L352)
+Defined in: [packages/graph/src/analysis/analyze-project-structure.ts:352](https://github.com/Xunnamius/projector/blob/929f57e95906b9d431b526feb4b0c2cf7ee47730/packages/graph/src/analysis/analyze-project-structure.ts#L352)
 
 Synchronously returns information about the structure of the project at the
 current working directory.

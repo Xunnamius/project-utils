@@ -8,7 +8,7 @@
 
 > **mapRawSpecifierToPath**(`rawAliasMappings`, `specifier`, `__namedParameters`): `undefined` \| `RelativePath`
 
-Defined in: [packages/graph/src/alias.ts:764](https://github.com/Xunnamius/projector/blob/9c68f75450e3c8cd36c484a1863f7d61992f83cc/packages/graph/src/alias.ts#L764)
+Defined in: [packages/graph/src/alias.ts:764](https://github.com/Xunnamius/projector/blob/929f57e95906b9d431b526feb4b0c2cf7ee47730/packages/graph/src/alias.ts#L764)
 
 Accepts a _raw `specifier`_ and returns an "bare" RelativePath (in
 that it does not begin with "./") to a theoretical location on the filesystem

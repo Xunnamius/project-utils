@@ -8,6 +8,6 @@
 
 > `const` **webpackConfigProjectBase**: `"webpack.config.mjs"` = `'webpack.config.mjs'`
 
-Defined in: [packages/graph/src/constant.ts:70](https://github.com/Xunnamius/projector/blob/9c68f75450e3c8cd36c484a1863f7d61992f83cc/packages/graph/src/constant.ts#L70)
+Defined in: [packages/graph/src/constant.ts:70](https://github.com/Xunnamius/projector/blob/929f57e95906b9d431b526feb4b0c2cf7ee47730/packages/graph/src/constant.ts#L70)
 
 The basename of the well-known Webpack configuration file.

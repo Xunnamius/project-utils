@@ -8,7 +8,7 @@
 
 > **deriveAliasesForNextJs**(`rawAliasMappings`, `projectRoot`): `object`
 
-Defined in: [packages/graph/src/alias.ts:661](https://github.com/Xunnamius/projector/blob/9c68f75450e3c8cd36c484a1863f7d61992f83cc/packages/graph/src/alias.ts#L661)
+Defined in: [packages/graph/src/alias.ts:661](https://github.com/Xunnamius/projector/blob/929f57e95906b9d431b526feb4b0c2cf7ee47730/packages/graph/src/alias.ts#L661)
 
 Returns an object that can be plugged into NextJs configurations. Currently
 only Webpack-based alias configurations are supported, making this function
