@@ -216,6 +216,11 @@ export const tailwindConfigProjectBase = 'tailwind.config.ts';
 export const vercelConfigProjectBase = 'vercel.json';
 
 /**
+ * The basename of the well-known vercel-ignore configuration file.
+ */
+export const vercelignoreConfigProjectBase = '.vercelignore';
+
+/**
  * The basename of the well-known generated types output directory.
  *
  * Never contains special regular expression characters.
