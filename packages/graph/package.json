@@ -77,7 +77,7 @@
     "@babel/plugin-syntax-typescript": "^7.27.1",
     "@types/semver": "^7.7.0",
     "babel-plugin-metadata-accumulator": "^1.0.1",
-    "browserslist": "^4.25.0",
+    "browserslist": "^4.25.1",
     "core-js": "^3.43.0",
     "escape-string-regexp~4": "npm:escape-string-regexp@^4.0.0",
     "find-up~5": "npm:find-up@^5.0.0",
