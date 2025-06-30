@@ -240,6 +240,12 @@ export const changelogPatchConfigProjectBase = 'changelog.patch.mjs';
 export const nextjsConfigPackageBase = 'next.config.mjs';
 
 /**
+ * The basename of the well-known Cloudflare Wrangler configuration file (as
+ * JSON, not JSONC or TOML).
+ */
+export const wranglerConfigPackageBase = 'wrangler.json';
+
+/**
  * The basename of the well-known changelog patcher configuration file
  * (respected by the `symbiote build changelog` command).
  */
