@@ -60,11 +60,6 @@ export const jestConfigProjectBase = 'jest.config.mjs';
 export const tstycheConfigProjectBase = 'tstyche.config.json';
 
 /**
- * The basename of the well-known Next.js configuration file.
- */
-export const nextjsConfigProjectBase = 'next.config.mjs';
-
-/**
  * The basename of the well-known Webpack configuration file.
  */
 export const webpackConfigProjectBase = 'webpack.config.mjs';
@@ -238,6 +233,11 @@ export const aliasMapConfigProjectBase = 'alias.config.mjs';
  * (respected by the `symbiote build changelog` command).
  */
 export const changelogPatchConfigProjectBase = 'changelog.patch.mjs';
+
+/**
+ * The basename of the well-known Next.js configuration file.
+ */
+export const nextjsConfigPackageBase = 'next.config.mjs';
 
 /**
  * The basename of the well-known changelog patcher configuration file

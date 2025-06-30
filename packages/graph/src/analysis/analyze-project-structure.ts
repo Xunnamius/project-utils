@@ -34,7 +34,7 @@ import { commonDebug } from 'universe+graph:common.ts';
 
 import {
   directorySrcPackageBase,
-  nextjsConfigProjectBase,
+  nextjsConfigPackageBase,
   packageJsonConfigPackageBase,
   sharedAttributeFileBase,
   vercelConfigProjectBase,
@@ -765,7 +765,7 @@ function getProjectAttributes(
     if (
       isAccessibleFromRoot(
         true,
-        toRelativePath(nextjsConfigProjectBase),
+        toRelativePath(nextjsConfigPackageBase),
         root,
         useCached
       )
@@ -816,7 +816,7 @@ function getProjectAttributes(
       const [hasNext, hasWebpack, isHybridrepo, hasVercel] = await Promise.all([
         isAccessibleFromRoot(
           false,
-          toRelativePath(nextjsConfigProjectBase),
+          toRelativePath(nextjsConfigPackageBase),
           root,
           useCached
         ),
