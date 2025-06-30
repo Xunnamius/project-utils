@@ -8,6 +8,6 @@
 
 > `const` **vercelConfigProjectBase**: `"vercel.json"` = `'vercel.json'`
 
-Defined in: [packages/graph/src/constant.ts:221](https://github.com/Xunnamius/projector/blob/e9ee21374a7ed831ce875c6adff409f48ae6e839/packages/graph/src/constant.ts#L221)
+Defined in: [packages/graph/src/constant.ts:216](https://github.com/Xunnamius/projector/blob/7b62fe0623286ad7bf6227972127d835f758db94/packages/graph/src/constant.ts#L216)
 
 The basename of the well-known @vercel/cli configuration file.

@@ -8,7 +8,7 @@
 
 > `const` **isLocalLookingRegExp**: `RegExp`
 
-Defined in: [packages/graph/src/alias.ts:52](https://github.com/Xunnamius/projector/blob/e9ee21374a7ed831ce875c6adff409f48ae6e839/packages/graph/src/alias.ts#L52)
+Defined in: [packages/graph/src/alias.ts:52](https://github.com/Xunnamius/projector/blob/7b62fe0623286ad7bf6227972127d835f758db94/packages/graph/src/alias.ts#L52)
 
 A regex that matches any string that looks like a relative path without also
 looking like a bare specifier.

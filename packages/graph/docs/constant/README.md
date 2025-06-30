@@ -55,7 +55,7 @@
 - [markdownReadmePackageBase](variables/markdownReadmePackageBase.md)
 - [markdownSecurityProjectBase](variables/markdownSecurityProjectBase.md)
 - [ncuConfigProjectBase](variables/ncuConfigProjectBase.md)
-- [nextjsConfigProjectBase](variables/nextjsConfigProjectBase.md)
+- [nextjsConfigPackageBase](variables/nextjsConfigPackageBase.md)
 - [packageJsonConfigPackageBase](variables/packageJsonConfigPackageBase.md)
 - [postcssConfigProjectBase](variables/postcssConfigProjectBase.md)
 - [postNpmInstallPackageBase](variables/postNpmInstallPackageBase.md)

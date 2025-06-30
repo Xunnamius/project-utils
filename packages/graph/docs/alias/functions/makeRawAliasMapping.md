@@ -8,7 +8,7 @@
 
 > **makeRawAliasMapping**(`rawAlias`, `rawPath`): [`RawAliasMapping`](../type-aliases/RawAliasMapping.md)
 
-Defined in: [packages/graph/src/alias.ts:213](https://github.com/Xunnamius/projector/blob/e9ee21374a7ed831ce875c6adff409f48ae6e839/packages/graph/src/alias.ts#L213)
+Defined in: [packages/graph/src/alias.ts:213](https://github.com/Xunnamius/projector/blob/7b62fe0623286ad7bf6227972127d835f758db94/packages/graph/src/alias.ts#L213)
 
 Accepts partial [RawAlias](../type-aliases/RawAlias.md) and [RawPath](../type-aliases/RawPath.md) objects and returns
 proper [RawAlias](../type-aliases/RawAlias.md) and [RawPath](../type-aliases/RawPath.md) objects as a key-value tuple.

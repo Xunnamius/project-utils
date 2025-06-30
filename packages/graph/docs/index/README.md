@@ -464,9 +464,9 @@ Re-exports [ncuConfigProjectBase](../constant/variables/ncuConfigProjectBase.md)
 
 ***
 
-### nextjsConfigProjectBase
+### nextjsConfigPackageBase
 
-Re-exports [nextjsConfigProjectBase](../constant/variables/nextjsConfigProjectBase.md)
+Re-exports [nextjsConfigPackageBase](../constant/variables/nextjsConfigPackageBase.md)
 
 ***
 
