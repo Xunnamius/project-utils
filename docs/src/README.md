@@ -150,6 +150,7 @@
 - [uriSchemeSubDelimiterUnescaped](variables/uriSchemeSubDelimiterUnescaped.md)
 - [vercelConfigProjectBase](variables/vercelConfigProjectBase.md)
 - [webpackConfigProjectBase](variables/webpackConfigProjectBase.md)
+- [wranglerConfigPackageBase](variables/wranglerConfigPackageBase.md)
 - [xchangelogConfigProjectBase](variables/xchangelogConfigProjectBase.md)
 - [xreleaseConfigProjectBase](variables/xreleaseConfigProjectBase.md)
 

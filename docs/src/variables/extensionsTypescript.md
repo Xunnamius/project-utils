@@ -8,6 +8,6 @@
 
 > `const` **extensionsTypescript**: readonly \[`".ts"`, `".cts"`, `".mts"`, `".tsx"`\]
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:292
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:297
 
 All known TypeScript file extensions supported by Babel (except [extensionTypescriptDefinition](extensionTypescriptDefinition.md)).

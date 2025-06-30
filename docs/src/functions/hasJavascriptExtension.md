@@ -8,7 +8,7 @@
 
 > **hasJavascriptExtension**(`path`): `boolean`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:326
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:331
 
 Returns `true` if `path` points to a file with a JavaScript extension.
 

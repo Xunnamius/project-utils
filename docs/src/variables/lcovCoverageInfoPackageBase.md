@@ -8,6 +8,6 @@
 
 > `const` **lcovCoverageInfoPackageBase**: `"lcov.info"` = `"lcov.info"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:234
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:239
 
 The basename of the well-known istanbul/jest code coverage output file.

@@ -8,7 +8,7 @@
 
 > `const` **postNpmInstallPackageBase**: `"post-npm-install.mjs"` = `"post-npm-install.mjs"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:209
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:214
 
 The basename of the well-known script run after `npm install` (exactly as
 typed).
