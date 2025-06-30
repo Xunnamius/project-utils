@@ -93,7 +93,7 @@
   },
   "dependencies": {
     "@-xun/project-fs": "^2.0.3",
-    "@-xun/project-graph": "^3.1.1",
+    "@-xun/project-graph": "^3.2.0",
     "@-xun/project-types": "^2.0.1",
     "core-js": "^3.43.0",
     "named-app-errors": "^4.0.2"
