@@ -698,6 +698,12 @@ Re-exports [vercelConfigProjectBase](../constant/variables/vercelConfigProjectBa
 
 ***
 
+### vercelignoreConfigProjectBase
+
+Re-exports [vercelignoreConfigProjectBase](../constant/variables/vercelignoreConfigProjectBase.md)
+
+***
+
 ### webpackConfigProjectBase
 
 Re-exports [webpackConfigProjectBase](../constant/variables/webpackConfigProjectBase.md)
