@@ -8,7 +8,7 @@
 
 > `const` **extensionTypescriptDefinition**: `".d.ts"` = `".d.ts"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:303
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:307
 
 The known file extension for TypeScript definition files.
 

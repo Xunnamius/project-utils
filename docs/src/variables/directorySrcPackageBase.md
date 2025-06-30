@@ -8,7 +8,7 @@
 
 > `const` **directorySrcPackageBase**: `"src"` = `"src"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:272
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:276
 
 The basename of the well-known source directory.
 

@@ -8,7 +8,7 @@
 
 > `const` **wranglerConfigPackageBase**: `"wrangler.json"` = `"wrangler.json"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:204
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:208
 
 The basename of the well-known Cloudflare Wrangler configuration file (as
 JSON, not JSONC or TOML).

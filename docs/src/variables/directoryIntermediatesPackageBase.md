@@ -8,6 +8,6 @@
 
 > `const` **directoryIntermediatesPackageBase**: `".transpiled"` = `".transpiled"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:260
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:264
 
 The basename of the well-known intermediate transpilation output directory.

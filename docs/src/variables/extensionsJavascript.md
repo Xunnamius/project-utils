@@ -8,6 +8,6 @@
 
 > `const` **extensionsJavascript**: readonly \[`".js"`, `".mjs"`, `".cjs"`, `".jsx"`\]
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:307
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:311
 
 All known JavaScript file extensions supported by Babel.

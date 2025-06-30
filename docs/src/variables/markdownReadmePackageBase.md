@@ -8,6 +8,6 @@
 
 > `const` **markdownReadmePackageBase**: `"README.md"` = `"README.md"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:227
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:231
 
 The basename of the well-known README file.

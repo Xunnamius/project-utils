@@ -8,7 +8,7 @@
 
 > `const` **directoryDistPackageBase**: `"dist"` = `"dist"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:256
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:260
 
 The basename of the well-known distributables output or "dist" directory.
 

@@ -8,7 +8,7 @@
 
 > `const` **directoryCoveragePackageBase**: `"coverage"` = `"coverage"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:266
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:270
 
 The basename of the well-known test coverage output directory.
 

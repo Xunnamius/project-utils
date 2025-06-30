@@ -8,7 +8,7 @@
 
 > **hasExtensionAcceptedByBabel**(`path`): `boolean`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:318
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:322
 
 Returns `true` if `path` points to a file with an extension accepted by Babel
 (including `.d.ts`).

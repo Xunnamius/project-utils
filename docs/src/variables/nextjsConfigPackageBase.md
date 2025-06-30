@@ -8,6 +8,6 @@
 
 > `const` **nextjsConfigPackageBase**: `"next.config.mjs"` = `"next.config.mjs"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:199
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:203
 
 The basename of the well-known Next.js configuration file.
