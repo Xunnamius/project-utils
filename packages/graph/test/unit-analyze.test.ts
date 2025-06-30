@@ -230,6 +230,40 @@ describe('::pathToPackage', () => {
     ).toStrictEqual(secondPackage);
   });
 
+  it('is not tricked by package ids that start with the same characters as another', () => {
+    expect.hasAssertions();
+
+    const projectMetadata = dummyToProjectMetadata('goodMonorepoSimilarIds');
+    const packageA = repositories.goodMonorepoSimilarIds.namedPackageMapData[0]![1];
+    const packageAAA = repositories.goodMonorepoSimilarIds.namedPackageMapData[1]![1];
+
+    expect(pathToPackage(packageA.root, projectMetadata)).toStrictEqual(packageA);
+
+    expect(
+      pathToPackage((packageA.root + '/package.json') as AbsolutePath, projectMetadata)
+    ).toStrictEqual(packageA);
+
+    expect(
+      pathToPackage(
+        (packageA.root + '/some/path/to/somewhere.ts') as AbsolutePath,
+        projectMetadata
+      )
+    ).toStrictEqual(packageA);
+
+    expect(pathToPackage(packageAAA.root, projectMetadata)).toStrictEqual(packageAAA);
+
+    expect(
+      pathToPackage((packageAAA.root + '/package.json') as AbsolutePath, projectMetadata)
+    ).toStrictEqual(packageAAA);
+
+    expect(
+      pathToPackage(
+        (packageAAA.root + '/some/path/to/somewhere.ts') as AbsolutePath,
+        projectMetadata
+      )
+    ).toStrictEqual(packageAAA);
+  });
+
   it('throws if path is not within project', () => {
     expect.hasAssertions();
 

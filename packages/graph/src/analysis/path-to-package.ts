@@ -1,3 +1,5 @@
+import { sep } from 'node:path';
+
 import { ProjectError } from 'multiverse+common:error.ts';
 
 import { GraphErrorMessage } from 'universe+graph:error.ts';
@@ -17,7 +19,11 @@ export function pathToPackage<T extends GenericPackageJson>(
 
   if (subRootPackages) {
     const subrootPackage = subRootPackages.all.find(({ root: packageRoot }) => {
-      return path.startsWith(packageRoot);
+      return (
+        path === packageRoot ||
+        path.startsWith(packageRoot + '/') ||
+        path.startsWith(packageRoot + sep)
+      );
     });
 
     if (subrootPackage) {
@@ -25,7 +31,11 @@ export function pathToPackage<T extends GenericPackageJson>(
     }
   }
 
-  if (path.startsWith(rootPackage.root)) {
+  if (
+    path === rootPackage.root ||
+    path.startsWith(rootPackage.root + '/') ||
+    path.startsWith(rootPackage.root + sep)
+  ) {
     return rootPackage;
   }
 
