@@ -8,7 +8,7 @@
 
 > `const` **GraphErrorMessage**: `object`
 
-Defined in: [packages/graph/src/error.ts:19](https://github.com/Xunnamius/projector/blob/7b62fe0623286ad7bf6227972127d835f758db94/packages/graph/src/error.ts#L19)
+Defined in: [packages/graph/src/error.ts:19](https://github.com/Xunnamius/projector/blob/8083fdfb8119466a16efa45bfe532af41d9ff256/packages/graph/src/error.ts#L19)
 
 A collection of possible error and warning messages.
 

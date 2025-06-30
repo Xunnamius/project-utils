@@ -8,6 +8,6 @@
 
 > `const` **packageJsonConfigPackageBase**: `"package.json"` = `'package.json'`
 
-Defined in: [packages/graph/src/constant.ts:273](https://github.com/Xunnamius/projector/blob/7b62fe0623286ad7bf6227972127d835f758db94/packages/graph/src/constant.ts#L273)
+Defined in: [packages/graph/src/constant.ts:279](https://github.com/Xunnamius/projector/blob/8083fdfb8119466a16efa45bfe532af41d9ff256/packages/graph/src/constant.ts#L279)
 
 The basename of the well-known package.json file.

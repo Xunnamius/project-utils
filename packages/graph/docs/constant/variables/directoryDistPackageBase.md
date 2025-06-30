@@ -8,7 +8,7 @@
 
 > `const` **directoryDistPackageBase**: `"dist"` = `'dist'`
 
-Defined in: [packages/graph/src/constant.ts:303](https://github.com/Xunnamius/projector/blob/7b62fe0623286ad7bf6227972127d835f758db94/packages/graph/src/constant.ts#L303)
+Defined in: [packages/graph/src/constant.ts:309](https://github.com/Xunnamius/projector/blob/8083fdfb8119466a16efa45bfe532af41d9ff256/packages/graph/src/constant.ts#L309)
 
 The basename of the well-known distributables output or "dist" directory.
 

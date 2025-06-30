@@ -8,6 +8,6 @@
 
 > `const` **prefixAssetImport**: `"<❗ASSET>"` = `'<❗ASSET>'`
 
-Defined in: [packages/graph/src/analysis/gather-package-build-targets.ts:49](https://github.com/Xunnamius/projector/blob/7b62fe0623286ad7bf6227972127d835f758db94/packages/graph/src/analysis/gather-package-build-targets.ts#L49)
+Defined in: [packages/graph/src/analysis/gather-package-build-targets.ts:49](https://github.com/Xunnamius/projector/blob/8083fdfb8119466a16efa45bfe532af41d9ff256/packages/graph/src/analysis/gather-package-build-targets.ts#L49)
 
 Prefixed to specifiers used in non-source files.

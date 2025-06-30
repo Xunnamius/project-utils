@@ -8,7 +8,7 @@
 
 > **ImportSpecifier** = \[`AbsolutePath`, `string`\]
 
-Defined in: [packages/graph/src/analysis/gather-import-entries-from-files.ts:30](https://github.com/Xunnamius/projector/blob/7b62fe0623286ad7bf6227972127d835f758db94/packages/graph/src/analysis/gather-import-entries-from-files.ts#L30)
+Defined in: [packages/graph/src/analysis/gather-import-entries-from-files.ts:30](https://github.com/Xunnamius/projector/blob/8083fdfb8119466a16efa45bfe532af41d9ff256/packages/graph/src/analysis/gather-import-entries-from-files.ts#L30)
 
 An entry mapping an absolute file path to a single import/require specifier
 present in said file. This specifier may or may not form part of a type-only

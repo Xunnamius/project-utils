@@ -8,7 +8,7 @@
 
 > `const` **CommonErrorMessage**: `object`
 
-Defined in: [packages/common/src/error.ts:259](https://github.com/Xunnamius/projector/blob/7b62fe0623286ad7bf6227972127d835f758db94/packages/common/src/error.ts#L259)
+Defined in: [packages/common/src/error.ts:259](https://github.com/Xunnamius/projector/blob/8083fdfb8119466a16efa45bfe532af41d9ff256/packages/common/src/error.ts#L259)
 
 A collection of possible error and warning messages.
 

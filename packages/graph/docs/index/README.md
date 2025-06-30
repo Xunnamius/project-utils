@@ -710,6 +710,12 @@ Re-exports [WellKnownImportAlias](../alias/enumerations/WellKnownImportAlias.md)
 
 ***
 
+### wranglerConfigPackageBase
+
+Re-exports [wranglerConfigPackageBase](../constant/variables/wranglerConfigPackageBase.md)
+
+***
+
 ### xchangelogConfigProjectBase
 
 Re-exports [xchangelogConfigProjectBase](../constant/variables/xchangelogConfigProjectBase.md)
