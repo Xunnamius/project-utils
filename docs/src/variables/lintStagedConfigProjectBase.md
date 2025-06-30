@@ -8,6 +8,6 @@
 
 > `const` **lintStagedConfigProjectBase**: `"lint-staged.config.mjs"` = `"lint-staged.config.mjs"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:171
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:167
 
 The basename of the well-known lint-staged configuration file.

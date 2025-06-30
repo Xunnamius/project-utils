@@ -8,6 +8,6 @@
 
 > `const` **dotEnvConfigProjectBase**: `".env"` = `".env"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:86
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:82
 
 The basename of the well-known Dotenv file.

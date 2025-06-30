@@ -8,6 +8,6 @@
 
 > `const` **directoryHuskyProjectBase**: `".husky"` = `".husky"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:122
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:118
 
 The basename of the well-known Husky configuration directory.

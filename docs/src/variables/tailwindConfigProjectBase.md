@@ -8,6 +8,6 @@
 
 > `const` **tailwindConfigProjectBase**: `"tailwind.config.ts"` = `"tailwind.config.ts"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:179
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:175
 
 The basename of the well-known Tailwind configuration file.

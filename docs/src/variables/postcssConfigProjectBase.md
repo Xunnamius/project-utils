@@ -8,6 +8,6 @@
 
 > `const` **postcssConfigProjectBase**: `"postcss.config.mjs"` = `"postcss.config.mjs"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:175
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:171
 
 The basename of the well-known Postcss configuration file.

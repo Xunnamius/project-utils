@@ -8,6 +8,6 @@
 
 > `const` **markdownMaintainingProjectBase**: `"MAINTAINING.md"` = `"MAINTAINING.md"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:159
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:155
 
 The basename of the well-known MAINTAINING file.

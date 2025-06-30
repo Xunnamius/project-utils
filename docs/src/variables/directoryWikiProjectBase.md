@@ -8,6 +8,6 @@
 
 > `const` **directoryWikiProjectBase**: `".wiki"` = `".wiki"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:147
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:143
 
 The basename of the well-known .wiki directory.

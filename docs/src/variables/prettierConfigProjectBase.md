@@ -8,6 +8,6 @@
 
 > `const` **prettierConfigProjectBase**: `"prettier.config.mjs"` = `"prettier.config.mjs"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:130
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:126
 
 The basename of the well-known Prettier configuration file.

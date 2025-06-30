@@ -8,6 +8,6 @@
 
 > `const` **remarkConfigProjectBase**: `".remarkrc.mjs"` = `".remarkrc.mjs"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:74
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:70
 
 The basename of the well-known Remark configuration file.

@@ -8,6 +8,6 @@
 
 > `const` **directoryGithubConfigProjectBase**: `".github"` = `".github"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:114
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:110
 
 The basename of the well-known GitHub repository configuration directory.

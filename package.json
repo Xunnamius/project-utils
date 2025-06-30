@@ -1,6 +1,6 @@
 {
   "name": "@-xun/project",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "A library to help me wrangle the complex landscape between monorepos and polyrepos",
   "keywords": [
     "library",
@@ -58,8 +58,8 @@
     "/README.md"
   ],
   "workspaces": [
-    "packages/*",
-    "!packages/*.ignore*"
+    "!packages/*.ignore*",
+    "packages/*"
   ],
   "scripts": {
     "build": "npm run build:dist --",

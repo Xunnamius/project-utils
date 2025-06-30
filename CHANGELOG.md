@@ -22,91 +22,99 @@ this project adheres to [Semantic Versioning][2].
 
 <br />
 
-### 🏗️ Patch @-xun/project[@2.0.4][9] (2025-06-14)
+### 🏗️ Patch @-xun/project[@2.0.5][9] (2025-06-30)
 
 #### ⚙️ Build System
 
-- **deps:** bump internal monorepo interdependencies to latest versions ([b43bd6a][10])
+- **deps:** bump @-xun/project-graph from 2.1.3 to 3.0.0 ([e470288][10])
 
 <br />
 
-### 🏗️ Patch @-xun/project[@2.0.3][11] (2025-06-14)
+### 🏗️ Patch @-xun/project[@2.0.4][11] (2025-06-14)
 
 #### ⚙️ Build System
 
-- **deps:** bump core-js from 3.42.0 to 3.43.0 ([65ef089][12])
-- **deps:** bump internal monorepo interdependencies to latest versions ([205bc80][13])
+- **deps:** bump internal monorepo interdependencies to latest versions ([b43bd6a][12])
 
 <br />
 
-### 🏗️ Patch @-xun/project[@2.0.2][14] (2025-06-01)
+### 🏗️ Patch @-xun/project[@2.0.3][13] (2025-06-14)
 
 #### ⚙️ Build System
 
-- **deps:** bump internal monorepo interdependencies to latest versions ([e7b2173][15])
+- **deps:** bump core-js from 3.42.0 to 3.43.0 ([65ef089][14])
+- **deps:** bump internal monorepo interdependencies to latest versions ([205bc80][15])
 
 <br />
 
-### 🏗️ Patch @-xun/project[@2.0.1][16] (2025-06-01)
+### 🏗️ Patch @-xun/project[@2.0.2][16] (2025-06-01)
 
 #### ⚙️ Build System
 
-- **deps:** bump internal monorepo interdependencies to latest versions ([3f26464][17])
+- **deps:** bump internal monorepo interdependencies to latest versions ([e7b2173][17])
 
 <br />
 
-## @-xun/project[@1.0.0][18] (2025-02-03)
+### 🏗️ Patch @-xun/project[@2.0.1][18] (2025-06-01)
+
+#### ⚙️ Build System
+
+- **deps:** bump internal monorepo interdependencies to latest versions ([3f26464][19])
+
+<br />
+
+## @-xun/project[@1.0.0][20] (2025-02-03)
 
 ### ⚙️ Build System
 
-- Integrate externalized @-xun/memoize and bpma packages ([e672064][19])
-- **release:** factor @-xun/project multirepo out from symbiote ([880d8ce][20])
+- Integrate externalized @-xun/memoize and bpma packages ([e672064][21])
+- **release:** factor @-xun/project multirepo out from symbiote ([880d8ce][22])
 
 <br />
 
-### 🏗️ Patch @-xun/project[@1.0.5][21] (2025-03-19)
+### 🏗️ Patch @-xun/project[@1.0.5][23] (2025-03-19)
 
 #### ⚙️ Build System
 
-- **deps:** bump @-xun/project-fs from 1.0.5 to 1.1.0 ([3890403][22])
-- **deps:** bump @-xun/project-fs from 1.1.0 to 1.2.0 ([366cf7a][23])
-- **deps:** bump core-js from 3.40.0 to 3.41.0 ([f9ccc15][24])
+- **deps:** bump @-xun/project-fs from 1.0.5 to 1.1.0 ([3890403][24])
+- **deps:** bump @-xun/project-fs from 1.1.0 to 1.2.0 ([366cf7a][25])
+- **deps:** bump core-js from 3.40.0 to 3.41.0 ([f9ccc15][26])
 
 <br />
 
-### 🏗️ Patch @-xun/project[@1.0.4][25] (2025-03-13)
+### 🏗️ Patch @-xun/project[@1.0.4][27] (2025-03-13)
 
 #### ⚙️ Build System
 
-- **deps:** bump @-xun/project-fs from 1.0.4 to 1.0.5 ([14698d1][26])
-- **deps:** bump @-xun/project-graph from 1.0.3 to 1.0.4 ([8ab5e22][27])
-- **deps:** bump @-xun/project-types from 1.0.3 to 1.0.4 ([d113f0b][28])
+- **deps:** bump @-xun/project-fs from 1.0.4 to 1.0.5 ([14698d1][28])
+- **deps:** bump @-xun/project-graph from 1.0.3 to 1.0.4 ([8ab5e22][29])
+- **deps:** bump @-xun/project-types from 1.0.3 to 1.0.4 ([d113f0b][30])
 
 <br />
 
-### 🏗️ Patch @-xun/project[@1.0.3][29] (2025-02-24)
+### 🏗️ Patch @-xun/project[@1.0.3][31] (2025-02-24)
 
 #### ⚙️ Build System
 
-- **deps:** bump @-xun/project-fs from 1.0.2 to 1.0.3 ([33c2322][30])
-- **packages/graph:** add missing "@types/semver" package ([6a643c7][31])
+- **deps:** bump @-xun/project-fs from 1.0.2 to 1.0.3 ([33c2322][32])
+- **packages/graph:** add missing "@types/semver" package ([6a643c7][33])
 
 <br />
 
-### 🏗️ Patch @-xun/project[@1.0.2][32] (2025-02-17)
+### 🏗️ Patch @-xun/project[@1.0.2][34] (2025-02-17)
 
 #### ⚙️ Build System
 
-- Update @-xun/run to 1.0.1 ([ff90125][33])
+- Update @-xun/run to 1.0.1 ([ff90125][35])
 
 <br />
 
-### 🏗️ Patch @-xun/project[@1.0.1][34] (2025-02-06)
+### 🏗️ Patch @-xun/project[@1.0.1][36] (2025-02-06)
 
 #### ⚙️ Build System
 
-- **husky:** skip slow tests ([80a5ed7][35])
-- **post-npm-install:** add common-dummies post-install to npm-post-install ([2747383][36])
+- **husky:** skip slow tests ([80a5ed7][37])
+- **post-npm-install:** add common-dummies post-install to npm-post-install ([2747383][38])
 
 [1]: https://conventionalcommits.org
 [2]: https://semver.org
@@ -116,31 +124,33 @@ this project adheres to [Semantic Versioning][2].
 [6]: https://github.com/Xunnamius/project-utils/commit/af8fbc3825cd5ef2fd19c4bced71487d8472f94f
 [7]: https://github.com/Xunnamius/project-utils/commit/268098af59787123b416ede82139069547b84b3a
 [8]: https://github.com/Xunnamius/project-utils/commit/19084dae491dd3fb1056b307e670a0d5c6baeaf6
-[9]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@2.0.3...@-xun/project@2.0.4
-[10]: https://github.com/Xunnamius/project-utils/commit/b43bd6a4f97fcf82e8d3f6a33f50608920610b4f
-[11]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@2.0.2...@-xun/project@2.0.3
-[12]: https://github.com/Xunnamius/project-utils/commit/65ef089a3e0427ec45ff3b039d0aaf51340e2f41
-[13]: https://github.com/Xunnamius/project-utils/commit/205bc80171b495c712b76e67f6d7a96afbd956ad
-[14]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@2.0.1...@-xun/project@2.0.2
-[15]: https://github.com/Xunnamius/project-utils/commit/e7b21739cc33a57f2a9abcf11f4851a05a516330
-[16]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@2.0.0...@-xun/project@2.0.1
-[17]: https://github.com/Xunnamius/project-utils/commit/3f264648b14bd2b3fa7c4624b8bae0620550d867
-[18]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@0.0.0-init...@-xun/project@1.0.0
-[19]: https://github.com/Xunnamius/project-utils/commit/e6720648fa9dc975b0426fb558b4c4b10c6b2e73
-[20]: https://github.com/Xunnamius/project-utils/commit/880d8ce103b19a190f99c2f5db4ca46d8da97664
-[21]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@1.0.4...@-xun/project@1.0.5
-[22]: https://github.com/Xunnamius/project-utils/commit/389040340d116d412352559015399d2805c68f2e
-[23]: https://github.com/Xunnamius/project-utils/commit/366cf7a15f26e201378e7d7c58b86d52798025f0
-[24]: https://github.com/Xunnamius/project-utils/commit/f9ccc15927dc834a70c81cc9f31d96f6ed1ec9e8
-[25]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@1.0.3...@-xun/project@1.0.4
-[26]: https://github.com/Xunnamius/project-utils/commit/14698d1436d3e8fc067837863378f952ce2e3284
-[27]: https://github.com/Xunnamius/project-utils/commit/8ab5e22d2602e3e1319f0628ac56aacb24bb6abe
-[28]: https://github.com/Xunnamius/project-utils/commit/d113f0b09b963ba4a043b10be57f23fa90f7ccf5
-[29]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@1.0.2...@-xun/project@1.0.3
-[30]: https://github.com/Xunnamius/project-utils/commit/33c2322ace484b27ca7ffbda7c2c3b614afa59b5
-[31]: https://github.com/Xunnamius/project-utils/commit/6a643c7575f40293f9c55119a69a7e2c0cc5269a
-[32]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@1.0.1...@-xun/project@1.0.2
-[33]: https://github.com/Xunnamius/project-utils/commit/ff90125e0338879bf7bf87de3d6d4aed56521e4c
-[34]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@1.0.0...@-xun/project@1.0.1
-[35]: https://github.com/Xunnamius/project-utils/commit/80a5ed7472360ab582a2244137ed53d9f14dcec5
-[36]: https://github.com/Xunnamius/project-utils/commit/274738346fdc425d391c09d88ec14c504de107a1
+[9]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@2.0.4...@-xun/project@2.0.5
+[10]: https://github.com/Xunnamius/project-utils/commit/e4702887819693f85ddaf48456b6cf90d6defe57
+[11]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@2.0.3...@-xun/project@2.0.4
+[12]: https://github.com/Xunnamius/project-utils/commit/b43bd6a4f97fcf82e8d3f6a33f50608920610b4f
+[13]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@2.0.2...@-xun/project@2.0.3
+[14]: https://github.com/Xunnamius/project-utils/commit/65ef089a3e0427ec45ff3b039d0aaf51340e2f41
+[15]: https://github.com/Xunnamius/project-utils/commit/205bc80171b495c712b76e67f6d7a96afbd956ad
+[16]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@2.0.1...@-xun/project@2.0.2
+[17]: https://github.com/Xunnamius/project-utils/commit/e7b21739cc33a57f2a9abcf11f4851a05a516330
+[18]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@2.0.0...@-xun/project@2.0.1
+[19]: https://github.com/Xunnamius/project-utils/commit/3f264648b14bd2b3fa7c4624b8bae0620550d867
+[20]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@0.0.0-init...@-xun/project@1.0.0
+[21]: https://github.com/Xunnamius/project-utils/commit/e6720648fa9dc975b0426fb558b4c4b10c6b2e73
+[22]: https://github.com/Xunnamius/project-utils/commit/880d8ce103b19a190f99c2f5db4ca46d8da97664
+[23]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@1.0.4...@-xun/project@1.0.5
+[24]: https://github.com/Xunnamius/project-utils/commit/389040340d116d412352559015399d2805c68f2e
+[25]: https://github.com/Xunnamius/project-utils/commit/366cf7a15f26e201378e7d7c58b86d52798025f0
+[26]: https://github.com/Xunnamius/project-utils/commit/f9ccc15927dc834a70c81cc9f31d96f6ed1ec9e8
+[27]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@1.0.3...@-xun/project@1.0.4
+[28]: https://github.com/Xunnamius/project-utils/commit/14698d1436d3e8fc067837863378f952ce2e3284
+[29]: https://github.com/Xunnamius/project-utils/commit/8ab5e22d2602e3e1319f0628ac56aacb24bb6abe
+[30]: https://github.com/Xunnamius/project-utils/commit/d113f0b09b963ba4a043b10be57f23fa90f7ccf5
+[31]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@1.0.2...@-xun/project@1.0.3
+[32]: https://github.com/Xunnamius/project-utils/commit/33c2322ace484b27ca7ffbda7c2c3b614afa59b5
+[33]: https://github.com/Xunnamius/project-utils/commit/6a643c7575f40293f9c55119a69a7e2c0cc5269a
+[34]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@1.0.1...@-xun/project@1.0.2
+[35]: https://github.com/Xunnamius/project-utils/commit/ff90125e0338879bf7bf87de3d6d4aed56521e4c
+[36]: https://github.com/Xunnamius/project-utils/compare/@-xun/project@1.0.0...@-xun/project@1.0.1
+[37]: https://github.com/Xunnamius/project-utils/commit/80a5ed7472360ab582a2244137ed53d9f14dcec5
+[38]: https://github.com/Xunnamius/project-utils/commit/274738346fdc425d391c09d88ec14c504de107a1

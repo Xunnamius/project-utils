@@ -8,6 +8,6 @@
 
 > `const` **allContributorsConfigProjectBase**: `".all-contributorsrc"` = `".all-contributorsrc"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:94
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:90
 
 The basename of the well-known All-contributors configuration file.

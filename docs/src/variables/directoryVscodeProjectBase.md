@@ -8,6 +8,6 @@
 
 > `const` **directoryVscodeProjectBase**: `".vscode"` = `".vscode"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:143
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:139
 
 The basename of the well-known Vscode configuration directory.

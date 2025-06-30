@@ -82,7 +82,7 @@ the string "--multiversal=false"
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:89
 
-A [nextjsConfigProjectBase](../variables/nextjsConfigProjectBase.md) file exists at the project root.
+A nextjsConfigProjectBase file exists at the project root.
 
 ***
 

@@ -8,6 +8,6 @@
 
 > `const` **gitattributesConfigProjectBase**: `".gitattributes"` = `".gitattributes"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:110
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:106
 
 The basename of the well-known git-attributes configuration file.

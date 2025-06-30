@@ -8,6 +8,6 @@
 
 > `const` **prettierIgnoreConfigProjectBase**: `".prettierignore"` = `".prettierignore"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:134
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:130
 
 The basename of the well-known prettier-ignore configuration file.

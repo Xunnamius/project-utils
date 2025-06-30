@@ -8,7 +8,7 @@
 
 > `const` **directoryTypesProjectBase**: `"types"` = `"types"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:189
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:185
 
 The basename of the well-known generated types output directory.
 

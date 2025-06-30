@@ -8,6 +8,6 @@
 
 > `const` **markdownContributingProjectBase**: `"CONTRIBUTING.md"` = `"CONTRIBUTING.md"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:155
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:151
 
 The basename of the well-known CONTRIBUTING file.

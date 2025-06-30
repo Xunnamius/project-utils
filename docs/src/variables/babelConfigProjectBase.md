@@ -8,6 +8,6 @@
 
 > `const` **babelConfigProjectBase**: `"babel.config.cjs"` = `"babel.config.cjs"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:70
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:66
 
 The basename of the well-known Babel configuration file.

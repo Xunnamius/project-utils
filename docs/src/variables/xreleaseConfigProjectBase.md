@@ -8,6 +8,6 @@
 
 > `const` **xreleaseConfigProjectBase**: `"release.config.cjs"` = `"release.config.cjs"`
 
-Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:78
+Defined in: packages/graph/dist/packages/graph/src/constant.d.ts:74
 
 The basename of the well-known xrelease configuration file.
