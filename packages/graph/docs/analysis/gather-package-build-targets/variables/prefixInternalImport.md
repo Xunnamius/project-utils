@@ -8,6 +8,6 @@
 
 > `const` **prefixInternalImport**: `"<intr>"` = `'<intr>'`
 
-Defined in: [packages/graph/src/analysis/gather-package-build-targets.ts:54](https://github.com/Xunnamius/projector/blob/8083fdfb8119466a16efa45bfe532af41d9ff256/packages/graph/src/analysis/gather-package-build-targets.ts#L54)
+Defined in: [packages/graph/src/analysis/gather-package-build-targets.ts:54](https://github.com/Xunnamius/projector/blob/30ee33dd3f520f95da3402a4b1c6901f010100cc/packages/graph/src/analysis/gather-package-build-targets.ts#L54)
 
 Prefixed to specifiers used in internal files.

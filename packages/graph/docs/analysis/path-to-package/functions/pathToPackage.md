@@ -8,7 +8,7 @@
 
 > **pathToPackage**\<`T`\>(`path`, `projectMetadata`): `Package`\<`T`\>
 
-Defined in: [packages/graph/src/analysis/path-to-package.ts:12](https://github.com/Xunnamius/projector/blob/8083fdfb8119466a16efa45bfe532af41d9ff256/packages/graph/src/analysis/path-to-package.ts#L12)
+Defined in: [packages/graph/src/analysis/path-to-package.ts:14](https://github.com/Xunnamius/projector/blob/30ee33dd3f520f95da3402a4b1c6901f010100cc/packages/graph/src/analysis/path-to-package.ts#L14)
 
 Synchronously resolve `path` to the first package that contains that path.
 If `path` points to a location outside of the project, an error is thrown.

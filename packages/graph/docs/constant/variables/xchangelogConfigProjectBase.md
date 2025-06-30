@@ -8,6 +8,6 @@
 
 > `const` **xchangelogConfigProjectBase**: `"conventional.config.cjs"` = `'conventional.config.cjs'`
 
-Defined in: [packages/graph/src/constant.ts:90](https://github.com/Xunnamius/projector/blob/8083fdfb8119466a16efa45bfe532af41d9ff256/packages/graph/src/constant.ts#L90)
+Defined in: [packages/graph/src/constant.ts:90](https://github.com/Xunnamius/projector/blob/30ee33dd3f520f95da3402a4b1c6901f010100cc/packages/graph/src/constant.ts#L90)
 
 The basename of the well-known xchangelog configuration file.

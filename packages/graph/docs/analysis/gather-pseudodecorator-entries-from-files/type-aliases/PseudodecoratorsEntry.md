@@ -8,7 +8,7 @@
 
 > **PseudodecoratorsEntry** = \[`AbsolutePath`, [`Pseudodecorator`](Pseudodecorator.md)[]\]
 
-Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:136](https://github.com/Xunnamius/projector/blob/8083fdfb8119466a16efa45bfe532af41d9ff256/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L136)
+Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:136](https://github.com/Xunnamius/projector/blob/30ee33dd3f520f95da3402a4b1c6901f010100cc/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L136)
 
 An entry mapping an absolute file path to an array of
 [Pseudodecorator](Pseudodecorator.md)s present in said file.
