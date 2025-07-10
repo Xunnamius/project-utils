@@ -8,7 +8,7 @@
 
 > **sync**(...`arguments_`): [`PackageBuildTargets`](../../../../../common/type-aliases/PackageBuildTargets.md)
 
-Defined in: [packages/graph/src/analysis/gather-package-build-targets.ts:611](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/analysis/gather-package-build-targets.ts#L611)
+Defined in: [packages/graph/src/analysis/gather-package-build-targets.ts:611](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/analysis/gather-package-build-targets.ts#L611)
 
 Synchronously construct a [PackageBuildTargets](../../../../../common/type-aliases/PackageBuildTargets.md) instance derived from
 a Package instance.

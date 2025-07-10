@@ -8,7 +8,7 @@
 
 > **PackageFiles** = `object`
 
-Defined in: [packages/graph/src/common.ts:220](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/common.ts#L220)
+Defined in: [packages/graph/src/common.ts:220](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/common.ts#L220)
 
 In the context of a Package, this type represents a collection of
 AbsolutePaths, one for each file under the package root that is not
@@ -24,7 +24,7 @@ The collection is organized by location and utility.
 
 > **dist**: `AbsolutePath`[]
 
-Defined in: [packages/graph/src/common.ts:227](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/common.ts#L227)
+Defined in: [packages/graph/src/common.ts:227](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/common.ts#L227)
 
 Every file under the package's `./dist` directory.
 
@@ -37,7 +37,7 @@ in a monorepo) will never be returned.
 
 > **docs**: `AbsolutePath`[]
 
-Defined in: [packages/graph/src/common.ts:235](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/common.ts#L235)
+Defined in: [packages/graph/src/common.ts:235](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/common.ts#L235)
 
 Every file under the package's `./docs` directory that is not ignored by
 Git.
@@ -51,7 +51,7 @@ in a monorepo) will never be returned.
 
 > **other**: `AbsolutePath`[]
 
-Defined in: [packages/graph/src/common.ts:260](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/common.ts#L260)
+Defined in: [packages/graph/src/common.ts:260](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/common.ts#L260)
 
 Every file under the package's root directory that is not ignored by Git
 nor contained in any other PackageFiles property.
@@ -65,7 +65,7 @@ in a monorepo) will never be returned.
 
 > **src**: `AbsolutePath`[]
 
-Defined in: [packages/graph/src/common.ts:244](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/common.ts#L244)
+Defined in: [packages/graph/src/common.ts:244](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/common.ts#L244)
 
 Every file under the package's `./src` directory that is not ignored by
 Git. Does not include files under `./types` (those are in
@@ -80,7 +80,7 @@ in a monorepo) will never be returned.
 
 > **test**: `AbsolutePath`[]
 
-Defined in: [packages/graph/src/common.ts:252](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/common.ts#L252)
+Defined in: [packages/graph/src/common.ts:252](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/common.ts#L252)
 
 Every file under the package's `./test` directory that is not ignored by
 Git.

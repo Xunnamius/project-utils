@@ -8,7 +8,7 @@
 
 > **RawAlias** = `object`
 
-Defined in: [packages/graph/src/alias.ts:107](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/alias.ts#L107)
+Defined in: [packages/graph/src/alias.ts:107](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/alias.ts#L107)
 
 A metadata object describing an "alias key," sometimes referred to as an
 "alias". Always corresponds to an "alias value" (i.e. an "alias path").
@@ -23,7 +23,7 @@ A metadata object describing an "alias key," sometimes referred to as an
 
 > **alias**: `string`
 
-Defined in: [packages/graph/src/alias.ts:129](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/alias.ts#L129)
+Defined in: [packages/graph/src/alias.ts:129](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/alias.ts#L129)
 
 The eponymous "raw alias". Must not contain any path separator characters
 (i.e. "/", "\", or ":") or the "$" character.
@@ -34,7 +34,7 @@ The eponymous "raw alias". Must not contain any path separator characters
 
 > **group**: [`WellKnownImportAlias`](../enumerations/WellKnownImportAlias.md)
 
-Defined in: [packages/graph/src/alias.ts:133](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/alias.ts#L133)
+Defined in: [packages/graph/src/alias.ts:133](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/alias.ts#L133)
 
 The well-known import alias "group" to which the raw `alias` belongs.
 
@@ -44,7 +44,7 @@ The well-known import alias "group" to which the raw `alias` belongs.
 
 > **packageId**: `WorkspacePackageId` \| `undefined`
 
-Defined in: [packages/graph/src/alias.ts:150](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/alias.ts#L150)
+Defined in: [packages/graph/src/alias.ts:150](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/alias.ts#L150)
 
 If this alias contains a reference to a package's id (e.g.
 "universe+package-id"), `packageId` must be defined.
@@ -55,7 +55,7 @@ If this alias contains a reference to a package's id (e.g.
 
 > **prefix**: `"none"` \| `"exact"`
 
-Defined in: [packages/graph/src/alias.ts:115](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/alias.ts#L115)
+Defined in: [packages/graph/src/alias.ts:115](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/alias.ts#L115)
 
 Determines the prefix matching behavior for alias keys. Choices are:
 
@@ -69,7 +69,7 @@ Determines the prefix matching behavior for alias keys. Choices are:
 
 > **regExp**: `RegExp`
 
-Defined in: [packages/graph/src/alias.ts:145](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/alias.ts#L145)
+Defined in: [packages/graph/src/alias.ts:145](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/alias.ts#L145)
 
 A regular expression derived from `alias` that can be matched against
 specifier strings. If this alias's `suffix` is `"open"`, the returned
@@ -89,7 +89,7 @@ be escaped.
 
 > **suffix**: `"none"` \| `"exact"` \| `"open"`
 
-Defined in: [packages/graph/src/alias.ts:124](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/alias.ts#L124)
+Defined in: [packages/graph/src/alias.ts:124](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/alias.ts#L124)
 
 Determines the suffix matching behavior for alias keys. Choices are:
 

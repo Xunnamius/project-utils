@@ -8,7 +8,7 @@
 
 > **gatherPseudodecoratorEntriesFromFilesOptions** = `object`
 
-Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:149](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L149)
+Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:149](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L149)
 
 ## See
 
@@ -20,7 +20,7 @@ Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-fil
 
 > **useCached**: `boolean`
 
-Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:160](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L160)
+Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:160](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L160)
 
 Use the internal cached result from a previous run, if available.
 

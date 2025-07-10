@@ -8,7 +8,7 @@
 
 > **sync**(...`arguments_`): [`ImportSpecifiersEntry`](../../../type-aliases/ImportSpecifiersEntry.md)[]
 
-Defined in: [packages/graph/src/analysis/gather-import-entries-from-files.ts:242](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/analysis/gather-import-entries-from-files.ts#L242)
+Defined in: [packages/graph/src/analysis/gather-import-entries-from-files.ts:242](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/analysis/gather-import-entries-from-files.ts#L242)
 
 Accepts zero or more file paths and synchronously returns an array of
 [ImportSpecifiersEntry](../../../type-aliases/ImportSpecifiersEntry.md)s each mapping a given file path to an array

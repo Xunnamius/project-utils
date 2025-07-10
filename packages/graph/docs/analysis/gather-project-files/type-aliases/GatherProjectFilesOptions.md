@@ -8,7 +8,7 @@
 
 > **GatherProjectFilesOptions** = `object` & \{ `skipPrettierIgnored`: `false`; `skipUnknown?`: `false`; \} \| \{ `skipPrettierIgnored?`: `true`; `skipUnknown?`: `boolean`; \}
 
-Defined in: [packages/graph/src/analysis/gather-project-files.ts:27](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/analysis/gather-project-files.ts#L27)
+Defined in: [packages/graph/src/analysis/gather-project-files.ts:27](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/analysis/gather-project-files.ts#L27)
 
 ## Type declaration
 

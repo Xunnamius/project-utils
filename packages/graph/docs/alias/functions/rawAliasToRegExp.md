@@ -8,7 +8,7 @@
 
 > **rawAliasToRegExp**(`__namedParameters`): `RegExp`
 
-Defined in: [packages/graph/src/alias.ts:1095](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/alias.ts#L1095)
+Defined in: [packages/graph/src/alias.ts:1095](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/alias.ts#L1095)
 
 Takes a [RawAlias](../type-aliases/RawAlias.md) partial and returns a regular expression that can be
 matched against specifier strings. If `suffix` is `"open"`, the returned

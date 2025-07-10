@@ -8,6 +8,6 @@
 
 > `const` **dotEnvConfigPackageBase**: `".env"` = `'.env'`
 
-Defined in: [packages/graph/src/constant.ts:289](https://github.com/Xunnamius/projector/blob/e784a5e8ae5bff24c71e3b35914b446e5dd59fe7/packages/graph/src/constant.ts#L289)
+Defined in: [packages/graph/src/constant.ts:289](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/constant.ts#L289)
 
 The basename of the well-known Dotenv configuration file.
