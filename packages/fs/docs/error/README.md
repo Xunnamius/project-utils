@@ -6,27 +6,21 @@
 
 # error
 
-## Classes
-
-- [DuplicatePackageIdError](classes/DuplicatePackageIdError.md)
-- [DuplicatePackageNameError](classes/DuplicatePackageNameError.md)
-- [NotAGitRepositoryError](classes/NotAGitRepositoryError.md)
-- [ProjectError](classes/ProjectError.md)
-- [XPackageJsonNotParsableError](classes/XPackageJsonNotParsableError.md)
-
 ## Type Aliases
 
+- [DuplicatePackageIdError](type-aliases/DuplicatePackageIdError.md)
+- [DuplicatePackageNameError](type-aliases/DuplicatePackageNameError.md)
+- [NotAGitRepositoryError](type-aliases/NotAGitRepositoryError.md)
+- [ProjectError](type-aliases/ProjectError.md)
 - [ProjectErrorOptions](type-aliases/ProjectErrorOptions.md)
+- [XPackageJsonNotParsableError](type-aliases/XPackageJsonNotParsableError.md)
 
 ## Variables
 
 - [CommonErrorMessage](variables/CommonErrorMessage.md)
+- [DuplicatePackageIdError](variables/DuplicatePackageIdError.md)
+- [DuplicatePackageNameError](variables/DuplicatePackageNameError.md)
 - [FsErrorMessage](variables/FsErrorMessage.md)
-
-## Functions
-
-- [isDuplicatePackageIdError](functions/isDuplicatePackageIdError.md)
-- [isDuplicatePackageNameError](functions/isDuplicatePackageNameError.md)
-- [isNotAGitRepositoryError](functions/isNotAGitRepositoryError.md)
-- [isProjectError](functions/isProjectError.md)
-- [isXPackageJsonNotParsableError](functions/isXPackageJsonNotParsableError.md)
+- [NotAGitRepositoryError](variables/NotAGitRepositoryError.md)
+- [ProjectError](variables/ProjectError.md)
+- [XPackageJsonNotParsableError](variables/XPackageJsonNotParsableError.md)

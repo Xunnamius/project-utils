@@ -8,7 +8,7 @@
 
 > **ReadJsonOptions** = `object`
 
-Defined in: [packages/fs/src/system/read-json.ts:21](https://github.com/Xunnamius/projector/blob/c2c01047121dc52d072be87749a60b62bccc5a6e/packages/fs/src/system/read-json.ts#L21)
+Defined in: [packages/fs/src/system/read-json.ts:21](https://github.com/Xunnamius/projector/blob/5b7550c9164a11cdadffbed45b8561eafc585ead/packages/fs/src/system/read-json.ts#L21)
 
 ## See
 
@@ -20,7 +20,7 @@ Defined in: [packages/fs/src/system/read-json.ts:21](https://github.com/Xunnamiu
 
 > `optional` **try**: `boolean`
 
-Defined in: [packages/fs/src/system/read-json.ts:40](https://github.com/Xunnamius/projector/blob/c2c01047121dc52d072be87749a60b62bccc5a6e/packages/fs/src/system/read-json.ts#L40)
+Defined in: [packages/fs/src/system/read-json.ts:40](https://github.com/Xunnamius/projector/blob/5b7550c9164a11cdadffbed45b8561eafc585ead/packages/fs/src/system/read-json.ts#L40)
 
 If `true`, an attempt will be made to read in and parse the JSON file. If
 it fails (i.e. an error is thrown), `{}` is returned and no error is
@@ -40,7 +40,7 @@ false
 
 > **useCached**: `boolean`
 
-Defined in: [packages/fs/src/system/read-json.ts:30](https://github.com/Xunnamius/projector/blob/c2c01047121dc52d072be87749a60b62bccc5a6e/packages/fs/src/system/read-json.ts#L30)
+Defined in: [packages/fs/src/system/read-json.ts:30](https://github.com/Xunnamius/projector/blob/5b7550c9164a11cdadffbed45b8561eafc585ead/packages/fs/src/system/read-json.ts#L30)
 
 Use the internal cached result from a previous run, if available.
 
