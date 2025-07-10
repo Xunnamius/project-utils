@@ -80,7 +80,7 @@
     "type-fest": "^4.41.0"
   },
   "devDependencies": {
-    "@-xun/common-dummies": "^2.1.0",
+    "@-xun/common-dummies": "^2.1.1",
     "toss-expression": "^0.1.2"
   },
   "engines": {
