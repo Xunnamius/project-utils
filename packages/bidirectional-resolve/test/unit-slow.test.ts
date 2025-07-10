@@ -5,11 +5,9 @@
 import assert from 'node:assert';
 
 import { getDummyPackage } from '@-xun/common-dummies/packages';
-import { TrialError } from 'named-app-errors';
 import { toss } from 'toss-expression';
 
 import {
-  ErrorMessage,
   flattenPackageJsonSubpathMap,
   resolveEntryPointsFromExportsTarget,
   resolveEntryPointsFromImportsTarget,
@@ -3532,7 +3530,7 @@ describe('::resolveEntryPointsFromExportsTarget', () => {
             flattenedExports,
             target,
             conditions
-          })[0] || toss(new TrialError()),
+          })[0] || toss(new Error('test failed')),
         conditions
       })
     ).toStrictEqual([target]);
@@ -4116,7 +4114,7 @@ describe('::resolveExportsTargetsFromEntryPoint', () => {
             flattenedExports,
             entryPoint,
             conditions
-          })[0] || toss(new TrialError()),
+          })[0] || toss(new Error('test failed')),
         conditions
       })
     ).toStrictEqual([entryPoint]);
@@ -5223,7 +5221,7 @@ describe('::resolveEntryPointsFromImportsTarget', () => {
             flattenedImports,
             target,
             conditions
-          })[0] || toss(new TrialError()),
+          })[0] || toss(new Error('test failed')),
         conditions
       })
     ).toStrictEqual([target]);
@@ -5843,7 +5841,7 @@ describe('::resolveImportsTargetsFromEntryPoint', () => {
             flattenedImports,
             entryPoint,
             conditions
-          })[0] || toss(new TrialError()),
+          })[0] || toss(new Error('test failed')),
         conditions
       })
     ).toStrictEqual([entryPoint]);
@@ -6180,7 +6178,7 @@ function registerLibraryResolverTest(
         }`, async () => {
           expect.hasAssertions();
 
-          assert(subpath, ErrorMessage.GuruMeditation());
+          assert(subpath);
 
           // eslint-disable-next-line jest/valid-expect
           const expectation = expect(
@@ -6250,7 +6248,7 @@ function registerNodeResolverTest(
         test(`${title}.${subIndex + 1}`, async () => {
           expect.hasAssertions();
 
-          assert(subpath, ErrorMessage.GuruMeditation());
+          assert(subpath);
 
           await expect(
             resolveTargetWithNodeJs({

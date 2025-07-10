@@ -8,7 +8,6 @@ import { isNativeError } from 'node:util/types';
 
 import { getDummyLoaderPath } from '@-xun/common-dummies/loaders';
 import { runNoRejectOnBadExit } from '@-xun/run';
-import { TrialError } from 'named-app-errors';
 import { resolve as resolverLibrary } from 'resolve.exports';
 
 import type { XPackageJson } from 'multiverse+types';
@@ -100,7 +99,7 @@ export async function resolveTargetWithNodeJs({
   }
 
   if (!resolvedTarget || !resolvedSpecifier) {
-    throw new TrialError(
+    throw new Error(
       `unable to resolve specifier "${specifier}" at ${rootPackagePath} with conditions: "${
         conditions.join('", "') || 'default'
       }"\n\nNode.js process output: ${result.all}`
@@ -144,7 +143,7 @@ export function resolveTargetWithResolveExports({
   conditions: string[];
 }): ResolvedSummary & { allResolvedTargets: ResolvedSummary['resolvedTarget'][] } {
   if (!(subpath.startsWith('#') || subpath.startsWith('./') || subpath === '.')) {
-    throw new TrialError('subpath must start with "#" or "./", or strictly equal "."');
+    throw new Error('subpath must start with "#" or "./", or strictly equal "."');
   }
 
   const result = (() => {
@@ -163,7 +162,7 @@ export function resolveTargetWithResolveExports({
         return [null];
       }
 
-      throw new TrialError(
+      throw new Error(
         `resolve.exports failed to resolve target "${subpath}" with conditions: "${
           conditions.join('", "') || 'default'
         }"\n\nError thrown by resolve.exports: ${String(error)}`
