@@ -8,7 +8,7 @@
 
 > **UnsafeFallbackOption** = `object`
 
-Defined in: [packages/bidirectional-resolve/src/resolvers.ts:56](https://github.com/Xunnamius/projector/blob/38588c43723411fd0ec7837abba2c98bf624a467/packages/bidirectional-resolve/src/resolvers.ts#L56)
+Defined in: [resolvers.ts:56](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L56)
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [packages/bidirectional-resolve/src/resolvers.ts:56](https://github.
 
 > `optional` **includeUnsafeFallbackTargets**: `boolean`
 
-Defined in: [packages/bidirectional-resolve/src/resolvers.ts:80](https://github.com/Xunnamius/projector/blob/38588c43723411fd0ec7837abba2c98bf624a467/packages/bidirectional-resolve/src/resolvers.ts#L80)
+Defined in: [resolvers.ts:80](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L80)
 
 When encountering a fallback array (i.e. targets present at some level
 within an array),

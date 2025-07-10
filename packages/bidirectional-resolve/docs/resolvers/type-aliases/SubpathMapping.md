@@ -8,7 +8,7 @@
 
 > **SubpathMapping** = `object`
 
-Defined in: [packages/bidirectional-resolve/src/resolvers.ts:104](https://github.com/Xunnamius/projector/blob/38588c43723411fd0ec7837abba2c98bf624a467/packages/bidirectional-resolve/src/resolvers.ts#L104)
+Defined in: [resolvers.ts:104](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L104)
 
 A single flattened subpath in a `package.json` `exports`/`imports` map along
 with its target, matchable conditions, and other metadata. One or more
@@ -21,7 +21,7 @@ subpath mappings together form an imports/exports "entry point" or
 
 > **conditions**: `string`[]
 
-Defined in: [packages/bidirectional-resolve/src/resolvers.ts:149](https://github.com/Xunnamius/projector/blob/38588c43723411fd0ec7837abba2c98bf624a467/packages/bidirectional-resolve/src/resolvers.ts#L149)
+Defined in: [resolvers.ts:149](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L149)
 
 The combination of resolution conditions that, when matched, result in
 `subpath` resolving to `target`. Conditions are listed in the order they
@@ -36,7 +36,7 @@ actually exist in the actual `package.json` file.
 
 > **excludedConditions**: `string`[]
 
-Defined in: [packages/bidirectional-resolve/src/resolvers.ts:171](https://github.com/Xunnamius/projector/blob/38588c43723411fd0ec7837abba2c98bf624a467/packages/bidirectional-resolve/src/resolvers.ts#L171)
+Defined in: [resolvers.ts:171](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L171)
 
 When the subpath mapping is a "default" mapping that occurs after one or
 more sibling conditions, it cannot be selected if one of those siblings is
@@ -65,7 +65,7 @@ Useful when reverse-mapping targets to subpaths.
 
 > **isDeadCondition**: `boolean`
 
-Defined in: [packages/bidirectional-resolve/src/resolvers.ts:237](https://github.com/Xunnamius/projector/blob/38588c43723411fd0ec7837abba2c98bf624a467/packages/bidirectional-resolve/src/resolvers.ts#L237)
+Defined in: [resolvers.ts:237](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L237)
 
 If `true`, this condition is guaranteed to be impossible to reach, likely
 because it occurs after the "default" condition.
@@ -76,7 +76,7 @@ because it occurs after the "default" condition.
 
 > **isFallback**: `boolean`
 
-Defined in: [packages/bidirectional-resolve/src/resolvers.ts:221](https://github.com/Xunnamius/projector/blob/38588c43723411fd0ec7837abba2c98bf624a467/packages/bidirectional-resolve/src/resolvers.ts#L221)
+Defined in: [resolvers.ts:221](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L221)
 
 If `true`, `target` is a so-called "fallback target". This means either (1)
 `target` is a member of a fallback array or (2) the parent or ancestor
@@ -115,7 +115,7 @@ like Webpack or TypeScript, and even then their utility is limited.
 
 > **isFirstNonNullFallback**: `boolean`
 
-Defined in: [packages/bidirectional-resolve/src/resolvers.ts:226](https://github.com/Xunnamius/projector/blob/38588c43723411fd0ec7837abba2c98bf624a467/packages/bidirectional-resolve/src/resolvers.ts#L226)
+Defined in: [resolvers.ts:226](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L226)
 
 When `isFallback` is true, `isFistNonNullFallback` will be `true` if
 `target` is the first non-`null` member in the flattened fallback array.
@@ -126,7 +126,7 @@ When `isFallback` is true, `isFistNonNullFallback` will be `true` if
 
 > **isLastFallback**: `boolean`
 
-Defined in: [packages/bidirectional-resolve/src/resolvers.ts:232](https://github.com/Xunnamius/projector/blob/38588c43723411fd0ec7837abba2c98bf624a467/packages/bidirectional-resolve/src/resolvers.ts#L232)
+Defined in: [resolvers.ts:232](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L232)
 
 When `isFallback` is true, `isLastFallback` will be `true` if `target` is
 the last member in the flattened fallback array regardless of value of
@@ -138,7 +138,7 @@ the last member in the flattened fallback array regardless of value of
 
 > **isSugared**: `boolean`
 
-Defined in: [packages/bidirectional-resolve/src/resolvers.ts:189](https://github.com/Xunnamius/projector/blob/38588c43723411fd0ec7837abba2c98bf624a467/packages/bidirectional-resolve/src/resolvers.ts#L189)
+Defined in: [resolvers.ts:189](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L189)
 
 If `true`, the value of `subpath` was inferred but no corresponding
 property exists in the actual `package.json` file.
@@ -165,7 +165,7 @@ https://nodejs.org/api/packages.html#exports-sugar
 
 > **subpath**: `string`
 
-Defined in: [packages/bidirectional-resolve/src/resolvers.ts:123](https://github.com/Xunnamius/projector/blob/38588c43723411fd0ec7837abba2c98bf624a467/packages/bidirectional-resolve/src/resolvers.ts#L123)
+Defined in: [resolvers.ts:123](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L123)
 
 The subpath that maps to `target`, e.g.:
 
@@ -191,7 +191,7 @@ pattern](https://nodejs.org/docs/latest-v19.x/api/packages.html#subpath-patterns
 
 > **target**: `string` \| `null`
 
-Defined in: [packages/bidirectional-resolve/src/resolvers.ts:140](https://github.com/Xunnamius/projector/blob/38588c43723411fd0ec7837abba2c98bf624a467/packages/bidirectional-resolve/src/resolvers.ts#L140)
+Defined in: [resolvers.ts:140](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L140)
 
 The path to a target file that maps to `subpath`, e.g.:
 

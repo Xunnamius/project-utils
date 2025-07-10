@@ -8,17 +8,11 @@
 
 > `const` **ErrorMessage**: `object`
 
-Defined in: [packages/bidirectional-resolve/src/error.ts:8](https://github.com/Xunnamius/projector/blob/38588c43723411fd0ec7837abba2c98bf624a467/packages/bidirectional-resolve/src/error.ts#L8)
+Defined in: [error.ts:6](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/error.ts#L6)
+
+A collection of possible error and warning messages.
 
 ## Type declaration
-
-### GuruMeditation()
-
-> **GuruMeditation**: () => `string` = `UpstreamErrorMessage.GuruMeditation`
-
-#### Returns
-
-`string`
 
 ### AssertionFailedWantedPathIsNotSeenPath()
 

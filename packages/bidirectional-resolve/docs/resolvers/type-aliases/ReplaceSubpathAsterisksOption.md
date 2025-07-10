@@ -8,7 +8,7 @@
 
 > **ReplaceSubpathAsterisksOption** = `object`
 
-Defined in: [packages/bidirectional-resolve/src/resolvers.ts:83](https://github.com/Xunnamius/projector/blob/38588c43723411fd0ec7837abba2c98bf624a467/packages/bidirectional-resolve/src/resolvers.ts#L83)
+Defined in: [resolvers.ts:83](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L83)
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [packages/bidirectional-resolve/src/resolvers.ts:83](https://github.
 
 > `optional` **replaceSubpathAsterisks**: `boolean`
 
-Defined in: [packages/bidirectional-resolve/src/resolvers.ts:95](https://github.com/Xunnamius/projector/blob/38588c43723411fd0ec7837abba2c98bf624a467/packages/bidirectional-resolve/src/resolvers.ts#L95)
+Defined in: [resolvers.ts:95](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L95)
 
 When returning a subpath pattern, i.e. a subpath containing an asterisk
 ("*"), the asterisks will be replaced by the matching portions of `target` if
