@@ -8,7 +8,7 @@
 
 > **ResolvedSummary** = `object`
 
-Defined in: [test/util.ts:24](https://github.com/Xunnamius/projector/blob/8bea50eb5599273320365c83c86de6c3ab63dc11/test/util.ts#L24)
+Defined in: [test/util.ts:23](https://github.com/Xunnamius/projector/blob/c7a6380c5fef74e75095ba3cdbe74911dcb1af41/test/util.ts#L23)
 
 Represents the summary of an import resolution attempt.
 
@@ -18,7 +18,7 @@ Represents the summary of an import resolution attempt.
 
 > **isExportedTypescriptType**: `boolean`
 
-Defined in: [test/util.ts:27](https://github.com/Xunnamius/projector/blob/8bea50eb5599273320365c83c86de6c3ab63dc11/test/util.ts#L27)
+Defined in: [test/util.ts:26](https://github.com/Xunnamius/projector/blob/c7a6380c5fef74e75095ba3cdbe74911dcb1af41/test/util.ts#L26)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [test/util.ts:27](https://github.com/Xunnamius/projector/blob/8bea50
 
 > **resolvedTarget**: `string` \| `null`
 
-Defined in: [test/util.ts:25](https://github.com/Xunnamius/projector/blob/8bea50eb5599273320365c83c86de6c3ab63dc11/test/util.ts#L25)
+Defined in: [test/util.ts:24](https://github.com/Xunnamius/projector/blob/c7a6380c5fef74e75095ba3cdbe74911dcb1af41/test/util.ts#L24)
 
 ***
 
@@ -34,4 +34,4 @@ Defined in: [test/util.ts:25](https://github.com/Xunnamius/projector/blob/8bea50
 
 > **resolverSubpath**: `string`
 
-Defined in: [test/util.ts:26](https://github.com/Xunnamius/projector/blob/8bea50eb5599273320365c83c86de6c3ab63dc11/test/util.ts#L26)
+Defined in: [test/util.ts:25](https://github.com/Xunnamius/projector/blob/c7a6380c5fef74e75095ba3cdbe74911dcb1af41/test/util.ts#L25)
