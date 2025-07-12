@@ -6,7 +6,7 @@
 
 # Function: deriveAliasesForWebpack()
 
-> **deriveAliasesForWebpack**(`rawAliasMappings`, `projectRoot`): `object`
+> **deriveAliasesForWebpack**(`rawAliasMappings`): `object`
 
 Defined in: packages/graph/dist/packages/graph/src/alias.d.ts:257
 
@@ -20,10 +20,6 @@ See also: https://webpack.js.org/configuration/resolve/#resolvealias
 ### rawAliasMappings
 
 readonly [`RawAliasMapping`](../type-aliases/RawAliasMapping.md)[]
-
-### projectRoot
-
-`string`
 
 ## Returns
 

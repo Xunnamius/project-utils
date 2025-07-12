@@ -6,7 +6,7 @@
 
 # Function: deriveAliasesForNextJs()
 
-> **deriveAliasesForNextJs**(`rawAliasMappings`, `projectRoot`): `object`
+> **deriveAliasesForNextJs**(`rawAliasMappings`): `object`
 
 Defined in: packages/graph/dist/packages/graph/src/alias.d.ts:268
 
@@ -22,10 +22,6 @@ See also: https://nextjs.org/docs/messages/invalid-resolve-alias
 ### rawAliasMappings
 
 readonly [`RawAliasMapping`](../type-aliases/RawAliasMapping.md)[]
-
-### projectRoot
-
-`string`
 
 ## Returns
 
