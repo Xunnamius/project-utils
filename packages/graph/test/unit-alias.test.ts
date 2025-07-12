@@ -2212,36 +2212,33 @@ describe('::deriveAliasesForWebpack', () => {
     expect.hasAssertions();
 
     const expected = {
-      'multiverse+pkg-1:': `${mockProjectRoot}/path/to/packages/pkg-1/src/`,
-      'multiverse+pkg-2:': `${mockProjectRoot}/path/to/packages/pkg-2/src/`,
-      'multiverse+pkg-10:': `${mockProjectRoot}/path/to/packages/pkg-10/src/`,
-      'multiverse+pkg-1': `${mockProjectRoot}/path/to/packages/pkg-1/src/index.ts`,
-      'multiverse+pkg-2': `${mockProjectRoot}/path/to/packages/pkg-2/src/index.ts`,
-      'multiverse+pkg-10': `${mockProjectRoot}/path/to/packages/pkg-10/src/index.ts`,
-      'universe+pkg-1:': `${mockProjectRoot}/path/to/packages/pkg-1/src/`,
-      'universe+pkg-2:': `${mockProjectRoot}/path/to/packages/pkg-2/src/`,
-      'universe+pkg-10:': `${mockProjectRoot}/path/to/packages/pkg-10/src/`,
-      'universe+pkg-1': `${mockProjectRoot}/path/to/packages/pkg-1/src/index.ts`,
-      'universe+pkg-2': `${mockProjectRoot}/path/to/packages/pkg-2/src/index.ts`,
-      'universe+pkg-10': `${mockProjectRoot}/path/to/packages/pkg-10/src/index.ts`,
-      'universe:': `${mockProjectRoot}/src/`,
-      universe: `${mockProjectRoot}/src/index.ts`,
-      'testverse+pkg-1:': `${mockProjectRoot}/path/to/packages/pkg-1/test/`,
-      'testverse+pkg-2:': `${mockProjectRoot}/path/to/packages/pkg-2/test/`,
-      'testverse+pkg-10:': `${mockProjectRoot}/path/to/packages/pkg-10/test/`,
-      'testverse:': `${mockProjectRoot}/test/`,
-      'typeverse:': `${mockProjectRoot}/types/`,
+      'multiverse+pkg-1:*': 'path/to/packages/pkg-1/src/*',
+      'multiverse+pkg-2:*': 'path/to/packages/pkg-2/src/*',
+      'multiverse+pkg-10:*': 'path/to/packages/pkg-10/src/*',
+      'multiverse+pkg-1$': 'path/to/packages/pkg-1/src/index.ts',
+      'multiverse+pkg-2$': 'path/to/packages/pkg-2/src/index.ts',
+      'multiverse+pkg-10$': 'path/to/packages/pkg-10/src/index.ts',
+      'universe+pkg-1:*': 'path/to/packages/pkg-1/src/*',
+      'universe+pkg-2:*': 'path/to/packages/pkg-2/src/*',
+      'universe+pkg-10:*': 'path/to/packages/pkg-10/src/*',
+      'universe+pkg-1$': 'path/to/packages/pkg-1/src/index.ts',
+      'universe+pkg-2$': 'path/to/packages/pkg-2/src/index.ts',
+      'universe+pkg-10$': 'path/to/packages/pkg-10/src/index.ts',
+      'universe:*': `src/*`,
+      universe$: `src/index.ts`,
+      'testverse+pkg-1:*': 'path/to/packages/pkg-1/test/*',
+      'testverse+pkg-2:*': 'path/to/packages/pkg-2/test/*',
+      'testverse+pkg-10:*': 'path/to/packages/pkg-10/test/*',
+      'testverse:*': `test/*`,
+      'typeverse:*': `types/*`,
       // ! Unlike for-import-ordering, for-config should place these here
-      'rootverse+pkg-1:': `${mockProjectRoot}/path/to/packages/pkg-1/`,
-      'rootverse+pkg-2:': `${mockProjectRoot}/path/to/packages/pkg-2/`,
-      'rootverse+pkg-10:': `${mockProjectRoot}/path/to/packages/pkg-10/`,
-      'rootverse:': `${mockProjectRoot}/`
+      'rootverse+pkg-1:*': 'path/to/packages/pkg-1/*',
+      'rootverse+pkg-2:*': 'path/to/packages/pkg-2/*',
+      'rootverse+pkg-10:*': 'path/to/packages/pkg-10/*',
+      'rootverse:*': `*`
     };
 
-    const actual = deriveAliasesForWebpack(
-      mockConfigOrderHybridrepoMappings,
-      mockProjectRoot
-    );
+    const actual = deriveAliasesForWebpack(mockConfigOrderHybridrepoMappings);
 
     expect(actual).toStrictEqual(expected);
     expect(Object.keys(actual)).toStrictEqual(Object.keys(expected));
@@ -2253,36 +2250,33 @@ describe('::deriveAliasesForNextJs', () => {
     expect.hasAssertions();
 
     const expected = {
-      'multiverse+pkg-1:': `${mockProjectRoot}/path/to/packages/pkg-1/src/`,
-      'multiverse+pkg-2:': `${mockProjectRoot}/path/to/packages/pkg-2/src/`,
-      'multiverse+pkg-10:': `${mockProjectRoot}/path/to/packages/pkg-10/src/`,
-      'multiverse+pkg-1': `${mockProjectRoot}/path/to/packages/pkg-1/src/index.ts`,
-      'multiverse+pkg-2': `${mockProjectRoot}/path/to/packages/pkg-2/src/index.ts`,
-      'multiverse+pkg-10': `${mockProjectRoot}/path/to/packages/pkg-10/src/index.ts`,
-      'universe+pkg-1:': `${mockProjectRoot}/path/to/packages/pkg-1/src/`,
-      'universe+pkg-2:': `${mockProjectRoot}/path/to/packages/pkg-2/src/`,
-      'universe+pkg-10:': `${mockProjectRoot}/path/to/packages/pkg-10/src/`,
-      'universe+pkg-1': `${mockProjectRoot}/path/to/packages/pkg-1/src/index.ts`,
-      'universe+pkg-2': `${mockProjectRoot}/path/to/packages/pkg-2/src/index.ts`,
-      'universe+pkg-10': `${mockProjectRoot}/path/to/packages/pkg-10/src/index.ts`,
-      'universe:': `${mockProjectRoot}/src/`,
-      universe: `${mockProjectRoot}/src/index.ts`,
-      'testverse+pkg-1:': `${mockProjectRoot}/path/to/packages/pkg-1/test/`,
-      'testverse+pkg-2:': `${mockProjectRoot}/path/to/packages/pkg-2/test/`,
-      'testverse+pkg-10:': `${mockProjectRoot}/path/to/packages/pkg-10/test/`,
-      'testverse:': `${mockProjectRoot}/test/`,
-      'typeverse:': `${mockProjectRoot}/types/`,
+      'multiverse+pkg-1:*': 'path/to/packages/pkg-1/src/*',
+      'multiverse+pkg-2:*': 'path/to/packages/pkg-2/src/*',
+      'multiverse+pkg-10:*': 'path/to/packages/pkg-10/src/*',
+      'multiverse+pkg-1$': 'path/to/packages/pkg-1/src/index.ts',
+      'multiverse+pkg-2$': 'path/to/packages/pkg-2/src/index.ts',
+      'multiverse+pkg-10$': 'path/to/packages/pkg-10/src/index.ts',
+      'universe+pkg-1:*': 'path/to/packages/pkg-1/src/*',
+      'universe+pkg-2:*': 'path/to/packages/pkg-2/src/*',
+      'universe+pkg-10:*': 'path/to/packages/pkg-10/src/*',
+      'universe+pkg-1$': 'path/to/packages/pkg-1/src/index.ts',
+      'universe+pkg-2$': 'path/to/packages/pkg-2/src/index.ts',
+      'universe+pkg-10$': 'path/to/packages/pkg-10/src/index.ts',
+      'universe:*': `src/*`,
+      universe$: `src/index.ts`,
+      'testverse+pkg-1:*': 'path/to/packages/pkg-1/test/*',
+      'testverse+pkg-2:*': 'path/to/packages/pkg-2/test/*',
+      'testverse+pkg-10:*': 'path/to/packages/pkg-10/test/*',
+      'testverse:*': `test/*`,
+      'typeverse:*': `types/*`,
       // ! Unlike for-import-ordering, for-config should place these here
-      'rootverse+pkg-1:': `${mockProjectRoot}/path/to/packages/pkg-1/`,
-      'rootverse+pkg-2:': `${mockProjectRoot}/path/to/packages/pkg-2/`,
-      'rootverse+pkg-10:': `${mockProjectRoot}/path/to/packages/pkg-10/`,
-      'rootverse:': `${mockProjectRoot}/`
+      'rootverse+pkg-1:*': 'path/to/packages/pkg-1/*',
+      'rootverse+pkg-2:*': 'path/to/packages/pkg-2/*',
+      'rootverse+pkg-10:*': 'path/to/packages/pkg-10/*',
+      'rootverse:*': '*'
     };
 
-    const actual = deriveAliasesForNextJs(
-      mockConfigOrderHybridrepoMappings,
-      mockProjectRoot
-    );
+    const actual = deriveAliasesForNextJs(mockConfigOrderHybridrepoMappings);
 
     expect(actual).toStrictEqual(expected);
     expect(Object.keys(actual)).toStrictEqual(Object.keys(expected));

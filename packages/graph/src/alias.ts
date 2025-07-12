@@ -632,19 +632,25 @@ export function deriveAliasesForEslint(rawAliasMappings: readonly RawAliasMappin
  *
  * See also: https://webpack.js.org/configuration/resolve/#resolvealias
  */
-export function deriveAliasesForWebpack(
-  rawAliasMappings: readonly RawAliasMapping[],
-  projectRoot: string
-) {
+export function deriveAliasesForWebpack(rawAliasMappings: readonly RawAliasMapping[]) {
   return Object.fromEntries(
     rawAliasMappings.map(([rawAlias, rawPath]) => {
-      const aliasSuffix = rawAlias.suffix === 'open' ? uriSchemeDelimiterUnescaped : '';
+      const aliasSuffix =
+        rawAlias.suffix === 'open'
+          ? `${uriSchemeDelimiterUnescaped}*`
+          : rawAlias.suffix === 'exact'
+            ? '$'
+            : '';
+
       const pathSuffix =
-        (rawPath.suffix === 'open' ? '/' : '') + (rawPath.extensionless ? '' : '.ts');
+        (rawPath.suffix === 'open' ? '*' : '') + (rawPath.extensionless ? '' : '.ts');
 
       return [
         rawAlias.alias + aliasSuffix,
-        projectRoot + (rawPath.path.length ? `/${rawPath.path}` : '') + pathSuffix
+        rawPath.path +
+          (rawPath.path.length && pathSuffix.startsWith('*')
+            ? `/${pathSuffix}`
+            : pathSuffix)
       ];
     })
   );
@@ -658,22 +664,8 @@ export function deriveAliasesForWebpack(
  *
  * See also: https://nextjs.org/docs/messages/invalid-resolve-alias
  */
-export function deriveAliasesForNextJs(
-  rawAliasMappings: readonly RawAliasMapping[],
-  projectRoot: string
-) {
-  return Object.fromEntries(
-    rawAliasMappings.map(([rawAlias, rawPath]) => {
-      const aliasSuffix = rawAlias.suffix === 'open' ? uriSchemeDelimiterUnescaped : '';
-      const pathSuffix =
-        (rawPath.suffix === 'open' ? '/' : '') + (rawPath.extensionless ? '' : '.ts');
-
-      return [
-        rawAlias.alias + aliasSuffix,
-        projectRoot + (rawPath.path.length ? `/${rawPath.path}` : '') + pathSuffix
-      ];
-    })
-  );
+export function deriveAliasesForNextJs(rawAliasMappings: readonly RawAliasMapping[]) {
+  return deriveAliasesForWebpack(rawAliasMappings);
 }
 
 /**
