@@ -76,7 +76,7 @@
     "@-xun/run": "^1.1.0",
     "core-js": "^3.44.0",
     "jsonc-parser": "^3.3.1",
-    "rejoinder": "^2.0.1",
+    "rejoinder": "^2.0.2",
     "type-fest": "^4.41.0"
   },
   "devDependencies": {
