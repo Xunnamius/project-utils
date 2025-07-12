@@ -6,9 +6,9 @@
 
 # Function: deriveAliasesForNextJs()
 
-> **deriveAliasesForNextJs**(`rawAliasMappings`, `projectRoot`): `object`
+> **deriveAliasesForNextJs**(`rawAliasMappings`): `object`
 
-Defined in: [packages/graph/src/alias.ts:661](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/alias.ts#L661)
+Defined in: [packages/graph/src/alias.ts:667](https://github.com/Xunnamius/projector/blob/9157d42cdc0054cf96a3e2980daba7c8ae5a3e13/packages/graph/src/alias.ts#L667)
 
 Returns an object that can be plugged into NextJs configurations. Currently
 only Webpack-based alias configurations are supported, making this function
@@ -22,10 +22,6 @@ See also: https://nextjs.org/docs/messages/invalid-resolve-alias
 ### rawAliasMappings
 
 readonly [`RawAliasMapping`](../type-aliases/RawAliasMapping.md)[]
-
-### projectRoot
-
-`string`
 
 ## Returns
 

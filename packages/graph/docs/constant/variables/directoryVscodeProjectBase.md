@@ -8,6 +8,6 @@
 
 > `const` **directoryVscodeProjectBase**: `".vscode"` = `'.vscode'`
 
-Defined in: [packages/graph/src/constant.ts:166](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/constant.ts#L166)
+Defined in: [packages/graph/src/constant.ts:166](https://github.com/Xunnamius/projector/blob/9157d42cdc0054cf96a3e2980daba7c8ae5a3e13/packages/graph/src/constant.ts#L166)
 
 The basename of the well-known Vscode configuration directory.

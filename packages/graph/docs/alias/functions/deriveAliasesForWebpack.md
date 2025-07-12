@@ -6,9 +6,9 @@
 
 # Function: deriveAliasesForWebpack()
 
-> **deriveAliasesForWebpack**(`rawAliasMappings`, `projectRoot`): `object`
+> **deriveAliasesForWebpack**(`rawAliasMappings`): `object`
 
-Defined in: [packages/graph/src/alias.ts:635](https://github.com/Xunnamius/projector/blob/b410307fe2da8a8f1d44526700e14694b1e77559/packages/graph/src/alias.ts#L635)
+Defined in: [packages/graph/src/alias.ts:635](https://github.com/Xunnamius/projector/blob/9157d42cdc0054cf96a3e2980daba7c8ae5a3e13/packages/graph/src/alias.ts#L635)
 
 Returns an object that can be plugged into Webpack configurations at
 `resolve.alias`.
@@ -20,10 +20,6 @@ See also: https://webpack.js.org/configuration/resolve/#resolvealias
 ### rawAliasMappings
 
 readonly [`RawAliasMapping`](../type-aliases/RawAliasMapping.md)[]
-
-### projectRoot
-
-`string`
 
 ## Returns
 
