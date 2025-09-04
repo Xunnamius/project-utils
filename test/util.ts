@@ -4,7 +4,6 @@
  */
 
 import assert from 'node:assert';
-import { isNativeError } from 'node:util/types';
 
 import { getDummyLoaderPath } from '@-xun/common-dummies/loaders';
 import { runNoRejectOnBadExit } from '@-xun/run';
@@ -12,8 +11,16 @@ import { resolve as resolverLibrary } from 'resolve.exports';
 
 import type { XPackageJson } from 'multiverse+types';
 
-// ? @-xun/jest will always come from @-xun/symbiote (i.e. transitively)
-// {@symbiote/notInvalid @-xun/jest}
+// ? These will always come from @-xun/symbiote and @-xun/jest (transitively)
+// {@symbiote/notInvalid
+//   - @-xun/jest
+//   - @-xun/test-mock-argv
+//   - @-xun/test-mock-exit
+//   - @-xun/test-mock-import
+//   - @-xun/test-mock-env
+//   - @-xun/test-mock-fixture
+//   - @-xun/test-mock-output
+// }
 
 export * from '@-xun/jest';
 
@@ -110,7 +117,7 @@ export async function resolveTargetWithNodeJs({
     resolvedTarget,
     resolverSubpath: resolvedSpecifier.replace(packageName, '.'),
     isExportedTypescriptType:
-      !!result.all.includes('ERR_UNKNOWN_FILE_EXTENSION') &&
+      result.all.includes('ERR_UNKNOWN_FILE_EXTENSION') &&
       resolvedTarget.endsWith('.d.ts')
   };
 
@@ -155,7 +162,7 @@ export function resolveTargetWithResolveExports({
       return result;
     } catch (error) {
       if (
-        isNativeError(error) &&
+        Error.isError(error) &&
         (error.message.includes(`No known conditions for "${subpath}" specifier`) ||
           error.message.includes(`Missing "${subpath}" specifier`))
       ) {

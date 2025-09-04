@@ -1,5 +1,3 @@
-import { isNativeError } from 'node:util/types';
-
 import { makeNamedError } from '@-xun/error';
 
 /**
@@ -205,7 +203,7 @@ export const CommonErrorMessage = {
     return 'unable to locate git repository root';
   },
   PackageJsonNotParsable(packageJsonPath: string, reason: unknown) {
-    return `unable to parse ${packageJsonPath}: ${isNativeError(reason) ? reason.message : String(reason)}`;
+    return `unable to parse ${packageJsonPath}: ${Error.isError(reason) ? reason.message : String(reason)}`;
   },
   DuplicatePackageName(packageName: string, firstPath: string, secondPath: string) {
     return (

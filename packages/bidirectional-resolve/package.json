@@ -85,7 +85,7 @@
     "toss-expression": "^0.1.2"
   },
   "engines": {
-    "node": "^20.18.0 || ^22.12.0 || >=23.3.0"
+    "node": "^20.18.0 || >=22.12.0"
   },
   "publishConfig": {
     "access": "public",

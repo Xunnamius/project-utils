@@ -740,7 +740,7 @@ function isAMatch(maybePattern: string, path: string) {
  * Returns `true` is `maybePattern` is a pattern and `false` otherwise.
  */
 function isAPattern(maybePattern: string) {
-  return !!maybePattern.includes('*');
+  return maybePattern.includes('*');
 }
 
 /**

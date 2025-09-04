@@ -64,7 +64,7 @@ package.
 To install:
 
 ```shell
-npm install @-xun/project-analyze
+npm install @-xun/project-graph
 ```
 
 ## Usage
