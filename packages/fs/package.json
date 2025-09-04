@@ -74,7 +74,7 @@
     "@-xun/memoize": "^1.1.0",
     "@-xun/project-types": "^2.0.1",
     "@-xun/run": "^2.0.0",
-    "core-js": "^3.44.0",
+    "core-js": "^3.45.1",
     "jsonc-parser": "^3.3.1",
     "rejoinder": "^2.0.2",
     "type-fest": "^4.41.0"
