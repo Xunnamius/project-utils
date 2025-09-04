@@ -8,7 +8,7 @@
 
 > **Pseudodecorator** = `object`
 
-Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:125](https://github.com/Xunnamius/projector/blob/9157d42cdc0054cf96a3e2980daba7c8ae5a3e13/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L125)
+Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:125](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L125)
 
 A so-called "pseudodecorator" is a decorator-like syntax that can appear
 anywhere in almost any type of file and is used to pass information to
@@ -95,7 +95,7 @@ for more details.
 
 > **items**: `string`[]
 
-Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:127](https://github.com/Xunnamius/projector/blob/9157d42cdc0054cf96a3e2980daba7c8ae5a3e13/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L127)
+Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:127](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L127)
 
 ***
 
@@ -103,4 +103,4 @@ Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-fil
 
 > **tag**: [`PseudodecoratorTag`](../enumerations/PseudodecoratorTag.md)
 
-Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:126](https://github.com/Xunnamius/projector/blob/9157d42cdc0054cf96a3e2980daba7c8ae5a3e13/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L126)
+Defined in: [packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts:126](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/analysis/gather-pseudodecorator-entries-from-files.ts#L126)

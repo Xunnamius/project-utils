@@ -8,7 +8,7 @@
 
 > **gatherImportEntriesFromFiles**(...`args`): `Promise`\<[`ImportSpecifiersEntry`](../type-aliases/ImportSpecifiersEntry.md)[]\>
 
-Defined in: [packages/graph/src/analysis/gather-import-entries-from-files.ts:219](https://github.com/Xunnamius/projector/blob/9157d42cdc0054cf96a3e2980daba7c8ae5a3e13/packages/graph/src/analysis/gather-import-entries-from-files.ts#L219)
+Defined in: [packages/graph/src/analysis/gather-import-entries-from-files.ts:219](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/analysis/gather-import-entries-from-files.ts#L219)
 
 Accepts zero or more file paths and asynchronously returns an array of
 [ImportSpecifiersEntry](../type-aliases/ImportSpecifiersEntry.md)s each mapping a given file path to an array of

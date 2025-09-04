@@ -8,7 +8,7 @@
 
 > **ProjectError** = `InstanceType`\<*typeof* [`ProjectError`](../variables/ProjectError.md)\>
 
-Defined in: [packages/common/src/error.ts:21](https://github.com/Xunnamius/projector/blob/9157d42cdc0054cf96a3e2980daba7c8ae5a3e13/packages/common/src/error.ts#L21)
+Defined in: [packages/common/src/error.ts:19](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/common/src/error.ts#L19)
 
 Represents an exception originating from project meta-analysis tooling
 (e.g. from `@-xun/project`).
