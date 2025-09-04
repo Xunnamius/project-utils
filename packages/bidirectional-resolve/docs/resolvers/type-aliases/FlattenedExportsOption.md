@@ -8,7 +8,7 @@
 
 > **FlattenedExportsOption** = `object`
 
-Defined in: [resolvers.ts:48](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L48)
+Defined in: [resolvers.ts:48](https://github.com/Xunnamius/projector/blob/3c6f177510f3f2da7ac5e382b8e400ab1e86d7f4/packages/bidirectional-resolve/src/resolvers.ts#L48)
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [resolvers.ts:48](https://github.com/Xunnamius/projector/blob/ff5746
 
 > **flattenedExports**: [`SubpathMappings`](SubpathMappings.md)
 
-Defined in: [resolvers.ts:53](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L53)
+Defined in: [resolvers.ts:53](https://github.com/Xunnamius/projector/blob/3c6f177510f3f2da7ac5e382b8e400ab1e86d7f4/packages/bidirectional-resolve/src/resolvers.ts#L53)
 
 The `package.json` `exports` object as a flattened array. Such an array is
 returned by flattenPackageJsonSubpathMap.

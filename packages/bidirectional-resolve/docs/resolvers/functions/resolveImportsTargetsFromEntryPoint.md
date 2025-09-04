@@ -8,7 +8,7 @@
 
 > **resolveImportsTargetsFromEntryPoint**(`__namedParameters`): `string`[]
 
-Defined in: [resolvers.ts:384](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/resolvers.ts#L384)
+Defined in: [resolvers.ts:384](https://github.com/Xunnamius/projector/blob/3c6f177510f3f2da7ac5e382b8e400ab1e86d7f4/packages/bidirectional-resolve/src/resolvers.ts#L384)
 
 Given `entryPoint` and `conditions`, this function returns an array of zero
 or more targets that `entryPoint` is guaranteed to resolve to when the exact

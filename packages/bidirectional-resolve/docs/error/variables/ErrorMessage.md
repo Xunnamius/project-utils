@@ -8,11 +8,11 @@
 
 > `const` **ErrorMessage**: `object`
 
-Defined in: [error.ts:6](https://github.com/Xunnamius/projector/blob/ff57464fce3165c436dfb3fa63076bf303a44b56/packages/bidirectional-resolve/src/error.ts#L6)
+Defined in: [error.ts:6](https://github.com/Xunnamius/projector/blob/3c6f177510f3f2da7ac5e382b8e400ab1e86d7f4/packages/bidirectional-resolve/src/error.ts#L6)
 
 A collection of possible error and warning messages.
 
-## Type declaration
+## Type Declaration
 
 ### AssertionFailedWantedPathIsNotSeenPath()
 
