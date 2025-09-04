@@ -74,7 +74,7 @@
     "@-xun/memoize": "^1.1.0",
     "@-xun/project-fs": "^2.0.5",
     "@-xun/project-types": "^2.0.1",
-    "@babel/core": "^7.28.0",
+    "@babel/core": "^7.28.3",
     "@babel/plugin-syntax-typescript": "^7.27.1",
     "@types/semver": "^7.7.0",
     "babel-plugin-metadata-accumulator": "^1.0.1",
