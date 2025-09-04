@@ -92,7 +92,7 @@
   },
   "devDependencies": {
     "@-xun/common-dummies": "^2.1.3",
-    "@-xun/run": "^1.1.0",
+    "@-xun/run": "^2.0.0",
     "@types/validate-npm-package-name": "^4.0.2"
   },
   "engines": {
