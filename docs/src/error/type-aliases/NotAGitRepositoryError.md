@@ -8,6 +8,6 @@
 
 > **NotAGitRepositoryError** = `InstanceType`\<*typeof* [`NotAGitRepositoryError`](../variables/NotAGitRepositoryError.md)\>
 
-Defined in: [packages/common/src/error.ts:61](https://github.com/Xunnamius/projector/blob/be1a6e83d98b597cc88a529293d6f2c53c8959cb/packages/common/src/error.ts#L61)
+Defined in: [packages/common/src/error.ts:59](https://github.com/Xunnamius/projector/blob/469027314f28fed87663b0b59124d3eaace7606d/packages/common/src/error.ts#L59)
 
 Represents encountering a project that is not a git repository.

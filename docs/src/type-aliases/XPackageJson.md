@@ -14,7 +14,7 @@ A version of PackageJson used by symbiote-powered projects with
 certain additional properties and other properties that are guaranteed to
 exist.
 
-## Type declaration
+## Type Declaration
 
 ### bin?
 

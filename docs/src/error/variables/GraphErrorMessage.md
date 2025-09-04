@@ -12,7 +12,7 @@ Defined in: packages/graph/dist/packages/graph/src/error.d.ts:6
 
 A collection of possible error and warning messages.
 
-## Type declaration
+## Type Declaration
 
 ### DeriverAsyncConfigurationConflict()
 

@@ -10,7 +10,7 @@
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/gather-import-entries-from-files.d.ts:23
 
-## Type declaration
+## Type Declaration
 
 ### useCached
 

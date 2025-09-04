@@ -8,7 +8,7 @@
 
 > **XPackageJsonNotParsableError** = `InstanceType`\<*typeof* [`XPackageJsonNotParsableError`](../variables/XPackageJsonNotParsableError.md)\>
 
-Defined in: [packages/common/src/error.ts:79](https://github.com/Xunnamius/projector/blob/be1a6e83d98b597cc88a529293d6f2c53c8959cb/packages/common/src/error.ts#L79)
+Defined in: [packages/common/src/error.ts:77](https://github.com/Xunnamius/projector/blob/469027314f28fed87663b0b59124d3eaace7606d/packages/common/src/error.ts#L77)
 
 Represents encountering an unparsable package.json file in an
 symbiote-powered project.

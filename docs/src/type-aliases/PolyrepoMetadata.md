@@ -12,7 +12,7 @@ Defined in: packages/types/dist/packages/types/src/index.d.ts:248
 
 A collection of useful information about a polyrepo.
 
-## Type declaration
+## Type Declaration
 
 ### subRootPackages
 

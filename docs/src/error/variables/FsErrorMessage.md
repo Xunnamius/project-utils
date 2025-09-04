@@ -12,7 +12,7 @@ Defined in: packages/fs/dist/packages/fs/src/error.d.ts:5
 
 A collection of possible error and warning messages.
 
-## Type declaration
+## Type Declaration
 
 ### DeriverAsyncConfigurationConflict()
 

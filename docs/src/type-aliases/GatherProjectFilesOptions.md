@@ -10,7 +10,7 @@
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/gather-project-files.d.ts:7
 
-## Type declaration
+## Type Declaration
 
 ### ignoreUnsupportedFeatures?
 
