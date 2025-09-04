@@ -10,7 +10,7 @@
 
 > **readJsonc**\<`T`\>(`path`, `options`): `Promise`\<`T`\>
 
-Defined in: [packages/fs/src/system/read-jsonc.ts:173](https://github.com/Xunnamius/projector/blob/993e593b03d5f049b7b380ada7990aa937046ca5/packages/fs/src/system/read-jsonc.ts#L173)
+Defined in: [packages/fs/src/system/read-jsonc.ts:173](https://github.com/Xunnamius/projector/blob/2bfbc9e75e2a22c1cf17e80270873165bc38b0c9/packages/fs/src/system/read-jsonc.ts#L173)
 
 Asynchronously read in and parse the contents of an arbitrary JSONC file.
 
@@ -46,7 +46,7 @@ option to `false` or clear the internal cache with cache.clear.
 
 > **readJsonc**\<`T`\>(`path`, `options`): `Promise`\<`EmptyObject` \| `T`\>
 
-Defined in: [packages/fs/src/system/read-jsonc.ts:177](https://github.com/Xunnamius/projector/blob/993e593b03d5f049b7b380ada7990aa937046ca5/packages/fs/src/system/read-jsonc.ts#L177)
+Defined in: [packages/fs/src/system/read-jsonc.ts:177](https://github.com/Xunnamius/projector/blob/2bfbc9e75e2a22c1cf17e80270873165bc38b0c9/packages/fs/src/system/read-jsonc.ts#L177)
 
 Asynchronously read in and parse the contents of an arbitrary JSONC file.
 
