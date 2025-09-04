@@ -103,7 +103,7 @@
     "@-xun/run": "^2.0.0",
     "@-xun/symbiote": "^4.15.2",
     "glob": "^11.0.3",
-    "rejoinder": "^2.0.2",
+    "rejoinder": "^2.1.0",
     "resolve.exports": "^2.0.3"
   },
   "engines": {
