@@ -94,8 +94,8 @@
   },
   "dependencies": {
     "@-xun/error": "^1.1.6",
-    "@-xun/project-fs": "^2.0.5",
-    "@-xun/project-graph": "^3.2.2",
+    "@-xun/project-fs": "^2.0.6",
+    "@-xun/project-graph": "^3.2.3",
     "@-xun/project-types": "^2.0.1",
     "core-js": "^3.45.1"
   },
