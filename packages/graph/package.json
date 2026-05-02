@@ -82,7 +82,7 @@
     "core-js": "^3.49.0",
     "escape-string-regexp~4": "npm:escape-string-regexp@^4.0.0",
     "find-up~5": "npm:find-up@^5.0.0",
-    "glob": "^11.0.3",
+    "glob": "^13.0.6",
     "glob-gitignore": "^1.0.15",
     "rejoinder": "^2.1.0",
     "semver": "^7.7.2",
