@@ -1280,7 +1280,7 @@ describe('::extractExamplesFromDocument', () => {
 
       expect(
         extractExamplesFromDocument.sync('fake.md', { useCached: true })
-      ).toStrictEqual(new Map([]));
+      ).toStrictEqual(new Map());
     });
 
     it('returns no examples from a document that contains invalid example regions', () => {
@@ -1293,7 +1293,7 @@ describe('::extractExamplesFromDocument', () => {
 
       expect(
         extractExamplesFromDocument.sync('fake.md', { useCached: true })
-      ).toStrictEqual(new Map([]));
+      ).toStrictEqual(new Map());
     });
 
     it('returns examples for a file URL string path', () => {
@@ -1420,7 +1420,7 @@ describe('::extractExamplesFromDocument', () => {
 
       await expect(
         extractExamplesFromDocument('fake.md', { useCached: true })
-      ).resolves.toStrictEqual(new Map([]));
+      ).resolves.toStrictEqual(new Map());
     });
 
     it('returns variable-space-matching regular expressions with respect to asRegExp', async () => {
@@ -1457,7 +1457,7 @@ describe('::extractExamplesFromDocument', () => {
 
       await expect(
         extractExamplesFromDocument('fake.md', { useCached: true })
-      ).resolves.toStrictEqual(new Map([]));
+      ).resolves.toStrictEqual(new Map());
     });
 
     it('returns result from internal cache if available unless useCached is false (new result is always added to internal cache)', async () => {

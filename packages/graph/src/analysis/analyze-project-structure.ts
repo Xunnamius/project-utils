@@ -548,7 +548,7 @@ function setSubrootPackagesAndCwdPackage(
         })
       );
 
-      for (const { fn } of workspacesAddFunctionsToCall.sort(
+      for (const { fn } of workspacesAddFunctionsToCall.toSorted(
         ({ patternIndex: indexA }, { patternIndex: indexB }) =>
           indexA === indexB ? 0 : indexA < indexB ? -1 : 1
       )) {

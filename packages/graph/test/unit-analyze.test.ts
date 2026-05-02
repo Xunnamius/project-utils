@@ -1451,7 +1451,7 @@ describe('::gatherImportEntriesFromFiles', () => {
 
       const fileTwoResult = {
         normal: new Set(['./tool.js', '../path/to/import.js', 'string-literal']),
-        typeOnly: new Set([])
+        typeOnly: new Set()
       };
 
       const fileThreeResult = fileTwoResult;
@@ -1508,7 +1508,7 @@ describe('::gatherImportEntriesFromFiles', () => {
           '../path/to/import.js',
           'string-literal'
         ]),
-        typeOnly: new Set([])
+        typeOnly: new Set()
       };
 
       expect(
@@ -1659,7 +1659,7 @@ describe('::gatherImportEntriesFromFiles', () => {
 
       const fileTwoResult = {
         normal: new Set(['./tool.js', '../path/to/import.js', 'string-literal']),
-        typeOnly: new Set([])
+        typeOnly: new Set()
       };
 
       const fileThreeResult = fileTwoResult;
@@ -1715,7 +1715,7 @@ describe('::gatherImportEntriesFromFiles', () => {
           '../path/to/import.js',
           'string-literal'
         ]),
-        typeOnly: new Set([])
+        typeOnly: new Set()
       };
 
       await expect(
@@ -5246,7 +5246,7 @@ describe('::analyzeProjectStructure', () => {
           cwd: repositories.goodMonorepoWeirdYarn.root,
           useCached: true,
           allowUnnamedPackages: true
-        })
+        }).subRootPackages
       ).toBeDefined();
     });
 

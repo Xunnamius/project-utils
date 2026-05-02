@@ -44,7 +44,7 @@ export function generatePackageJsonEngineMaintainedNodeVersions(options?: {
   // ? does not like it when browserslist is mocked
   const versions = (require('browserslist')('maintained node versions') as string[])
     .map((v) => v.split(' ').at(-1)!)
-    .sort(semver.compareBuild);
+    .toSorted(semver.compareBuild);
 
   return options?.format === 'array'
     ? versions

@@ -193,7 +193,7 @@ export function sortPackagesTopologically(
         }
       })
       .filter((package_) => !!package_)
-      .sort((packageA, packageB) => {
+      .toSorted((packageA, packageB) => {
         // ? Natural sort using latest ES6/7 features!
         return isRootPackage(packageA)
           ? -1

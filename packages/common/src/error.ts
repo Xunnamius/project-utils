@@ -36,7 +36,7 @@ export const { ProjectError } = makeNamedError(
     constructor(
       reason: Error | string | undefined,
       options: ProjectErrorOptions = {},
-      message: string | undefined = undefined,
+      message?: string,
       superOptions: ErrorOptions = {}
     ) {
       let { cause } = options;
@@ -67,7 +67,7 @@ export const { NotAGitRepositoryError } = makeNamedError(
      * constructor via `super`.
      */
     constructor(message: string);
-    constructor(message: string | undefined = undefined) {
+    constructor(message?: string) {
       super(message ?? CommonErrorMessage.NotAGitRepositoryError());
     }
   },
@@ -88,7 +88,7 @@ export const { XPackageJsonNotParsableError } = makeNamedError(
     constructor(
       public readonly packageJsonPath: string,
       public readonly reason: unknown,
-      message: string | undefined = undefined
+      message?: string
     ) {
       super(
         message ?? CommonErrorMessage.PackageJsonNotParsable(packageJsonPath, reason)
@@ -119,7 +119,7 @@ export const { DuplicatePackageNameError } = makeNamedError(
       public readonly packageName: string,
       public readonly firstPath: string,
       public readonly secondPath: string,
-      message: string | undefined = undefined
+      message?: string
     ) {
       super(
         message ??
@@ -146,7 +146,7 @@ export const { DuplicatePackageIdError } = makeNamedError(
       public readonly id: string,
       public readonly firstPath: string,
       public readonly secondPath: string,
-      message: string | undefined = undefined
+      message?: string
     ) {
       super(message ?? CommonErrorMessage.DuplicatePackageId(id, firstPath, secondPath));
     }
