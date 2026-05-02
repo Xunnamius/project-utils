@@ -8,7 +8,7 @@
 
 > **FlattenedImportsOption** = `object`
 
-Defined in: [resolvers.ts:40](https://github.com/Xunnamius/projector/blob/3c6f177510f3f2da7ac5e382b8e400ab1e86d7f4/packages/bidirectional-resolve/src/resolvers.ts#L40)
+Defined in: [resolvers.ts:40](https://github.com/Xunnamius/projector/blob/2f27fcc45a3b7194f8512eb7f0274bde1ac7ea9d/packages/bidirectional-resolve/src/resolvers.ts#L40)
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [resolvers.ts:40](https://github.com/Xunnamius/projector/blob/3c6f17
 
 > **flattenedImports**: [`SubpathMappings`](SubpathMappings.md)
 
-Defined in: [resolvers.ts:45](https://github.com/Xunnamius/projector/blob/3c6f177510f3f2da7ac5e382b8e400ab1e86d7f4/packages/bidirectional-resolve/src/resolvers.ts#L45)
+Defined in: [resolvers.ts:45](https://github.com/Xunnamius/projector/blob/2f27fcc45a3b7194f8512eb7f0274bde1ac7ea9d/packages/bidirectional-resolve/src/resolvers.ts#L45)
 
 The `package.json` `imports` object as a flattened array. Such an array is
 returned by flattenPackageJsonSubpathMap.

@@ -8,15 +8,15 @@
 
 > **ConditionsOption** = `object`
 
-Defined in: [resolvers.ts:12](https://github.com/Xunnamius/projector/blob/3c6f177510f3f2da7ac5e382b8e400ab1e86d7f4/packages/bidirectional-resolve/src/resolvers.ts#L12)
+Defined in: [resolvers.ts:12](https://github.com/Xunnamius/projector/blob/2f27fcc45a3b7194f8512eb7f0274bde1ac7ea9d/packages/bidirectional-resolve/src/resolvers.ts#L12)
 
 ## Properties
 
 ### conditions?
 
-> `optional` **conditions**: `string`[]
+> `optional` **conditions?**: `string`[]
 
-Defined in: [resolvers.ts:37](https://github.com/Xunnamius/projector/blob/3c6f177510f3f2da7ac5e382b8e400ab1e86d7f4/packages/bidirectional-resolve/src/resolvers.ts#L37)
+Defined in: [resolvers.ts:37](https://github.com/Xunnamius/projector/blob/2f27fcc45a3b7194f8512eb7f0274bde1ac7ea9d/packages/bidirectional-resolve/src/resolvers.ts#L37)
 
 Conditions to recursively match against. If none of the listed conditions
 can be found and there are no matching `default` conditions, this function

@@ -8,7 +8,7 @@
 
 > **flattenPackageJsonSubpathMap**(`__namedParameters`): [`SubpathMappings`](../../resolvers/type-aliases/SubpathMappings.md)
 
-Defined in: [flatten-package-json-subpath-map.ts:12](https://github.com/Xunnamius/projector/blob/3c6f177510f3f2da7ac5e382b8e400ab1e86d7f4/packages/bidirectional-resolve/src/flatten-package-json-subpath-map.ts#L12)
+Defined in: [flatten-package-json-subpath-map.ts:12](https://github.com/Xunnamius/projector/blob/2f27fcc45a3b7194f8512eb7f0274bde1ac7ea9d/packages/bidirectional-resolve/src/flatten-package-json-subpath-map.ts#L12)
 
 Flatten entry points within a `package.json` `imports`/`exports` map into a
 one dimensional array of subpath-target mappings.
@@ -19,7 +19,7 @@ one dimensional array of subpath-target mappings.
 
 #### map
 
-`undefined` \| `Exports` \| `Imports`
+`Exports` \| `Imports` \| `undefined`
 
 ## Returns
 
