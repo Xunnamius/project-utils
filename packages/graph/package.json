@@ -85,7 +85,7 @@
     "glob": "^13.0.6",
     "glob-gitignore": "^1.0.15",
     "rejoinder": "^2.1.0",
-    "semver": "^7.7.2",
+    "semver": "^7.7.4",
     "toss-expression": "^0.1.2",
     "type-fest": "^4.41.0",
     "validate-npm-package-name": "^6.0.2"
