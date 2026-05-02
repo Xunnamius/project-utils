@@ -77,7 +77,7 @@
     "core-js": "^3.49.0",
     "jsonc-parser": "^3.3.1",
     "rejoinder": "^2.1.0",
-    "type-fest": "^4.41.0"
+    "type-fest": "^5.6.0"
   },
   "devDependencies": {
     "@-xun/common-dummies": "^2.1.3",
