@@ -75,7 +75,7 @@
     "@-xun/project-fs": "^2.0.6",
     "@-xun/project-types": "^2.0.1",
     "@babel/core": "^7.29.0",
-    "@babel/plugin-syntax-typescript": "^7.27.1",
+    "@babel/plugin-syntax-typescript": "^7.28.6",
     "@types/semver": "^7.7.1",
     "babel-plugin-metadata-accumulator": "^1.0.2",
     "browserslist": "^4.25.4",
