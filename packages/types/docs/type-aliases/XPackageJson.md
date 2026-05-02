@@ -8,17 +8,17 @@
 
 > **XPackageJson**\<`Scripts`\> = `Omit`\<`OmitIndexSignature`\<`PackageJson`\>, `"bin"` \| `"name"`\> & `object`
 
-Defined in: [index.ts:513](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L513)
+Defined in: [index.ts:513](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L513)
 
 A version of PackageJson used by symbiote-powered projects with
 certain additional properties and other properties that are guaranteed to
 exist.
 
-## Type declaration
+## Type Declaration
 
 ### bin?
 
-> `optional` **bin**: `string` \| `Record`\<`string`, `string`\>
+> `optional` **bin?**: `string` \| `Record`\<`string`, `string`\>
 
 ### name
 
@@ -26,7 +26,7 @@ exist.
 
 ### scripts?
 
-> `optional` **scripts**: `Scripts`
+> `optional` **scripts?**: `Scripts`
 
 ## Type Parameters
 

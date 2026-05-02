@@ -8,7 +8,7 @@
 
 > **XPackageJsonScripts** = `object`
 
-Defined in: [index.ts:283](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L283)
+Defined in: [index.ts:283](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L283)
 
 Additional scripts available when working on an symbiote-powered project.
 
@@ -16,9 +16,9 @@ Additional scripts available when working on an symbiote-powered project.
 
 ### build?
 
-> `optional` **build**: `string`
+> `optional` **build?**: `string`
 
-Defined in: [index.ts:292](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L292)
+Defined in: [index.ts:292](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L292)
 
 Run by users, symbiote, and related tooling when building the current
 package's production-ready distributables.
@@ -35,9 +35,9 @@ This script is usually a reference to `npm run build:dist`.
 
 ### build:changelog?
 
-> `optional` **build:changelog**: `string`
+> `optional` **build:changelog?**: `string`
 
-Defined in: [index.ts:299](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L299)
+Defined in: [index.ts:299](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L299)
 
 Run by users, symbiote, and related tooling when building the current
 package's `CHANGELOG.md` file.
@@ -52,9 +52,9 @@ package's `CHANGELOG.md` file.
 
 ### build:dist?
 
-> `optional` **build:dist**: `string`
+> `optional` **build:dist?**: `string`
 
-Defined in: [index.ts:306](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L306)
+Defined in: [index.ts:306](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L306)
 
 Run by users, symbiote, and related tooling when building the current
 package's production-ready distributables.
@@ -69,9 +69,9 @@ package's production-ready distributables.
 
 ### build:docs?
 
-> `optional` **build:docs**: `string`
+> `optional` **build:docs?**: `string`
 
-Defined in: [index.ts:313](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L313)
+Defined in: [index.ts:313](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L313)
 
 Run by users, symbiote, and related tooling when building the current
 package's documentation (typically found under `docs/`).
@@ -86,9 +86,9 @@ package's documentation (typically found under `docs/`).
 
 ### build:topological?
 
-> `optional` **build:topological**: `string`
+> `optional` **build:topological?**: `string`
 
-Defined in: [index.ts:320](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L320)
+Defined in: [index.ts:320](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L320)
 
 Run by users, symbiote, and related tooling when building, in topological
 order, production-ready distributables across all packages in the project.
@@ -103,9 +103,9 @@ order, production-ready distributables across all packages in the project.
 
 ### clean?
 
-> `optional` **clean**: `string`
+> `optional` **clean?**: `string`
 
-Defined in: [index.ts:327](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L327)
+Defined in: [index.ts:327](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L327)
 
 Run by users, symbiote, and related tooling when removing files from the
 project or package that are ignored by git (with exceptions).
@@ -120,9 +120,9 @@ project or package that are ignored by git (with exceptions).
 
 ### deploy?
 
-> `optional` **deploy**: `string`
+> `optional` **deploy?**: `string`
 
-Defined in: [index.ts:335](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L335)
+Defined in: [index.ts:335](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L335)
 
 Run by users, symbiote, and related tooling when deploying built
 distributables to the appropriate remote system(s).
@@ -138,9 +138,9 @@ distributables to the appropriate remote system(s).
 
 ### dev?
 
-> `optional` **dev**: `string`
+> `optional` **dev?**: `string`
 
-Defined in: [index.ts:444](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L444)
+Defined in: [index.ts:444](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L444)
 
 Run by users, symbiote, and related tooling when spinning up a project's
 local development environment.
@@ -149,9 +149,9 @@ local development environment.
 
 ### format?
 
-> `optional` **format**: `string`
+> `optional` **format?**: `string`
 
-Defined in: [index.ts:342](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L342)
+Defined in: [index.ts:342](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L342)
 
 Run by users, symbiote, and related tooling when formatting the project or
 package.
@@ -166,9 +166,9 @@ package.
 
 ### info?
 
-> `optional` **info**: `string`
+> `optional` **info?**: `string`
 
-Defined in: [index.ts:349](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L349)
+Defined in: [index.ts:349](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L349)
 
 Run by users, symbiote, and related tooling when printing information about
 the current project or package.
@@ -183,9 +183,9 @@ the current project or package.
 
 ### lint?
 
-> `optional` **lint**: `string`
+> `optional` **lint?**: `string`
 
-Defined in: [index.ts:358](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L358)
+Defined in: [index.ts:358](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L358)
 
 Run by users, symbiote, and related tooling when linting the current
 package's files.
@@ -202,9 +202,9 @@ This script is usually a reference to `npm run lint:package`.
 
 ### lint:package?
 
-> `optional` **lint:package**: `string`
+> `optional` **lint:package?**: `string`
 
-Defined in: [index.ts:367](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L367)
+Defined in: [index.ts:367](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L367)
 
 Run by users, symbiote, and related tooling when linting all of the
 lintable files under the current package's root along with any other source
@@ -221,9 +221,9 @@ gatherPackageBuildTargets).
 
 ### lint:packages?
 
-> `optional` **lint:packages**: `string`
+> `optional` **lint:packages?**: `string`
 
-Defined in: [index.ts:374](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L374)
+Defined in: [index.ts:374](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L374)
 
 Run by users, symbiote, and related tooling when linting all lintable files
 in the entire project.
@@ -238,9 +238,9 @@ in the entire project.
 
 ### lint:project?
 
-> `optional` **lint:project**: `string`
+> `optional` **lint:project?**: `string`
 
-Defined in: [index.ts:381](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L381)
+Defined in: [index.ts:381](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L381)
 
 Run by users, symbiote, and related tooling when linting a project's
 metadata, such as its file structure and configuration settings.
@@ -255,9 +255,9 @@ metadata, such as its file structure and configuration settings.
 
 ### lint:topological?
 
-> `optional` **lint:topological**: `string`
+> `optional` **lint:topological?**: `string`
 
-Defined in: [index.ts:395](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L395)
+Defined in: [index.ts:395](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L395)
 
 Run by users, symbiote, and related tooling when linting, in topological
 order, files belonging to packages across the project.
@@ -272,9 +272,9 @@ order, files belonging to packages across the project.
 
 ### list-tasks?
 
-> `optional` **list-tasks**: `string`
+> `optional` **list-tasks?**: `string`
 
-Defined in: [index.ts:388](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L388)
+Defined in: [index.ts:388](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L388)
 
 Run by users, symbiote, and related tooling when printing information about
 available scripts in `package.json`.
@@ -289,9 +289,9 @@ available scripts in `package.json`.
 
 ### prepare?
 
-> `optional` **prepare**: `string`
+> `optional` **prepare?**: `string`
 
-Defined in: [index.ts:406](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L406)
+Defined in: [index.ts:406](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L406)
 
 Run by users, symbiote, and related tooling when preparing a fresh
 development environment.
@@ -310,9 +310,9 @@ for more information.
 
 ### release?
 
-> `optional` **release**: `string`
+> `optional` **release?**: `string`
 
-Defined in: [index.ts:413](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L413)
+Defined in: [index.ts:413](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L413)
 
 Run by users, symbiote, and related tooling when potentially releasing the
 next version of a package.
@@ -327,9 +327,9 @@ next version of a package.
 
 ### release:topological?
 
-> `optional` **release:topological**: `string`
+> `optional` **release:topological?**: `string`
 
-Defined in: [index.ts:420](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L420)
+Defined in: [index.ts:420](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L420)
 
 Run by users, symbiote, and related tooling when potentially releasing, in
 topological order, the next version of each package in the project.
@@ -344,9 +344,9 @@ topological order, the next version of each package in the project.
 
 ### renovate?
 
-> `optional` **renovate**: `string`
+> `optional` **renovate?**: `string`
 
-Defined in: [index.ts:429](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L429)
+Defined in: [index.ts:429](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L429)
 
 Run by users, symbiote, and related tooling when manipulating a project's
 _metadata_, such as its file structure and configuration settings, with the
@@ -363,9 +363,9 @@ goal of bringing the project up to date with latest best practices.
 
 ### start?
 
-> `optional` **start**: `string`
+> `optional` **start?**: `string`
 
-Defined in: [index.ts:439](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L439)
+Defined in: [index.ts:439](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L439)
 
 Run by users, symbiote, and related tooling when attempting to execute a
 project's distributables locally.
@@ -383,9 +383,9 @@ for more information.
 
 ### test?
 
-> `optional` **test**: `string`
+> `optional` **test?**: `string`
 
-Defined in: [index.ts:455](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L455)
+Defined in: [index.ts:455](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L455)
 
 Run by users, symbiote, and related tooling when executing unit tests
 against the current package.
@@ -404,9 +404,9 @@ information.
 
 ### test:package:all?
 
-> `optional` **test:package:all**: `string`
+> `optional` **test:package:all?**: `string`
 
-Defined in: [index.ts:464](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L464)
+Defined in: [index.ts:464](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L464)
 
 Run by users, symbiote, and related tooling when executing all possible
 tests against the current package. In a monorepo context, this script will
@@ -423,9 +423,9 @@ transitive dependencies).
 
 ### test:package:e2e?
 
-> `optional` **test:package:e2e**: `string`
+> `optional` **test:package:e2e?**: `string`
 
-Defined in: [index.ts:473](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L473)
+Defined in: [index.ts:473](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L473)
 
 Run by users, symbiote, and related tooling when executing end-to-end tests
 against the current package. In a monorepo context, this script will also
@@ -442,9 +442,9 @@ transitive dependencies).
 
 ### test:package:integration?
 
-> `optional` **test:package:integration**: `string`
+> `optional` **test:package:integration?**: `string`
 
-Defined in: [index.ts:482](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L482)
+Defined in: [index.ts:482](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L482)
 
 Run by users, symbiote, and related tooling when executing integration
 tests against the current package. In a monorepo context, this script will
@@ -461,9 +461,9 @@ transitive dependencies).
 
 ### test:package:unit?
 
-> `optional` **test:package:unit**: `string`
+> `optional` **test:package:unit?**: `string`
 
-Defined in: [index.ts:491](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L491)
+Defined in: [index.ts:491](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L491)
 
 Run by users, symbiote, and related tooling when executing unit tests
 against the current package. In a monorepo context, this script will also
@@ -480,9 +480,9 @@ transitive dependencies).
 
 ### test:packages:all?
 
-> `optional` **test:packages:all**: `string`
+> `optional` **test:packages:all?**: `string`
 
-Defined in: [index.ts:498](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L498)
+Defined in: [index.ts:498](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L498)
 
 Run by users, symbiote, and related tooling when executing all possible
 tests across the entire project.
@@ -497,9 +497,9 @@ tests across the entire project.
 
 ### test:topological?
 
-> `optional` **test:topological**: `string`
+> `optional` **test:topological?**: `string`
 
-Defined in: [index.ts:505](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L505)
+Defined in: [index.ts:505](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L505)
 
 Run by users, symbiote, and related tooling when executing tests against
 packages, in topological order, across the entire project.

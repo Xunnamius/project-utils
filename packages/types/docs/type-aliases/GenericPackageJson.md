@@ -8,7 +8,7 @@
 
 > **GenericPackageJson** = `PackageJson` \| [`XPackageJson`](XPackageJson.md)
 
-Defined in: [index.ts:548](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L548)
+Defined in: [index.ts:548](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L548)
 
 Represents any `package.json` file in the wild, including symbiote-ready
 `package.json` files.

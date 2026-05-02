@@ -1,6 +1,6 @@
 {
   "name": "@-xun/project-types",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "The types available to consumers of the @-xun/project package",
   "keywords": [],
   "homepage": "https://github.com/Xunnamius/project-utils/tree/main/packages/types#readme",

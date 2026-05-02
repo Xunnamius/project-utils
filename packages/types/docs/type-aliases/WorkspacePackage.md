@@ -8,7 +8,7 @@
 
 > **WorkspacePackage**\<`Json`\> = `object`
 
-Defined in: [index.ts:44](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L44)
+Defined in: [index.ts:44](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L44)
 
 An object representing a non-root package in a monorepo project.
 
@@ -24,7 +24,7 @@ An object representing a non-root package in a monorepo project.
 
 > **attributes**: `{ [key in WorkspaceAttribute]?: boolean }`
 
-Defined in: [index.ts:73](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L73)
+Defined in: [index.ts:73](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L73)
 
 A collection of [WorkspaceAttribute](../enumerations/WorkspaceAttribute.md) flags describing the workspace.
 
@@ -34,7 +34,7 @@ A collection of [WorkspaceAttribute](../enumerations/WorkspaceAttribute.md) flag
 
 > **id**: [`WorkspacePackageId`](WorkspacePackageId.md)
 
-Defined in: [index.ts:53](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L53)
+Defined in: [index.ts:53](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L53)
 
 The package-id of the workspace package. The package-id is derived from the
 name of the parent directory of this package's `package.json` file, i.e.
@@ -49,7 +49,7 @@ character.
 
 > **json**: `Json`
 
-Defined in: [index.ts:69](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L69)
+Defined in: [index.ts:69](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L69)
 
 The contents of the package's `package.json` file.
 
@@ -59,7 +59,7 @@ The contents of the package's `package.json` file.
 
 > **projectMetadata**: [`ProjectMetadata`](ProjectMetadata.md)\<`Json`\>
 
-Defined in: [index.ts:78](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L78)
+Defined in: [index.ts:78](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L78)
 
 A link back to the [ProjectMetadata](ProjectMetadata.md) instance containing this
 package.
@@ -70,7 +70,7 @@ package.
 
 > **relativeRoot**: `RelativePath`
 
-Defined in: [index.ts:65](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L65)
+Defined in: [index.ts:65](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L65)
 
 The path to the root directory of the package _relative to the project
 root_.
@@ -84,6 +84,6 @@ returned path.
 
 > **root**: `AbsolutePath`
 
-Defined in: [index.ts:57](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L57)
+Defined in: [index.ts:57](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L57)
 
 The absolute path to the root directory of the package.

@@ -8,6 +8,6 @@
 
 > **XPackageJsonHybridrepoRoot** = [`XPackageJson`](XPackageJson.md) & `NonNullable`\<`Pick`\<[`XPackageJson`](XPackageJson.md), `"workspaces"`\>\>
 
-Defined in: [index.ts:535](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L535)
+Defined in: [index.ts:535](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L535)
 
 A version of [XPackageJson](XPackageJson.md) specifically for hybridrepo roots.

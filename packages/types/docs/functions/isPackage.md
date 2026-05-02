@@ -10,7 +10,7 @@
 
 > **isPackage**(`o`, `options?`): `o is GenericPackage`
 
-Defined in: [index.ts:592](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L592)
+Defined in: [index.ts:592](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L592)
 
 Returns `true` if `o` is probably an instance of `RootPackage` or
 `WorkspacePackage`.
@@ -35,7 +35,7 @@ Returns `true` if `o` is probably an instance of `RootPackage` or
 
 > **isPackage**(`o`, `options`): `o is Package<XPackageJson<XPackageJsonScripts>>`
 
-Defined in: [index.ts:593](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L593)
+Defined in: [index.ts:593](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L593)
 
 Returns `true` if `o` is probably an instance of `RootPackage` or
 `WorkspacePackage`.
@@ -60,7 +60,7 @@ Returns `true` if `o` is probably an instance of `RootPackage` or
 
 > **isPackage**(`o`, `options`): o is GenericPackage \| Package\<XPackageJson\<XPackageJsonScripts\>\>
 
-Defined in: [index.ts:594](https://github.com/Xunnamius/projector/blob/1e3e32abc78a59aa6a685503e0c5345146db6c1f/packages/types/src/index.ts#L594)
+Defined in: [index.ts:594](https://github.com/Xunnamius/projector/blob/2ee6352d2d20d1cac2a947b31a478b43bbb1165b/packages/types/src/index.ts#L594)
 
 Returns `true` if `o` is probably an instance of `RootPackage` or
 `WorkspacePackage`.
