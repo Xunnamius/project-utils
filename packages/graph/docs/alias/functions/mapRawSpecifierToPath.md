@@ -6,9 +6,9 @@
 
 # Function: mapRawSpecifierToPath()
 
-> **mapRawSpecifierToPath**(`rawAliasMappings`, `specifier`, `__namedParameters`): `undefined` \| `RelativePath`
+> **mapRawSpecifierToPath**(`rawAliasMappings`, `specifier`, `__namedParameters?`): `RelativePath` \| `undefined`
 
-Defined in: [packages/graph/src/alias.ts:756](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/alias.ts#L756)
+Defined in: [packages/graph/src/alias.ts:756](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/alias.ts#L756)
 
 Accepts a _raw `specifier`_ and returns an "bare" RelativePath (in
 that it does not begin with "./") to a theoretical location on the filesystem
@@ -29,7 +29,7 @@ has been resolved to a real filesystem path (such as by this function).
 
 `string`
 
-### \_\_namedParameters
+### \_\_namedParameters?
 
 #### extensionToAppend?
 
@@ -47,4 +47,4 @@ a "." character.
 
 ## Returns
 
-`undefined` \| `RelativePath`
+`RelativePath` \| `undefined`

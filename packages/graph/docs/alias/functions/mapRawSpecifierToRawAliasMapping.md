@@ -6,9 +6,9 @@
 
 # Function: mapRawSpecifierToRawAliasMapping()
 
-> **mapRawSpecifierToRawAliasMapping**(`rawAliasMappings`, `specifier`): `undefined` \| [`RawAliasMapping`](../type-aliases/RawAliasMapping.md)
+> **mapRawSpecifierToRawAliasMapping**(`rawAliasMappings`, `specifier`): [`RawAliasMapping`](../type-aliases/RawAliasMapping.md) \| `undefined`
 
-Defined in: [packages/graph/src/alias.ts:737](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/alias.ts#L737)
+Defined in: [packages/graph/src/alias.ts:737](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/alias.ts#L737)
 
 Accepts a _raw `specifier`_ and returns the first matching
 [RawAliasMapping](../type-aliases/RawAliasMapping.md) (in precedence order) or `undefined` if `specifier`
@@ -29,4 +29,4 @@ readonly [`RawAliasMapping`](../type-aliases/RawAliasMapping.md)[]
 
 ## Returns
 
-`undefined` \| [`RawAliasMapping`](../type-aliases/RawAliasMapping.md)
+[`RawAliasMapping`](../type-aliases/RawAliasMapping.md) \| `undefined`

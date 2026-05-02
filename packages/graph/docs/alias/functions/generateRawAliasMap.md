@@ -6,9 +6,9 @@
 
 # Function: generateRawAliasMap()
 
-> **generateRawAliasMap**(`projectMetadata`, `outputTarget`): [`RawAliasMapping`](../type-aliases/RawAliasMapping.md)[]
+> **generateRawAliasMap**(`projectMetadata`, `outputTarget?`): [`RawAliasMapping`](../type-aliases/RawAliasMapping.md)[]
 
-Defined in: [packages/graph/src/alias.ts:311](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/alias.ts#L311)
+Defined in: [packages/graph/src/alias.ts:311](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/alias.ts#L311)
 
 Given `projectMetadata`, this function returns an array of
 [RawAliasMapping](../type-aliases/RawAliasMapping.md) entries. Each entry maps an import specifier alias
@@ -45,7 +45,9 @@ less-specific or catch-all open-suffix aliases. Entries of the same
 
 `GenericProjectMetadata`
 
-### outputTarget
+### outputTarget?
+
+`"for-config"` \| `"for-import-ordering"` \| `"for-import-hinting"`
 
 This controls the order of the elements of this function's output. The
 options are:
@@ -58,8 +60,6 @@ options are:
 powered by eslint. `"for-import-hinting"` ensures that aliases are ordered
 in such a way that TypeScript-based intellisense will return more prudent
 results.
-
-`"for-config"` | `"for-import-ordering"` | `"for-import-hinting"`
 
 ## Returns
 

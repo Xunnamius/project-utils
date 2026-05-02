@@ -8,7 +8,7 @@
 
 > **deriveAliasesForBabel**(`rawAliasMappings`): `object`
 
-Defined in: [packages/graph/src/alias.ts:585](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/alias.ts#L585)
+Defined in: [packages/graph/src/alias.ts:585](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/alias.ts#L585)
 
 Returns an object that can be plugged into
 "babel-plugin-transform-rewrite-imports" Babel plugin configurations at

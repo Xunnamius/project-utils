@@ -6,9 +6,9 @@
 
 # Function: sortPackagesTopologically()
 
-> **sortPackagesTopologically**(`projectMetadata`, `__namedParameters`): `Package`\<`GenericPackageJson`\>[][]
+> **sortPackagesTopologically**(`projectMetadata`, `__namedParameters?`): `Package`\<`GenericPackageJson`\>[][]
 
-Defined in: [packages/graph/src/analysis/sort-packages-topologically.ts:39](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/analysis/sort-packages-topologically.ts#L39)
+Defined in: [packages/graph/src/analysis/sort-packages-topologically.ts:39](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/analysis/sort-packages-topologically.ts#L39)
 
 Synchronously derive a directed graph representing the project's package
 dependency topology and return said project's packages in a
@@ -30,7 +30,7 @@ ignored. Dependency cycles will cause this function to throw.
 
 `ProjectMetadata`\<`GenericPackageJson`\>
 
-### \_\_namedParameters
+### \_\_namedParameters?
 
 #### allowPrivateDependencies?
 

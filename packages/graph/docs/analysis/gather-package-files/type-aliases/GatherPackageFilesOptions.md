@@ -8,7 +8,7 @@
 
 > **GatherPackageFilesOptions** = `object`
 
-Defined in: [packages/graph/src/analysis/gather-package-files.ts:27](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/analysis/gather-package-files.ts#L27)
+Defined in: [packages/graph/src/analysis/gather-package-files.ts:27](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/analysis/gather-package-files.ts#L27)
 
 ## See
 
@@ -18,9 +18,9 @@ Defined in: [packages/graph/src/analysis/gather-package-files.ts:27](https://git
 
 ### ignore?
 
-> `optional` **ignore**: (`string` \| `RelativePath`)[]
+> `optional` **ignore?**: (`string` \| `RelativePath`)[]
 
-Defined in: [packages/graph/src/analysis/gather-package-files.ts:54](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/analysis/gather-package-files.ts#L54)
+Defined in: [packages/graph/src/analysis/gather-package-files.ts:54](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/analysis/gather-package-files.ts#L54)
 
 Exclude paths from the result with respect to the given patterns, which are
 interpreted **relative to the _project root_** according to gitignore
@@ -35,9 +35,9 @@ un-ignore files.
 
 ### skipGitIgnored?
 
-> `optional` **skipGitIgnored**: `boolean`
+> `optional` **skipGitIgnored?**: `boolean`
 
-Defined in: [packages/graph/src/analysis/gather-package-files.ts:43](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/analysis/gather-package-files.ts#L43)
+Defined in: [packages/graph/src/analysis/gather-package-files.ts:43](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/analysis/gather-package-files.ts#L43)
 
 If `true`, use the project root's `.gitignore` file exclusively to filter
 out returned project files.
@@ -54,7 +54,7 @@ true
 
 > **useCached**: `boolean`
 
-Defined in: [packages/graph/src/analysis/gather-package-files.ts:36](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/analysis/gather-package-files.ts#L36)
+Defined in: [packages/graph/src/analysis/gather-package-files.ts:36](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/analysis/gather-package-files.ts#L36)
 
 Use the internal cached result from a previous run, if available.
 

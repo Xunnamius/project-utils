@@ -8,7 +8,7 @@
 
 > **Serializable**\<`T`\> = `Tagged`\<`T`, `"serializable"`\>
 
-Defined in: [packages/graph/src/common.ts:283](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/common.ts#L283)
+Defined in: [packages/graph/src/common.ts:283](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/common.ts#L283)
 
 ## Type Parameters
 

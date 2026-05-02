@@ -8,13 +8,13 @@
 
 > `const` **GraphErrorMessage**: `object`
 
-Defined in: [packages/graph/src/error.ts:19](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/error.ts#L19)
+Defined in: [packages/graph/src/error.ts:19](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/error.ts#L19)
 
 A collection of possible error and warning messages.
 
 ## Type Declaration
 
-### DeriverAsyncConfigurationConflict()
+### DeriverAsyncConfigurationConflict
 
 > **DeriverAsyncConfigurationConflict**: () => `string` = `FsErrorMessage.DeriverAsyncConfigurationConflict`
 
@@ -144,7 +144,7 @@ A collection of possible error and warning messages.
 
 ##### invalids
 
-`string` | `RegExp`
+`string` \| `RegExp`
 
 #### Returns
 
@@ -166,7 +166,7 @@ A collection of possible error and warning messages.
 
 ##### invalids
 
-`string` | `RegExp`
+`string` \| `RegExp`
 
 #### Returns
 
@@ -368,7 +368,7 @@ A collection of possible error and warning messages.
 
 ##### replacement
 
-`undefined` | `string`
+`string` \| `undefined`
 
 ##### path?
 

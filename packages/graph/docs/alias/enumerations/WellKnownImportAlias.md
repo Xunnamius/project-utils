@@ -6,7 +6,7 @@
 
 # Enumeration: WellKnownImportAlias
 
-Defined in: [packages/graph/src/alias.ts:57](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/alias.ts#L57)
+Defined in: [packages/graph/src/alias.ts:57](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/alias.ts#L57)
 
 A well-known import alias group, such as "universe" or "multiverse".
 
@@ -16,7 +16,7 @@ A well-known import alias group, such as "universe" or "multiverse".
 
 > **Multiverse**: `"multiverse"`
 
-Defined in: [packages/graph/src/alias.ts:74](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/alias.ts#L74)
+Defined in: [packages/graph/src/alias.ts:74](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/alias.ts#L74)
 
 This alias always refers to a sub-root package's `./src` directory.
 
@@ -30,7 +30,7 @@ Examples of matching aliases:
 
 > **Rootverse**: `"rootverse"`
 
-Defined in: [packages/graph/src/alias.ts:98](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/alias.ts#L98)
+Defined in: [packages/graph/src/alias.ts:98](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/alias.ts#L98)
 
 This alias always refers to some file relative to the project root.
 
@@ -44,7 +44,7 @@ Examples of matching aliases:
 
 > **Testverse**: `"testverse"`
 
-Defined in: [packages/graph/src/alias.ts:83](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/alias.ts#L83)
+Defined in: [packages/graph/src/alias.ts:83](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/alias.ts#L83)
 
 This alias refers to either a root or sub-root package's `./test`
 directory.
@@ -59,7 +59,7 @@ Examples of matching aliases:
 
 > **Typeverse**: `"typeverse"`
 
-Defined in: [packages/graph/src/alias.ts:90](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/alias.ts#L90)
+Defined in: [packages/graph/src/alias.ts:90](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/alias.ts#L90)
 
 This alias always refers to the project root's `./types` directory.
 
@@ -72,7 +72,7 @@ Examples of matching aliases:
 
 > **Universe**: `"universe"`
 
-Defined in: [packages/graph/src/alias.ts:66](https://github.com/Xunnamius/projector/blob/514ccc0cc29a5be24dff01a84b9935be834df2b5/packages/graph/src/alias.ts#L66)
+Defined in: [packages/graph/src/alias.ts:66](https://github.com/Xunnamius/projector/blob/8b829a35843b6bd00f87495a6c64e0da9cfd40e7/packages/graph/src/alias.ts#L66)
 
 This alias always refers to the project root (i.e. root package)'s `./src`
 directory.
