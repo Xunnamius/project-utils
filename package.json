@@ -97,7 +97,7 @@
     "@-xun/project-fs": "^2.0.6",
     "@-xun/project-graph": "^3.2.3",
     "@-xun/project-types": "^2.0.1",
-    "core-js": "^3.45.1"
+    "core-js": "^3.49.0"
   },
   "devDependencies": {
     "@-xun/common-dummies": "^2.1.3",
