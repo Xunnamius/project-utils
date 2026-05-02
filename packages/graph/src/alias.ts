@@ -716,7 +716,7 @@ export function deriveAliasesForTypeScript(
       return [
         rawAlias.alias + aliasSuffix,
         [
-          rawPath.path +
+          `./${rawPath.path}` +
             (rawPath.path.length && pathSuffix.startsWith('*')
               ? `/${pathSuffix}`
               : pathSuffix)
