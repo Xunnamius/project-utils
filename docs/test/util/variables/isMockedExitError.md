@@ -4,7 +4,7 @@
 
 [@-xun/project](../../../README.md) / [test/util](../README.md) / isMockedExitError
 
-# Variable: isMockedExitError()
+# Variable: isMockedExitError
 
 > `const` **isMockedExitError**: (`parameter`) => `parameter is Error & { cause?: unknown; message: string; name: string; stack?: string }`
 

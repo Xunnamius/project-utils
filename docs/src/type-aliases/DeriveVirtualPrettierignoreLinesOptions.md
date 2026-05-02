@@ -14,7 +14,7 @@ Defined in: packages/fs/dist/packages/fs/src/system/derive-virtual-prettierignor
 
 ### includeUnknownPaths?
 
-> `optional` **includeUnknownPaths**: `boolean`
+> `optional` **includeUnknownPaths?**: `boolean`
 
 Defined in: packages/fs/dist/packages/fs/src/system/derive-virtual-prettierignore-lines.d.ts:18
 

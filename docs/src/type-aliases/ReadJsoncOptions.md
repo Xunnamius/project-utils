@@ -18,7 +18,7 @@ Defined in: packages/fs/dist/packages/fs/src/system/read-jsonc.d.ts:8
 
 ### ignoreNonExceptionErrors?
 
-> `optional` **ignoreNonExceptionErrors**: `boolean`
+> `optional` **ignoreNonExceptionErrors?**: `boolean`
 
 Defined in: packages/fs/dist/packages/fs/src/system/read-jsonc.d.ts:16
 
@@ -36,7 +36,7 @@ false
 
 ### parseOptions?
 
-> `optional` **parseOptions**: `Parameters`\<*typeof* [`parse`](../namespaces/JSONC/variables/parse.md)\>\[`2`\]
+> `optional` **parseOptions?**: `Parameters`\<*typeof* [`parse`](../namespaces/JSONC/variables/parse.md)\>\[`2`\]
 
 Defined in: packages/fs/dist/packages/fs/src/system/read-jsonc.d.ts:29
 
@@ -48,7 +48,7 @@ Defined in: packages/fs/dist/packages/fs/src/system/read-jsonc.d.ts:29
 
 ### try?
 
-> `optional` **try**: `boolean`
+> `optional` **try?**: `boolean`
 
 Defined in: packages/fs/dist/packages/fs/src/system/read-jsonc.d.ts:39
 

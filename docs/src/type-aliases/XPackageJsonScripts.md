@@ -16,7 +16,7 @@ Additional scripts available when working on an symbiote-powered project.
 
 ### build?
 
-> `optional` **build**: `string`
+> `optional` **build?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:273
 
@@ -35,7 +35,7 @@ This script is usually a reference to `npm run build:dist`.
 
 ### build:changelog?
 
-> `optional` **build:changelog**: `string`
+> `optional` **build:changelog?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:280
 
@@ -52,7 +52,7 @@ package's `CHANGELOG.md` file.
 
 ### build:dist?
 
-> `optional` **build:dist**: `string`
+> `optional` **build:dist?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:287
 
@@ -69,7 +69,7 @@ package's production-ready distributables.
 
 ### build:docs?
 
-> `optional` **build:docs**: `string`
+> `optional` **build:docs?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:294
 
@@ -86,7 +86,7 @@ package's documentation (typically found under `docs/`).
 
 ### build:topological?
 
-> `optional` **build:topological**: `string`
+> `optional` **build:topological?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:301
 
@@ -103,7 +103,7 @@ order, production-ready distributables across all packages in the project.
 
 ### clean?
 
-> `optional` **clean**: `string`
+> `optional` **clean?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:308
 
@@ -120,7 +120,7 @@ project or package that are ignored by git (with exceptions).
 
 ### deploy?
 
-> `optional` **deploy**: `string`
+> `optional` **deploy?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:316
 
@@ -138,7 +138,7 @@ distributables to the appropriate remote system(s).
 
 ### dev?
 
-> `optional` **dev**: `string`
+> `optional` **dev?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:425
 
@@ -149,7 +149,7 @@ local development environment.
 
 ### format?
 
-> `optional` **format**: `string`
+> `optional` **format?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:323
 
@@ -166,7 +166,7 @@ package.
 
 ### info?
 
-> `optional` **info**: `string`
+> `optional` **info?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:330
 
@@ -183,7 +183,7 @@ the current project or package.
 
 ### lint?
 
-> `optional` **lint**: `string`
+> `optional` **lint?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:339
 
@@ -202,7 +202,7 @@ This script is usually a reference to `npm run lint:package`.
 
 ### lint:package?
 
-> `optional` **lint:package**: `string`
+> `optional` **lint:package?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:348
 
@@ -221,7 +221,7 @@ files that comprise this package's build targets (see
 
 ### lint:packages?
 
-> `optional` **lint:packages**: `string`
+> `optional` **lint:packages?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:355
 
@@ -238,7 +238,7 @@ in the entire project.
 
 ### lint:project?
 
-> `optional` **lint:project**: `string`
+> `optional` **lint:project?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:362
 
@@ -255,7 +255,7 @@ metadata, such as its file structure and configuration settings.
 
 ### lint:topological?
 
-> `optional` **lint:topological**: `string`
+> `optional` **lint:topological?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:376
 
@@ -272,7 +272,7 @@ order, files belonging to packages across the project.
 
 ### list-tasks?
 
-> `optional` **list-tasks**: `string`
+> `optional` **list-tasks?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:369
 
@@ -289,7 +289,7 @@ available scripts in `package.json`.
 
 ### prepare?
 
-> `optional` **prepare**: `string`
+> `optional` **prepare?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:387
 
@@ -310,7 +310,7 @@ for more information.
 
 ### release?
 
-> `optional` **release**: `string`
+> `optional` **release?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:394
 
@@ -327,7 +327,7 @@ next version of a package.
 
 ### release:topological?
 
-> `optional` **release:topological**: `string`
+> `optional` **release:topological?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:401
 
@@ -344,7 +344,7 @@ topological order, the next version of each package in the project.
 
 ### renovate?
 
-> `optional` **renovate**: `string`
+> `optional` **renovate?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:410
 
@@ -363,7 +363,7 @@ goal of bringing the project up to date with latest best practices.
 
 ### start?
 
-> `optional` **start**: `string`
+> `optional` **start?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:420
 
@@ -383,7 +383,7 @@ for more information.
 
 ### test?
 
-> `optional` **test**: `string`
+> `optional` **test?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:436
 
@@ -404,7 +404,7 @@ information.
 
 ### test:package:all?
 
-> `optional` **test:package:all**: `string`
+> `optional` **test:package:all?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:445
 
@@ -423,7 +423,7 @@ transitive dependencies).
 
 ### test:package:e2e?
 
-> `optional` **test:package:e2e**: `string`
+> `optional` **test:package:e2e?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:454
 
@@ -442,7 +442,7 @@ transitive dependencies).
 
 ### test:package:integration?
 
-> `optional` **test:package:integration**: `string`
+> `optional` **test:package:integration?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:463
 
@@ -461,7 +461,7 @@ transitive dependencies).
 
 ### test:package:unit?
 
-> `optional` **test:package:unit**: `string`
+> `optional` **test:package:unit?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:472
 
@@ -480,7 +480,7 @@ transitive dependencies).
 
 ### test:packages:all?
 
-> `optional` **test:packages:all**: `string`
+> `optional` **test:packages:all?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:479
 
@@ -497,7 +497,7 @@ tests across the entire project.
 
 ### test:topological?
 
-> `optional` **test:topological**: `string`
+> `optional` **test:topological?**: `string`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:486
 

@@ -4,7 +4,7 @@
 
 [@-xun/project](../../../../README.md) / [src](../../../README.md) / [JSONC](../README.md) / findNodeAtLocation
 
-# Variable: findNodeAtLocation()
+# Variable: findNodeAtLocation
 
 > `const` **findNodeAtLocation**: (`root`, `path`) => [`Node`](../interfaces/Node.md) \| `undefined`
 

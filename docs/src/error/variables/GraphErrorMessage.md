@@ -14,7 +14,7 @@ A collection of possible error and warning messages.
 
 ## Type Declaration
 
-### DeriverAsyncConfigurationConflict()
+### DeriverAsyncConfigurationConflict
 
 > **DeriverAsyncConfigurationConflict**: () => `string`
 
@@ -144,7 +144,7 @@ A collection of possible error and warning messages.
 
 ##### invalids
 
-`string` | `RegExp`
+`string` \| `RegExp`
 
 #### Returns
 
@@ -166,7 +166,7 @@ A collection of possible error and warning messages.
 
 ##### invalids
 
-`string` | `RegExp`
+`string` \| `RegExp`
 
 #### Returns
 
@@ -368,7 +368,7 @@ A collection of possible error and warning messages.
 
 ##### replacement
 
-`undefined` | `string`
+`string` \| `undefined`
 
 ##### path?
 

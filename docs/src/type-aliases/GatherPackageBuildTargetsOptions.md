@@ -28,7 +28,7 @@ If `true`, multiversal import support will be enabled.
 
 ### excludeInternalsPatterns?
 
-> `optional` **excludeInternalsPatterns**: `string`[]
+> `optional` **excludeInternalsPatterns?**: `string`[]
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/gather-package-build-targets.d.ts:64
 
@@ -47,7 +47,7 @@ root.
 
 ### includeExternalsPatterns?
 
-> `optional` **includeExternalsPatterns**: `string`[]
+> `optional` **includeExternalsPatterns?**: `string`[]
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/gather-package-build-targets.d.ts:72
 

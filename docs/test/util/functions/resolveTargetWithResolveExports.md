@@ -8,7 +8,7 @@
 
 > **resolveTargetWithResolveExports**(`__namedParameters`): [`ResolvedSummary`](../type-aliases/ResolvedSummary.md) & `object`
 
-Defined in: [test/util.ts:133](https://github.com/Xunnamius/projector/blob/469027314f28fed87663b0b59124d3eaace7606d/test/util.ts#L133)
+Defined in: [test/util.ts:133](https://github.com/Xunnamius/projector/blob/68e4fc6f2a243c194fa5573f168824fede094394/test/util.ts#L133)
 
 Resolves a subpath to a target using the resolve.exports library. This
 function is used to ensure project-utils's resolver functions return results

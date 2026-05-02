@@ -4,7 +4,7 @@
 
 [@-xun/project](../../../../README.md) / [src](../../../README.md) / [JSONC](../README.md) / parse
 
-# Variable: parse()
+# Variable: parse
 
 > `const` **parse**: (`text`, `errors?`, `options?`) => `any`
 

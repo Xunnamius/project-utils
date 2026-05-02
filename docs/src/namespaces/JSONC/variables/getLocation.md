@@ -4,7 +4,7 @@
 
 [@-xun/project](../../../../README.md) / [src](../../../README.md) / [JSONC](../README.md) / getLocation
 
-# Variable: getLocation()
+# Variable: getLocation
 
 > `const` **getLocation**: (`text`, `position`) => [`Location`](../interfaces/Location.md)
 

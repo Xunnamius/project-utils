@@ -4,7 +4,7 @@
 
 [@-xun/project](../../../../README.md) / [src](../../../README.md) / [deriveVirtualGitignoreLines](../README.md) / sync
 
-# Variable: sync()
+# Variable: sync
 
 > `const` **sync**: (`projectRoot`, `options`) => `Awaited`\<`ReturnType`\<*typeof* [`deriveVirtualGitignoreLines`](../../../functions/deriveVirtualGitignoreLines.md)\>\>
 

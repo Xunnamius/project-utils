@@ -4,7 +4,7 @@
 
 [@-xun/project](../../../../README.md) / [src](../../../README.md) / [JSONC](../README.md) / visit
 
-# Variable: visit()
+# Variable: visit
 
 > `const` **visit**: (`text`, `visitor`, `options?`) => `any`
 

@@ -18,7 +18,7 @@ Defined in: packages/fs/dist/packages/fs/src/system/read-xpackage-json-at-root.d
 
 ### try?
 
-> `optional` **try**: `boolean`
+> `optional` **try?**: `boolean`
 
 Defined in: packages/fs/dist/packages/fs/src/system/read-xpackage-json-at-root.d.ts:24
 

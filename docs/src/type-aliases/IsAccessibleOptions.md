@@ -18,7 +18,7 @@ Defined in: packages/fs/dist/packages/fs/src/system/is-accessible.d.ts:9
 
 ### fsConstant?
 
-> `optional` **fsConstant**: `number`
+> `optional` **fsConstant?**: `number`
 
 Defined in: packages/fs/dist/packages/fs/src/system/is-accessible.d.ts:15
 

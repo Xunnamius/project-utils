@@ -4,7 +4,7 @@
 
 [@-xun/project](../../../README.md) / [test/util](../README.md) / ExpectExceptionsWithMatchingErrorsFunction
 
-# Type Alias: ExpectExceptionsWithMatchingErrorsFunction()\<Params\>
+# Type Alias: ExpectExceptionsWithMatchingErrorsFunction\<Params\>
 
 > **ExpectExceptionsWithMatchingErrorsFunction**\<`Params`\> = (`params`, `index`) => `Promisable`\<`unknown`\>
 

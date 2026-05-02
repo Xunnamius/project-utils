@@ -6,7 +6,7 @@
 
 # Variable: prefixAssetImport
 
-> `const` **prefixAssetImport**: `"<❗ASSET>"` = `"<\u2757ASSET>"`
+> `const` **prefixAssetImport**: `"<❗ASSET>"` = "\<\u2757ASSET\>"
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/gather-package-build-targets.d.ts:7
 

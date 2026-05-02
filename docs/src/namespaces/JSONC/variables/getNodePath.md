@@ -4,7 +4,7 @@
 
 [@-xun/project](../../../../README.md) / [src](../../../README.md) / [JSONC](../README.md) / getNodePath
 
-# Variable: getNodePath()
+# Variable: getNodePath
 
 > `const` **getNodePath**: (`node`) => [`JSONPath`](../type-aliases/JSONPath.md)
 

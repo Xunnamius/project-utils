@@ -47,6 +47,8 @@ less-specific or catch-all open-suffix aliases. Entries of the same
 
 ### outputTarget?
 
+`"for-config"` \| `"for-import-ordering"` \| `"for-import-hinting"`
+
 This controls the order of the elements of this function's output. The
 options are:
 
@@ -58,8 +60,6 @@ options are:
 powered by eslint. `"for-import-hinting"` ensures that aliases are ordered
 in such a way that TypeScript-based intellisense will return more prudent
 results.
-
-`"for-config"` | `"for-import-ordering"` | `"for-import-hinting"`
 
 ## Returns
 

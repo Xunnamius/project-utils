@@ -4,7 +4,7 @@
 
 [@-xun/project](../../../../README.md) / [src](../../../README.md) / [JSONC](../README.md) / stripComments
 
-# Variable: stripComments()
+# Variable: stripComments
 
 > `const` **stripComments**: (`text`, `replaceCh?`) => `string`
 

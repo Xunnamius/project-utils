@@ -18,7 +18,7 @@ Defined in: packages/fs/dist/packages/fs/src/system/extract-examples-from-docume
 
 ### asRegExp?
 
-> `optional` **asRegExp**: `boolean`
+> `optional` **asRegExp?**: `boolean`
 
 Defined in: packages/fs/dist/packages/fs/src/system/extract-examples-from-document.d.ts:20
 

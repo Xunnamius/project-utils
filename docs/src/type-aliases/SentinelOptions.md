@@ -16,7 +16,7 @@ The options accepted by several of the `isX` sentinel functions.
 
 ### generic?
 
-> `optional` **generic**: `boolean`
+> `optional` **generic?**: `boolean`
 
 Defined in: packages/types/dist/packages/types/src/index.d.ts:551
 

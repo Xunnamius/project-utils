@@ -14,7 +14,7 @@ Defined in: packages/graph/dist/packages/graph/src/analysis/gather-project-files
 
 ### ignoreUnsupportedFeatures?
 
-> `optional` **ignoreUnsupportedFeatures**: `boolean`
+> `optional` **ignoreUnsupportedFeatures?**: `boolean`
 
 Will not error if an interesting `package.json` file uses unsupported
 features.

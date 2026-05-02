@@ -18,7 +18,7 @@ Defined in: packages/fs/dist/packages/fs/src/system/read-json.d.ts:6
 
 ### try?
 
-> `optional` **try**: `boolean`
+> `optional` **try?**: `boolean`
 
 Defined in: packages/fs/dist/packages/fs/src/system/read-json.d.ts:25
 

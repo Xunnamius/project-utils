@@ -6,7 +6,7 @@
 
 # Function: mapRawSpecifierToRawAliasMapping()
 
-> **mapRawSpecifierToRawAliasMapping**(`rawAliasMappings`, `specifier`): `undefined` \| [`RawAliasMapping`](../type-aliases/RawAliasMapping.md)
+> **mapRawSpecifierToRawAliasMapping**(`rawAliasMappings`, `specifier`): [`RawAliasMapping`](../type-aliases/RawAliasMapping.md) \| `undefined`
 
 Defined in: packages/graph/dist/packages/graph/src/alias.d.ts:298
 
@@ -29,4 +29,4 @@ readonly [`RawAliasMapping`](../type-aliases/RawAliasMapping.md)[]
 
 ## Returns
 
-`undefined` \| [`RawAliasMapping`](../type-aliases/RawAliasMapping.md)
+[`RawAliasMapping`](../type-aliases/RawAliasMapping.md) \| `undefined`

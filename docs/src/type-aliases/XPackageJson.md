@@ -18,7 +18,7 @@ exist.
 
 ### bin?
 
-> `optional` **bin**: `string` \| `Record`\<`string`, `string`\>
+> `optional` **bin?**: `string` \| `Record`\<`string`, `string`\>
 
 ### name
 
@@ -26,7 +26,7 @@ exist.
 
 ### scripts?
 
-> `optional` **scripts**: `Scripts`
+> `optional` **scripts?**: `Scripts`
 
 ## Type Parameters
 

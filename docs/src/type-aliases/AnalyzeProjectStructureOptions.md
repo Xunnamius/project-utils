@@ -18,7 +18,7 @@ Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-stru
 
 ### allowUnnamedPackages?
 
-> `optional` **allowUnnamedPackages**: `boolean`
+> `optional` **allowUnnamedPackages?**: `boolean`
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-structure.d.ts:35
 
@@ -50,7 +50,7 @@ false
 
 ### cwd?
 
-> `optional` **cwd**: `AbsolutePath`
+> `optional` **cwd?**: `AbsolutePath`
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/analyze-project-structure.d.ts:13
 

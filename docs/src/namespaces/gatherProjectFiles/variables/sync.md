@@ -4,7 +4,7 @@
 
 [@-xun/project](../../../../README.md) / [src](../../../README.md) / [gatherProjectFiles](../README.md) / sync
 
-# Variable: sync()
+# Variable: sync
 
 > `const` **sync**: (`projectMetadata`, `options`) => `Awaited`\<`ReturnType`\<*typeof* [`gatherProjectFiles`](../../../functions/gatherProjectFiles.md)\>\>
 

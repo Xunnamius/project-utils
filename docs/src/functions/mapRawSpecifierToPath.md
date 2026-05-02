@@ -6,7 +6,7 @@
 
 # Function: mapRawSpecifierToPath()
 
-> **mapRawSpecifierToPath**(`rawAliasMappings`, `specifier`, `__namedParameters?`): `undefined` \| `RelativePath`
+> **mapRawSpecifierToPath**(`rawAliasMappings`, `specifier`, `__namedParameters?`): `RelativePath` \| `undefined`
 
 Defined in: packages/graph/dist/packages/graph/src/alias.d.ts:309
 
@@ -47,4 +47,4 @@ a "." character.
 
 ## Returns
 
-`undefined` \| `RelativePath`
+`RelativePath` \| `undefined`

@@ -22,9 +22,9 @@ The input text
 
 ### range
 
-The range to format or `undefined` to format the full content
+[`Range`](../interfaces/Range.md) \| `undefined`
 
-`undefined` | [`Range`](../interfaces/Range.md)
+The range to format or `undefined` to format the full content
 
 ### options
 

@@ -18,7 +18,7 @@ Defined in: packages/graph/dist/packages/graph/src/analysis/gather-package-files
 
 ### ignore?
 
-> `optional` **ignore**: (`string` \| `RelativePath`)[]
+> `optional` **ignore?**: (`string` \| `RelativePath`)[]
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/gather-package-files.d.ts:35
 
@@ -35,7 +35,7 @@ un-ignore files.
 
 ### skipGitIgnored?
 
-> `optional` **skipGitIgnored**: `boolean`
+> `optional` **skipGitIgnored?**: `boolean`
 
 Defined in: packages/graph/dist/packages/graph/src/analysis/gather-package-files.d.ts:24
 

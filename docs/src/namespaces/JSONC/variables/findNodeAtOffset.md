@@ -4,7 +4,7 @@
 
 [@-xun/project](../../../../README.md) / [src](../../../README.md) / [JSONC](../README.md) / findNodeAtOffset
 
-# Variable: findNodeAtOffset()
+# Variable: findNodeAtOffset
 
 > `const` **findNodeAtOffset**: (`root`, `offset`, `includeRightBound?`) => [`Node`](../interfaces/Node.md) \| `undefined`
 

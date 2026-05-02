@@ -20,9 +20,9 @@ current `JSONPath` within the document.
 
 ## Properties
 
-### onArrayBegin()?
+### onArrayBegin?
 
-> `optional` **onArrayBegin**: (`offset`, `length`, `startLine`, `startCharacter`, `pathSupplier`) => `boolean` \| `void`
+> `optional` **onArrayBegin?**: (`offset`, `length`, `startLine`, `startCharacter`, `pathSupplier`) => `boolean` \| `void`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:215
 
@@ -57,9 +57,9 @@ When `false` is returned, the array items will not be visited.
 
 ***
 
-### onArrayEnd()?
+### onArrayEnd?
 
-> `optional` **onArrayEnd**: (`offset`, `length`, `startLine`, `startCharacter`) => `void`
+> `optional` **onArrayEnd?**: (`offset`, `length`, `startLine`, `startCharacter`) => `void`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:219
 
@@ -89,9 +89,9 @@ Invoked when a closing bracket is encountered. The offset and length represent t
 
 ***
 
-### onComment()?
+### onComment?
 
-> `optional` **onComment**: (`offset`, `length`, `startLine`, `startCharacter`) => `void`
+> `optional` **onComment?**: (`offset`, `length`, `startLine`, `startCharacter`) => `void`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:231
 
@@ -121,9 +121,9 @@ When comments are allowed, invoked when a line or block comment is encountered. 
 
 ***
 
-### onError()?
+### onError?
 
-> `optional` **onError**: (`error`, `offset`, `length`, `startLine`, `startCharacter`) => `void`
+> `optional` **onError?**: (`error`, `offset`, `length`, `startLine`, `startCharacter`) => `void`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:235
 
@@ -157,9 +157,9 @@ Invoked on an error.
 
 ***
 
-### onLiteralValue()?
+### onLiteralValue?
 
-> `optional` **onLiteralValue**: (`value`, `offset`, `length`, `startLine`, `startCharacter`, `pathSupplier`) => `void`
+> `optional` **onLiteralValue?**: (`value`, `offset`, `length`, `startLine`, `startCharacter`, `pathSupplier`) => `void`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:223
 
@@ -197,9 +197,9 @@ Invoked when a literal value is encountered. The offset and length represent the
 
 ***
 
-### onObjectBegin()?
+### onObjectBegin?
 
-> `optional` **onObjectBegin**: (`offset`, `length`, `startLine`, `startCharacter`, `pathSupplier`) => `boolean` \| `void`
+> `optional` **onObjectBegin?**: (`offset`, `length`, `startLine`, `startCharacter`, `pathSupplier`) => `boolean` \| `void`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:200
 
@@ -234,9 +234,9 @@ When `false` is returned, the object properties will not be visited.
 
 ***
 
-### onObjectEnd()?
+### onObjectEnd?
 
-> `optional` **onObjectEnd**: (`offset`, `length`, `startLine`, `startCharacter`) => `void`
+> `optional` **onObjectEnd?**: (`offset`, `length`, `startLine`, `startCharacter`) => `void`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:210
 
@@ -266,9 +266,9 @@ Invoked when a closing brace is encountered and an object is completed. The offs
 
 ***
 
-### onObjectProperty()?
+### onObjectProperty?
 
-> `optional` **onObjectProperty**: (`property`, `offset`, `length`, `startLine`, `startCharacter`, `pathSupplier`) => `void`
+> `optional` **onObjectProperty?**: (`property`, `offset`, `length`, `startLine`, `startCharacter`, `pathSupplier`) => `void`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:206
 
@@ -308,9 +308,9 @@ property name yet.
 
 ***
 
-### onSeparator()?
+### onSeparator?
 
-> `optional` **onSeparator**: (`character`, `offset`, `length`, `startLine`, `startCharacter`) => `void`
+> `optional` **onSeparator?**: (`character`, `offset`, `length`, `startLine`, `startCharacter`) => `void`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:227
 

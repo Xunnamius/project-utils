@@ -14,7 +14,7 @@ Options used by [`modify`](../functions/modify.md) when computing the modificati
 
 ### formattingOptions?
 
-> `optional` **formattingOptions**: [`FormattingOptions`](FormattingOptions.md)
+> `optional` **formattingOptions?**: [`FormattingOptions`](FormattingOptions.md)
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:320
 
@@ -22,9 +22,9 @@ Formatting options. If undefined, the newly inserted code will be inserted unfor
 
 ***
 
-### getInsertionIndex()?
+### getInsertionIndex?
 
-> `optional` **getInsertionIndex**: (`properties`) => `number`
+> `optional` **getInsertionIndex?**: (`properties`) => `number`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:329
 
@@ -44,7 +44,7 @@ Optional function to define the insertion index given an existing list of proper
 
 ### isArrayInsertion?
 
-> `optional` **isArrayInsertion**: `boolean`
+> `optional` **isArrayInsertion?**: `boolean`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:325
 
