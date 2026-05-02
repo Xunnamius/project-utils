@@ -4,7 +4,7 @@
 
 [@-xun/project-fs](../../../../README.md) / [index](../../../README.md) / [JSONC](../README.md) / getNodeValue
 
-# Variable: getNodeValue()
+# Variable: getNodeValue
 
 > `const` **getNodeValue**: (`node`) => `any`
 

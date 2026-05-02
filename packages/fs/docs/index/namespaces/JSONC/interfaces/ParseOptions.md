@@ -12,7 +12,7 @@ Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:179
 
 ### allowEmptyContent?
 
-> `optional` **allowEmptyContent**: `boolean`
+> `optional` **allowEmptyContent?**: `boolean`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:182
 
@@ -20,7 +20,7 @@ Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:182
 
 ### allowTrailingComma?
 
-> `optional` **allowTrailingComma**: `boolean`
+> `optional` **allowTrailingComma?**: `boolean`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:181
 
@@ -28,6 +28,6 @@ Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:181
 
 ### disallowComments?
 
-> `optional` **disallowComments**: `boolean`
+> `optional` **disallowComments?**: `boolean`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:180

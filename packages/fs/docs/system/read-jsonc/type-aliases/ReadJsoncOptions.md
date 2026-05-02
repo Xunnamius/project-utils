@@ -8,7 +8,7 @@
 
 > **ReadJsoncOptions** = `object`
 
-Defined in: [packages/fs/src/system/read-jsonc.ts:24](https://github.com/Xunnamius/projector/blob/2bfbc9e75e2a22c1cf17e80270873165bc38b0c9/packages/fs/src/system/read-jsonc.ts#L24)
+Defined in: [packages/fs/src/system/read-jsonc.ts:24](https://github.com/Xunnamius/projector/blob/7a4ee28c8d16b3a6c8cf249bb2ac2cbc32692481/packages/fs/src/system/read-jsonc.ts#L24)
 
 ## See
 
@@ -18,9 +18,9 @@ Defined in: [packages/fs/src/system/read-jsonc.ts:24](https://github.com/Xunnami
 
 ### ignoreNonExceptionErrors?
 
-> `optional` **ignoreNonExceptionErrors**: `boolean`
+> `optional` **ignoreNonExceptionErrors?**: `boolean`
 
-Defined in: [packages/fs/src/system/read-jsonc.ts:32](https://github.com/Xunnamius/projector/blob/2bfbc9e75e2a22c1cf17e80270873165bc38b0c9/packages/fs/src/system/read-jsonc.ts#L32)
+Defined in: [packages/fs/src/system/read-jsonc.ts:32](https://github.com/Xunnamius/projector/blob/7a4ee28c8d16b3a6c8cf249bb2ac2cbc32692481/packages/fs/src/system/read-jsonc.ts#L32)
 
 If `true`, so long as the `parse` function does not throw, this function
 will return the result. Note that this could result in an incomplete or
@@ -36,9 +36,9 @@ false
 
 ### parseOptions?
 
-> `optional` **parseOptions**: `Parameters`\<*typeof* [`parse`](../../../index/namespaces/JSONC/variables/parse.md)\>\[`2`\]
+> `optional` **parseOptions?**: `Parameters`\<*typeof* [`parse`](../../../index/namespaces/JSONC/variables/parse.md)\>\[`2`\]
 
-Defined in: [packages/fs/src/system/read-jsonc.ts:45](https://github.com/Xunnamius/projector/blob/2bfbc9e75e2a22c1cf17e80270873165bc38b0c9/packages/fs/src/system/read-jsonc.ts#L45)
+Defined in: [packages/fs/src/system/read-jsonc.ts:45](https://github.com/Xunnamius/projector/blob/7a4ee28c8d16b3a6c8cf249bb2ac2cbc32692481/packages/fs/src/system/read-jsonc.ts#L45)
 
 #### See
 
@@ -48,9 +48,9 @@ Defined in: [packages/fs/src/system/read-jsonc.ts:45](https://github.com/Xunnami
 
 ### try?
 
-> `optional` **try**: `boolean`
+> `optional` **try?**: `boolean`
 
-Defined in: [packages/fs/src/system/read-jsonc.ts:55](https://github.com/Xunnamius/projector/blob/2bfbc9e75e2a22c1cf17e80270873165bc38b0c9/packages/fs/src/system/read-jsonc.ts#L55)
+Defined in: [packages/fs/src/system/read-jsonc.ts:55](https://github.com/Xunnamius/projector/blob/7a4ee28c8d16b3a6c8cf249bb2ac2cbc32692481/packages/fs/src/system/read-jsonc.ts#L55)
 
 If `true`, an attempt will be made to read in and parse the JSON file. If
 it fails (i.e. an error is thrown), `{}` is returned and no error is
@@ -70,7 +70,7 @@ false
 
 > **useCached**: `boolean`
 
-Defined in: [packages/fs/src/system/read-jsonc.ts:41](https://github.com/Xunnamius/projector/blob/2bfbc9e75e2a22c1cf17e80270873165bc38b0c9/packages/fs/src/system/read-jsonc.ts#L41)
+Defined in: [packages/fs/src/system/read-jsonc.ts:41](https://github.com/Xunnamius/projector/blob/7a4ee28c8d16b3a6c8cf249bb2ac2cbc32692481/packages/fs/src/system/read-jsonc.ts#L41)
 
 Use the internal cached result from a previous run, if available.
 

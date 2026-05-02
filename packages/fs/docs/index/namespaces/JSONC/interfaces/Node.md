@@ -12,7 +12,7 @@ Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:143
 
 ### children?
 
-> `readonly` `optional` **children**: `Node`[]
+> `readonly` `optional` **children?**: `Node`[]
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:150
 
@@ -20,7 +20,7 @@ Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:150
 
 ### colonOffset?
 
-> `readonly` `optional` **colonOffset**: `number`
+> `readonly` `optional` **colonOffset?**: `number`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:148
 
@@ -44,7 +44,7 @@ Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:146
 
 ### parent?
 
-> `readonly` `optional` **parent**: `Node`
+> `readonly` `optional` **parent?**: `Node`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:149
 
@@ -60,6 +60,6 @@ Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:144
 
 ### value?
 
-> `readonly` `optional` **value**: `any`
+> `readonly` `optional` **value?**: `any`
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:145

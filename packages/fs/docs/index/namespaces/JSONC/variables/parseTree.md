@@ -4,7 +4,7 @@
 
 [@-xun/project-fs](../../../../README.md) / [index](../../../README.md) / [JSONC](../README.md) / parseTree
 
-# Variable: parseTree()
+# Variable: parseTree
 
 > `const` **parseTree**: (`text`, `errors?`, `options?`) => [`Node`](../interfaces/Node.md) \| `undefined`
 

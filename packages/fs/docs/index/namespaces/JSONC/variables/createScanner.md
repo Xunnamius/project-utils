@@ -4,7 +4,7 @@
 
 [@-xun/project-fs](../../../../README.md) / [index](../../../README.md) / [JSONC](../README.md) / createScanner
 
-# Variable: createScanner()
+# Variable: createScanner
 
 > `const` **createScanner**: (`text`, `ignoreTrivia?`) => [`JSONScanner`](../interfaces/JSONScanner.md)
 

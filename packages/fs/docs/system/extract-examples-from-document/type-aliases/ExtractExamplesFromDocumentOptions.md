@@ -8,7 +8,7 @@
 
 > **ExtractExamplesFromDocumentOptions** = `object`
 
-Defined in: [packages/fs/src/system/extract-examples-from-document.ts:21](https://github.com/Xunnamius/projector/blob/2bfbc9e75e2a22c1cf17e80270873165bc38b0c9/packages/fs/src/system/extract-examples-from-document.ts#L21)
+Defined in: [packages/fs/src/system/extract-examples-from-document.ts:21](https://github.com/Xunnamius/projector/blob/7a4ee28c8d16b3a6c8cf249bb2ac2cbc32692481/packages/fs/src/system/extract-examples-from-document.ts#L21)
 
 ## See
 
@@ -18,9 +18,9 @@ Defined in: [packages/fs/src/system/extract-examples-from-document.ts:21](https:
 
 ### asRegExp?
 
-> `optional` **asRegExp**: `boolean`
+> `optional` **asRegExp?**: `boolean`
 
-Defined in: [packages/fs/src/system/extract-examples-from-document.ts:37](https://github.com/Xunnamius/projector/blob/2bfbc9e75e2a22c1cf17e80270873165bc38b0c9/packages/fs/src/system/extract-examples-from-document.ts#L37)
+Defined in: [packages/fs/src/system/extract-examples-from-document.ts:37](https://github.com/Xunnamius/projector/blob/7a4ee28c8d16b3a6c8cf249bb2ac2cbc32692481/packages/fs/src/system/extract-examples-from-document.ts#L37)
 
 If `true`, the value returned by `extractExamplesFromDocument` will take
 the form `Map<string, RegExp>` where each example region is mapped to a
@@ -46,7 +46,7 @@ false
 
 > **useCached**: `boolean`
 
-Defined in: [packages/fs/src/system/extract-examples-from-document.ts:46](https://github.com/Xunnamius/projector/blob/2bfbc9e75e2a22c1cf17e80270873165bc38b0c9/packages/fs/src/system/extract-examples-from-document.ts#L46)
+Defined in: [packages/fs/src/system/extract-examples-from-document.ts:46](https://github.com/Xunnamius/projector/blob/7a4ee28c8d16b3a6c8cf249bb2ac2cbc32692481/packages/fs/src/system/extract-examples-from-document.ts#L46)
 
 Use the internal cached result from a previous run, if available.
 

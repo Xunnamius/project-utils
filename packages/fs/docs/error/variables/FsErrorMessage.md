@@ -8,7 +8,7 @@
 
 > `const` **FsErrorMessage**: `object`
 
-Defined in: [packages/fs/src/error.ts:9](https://github.com/Xunnamius/projector/blob/2bfbc9e75e2a22c1cf17e80270873165bc38b0c9/packages/fs/src/error.ts#L9)
+Defined in: [packages/fs/src/error.ts:9](https://github.com/Xunnamius/projector/blob/7a4ee28c8d16b3a6c8cf249bb2ac2cbc32692481/packages/fs/src/error.ts#L9)
 
 A collection of possible error and warning messages.
 
@@ -100,7 +100,7 @@ A collection of possible error and warning messages.
 
 ### NotParsable()
 
-> **NotParsable**(`path`, `type`): `string`
+> **NotParsable**(`path`, `type?`): `string`
 
 #### Parameters
 
@@ -108,7 +108,7 @@ A collection of possible error and warning messages.
 
 `string`
 
-##### type
+##### type?
 
 `string` = `'json'`
 

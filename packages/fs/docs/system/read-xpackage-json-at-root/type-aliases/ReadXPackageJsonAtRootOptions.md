@@ -8,7 +8,7 @@
 
 > **ReadXPackageJsonAtRootOptions** = `object`
 
-Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:23](https://github.com/Xunnamius/projector/blob/2bfbc9e75e2a22c1cf17e80270873165bc38b0c9/packages/fs/src/system/read-xpackage-json-at-root.ts#L23)
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:23](https://github.com/Xunnamius/projector/blob/7a4ee28c8d16b3a6c8cf249bb2ac2cbc32692481/packages/fs/src/system/read-xpackage-json-at-root.ts#L23)
 
 ## See
 
@@ -18,9 +18,9 @@ Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:23](https://gi
 
 ### try?
 
-> `optional` **try**: `boolean`
+> `optional` **try?**: `boolean`
 
-Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:40](https://github.com/Xunnamius/projector/blob/2bfbc9e75e2a22c1cf17e80270873165bc38b0c9/packages/fs/src/system/read-xpackage-json-at-root.ts#L40)
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:40](https://github.com/Xunnamius/projector/blob/7a4ee28c8d16b3a6c8cf249bb2ac2cbc32692481/packages/fs/src/system/read-xpackage-json-at-root.ts#L40)
 
 If `true`, an attempt will be made to read in and parse the JSON file. If
 it fails (i.e. an error is thrown), `{}` is returned and no error is
@@ -40,7 +40,7 @@ false
 
 > **useCached**: `boolean`
 
-Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:30](https://github.com/Xunnamius/projector/blob/2bfbc9e75e2a22c1cf17e80270873165bc38b0c9/packages/fs/src/system/read-xpackage-json-at-root.ts#L30)
+Defined in: [packages/fs/src/system/read-xpackage-json-at-root.ts:30](https://github.com/Xunnamius/projector/blob/7a4ee28c8d16b3a6c8cf249bb2ac2cbc32692481/packages/fs/src/system/read-xpackage-json-at-root.ts#L30)
 
 Use the internal cached result from a previous run, if available.
 

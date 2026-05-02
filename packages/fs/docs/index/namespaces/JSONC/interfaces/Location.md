@@ -20,7 +20,7 @@ If set, the location's offset is at a property key.
 
 ***
 
-### matches()
+### matches
 
 > **matches**: (`patterns`) => `boolean`
 
@@ -55,7 +55,7 @@ representing an object property or numbers for array indices.
 
 ### previousNode?
 
-> `optional` **previousNode**: [`Node`](Node.md)
+> `optional` **previousNode?**: [`Node`](Node.md)
 
 Defined in: node\_modules/jsonc-parser/lib/umd/main.d.ts:162
 

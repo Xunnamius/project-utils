@@ -4,11 +4,11 @@
 
 [@-xun/project-fs](../../../../../README.md) / [system/read-jsonc](../../../README.md) / [readJsonc](../README.md) / sync
 
-# Variable: sync()
+# Variable: sync
 
 > `const` **sync**: \{\<`T`\>(`path`, `options`): `T`; \<`T`\>(`path`, `options`): `EmptyObject` \| `T`; \} = `readJsoncSync`
 
-Defined in: [packages/fs/src/system/read-jsonc.ts:215](https://github.com/Xunnamius/projector/blob/2bfbc9e75e2a22c1cf17e80270873165bc38b0c9/packages/fs/src/system/read-jsonc.ts#L215)
+Defined in: [packages/fs/src/system/read-jsonc.ts:215](https://github.com/Xunnamius/projector/blob/7a4ee28c8d16b3a6c8cf249bb2ac2cbc32692481/packages/fs/src/system/read-jsonc.ts#L215)
 
 ## Call Signature
 
