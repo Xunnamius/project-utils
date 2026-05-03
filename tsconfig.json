@@ -8,7 +8,6 @@
     // ? Due to paths, the effect of this prop is limited (often ignored)
     "allowArbitraryExtensions": true,
     "alwaysStrict": true,
-    "baseUrl": ".",
     // ? Does too much; opt-in (provided by allowJs) is better
     "checkJs": false,
     "jsx": "preserve",
@@ -42,56 +41,60 @@
     // ! directly, consider regenerating aliases across the entire project with:
     // ! `npx symbiote project renovate --regenerate-assets --assets-preset ...`
     "paths": {
-      "universe": ["src/index.ts"],
-      "universe:*": ["src/*"],
+      "universe": ["./src/index.ts"],
+      "universe:*": ["./src/*"],
       "universe+bidirectional-resolve": [
-        "packages/bidirectional-resolve/src/index.ts"
+        "./packages/bidirectional-resolve/src/index.ts"
       ],
-      "universe+common": ["packages/common/src/index.ts"],
-      "universe+fs": ["packages/fs/src/index.ts"],
-      "universe+graph": ["packages/graph/src/index.ts"],
-      "universe+types": ["packages/types/src/index.ts"],
+      "universe+common": ["./packages/common/src/index.ts"],
+      "universe+fs": ["./packages/fs/src/index.ts"],
+      "universe+graph": ["./packages/graph/src/index.ts"],
+      "universe+types": ["./packages/types/src/index.ts"],
       "universe+bidirectional-resolve:*": [
-        "packages/bidirectional-resolve/src/*"
+        "./packages/bidirectional-resolve/src/*"
       ],
-      "universe+common:*": ["packages/common/src/*"],
-      "universe+fs:*": ["packages/fs/src/*"],
-      "universe+graph:*": ["packages/graph/src/*"],
-      "universe+types:*": ["packages/types/src/*"],
+      "universe+common:*": ["./packages/common/src/*"],
+      "universe+fs:*": ["./packages/fs/src/*"],
+      "universe+graph:*": ["./packages/graph/src/*"],
+      "universe+types:*": ["./packages/types/src/*"],
       "multiverse+bidirectional-resolve": [
-        "packages/bidirectional-resolve/src/index.ts"
+        "./packages/bidirectional-resolve/src/index.ts"
       ],
-      "multiverse+common": ["packages/common/src/index.ts"],
-      "multiverse+fs": ["packages/fs/src/index.ts"],
-      "multiverse+graph": ["packages/graph/src/index.ts"],
-      "multiverse+types": ["packages/types/src/index.ts"],
+      "multiverse+common": ["./packages/common/src/index.ts"],
+      "multiverse+fs": ["./packages/fs/src/index.ts"],
+      "multiverse+graph": ["./packages/graph/src/index.ts"],
+      "multiverse+types": ["./packages/types/src/index.ts"],
       "multiverse+bidirectional-resolve:*": [
-        "packages/bidirectional-resolve/src/*"
+        "./packages/bidirectional-resolve/src/*"
       ],
-      "multiverse+common:*": ["packages/common/src/*"],
-      "multiverse+fs:*": ["packages/fs/src/*"],
-      "multiverse+graph:*": ["packages/graph/src/*"],
-      "multiverse+types:*": ["packages/types/src/*"],
-      "testverse:*": ["test/*"],
+      "multiverse+common:*": ["./packages/common/src/*"],
+      "multiverse+fs:*": ["./packages/fs/src/*"],
+      "multiverse+graph:*": ["./packages/graph/src/*"],
+      "multiverse+types:*": ["./packages/types/src/*"],
+      "testverse:*": ["./test/*"],
       "testverse+bidirectional-resolve:*": [
-        "packages/bidirectional-resolve/test/*"
+        "./packages/bidirectional-resolve/test/*"
       ],
-      "testverse+common:*": ["packages/common/test/*"],
-      "testverse+fs:*": ["packages/fs/test/*"],
-      "testverse+graph:*": ["packages/graph/test/*"],
-      "testverse+types:*": ["packages/types/test/*"],
-      "typeverse:*": ["types/*"],
-      "rootverse+bidirectional-resolve:*": ["packages/bidirectional-resolve/*"],
-      "rootverse+common:*": ["packages/common/*"],
-      "rootverse+fs:*": ["packages/fs/*"],
-      "rootverse+graph:*": ["packages/graph/*"],
-      "rootverse+types:*": ["packages/types/*"],
-      "rootverse:*": ["*"]
+      "testverse+common:*": ["./packages/common/test/*"],
+      "testverse+fs:*": ["./packages/fs/test/*"],
+      "testverse+graph:*": ["./packages/graph/test/*"],
+      "testverse+types:*": ["./packages/types/test/*"],
+      "typeverse:*": ["./types/*"],
+      "rootverse+bidirectional-resolve:*": [
+        "./packages/bidirectional-resolve/*"
+      ],
+      "rootverse+common:*": ["./packages/common/*"],
+      "rootverse+fs:*": ["./packages/fs/*"],
+      "rootverse+graph:*": ["./packages/graph/*"],
+      "rootverse+types:*": ["./packages/types/*"],
+      "rootverse:*": ["./*"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ESNext"
+    "target": "ESNext",
+    // ? With TypeScript 6.0, all node_modules/@types must be specified manually
+    "types": ["node", "jest"]
   },
   "include": [
     "types/**/*",

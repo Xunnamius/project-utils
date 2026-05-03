@@ -114,7 +114,6 @@ function extractExamplesFromDocument_(
       const splitByNewlines = text.split('\n').map((line) =>
         line
           .split(multiSpaceRegExp)
-          // @ts-expect-error: remove this comment when type libs are updated
           .map((substr) => RegExp.escape(substr))
           .join(String.raw`\s+`)
       );
