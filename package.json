@@ -100,7 +100,7 @@
     "core-js": "^3.49.0"
   },
   "devDependencies": {
-    "@-xun/common-dummies": "^2.1.4",
+    "@-xun/common-dummies": "^2.1.5",
     "@-xun/run": "^2.0.1",
     "@-xun/symbiote": "^4.15.9",
     "glob": "^13.0.6",
